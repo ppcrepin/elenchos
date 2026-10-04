@@ -97,6 +97,10 @@ Le porteur choisit l'univers **La Tablée** (`docs/maquettes/univers.html`), par
 
 Risques à tester à l'étape 4 : paraître vieillot aux 15-25 ans ; faire « famille traditionnelle » (parade : une table, jamais une famille-type) ; le miel ne doit évoquer aucun parti (à vérifier).
 
+### D-013 — Nom de travail : Elenchos · Décidé
+
+Le porteur retient **Elenchos** comme nom de travail du jeu, de préférence aux quatre propositions (Qui dit quoi, recommandé par la direction artistique ; Devinade ; Entre nous, favori d'UX ; Tu crois ?). Il remplace « [Nom] » dans les maquettes finales. À l'étape 4 : tester la prononciation et l'écriture auprès de vraies personnes (mot grec, peu connu). Avant le logo : le porteur vérifie que le nom est libre (marques INPI et européennes, noms de domaine, boutiques, réseaux), idéalement avec un conseil en propriété industrielle. Recherche rapide faite : deux jeux de société proches du concept existent, « Devin'Emoi » et « Devine-moi ! ».
+
 ### C-001 — Le « pourquoi » reste cadré · Constaté
 
 Le « pourquoi » passe uniquement par ce qui est validé : choix d'une considération parmi 4 arguments réels de députés (§2), réponse à considération masquée (§2), révélation de l'auteur de l'argument à 18h (§2). La question quotidienne « d'où vient ta conviction » reste écartée (§10). Toute proposition de « pourquoi » plus profond rouvrirait le §10 et devrait être tranchée explicitement par le porteur.
