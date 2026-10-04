@@ -101,6 +101,12 @@ Risques à tester à l'étape 4 : paraître vieillot aux 15-25 ans ; faire « fa
 
 Le porteur retient **Elenchos** comme nom de travail du jeu, de préférence aux quatre propositions (Qui dit quoi, recommandé par la direction artistique ; Devinade ; Entre nous, favori d'UX ; Tu crois ?). Il remplace « [Nom] » dans les maquettes finales. À l'étape 4 : tester la prononciation et l'écriture auprès de vraies personnes (mot grec, peu connu). Avant le logo : le porteur vérifie que le nom est libre (marques INPI et européennes, noms de domaine, boutiques, réseaux), idéalement avec un conseil en propriété industrielle. Recherche rapide faite : deux jeux de société proches du concept existent, « Devin'Emoi » et « Devine-moi ! ».
 
+### D-014 — Maquettes finales validées · Décidé
+
+Les maquettes finales (`docs/maquettes/maquettes-finales.html` : les 51 écrans de D-011 dans l'univers La Tablée, nom Elenchos) sont validées. Ton : « Ça alors ! », « Tu connais ton monde. » et « Tu connais ton monde, et ses raisons. » sont validés ; **« la table est mise » est refusé** : le message de 18h garde sa forme validée, « 18h. Qui avait dit quoi ? La révélation d'hier t'attend, et la question d'aujourd'hui. » (et le dimanche : « … Ce soir, aussi : les titres de la semaine. »). L'étape 3 est terminée, sauf le logo, qui attend la vérification du nom (D-013) puis un graphiste.
+
+Le porteur demande aussi que tout le travail soit poussé sur `main` sur GitHub, régulièrement : règle inscrite dans `CLAUDE.md` (chaque commit poussé sur la branche de travail et sur `main`).
+
 ### C-001 — Le « pourquoi » reste cadré · Constaté
 
 Le « pourquoi » passe uniquement par ce qui est validé : choix d'une considération parmi 4 arguments réels de députés (§2), réponse à considération masquée (§2), révélation de l'auteur de l'argument à 18h (§2). La question quotidienne « d'où vient ta conviction » reste écartée (§10). Toute proposition de « pourquoi » plus profond rouvrirait le §10 et devrait être tranchée explicitement par le porteur.

@@ -210,7 +210,7 @@ button.face { cursor: pointer; }
 <div class="wrap">
   <header style="display:grid;gap:10px">
     <h1>Maquettes finales : Elenchos, univers La Tablée</h1>
-    <p class="lede"><strong>Vos 51 écrans validés, habillés dans l'univers choisi, avec le nom Elenchos et le ton de La Tablée.</strong> Rien d'autre ne change : mêmes écrans, mêmes règles. Prénoms, textes et députés sont fictifs. Le logo viendra plus tard, avec un graphiste. En bas de page : les phrases qui changent avec le ton, à valider une par une.</p>
+    <p class="lede"><strong>Vos 51 écrans validés, habillés dans l'univers choisi, avec le nom Elenchos et le ton de La Tablée.</strong> Rien d'autre ne change : mêmes écrans, mêmes règles. Prénoms, textes et députés sont fictifs. Le logo viendra plus tard, avec un graphiste. Validées par le porteur (D-014). En bas de page : les phrases qui ont changé avec le ton.</p>
   </header>
 
   <nav class="chapters" id="chapters" aria-label="Journées"></nav>
@@ -230,19 +230,17 @@ button.face { cursor: pointer; }
   </div>
 
   <section class="changes" aria-labelledby="chg">
-    <h2 id="chg">Les phrases qui changent avec La Tablée</h2>
-    <p>Le ton vient avec l'univers (D-012). Voici chaque phrase modifiée, avant et après ; tout le reste est identique aux maquettes validées.</p>
-    <div class="change"><b>1. Le message de 18h</b> (écrans 2.6 et 3.1)
-      <div class="ba"><span class="k">Avant</span><span class="before">« 18h. Qui avait dit quoi ? La révélation d'hier t'attend, et la question d'aujourd'hui. »</span><span class="k">Après</span><span class="after">« 18h, la table est mise. Qui avait dit quoi ? La révélation d'hier t'attend, et la question d'aujourd'hui. »</span></div></div>
-    <div class="change"><b>2. Quand on s'est trompé</b> (écrans 1.6 et 2.7a)
+    <h2 id="chg">Les phrases qui ont changé avec La Tablée</h2>
+    <p>Validées par le porteur (D-014). Le message de 18h garde sa forme d'origine, sans « la table est mise ».</p>
+    <div class="change"><b>1. Quand on s'est trompé</b> (écrans 1.6 et 2.7a)
       <div class="ba"><span class="k">Avant</span><span class="before">« Surprise ! »</span><span class="k">Après</span><span class="after">« Ça alors ! »</span></div></div>
-    <div class="change"><b>3. Quand on a vu juste</b> (écran 1.6, texte suivant)
+    <div class="change"><b>2. Quand on a vu juste</b> (écran 1.6, texte suivant)
       <div class="ba"><span class="k">Avant</span><span class="before">« Bien vu ! »</span><span class="k">Après</span><span class="after">« Tu connais ton monde. »</span></div></div>
-    <div class="change"><b>4. Quand on a vu juste, raison comprise</b> (écran 2.7b)
+    <div class="change"><b>3. Quand on a vu juste, raison comprise</b> (écran 2.7b)
       <div class="ba"><span class="k">Avant</span><span class="before">« Bien vu ! Et la raison aussi. »</span><span class="k">Après</span><span class="after">« Tu connais ton monde, et ses raisons. »</span></div></div>
-    <div class="change"><b>5. Le nom</b> (partout)
+    <div class="change"><b>4. Le nom</b> (partout)
       <div class="ba"><span class="k">Avant</span><span class="before">« [Nom] »</span><span class="k">Après</span><span class="after">« Elenchos » (nom de travail, D-013)</span></div></div>
-    <p>Restent identiques : l'invitation « Tu crois me connaître ? … », « Rien à deviner aujourd'hui. », et toutes les autres phrases. Deux changements visuels viennent de l'univers lui-même, pas du ton : la révélation de 18h passe toujours en palette du soir, et sur l'écran d'un proche le rond de Hugo devient un rond de serviette (« ◎ Hugo »).</p>
+    <p>Restent identiques : le message de 18h, l'invitation « Tu crois me connaître ? … », « Rien à deviner aujourd'hui. », et toutes les autres phrases. Deux changements visuels viennent de l'univers lui-même, pas du ton : la révélation de 18h passe toujours en palette du soir, et sur l'écran d'un proche le rond de Hugo devient un rond de serviette (« ◎ Hugo »).</p>
   </section>
 </div>
 
@@ -368,7 +366,7 @@ var S = [
     when: "La boucle du jour est finie : une minute trente en tout. On ferme l'application.",
     to: ["Pas de bouton principal : c'est la fin de la boucle.", "Toucher la phrase du jour → Moi, Portrait (4.1).", "À 18h → le message (2.6).", "Réservé, non dessiné : le geste qui active le message de 18h sur le téléphone, en suspens tant que « web ou application » n'est pas tranché."], never: ["« Paul n'a pas encore joué ».", "Une relance.", "Les choix de Marie au Deviner."] },
   { id: "2.6", ch: "j2", name: "Le message de 18h", kind: "lock", time: "18:00", day: "jeudi 3 avril",
-    notif: "18h, la table est mise. Qui avait dit quoi ? La révélation d'hier t'attend, et la question d'aujourd'hui.", nto: "2.7a",
+    notif: "18h. Qui avait dit quoi ? La révélation d'hier t'attend, et la question d'aujourd'hui.", nto: "2.7a",
     when: "Chaque jour à 18h, le même message pour tout le cercle.",
     to: ["Toucher le message → la révélation (2.7a)."], never: ["Un nom, un score, un indice sur le résultat."] },
   { id: "2.7a", ch: "j2", name: "Révélation : première réponse", kind: "reveal", time: "18:01", dots: [6, 0],
@@ -404,7 +402,7 @@ var S = [
 
   // ---------- Dimanche ----------
   { id: "3.1", ch: "j3", name: "Le message de 18h du dimanche", kind: "lock", time: "18:00", day: "dimanche 6 avril",
-    notif: "18h, la table est mise. Qui avait dit quoi ? La révélation d'hier t'attend, et la question d'aujourd'hui. Ce soir, aussi : les titres de la semaine.", nto: "3.2",
+    notif: "18h. Qui avait dit quoi ? La révélation d'hier t'attend, et la question d'aujourd'hui. Ce soir, aussi : les titres de la semaine.", nto: "3.2",
     when: "Le dimanche, le même message annonce aussi les titres.",
     to: ["→ la révélation habituelle (comme 2.7a à 2.7e), puis un badge rare s'il y en a un (3.2)."], never: ["Qui a gagné."] },
   { id: "3.2", ch: "j3", name: "Badge rare", kind: "reveal", time: "18:02", dots: [12, 5],
