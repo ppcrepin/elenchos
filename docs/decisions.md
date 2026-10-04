@@ -73,6 +73,16 @@ Conséquences :
 - La vision (D-004) et l'onboarding (D-006) restent acquis comme matière de départ ; ils peuvent évoluer aux étapes 1 et 2.
 - La feuille de route précédente est remplacée.
 
+### D-010 — Le produit, première version · Décidé
+
+`docs/produit.md` est validé : fonctions, journées, règles, écrans, messages, états vides, mesures, et toutes les propositions qu'il contient (revues sur les maquettes à l'étape 2). Ce qu'il change dans le document de projet (sa section 9) est validé : « aucune » comme cinquième considération (C-005, clos) ; « Répondre » au lieu de « Déposer » ; trois cercles au plus (règle le point ouvert §11.6) ; pause après sept jours sans réponse et cercle endormi sous trois membres actifs ; une seule révélation pour tous ses cercles ; Le Fidèle à plusieurs titulaires ; Sans-Faute sans erreur ni passe ; égalité au Devin départagée par les raisons cachées ; points remis à zéro le lundi ; tempéraments sur deux mois ; « Le Mesuré » ; phrase du jour juste après la réponse, phrase de la semaine le dimanche ; archives jouables reportées ; titres passés sans total ; palmarès limité à ses propres titres ; lien vers le scrutin à 18h seulement.
+
+Quatre questions de fond tranchées :
+1. **C-006, clos** : pendant qu'on devine, on ne sait rien ; vote, auteurs et bonnes réponses tombent ensemble à 18h (lecture A).
+2. **C-003, clos** : l'écran d'un proche montre les deux portraits superposés et ses surprises, sans aucun chiffre ; ni taux de lecture, ni désaccords côte à côte.
+3. **§11.5, clos** : quand un proche décroche, rien de visible ; pause après sept jours, cercle endormi sous trois membres actifs, réveil automatique ; aucune relance.
+4. Les changements au document de projet sont validés avec ce document.
+
 ### C-001 — Le « pourquoi » reste cadré · Constaté
 
 Le « pourquoi » passe uniquement par ce qui est validé : choix d'une considération parmi 4 arguments réels de députés (§2), réponse à considération masquée (§2), révélation de l'auteur de l'argument à 18h (§2). La question quotidienne « d'où vient ta conviction » reste écartée (§10). Toute proposition de « pourquoi » plus profond rouvrirait le §10 et devrait être tranchée explicitement par le porteur.
@@ -82,11 +92,11 @@ Le « pourquoi » passe uniquement par ce qui est validé : choix d'une considé
 À soumettre au porteur après validation de la vision, en QCM, une par une, avec leur origine.
 
 - **C-002 — Taille minimale du cercle.** *Clos par D-006.* §3 : 3 à 10 membres. §2 : 3 réponses d'autres membres à attribuer, jamais la sienne. Un cercle de 3 n'a que 2 « autres ». À 4, la dernière attribution se déduit par élimination si chaque personne n'est proposée qu'une fois.
-- **C-003 — Palmarès et statistiques contre lignes rouges.** §4 (palmarès), §6 (statistiques, « taux de lecture » d'une personne) et §8 (statistiques publiques) face au §9 : aucun classement permanent, aucun chiffre public sur ce que pensent les joueurs, aucun taux d'accord entre deux personnes. À qualifier terme par terme.
+- **C-003 — Palmarès et statistiques contre lignes rouges.** *Clos par D-010.* §4 (palmarès), §6 (statistiques, « taux de lecture » d'une personne) et §8 (statistiques publiques) face au §9 : aucun classement permanent, aucun chiffre public sur ce que pensent les joueurs, aucun taux d'accord entre deux personnes. À qualifier terme par terme.
 - **C-004 — Onboarding v2 et « rien ne sort du cercle ».** *Clos par D-006 (exception acceptée, lien personnel à usage unique).* §7 : l'invitée voit les réponses du créateur avant d'être membre du cercle. Tension avec le §9.
-- **C-005 — « Aucune de ces raisons ».** §8 prévoit un taux de « aucune de ces raisons » dans le suivi statistique ; l'écran 2 (§2) ne propose que 4 considérations, sans cette option.
+- **C-005 — « Aucune de ces raisons ».** *Clos par D-010 (« aucune » ajoutée).* §8 prévoit un taux de « aucune de ces raisons » dans le suivi statistique ; l'écran 2 (§2) ne propose que 4 considérations, sans cette option.
 
-### C-006 — Chronologie de la révélation de 18h · Constaté, non tranché
+### C-006 — Chronologie de la révélation de 18h · Clos par D-010 (lecture A)
 
 Le §2 liste en une seule « révélation commune à 18h » quatre éléments (attributions justes/fausses, résultat du vote à l'Assemblée, auteur du texte, auteur de l'argument choisi) sans dire sur quel texte porte chacun. Un texte ouvert à 18h le jour J est déposé jusqu'à 18h J+1 et deviné de 18h J+1 à 18h J+2 ; ses attributions ne peuvent donc être révélées qu'à 18h J+2. Deux lectures pour le vote, l'auteur du texte et l'auteur de l'argument :
 - **(A)** révélés à 18h J+2 avec les attributions, tout sur le même texte ; rien n'est connu pendant qu'on devine (appui : §1, mot « commune ») ;
@@ -96,4 +106,4 @@ L'explication de la vision suit (A). Avis du game design : (A), nettement ; sous
 
 ### Points ouverts du §11 — toujours ouverts
 
-(1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique · (4) Juridique · (5) Mortalité du cercle · (6) Plafond d'attributions · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
+(1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.

@@ -1,6 +1,6 @@
 # Le produit, première version
 
-*Proposition à valider (étape 1, D-009). Prénoms et textes fictifs. « Proposé » signale ce que votre document ne disait pas encore ; la section 9 récapitule ce qui change dans ce qu'il avait validé ; les questions de fond sont à la fin.*
+*Validé par le porteur le 4 octobre 2026 (D-010). Étape 1 de la feuille de route. Prénoms et textes fictifs. « Proposé » signale ce que le document de projet ne disait pas ; toutes ces propositions sont validées avec ce document et seront revues sur les maquettes. La section 9 récapitule ce qui change dans ce que le document de projet avait validé.*
 
 ## 1. En une phrase, et pour qui
 
@@ -138,9 +138,9 @@ Cinq mesures internes (proposé), jamais montrées aux joueurs, sur ce que les j
 - **La transparence** (§8) : le lien vers le scrutin officiel n'arrive qu'à 18h, car sa page montre probablement le vote (à confirmer).
 - **L'entrée** (D-006) : l'étape qui active le message de 18h sur le téléphone est mise de côté tant que « web ou application » est en suspens (D-009).
 
-## Questions de fond
+## Questions de fond, tranchées (D-010)
 
-1. **Que sait-on pendant qu'on devine ?** (C-006) Rien, tout tombe à 18h ; ou le vote et l'auteur un soir plus tôt.
-2. **Quels chiffres montre l'écran d'un proche ?** (C-003, §6 face au §9) Ses surprises sans chiffre ; ou aussi un nombre de bonnes réponses, visible de toi seul ; ou les portraits seuls.
-3. **Que se passe-t-il quand un proche décroche ?** (§11.5) Rien de visible, pause et réveil automatiques ; ou un message de relance qu'un proche peut envoyer.
-4. **Les changements de la section 9** : les valider avec ce document, ou en écarter certains.
+1. **Ce qu'on sait pendant qu'on devine** (C-006) : rien ; tout tombe à 18h.
+2. **L'écran d'un proche** (C-003) : vos deux portraits superposés et ses surprises, sans aucun chiffre.
+3. **Quand un proche décroche** (§11.5) : rien de visible ; pause et réveil automatiques.
+4. **Les changements de la section 9** : validés avec ce document.
