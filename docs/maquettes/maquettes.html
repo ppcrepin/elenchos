@@ -255,7 +255,7 @@ var S = [
   { id: "1.6", ch: "j1", name: "Révélation immédiate", time: "12:05",
     b: [["band", "Texte 1 sur 3"], ["big", "Surprise !"], ["p", "Ton pari : Favorable."], ["faceline", "T", "Thomas : Défavorable", "« C'est aux familles de décider. »"], ["rule"], ["p", "<b>L'Assemblée :</b> texte adopté."], ["p", "Proposé par Sophie Marchal, députée, [Groupe A]."], ["p", "Ta raison, « Les élèves apprennent mieux sans écran », était l'argument de Julien Barre, député, [Groupe B]."]],
     p: { label: "Texte suivant", to: "1.7" },
-    when: "Aussitôt après la devinette. Quand c'est juste, le verdict est « Bien vu ! ».",
+    when: "Aussitôt après la devinette. C'est juste si Marie trouve le bon côté (défavorable, neutre ou favorable), même sans le niveau exact ; le verdict est alors « Bien vu ! » (Game design).",
     to: ["Textes 2 et 3 (« Magasins ouverts le dimanche dans les grandes villes », « Deux mois de congé pour les pères ») : même chemin, Marie les devine juste. La maquette passe directement au bilan (1.7)."], never: ["La réponse de Marie à côté de celle de Thomas. « Ton pari » dit ce qu'elle a deviné, pas ce qu'elle pense."] },
   { id: "1.7", ch: "j1", name: "Bilan d'entrée", time: "12:07",
     b: [["huge", "2 sur 3"], ["p", "Tu as trouvé 2 réponses de Thomas sur 3."], ["rule"], ["label", "Ton portrait commence"], ["slider", 0, { w: 0.9, c: 0.5 }], ["slider", 2, { w: 0.9, c: 0.45 }], ["slider", 4, { w: 0.85, c: 0.5 }], ["small", "Chaque réponse les précise."]],
