@@ -49,6 +49,12 @@ Un livrable = tout texte, décision proposée, parcours, écran, règle, ou code
 
 Rien n'atteint le porteur sans l'étape 4. Un livrable rejeté par le porteur repasse par le circuit complet, jamais par une simple retouche de l'orchestrateur.
 
+## Règles pratiques apprises
+
+- Les agents parallèles partagent le même scratchpad : tout fichier de travail d'un agent est préfixé par son nom (`ux-…`, `game-design-…`).
+- Aucune question technique au porteur avant l'étape 6, même pour un test jetable : il l'a demandé explicitement (D-005).
+- Une synthèse de plusieurs avis nomme les désaccords et attribue chaque position ; « les cinq s'accordent » ne s'écrit que si c'est vrai mot pour mot.
+
 ## Après chaque arbitrage du porteur
 
 L'orchestrateur ajoute une entrée datée dans `docs/decisions.md` (format décrit en tête du fichier), puis commit. C'est ce qui rend les agents constants d'une session à l'autre.
