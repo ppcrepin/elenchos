@@ -136,7 +136,7 @@ Le §2 liste en une seule « révélation commune à 18h » quatre éléments (a
 
 L'explication de la vision suit (A). Avis du game design : (A), nettement ; sous (B), l'auteur du texte et son groupe sont connus pendant qu'on devine, donc on devine par camp au lieu de deviner la personne, et le rendez-vous de 18h s'étale sur deux soirs. À trancher par le porteur à l'étape des règles. Si (B) est retenu, une phrase de la vision est à ajuster.
 
-### C-007 à C-015 — Manques du produit révélés par la préparation de l'essai · Constaté, non tranché
+### C-007 à C-016 — Manques du produit révélés par la préparation de l'essai · Constaté, non tranché
 
 Relevés par Game design, Cohérence et UX en écrivant la simulation de l'essai (`docs/essai/simulation.md`). L'essai les règle par convention, sans rien décider pour le produit ; ils seront soumis au porteur au bilan de l'étape 4.
 
@@ -149,6 +149,7 @@ Relevés par Game design, Cohérence et UX en écrivant la simulation de l'essai
 - **C-013 — Égalités et minimums des titres de la semaine.** Le §4 donne un seul titulaire au Devin et au Mystère (D-010 n'a changé que Le Fidèle). La règle 12 ne départage Le Devin que par les raisons cachées et ne départage pas Le Mystère. Elle ne fixe pas non plus de minimum (Mystère sur une seule tentative, Devin à zéro point), ni le sort des passes pour « le texte qui a le plus trompé le cercle ».
 - **C-014 — Le Sans-Faute : raison cachée et jours sans carte.** La règle 14 dit « sept jours sans erreur ni passe ». Deux choses ne sont pas fixées : une raison cachée mal devinée, avec la bonne personne, est-elle une erreur ? Un jour sans rien à deviner interrompt-il la série ?
 - **C-015 — Libellés courts des pôles dans les phrases.** Les phrases raccourcissent certains pôles (« la liberté » pour Liberté individuelle) et en gardent d'autres en entier (« la solidarité collective », écran 1.13). Aucun libellé n'existe pour Local ↔ National ni pour les autres tensions. La liste est à fixer pour les huit tensions.
+- **C-016 — Rouvrir une révélation, toucher son propre visage.** Les maquettes disent que la croix de la révélation ramène à Aujourd'hui (écran 2.7a), mais ni `produit.md` ni les maquettes ne disent comment rouvrir une révélation fermée avant la fin, ni ce que fait un toucher sur son propre visage dans Le Cercle.
 
 ### Points ouverts du §11 — toujours ouverts
 
