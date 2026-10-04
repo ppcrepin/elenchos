@@ -457,17 +457,17 @@ On calcule en minutes : r(m) = (m − 1080 + 1440) mod 1440. Un personnage figur
 | `attributions_justes` | entier ou `null` | dans la manche de cette séance ; `null` s'il n'y a pas de manche |
 | `raison_tentee`, `raison_trouvee` | booléen ou `null` | dans la manche de cette séance ; `null` s'il n'y a pas de carte à raison cachée |
 
-`agregats` couvre l'ensemble de la partie (§8.4). Chaque chiffre vaut `null` tant que moins de 5 textes ont été révélés (seuil du §8.4, à confirmer par Juridique).
+`agregats` couvre l'ensemble de la partie (§8.4). Chaque chiffre vaut `null` tant que le joueur a répondu à moins de 5 des textes révélés (seuil du §8.4, confirmé par Juridique) ; `justesse_personnages_sur_porteur` vaut aussi `null` si aucune carte du joueur n'a été servie à un personnage.
 
 | Clé | Type | Définition (Game design) |
 |---|---|---|
-| `justesse_personnages_entre_eux` | fraction ou `null` | cartes des manches des personnages dont `auteur_compte` est un personnage, attribuées juste, sur ces mêmes cartes ; manches révélées seulement |
-| `justesse_personnages_sur_porteur` | fraction ou `null` | la même chose pour les cartes dont `auteur_compte` est le porteur ; le carnet n'en donne que le pourcentage |
+| `justesse_personnages_entre_eux` | objet `{"justes": entier, "total": entier}` ou `null` (comptes bruts, non réduits, pour le carnet) | cartes des manches des personnages dont `auteur_compte` est un personnage, attribuées juste, sur ces mêmes cartes ; manches révélées seulement |
+| `justesse_personnages_sur_porteur` | objet `{"justes": entier, "total": entier}` ou `null` | la même chose pour les cartes dont `auteur_compte` est le porteur ; le carnet la donne en comptes bruts (§8.12) |
 | `titres_tires_au_sort` | entier ou `null` | nombre de titres (Devin, Mystère, surprise ; semaines 1 et 2) dont `departage` vaut `"tirage"`, de 0 à 6 |
 
 Les chiffres qui ne dépendent que du fichier scellé (réponses atypiques, cartes identiques, raisons « aucune », égalités de classement dans la manche du porteur) ne sont pas dans la trace : ils vont au rapport de scellement (§9).
 
-Une proportion dont le dénominateur serait nul (aucune carte) vaut `null`.
+Un compte dont le total serait nul (aucune carte) vaut `null`.
 
 `carnet.texte` est le texte exact que « Copier mon carnet » a donné à la fin de la partie (clôture ou arrêt), jusqu'à « Fin du carnet » compris. Son format est au §8.12.
 
@@ -615,7 +615,7 @@ Au moins une partie témoin contient les cas suivants :
 
 ## 6. Points fixés depuis la version 1 de ce document
 
-1. **Format du carnet** : §8.12 de la simulation (UX). Contraintes respectées : U+000A seulement, pas de tabulation, « Fin du carnet » sans retour final, durées repérables par une expression régulière, pas de pseudo, pourcentage calculé en entiers sur la fraction exacte.
+1. **Format du carnet** : §8.12 de la simulation (UX). Contraintes respectées : U+000A seulement, pas de tabulation, « Fin du carnet » sans retour final, durées repérables par une expression régulière, pas de pseudo, uniquement des comptes bruts (aucun arrondi).
 2. **Mesures globales** : §8.4 (Game design) et partie 3.10. Trois chiffres restent dans la trace ; les autres, constants pour un fichier donné, vont au rapport de scellement.
 3. **`jours_ecoules`** : différence entre les dates locales (heure de Paris) de deux ouvertures successives ; l'ouverture est le premier toucher du joueur dans la séance.
 4. **Typographie** : §7.8 (UX). Le fichier scellé reste en typographie simple ; la page et C appliquent les mêmes règles à l'affichage ; la trace enregistre les phrases sous leur forme affichée.
