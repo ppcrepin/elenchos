@@ -111,6 +111,10 @@ Le porteur demande aussi que tout le travail soit poussé sur `main` sur GitHub,
 
 Le porteur fait l'essai seul, avec des joueurs simulés (reprend D-007, suspendu par D-009). Conception déjà faite et relue (Game design, UX, Juridique ; Cohérence et Vérificateur) : personnages inventés au profil caché, jamais calqués sur de vrais proches ; réponses simulées écrites et scellées avant chaque coup du porteur (empreinte publiée), contrôlées à la fin par le Vérificateur ; lecture A de C-006 (D-010). Limite assumée : l'essai ne dira rien de ce que d'autres personnes comprennent ou ressentent (univers vieillot ou non, nom prononçable, couleur associée à un parti, clarté sans explication) ; ces risques seront vérifiés en bêta, à l'étape 7. Restent à trancher : le support (conversation ou page jouable), le nombre de personnages, le rythme.
 
+### D-016 — Forme de l'essai · Décidé
+
+Pour l'essai seul (D-015) : **une page jouable aux couleurs de La Tablée**, tirée des maquettes finales (maquette animée, pas l'application) ; **quatre personnages inventés** (un cercle de cinq avec le porteur) ; **une journée de jeu par séance**, à son rythme, sans attente de 18h (deux « dimanches » simulés aux jours 7 et 14 pour les titres). Les réponses politiques du porteur restent dans son navigateur, jamais dans le dépôt (avis Juridique) ; un bouton lui permet de copier son carnet de bilan pour le donner à l'équipe.
+
 ### C-001 — Le « pourquoi » reste cadré · Constaté
 
 Le « pourquoi » passe uniquement par ce qui est validé : choix d'une considération parmi 4 arguments réels de députés (§2), réponse à considération masquée (§2), révélation de l'auteur de l'argument à 18h (§2). La question quotidienne « d'où vient ta conviction » reste écartée (§10). Toute proposition de « pourquoi » plus profond rouvrirait le §10 et devrait être tranchée explicitement par le porteur.
