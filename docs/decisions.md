@@ -38,6 +38,14 @@ Le « pourquoi » passe uniquement par ce qui est validé : choix d'une considé
 - **C-004 — Onboarding v2 et « rien ne sort du cercle ».** §7 : l'invitée voit les réponses du créateur avant d'être membre du cercle. Tension avec le §9.
 - **C-005 — « Aucune de ces raisons ».** §8 prévoit un taux de « aucune de ces raisons » dans le suivi statistique ; l'écran 2 (§2) ne propose que 4 considérations, sans cette option.
 
+### C-006 — Chronologie de la révélation de 18h · Constaté, non tranché
+
+Le §2 liste en une seule « révélation commune à 18h » quatre éléments (attributions justes/fausses, résultat du vote à l'Assemblée, auteur du texte, auteur de l'argument choisi) sans dire sur quel texte porte chacun. Un texte ouvert à 18h le jour J est déposé jusqu'à 18h J+1 et deviné de 18h J+1 à 18h J+2 ; ses attributions ne peuvent donc être révélées qu'à 18h J+2. Deux lectures pour le vote, l'auteur du texte et l'auteur de l'argument :
+- **(A)** révélés à 18h J+2 avec les attributions, tout sur le même texte ; rien n'est connu pendant qu'on devine (appui : §1, mot « commune ») ;
+- **(B)** révélés à 18h J+1 à la clôture des dépôts, les attributions 24h plus tard ; le vote et le groupe des arguments sont déjà connus pendant qu'on devine (appui : §7 « révélation solo chaque soir », §8 « avant 18h, seul le lien »).
+
+L'explication de la vision suit (A). À trancher par le porteur à l'étape des règles, avec l'avis du game design sur l'effet de (B) sur le devinage. Si (B) est retenu, une phrase de la vision est à ajuster.
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application · (2) Validation de l'onboarding v2 · (3) Modèle économique · (4) Juridique · (5) Mortalité du cercle · (6) Plafond d'attributions · (7) Surcouche 2027 · (8) Étapes suivantes. Aucun n'est tranché à ce jour.
