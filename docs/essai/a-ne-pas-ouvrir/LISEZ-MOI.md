@@ -6,3 +6,4 @@ Ils sont enregistrés ici seulement pour ne pas être perdus d'une session à l'
 
 - `profils.md` : profils cachés, réponse type de chacun, contraintes, réponses atypiques, absences, corrigé de la question F1.
 - `regles-de-calcul.md` : comment les personnages répondent et devinent, choix des cartes, réglage et parties témoins, contraintes de Contenu.
+- `schema.md` : schéma du fichier scellé et format de la trace des parties témoins (ses noms de champs laissent entrevoir les règles de calcul).
