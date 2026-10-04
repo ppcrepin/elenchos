@@ -107,6 +107,10 @@ Les maquettes finales (`docs/maquettes/maquettes-finales.html` : les 51 écrans 
 
 Le porteur demande aussi que tout le travail soit poussé sur `main` sur GitHub, régulièrement : règle inscrite dans `CLAUDE.md` (chaque commit poussé sur la branche de travail et sur `main`).
 
+### D-015 — Étape 4 : essai seul, avec des joueurs simulés · Décidé
+
+Le porteur fait l'essai seul, avec des joueurs simulés (reprend D-007, suspendu par D-009). Conception déjà faite et relue (Game design, UX, Juridique ; Cohérence et Vérificateur) : personnages inventés au profil caché, jamais calqués sur de vrais proches ; réponses simulées écrites et scellées avant chaque coup du porteur (empreinte publiée), contrôlées à la fin par le Vérificateur ; lecture A de C-006 (D-010). Limite assumée : l'essai ne dira rien de ce que d'autres personnes comprennent ou ressentent (univers vieillot ou non, nom prononçable, couleur associée à un parti, clarté sans explication) ; ces risques seront vérifiés en bêta, à l'étape 7. Restent à trancher : le support (conversation ou page jouable), le nombre de personnages, le rythme.
+
 ### C-001 — Le « pourquoi » reste cadré · Constaté
 
 Le « pourquoi » passe uniquement par ce qui est validé : choix d'une considération parmi 4 arguments réels de députés (§2), réponse à considération masquée (§2), révélation de l'auteur de l'argument à 18h (§2). La question quotidienne « d'où vient ta conviction » reste écartée (§10). Toute proposition de « pourquoi » plus profond rouvrirait le §10 et devrait être tranchée explicitement par le porteur.
