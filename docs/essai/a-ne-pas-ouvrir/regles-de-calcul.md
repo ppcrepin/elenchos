@@ -102,7 +102,7 @@ La carte de la dernière place (3, sinon 2, sinon 1). Si sa raison est « aucune
 
 ## 9 bis. Réglage avant scellement et parties témoins
 
-**Avant de sceller, une seule fois.** Le programme indépendant joue 200 parties sur les textes et les réponses prêts à sceller. La place du porteur est tenue par un joueur simulé au profil cohérent tiré au hasard (position et fermeté par tension, règles 2.1 à 2.3, trois réponses atypiques). Il devine par la règle du §3, le côté attendu de chaque personnage étant tiré de son curseur tel que le porteur le voit (§5.4 de `simulation.md`). On relève : justesse des personnages entre eux ; justesse des personnages sur les réponses du joueur simulé, semaines 1 et 2 ; justesse du joueur simulé, semaines 1 et 2 ; fréquence des cartes identiques, des raisons « aucune », des manches à deux cartes ; titulaires des titres ; pour chaque personnage et chaque tension, combien de fois sa réponse est servie au joueur simulé en 14 séances. Une case personnage × tension servie moins de 3 fois en moyenne (seuil proposé par le Vérificateur, à confirmer par Game design) est signalée, et exclue de la justesse de F1 au bilan.
+**Avant de sceller, une seule fois.** Le programme indépendant joue 200 parties de réglage sur les textes et les réponses prêts à sceller. La place du porteur est tenue par un joueur simulé au profil cohérent tiré au hasard (position et fermeté par tension, règles 2.1 à 2.3, trois réponses atypiques). Il devine par la règle du §3, le côté attendu de chaque personnage étant tiré de son curseur tel que le porteur le voit (§5.4 de `simulation.md`). On relève : justesse des personnages entre eux ; justesse des personnages sur les réponses du joueur simulé, semaines 1 et 2 ; justesse du joueur simulé, semaines 1 et 2 ; fréquence des cartes identiques, des raisons « aucune », des manches à deux cartes ; titulaires des titres ; pour chaque personnage et chaque tension, combien de fois sa réponse est servie au joueur simulé en 14 séances. Une case personnage × tension servie moins de 3 fois au porteur (ce compte ne dépend que du fichier scellé ; seuil proposé par le Vérificateur, à confirmer par Game design) est signalée, et exclue de la justesse de F1 au bilan.
 
 Deux réglages possibles, et seulement ceux-là :
 - joueur simulé au-dessus de 70 % en semaine 2 → quatre réponses atypiques par personnage au lieu de trois ; sous 35 % → deux (`profils.md` mis à jour) ;
@@ -110,14 +110,14 @@ Deux réglages possibles, et seulement ceux-là :
 
 Le seuil haut (70 %) laisse une marge au-dessus du repère indicatif de `simulation.md` (35 à 65 % en semaine 2) : on ne règle que si le joueur simulé sort nettement de la fourchette, pas pour un écart de quelques points dû au hasard des textes.
 
-Résultats et réglages sont inscrits ici, datés, avant le scellement ; ensuite rien ne change.
+Résultats et réglages sont inscrits au rapport de scellement, datés, avant le scellement ; ensuite rien ne change. Le rapport de scellement contient aussi les chiffres constants du fichier : part de réponses atypiques parmi les cartes servies au porteur ; remplacements de cartes identiques et cartes identiques servies ensemble dans sa manche ; raisons « aucune » parmi ses cartes (affichées et cachées à part) et parmi les réponses scellées (vérifie l'annexe A) ; égalités de classement dans sa manche ; nombre de fois où chaque case personnage × tension est servie au porteur.
 
 **Après le scellement, avant de donner la page.** Trois parties témoins jouées sur la page, réponses et devinettes consignées :
 - (a) toujours Neutre, passe tout, ne répond pas au texte 10 (manches d'une carte) ;
 - (b) réponses écrites pour couvrir la liste ci-dessous, tente toutes les raisons cachées ;
 - (c) lit le fichier scellé et attribue tout juste, pour Le Sans-Faute.
 
-Plus 200 parties au hasard, graine publiée avec le rapport, jouées par la page et par le programme indépendant, comparées trace contre trace : toute différence est un défaut. D'une partie à l'autre, aucune réponse de personnage ne change.
+Plus 200 parties au hasard, graine inscrite au rapport de contrôle (le rapport du Vérificateur sur les contrôles 5 à 14), jouées par la page et par le programme indépendant, comparées trace contre trace : toute différence est un défaut. D'une partie à l'autre, aucune réponse de personnage ne change.
 
 **Liste à couvrir**, au moins une fois sur l'ensemble des parties ; sinon, une partie témoin de plus :
 - manches de 3, 2 et 1 carte ;
@@ -125,6 +125,8 @@ Plus 200 parties au hasard, graine publiée avec le rapport, jouées par la page
 - côté attendu du porteur « inconnu », 0, +1, −1 ;
 - les quatre lignes du §4.6 de `simulation.md` ; carte à raison cachée déplacée parce que sa raison était « aucune » ; carte « aucune des quatre raisons » ;
 - les quatre phrases du jour ; les trois phrases de la semaine ;
+- cartes laissées sans attribution au passage au jour suivant ; position donnée sans raison ; texte laissé sans réponse ;
+- arrêt avant le jour 3, arrêt après le jour 3 avec F1 remplie, arrêt avec F1 sautée ; carnet copié depuis la confirmation de « Tout effacer » en cours d'essai ;
 - Le Devin départagé par les raisons cachées ; Le Sans-Faute obtenu et manqué ; Le Fidèle avec et sans le porteur ;
 - chaque départage par t ;
 - l'écran 5.12 (personne n'a répondu la veille), s'il peut arriver.

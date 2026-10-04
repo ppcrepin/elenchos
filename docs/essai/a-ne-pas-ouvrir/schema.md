@@ -139,7 +139,7 @@ Un député (l'`auteur` de type `"depute"`, ou le `depute` d'une considération)
 | `groupe` | chaîne | le nom du groupe, tel qu'affiché |
 
 - Les adresses sont en https et en ASCII : un caractère spécial s'écrit encodé, sous la forme %xx. Elles ne contiennent pas d'espace.
-- Les chaînes affichées sont écrites telles qu'elles s'affichent, espaces et apostrophes comprises. La page ne les retouche pas, sauf selon les règles écrites au §4.6 (guillemets, point final).
+- Les chaînes affichées sont écrites en typographie simple : apostrophe droite, espaces ordinaires (contrôle 1). La page applique le §4.6 (guillemets, point final), puis les règles d'affichage du §7.8.
 
 ### 2.4 Réponses, absences, réponses atypiques
 
@@ -454,8 +454,8 @@ On calcule en minutes : r(m) = (m − 1080 + 1440) mod 1440. Un personnage figur
 | `duree_seance`, `duree_deviner`, `duree_repondre` | entier ou `null` | en secondes entières, tronquées. `null` si l'étape n'a pas eu lieu, et en mode `moteur`. Ces durées ne sont jamais comparées. |
 | `relire` | entier | les touchers sur « Relire », comptés par la page |
 | `passer` | entier | les cartes passées par un toucher sur « Passer » |
-| `attributions_justes` | entier ou `null` | dans la manche de cette séance ; `null` s'il n'y a pas de manche |
-| `raison_tentee`, `raison_trouvee` | booléen ou `null` | dans la manche de cette séance ; `null` s'il n'y a pas de carte à raison cachée |
+| `revelation_verdicts` | tableau ou `null` | les verdicts de la manche du joueur révélée à cette séance (jouée à la séance précédente), dans l'ordre d'affichage : codes de la partie 3.7 ; `null` s'il n'y a pas de révélation ; tableau vide si la manche était vide (5.12) |
+| `revelation_raison_tentee` | booléen ou `null` | sur cette même manche : la raison cachée a-t-elle été tentée ; `null` s'il n'y avait pas de carte à raison cachée |
 
 `agregats` couvre l'ensemble de la partie (§8.4). Chaque chiffre vaut `null` tant que le joueur a répondu à moins de 5 des textes révélés (seuil du §8.4, confirmé par Juridique) ; `justesse_personnages_sur_porteur` vaut aussi `null` si aucune carte du joueur n'a été servie à un personnage.
 
@@ -597,7 +597,7 @@ Où regarder une différence :
 - **Contrôle 13.** Le harnais rejoue les trois parties témoins sur la version du porteur, avec le même journal, et récupère le carnet copié. Il le compare au `carnet.texte` de la trace de C pour la même partie. Avant la comparaison, chaque durée est remplacée par « ‹durée› » dans les deux textes. Les durées se repèrent par l'expression régulière du §8.12. Les heures, fixées par le harnais, sont comparées.
 - **Contrôle 12.**
   - `carnet.texte` ne contient jamais le pseudo (`seances[0].coups.pseudo`).
-  - On prend deux parties jouées avec les mêmes devinettes et des réponses opposées. Séance par séance, leurs `seances[k].mesures` sont identiques, sauf les `duree_*` et `relire`. Le harnais leur donne les mêmes heures d'ouverture.
+  - Trois variantes d'une même partie, rejouées avec la même horloge et les mêmes gestes, seules les réponses du joueur changeant (§9, contrôle 12) : séance par séance, les blocs de séance du carnet (et `seances[k].mesures`, hors `duree_*`) sont identiques ; seuls « Titres de la semaine » et « Sur tout l'essai » peuvent différer.
   - Le carnet suit exactement le gabarit du §8.12 : toute ligne qui n'y figure pas est un défaut.
 
 ### 4.4 Mettre l'horloge à l'épreuve
