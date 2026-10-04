@@ -53,6 +53,16 @@ Aussi retenus avec le parcours : carte de consentement explicite avant la premi�
 
 Circuit : UX, Game design, Juridique → synthèse → Cohérence (compatible avec réserves, levées) + Vérificateur (OK avec corrections, appliquées).
 
+### D-007 — Le test se fait seul, avec des joueurs simulés · Décidé
+
+Le porteur ne veut pas du prototype manuel sur WhatsApp avec un cercle réel (§11, « prochaine étape immédiate », et phase Prototype de `docs/feuille-de-route.md`). Il veut faire le test seul ; Claude simule les autres joueurs. Modalités (joueurs fictifs ou non, temps réel ou accéléré, garanties d'honnêteté de la simulation, ce que le test peut et ne peut pas montrer) : à concevoir par Game design, UX et Juridique, puis à soumettre au porteur. Limite déjà connue : un test solo ne peut pas montrer que de vrais proches reviennent chaque soir et en parlent ; il teste les règles, la boucle et le plaisir de deviner.
+
+### D-008 — Pas de règle d'arrêt fixée d'avance · Décidé
+
+La décision de continuer, d'ajuster ou d'arrêter se prend au bilan du test, sans règle fixée d'avance (proposition du Vérificateur « deux prototypes ratés, on arrête » refusée).
+
+L'ordre de travail proposé par la feuille de route (règles, test, puis conception avec le design, puis construction ; change le §0) n'est pas encore validé.
+
 ### C-001 — Le « pourquoi » reste cadré · Constaté
 
 Le « pourquoi » passe uniquement par ce qui est validé : choix d'une considération parmi 4 arguments réels de députés (§2), réponse à considération masquée (§2), révélation de l'auteur de l'argument à 18h (§2). La question quotidienne « d'où vient ta conviction » reste écartée (§10). Toute proposition de « pourquoi » plus profond rouvrirait le §10 et devrait être tranchée explicitement par le porteur.
