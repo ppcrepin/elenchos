@@ -290,9 +290,15 @@ Tout ce qui est en « vous » vit hors du téléphone : fond neutre, sans ronds 
 
 ### 8.2 Barre, fiche « Qui est qui » et premier message
 
-- Barre permanente : « Jour 3 sur 14 · mercredi » (« Entrée » à la séance 0, « Clôture » à la séance 15), un bouton « Qui est qui ? », le bouton « Jour suivant » en fin de séance.
+- Barre permanente : « Jour 3 sur 14 · mercredi » (« Entrée » à la séance 0, « Clôture » à la séance 15) ; juste après, le lien discret « Arrêter l'essai » (§8.10) ; un bouton « Qui est qui ? » ; le bouton « Jour suivant » en fin de séance, toujours actif, jamais à côté de « Arrêter l'essai ».
+- « Jour suivant » alors que la journée n'est pas finie : confirmation dans le cadre, « Passer au jour suivant sans répondre ? » (ou « sans finir de deviner ? », ou « sans finir de deviner ni répondre ? ») ; « Ce que vous n'avez pas fait aujourd'hui restera ainsi : vous ne pourrez pas y revenir. » ; « Annuler » · « Passer », même poids visuel. Une position sans raison compte comme pas de réponse. Les conséquences ne sont pas listées : le porteur les découvre comme un vrai joueur. Ensuite : le texte reste sans réponse du porteur (pas de phrase du jour, pas de ligne dans l'Historique, Le Fidèle perdu pour la semaine, les personnages devinent sans sa carte) ; les cartes non attribuées comptent comme passées. La partie témoin (a) couvre ce cas.
 - Une fois, à la séance 1 : « Dans l'essai, pas besoin d'attendre 18h : passez au jour suivant quand vous voulez. » Le compte à rebours reste affiché dans le téléphone : c'est l'écran testé.
-- Une fois, au début de la séance 0 : « Vos réponses restent dans ce navigateur : personne d'autre ne les voit, l'équipe non plus. Pour que cela reste vrai : jouez sur un appareil à vous, toujours dans le même navigateur ; si vous envoyez une capture d'écran à l'équipe, évitez Répondre, la carte des auteurs, Moi et vos phrases, qui montrent vos réponses ; dans la conversation, parlez du jeu, pas de vos réponses. » (Juridique)
+- Une fois, au début de la séance 0 (texte de Juridique, réécrit par UX sans en changer le sens : la liste d'écrans, encore inconnus du porteur à ce moment, devient une règle) :
+  « Vos réponses restent dans ce navigateur : personne d'autre ne les voit, l'équipe non plus. En pratique :
+  - Jouez sur un appareil à vous, toujours dans le même navigateur, et pas en navigation privée : elle oublie tout à la fermeture.
+  - Sur un appareil Apple, ne restez pas plus de sept jours sans revenir sur la page : au-delà, l'avancement peut s'effacer.
+  - Si un jour la page repart du début alors que vous aviez commencé, ne rejouez pas : dites-le dans la conversation.
+  - Dans la conversation et sur vos captures d'écran, parlez du jeu, pas de vos réponses ni de ce que le jeu en dit (vos phrases, votre portrait). »
 - La fiche s'ouvre d'elle-même une fois, au début de la séance 0, avant le message d'Agathe ; ensuite, par le bouton seulement, jamais depuis Le Cercle. Ouverte depuis Le Cercle, elle passerait pour une fonction du produit, qui ne montre jamais l'âge, le métier ou la ville d'un proche.
 - En-tête : « Qui est qui · fiche d'essai. Hors application. Dans le vrai jeu, il n'y a pas de fiche : vos proches, vous les connaissez déjà. Ces quatre personnes sont inventées. »
 - Une carte par personne, dans l'ordre des visages. Exemple : « Agathe, 46 ans · sage-femme, Rennes. Travaille de nuit une semaine sur deux ; le reste du temps, elle chante dans une chorale de quartier. Joue d'habitude vers 7h40. C'est elle qui vous invite. »
@@ -339,7 +345,7 @@ F1 et F2 ne disent rien des opinions du porteur : F1 porte sur des personnes inv
 
 ### 8.7 Export
 
-Un seul export, « Copier mon carnet » (D-016), proposé à la clôture et dans la confirmation de « Tout effacer » (« Copier mon carnet d'abord ») : le carnet, les mesures et agrégats du §8.4, F1 et F2, rien d'autre. Jamais une position, une raison, une phrase du jour ou de la semaine, un curseur ni le pseudo du porteur. Dans les deux cas, le texte copié s'affiche en entier avant la copie : le porteur voit ce qu'il donne. Après la copie : « Carnet copié : collez-le dans la conversation. » Aucun autre export. Dans le dépôt n'entre que ce carnet ; une réponse que le porteur citerait dans la conversation n'y entre jamais.
+Un seul export, « Copier mon carnet » (D-016), proposé à la clôture, dans le parcours « Arrêter l'essai » et dans la confirmation de « Tout effacer » (« Copier mon carnet d'abord ») : le carnet, les mesures et agrégats du §8.4, F1 et F2, rien d'autre. Jamais une position, une raison, une phrase du jour ou de la semaine, un curseur ni le pseudo du porteur. Dans tous les cas, le texte copié s'affiche en entier avant la copie : le porteur voit ce qu'il donne. Il se termine toujours par une ligne « Fin du carnet ». Après la copie : « Carnet copié : collez-le dans la conversation. » Si le navigateur refuse la copie automatique, le texte reste affiché dans une zone sélectionnable (avec « Tout sélectionner ») : « La copie automatique n'a pas fonctionné. Sélectionnez tout le texte ci-dessous, jusqu'à « Fin du carnet », copiez-le, puis collez-le dans la conversation. » Aucun autre export. Dans le dépôt n'entre que ce carnet ; une réponse que le porteur citerait dans la conversation n'y entre jamais.
 
 ### 8.8 Ce que la page garde, et où
 
@@ -358,7 +364,24 @@ La carte de consentement validée (1.3) promet « Tu peux tout effacer, quand tu
 - **Confirmation pendant l'essai**, dans le cadre : « Tout effacer ? » ; « Vos réponses, votre carnet et votre avancement seront supprimés de ce navigateur. C'est définitif. Si vous recommencez, vous connaîtrez déjà les réponses des personnages : l'essai ne vaudra plus comme test. » ; boutons « Annuler » (mis en avant) · « Copier mon carnet d'abord » (le même export, pas un second) · « Tout effacer ».
 - **À la clôture** : « Une fois votre carnet copié, vous pouvez tout effacer de ce navigateur. » ; confirmation « Tout effacer ? Vos réponses et votre carnet seront supprimés de ce navigateur. C'est définitif. » · « Annuler » · « Tout effacer ».
 - **Après** : « Tout est effacé de ce navigateur. »
-- **« Qui, durée, droits »** (1.3 et 5.7) ouvre une note dans le cadre : « Version d'essai : cette page sera écrite avant le lancement et relue par un avocat. Dans l'essai, vos réponses ne quittent pas ce navigateur ; « Tout effacer » (dans Moi, la roue dentée) les supprime. »
+- **« Qui, durée, droits »** (1.3 et 5.7) ouvre une note dans le cadre :
+  « Version d'essai. La vraie page sera écrite avant le lancement et relue par un avocat.
+  Qui voit vos réponses : personne d'autre que vous. Elles restent dans ce navigateur ; la page n'envoie rien.
+  Durée : jusqu'à ce que vous les effaciez. Le navigateur peut aussi les perdre : en navigation privée, ou sur un appareil Apple après sept jours sans visite.
+  Droits : « Tout effacer » (dans Moi, la roue dentée) les supprime, quand vous voulez. »
+
+### 8.10 Arrêter l'essai avant la fin
+
+Le porteur peut s'arrêter quand il veut (D-008 : aucune règle d'arrêt fixée d'avance). L'arrêt est possible de l'entrée au jour 14 ; il est définitif ; il n'est jamais suggéré.
+
+- **Confirmation** : « Arrêter l'essai ? » / « Ensuite : quelques questions, votre carnet à copier, puis le dévoilement. C'est définitif : l'essai ne pourra pas reprendre. » ; « Annuler » · « Arrêter l'essai », même poids visuel, « Annuler » en premier.
+- **Questions** : en tête, « Essai arrêté au jour 6. » (« Essai arrêté à l'entrée. » à la séance 0). « Vous arrêtez surtout parce que : » Je ne m'amuse pas · Je ne comprends pas tout · Je n'ai pas le temps · J'ai vu ce que je voulais voir · Autre raison. Dès le jour 3, dessous, F2 : « Jusqu'ici, deviner était : » et ses quatre choix. « Continuer », toujours actif : rien n'est obligatoire. Pas de champ de texte libre : une réponse politique pourrait s'y glisser.
+- **F1, dès le jour 3, facultatif** : « Facultatif, environ une minute. Où placez-vous chacun ? D'après ce que vous avez vu. Même si vous hésitez, choisissez. » ; « Continuer » · « Passer ».
+- **Export** (§8.7) : le carnet porte le jour d'arrêt et la raison. Dessous : « Voir le dévoilement ».
+- **Dévoilement** (§8.6), d'un toucher ; le corrigé de F1 n'apparaît que si F1 a été rempli.
+- **Effacement** : mêmes textes qu'à la clôture (§8.9).
+- **Après** : la barre affiche seulement « Essai arrêté au jour 6 ». Rouverte, la page reprend ce parcours là où il en était, jamais le jeu.
+- Pourquoi l'export avant le dévoilement : après le dévoilement, on ferme la page ; le carnet doit être copié avant. Pourquoi « définitif » : le dévoilement et le carnet final closent l'essai. Pourquoi le seuil du jour 3 : avant, il n'y a eu qu'une ou deux manches de Deviner, F2 n'a pas de tendance à dire et F1 n'a pas de matière.
 
 ## 9. Ce qui est contrôlé
 
@@ -434,7 +457,7 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 
 **Dans le téléphone, seuls les noms changent :** prénoms, « Amis », vrais textes, vrais députés, groupes et votes ; « Tu as rejoint Amis. », « Agathe te lance un défi », « Les titres de la semaine · Amis », « {Pseudo} décroche Le Sans-Faute. », « toi@exemple.fr » ; élisions et accords (§7.6).
 
-**Dans le cadre, tout est nouveau :** la barre, la note sur 18h et le message de la séance 0 (§8.2) ; la fiche « Qui est qui » ; « Pas dans l'essai. » ; la note du compte simulé ; la note « Qui, durée, droits » ; le carnet ; la note du texte 14, « Continuer », « L'essai est fini. Deux questions, puis le dévoilement. » ; F2 et F1 ; le dévoilement ; « Copier mon carnet », « Carnet copié : collez-le dans la conversation. » ; les textes d'effacement (§8.9).
+**Dans le cadre, tout est nouveau :** la barre, « Arrêter l'essai » et son parcours (§8.10), la confirmation de « Jour suivant », la note sur 18h et le message de la séance 0 (§8.2) ; la fiche « Qui est qui » ; « Pas dans l'essai. » ; la note du compte simulé ; la note « Qui, durée, droits » ; le carnet ; la note du texte 14, « Continuer », « L'essai est fini. Deux questions, puis le dévoilement. » ; F2 et F1 ; le dévoilement ; « Copier mon carnet », « Carnet copié : collez-le dans la conversation. », la consigne de copie manuelle et « Fin du carnet » ; les textes d'effacement (§8.9).
 
 ## Décisions touchées, conventions et constats
 
@@ -456,6 +479,7 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 - personnages qui ne passent jamais ;
 - pas de message de 18h aux séances 2 et 15 ; « Nouveau texte dans … » à la séance 1 (la variante que D-011 liait aux cercles de moins de trois membres sert ici pour un jour sans révélation) ;
 - compte simulé, pseudo tapé ;
+- arrêt possible à tout moment par « Arrêter l'essai » (§8.10) ; « Jour suivant » toujours actif, avec confirmation si la journée n'est pas finie ;
 - écrans absents et croix des révélations signalés par « Pas dans l'essai. » (§7.1) ; son propre visage ne réagit pas ; « Tout effacer » actif ; « Qui, durée, droits » ouvre une note dans le cadre, au lieu de la page d'information prévue en 1.3 ;
 - écran d'un proche (4.3) : la raison toujours écrite sur les lignes de « Ses surprises » ;
 - fiche « Qui est qui » et cadre de l'essai hors du téléphone ;
@@ -470,6 +494,7 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 - Le Pas de Côté : penchant clair à |c − 0,5| ≥ 0,2 ;
 - « inattendue de la part de son auteur » : lecture provisoire (C-009 ; détail dans `a-ne-pas-ouvrir/regles-de-calcul.md`) ;
 - « Ses surprises » (4.3) : textes d'entrée exclus (D-010 ne fixe pas cette limite) ;
+- cartes non attribuées quand le porteur passe au jour suivant : comptées comme passées ;
 - cartes identiques servies ensemble : auteurs redistribués (C-010) ;
 - phrase de la semaine : tension retenue par la plus grande différence entre les poids de ses pôles (C-008).
 
@@ -480,6 +505,8 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 - Agrégats du carnet : le Vérificateur les voulait tous globaux ; Juridique garde par séance ce que le porteur fait (pas ce qu'il répond). Retenu : Juridique.
 - Pseudo : le Vérificateur proposait « Toi » ; UX fait taper un pseudo, comme les maquettes (« Toi » casserait « Toi décroche Le Sans-Faute. »). Retenu : UX.
 - Confirmation de « Tout effacer » : Juridique la proposait dans le téléphone, en « tu » ; UX dans le cadre, en « vous », parce que ce qu'on perd ici est l'essai lui-même et que le texte du produit reste à écrire avec Juridique. Retenu : UX ; sa confirmation dit aussi, comme le demandait Juridique, que le carnet est effacé, et propose de le copier d'abord.
+- Arrêt avant la fin : le Vérificateur proposait « Je m'ennuie » parmi les raisons et justifiait le caractère définitif par « vous connaissez déjà une partie des réponses » ; UX remplace par des raisons qui parlent du jeu, ajoute « J'ai vu ce que je voulais voir » (sans quoi toute raison serait un échec, contre D-008), et corrige la justification (connaître les réponses révélées fait partie du jeu ; ce qui clôt l'essai, c'est le dévoilement). Retenu : UX.
+- Question « Envie de jouer demain ? » : proposée par le Vérificateur ; UX la déconseille (dans l'essai, « demain » est à un toucher ; intention déclarée, mesure faible ; met l'idée d'arrêter en tête ; un tiers de charge en plus). Retenu : pas de question ; la date et l'heure de chaque séance mesurent le rythme réel (§8.4).
 - « Qui, durée, droits » : Juridique proposait trois lignes dans le téléphone ; UX une note dans le cadre, pour ne pas écrire un texte de produit non validé. Retenu : la note dans le cadre (UX), avec la mention de l'avocat (Juridique).
 
 **Manques du produit, ouverts dans `docs/decisions.md` :** C-007 à C-016. Deux points relevés dans la première version ne sont pas des manques : les curseurs des autres limités aux réponses déjà révélées découlent de D-010 (lecture A) ; Le Fidèle dans une semaine incomplète est tranché par la lettre de la règle 12 (« les sept jours »), et c'est l'essai qui s'en écarte, par convention.
