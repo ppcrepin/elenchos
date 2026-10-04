@@ -1,0 +1,658 @@
+<title>Maquettes finales Elenchos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,700;1,500;1,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Mise en page : un téléphone en fil de fer, à côté de ses annotations au crayon bleu (le bleu non photographique des planches de dessin). */
+:root {
+  --page: #eef0ee;
+  --screen: #ffffff;
+  --ink: #1c1d1f;
+  --muted: #676a67;
+  --line: #c4c7c3;
+  --fill: #e6e8e5;
+  --hatch: #9a9e99;
+  --shade: rgba(28, 29, 31, 0.22);
+  --blue: #23729c;
+  --font-ui: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-note: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #141516; --screen: #1d1e20; --ink: #ebece9; --muted: #a3a6a2;
+    --line: #3d3f41; --fill: #2b2d2f; --hatch: #74787a; --shade: rgba(0, 0, 0, 0.6); --blue: #86c4e6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --page: #141516; --screen: #1d1e20; --ink: #ebece9; --muted: #a3a6a2;
+  --line: #3d3f41; --fill: #2b2d2f; --hatch: #74787a; --shade: rgba(0, 0, 0, 0.6); --blue: #86c4e6;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--page); color: var(--ink); font-family: var(--font-ui); font-size: 15px; line-height: 1.45; }
+.wrap { max-width: 1040px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 48px; display: grid; gap: 16px; }
+h1 { font-size: 1.55rem; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+.lede { margin: 0; max-width: 62ch; color: var(--muted); }
+.lede strong { color: var(--ink); }
+.chapters { display: flex; flex-wrap: wrap; gap: 6px; }
+.chapters button { font: inherit; font-size: 0.9rem; border: 1px solid var(--line); background: var(--screen); color: var(--ink); border-radius: 999px; padding: 8px 13px; cursor: pointer; }
+.chapters button[aria-pressed="true"] { background: var(--ink); color: var(--screen); border-color: var(--ink); }
+button:focus-visible, select:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.chapter-sub { margin: -4px 0 0; color: var(--muted); font-size: 0.92rem; }
+.stage { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 24px; align-items: start; }
+@media (max-width: 760px) { .stage { grid-template-columns: minmax(0, 1fr); } }
+.nav { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+.nav button { font: inherit; font-size: 1.1rem; min-width: 44px; min-height: 44px; border: 1px solid var(--line); background: var(--screen); color: var(--ink); border-radius: 8px; cursor: pointer; }
+.nav button:disabled { opacity: 0.4; cursor: default; }
+.nav select { font: inherit; font-size: 0.88rem; min-width: 0; min-height: 44px; flex: 1 1 180px; border: 1px solid var(--line); background: var(--screen); color: var(--ink); border-radius: 8px; padding: 6px 8px; }
+.count { font-family: var(--font-note); font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* Le téléphone */
+.phone { width: 100%; max-width: 380px; height: clamp(560px, 78vh, 740px); border: 2px solid var(--ink); border-radius: 34px; background: var(--screen); padding: 10px 8px; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+.statusbar { display: flex; justify-content: space-between; font-family: var(--font-note); font-size: 0.72rem; color: var(--muted); padding: 2px 14px 6px; }
+.body { flex: 1; overflow-y: auto; padding: 4px 14px 12px; display: flex; flex-direction: column; gap: 10px;
+  background:
+    linear-gradient(var(--screen) 30%, transparent) center top,
+    linear-gradient(transparent, var(--screen) 70%) center bottom,
+    radial-gradient(farthest-side at 50% 0, var(--shade), transparent) center top,
+    radial-gradient(farthest-side at 50% 100%, var(--shade), transparent) center bottom;
+  background-repeat: no-repeat;
+  background-size: 100% 36px, 100% 36px, 100% 12px, 100% 12px;
+  background-attachment: local, local, scroll, scroll; }
+.bottom { padding: 8px 14px 4px; display: grid; gap: 8px; }
+.btn1 { font: inherit; font-weight: 700; width: 100%; background: var(--ink); color: var(--screen); border: 0; border-radius: 10px; padding: 12px; cursor: pointer; }
+.btn2 { font: inherit; width: 100%; background: transparent; color: var(--ink); border: 1.5px solid var(--ink); border-radius: 10px; padding: 9px; cursor: pointer; text-align: center; }
+.link, .plain { font: inherit; background: none; border: 0; padding: 0; color: var(--ink); text-align: left; cursor: pointer; }
+.link { text-decoration: underline; text-underline-offset: 3px; }
+span.link { cursor: default; }
+.tabbar { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); padding-top: 8px; margin-top: 2px; }
+.tab { font: inherit; background: none; border: 0; cursor: pointer; display: grid; justify-items: center; gap: 3px; font-size: 0.78rem; color: var(--muted); }
+.tab::before { content: ""; width: 18px; height: 18px; border: 1.5px solid currentColor; border-radius: 4px; }
+.tab.on { color: var(--ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.hd { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.hd .plain:first-child, .hd b { font-size: 1.15rem; font-weight: 700; }
+.hd .right { font-size: 0.9rem; text-decoration: underline; text-underline-offset: 3px; }
+.back { font-size: 0.9rem; }
+.close { position: absolute; top: 30px; right: 16px; font: inherit; font-size: 1.4rem; line-height: 1; background: none; border: 0; color: var(--ink); cursor: pointer; padding: 6px; }
+.band { background: var(--fill); border-radius: 6px; padding: 5px 10px; font-size: 0.8rem; font-weight: 700; }
+.banner { background: var(--fill); border-radius: 8px; padding: 10px 12px; font-size: 0.9rem; }
+.label { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.ttl { font-size: 1.12rem; font-weight: 700; line-height: 1.25; text-wrap: balance; }
+.lines { display: grid; gap: 2px; font-size: 0.92rem; }
+.q { font-weight: 700; font-size: 1rem; }
+.small { font-size: 0.82rem; color: var(--muted); }
+.p { font-size: 0.93rem; }
+.big { font-size: 1.7rem; font-weight: 700; line-height: 1.15; text-wrap: balance; }
+.huge { font-size: 3rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.rule { border: 0; border-top: 1px solid var(--line); margin: 2px 0; width: 100%; }
+.opts { display: grid; gap: 6px; }
+.opt { border: 1.5px solid var(--line); border-radius: 8px; padding: 9px 10px; font-size: 0.92rem; }
+.opt.on { background: var(--ink); color: var(--screen); border-color: var(--ink); }
+.opt.gap { margin-top: 6px; }
+.box { border: 1.5px solid var(--line); border-radius: 10px; padding: 10px; display: grid; gap: 8px; }
+.faces { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; }
+.face { font: inherit; color: var(--ink); background: none; border: 0; padding: 0; display: grid; justify-items: center; gap: 2px; font-size: 0.72rem; max-width: 64px; text-align: center; }
+button.face { cursor: pointer; }
+.dot { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--ink); display: grid; place-items: center; font-weight: 700; }
+.face.L { max-width: 130px; }
+.face.L .dot { width: 64px; height: 64px; font-size: 1.5rem; }
+.face.S .dot { width: 34px; height: 34px; font-size: 0.85rem; }
+.face.on .dot { background: var(--ink); color: var(--screen); }
+.face.off { opacity: 0.35; }
+.face.ghost .dot { border-style: dashed; color: var(--muted); }
+.face .cap { color: var(--muted); font-size: 0.68rem; line-height: 1.2; }
+.guess { border: 1.5px solid var(--line); border-radius: 10px; padding: 10px; display: grid; gap: 8px; }
+.guess .ans { font-size: 0.92rem; font-weight: 700; }
+.guess .why { font-style: italic; font-size: 0.85rem; }
+.guess .row { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.guess .faces { gap: 8px; }
+.guess.passed { opacity: 0.6; }
+.slider { display: grid; gap: 4px; }
+.poles { display: flex; justify-content: space-between; gap: 8px; font-size: 0.72rem; color: var(--muted); }
+.track { position: relative; height: 18px; }
+.track::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 1.5px solid var(--ink); }
+.haze { position: absolute; top: 2px; bottom: 2px; border-radius: 3px; background: repeating-linear-gradient(45deg, var(--hatch) 0 1.5px, transparent 1.5px 6px); }
+.haze.rev { background: repeating-linear-gradient(-45deg, var(--hatch) 0 1px, transparent 1px 7px); opacity: 0.8; }
+.pt { position: absolute; top: 50%; width: 13px; height: 13px; border-radius: 50%; background: var(--ink); transform: translate(-50%, -50%); }
+.pt.hollow { background: var(--screen); border: 2px solid var(--ink); }
+.ini { position: absolute; top: 50%; width: 22px; height: 22px; border-radius: 50%; background: var(--screen); border: 1.5px solid var(--ink); transform: translate(-50%, -50%); font-size: 0.65rem; font-weight: 700; display: grid; place-items: center; }
+.steps { display: flex; gap: 14px; font-size: 0.82rem; color: var(--muted); }
+.steps .on { color: var(--ink); font-weight: 700; }
+.steps .strike { text-decoration: line-through; }
+.dots { display: flex; gap: 5px; justify-content: center; padding-top: 2px; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; border: 1px solid var(--ink); }
+.dots i.on { background: var(--ink); }
+.field { display: grid; gap: 4px; font-size: 0.8rem; color: var(--muted); }
+.field div { border: 1.5px solid var(--line); border-radius: 8px; padding: 9px 10px; color: var(--ink); font-size: 0.95rem; }
+.code { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+.code div { aspect-ratio: 3 / 4; border: 1.5px solid var(--line); border-radius: 6px; max-width: 100%; }
+.quote { border-left: 3px solid var(--ink); padding: 4px 0 4px 10px; font-size: 0.92rem; }
+.listrow { display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px solid var(--line); padding: 7px 0; font-size: 0.88rem; }
+.listrow span { min-width: 0; }
+.listrow span:last-child { color: var(--muted); text-align: right; }
+.subtabs { display: flex; gap: 14px; font-size: 0.86rem; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+.subtabs .on { color: var(--ink); font-weight: 700; }
+.toggle { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
+.toggle i { width: 38px; height: 22px; border-radius: 11px; border: 1.5px solid var(--ink); position: relative; flex: none; }
+.toggle i::after { content: ""; position: absolute; right: 2px; top: 2px; width: 15px; height: 15px; border-radius: 50%; background: var(--ink); }
+.chat-hd { font-weight: 700; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+.bubble { background: var(--fill); border-radius: 14px 14px 14px 4px; padding: 10px 12px; max-width: 88%; font-size: 0.92rem; }
+.preview { font: inherit; color: var(--ink); background: none; border: 1.5px solid var(--ink); border-radius: 10px; padding: 10px; max-width: 88%; font-size: 0.86rem; cursor: pointer; display: grid; gap: 2px; text-align: left; }
+.lock { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 30px 14px; gap: 6px; background: var(--fill); border-radius: 26px; }
+.lock .clock { font-size: 3.4rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.notif { margin-top: 26px; width: 100%; background: var(--screen); border-radius: 14px; padding: 10px 12px; display: grid; gap: 4px; cursor: pointer; text-align: left; font: inherit; color: var(--ink); border: 0; }
+.notif .meta { display: flex; gap: 8px; align-items: center; font-size: 0.74rem; color: var(--muted); }
+.notif .meta i { width: 18px; height: 18px; border: 1.5px solid var(--ink); border-radius: 4px; font-style: normal; font-size: 0.55rem; display: grid; place-items: center; color: var(--ink); }
+.dim { height: 70px; flex: none; background: repeating-linear-gradient(45deg, var(--fill) 0 6px, transparent 6px 12px); border-radius: 8px; display: grid; place-items: center; font-size: 0.75rem; color: var(--muted); }
+.grab { width: 38px; height: 4px; border-radius: 2px; background: var(--line); margin: 0 auto 4px; flex: none; }
+
+/* Les annotations */
+.notes { display: grid; gap: 14px; }
+.code-id { font-family: var(--font-note); font-size: 0.8rem; color: var(--blue); }
+.notes h2 { margin: 2px 0 0; font-size: 1.3rem; text-wrap: balance; }
+.note { display: grid; gap: 4px; max-width: 60ch; }
+.note .k { font-family: var(--font-note); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.note ul { margin: 0; padding-left: 1.1em; display: grid; gap: 3px; }
+.note.never { border-left: 3px solid var(--blue); padding-left: 12px; }
+.note.never .k { color: var(--blue); }
+.goto { font: inherit; background: none; border: 0; padding: 0; color: var(--blue); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+/* Ce qui change */
+.changes { border-top: 1px solid var(--line); padding-top: 18px; display: grid; gap: 12px; }
+.changes h2 { margin: 0; font-size: 1.15rem; }
+.changes > p { margin: 0; max-width: 62ch; color: var(--muted); font-size: 0.92rem; }
+.change { display: grid; gap: 6px; max-width: 72ch; }
+.change b { font-size: 0.95rem; }
+.ba { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 10px; font-size: 0.9rem; }
+.ba .k { font-family: var(--font-note); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding-top: 2px; }
+.ba .after { color: var(--ink); }
+.ba .before { color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1px; }
+
+/* ---------- Univers La Tablée (D-012), appliqué au téléphone seulement ---------- */
+.phone { --screen: #F2EEE8; --ink: #2A211C; --muted: #6B5F57; --line: rgba(42, 33, 28, 0.18); --fill: #FFFFFF; --hatch: #6B5F57; --caramel: #8A5714; --honey: #E9B45A; --btn-bg: #2A211C; --btn-fg: #F2EEE8; --shadow: rgba(42, 33, 28, 0.09);
+  --ft: "Alegreya", Georgia, serif; --fb: "Alegreya Sans", "Trebuchet MS", system-ui, sans-serif;
+  font-family: var(--fb); font-size: 16px; color: var(--ink); }
+.phone.evening { --screen: #1C1612; --ink: #F2ECE3; --muted: #B8ACA2; --line: rgba(242, 236, 227, 0.18); --fill: #29211B; --hatch: #B8ACA2; --caramel: #E9B45A; --honey: rgba(233, 180, 90, 0.25); --btn-bg: #E9B45A; --btn-fg: #1C1612; --shadow: rgba(0, 0, 0, 0.4); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .phone { --screen: #1C1612; --ink: #F2ECE3; --muted: #B8ACA2; --line: rgba(242, 236, 227, 0.18); --fill: #29211B; --hatch: #B8ACA2; --caramel: #E9B45A; --honey: rgba(233, 180, 90, 0.25); --btn-bg: #E9B45A; --btn-fg: #1C1612; --shadow: rgba(0, 0, 0, 0.4); } }
+:root[data-theme="dark"] .phone { --screen: #1C1612; --ink: #F2ECE3; --muted: #B8ACA2; --line: rgba(242, 236, 227, 0.18); --fill: #29211B; --hatch: #B8ACA2; --caramel: #E9B45A; --honey: rgba(233, 180, 90, 0.25); --btn-bg: #E9B45A; --btn-fg: #1C1612; --shadow: rgba(0, 0, 0, 0.4); }
+.phone .ttl, .phone .big, .phone .huge, .phone .hd b, .phone .hd .plain:first-child, .phone .chat-hd { font-family: var(--ft); font-weight: 700; }
+.phone .ttl { font-size: 1.3rem; }
+.phone .big { font-size: 1.8rem; }
+.phone .hd b, .phone .hd .plain:first-child { font-size: 1.3rem; }
+.phone .p, .phone .lines, .phone .opt { font-size: 1rem; }
+.phone .small { font-size: 0.85rem; }
+.phone .btn1 { background: var(--btn-bg); color: var(--btn-fg); border-radius: 12px; font-family: var(--fb); }
+.phone .btn2 { border-radius: 12px; }
+.phone .opt { background: var(--fill); border: 1px solid var(--line); border-radius: 12px; }
+.phone .opt.on { background: var(--ink); color: var(--screen); border-color: var(--ink); }
+.phone .band { background: transparent; border-radius: 0; border-top: 6px double var(--caramel); padding: 6px 0 0; color: var(--muted); }
+.phone .banner, .phone .box, .phone .guess { background: var(--fill); border: 0; border-top: 6px double var(--caramel); border-radius: 14px; box-shadow: 0 1px 2px var(--shadow), 0 6px 16px var(--shadow); }
+.phone .dot { border: 4px double var(--ink); background: var(--fill); font-family: var(--ft); font-style: italic; font-weight: 500; }
+.phone .face.on .dot { background: var(--ink); color: var(--screen); }
+.phone .face.L .dot { font-size: 1.7rem; }
+.phone .haze { top: 4px; bottom: auto; height: 10px; border-radius: 6px; background: linear-gradient(90deg, transparent, var(--honey) 22%, var(--caramel) 50%, var(--honey) 78%, transparent); }
+.phone .haze.rev { height: 8px; top: 5px; background: repeating-linear-gradient(-45deg, var(--hatch) 0 1px, transparent 1px 4px); opacity: 1; -webkit-mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent); mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent); }
+.phone .pt { width: 12px; height: 12px; }
+.phone .pt.hollow { width: 15px; height: 15px; background: var(--fill); border: 4px double var(--ink); }
+.phone .ini { border: 3px double var(--ink); background: var(--fill); font-family: var(--ft); font-style: italic; width: 24px; height: 24px; }
+.phone .tab::before { border-radius: 50%; border: 3px double currentColor; }
+.phone.evening .body { background: radial-gradient(circle at 50% 42%, rgba(233, 180, 90, 0.38), transparent 60%); }
+.phone.evening .face.L .dot { background: #F2EEE8; color: #2A211C; border-color: #2A211C; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45); }
+.phone .lock { background: var(--fill); }
+.phone .notif .meta i { border-radius: 50%; border: 3px double var(--ink); font-family: var(--ft); font-style: italic; font-size: 0.7rem; }
+.phone .preview { border-radius: 12px; }
+@media (prefers-reduced-motion: no-preference) { .phone .body { scroll-behavior: smooth; } }
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:10px">
+    <h1>Maquettes finales : Elenchos, univers La Tablée</h1>
+    <p class="lede"><strong>Vos 51 écrans validés, habillés dans l'univers choisi, avec le nom Elenchos et le ton de La Tablée.</strong> Rien d'autre ne change : mêmes écrans, mêmes règles. Prénoms, textes et députés sont fictifs. Le logo viendra plus tard, avec un graphiste. En bas de page : les phrases qui changent avec le ton, à valider une par une.</p>
+  </header>
+
+  <nav class="chapters" id="chapters" aria-label="Journées"></nav>
+  <p class="chapter-sub" id="chapterSub"></p>
+
+  <div class="stage">
+    <div>
+      <div class="nav">
+        <button type="button" id="prev" aria-label="Écran précédent">←</button>
+        <button type="button" id="next" aria-label="Écran suivant">→</button>
+        <span class="count" id="count"></span>
+        <select id="pick" aria-label="Aller à un écran"></select>
+      </div>
+      <div class="phone" id="phone" aria-live="polite"></div>
+    </div>
+    <section class="notes" id="notes" aria-label="Annotations"></section>
+  </div>
+
+  <section class="changes" aria-labelledby="chg">
+    <h2 id="chg">Les phrases qui changent avec La Tablée</h2>
+    <p>Le ton vient avec l'univers (D-012). Voici chaque phrase modifiée, avant et après ; tout le reste est identique aux maquettes validées.</p>
+    <div class="change"><b>1. Le message de 18h</b> (écrans 2.6 et 3.1)
+      <div class="ba"><span class="k">Avant</span><span class="before">« 18h. Qui avait dit quoi ? La révélation d'hier t'attend, et la question d'aujourd'hui. »</span><span class="k">Après</span><span class="after">« 18h, la table est mise. Qui avait dit quoi ? La révélation d'hier t'attend, et la question d'aujourd'hui. »</span></div></div>
+    <div class="change"><b>2. Quand on s'est trompé</b> (écrans 1.6 et 2.7a)
+      <div class="ba"><span class="k">Avant</span><span class="before">« Surprise ! »</span><span class="k">Après</span><span class="after">« Ça alors ! »</span></div></div>
+    <div class="change"><b>3. Quand on a vu juste</b> (écran 1.6, texte suivant)
+      <div class="ba"><span class="k">Avant</span><span class="before">« Bien vu ! »</span><span class="k">Après</span><span class="after">« Tu connais ton monde. »</span></div></div>
+    <div class="change"><b>4. Quand on a vu juste, raison comprise</b> (écran 2.7b)
+      <div class="ba"><span class="k">Avant</span><span class="before">« Bien vu ! Et la raison aussi. »</span><span class="k">Après</span><span class="after">« Tu connais ton monde, et ses raisons. »</span></div></div>
+    <div class="change"><b>5. Le nom</b> (partout)
+      <div class="ba"><span class="k">Avant</span><span class="before">« [Nom] »</span><span class="k">Après</span><span class="after">« Elenchos » (nom de travail, D-013)</span></div></div>
+    <p>Restent identiques : l'invitation « Tu crois me connaître ? … », « Rien à deviner aujourd'hui. », et toutes les autres phrases.</p>
+  </section>
+</div>
+
+<script>
+var POS = ["Très défavorable", "Défavorable", "Neutre", "Favorable", "Très favorable"];
+var NAMES = { T: "Thomas", M: "Marie", H: "Hugo", P: "Paul", I: "Inès", L: "Lou", S: "Sam", N: "Nora" };
+var CANTINE = ["« Aucun enfant ne devrait sauter le déjeuner. »", "« Ça coûte trop cher. »", "« C'est aux communes de décider. »", "« Les familles aisées n'en ont pas besoin. »"];
+var PORTABLE = ["« Les élèves apprennent mieux sans écran. »", "« C'est aux familles de décider. »", "« Ça protège du harcèlement entre élèves. »", "« Les jeunes doivent apprendre à s'en servir, pas à s'en passer. »"];
+var CAMERAS = ["« Les agents seraient prévenus plus vite. »", "« Être filmé partout change la façon de vivre. »", "« La machine se trompera, et ce seront des innocents. »", "« Ça aide à prévenir les attentats. »"];
+var T8 = [["Sécurité", "Liberté individuelle"], ["Égalité", "Mérite"], ["Solidarité collective", "Responsabilité individuelle"], ["Précaution", "Innovation"], ["Tradition", "Changement"], ["Souveraineté", "Ouverture"], ["État", "Marché"], ["Local", "National"]];
+var TABS = [["Aujourd'hui", "2.1"], ["Le Cercle", "4.2"], ["Moi", "4.1"]];
+
+var CHAPTERS = [
+  { id: "j1", name: "Le premier jour", sub: "Mardi 4 mars : Marie reçoit le défi de Thomas, entre dans le jeu, et le cercle se lance le soir avec Hugo." },
+  { id: "j2", name: "Un jour ordinaire", sub: "Jeudi 3 avril, un mois plus tard. Cercle « Famille » : Thomas, Marie, Hugo, Paul, Inès." },
+  { id: "j3", name: "Le dimanche", sub: "Dimanche 6 avril, 18h : la révélation, puis les titres de la semaine." },
+  { id: "j4", name: "Au bout de trois mois", sub: "Début juin : le portrait de Marie s'est précisé ; elle regarde le cercle, puis l'écran de Hugo." },
+  { id: "j5", name: "Autres écrans", sub: "L'entrée du créateur, Moi, la fiche d'un texte, les réglages, plusieurs cercles, les états vides, un lien déjà utilisé." }
+];
+
+var S = [
+  // ---------- Premier jour ----------
+  { id: "1.1", ch: "j1", name: "Le message de Thomas", kind: "chat", time: "12:02",
+    b: [["chathd", "Thomas"], ["bubble", "Tu crois me connaître ? J'ai répondu à 3 vraies questions de l'Assemblée. Devine ce que j'ai dit, 2 minutes."], ["preview", "Elenchos", "Thomas te lance un défi", "1.2"]],
+    when: "Mardi, 12h02, dans la messagerie de Marie. Ce n'est pas un écran du jeu : on le dessine pour planter le décor.",
+    to: ["Toucher le lien → premier texte (1.2).", "Si le lien a déjà servi → (5.14)."], never: ["Le service n'envoie jamais ce message : c'est Thomas qui l'envoie lui-même."] },
+  { id: "1.2", ch: "j1", name: "Premier texte : la position", time: "12:03",
+    b: [["band", "Défi de Thomas · Texte 1 sur 3"], ["small", "Réponds, puis devine ce qu'a dit Thomas."], ["label", "Un vrai texte de l'Assemblée nationale · auteur masqué"], ["title", "Portable interdit au collège et au lycée"], ["lines", ["Le téléphone serait interdit dans tout l'établissement, pauses comprises.", "Les élèves le déposeraient à l'entrée.", "Chaque établissement fixerait ses exceptions."]], ["q", "Ton avis ?"], ["pos", 3]],
+    p: { label: "Suivant", to: "1.3" },
+    when: "Marie ouvre le lien. C'est le tout premier écran : ni accueil, ni compte.",
+    to: ["Au premier toucher sur une position, la carte de consentement s'ouvre avant tout enregistrement (1.3).", "Puis « Suivant » → la raison (1.4)."], never: ["L'auteur, le groupe, la tension touchée, la moindre trace du vote."] },
+  { id: "1.3", ch: "j1", name: "Carte de consentement", time: "12:03",
+    b: [["back", "Retour au texte"], ["title", "Avant ta première réponse"], ["p", "Tes réponses révèlent tes opinions politiques. Elles servent au jeu : tes proches te devinent, ton portrait se dessine. Seul ton cercle les voit, elles ne sont jamais vendues. Tu peux tout effacer, quand tu veux. 15 ans et plus."], ["link", "Qui, durée, droits"]],
+    p: { label: "J'accepte", to: "1.4" },
+    when: "Une seule fois, au premier toucher sur une position, avant que la réponse soit enregistrée.",
+    to: ["« J'accepte » → retour au texte, la position déjà choisie, puis la raison (1.4).", "« Qui, durée, droits » → une page d'information (contenu à écrire avec Juridique)."], never: ["Une case précochée.", "Une demande d'identité ou d'e-mail."] },
+  { id: "1.4", ch: "j1", name: "Premier texte : la raison", time: "12:04",
+    b: [["back", "Changer ma position"], ["band", "Défi de Thomas · Texte 1 sur 3"], ["small", "Portable interdit au collège et au lycée · Ton avis : Favorable"], ["q", "Qu'est-ce qui a le plus pesé ?"], ["reasons", PORTABLE, 0], ["small", "Ta réponse sera définitive."]],
+    p: { label: "Valider", to: "1.5" },
+    when: "Juste après la position.",
+    to: ["« Valider » → deviner Thomas (1.5)."], never: ["Le député ou le groupe derrière chaque argument."] },
+  { id: "1.5", ch: "j1", name: "« Et Thomas ? »", time: "12:04",
+    b: [["band", "Défi de Thomas · Texte 1 sur 3"], ["faces", [["T", "Thomas", "", "L"]]], ["big", "Et Thomas ? Sa réponse ?"], ["small", "Portable interdit au collège et au lycée"], ["pos", 3]],
+    p: { label: "Voir sa réponse", to: "1.6" },
+    when: "Après la réponse de Marie au texte 1.",
+    to: ["« Voir sa réponse » → la révélation immédiate (1.6)."], never: ["La réponse de Marie, ni ici, ni à côté de celle de Thomas."] },
+  { id: "1.6", ch: "j1", name: "Révélation immédiate", time: "12:05",
+    b: [["band", "Texte 1 sur 3"], ["big", "Ça alors !"], ["p", "Ton pari : Favorable."], ["faceline", "T", "Thomas : Défavorable", "« C'est aux familles de décider. »"], ["rule"], ["p", "<b>L'Assemblée :</b> texte adopté."], ["p", "Proposé par Sophie Marchal, députée, [Groupe A]."], ["p", "Ta raison, « Les élèves apprennent mieux sans écran », était l'argument de Julien Barre, député, [Groupe B]."]],
+    p: { label: "Texte suivant", to: "1.7" },
+    when: "Aussitôt après la devinette. C'est juste si Marie trouve le bon côté (défavorable, neutre ou favorable), même sans le niveau exact ; le verdict est alors « Tu connais ton monde. » (Game design).",
+    to: ["Textes 2 et 3 (« Magasins ouverts le dimanche dans les grandes villes », « Deux mois de congé pour les pères ») : même chemin, Marie les devine juste. La maquette passe directement au bilan (1.7)."], never: ["La réponse de Marie à côté de celle de Thomas. « Ton pari » dit ce qu'elle a deviné, pas ce qu'elle pense."] },
+  { id: "1.7", ch: "j1", name: "Bilan d'entrée", time: "12:07",
+    b: [["huge", "2 sur 3"], ["p", "Tu as trouvé 2 réponses de Thomas sur 3."], ["rule"], ["label", "Ton portrait commence"], ["slider", 0, { w: 0.9, c: 0.5 }], ["slider", 2, { w: 0.9, c: 0.45 }], ["slider", 4, { w: 0.85, c: 0.5 }], ["small", "Chaque réponse les précise."]],
+    p: { label: "Créer mon compte", to: "1.8" },
+    when: "Après le troisième texte.",
+    to: ["« Créer mon compte » → pseudo et e-mail (1.8).", "Variante à 0 ou 1 sur 3 : « Thomas a réussi à te surprendre deux fois. »"], never: ["Une comparaison entre les réponses de Marie et celles de Thomas.", "Un chiffre sur le portrait."] },
+  { id: "1.8", ch: "j1", name: "Compte : pseudo et e-mail", time: "12:08",
+    b: [["p", "Pour que Thomas sache que c'était toi, et retrouver tes réponses demain : un pseudo, ton e-mail."], ["field", "Pseudo", "Marie"], ["field", "E-mail", "marie@exemple.fr"]],
+    p: { label: "Recevoir mon code", to: "1.9" },
+    when: "Après le bilan, jamais avant d'avoir joué.",
+    to: ["→ le code (1.9)."], never: ["Une connexion imposée par un compte Google ou Apple (D-006)."] },
+  { id: "1.9", ch: "j1", name: "Compte : le code", time: "12:08",
+    b: [["p", "Code envoyé à marie@exemple.fr"], ["code"], ["link", "Renvoyer le code"], ["link", "Plus tard"]],
+    p: { label: "Valider", to: "1.12" },
+    when: "Juste après l'e-mail.",
+    to: ["« Valider » → Aujourd'hui (1.12). La barre des trois onglets apparaît à partir de là.", "« Plus tard » : le jeu continue, le code sera demandé plus tard."], never: ["Un blocage du jeu tant que le code n'est pas saisi."] },
+  { id: "1.10", ch: "j1", name: "Ce que reçoit Thomas", kind: "lock", time: "12:09", day: "mardi 4 mars",
+    notif: "Marie a trouvé 2 de tes 3 réponses. À ton tour de deviner Marie.", nto: "1.11",
+    when: "Sur le téléphone de Thomas, juste après le compte de Marie. Seule exception au message unique de 18h, tant que le cercle a moins de trois membres (D-006).",
+    to: ["Toucher le message → Thomas devine Marie (1.11)."], never: ["Ce message une fois le cercle lancé : dès trois membres, il ne reste que celui de 18h."] },
+  { id: "1.11", ch: "j1", name: "Thomas devine Marie", time: "12:15",
+    b: [["band", "Les réponses de Marie · Texte 1 sur 3"], ["faces", [["M", "Marie", "", "L"]]], ["big", "Et Marie ? Sa réponse ?"], ["small", "Portable interdit au collège et au lycée"], ["pos", 1]],
+    p: { label: "Voir sa réponse", to: "1.15" },
+    when: "Thomas a touché le message.",
+    to: ["Révélation immédiate en miroir, sur les trois mêmes textes : « Ton pari : Défavorable », puis la réponse de Marie seulement (Thomas connaît déjà le vote et les auteurs).", "Bilan visible de lui seul. Thomas a trouvé une réponse sur trois, donc on compte les surprises : « Marie a réussi à te surprendre deux fois. » Puis « Retour au cercle » (1.15)."], never: ["La réponse de Thomas à côté de celle de Marie."] },
+  { id: "1.12", ch: "j1", name: "Aujourd'hui : rien à deviner", time: "12:10", tab: 0,
+    b: [["hd", "Aujourd'hui · mardi"], ["steps", [["Deviner", "off"], ["Répondre", "on"]]], ["band", "Tu as rejoint Famille."], ["banner", "Rien à deviner pour l'instant. Réponds : dès que vous serez trois, ton cercle pourra te deviner."], ["label", "Un vrai texte de l'Assemblée nationale · auteur masqué"], ["title", "Billets de train plafonnés pour les moins de 26 ans"], ["lines", ["Le prix d'un billet serait plafonné pour les moins de 26 ans.", "L'État compenserait les transporteurs.", "La mesure serait revue au bout de trois ans."]], ["q", "Ton avis ?"], ["pos", 3]],
+    p: { label: "Suivant", to: "1.13" },
+    when: "Marie vient de rejoindre le cercle de Thomas. À deux, aucune manche n'est ouverte.",
+    to: ["→ la raison (même écran qu'en 1.4, sans le bandeau du défi), puis « En attendant » (1.13)."], never: ["Un reproche, ou le nom de qui que ce soit."] },
+  { id: "1.13", ch: "j1", name: "En attendant (cercle incomplet)", time: "12:12", tab: 0,
+    b: [["hd", "Aujourd'hui"], ["box", [["label", "Ta phrase du jour"], ["p", "Aujourd'hui, tu as fait passer la solidarité collective avant la responsabilité individuelle."]]], ["big", "Nouveau texte dans 5 h 48"], ["small", "Déjà joué aujourd'hui :"], ["faces", [["T", "Thomas", "", "S"]]], ["banner", "Il faut trois joueurs pour deviner."]],
+    p: { label: "Inviter un proche", to: "1.14" },
+    when: "Juste après sa réponse, tant que le cercle a moins de trois membres : à deux, il n'y a rien à révéler à 18h, seulement un nouveau texte.",
+    to: ["« Inviter un proche » → 1.14."], never: ["Qui n'a pas encore joué."] },
+  { id: "1.14", ch: "j1", name: "Inviter", time: "12:13",
+    b: [["back", "Retour"], ["title", "Invite un proche"], ["small", "Il faut être trois pour lancer le cercle."], ["quote", "Tu crois me connaître ? J'ai répondu à 3 vraies questions de l'Assemblée. Devine ce que j'ai dit, 2 minutes. [lien]"], ["p", "<b>Tu envoies tes 3 réponses à la personne que tu invites. Ce lien est pour elle seule.</b>"], ["small", "Chaque lien ne sert qu'une fois."], ["link", "Plus tard"]],
+    p: { label: "Envoyer une invitation", to: "1.15" },
+    when: "Depuis « En attendant », depuis Le Cercle, ou à la fin de l'entrée du créateur.",
+    to: ["« Envoyer une invitation » ouvre le partage du téléphone ; au retour, le bouton devient « Envoyer une autre invitation » et l'écran affiche « Liens envoyés : 1 ».", "La maquette passe au soir (1.15)."], never: ["Un envoi par le service lui-même.", "Une demande d'accès aux contacts."] },
+  { id: "1.15", ch: "j1", name: "Le Cercle, le soir : Hugo arrive", time: "21:40", tab: 1,
+    b: [["hd", "Famille ▾", "+ Inviter"], ["band", "Vous êtes trois : le cercle est lancé."], ["faces", [["T", "Thomas", ""], ["M", "Marie", ""], ["H", "Hugo", ""]]], ["label", "Où chacun se place"], ["bar", 0, [], "Encore flou : Thomas, Marie, Hugo"], ["bar", 2, [], "Encore flou : Thomas, Marie, Hugo"], ["small", "… et six autres tensions."]],
+    p: { label: "Inviter", to: "1.14" },
+    when: "Mardi soir. Thomas a invité Hugo, qui a fini son entrée. La phrase « le cercle est lancé » s'affiche une seule fois.",
+    to: ["Toucher un visage → l'écran de ce proche (voir 4.3).", "Sous cinq membres, « Inviter » reste le bouton principal."], never: ["Un message ou une notification de lancement envoyé au cercle."] },
+
+  // ---------- Jour ordinaire ----------
+  { id: "2.1", ch: "j2", name: "Aujourd'hui : Deviner", time: "08:10", tab: 0,
+    b: [["hd", "Aujourd'hui · jeudi"], ["steps", [["Deviner", "on"], ["Répondre", "off"]]], ["label", "Famille"], ["small", "Hier : Cantine gratuite en primaire · <u>Relire</u>"], ["q", "À qui sont ces réponses ?"],
+      ["guess", { a: "Défavorable · « Ça coûte trop cher. »", f: [["T", 2], ["H", 0], ["P", 1], ["I", 0]] }],
+      ["guess", { a: "Très favorable · raison cachée", why: "Ta devinette : « Aucun enfant ne devrait sauter le déjeuner. »", btn: "Devine aussi pourquoi", bto: "2.2", f: [["T", 1], ["H", 0], ["P", 2], ["I", 0]] }],
+      ["guess", { a: "Neutre · « Les familles aisées n'en ont pas besoin. »", passed: true, f: [["T", 2], ["H", 0], ["P", 2], ["I", 0]] }]],
+    p: { label: "Valider", to: "2.3" },
+    when: "Jeudi, 8h10, dans le métro. Marie a répondu mercredi au texte « Cantine gratuite en primaire » ; elle devine aujourd'hui les réponses de trois proches.",
+    to: ["Un visage choisi devient noir et se grise sur les autres cartes (une personne par réponse).", "« Devine aussi pourquoi » → la feuille des raisons (2.2).", "« Valider » → la manche suivante s'il y a plusieurs cercles (5.8), sinon Répondre (2.3).", "Si personne n'a répondu hier → (5.12)."], never: ["La réponse de Marie à ce texte.", "Le vote, l'auteur, ou si un choix est juste : tout tombe à 18h.", "Une étiquette « réponse inattendue », qui a déjà deviné, qui est en pause."] },
+  { id: "2.2", ch: "j2", name: "Feuille « Devine aussi pourquoi »", kind: "sheet", time: "08:10",
+    b: [["title", "Pourquoi, d'après toi ?"], ["reasons", CANTINE, 0]],
+    p: { label: "Choisir", to: "2.1" },
+    when: "Sur la carte à raison cachée.",
+    to: ["« Choisir » → retour à Deviner ; la carte affiche la raison choisie en italique (2.1)."], never: ["Un indice sur la bonne raison."] },
+  { id: "2.3", ch: "j2", name: "Répondre : la position", time: "08:11", tab: 0,
+    b: [["steps", [["Deviner", "done"], ["Répondre", "on"]]], ["label", "Un vrai texte de l'Assemblée nationale · auteur masqué"], ["title", "Caméras intelligentes dans les gares"], ["lines", ["Les caméras des gares pourraient repérer seules un bagage abandonné ou une bagarre.", "Un agent vérifierait chaque alerte.", "L'essai durerait deux ans."]], ["q", "Ton avis ?"], ["pos", 3]],
+    p: { label: "Suivant", to: "2.4" },
+    when: "Après la manche du jour.",
+    to: ["→ la raison (2.4)."], never: ["L'auteur, le groupe, la tension, le lien vers le scrutin."] },
+  { id: "2.4", ch: "j2", name: "Répondre : la raison", time: "08:11", tab: 0,
+    b: [["back", "Changer ma position"], ["small", "Caméras intelligentes dans les gares · Ton avis : Favorable"], ["q", "Qu'est-ce qui a le plus pesé ?"], ["reasons", CAMERAS, 3], ["small", "Ta réponse sera définitive."]],
+    p: { label: "Valider", to: "2.5" },
+    when: "Juste après la position.",
+    to: ["→ En attendant 18h (2.5)."], never: ["Le député ou le groupe derrière chaque argument."] },
+  { id: "2.5", ch: "j2", name: "En attendant 18h", time: "08:12", tab: 0,
+    b: [["hd", "Aujourd'hui · jeudi"], ["box", [["label", "Ta phrase du jour"], ["p", "Aujourd'hui, tu as fait passer la sécurité avant la liberté."], ["goto", "Voir mon portrait", "4.1"]]], ["big", "Révélation dans 9 h 48"], ["small", "Déjà joué aujourd'hui :"], ["faces", [["H", "Hugo", "", "S"], ["I", "Inès", "", "S"]]]],
+    when: "La boucle du jour est finie : une minute trente en tout. On ferme l'application.",
+    to: ["Pas de bouton principal : c'est la fin de la boucle.", "Toucher la phrase du jour → Moi, Portrait (4.1).", "À 18h → le message (2.6).", "Réservé, non dessiné : le geste qui active le message de 18h sur le téléphone, en suspens tant que « web ou application » n'est pas tranché."], never: ["« Paul n'a pas encore joué ».", "Une relance.", "Les choix de Marie au Deviner."] },
+  { id: "2.6", ch: "j2", name: "Le message de 18h", kind: "lock", time: "18:00", day: "jeudi 3 avril",
+    notif: "18h, la table est mise. Qui avait dit quoi ? La révélation d'hier t'attend, et la question d'aujourd'hui.", nto: "2.7a",
+    when: "Chaque jour à 18h, le même message pour tout le cercle.",
+    to: ["Toucher le message → la révélation (2.7a)."], never: ["Un nom, un score, un indice sur le résultat."] },
+  { id: "2.7a", ch: "j2", name: "Révélation : première réponse", kind: "reveal", time: "18:01", dots: [6, 0],
+    b: [["band", "Famille · Cantine gratuite en primaire"], ["p", "<b>Défavorable · « Ça coûte trop cher. »</b>"], ["small", "Ton pari : Paul."], ["faces", [["H", "", "", "L"]]], ["big", "Ça alors !"], ["p", "C'était Hugo."]],
+    p: { label: "Suivant", to: "2.7b" },
+    when: "Plein écran, une réponse par carte. Le soir, la révélation passe toujours en palette du soir, sous la lumière d'une lampe ; le visage apparaît quand Marie touche le rond « ? ».",
+    to: ["« Suivant » → la réponse suivante (2.7b).", "La croix ramène à Aujourd'hui."], never: ["La réponse de Marie à côté de celle des autres."] },
+  { id: "2.7b", ch: "j2", name: "Révélation : deuxième réponse", kind: "reveal", time: "18:01", dots: [6, 1],
+    b: [["band", "Famille · Cantine gratuite en primaire"], ["p", "<b>Très favorable · raison cachée</b>"], ["small", "Ton pari : Thomas, parce que « Aucun enfant ne devrait sauter le déjeuner »."], ["faces", [["T", "", "", "L"]]], ["big", "Tu connais ton monde, et ses raisons."]],
+    p: { label: "Suivant", to: "2.7c" },
+    when: "Suite de la révélation.",
+    to: ["→ la troisième réponse (2.7c)."], never: ["Les points des autres, un classement."] },
+  { id: "2.7c", ch: "j2", name: "Révélation : troisième réponse", kind: "reveal", time: "18:01", dots: [6, 2],
+    b: [["band", "Famille · Cantine gratuite en primaire"], ["p", "<b>Neutre · « Les familles aisées n'en ont pas besoin. »</b>"], ["small", "Tu avais passé."], ["faces", [["I", "", "", "L"]]], ["big", "C'était Inès."], ["rule"], ["small", "1 point aujourd'hui · 4 cette semaine"]],
+    p: { label: "Suivant", to: "2.7d" },
+    when: "Dernière réponse ; le pied de carte donne les points de Marie seulement.",
+    to: ["→ le vote (2.7d)."], never: ["Les points des autres, un classement.", "Les réponses que Marie n'avait pas à deviner."] },
+  { id: "2.7d", ch: "j2", name: "Révélation : le vote", kind: "reveal", time: "18:02", dots: [6, 3],
+    b: [["band", "Cantine gratuite en primaire"], ["q", "Et l'Assemblée ?"], ["big", "Texte rejeté."]],
+    p: { label: "Suivant", to: "2.7e" },
+    when: "Après les attributions.",
+    to: ["→ les auteurs (2.7e)."], never: ["Le décompte des positions dans le cercle.", "Un chiffre sur « les joueurs »."] },
+  { id: "2.7e", ch: "j2", name: "Révélation : les auteurs", kind: "reveal", time: "18:02", dots: [6, 4],
+    b: [["band", "Cantine gratuite en primaire"], ["p", "Proposé par Karim Benali, député, [Groupe D]."], ["rule"], ["p", "Ta raison, « Aucun enfant ne devrait sauter le déjeuner », était l'argument de Nadia Ferrand, députée, [Groupe C]."]],
+    p: { label: "Suivant", to: "2.7f" },
+    when: "Après le vote. Les auteurs sont révélés texte par texte, jamais additionnés.",
+    to: ["→ un badge rare s'il y en a un (exemple en 3.2), sinon la fin (2.7f)."], never: ["Un cumul des groupes, un « parti le plus proche »."] },
+  { id: "2.7f", ch: "j2", name: "Révélation : fin", kind: "reveal", time: "18:03", dots: [6, 5],
+    b: [["big", "Et maintenant, la question d'aujourd'hui."], ["link", "Le texte et ses sources", "5.4"]],
+    p: { label: "Jouer", to: "2.1" },
+    when: "Dernière carte de la séquence.",
+    to: ["« Jouer » → la nouvelle manche (Deviner, 2.1).", "« Le texte et ses sources » → la fiche du texte (5.4)."], never: [] },
+
+  // ---------- Dimanche ----------
+  { id: "3.1", ch: "j3", name: "Le message de 18h du dimanche", kind: "lock", time: "18:00", day: "dimanche 6 avril",
+    notif: "18h, la table est mise. Qui avait dit quoi ? La révélation d'hier t'attend, et la question d'aujourd'hui. Ce soir, aussi : les titres de la semaine.", nto: "3.2",
+    when: "Le dimanche, le même message annonce aussi les titres.",
+    to: ["→ la révélation habituelle (comme 2.7a à 2.7e), puis un badge rare s'il y en a un (3.2)."], never: ["Qui a gagné."] },
+  { id: "3.2", ch: "j3", name: "Badge rare", kind: "reveal", time: "18:02", dots: [12, 5],
+    b: [["label", "Badge rare"], ["faces", [["I", "", "", "L"]]], ["big", "Inès décroche Le Sans-Faute."], ["p", "Sept jours sans erreur, sans rien passer."]],
+    p: { label: "Suivant", to: "3.3a" },
+    when: "Après les attributions, le vote et les auteurs. Cette carte n'apparaît que s'il y a un badge.",
+    to: ["→ les titres de la semaine (3.3a)."], never: [] },
+  { id: "3.3a", ch: "j3", name: "Titre : Le Devin", kind: "reveal", time: "18:03", dots: [12, 6],
+    b: [["label", "Les titres de la semaine · Famille"], ["faces", [["I", "", "", "L"]]], ["big", "Le Devin : Inès"], ["p", "a le mieux deviné les autres cette semaine"]],
+    p: { label: "Suivant", to: "3.3b" }, when: "Suite de la séquence du dimanche.", to: ["→ Le Mystère (3.3b)."], never: ["Les points ou le total de chacun.", "Un rang (« 2e », « dernier »)."] },
+  { id: "3.3b", ch: "j3", name: "Titre : Le Mystère", kind: "reveal", time: "18:03", dots: [12, 7],
+    b: [["label", "Les titres de la semaine · Famille"], ["faces", [["P", "", "", "L"]]], ["big", "Le Mystère : Paul"], ["p", "le plus difficile à deviner cette semaine"]],
+    p: { label: "Suivant", to: "3.3c" }, when: "Suite de la séquence du dimanche.", to: ["→ Le Fidèle (3.3c)."], never: ["Un ratio ou un pourcentage."] },
+  { id: "3.3c", ch: "j3", name: "Titre : Le Fidèle", kind: "reveal", time: "18:03", dots: [12, 8],
+    b: [["label", "Les titres de la semaine · Famille"], ["faces", [["M", "Marie", "", "L"], ["H", "Hugo", "", "L"]]], ["big", "Le Fidèle : Marie et Hugo"], ["p", "ont répondu les sept jours"]],
+    p: { label: "Suivant", to: "3.3d" }, when: "Le Fidèle peut avoir plusieurs titulaires (D-010).", to: ["→ la surprise de la semaine (3.3d)."], never: ["Qui n'a pas répondu les sept jours."] },
+  { id: "3.3d", ch: "j3", name: "La surprise de la semaine", kind: "reveal", time: "18:04", dots: [12, 9],
+    b: [["label", "La surprise de la semaine"], ["big", "Éoliennes en mer près des côtes"], ["p", "le texte qui a le plus trompé le cercle"], ["link", "Voir le texte", "5.4"]],
+    p: { label: "Suivant", to: "3.3e" }, when: "Suite de la séquence du dimanche.", to: ["→ la phrase de la semaine (3.3e).", "« Voir le texte » ouvre la fiche d'un texte (5.4)."], never: ["Les réponses sur ce texte associées à des prénoms."] },
+  { id: "3.3e", ch: "j3", name: "Ta phrase de la semaine", kind: "reveal", time: "18:04", dots: [12, 10],
+    b: [["label", "Pour toi, cette semaine"], ["big", "Entre sécurité et liberté, tu choisis le plus souvent la liberté."], ["slider", 0, { p: 0.8 }]],
+    p: { label: "Suivant", to: "2.7f" }, when: "Pour Marie seule.", to: ["→ la fin de la séquence (comme 2.7f)."], never: ["La phrase de la semaine d'un autre membre."] },
+
+  // ---------- Trois mois ----------
+  { id: "4.1", ch: "j4", name: "Moi : mon portrait", time: "21:15", tab: 2,
+    b: [["hd", "Moi", "⚙", "5.7"], ["subtabs", ["Portrait", "Titres", "Historique"], 0, ["4.1", "5.2", "5.3"]], ["box", [["p", "<b>Ton tempérament : Le Pont.</b> Souvent au centre quand le cercle est divisé."]]],
+      ["slider", 2, { p: 0.2 }], ["slider", 0, { p: 0.78 }], ["slider", 4, { p: 0.75 }], ["slider", 7, { p: 0.5 }],
+      ["label", "Encore flous"], ["slider", 1, { w: 0.85, c: 0.5 }], ["slider", 3, { w: 0.8, c: 0.45 }], ["slider", 5, { w: 0.9, c: 0.5 }], ["slider", 6, { w: 0.75, c: 0.55 }]],
+    when: "Marie touche l'onglet Moi. Les curseurs du plus net au plus flou ; il faut faire défiler pour voir les flous.",
+    to: ["Onglets Titres (5.2) et Historique (5.3).", "La roue dentée → Réglages (5.7)."], never: ["Un chiffre, un axe gradué.", "Un « parti le plus proche », un groupe de député associé aux curseurs."] },
+  { id: "4.2", ch: "j4", name: "Le Cercle", time: "21:16", tab: 1,
+    b: [["hd", "Famille ▾", "+ Inviter"], ["faces", [["H", "Hugo", "Le Devin", "", "", "4.3"], ["I", "Inès", "Le Mystère"], ["M", "Marie", "Le Fidèle · Le Pont"], ["P", "Paul", "L'Original"], ["T", "Thomas", ""]]],
+      ["box", [["p", "<b>Surprise de la semaine :</b> Permis de conduire dès 17 ans"]]], ["label", "Où chacun se place"],
+      ["bar", 0, [["I", 0.4], ["H", 0.68], ["M", 0.8]], "Encore flou : Thomas, Paul"], ["bar", 2, [["M", 0.2], ["H", 0.3], ["T", 0.62]], "Encore flou : Paul, Inès"], ["bar", 4, [["H", 0.25], ["T", 0.5], ["M", 0.76]], "Encore flou : Paul, Inès"], ["small", "… et cinq autres tensions, toujours dans le même ordre."], ["goto", "Titres des semaines passées →", "5.5"]],
+    when: "Début juin. Sous chaque visage, le titre de la semaine, puis le tempérament. Les initiales n'apparaissent sur une barre que si le curseur de la personne est net ; les barres suivent toujours le même ordre.",
+    to: ["Toucher un visage → l'écran de ce proche (ici, Hugo : 4.3).", "« Famille ▾ » → changer de cercle (5.6)."], never: ["Un tri des barres par désaccord, une phrase « le cercle est divisé sur… ».", "Un pourcentage, un total de titres, qui est en pause."] },
+  { id: "4.3", ch: "j4", name: "L'écran d'un proche : Hugo", time: "21:17", tab: 1,
+    b: [["back", "Le Cercle"], ["faces", [["H", "Hugo", "Le Devin cette semaine", "L"]]], ["small", "● Toi   ◎ Hugo"],
+      ["overlay", 0, { p: 0.78 }, { p: 0.68 }], ["overlay", 2, { p: 0.2 }, { p: 0.32 }], ["overlay", 4, { p: 0.76 }, { p: 0.25 }], ["overlay", 7, { p: 0.5 }, { p: 0.44 }], ["overlay", 1, { w: 0.8, c: 0.5 }, { w: 0.7, c: 0.4 }],
+      ["label", "Ses surprises"], ["row", "Cantine gratuite en primaire : Défavorable, « Ça coûte trop cher. »", "Tu pensais à Paul"], ["row", "Éoliennes en mer près des côtes : Très favorable", "Tu pensais à Thomas"], ["link", "Voir tout"]],
+    when: "Marie touche le visage de Hugo. D'abord les tensions où vous êtes nets tous les deux, puis les autres, toujours dans l'ordre fixe des huit tensions.",
+    to: ["Toucher une surprise → la fiche du texte (5.4)."], never: ["Un taux d'accord, un « point commun », un « plus grand désaccord ».", "Un tri par écart, un nombre de surprises, un taux de bonnes réponses.", "La réponse de Marie à côté de celle de Hugo."] },
+
+  // ---------- Autres écrans ----------
+  { id: "5.1", ch: "j5", name: "Entrée du créateur : nommer le cercle", time: "11:58",
+    b: [["title", "Nomme ton cercle"], ["field", "Nom du cercle", "Famille"], ["small", "Famille, amis… Tes invités le verront."]],
+    p: { label: "Créer le cercle", to: "1.14" },
+    when: "Thomas, le créateur, a d'abord répondu à ses trois textes (« Pour commencer · Texte 1 sur 3 », sans « Et … ? »), vu la révélation immédiate de chacun, son portrait qui commence, puis créé son compte.",
+    to: ["« Créer le cercle » → Inviter (1.14)."], never: ["Une invitation envoyée sans qu'il la déclenche."] },
+  { id: "5.2", ch: "j5", name: "Moi : mes titres", time: "21:20", tab: 2,
+    b: [["hd", "Moi", "⚙", "5.7"], ["subtabs", ["Portrait", "Titres", "Historique"], 1, ["4.1", "5.2", "5.3"]], ["p", "<b>Tempérament :</b> Le Pont (Famille)"], ["row", "Semaine du 26 mai", "Le Fidèle · Famille"], ["row", "Semaine du 12 mai", "Le Devin, Le Fidèle · Famille"], ["row", "Semaine du 31 mars", "Le Fidèle · Famille"]],
+    when: "Onglet Titres de Moi, début juin.", to: [], never: ["Un total (« Le Fidèle × 7 »).", "Une comparaison avec les autres."] },
+  { id: "5.3", ch: "j5", name: "Moi : historique", time: "21:21", tab: 2,
+    b: [["hd", "Moi", "⚙", "5.7"], ["subtabs", ["Portrait", "Titres", "Historique"], 2, ["4.1", "5.2", "5.3"]], ["row", "Jeudi 3 avril · Caméras intelligentes dans les gares", "Favorable · révélé vendredi à 18h"], ["row", "Mercredi 2 avril · Cantine gratuite en primaire", "Favorable"], ["row", "Mardi 1er avril · Éoliennes en mer près des côtes", "Neutre"]],
+    when: "Onglet Historique de Moi.", to: ["Toucher une ligne → la fiche du texte (5.4)."], never: ["Les réponses des autres."] },
+  { id: "5.4", ch: "j5", name: "Fiche d'un texte", time: "21:22",
+    b: [["back", "Retour"], ["title", "Cantine gratuite en primaire"], ["small", "révélé jeudi"], ["lines", ["Le repas de midi serait gratuit dans toutes les écoles primaires.", "L'État rembourserait les communes.", "Objectif : qu'aucun enfant ne saute le déjeuner faute d'argent."]], ["p", "<b>Ta réponse :</b> Favorable · « Aucun enfant ne devrait sauter le déjeuner. »"], ["p", "<b>Vote :</b> rejeté. Proposé par Karim Benali, [Groupe D]."], ["label", "Les quatre raisons"],
+      ["row", CANTINE[0], "Nadia Ferrand, [Groupe C]"], ["row", CANTINE[1], "Marc Olivier, [Groupe A]"], ["row", CANTINE[2], "Léa Dumas, [Groupe B]"], ["row", CANTINE[3], "Luc Vasseur, [Groupe D]"], ["link", "Sources : extraits des débats"]],
+    p: { label: "Voir le scrutin sur le site de l'Assemblée", to: null },
+    when: "Depuis une révélation, une surprise ou l'historique, après la révélation. Une seule fiche est dessinée ici (Cantine) : tous les liens « Voir le texte » des maquettes y mènent.",
+    to: ["Le bouton noir ouvre la page officielle du scrutin (hors maquette).", "Avant la révélation : seulement le texte et ta réponse, plus « Le vote et les auteurs : vendredi à 18h ». Pas de lien officiel."], never: ["Un bouton de partage.", "Combien de joueurs ou de membres ont choisi chaque raison.", "Un cumul des groupes des raisons choisies."] },
+  { id: "5.5", ch: "j5", name: "Le Cercle : titres passés", time: "21:23", tab: 1,
+    b: [["back", "Le Cercle"], ["title", "Titres des semaines passées"], ["row", "Semaine du 26 mai", "Devin : Hugo · Mystère : Inès · Fidèle : Marie"], ["row", "Semaine du 19 mai", "Devin : Inès · Mystère : Thomas · Fidèle : Hugo"], ["row", "Semaine du 12 mai", "Devin : Marie · Mystère : Paul · Fidèle : Marie, Hugo"]],
+    when: "Depuis Le Cercle, début juin.", to: [], never: ["Un total par personne, un palmarès."] },
+  { id: "5.6", ch: "j5", name: "Changer de cercle", kind: "sheet", time: "21:24",
+    b: [["title", "Tes cercles"], ["opts", ["Famille ✓", "Amis"], 0], ["link", "+ Créer un cercle", "5.1"], ["small", "Trois cercles au plus."]],
+    when: "En touchant le nom du cercle.", to: ["« + Créer un cercle » → l'entrée du créateur (5.1). À trois cercles, ce lien est grisé."], never: [] },
+  { id: "5.7", ch: "j5", name: "Réglages", time: "21:25", tab: 2,
+    b: [["back", "Moi"], ["title", "Réglages"], ["label", "Compte"], ["row", "Pseudo", "Marie"], ["row", "E-mail", "marie@exemple.fr"], ["label", "Cercles"], ["row", "Famille · Amis", "Changer · Créer · Quitter"], ["label", "Message de 18h"], ["toggle", "Recevoir le message de 18h"], ["label", "Tes données"], ["link", "Qui, durée, droits"], ["rule"], ["link", "Tout effacer"]],
+    when: "Depuis la roue dentée de Moi.",
+    to: ["« Quitter Famille » : « Tes réponses quittent ce cercle. Tes titres passés y restent. » puis « Quitter ».", "« Tout effacer » : un texte à écrire avec Juridique, puis « Tout effacer »."], never: ["Le message de 18h coché d'office sans explication."] },
+  { id: "5.8", ch: "j5", name: "Deviner avec deux cercles", time: "08:12", tab: 0,
+    b: [["hd", "Aujourd'hui · jeudi"], ["steps", [["Deviner", "on"], ["Répondre", "off"]]], ["label", "Amis · 2 sur 2"], ["small", "Hier : Cantine gratuite en primaire"], ["q", "À qui sont ces réponses ?"],
+      ["guess", { a: "Favorable · « C'est aux communes de décider. »", f: [["L", 0], ["S", 0], ["N", 0]] }], ["guess", { a: "Très défavorable · raison cachée", btn: "Devine aussi pourquoi", bto: "2.2", f: [["L", 0], ["S", 0], ["N", 0]] }]],
+    p: { label: "Valider", to: "2.3" },
+    when: "Marie est dans deux cercles : après la manche Famille, la manche Amis, sur le même texte d'hier (une seule réponse vaut pour tous ses cercles). Ici, Nora n'a pas répondu hier : deux réponses seulement, et l'écran ne dit pas pourquoi.",
+    to: ["Une personne présente dans les deux cercles n'apparaît qu'une fois dans la journée.", "Si une manche se vide : « Rien à deviner dans Amis aujourd'hui. »", "À 18h, une seule révélation : les attributions de Famille, puis d'Amis, puis le vote et les auteurs une seule fois."], never: ["Qui n'a pas répondu."] },
+  { id: "5.9", ch: "j5", name: "Le Cercle, quand il dort", time: "19:30", tab: 1,
+    b: [["hd", "Amis ▾", "+ Inviter"], ["banner", "Il faut trois joueurs pour deviner."], ["faces", [["L", "Lou", ""], ["S", "Sam", ""], ["N", "Nora", ""], ["M", "Marie", ""]]], ["label", "Où chacun se place"], ["bar", 2, [["M", 0.2], ["S", 0.55]], "Encore flou : Lou, Nora"]],
+    p: { label: "Inviter", to: "1.14" },
+    when: "Il reste moins de trois membres actifs. On répond toujours, le portrait continue ; il n'y a plus de Deviner dans ce cercle.",
+    to: ["Le cercle se réveille seul dès que trois membres répondent à nouveau."], never: ["Le nom de qui a arrêté, un marquage sur son visage.", "Un reproche, « endormi à cause de… »."] },
+  { id: "5.10", ch: "j5", name: "Aujourd'hui, quand le cercle dort", time: "19:32", tab: 0,
+    b: [["hd", "Aujourd'hui · vendredi"], ["box", [["label", "Ta phrase du jour"], ["p", "Aujourd'hui, tu as fait passer la précaution avant l'innovation."]]], ["big", "Nouveau texte dans 22 h 28"], ["banner", "Il faut trois joueurs pour deviner."]],
+    p: { label: "Inviter", to: "1.14" },
+    when: "Marie n'a qu'un cercle, et il dort : elle a répondu directement, sans Deviner. Il n'y aura rien à révéler à 18h, seulement un nouveau texte.",
+    to: ["« Inviter » → 1.14."], never: ["Qui a arrêté de jouer."] },
+  { id: "5.11", ch: "j5", name: "Portrait pas encore formé", time: "12:20", tab: 2,
+    b: [["hd", "Moi", "⚙", "5.7"], ["subtabs", ["Portrait", "Titres", "Historique"], 0, ["4.1", "5.2", "5.3"]], ["slider", 0, { w: 0.95, c: 0.5 }], ["slider", 1, { w: 0.95, c: 0.5 }], ["slider", 2, { w: 0.8, c: 0.45 }], ["slider", 3, { w: 0.95, c: 0.5 }], ["slider", 4, { w: 0.85, c: 0.5 }], ["slider", 5, { w: 0.95, c: 0.5 }], ["slider", 6, { w: 0.95, c: 0.5 }], ["slider", 7, { w: 0.95, c: 0.5 }], ["small", "Chaque réponse le précise. Il faut environ trois mois pour les premiers curseurs nets."]],
+    when: "Les premiers jours. Les curseurs des trois textes d'entrée sont à peine resserrés.", to: [], never: ["Un chiffre, un pourcentage de remplissage."] },
+  { id: "5.12", ch: "j5", name: "Personne n'a répondu hier", time: "08:10", tab: 0,
+    b: [["hd", "Aujourd'hui · vendredi"], ["steps", [["Deviner", "strike"], ["Répondre", "on"]]], ["banner", "Rien à deviner aujourd'hui."], ["label", "Un vrai texte de l'Assemblée nationale · auteur masqué"], ["title", "Permis de conduire dès 17 ans"], ["lines", ["On pourrait passer le permis B dès 17 ans.", "Jusqu'à 18 ans, il faudrait conduire avec un adulte à bord la nuit.", "La mesure serait évaluée après trois ans."]], ["q", "Ton avis ?"], ["pos", null]],
+    p: { label: "Suivant", to: "5.10" },
+    when: "Aucun autre membre du cercle n'a répondu au texte d'hier.",
+    to: ["→ la raison, puis « En attendant 18h »."], never: ["Un nom, un reproche, « personne n'a joué hier »."] },
+  { id: "5.13", ch: "j5", name: "Cercle incomplet au départ", time: "12:30", tab: 1,
+    b: [["hd", "Famille ▾", "+ Inviter"], ["faces", [["T", "Thomas", ""], ["M", "Marie", ""], ["?", "", "", "", "ghost"]]], ["banner", "Il faut trois joueurs pour deviner."]],
+    p: { label: "Inviter", to: "1.14" },
+    when: "À deux membres, avant le lancement.", to: ["→ Inviter (1.14)."], never: [] },
+  { id: "5.14", ch: "j5", name: "Lien déjà utilisé", time: "12:40",
+    b: [["title", "Ce lien a déjà servi"], ["p", "Chaque invitation ne sert qu'une fois. Demande à Thomas de t'en envoyer une nouvelle."], ["small", "Tu as déjà un compte ? Connecte-toi pour retrouver ton cercle."]],
+    p: { label: "Me connecter", to: "1.8" },
+    when: "Quelqu'un ouvre un lien d'invitation déjà utilisé ou expiré (par exemple, transféré à une autre personne).",
+    to: ["« Me connecter » → e-mail et code (mêmes écrans que 1.8 et 1.9)."], never: ["Les réponses de Thomas.", "Le nom des autres membres du cercle."] }
+];
+
+var byId = {}; S.forEach(function (s, i) { byId[s.id] = i; });
+
+function haze(st, rev) {
+  if (st.p !== undefined) return "";
+  var w = st.w * 100, l = Math.max(0, Math.min(100 - w, st.c * 100 - w / 2));
+  return '<span class="haze' + (rev ? " rev" : "") + '" style="left:' + l + '%;width:' + w + '%"></span>';
+}
+function point(st, hollow) {
+  if (st.p === undefined) return "";
+  return '<span class="pt' + (hollow ? " hollow" : "") + '" style="left:' + (st.p * 100) + '%"></span>';
+}
+function poles(i) { return '<div class="poles"><span>' + T8[i][0] + '</span><span>' + T8[i][1] + '</span></div>'; }
+function toAttr(to) { return to ? ' data-to="' + to + '"' : ""; }
+
+function face(f) {
+  var size = f[3] || "", state = f[4] || "", to = f[5];
+  var tag = to ? "button" : "div";
+  return '<' + tag + (to ? ' type="button"' : "") + ' class="face ' + size + ' ' + state + '"' + toAttr(to) + '><span class="dot">' + f[0] + '</span>' + (f[1] ? '<span>' + f[1] + '</span>' : "") + (f[2] ? '<span class="cap">' + f[2] + '</span>' : "") + '</' + tag + '>';
+}
+
+function block(b) {
+  var t = b[0];
+  switch (t) {
+    case "band": return '<div class="band">' + b[1] + '</div>';
+    case "banner": return '<div class="banner">' + b[1] + '</div>';
+    case "label": return '<div class="label">' + b[1] + '</div>';
+    case "title": return '<div class="ttl">' + b[1] + '</div>';
+    case "lines": return '<div class="lines">' + b[1].map(function (x) { return "<span>" + x + "</span>"; }).join("") + '</div>';
+    case "q": return '<div class="q">' + b[1] + '</div>';
+    case "p": return '<div class="p">' + b[1] + '</div>';
+    case "small": return '<div class="small">' + b[1] + '</div>';
+    case "big": return '<div class="big">' + b[1] + '</div>';
+    case "huge": return '<div class="huge">' + b[1] + '</div>';
+    case "rule": return '<hr class="rule">';
+    case "back": return '<button type="button" class="plain back" data-back="1">← ' + b[1] + '</button>';
+    case "hd":
+      var left = b[1].indexOf("▾") > -1 ? '<button type="button" class="plain" data-to="5.6">' + b[1] + '</button>' : '<b>' + b[1] + '</b>';
+      var rto = b[3] || (b[2] === "+ Inviter" ? "1.14" : null);
+      var right = b[2] ? (rto ? '<button type="button" class="plain right" data-to="' + rto + '" aria-label="' + (b[2] === "⚙" ? "Réglages" : b[2]) + '">' + b[2] + '</button>' : '<span class="right">' + b[2] + '</span>') : "";
+      return '<div class="hd">' + left + right + '</div>';
+    case "link": return b[2] ? '<button type="button" class="link" data-to="' + b[2] + '">' + b[1] + '</button>' : '<span class="link">' + b[1] + '</span>';
+    case "goto": return '<button type="button" class="link" data-to="' + b[2] + '">' + b[1] + '</button>';
+    case "quote": return '<div class="quote">' + b[1] + '</div>';
+    case "pos": return '<div class="opts">' + POS.map(function (x, i) { return '<div class="opt' + (b[1] === i ? " on" : "") + '">' + x + '</div>'; }).join("") + '</div>';
+    case "reasons": return '<div class="opts">' + b[1].map(function (x, i) { return '<div class="opt' + (b[2] === i ? " on" : "") + '">' + x + '</div>'; }).join("") + '<div class="opt gap' + (b[2] === 4 ? " on" : "") + '">Aucune de ces raisons</div></div>';
+    case "opts": return '<div class="opts">' + b[1].map(function (x, i) { return '<div class="opt' + (b[2] === i ? " on" : "") + '">' + x + '</div>'; }).join("") + '</div>';
+    case "faces": return '<div class="faces">' + b[1].map(face).join("") + '</div>';
+    case "faceline": return '<div class="faces" style="align-items:center;flex-wrap:nowrap"><div class="face"><span class="dot">' + b[1] + '</span></div><div class="p" style="min-width:0"><b>' + b[2] + '</b><br>' + b[3] + '</div></div>';
+    case "box": return '<div class="box">' + b[1].map(block).join("") + '</div>';
+    case "steps": return '<div class="steps">' + b[1].map(function (s) { var mark = s[1] === "on" ? "●" : s[1] === "done" ? "✓" : "○"; return '<span class="' + s[1] + '">' + s[0] + " " + mark + '</span>'; }).join("<span>·</span>") + '</div>';
+    case "guess":
+      var g = b[1];
+      return '<div class="guess' + (g.passed ? " passed" : "") + '"><div class="ans">' + g.a + '</div>' + (g.why ? '<div class="why">' + g.why + '</div>' : "") + (g.btn ? '<button type="button" class="btn2" data-to="' + g.bto + '">' + g.btn + '</button>' : "") +
+        '<div class="row"><div class="faces">' + g.f.map(function (f) { return face([f[0], NAMES[f[0]], "", "S", f[1] === 1 ? "on" : f[1] === 2 ? "off" : ""]); }).join("") + '</div><span class="link">' + (g.passed ? "Passée" : "Passer") + '</span></div></div>';
+    case "slider": return '<div class="slider">' + poles(b[1]) + '<div class="track">' + haze(b[2]) + point(b[2]) + '</div></div>';
+    case "overlay": return '<div class="slider">' + poles(b[1]) + '<div class="track">' + haze(b[2]) + haze(b[3], true) + point(b[2]) + point(b[3], true) + '</div></div>';
+    case "bar": return '<div class="slider">' + poles(b[1]) + '<div class="track">' + b[2].map(function (m) { return '<span class="ini" style="left:' + (m[1] * 100) + '%">' + m[0] + '</span>'; }).join("") + '</div><div class="small">' + b[3] + '</div></div>';
+    case "field": return '<div class="field">' + b[1] + '<div>' + b[2] + '</div></div>';
+    case "code": return '<div class="code"><div></div><div></div><div></div><div></div><div></div><div></div></div>';
+    case "row": return '<div class="listrow"><span>' + b[1] + '</span><span>' + b[2] + '</span></div>';
+    case "subtabs": return '<div class="subtabs">' + b[1].map(function (x, i) { var to = b[3] && b[3][i]; return to && b[2] !== i ? '<button type="button" class="plain" style="font-size:inherit;color:inherit" data-to="' + to + '">' + x + '</button>' : '<span class="' + (b[2] === i ? "on" : "") + '">' + x + '</span>'; }).join("") + '</div>';
+    case "toggle": return '<div class="toggle"><span>' + b[1] + '</span><i aria-hidden="true"></i></div>';
+    case "chathd": return '<div class="chat-hd">← ' + b[1] + '</div>';
+    case "bubble": return '<div class="bubble">' + b[1] + '</div>';
+    case "preview": return '<button type="button" class="preview" data-to="' + b[3] + '"><b>' + b[1] + '</b><span>' + b[2] + '</span></button>';
+  }
+  return "";
+}
+
+function renderPhone(s) {
+  var h = '<div class="statusbar"><span>' + s.time + '</span><span>▮▮▮ ◔</span></div>';
+  if (s.kind === "lock") {
+    h += '<div class="lock"><div class="small">' + s.day + '</div><div class="clock">' + s.time + '</div>' +
+      '<button type="button" class="notif" data-to="' + s.nto + '"><span class="meta"><i>E</i>Elenchos · maintenant</span><span>' + s.notif + '</span></button></div>';
+    return h;
+  }
+  var body = (s.b || []).map(block).join("");
+  if (s.kind === "sheet") body = '<button type="button" class="dim" data-back="1">écran précédent, assombri</button><div class="grab"></div>' + body;
+  if (s.kind === "reveal") body = '<div class="dots">' + Array.from({ length: s.dots[0] }, function (_, i) { return '<i class="' + (i <= s.dots[1] ? "on" : "") + '"></i>'; }).join("") + '</div>' + body;
+  h += '<div class="body">' + body + '</div>';
+  var bottom = "";
+  if (s.p) bottom += '<button type="button" class="btn1"' + toAttr(s.p.to) + '>' + s.p.label + '</button>';
+  if (s.tab !== undefined) bottom += '<div class="tabbar">' + TABS.map(function (x, i) { return '<button type="button" class="tab' + (s.tab === i ? " on" : "") + '" data-to="' + x[1] + '">' + x[0] + '</button>'; }).join("") + '</div>';
+  if (bottom) h += '<div class="bottom">' + bottom + '</div>';
+  if (s.kind === "reveal") h += '<button type="button" class="close" data-to="2.1" aria-label="Fermer">×</button>';
+  return h;
+}
+
+function linkify(text) {
+  return text.replace(/\((\d\.\d+[a-z]?)\)/g, function (m, id) { return byId[id] !== undefined ? '(<button type="button" class="goto" data-to="' + id + '">' + id + '</button>)' : m; });
+}
+function renderNotes(s) {
+  var h = '<div><div class="code-id">Écran ' + s.id + '</div><h2>' + s.name + '</h2></div>';
+  h += '<div class="note"><span class="k">Quand</span><div>' + s.when + '</div></div>';
+  if (s.to && s.to.length) h += '<div class="note"><span class="k">Mène à</span><ul>' + s.to.map(function (x) { return "<li>" + linkify(x) + "</li>"; }).join("") + '</ul></div>';
+  if (s.never && s.never.length) h += '<div class="note never"><span class="k">Ce qu’on ne voit jamais ici</span><ul>' + s.never.map(function (x) { return "<li>" + x + "</li>"; }).join("") + '</ul></div>';
+  return h;
+}
+
+var cur = 0, hist = [];
+try { var saved = localStorage.getItem("maquettes-ecran"); if (saved && byId[saved] !== undefined) cur = byId[saved]; } catch (e) {}
+
+var chapEl = document.getElementById("chapters");
+CHAPTERS.forEach(function (c) {
+  var bt = document.createElement("button"); bt.type = "button"; bt.textContent = c.name; bt.dataset.ch = c.id;
+  bt.addEventListener("click", function () { go(S.findIndex(function (s) { return s.ch === c.id; }), true); });
+  chapEl.appendChild(bt);
+});
+
+function go(i, remember) {
+  if (i < 0 || i >= S.length) return;
+  if (remember && i !== cur) hist.push(cur);
+  cur = i; var s = S[i];
+  try { localStorage.setItem("maquettes-ecran", s.id); } catch (e) {}
+  var chapter = CHAPTERS.find(function (c) { return c.id === s.ch; });
+  Array.prototype.forEach.call(chapEl.children, function (b) { b.setAttribute("aria-pressed", b.dataset.ch === s.ch ? "true" : "false"); });
+  document.getElementById("chapterSub").textContent = chapter.sub;
+  var list = S.filter(function (x) { return x.ch === s.ch; });
+  document.getElementById("count").textContent = (list.indexOf(s) + 1) + " / " + list.length;
+  document.getElementById("pick").innerHTML = list.map(function (x) { return '<option value="' + x.id + '"' + (x === s ? " selected" : "") + '>' + x.id + " · " + x.name + '</option>'; }).join("");
+  document.getElementById("prev").disabled = i === 0;
+  document.getElementById("next").disabled = i === S.length - 1;
+  var ph = document.getElementById("phone");
+  ph.innerHTML = renderPhone(s);
+  ph.classList.toggle("evening", s.kind === "reveal");
+  ph.setAttribute("aria-label", "Écran " + s.id + " : " + s.name);
+  document.getElementById("notes").innerHTML = renderNotes(s);
+}
+
+document.addEventListener("click", function (e) {
+  var back = e.target.closest("[data-back]");
+  if (back) { e.preventDefault(); go(hist.length ? hist.pop() : cur - 1, false); return; }
+  var t = e.target.closest("[data-to]");
+  if (t && byId[t.dataset.to] !== undefined) { e.preventDefault(); go(byId[t.dataset.to], true); }
+});
+document.getElementById("prev").addEventListener("click", function () { go(cur - 1, true); });
+document.getElementById("next").addEventListener("click", function () { go(cur + 1, true); });
+document.getElementById("pick").addEventListener("change", function (e) { go(byId[e.target.value], true); });
+document.addEventListener("keydown", function (e) {
+  if (e.target.tagName === "SELECT") return;
+  if (e.key === "ArrowRight") go(cur + 1, true);
+  if (e.key === "ArrowLeft") go(cur - 1, true);
+});
+go(cur, false);
+</script>

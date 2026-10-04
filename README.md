@@ -8,6 +8,7 @@ Nom de code du projet « Tu crois connaître tes proches » : un jeu quotidien o
 - `docs/onboarding.md` — parcours d'entrée validé (remplace le §7 du document de projet)
 - `docs/produit.md` — le produit, première version : fonctions, journées, règles, écrans (validé, D-010)
 - `docs/feuille-de-route.md` — les étapes de création de l'application, dans l'ordre, et où on en est
+- `docs/maquettes/` — maquettes en noir et blanc (validées), trois univers, maquettes finales en La Tablée (à valider)
 - `CLAUDE.md` — règles de travail et circuit des livrables
 - `.claude/agents/` — définitions des agents spécialistes
 - `docs/socle-agents.md` — socle commun à tous les agents

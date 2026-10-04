@@ -59,6 +59,10 @@ Rien n'atteint le porteur sans l'étape 4. Un livrable rejeté par le porteur re
 - Aucune question technique au porteur avant l'étape 6, même pour un test jetable : il l'a demandé explicitement (D-005).
 - Une synthèse de plusieurs avis nomme les désaccords et attribue chaque position ; « les cinq s'accordent » ne s'écrit que si c'est vrai mot pour mot.
 
+## Pousser sur GitHub (demande du porteur)
+
+Après chaque commit, pousser la branche de travail **et** `main` sur GitHub, pour que `main` reflète toujours l'état du projet. `main` avance en avance rapide depuis la branche de travail (`git push origin <branche>:main`) ; jamais de réécriture d'historique sur `main`. Si l'avance rapide est impossible (quelqu'un a poussé sur `main` entre-temps), fusionner `main` dans la branche de travail, puis pousser.
+
 ## Après chaque arbitrage du porteur
 
 L'orchestrateur ajoute une entrée datée dans `docs/decisions.md` (format décrit en tête du fichier), puis commit. C'est ce qui rend les agents constants d'une session à l'autre.
