@@ -1,6 +1,6 @@
 # Spécification de la simulation : essai solo (étape 4)
 
-*Rédigée par Game design le 4 octobre 2026 pour l'essai décidé en D-015 et D-016 (page jouable, quatre personnages inventés, une journée de jeu par séance, 14 jours). Version 3, après Cohérence, UX, Juridique et le Vérificateur. Spécification de travail, pas un texte pour le porteur. Personnages, vies et exemples fictifs.*
+*Rédigée par Game design le 4 octobre 2026 pour l'essai décidé en D-015 et D-016 (page jouable, quatre personnages inventés, une journée de jeu par séance, 14 jours). Version 3, intégrée par l'orchestrateur après les relectures de Cohérence, UX, Juridique et du Vérificateur. Spécification de travail, pas un texte pour le porteur. Personnages, vies et exemples fictifs.*
 
 *Ce fichier se lit sans gâcher l'essai. **Tout ce qui aide à deviner est dans `a-ne-pas-ouvrir/`** : profils cachés, règles de calcul des personnages (comment ils répondent, devinent, et comment les cartes sont choisies), réponses atypiques, absences, corrigé de fin d'essai.*
 
@@ -9,7 +9,7 @@
 - **Ce qu'on teste** : le porteur joue seul, quatorze jours de jeu, face à quatre personnages inventés, sur une page aux couleurs de La Tablée tirée des maquettes finales.
 - **Ce qui est scellé** : les textes et toutes les réponses des personnages, calculés avant la séance 0 ; l'empreinte du fichier est publiée avant de jouer.
 - **Ce qui est calculé en direct** : les cartes servies, les devinettes des personnages, les points, les titres et le portrait, qui dépendent des coups du porteur.
-- **Comment on contrôle** : un programme écrit à part refait tous les calculs sur des parties témoins jouées avec des joueurs inventés ; les réponses du porteur ne quittent jamais son navigateur (D-016).
+- **Comment on contrôle** : un programme écrit à part refait tous les calculs sur des parties jouées avec des joueurs inventés (§9) ; les réponses du porteur ne quittent jamais son navigateur (D-016).
 
 Sources : D-006, D-010, D-011, D-014, D-015, D-016 ; `docs/produit.md`, règles 1 à 19 ; `docs/projet.md` §4, §5, §8 et §9 ; `docs/onboarding.md` ; tableau `S` de `docs/maquettes/maquettes-finales.html`.
 
@@ -47,9 +47,9 @@ Sources : D-006, D-010, D-011, D-014, D-015, D-016 ; `docs/produit.md`, règles 
 | 1 | lundi | — | « Rien à deviner pour l'instant. Réponds : à 18h, ton cercle pourra te deviner. » | 1 | — |
 | 2 | mardi | — (pas de message de 18h) | 1 | 2 | — |
 | k = 3 à 14 | … | k−2 | k−1 | k | — |
-| 7 | dimanche | 5 | 6 | 7 | badge rare éventuel, puis titres de la semaine 1 |
+| 7 | dimanche | 5 | 6 | 7 | titres de la semaine 1 (aucun badge rare possible en semaine 1) |
 | 14 | dimanche | 12 | 13 | 14 | badge rare éventuel, puis titres de la semaine 2 |
-| 15 | clôture | 13 (pas de message de 18h) | — | — | fiche du texte 14, questions de fin, dévoilement, export (ordre au §7.4) |
+| 15 | clôture | 13 (pas de message de 18h : la séance s'ouvre sur la révélation) | — | — | fiche du texte 14, questions de fin, dévoilement, export (ordre au §7.4) |
 
 - Séances 3 à 14 : ouvertes par le message de 18h validé (version du dimanche aux séances 7 et 14, D-014).
 - Séances 2 et 15 : pas de message de 18h. Le message validé annonce « La révélation d'hier t'attend, et la question d'aujourd'hui » : il serait faux à la séance 2 (rien à révéler) et à la séance 15 (pas de question). En écrire un autre sortirait du validé (C-012).
@@ -83,11 +83,11 @@ Côté : défavorable (1, 2), neutre (3), favorable (4, 5).
 - Graine : 16 caractères hexadécimaux minuscules, tirés au scellement et inscrits dans le fichier scellé. Chaîne hachée : graine + "|" + clé, en octets UTF-8, sans fin de ligne.
 - Clé : texte UTF-8, champs séparés par « | », sans espace. k, n et semaine (1 ou 2) : entiers décimaux sans zéro initial. Textes d'entrée : E1, E2, E3. id : rang d'affichage de la considération, de 1 à 4. Prénoms tels qu'au §1, majuscule comprise ; le porteur s'écrit « porteur » dans tout champ. Exemple : t("raison|Odile|5|2").
 - « Au hasard » ou « départage » = l'élément de plus petit t(clé). Mélanger une liste = la trier par t(clé|élément) croissant. Deux t exactement égaux : la clé la plus petite dans l'ordre des octets UTF-8 passe d'abord.
-- Vecteurs de test : l'agent qui scelle inscrit dans le fichier scellé, pour t("raison|Odile|E2|3"), t("hasard|Nassim|12|porteur") et t("surprise-semaine|2|11"), la chaîne hachée, les 8 chiffres hexadécimaux et N. Le programme de contrôle les reproduit avant tout autre calcul ; un seul écart arrête le contrôle.
+- Vecteurs de test : l'agent qui scelle inscrit dans le fichier scellé, pour t("raison|Odile|E2|3"), t("hasard|Nassim|12|porteur") et t("surprise-semaine|2|11"), la chaîne hachée, les 8 chiffres hexadécimaux et N. Le programme de contrôle les reproduit avant tout autre calcul ; une seule différence arrête le contrôle.
 
 ### Calcul exact
 
-Toutes les grandeurs sont exactes. Données et constantes (positions cachées, v, m, 0,07, 0,95, 0,70, seuils) valent leur écriture décimale (0,65 = 65/100). Les calculs (positions alignées, c, ℓ, q, distance, médiane, rareté, surprise, poids) se font en fractions, sans arrondi. Toute comparaison (seuil, classement, égalité qui déclenche un départage) porte sur la valeur exacte. La virgule flottante n'est pas conforme : deux valeurs égales peuvent y différer d'un rien et changer un départage.
+Toutes les grandeurs sont exactes. Données et constantes valent leur écriture décimale (0,37 = 37/100). Les calculs se font en fractions, sans arrondi (liste des grandeurs concernées : `a-ne-pas-ouvrir/regles-de-calcul.md`). Toute comparaison (seuil, classement, égalité qui déclenche un départage) porte sur la valeur exacte. La virgule flottante n'est pas conforme : deux valeurs égales peuvent y différer d'un rien et changer un départage.
 
 ## 1. Les quatre personnages
 
@@ -164,7 +164,7 @@ Flou : zone de largeur ℓ centrée sur c. Net : un point à c. Ordre dans Moi :
 - Portrait du porteur dans Moi : toute réponse dès qu'elle est donnée, entrée comprise (règle 15).
 - Curseurs des autres vus par le porteur : seulement l'entrée et les textes ≤ k−2. Sinon un curseur qui bouge trahirait une réponse avant qu'on la devine (conséquence de D-010, lecture A).
 - Le Cercle : aucune initiale sur les barres (personne n'est net) ; « Encore flou : » suivi de tous les membres.
-- Toucher un visage dans Le Cercle ouvre toujours l'écran d'un proche (4.3, D-010, §7.7), jamais la fiche « Qui est qui ».
+- Toucher le visage d'un proche dans Le Cercle ouvre toujours l'écran d'un proche (4.3, D-010, §7.7), jamais la fiche « Qui est qui ».
 - Tempéraments : non calculés, non affichés (il faut deux mois).
 - Dans l'essai, aucun curseur ne devient net ; c'est voulu.
 
@@ -189,22 +189,22 @@ Flou : zone de largeur ℓ centrée sur c. Net : un point à c. Ordre dans Moi :
 | Tiraillé | « Aujourd'hui, tu as donné du poids à {pôle 0} comme à {pôle 1}. » | nouvelle, convention d'essai |
 | Neutre | « Aujourd'hui, tu n'as penché ni vers {pôle 0} ni vers {pôle 1}. » | nouvelle, convention d'essai |
 
-« Tenir la balance égale », proposé d'abord pour le cas neutre, est écarté : il veut dire « être impartial » et sonne comme un compliment (UX).
+« Tenir la balance égale », proposé par Game design (v1) pour le cas neutre, est écarté par UX : il veut dire « être impartial » et sonne comme un compliment.
 
 ### 5.7 Phrase de la semaine (séances 7 et 14 ; C-008)
 
-Elle porte sur les réponses de la semaine (textes 1 à 6, puis 7 à 13). Un arbitrage est une réponse de poids w > 0 (§5.1). Le poids d'un pôle est la somme des w des réponses de la semaine qui vont vers lui. Parmi les tensions qui ont au moins 2 arbitrages dans la semaine, on retient celle où l'écart entre les poids de ses deux pôles est le plus grand ; à écart égal, celle au plus fort poids total ; puis S, P, T, L.
+Elle porte sur les réponses de la semaine (textes 1 à 6, puis 7 à 13). Un arbitrage est une réponse de poids w > 0 (§5.1). Le poids d'un pôle est la somme des w des réponses de la semaine qui vont vers lui. Parmi les tensions qui ont au moins 2 arbitrages dans la semaine, on retient celle où la différence entre les poids de ses deux pôles est la plus grande ; à différence égale, celle au plus fort poids total ; puis S, P, T, L.
 
 | Cas | Phrase | Statut |
 |---|---|---|
 | Une tension nette (la plus éloignée de 0,5) | « Entre {…} et {…}, tu choisis le plus souvent {…}. » | validée (écran 3.3e) ; n'apparaîtra pas dans l'essai |
-| Sinon : tension retenue, écart non nul (le pôle nommé est celui de plus fort poids) | « Cette semaine, entre {…} et {…}, tu as le plus souvent choisi {…}. » | nouvelle, convention d'essai |
-| Tension retenue, écart nul | « Cette semaine, entre {…} et {…}, tu as penché autant d'un côté que de l'autre. » | nouvelle, convention d'essai |
+| Sinon : tension retenue, différence non nulle (le pôle nommé est celui de plus fort poids) | « Cette semaine, entre {…} et {…}, tu as le plus souvent choisi {…}. » | nouvelle, convention d'essai |
+| Tension retenue, différence nulle | « Cette semaine, entre {…} et {…}, tu as penché autant d'un côté que de l'autre. » | nouvelle, convention d'essai |
 | Aucune tension n'a 2 arbitrages | « Cette semaine, ton portrait est encore flou. Chaque réponse le précise. » | nouvelle, convention d'essai |
 
 - Le curseur flou de la tension retenue s'affiche dessous (aucun curseur dans le dernier cas).
-- Retenir d'abord l'écart le plus grand fait dire à la phrase la chose la plus nette de la semaine, comme la phrase validée retient la tension « la plus éloignée de 0,5 » (Game design).
-- Écartés : « Tes réponses n'ont pas encore tranché » sonne comme un reproche d'indécision, ce que D-010 a voulu éviter en remplaçant « L'Indécis » par « Le Mesuré » ; « Tu n'as penché d'aucun côté », pour l'égalité, était faux : le joueur a penché, des deux côtés (UX).
+- Retenir d'abord la plus grande différence fait dire à la phrase la chose la plus nette de la semaine, comme la phrase validée retient la tension « la plus éloignée de 0,5 » (Game design).
+- Écartés par UX, sur deux propositions de Game design (v1) : « Tes réponses n'ont pas encore tranché » sonne comme un reproche d'indécision, comme « L'Indécis » qu'a remplacé « Le Mesuré » (`projet.md` §4, D-010) ; « Tu n'as penché d'aucun côté », pour l'égalité, était faux : le joueur a penché, des deux côtés.
 
 ## 6. Titres et badges
 
@@ -236,6 +236,7 @@ Tout ce qui est dans le téléphone est le produit, en « tu », tel que validé
   - 5.12 : géré, si aucun personnage n'a répondu la veille ; son « Suivant » mène à la raison, puis à 2.5 ; le lendemain, la révélation commence au vote.
   - 4.2 : huit barres, dans l'ordre fixe ; avant le premier dimanche, aucun titre sous les visages et pas d'encadré « Surprise de la semaine ».
 - **Liens vers un écran absent** : rien n'est masqué ; un toucher affiche dans le cadre, sous le téléphone, « Pas dans l'essai. », jusqu'au toucher suivant. Masquer « + Inviter » changerait un écran validé, et le porteur pourrait y lire une règle du produit. Concernés : « + Inviter » et « Amis ▾ » (4.2) ; « Changer · Créer · Quitter » et l'interrupteur du message de 18h (5.7) ; « Renvoyer le code » (1.9).
+- **Croix des écrans de révélation** (2.7a à 3.3e) : dans l'essai, elle affiche « Pas dans l'essai. » ; la révélation se lit jusqu'au bout, pour que les titres et la phrase de la semaine ne puissent pas être sautés (le produit ne dit pas comment rouvrir une révélation fermée, C-016).
 - **Autres touchers** : « Plus tard » (1.9) a le même effet que « Valider ». « Relire » (2.1) ouvre une feuille comme 2.2 : « Un vrai texte de l'Assemblée nationale · auteur masqué », le titre, les trois lignes, « ← Retour ». « Voir le scrutin sur le site de l'Assemblée » et « Sources : extraits des débats » sont de vrais liens, ouverts dans un nouvel onglet. Son propre visage dans Le Cercle ne réagit pas. « Qui, durée, droits » (1.3 et 5.7) et « Tout effacer » (5.7) : §8.9.
 
 ### 7.2 Entrée (séance 0)
@@ -252,7 +253,7 @@ Tout ce qui est dans le téléphone est le produit, en « tu », tel que validé
 
 ### 7.4 Séance 15 (clôture), dans cet ordre
 
-1. Révélation du texte 13, de 2.7a à 2.7e, sans 2.7f.
+1. Révélation du texte 13, ouverte directement (sans message de 18h), de 2.7a à 2.7e, sans 2.7f. Le pied de la dernière carte dit seulement « {n} point(s) aujourd'hui » : le texte 13 ne compte dans aucune semaine.
 2. Question 1 du carnet, s'il y a eu un « Ça alors ! » (pas de question 2 : il n'y a pas de texte du jour).
 3. Fiche du texte 14 : le téléphone montre 5.4 comme après une révélation (vote, auteurs, raisons avec leurs députés, sources, lien). Au-dessus, dans le cadre : « Le texte du jour 14 ne sera pas deviné : l'essai s'arrête avant. Voici quand même son vote et ses auteurs. », puis « Continuer ».
 4. Dans le cadre : « L'essai est fini. Deux questions, puis le dévoilement. »
@@ -264,7 +265,7 @@ Tout ce qui est dans le téléphone est le produit, en « tu », tel que validé
 ### 7.5 Deviner et « Déjà joué aujourd'hui »
 
 - Deviner propose toujours les quatre visages (D-011) ; rien ne dit qui n'a pas répondu.
-- « Déjà joué aujourd'hui » : journée de 18h à 18h ; m(h) = (h − 18 + 24) mod 24. Un personnage s'affiche s'il a répondu au texte du jour et si m(son heure de jeu) ≤ m(heure réelle du porteur). Si aucun ne s'affiche, la ligne disparaît avec ses visages, et rien ne la remplace : tout remplaçant dirait qui n'a pas joué.
+- « Déjà joué aujourd'hui » : journée de 18h à 18h ; r(h) = (h − 18 + 24) mod 24. Un personnage s'affiche s'il a répondu au texte du jour et si r(son heure de jeu) ≤ r(heure réelle du porteur). Si aucun ne s'affiche, la ligne disparaît avec ses visages, et rien ne la remplace : tout remplaçant dirait qui n'a pas joué.
 
 ### 7.6 Élision et accords
 
@@ -277,7 +278,7 @@ Tout ce qui est dans le téléphone est le produit, en « tu », tel que validé
 - « Ses surprises », puis au plus deux lignes, la plus récente en haut. À gauche : « {Titre du texte} : {Position}, « {raison} » » (ou « …, aucune des quatre raisons »). À droite : « Tu pensais à {prénom} ». « Voir tout », seulement s'il y en a plus de deux, déplie les autres lignes sur place. Toucher une ligne ouvre 5.4.
 - Une surprise = une carte de ce proche, déjà révélée, que le porteur a attribuée à quelqu'un d'autre. Exclus : les cartes passées, la bonne personne avec une raison fausse, les textes d'entrée.
 - Sans aucune surprise, le titre « Ses surprises » disparaît aussi : « Pas encore de surprise » serait un score de zéro déguisé.
-- Aucun nombre ; jamais la réponse du porteur à côté. Écart avec la maquette 4.3, dont une ligne n'a pas de raison : dans l'essai, la raison est toujours écrite.
+- Aucun nombre ; jamais la réponse du porteur à côté. Différence avec la maquette 4.3, dont une ligne n'a pas de raison : dans l'essai, la raison est toujours écrite.
 
 ## 8. Le cadre de l'essai, hors du téléphone
 
@@ -296,7 +297,7 @@ Tout ce qui est en « vous » vit hors du téléphone : fond neutre, sans ronds 
 
 ### 8.3 Carnet de bilan (chaque séance)
 
-Sous le téléphone, après « En attendant », avant le bouton « Jour suivant » : un seul écran, une touche par question, environ 10 secondes (estimation). Les questions ne bloquent pas le passage au jour suivant.
+Sous le téléphone, après « En attendant » (séances 1 à 14 ; séance 0 : §7.2 ; séance 15 : §7.4), avant le bouton « Jour suivant » : un seul écran, une touche par question, environ 10 secondes (estimation). Les questions ne bloquent pas le passage au jour suivant.
 
 1. Seulement s'il y a eu au moins un « Ça alors ! » à la révélation : « Vos erreurs à la révélation : » J'aurais pu trouver · Je ne pouvais pas trouver · Les deux (ce dernier choix seulement s'il y a eu au moins deux erreurs).
 2. « « {titre du texte du jour} » et ses quatre raisons : » Compris du premier coup · Compris en relisant · Pas tout compris. À la séance 0 : « Les trois textes et leurs raisons : ». Pas à la séance 15.
@@ -331,20 +332,20 @@ F1 et F2 ne disent rien des opinions du porteur : F1 porte sur des personnes inv
 
 ### 8.6 Dévoilement
 
-- D'abord ce qui se lit : profils et fermeté, réponses atypiques texte par texte, absences, corrigé de F1 face aux choix du porteur. Ces textes restent à écrire, avec UX, avant de construire la page.
+- D'abord ce qui se lit : profils, réponses atypiques texte par texte, absences, corrigé de F1 face aux choix du porteur. Ces textes restent à écrire, avec UX, avant de construire la page.
 - Ensuite, une partie repliée « Pour le contrôle » : graine, fichier scellé, et « Empreinte de ce fichier : {…}. Elle doit être identique à celle publiée le {date} dans la conversation. » La page affiche l'empreinte, mais n'affirme pas elle-même qu'elle correspond.
 
 ### 8.7 Export
 
-Un seul bouton, « Copier mon carnet » (D-016) : le carnet, les mesures et agrégats du §8.4, F1 et F2, rien d'autre. Jamais une position, une raison, une phrase du jour ou de la semaine, un curseur ni le pseudo du porteur. Le texte copié s'affiche en entier avant la copie : le porteur voit ce qu'il donne. Après la copie : « Carnet copié : collez-le dans la conversation. » Aucun autre export. Dans le dépôt n'entre que ce carnet ; une réponse que le porteur citerait dans la conversation n'y entre jamais.
+Un seul export, « Copier mon carnet » (D-016), proposé à la clôture et dans la confirmation de « Tout effacer » (« Copier mon carnet d'abord ») : le carnet, les mesures et agrégats du §8.4, F1 et F2, rien d'autre. Jamais une position, une raison, une phrase du jour ou de la semaine, un curseur ni le pseudo du porteur. Dans les deux cas, le texte copié s'affiche en entier avant la copie : le porteur voit ce qu'il donne. Après la copie : « Carnet copié : collez-le dans la conversation. » Aucun autre export. Dans le dépôt n'entre que ce carnet ; une réponse que le porteur citerait dans la conversation n'y entre jamais.
 
 ### 8.8 Ce que la page garde, et où
 
-- Les réponses du porteur (positions, raisons, devinettes), son pseudo, son carnet, F1, F2 et la séance atteinte sont gardés dans le stockage de son navigateur, et nulle part ailleurs. La page n'envoie rien (D-016).
-- Sur claude.ai, chaque page publiée a sa propre origine : ce qu'elle garde reste dans le navigateur de celui qui la consulte, survit aux nouvelles publications à la même adresse, et n'est visible ni des autres visiteurs ni des autres pages. Le stockage peut revenir vide en navigation privée ou si les données du site sont effacées ; Safari peut effacer de lui-même le stockage d'un site après sept jours sans visite. Ces points sont vérifiés en pratique au contrôle 5 bis.
+- Les réponses du porteur (positions, raisons, devinettes), son portrait, son pseudo, son consentement, son carnet, F1, F2 et la séance atteinte sont gardés dans le stockage de son navigateur, et nulle part ailleurs. La page n'envoie rien (D-016).
+- Sur claude.ai, chaque page publiée a sa propre origine : ce qu'elle garde reste dans le navigateur de celui qui la consulte, survit aux nouvelles versions publiées à la même adresse, et n'est visible ni des autres visiteurs ni des autres pages. Le stockage peut revenir vide en navigation privée ou si les données du site sont effacées ; Safari peut effacer de lui-même le stockage d'un site après sept jours sans visite. Ces points sont vérifiés en pratique au contrôle 5 bis.
 - Interdits dans la page : le stockage d'artefact de claude.ai (gardé chez Anthropic ; en mode partagé, visible de tous les visiteurs) ; l'appel à Claude, les connecteurs, le téléchargement ; tout script, style, police ou image venus d'ailleurs (Google Fonts, cdnjs, unpkg, jsDelivr…) ; tout envoi (fetch, XHR, WebSocket, formulaire, balise). Seules sorties : les liens que le porteur touche lui-même (scrutin, sources).
 - Polices embarquées : Alegreya et Alegreya Sans, sous licence SIL Open Font License 1.1, qui le permet ; leur mention de copyright et de licence reste dans la page.
-- La page reste privée : jamais partagée, ni par lien public ni dans une organisation. Le porteur joue sur une version figée.
+- La page reste privée : jamais partagée, ni par lien public ni dans une organisation (« publier » veut dire ici mettre en ligne une version privée). Le porteur joue sur une version figée.
 
 ### 8.9 « Tout effacer » et « Qui, durée, droits »
 
@@ -359,23 +360,23 @@ La carte de consentement validée (1.3) promet « Tu peux tout effacer, quand tu
 
 ## 9. Ce qui est contrôlé
 
-Les recalculs sont faits par un programme écrit à part, à partir de cette spécification et de `a-ne-pas-ouvrir/regles-de-calcul.md` seules, sans lire le code de la page. Le Vérificateur relit les résultats et les écarts.
+Les recalculs sont faits par un programme écrit à part, à partir de cette spécification et des fichiers de `a-ne-pas-ouvrir/` seuls, sans lire le code de la page. Le Vérificateur relit les résultats et les différences.
 
-**Avant d'écrire le fichier scellé.** Le schéma du fichier scellé (noms de champs, types) et le format de la trace (par séance : cartes servies dans l'ordre, auteur, niveau, raison, carte à raison cachée, attributions du joueur et des personnages, côtés attendus, points, titres, phrases, curseurs) sont fixés dans `docs/essai/schema.md`, relu par l'auteur du programme de contrôle. La difficulté est réglée une seule fois sur 200 parties simulées. Protocole : `a-ne-pas-ouvrir/regles-de-calcul.md`, §9 bis.
+**Avant d'écrire le fichier scellé.** Le schéma du fichier scellé (noms de champs, types) et le format de la trace (par séance : cartes servies dans l'ordre, auteur, niveau, raison, carte à raison cachée, attributions du joueur et des personnages, côtés attendus, points, titres, phrases, curseurs) seront fixés dans `docs/essai/schema.md`, à écrire et à faire relire par l'auteur du programme de contrôle. La difficulté est réglée une seule fois sur 200 parties simulées. Protocole : `a-ne-pas-ouvrir/regles-de-calcul.md`, §9 bis.
 
 **Avant la séance 0.** L'empreinte du fichier scellé est publiée dans la conversation, avec la date et l'heure.
 
-**Parties témoins, avant de donner la page au porteur.** Elles remplacent les contrôles qui auraient demandé les réponses du porteur. Trois parties témoins et 200 parties au hasard sont rejouées par la page et par le programme indépendant, trace contre trace (protocole : §9 bis du fichier caché). La trace est produite par une version de la page construite à part pour les parties témoins ; la version du porteur ne contient aucune fonction de trace, ni d'autre export que « Copier mon carnet ».
+**Parties témoins et parties au hasard, avant de donner la page au porteur.** Les parties témoins sont trois parties jouées sur la page avec des joueurs inventés, chacun écrit pour couvrir des cas précis ; les parties au hasard sont 200 parties jouées avec des coups tirés au hasard. Elles remplacent les contrôles qui auraient demandé les réponses du porteur. Les unes et les autres sont rejouées par la page et par le programme indépendant, trace contre trace (protocole : §9 bis du fichier caché). La trace est produite par une version de la page construite à part pour les parties témoins ; la version du porteur ne contient aucune fonction de trace, ni d'autre export que « Copier mon carnet ».
 
 1. Empreinte : SHA-256 du fichier scellé (JSON canonique) égal à l'empreinte publiée ; données embarquées identiques ; vecteurs de test reproduits.
 2. Profils : conformes au §1 et aux contraintes de `a-ne-pas-ouvrir/profils.md` ; aucune étiquette politique.
 3. Réponses : toutes les réponses des personnages, recalculées par les règles de `a-ne-pas-ouvrir/regles-de-calcul.md`, réponses atypiques comprises.
 4. Absences : celles prévues ; un absent ne répond pas et ne devine pas.
 5. Code de la page : réponses des personnages lues dans les données scellées ; les réponses des personnages ne dépendent en rien de celles du porteur ; la sélection n'utilise pas les profils cachés ; aucune des sorties interdites au §8.8 ; aucune capacité déclarée à la publication ; compte simulé ; la version du porteur et la version témoin ne diffèrent que par la trace.
-6. Parties témoins : sélections et carte à raison cachée reproduites.
-7. Parties témoins : devinettes des personnages reproduites.
-8. Parties témoins : points, titres et badges reproduits.
-9. Parties témoins : portrait et phrases reproduits.
+6. Parties témoins et au hasard : sélections et carte à raison cachée reproduites.
+7. Parties témoins et au hasard : devinettes des personnages reproduites.
+8. Parties témoins et au hasard : points, titres et badges reproduits.
+9. Parties témoins et au hasard : portrait et phrases reproduits.
 
 5 bis. Avant de donner la page, sur la version publiée, avec un joueur témoin : (a) pendant une séance entière, le panneau réseau du navigateur ne montre aucune requête émise par la page après son chargement ; (b) une réponse survit à la fermeture de l'onglet, au lendemain et à une nouvelle publication ; (c) une autre page, publiée pour le test et ouverte dans le même navigateur, ne lit rien de ce que la page a gardé ; (d) après « Tout effacer », il ne reste rien. Si (b) ou (c) échoue, la page n'est pas donnée sous cette forme : l'orchestrateur trouve une autre façon de l'ouvrir qui garde les réponses dans le navigateur, et refait les mêmes tests. Le stockage de claude.ai n'est pas une solution de repli sans décision du porteur, car il modifierait D-016. Toute nouvelle publication refait les contrôles 5 et 5 bis.
 
@@ -399,8 +400,8 @@ Contraintes :
 
 ## Annexe B : le fichier scellé
 
-- Contenu : version et graine ; vecteurs de test (§0) ; les 17 textes retenus (les réserves ne sont pas scellées) ; les 4 fiches (heure de jeu, profil) ; l'inviteuse ; les absences ; les réponses atypiques (avec le côté tiré quand la réponse type était neutre) ; toutes les réponses calculées.
-- Format : JSON canonique (UTF-8, clés triées, sans espaces, au sens de la RFC 8785) ; positions cachées écrites en centièmes entiers (65 pour 0,65) ; empreinte SHA-256 en hexadécimal, sur les octets du fichier ; schéma dans `docs/essai/schema.md` ; écrit par un agent distinct de celui qui écrit la page, avant la séance 0 ; embarqué dans la page en base64.
+- Contenu : version et graine ; vecteurs de test (§0) ; les 17 textes retenus (les réserves ne sont pas scellées) ; les 4 fiches (heure de jeu, profil) ; l'inviteuse ; les absences ; les réponses atypiques ; toutes les réponses calculées (détail : `a-ne-pas-ouvrir/regles-de-calcul.md`).
+- Format : JSON canonique (UTF-8, clés triées, sans espaces, au sens de la RFC 8785) ; positions cachées écrites en centièmes entiers (37 pour 0,37) ; empreinte SHA-256 en hexadécimal, sur les octets du fichier ; schéma dans `docs/essai/schema.md` ; écrit par un agent distinct de celui qui écrit la page, avant la séance 0 ; embarqué dans la page en base64.
 - Calculé en direct, jamais scellé (dépend du porteur) : sélections, devinettes des personnages, points, titres, portrait.
 - Limite à dire au porteur : le fichier embarqué se décode. Comme pour `a-ne-pas-ouvrir/`, l'essai repose sur sa bonne foi.
 
@@ -410,7 +411,7 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 
 **Dans le téléphone, nouveaux :**
 1. « Sa raison : « … » » ; « Sa raison : aucune des quatre. »
-2. « {Position} · aucune des quatre raisons » (cartes, 1.6 sous « Agathe : {Position} », 4.3, 5.4 « Ta réponse : … »).
+2. La raison « aucune », écran par écran : cartes, « Défavorable · aucune des quatre raisons » ; 1.6, la ligne sous « Agathe : {Position} » devient « aucune des quatre raisons » ; 4.3, « {Titre du texte} : {Position}, aucune des quatre raisons » ; 5.4, « Ta réponse : {Position} · aucune des quatre raisons ».
 3. « Ta devinette : aucune des quatre. » (2.1) ; « Ton pari : {prénom}, aucune des quatre raisons. »
 4. Trois phrases du jour et trois phrases de la semaine (§5.6, §5.7).
 5. Pôles jamais écrits : « la tradition », « le changement » (« au changement »), « la décision locale », « la décision nationale », « entre précaution et innovation », « entre tradition et changement », « entre local et national ».
@@ -419,7 +420,9 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 8. Dates : le jour seul (« mercredi ») sur l'écran verrouillé et dans l'Historique ; « Semaine 1 », « Semaine 2 » en 5.2 et 5.5 (à confirmer avec Front-end).
 9. Seulement si Contenu retient un projet de loi : « Proposé par le Gouvernement. »
 
-**Dans le téléphone, validés ailleurs mais jamais dessinés :** « Rien à deviner pour l'instant. Réponds : à 18h, ton cercle pourra te deviner. » ; « Agathe a réussi à te surprendre deux fois. » ; « Le vote et les auteurs : {jour} à 18h » ; une carte bien devinée à 18h (« Ton pari : {prénom}. », le visage, « Tu connais ton monde. ») ; « Nouveau texte dans … » dans un cercle de cinq.
+**Dans le téléphone, validés ailleurs mais jamais dessinés :** « Rien à deviner pour l'instant. Réponds : à 18h, ton cercle pourra te deviner. » ; « Agathe a réussi à te surprendre deux fois. » ; « Le vote et les auteurs : {jour} à 18h » ; une carte bien devinée à 18h (« Ton pari : {prénom}. », le visage, « Tu connais ton monde. »).
+
+**Dans le téléphone, texte validé employé dans un cas nouveau :** « Nouveau texte dans … » dans un cercle de cinq (D-011 ne le prévoit que sous trois membres).
 
 **Dans le téléphone, seuls les noms changent :** prénoms, « Amis », vrais textes, vrais députés, groupes et votes ; « Tu as rejoint Amis. », « Agathe te lance un défi », « Les titres de la semaine · Amis », « {Pseudo} décroche Le Sans-Faute. », « toi@exemple.fr » ; élisions et accords (§7.6).
 
@@ -427,7 +430,7 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 
 ## Décisions touchées, conventions et constats
 
-**Décisions modifiées : aucune.** L'export est unique (D-016) ; les contrôles qui demanderaient les réponses du porteur passent par les parties témoins (§9). La page, le fichier scellé et le programme de contrôle sont de l'outillage d'essai décidé en D-015 et D-016 (« maquette animée, pas l'application »), pas du code applicatif au sens de D-001 : à dire au porteur à la livraison.
+**Décisions modifiées : aucune.** L'export est unique (D-016) ; les contrôles qui demanderaient les réponses du porteur passent par les parties témoins et au hasard (§9). D-015 (« contrôlées à la fin par le Vérificateur ») est adapté par D-016, plus récent : les réponses du porteur ne quittent pas son navigateur ; le Vérificateur contrôle donc avant l'essai, sur les parties témoins et au hasard, et à la fin sur le carnet (contrôles 10 et 11) ; le porteur compare lui-même l'empreinte (§8.6). La page, le fichier scellé et le programme de contrôle sont de l'outillage d'essai décidé en D-015 et D-016 (« maquette animée, pas l'application »), pas du code applicatif au sens de D-001 : à dire au porteur à la livraison.
 
 **Conventions propres à l'essai :**
 - quatre tensions seulement ;
@@ -437,7 +440,8 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 - personnages qui ne passent jamais ;
 - pas de message de 18h aux séances 2 et 15 ; « Nouveau texte dans … » à la séance 1 (la variante que D-011 liait aux cercles de moins de trois membres sert ici pour un jour sans révélation) ;
 - compte simulé, pseudo tapé ;
-- écrans absents signalés par « Pas dans l'essai. » ; « Tout effacer » actif ;
+- écrans absents et croix des révélations signalés par « Pas dans l'essai. » (§7.1) ; son propre visage ne réagit pas ; « Tout effacer » actif ; « Qui, durée, droits » ouvre une note dans le cadre, au lieu de la page d'information prévue en 1.3 ;
+- écran d'un proche (4.3) : la raison toujours écrite sur les lignes de « Ses surprises » ;
 - fiche « Qui est qui » et cadre de l'essai hors du téléphone ;
 - textes nouveaux à l'écran : annexe C.
 
@@ -448,17 +452,18 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 - Le Mystère : erreurs sur ses propres réponses rapportées aux tentatives, passes exclues, au moins 6 tentatives ;
 - surprise de la semaine : passes exclues, au moins 4 attributions ;
 - Le Pas de Côté : penchant clair à |c − 0,5| ≥ 0,2 ;
-- « inattendue de la part de son auteur » lue, tant que le curseur est flou, avec une part de singularité du jour (C-009 ; détail dans `a-ne-pas-ouvrir/regles-de-calcul.md`) ;
+- « inattendue de la part de son auteur » : lecture provisoire tant que le curseur est flou (C-009 ; détail dans `a-ne-pas-ouvrir/regles-de-calcul.md`) ;
+- « Ses surprises » (4.3) : textes d'entrée exclus (D-010 ne fixe pas cette limite) ;
 - cartes identiques servies ensemble : auteurs redistribués (C-010) ;
-- phrase de la semaine : tension retenue par l'écart le plus grand (C-008).
+- phrase de la semaine : tension retenue par la plus grande différence entre les poids de ses pôles (C-008).
 
 **Désaccords entre spécialistes, et choix retenu :**
-- Second export des réponses du porteur : UX en proposait un libellé plus clair ; Cohérence le jugeait contraire à D-016. Retenu : pas de second export (Cohérence).
-- Médiane de la rareté : le Vérificateur proposait d'y inclure la réponse du devineur ; Game design l'exclut, sinon la main sert d'abord les réponses opposées à la sienne. Retenu : Game design.
+- Second export des réponses du porteur, prévu par Game design en v1 : Cohérence, à la relecture de la v1, le jugeait contraire à D-016 ; UX, sans se prononcer sur le fond, en proposait un libellé plus clair. Retenu : pas de second export (Cohérence).
+- Calcul des cartes servies : le Vérificateur proposait d'y inclure la réponse du devineur ; Game design l'exclut (détail : fichier caché). Retenu : Game design.
 - Cartes identiques servies ensemble : le Vérificateur proposait « juste si c'est l'auteur de l'une des deux » ; Game design redistribue les auteurs, sinon Le Mystère compte les erreurs à l'envers. Retenu : Game design.
 - Agrégats du carnet : le Vérificateur les voulait tous globaux ; Juridique garde par séance ce que le porteur fait (pas ce qu'il répond). Retenu : Juridique.
 - Pseudo : le Vérificateur proposait « Toi » ; UX fait taper un pseudo, comme les maquettes (« Toi » casserait « Toi décroche Le Sans-Faute. »). Retenu : UX.
-- Confirmation de « Tout effacer » : Juridique la proposait dans le téléphone, en « tu » ; UX dans le cadre, en « vous », parce que ce qu'on perd ici est l'essai lui-même et que le texte du produit reste à écrire avec Juridique. Retenu : UX, avec la phrase de Juridique sur le carnet.
+- Confirmation de « Tout effacer » : Juridique la proposait dans le téléphone, en « tu » ; UX dans le cadre, en « vous », parce que ce qu'on perd ici est l'essai lui-même et que le texte du produit reste à écrire avec Juridique. Retenu : UX ; sa confirmation dit aussi, comme le demandait Juridique, que le carnet est effacé, et propose de le copier d'abord.
 - « Qui, durée, droits » : Juridique proposait trois lignes dans le téléphone ; UX une note dans le cadre, pour ne pas écrire un texte de produit non validé. Retenu : la note dans le cadre (UX), avec la mention de l'avocat (Juridique).
 
 **Manques du produit, ouverts dans `docs/decisions.md` :** C-007 à C-016. Deux points relevés dans la première version ne sont pas des manques : les curseurs des autres limités aux réponses déjà révélées découlent de D-010 (lecture A) ; Le Fidèle dans une semaine incomplète est tranché par la lettre de la règle 12 (« les sept jours »), et c'est l'essai qui s'en écarte, par convention.
@@ -471,9 +476,9 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 - Les justesses visées sont des hypothèses (§9).
 - Des profils figés risquent d'être « résolus » dès la deuxième semaine ; F2 le mesure.
 - Tradition/Changement garde un risque partisan ; le choix des textes est la seule protection.
-- Les contrôles 6 à 9 portent sur les parties témoins, jamais sur la partie du porteur (D-016) : leur couverture est la seule garantie sur le code qu'il utilisera.
+- Les contrôles 6 à 9 portent sur les parties témoins et au hasard, jamais sur la partie du porteur (D-016) : leur couverture est la seule garantie sur le code qu'il utilisera.
 - Le porteur n'est pas un lecteur neuf (D-015) : la clarté des textes et des phrases ne sera vraiment vérifiée qu'en bêta. Il veut aussi que le jeu marche, et aucun libellé ne corrige ce biais ; les mesures automatiques font contrepoids.
-- F1 n'a pas de « Je ne sais pas » : le doute se reporte sur « Au milieu », ce qui fausse un peu la justesse sur les profils proches du centre. F1 mesure aussi à la fois la lecture du portrait des autres et l'inférence.
+- F1 n'a pas de « Je ne sais pas » : le doute se reporte sur « Au milieu », ce qui fausse un peu la justesse sur un profil proche du centre, s'il y en a. F1 mesure aussi à la fois la lecture du portrait des autres et l'inférence.
 - « Pas dans l'essai. » coupe un peu l'immersion ; c'est le prix pour ne pas modifier les écrans validés.
 - Avant un lancement public, à faire relire par un avocat (Juridique) : la page « Qui, durée, droits » complète (RGPD, art. 13) ; le sens de « Tout effacer » face aux titres passés gardés sous le pseudo (art. 17) ; l'analyse d'impact (art. 35) ; l'exemption de consentement pour le stockage du navigateur (art. 82 de la loi Informatique et Libertés). Les polices seront alors hébergées par le service.
 - Rien ici ne dit ce que ressentent de vrais proches (D-015).
