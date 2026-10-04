@@ -1,0 +1,386 @@
+<title>Trois univers Elenchos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,700;1,500;1,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Une table de revue de design neutre ; chaque téléphone porte son propre univers. */
+:root {
+  --pg-bg: #f2f2f0; --pg-card: #ffffff; --pg-fg: #1e1f22; --pg-muted: #5f6268; --pg-line: #d5d6d8; --pg-on: #1e1f22; --pg-on-fg: #ffffff;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --sys: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --pg-bg: #141517; --pg-card: #1c1d20; --pg-fg: #ececea; --pg-muted: #a3a5aa; --pg-line: #35373b; --pg-on: #ececea; --pg-on-fg: #141517; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --pg-bg: #141517; --pg-card: #1c1d20; --pg-fg: #ececea; --pg-muted: #a3a5aa; --pg-line: #35373b; --pg-on: #ececea; --pg-on-fg: #141517; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--pg-bg); color: var(--pg-fg); font-family: var(--sys); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1060px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 56px; display: grid; gap: 18px; }
+h1 { margin: 0; font-size: 1.6rem; letter-spacing: -0.01em; text-wrap: balance; }
+.lede { margin: 0; max-width: 62ch; color: var(--pg-muted); }
+.lede b { color: var(--pg-fg); }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; position: sticky; top: env(safe-area-inset-top, 0px); background: var(--pg-bg); padding-block: 8px; z-index: 2; }
+.tabs button { font: inherit; border: 1px solid var(--pg-line); background: var(--pg-card); color: var(--pg-fg); border-radius: 999px; padding: 8px 14px; cursor: pointer; min-height: 40px; }
+.tabs button[aria-pressed="true"] { background: var(--pg-on); color: var(--pg-on-fg); border-color: var(--pg-on); }
+button:focus-visible { outline: 2px solid var(--pg-fg); outline-offset: 2px; }
+.eyebrow { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--pg-muted); margin: 0; }
+.uinfo { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 20px 36px; }
+@media (max-width: 760px) { .uinfo { grid-template-columns: minmax(0, 1fr); } }
+.uinfo h2 { margin: 2px 0 6px; font-size: 2.2rem; line-height: 1.05; text-wrap: balance; }
+.intent { margin: 0 0 8px; font-size: 1.12rem; max-width: 46ch; }
+.adj { margin: 0 0 10px; font-family: var(--mono); font-size: 0.82rem; color: var(--pg-muted); }
+.uinfo h3 { margin: 16px 0 6px; font-size: 0.95rem; }
+.uinfo p { margin: 0; max-width: 62ch; }
+.voice { display: grid; gap: 8px; }
+.voice div { display: grid; gap: 1px; }
+.voice span { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--pg-muted); }
+.voice q { quotes: "« " " »"; }
+.swatches { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.sw { display: grid; gap: 4px; font-size: 0.8rem; }
+.sw i { display: grid; grid-template-columns: 1fr 1fr; height: 40px; border-radius: 6px; overflow: hidden; border: 1px solid var(--pg-line); }
+.sw small { color: var(--pg-muted); }
+.typo { display: grid; gap: 6px; }
+.typo div { border-top: 1px solid var(--pg-line); padding-top: 6px; display: grid; gap: 2px; }
+.typo b { font-size: 1.35rem; line-height: 1.2; }
+.typo small { font-family: var(--mono); font-size: 0.74rem; color: var(--pg-muted); }
+.uinfo ul { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+.trap { border-left: 3px solid var(--pg-fg); padding-left: 12px; }
+.strip { display: flex; gap: 18px; overflow-x: auto; padding: 6px 2px 14px; scroll-snap-type: x mandatory; }
+.cell { display: grid; gap: 8px; scroll-snap-align: start; flex: none; }
+.cell .cap { font-family: var(--mono); font-size: 0.76rem; color: var(--pg-muted); }
+.cell .cap b { color: var(--pg-fg); font-family: var(--sys); font-size: 0.9rem; }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.pills button { font: inherit; font-size: 0.88rem; border: 1px solid var(--pg-line); background: var(--pg-card); color: var(--pg-fg); border-radius: 8px; padding: 6px 12px; cursor: pointer; min-height: 38px; }
+.pills button[aria-pressed="true"] { border-color: var(--pg-fg); font-weight: 700; }
+.common { border-top: 1px solid var(--pg-line); padding-top: 18px; display: grid; gap: 12px; }
+.common h2 { margin: 0; font-size: 1.2rem; }
+.common ol, .common ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; max-width: 70ch; }
+.common p { margin: 0; max-width: 70ch; }
+.reco { background: var(--pg-card); border: 1px solid var(--pg-line); border-radius: 10px; padding: 12px 14px; }
+
+/* ---------- Le téléphone (commun aux univers) ---------- */
+.phone { width: 300px; height: 620px; border: 2px solid var(--pg-fg); border-radius: 34px; overflow: hidden; background: var(--bg); color: var(--ink); font-family: var(--fb); display: flex; flex-direction: column; padding: 8px 6px 6px; position: relative; }
+.sb { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); padding: 2px 14px 6px; }
+.scr { flex: 1; overflow-y: auto; padding: 4px 12px 10px; display: flex; flex-direction: column; gap: 10px; font-size: 16px; line-height: 1.4; }
+.bot { padding: 8px 12px 2px; display: grid; gap: 6px; }
+.btn { font: inherit; width: 100%; border: 0; background: var(--btn-bg); color: var(--btn-fg); padding: 12px; cursor: pointer; font-weight: 700; }
+.btn2 { font: inherit; font-size: 14px; width: 100%; background: transparent; color: var(--ink); border: 1.5px solid var(--ink); padding: 8px; cursor: pointer; }
+.label { font-size: 12px; color: var(--muted); }
+.lines { display: grid; gap: 2px; font-size: 15px; }
+.q { font-weight: 700; }
+.small { font-size: 13px; color: var(--muted); }
+.opts { display: grid; gap: 6px; }
+.opt { padding: 10px 12px; font-size: 16px; }
+.faces { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.face { width: 38px; height: 38px; display: inline-grid; place-items: center; flex: none; }
+.face.big { width: 66px; height: 66px; }
+.face.off { opacity: 0.32; }
+.who { display: grid; justify-items: center; gap: 2px; font-size: 12px; }
+.card { padding: 10px 12px; display: grid; gap: 8px; position: relative; }
+.card .ans { font-weight: 700; font-size: 15px; }
+.card .why { font-style: italic; font-size: 13px; }
+.card .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.card .pass { font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
+.card.passed { opacity: 0.55; }
+.steps { display: flex; gap: 10px; font-size: 13px; color: var(--muted); }
+.steps .on { color: var(--ink); font-weight: 700; }
+.steps .strike { text-decoration: line-through; }
+.tabbar { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); padding-top: 6px; }
+.tab { font-size: 12px; color: var(--muted); display: grid; justify-items: center; gap: 3px; }
+.tab.on { color: var(--ink); font-weight: 700; }
+.sl { display: grid; gap: 3px; }
+.poles { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; color: var(--muted); }
+.trk { position: relative; height: 22px; }
+.trk::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 1.5px solid var(--ink); }
+.zone { position: absolute; top: 50%; transform: translateY(-50%); }
+.pt { position: absolute; top: 50%; transform: translate(-50%, -50%); }
+.row2 { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; border-bottom: 1px solid var(--line); padding: 6px 0; }
+.row2 span:last-child { color: var(--muted); text-align: right; }
+.legend { font-size: 12px; color: var(--muted); display: flex; gap: 12px; align-items: center; }
+.rv { display: grid; justify-items: center; gap: 10px; text-align: center; padding: 6px 0; }
+.dots { display: flex; gap: 5px; justify-content: center; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; border: 1px solid var(--ink); }
+.dots i.on { background: var(--ink); }
+.hint { font-size: 12px; color: var(--muted); }
+.flip { cursor: pointer; background: none; border: 0; padding: 0; font: inherit; color: inherit; }
+
+/* ---------- 1. La Tablée ---------- */
+.u-tablee { --bg: #F2EEE8; --surface: #FFFFFF; --ink: #2A211C; --muted: #6B5F57; --accent: #8A5714; --accent2: #E9B45A; --line: rgba(42, 33, 28, 0.18); --btn-bg: #2A211C; --btn-fg: #F2EEE8; --shadow: rgba(42, 33, 28, 0.09);
+  --ft: "Alegreya", Georgia, serif; --fb: "Alegreya Sans", "Trebuchet MS", system-ui, sans-serif; }
+.u-tablee.evening, .u-tablee .evening { --bg: #1C1612; --surface: #29211B; --ink: #F2ECE3; --muted: #B8ACA2; --accent: #E9B45A; --accent2: rgba(233, 180, 90, 0.25); --line: rgba(242, 236, 227, 0.18); --btn-bg: #E9B45A; --btn-fg: #1C1612; --shadow: rgba(0, 0, 0, 0.4); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .u-tablee { --bg: #1C1612; --surface: #29211B; --ink: #F2ECE3; --muted: #B8ACA2; --accent: #E9B45A; --accent2: rgba(233, 180, 90, 0.25); --line: rgba(242, 236, 227, 0.18); --btn-bg: #E9B45A; --btn-fg: #1C1612; --shadow: rgba(0, 0, 0, 0.4); } }
+:root[data-theme="dark"] .u-tablee { --bg: #1C1612; --surface: #29211B; --ink: #F2ECE3; --muted: #B8ACA2; --accent: #E9B45A; --accent2: rgba(233, 180, 90, 0.25); --line: rgba(242, 236, 227, 0.18); --btn-bg: #E9B45A; --btn-fg: #1C1612; --shadow: rgba(0, 0, 0, 0.4); }
+.u-tablee .ttl, .u-tablee .hd { font-family: var(--ft); font-weight: 700; font-size: 22px; line-height: 1.2; text-wrap: balance; }
+.u-tablee .band { border-top: 6px double var(--accent); padding-top: 6px; font-size: 13px; font-weight: 700; color: var(--muted); }
+.u-tablee .opt { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.u-tablee .opt.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.u-tablee .btn { border-radius: 12px; }
+.u-tablee .btn2 { border-radius: 12px; }
+.u-tablee .card, .u-tablee .banner { background: var(--surface); border-radius: 14px; border-top: 6px double var(--accent); box-shadow: 0 1px 2px var(--shadow), 0 6px 16px var(--shadow); }
+.u-tablee .banner { padding: 10px 12px; }
+.u-tablee .face { border-radius: 50%; border: 4px double var(--ink); background: var(--surface); }
+.u-tablee .face b { font-family: var(--ft); font-style: italic; font-weight: 500; font-size: 17px; }
+.u-tablee .face.big b { font-size: 28px; }
+.u-tablee .face.sel { background: var(--ink); }
+.u-tablee .face.sel b { color: var(--bg); }
+.u-tablee .tab::before { content: ""; width: 16px; height: 16px; border-radius: 50%; border: 3px double currentColor; }
+.u-tablee .zone { height: 10px; border-radius: 6px; background: linear-gradient(90deg, transparent, var(--accent2) 22%, var(--accent) 50%, var(--accent2) 78%, transparent); }
+.u-tablee .zone.h { height: 8px; background: repeating-linear-gradient(-45deg, var(--muted) 0 1px, transparent 1px 4px); -webkit-mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent); mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent); }
+.u-tablee .pt { width: 12px; height: 12px; border-radius: 50%; background: var(--ink); }
+.u-tablee .pt.h { width: 15px; height: 15px; background: var(--surface); border: 4px double var(--ink); }
+.u-tablee .rv-stage { width: 100%; padding: 16px 0 6px; background: radial-gradient(circle at 50% 45%, rgba(233, 180, 90, 0.42), transparent 62%); display: grid; justify-items: center; gap: 10px; }
+.u-tablee .tent { width: 160px; height: 96px; perspective: 600px; }
+.u-tablee .tent { display: block; }
+.u-tablee .tent .in { display: block; position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 450ms ease; }
+.u-tablee .tent.flipped .in { transform: rotateX(180deg); }
+.u-tablee .tent .fr, .u-tablee .tent .bk { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: grid; place-items: center; background: #F2EEE8; color: #2A211C; border-radius: 6px; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45); }
+.u-tablee .tent .fr::after, .u-tablee .tent .bk::after { content: ""; position: absolute; left: 10px; right: 10px; top: 50%; border-top: 1px dashed rgba(42, 33, 28, 0.35); }
+.u-tablee .tent .fr b { font-family: var(--ft); font-size: 40px; }
+.u-tablee .tent .bk { transform: rotateX(180deg); }
+.u-tablee .tent .bk b { font-family: var(--ft); font-style: italic; font-weight: 700; font-size: 34px; }
+.u-tablee .verdict { font-family: var(--ft); font-weight: 700; font-size: 30px; line-height: 1.1; }
+
+/* ---------- 2. La Partie ---------- */
+.u-partie { --bg: #D6EEEB; --surface: #FFFFFF; --ink: #141A1A; --muted: #4A5655; --accent: #006A64; --accent2: #21B3A8; --line: rgba(20, 26, 26, 0.2); --btn-bg: #141A1A; --btn-fg: #FFFFFF;
+  --ft: "Rubik", system-ui, sans-serif; --fb: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", system-ui, sans-serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .u-partie { --bg: #0C2726; --surface: #153634; --ink: #EEF6F4; --muted: #A9C2BE; --accent: #46D2C4; --line: rgba(238, 246, 244, 0.22); --btn-bg: #46D2C4; --btn-fg: #0C2726; } }
+:root[data-theme="dark"] .u-partie { --bg: #0C2726; --surface: #153634; --ink: #EEF6F4; --muted: #A9C2BE; --accent: #46D2C4; --line: rgba(238, 246, 244, 0.22); --btn-bg: #46D2C4; --btn-fg: #0C2726; }
+.u-partie .ttl, .u-partie .hd { font-family: var(--ft); font-weight: 800; font-size: 21px; line-height: 1.15; text-wrap: balance; }
+.u-partie .band { justify-self: start; background: var(--accent2); color: #141A1A; border: 2px solid var(--ink); border-radius: 999px; padding: 3px 10px; font-family: var(--ft); font-weight: 600; font-size: 12px; }
+.u-partie .opt { background: var(--surface); border: 2px solid var(--ink); border-radius: 6px; }
+.u-partie .opt.on { background: var(--ink); color: var(--surface); }
+.u-partie .btn { border-radius: 6px; font-family: var(--ft); font-weight: 800; letter-spacing: 0.01em; }
+.u-partie .btn2 { border-radius: 6px; border-width: 2px; font-weight: 700; }
+.u-partie .card, .u-partie .banner { background: var(--surface); border: 2px solid var(--ink); border-radius: 6px; margin-bottom: 6px; }
+.u-partie .card::after, .u-partie .banner::after { content: ""; position: absolute; left: 7px; right: 7px; bottom: -6px; height: 6px; border: 2px solid var(--ink); border-top: 0; border-radius: 0 0 6px 6px; background: var(--surface); }
+.u-partie .banner { position: relative; padding: 10px 12px; font-weight: 700; }
+.u-partie .face { border-radius: 50%; border: 2px solid var(--ink); }
+.u-partie .face b { width: 20px; height: 20px; border-radius: 50%; background: var(--surface); display: grid; place-items: center; font-family: var(--ft); font-weight: 800; font-size: 12px; border: 1.5px solid var(--ink); }
+.u-partie .face.big b { width: 34px; height: 34px; font-size: 20px; }
+.u-partie .face.sel { box-shadow: 0 0 0 2px var(--bg), 0 0 0 5px var(--ink); transform: translateY(-2px); }
+.u-partie .f-T { background: repeating-linear-gradient(45deg, var(--ink) 0 2px, var(--surface) 2px 5px); }
+.u-partie .f-H { background: conic-gradient(var(--ink) 25%, var(--surface) 0 50%, var(--ink) 0 75%, var(--surface) 0) 0 0 / 8px 8px; }
+.u-partie .f-P { background: radial-gradient(var(--ink) 1.6px, transparent 1.9px) 0 0 / 6px 6px, var(--surface); }
+.u-partie .f-I { background: repeating-linear-gradient(0deg, var(--ink) 0 2px, var(--surface) 2px 5px); }
+.u-partie .f-M { background: repeating-linear-gradient(90deg, var(--ink) 0 2px, var(--surface) 2px 5px); }
+.u-partie .tab::before { content: ""; width: 14px; height: 14px; border-radius: 50%; border: 2px solid currentColor; }
+.u-partie .trk::before { border-top-width: 2px; }
+.u-partie .zone { height: 16px; background: repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 4px); -webkit-mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent); mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent); }
+.u-partie .zone.h { background: conic-gradient(var(--ink) 25%, transparent 0 50%, var(--ink) 0 75%, transparent 0) 0 0 / 6px 6px; opacity: 0.7; }
+.u-partie .pt { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--ink); }
+.u-partie.tapis, .u-partie .tapis { background: var(--accent2); color: #141A1A; }
+.u-partie.tapis .sb { color: #141A1A; }
+.u-partie.tapis .card, .u-partie .tapis .card { color: var(--ink); }
+.u-partie.tapis .dots i { border-color: #141A1A; }
+.u-partie.tapis .dots i.on { background: #141A1A; }
+.u-partie.tapis .hint, .u-partie.tapis .verdict, .u-partie.tapis .rv > div { color: #141A1A; }
+.u-partie.tapis .btn { background: #141A1A; color: #FFFFFF; }
+.u-partie .tok { width: 116px; height: 116px; perspective: 700px; }
+.u-partie .tok { display: block; }
+.u-partie .tok .in { display: block; position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 500ms ease; }
+.u-partie .tok.flipped .in { transform: rotateY(180deg); }
+.u-partie .tok .fr, .u-partie .tok .bk { position: absolute; inset: 0; border-radius: 50%; border: 3px solid #141A1A; display: grid; place-items: center; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.u-partie .tok .fr { background: #21B3A8; }
+.u-partie .tok .fr b { font-family: var(--ft); font-weight: 800; font-size: 46px; color: #141A1A; }
+.u-partie .tok .bk { transform: rotateY(180deg); }
+.u-partie .tok .bk b { width: 52px; height: 52px; border-radius: 50%; background: var(--surface); color: var(--ink); border: 2px solid var(--ink); display: grid; place-items: center; font-family: var(--ft); font-weight: 800; font-size: 26px; }
+.u-partie .verdict { font-family: var(--ft); font-weight: 800; font-size: 28px; line-height: 1.1; }
+
+/* ---------- 3. L'Édition du soir ---------- */
+.u-edition { --bg: #F4F3EE; --surface: #FFFFFF; --ink: #111111; --muted: #5C5C57; --accent: #000000; --accent2: #9C9B95; --line: #111111; --btn-bg: #000000; --btn-fg: #FFFFFF;
+  --ft: "Big Shoulders Display", "Oswald", "Arial Narrow", Impact, sans-serif; --fb: "Newsreader", Georgia, "Times New Roman", serif; }
+.u-edition.invert, .u-edition .invert { --bg: #121212; --surface: #1D1D1C; --ink: #F2F1EC; --muted: #A8A7A1; --accent: #FFFFFF; --accent2: #6E6D68; --line: #F2F1EC; --btn-bg: #FFFFFF; --btn-fg: #121212; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .u-edition { --bg: #121212; --surface: #1D1D1C; --ink: #F2F1EC; --muted: #A8A7A1; --accent: #FFFFFF; --accent2: #6E6D68; --line: #F2F1EC; --btn-bg: #FFFFFF; --btn-fg: #121212; }
+  :root:not([data-theme="light"]) .u-edition.invert, :root:not([data-theme="light"]) .u-edition .invert { --bg: #F4F3EE; --surface: #FFFFFF; --ink: #111111; --muted: #5C5C57; --accent: #000000; --accent2: #9C9B95; --line: #111111; --btn-bg: #000000; --btn-fg: #FFFFFF; }
+}
+:root[data-theme="dark"] .u-edition { --bg: #121212; --surface: #1D1D1C; --ink: #F2F1EC; --muted: #A8A7A1; --accent: #FFFFFF; --accent2: #6E6D68; --line: #F2F1EC; --btn-bg: #FFFFFF; --btn-fg: #121212; }
+:root[data-theme="dark"] .u-edition.invert, :root[data-theme="dark"] .u-edition .invert { --bg: #F4F3EE; --surface: #FFFFFF; --ink: #111111; --muted: #5C5C57; --accent: #000000; --accent2: #9C9B95; --line: #111111; --btn-bg: #000000; --btn-fg: #FFFFFF; }
+.u-edition .scr { font-size: 17px; }
+.u-edition .ttl { font-family: var(--ft); font-weight: 900; font-size: 30px; line-height: 0.98; text-transform: uppercase; letter-spacing: 0.01em; text-wrap: balance; }
+.u-edition .hd { font-family: var(--ft); font-weight: 900; font-size: 26px; text-transform: uppercase; border-bottom: 4px double var(--ink); padding-bottom: 4px; }
+.u-edition .band, .u-edition .label { font-family: var(--fb); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 4px 0; }
+.u-edition .label { color: var(--muted); border-bottom: 0; }
+.u-edition .opt { border-bottom: 1px solid var(--line); padding: 9px 6px; }
+.u-edition .opt:first-child { border-top: 1px solid var(--line); }
+.u-edition .opts { gap: 0; }
+.u-edition .opt.on { background: var(--ink); color: var(--bg); }
+.u-edition .btn { font-family: var(--ft); font-weight: 800; font-size: 20px; text-transform: uppercase; letter-spacing: 0.04em; padding: 9px; }
+.u-edition .btn2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; }
+.u-edition .card { border-top: 1px solid var(--line); padding: 10px 0 2px; }
+.u-edition .banner { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 8px 0; font-style: italic; }
+.u-edition .face { border: 1px solid var(--ink); background: var(--surface); }
+.u-edition .face b { font-family: var(--fb); font-weight: 600; font-size: 21px; }
+.u-edition .face.big b { font-size: 38px; }
+.u-edition .face.sel { background: var(--ink); }
+.u-edition .face.sel b { color: var(--bg); }
+.u-edition .tabbar { border-top: 4px double var(--ink); }
+.u-edition .tab { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; }
+.u-edition .tab.on { text-decoration: underline; text-underline-offset: 3px; }
+.u-edition .trk::before { border-top-width: 1px; }
+.u-edition .zone { height: 12px; background: radial-gradient(var(--ink) 1px, transparent 1.4px) 0 0 / 5px 5px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent); mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent); }
+.u-edition .zone.h { background: repeating-linear-gradient(45deg, var(--ink) 0 1px, transparent 1px 5px); }
+.u-edition .pt { width: 4px; height: 18px; background: var(--ink); }
+.u-edition .pt.h { width: 7px; background: var(--surface); border: 1.5px solid var(--ink); }
+.u-edition .press { width: 100%; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 4px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; }
+.u-edition .kicker { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; }
+.u-edition .wipe { display: block; width: 100%; text-align: left; }
+.u-edition .verdict { display: block; font-family: var(--ft); font-weight: 900; font-size: 50px; line-height: 0.92; text-transform: uppercase; clip-path: inset(0 0 0 0); transition: clip-path 400ms ease; }
+.u-edition .wipe.hide .verdict { clip-path: inset(0 0 100% 0); }
+.u-edition .rv { text-align: left; justify-items: start; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tent .in, .tok .in, .verdict { transition: none !important; }
+}
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:10px">
+    <p class="eyebrow">Étape 3 · le visage · premier choix</p>
+    <h1>Trois univers pour le jeu</h1>
+    <p class="lede"><b>Choisissez un univers : ce que le jeu fait ressentir, sa façon de parler, ses couleurs, ses lettres.</b> Chacun habille les mêmes écrans de vos maquettes validées : rien d'autre ne change. Le nom n'est pas encore choisi (« [Nom] »). Faites glisser les téléphones de côté ; sur l'écran de la révélation, touchez le grand élément central pour voir le moment de 18h.</p>
+  </header>
+
+  <nav class="tabs" id="tabs" aria-label="Univers"></nav>
+  <main id="view"></main>
+
+  <section class="common">
+    <h2>Ce qui vaut pour les trois</h2>
+    <ol>
+      <li><b>Aucune couleur sur ce qui touche à l'opinion.</b> Les cinq positions, les deux pôles d'une tension, le vote et les personnes restent dans la couleur du texte : un rouge et un vert se liraient « mal » et « bien », un bleu et un rouge « droite » et « gauche ».</li>
+      <li><b>« Surprise » n'est pas une erreur.</b> Les deux verdicts ont la même couleur ; seul le mot change.</li>
+      <li><b>Une seule teinte par univers, jamais deux qui forment un drapeau.</b> En France, presque toutes les teintes vives sont déjà associées à un parti ; le turquoise est l'une des rares libres. Pas d'hémicycle, de Marianne, d'urne, de cocarde, ni le style des sites de l'État.</li>
+    </ol>
+    <div class="reco">
+      <p><b>La recommandation de la direction artistique : La Tablée.</b> Elle met au premier plan le vrai sujet du jeu, les proches et le dîner qui suit ; son moment de 18h fait de la révélation un rendez-vous chaleureux plutôt qu'un verdict. Son risque, paraître vieillot aux 15-25 ans, se vérifiera au premier essai.</p>
+    </div>
+    <p class="small" style="color:var(--pg-muted)">À vérifier avant le choix définitif : les associations entre couleurs et partis (surtout le miel et le turquoise), et, à l'étape 4, sur 8 à 10 personnes de sensibilités variées : trois mots en cinq secondes, « cette page vous fait-elle penser à un parti ? », et ce qu'on ressent à 18h.</p>
+  </section>
+</div>
+
+<script>
+var NAMES = { T: "Thomas", M: "Marie", H: "Hugo", P: "Paul", I: "Inès" };
+var POS = ["Très défavorable", "Défavorable", "Neutre", "Favorable", "Très favorable"];
+var T8 = { 0: ["Sécurité", "Liberté individuelle"], 1: ["Égalité", "Mérite"], 2: ["Solidarité collective", "Responsabilité individuelle"], 4: ["Tradition", "Changement"], 7: ["Local", "National"] };
+
+var U = {
+  tablee: {
+    name: "La Tablée", cls: "u-tablee", font: "'Alegreya', Georgia, serif",
+    intent: "On ouvre le jeu comme on s'assoit à table avec ses proches : on se connaît par cœur, et on adore se surprendre.",
+    adj: "Chaleureux · complice · posé",
+    sacrifice: "Le tranchant et l'air de jeu : il peut sembler lent ou « vieillot » à un ado.",
+    voice: [["Invitation", "Tu crois me connaître ? J'ai répondu à 3 vraies questions de l'Assemblée. Devine ce que j'ai dit, 2 minutes.", "inchangée"], ["Message de 18h", "18h, la table est mise. Qui avait dit quoi ? La révélation d'hier t'attend, et la question d'aujourd'hui."], ["Verdicts", "Ça alors ! · Tu connais ton monde. · Tu connais ton monde, et ses raisons."], ["Rien à deviner", "Rien à deviner aujourd'hui.", "inchangé"]],
+    pal: [["Fond", "Lin grisé / Brou", "#F2EEE8", "#1C1612"], ["Surface", "Assiette / Noyer", "#FFFFFF", "#29211B"], ["Texte", "Brou de noix / Lin", "#2A211C", "#F2ECE3"], ["Texte secondaire", "Étain", "#6B5F57", "#B8ACA2"], ["Accent", "Caramel / Miel", "#8A5714", "#E9B45A"], ["Lumière, décor", "Miel / Lueur", "#E9B45A", "#5b4423"]],
+    typo: [["Alegreya", "titres", "'Alegreya', Georgia, serif", "700", "Un serif calligraphique, chaleureux comme une écriture à la main, lisible en petit."], ["Alegreya Sans", "texte", "'Alegreya Sans', system-ui, sans-serif", "400", "Le même squelette que les titres : une seule voix."]],
+    sig: ["Les visages : des ronds de serviette, cercle à double anneau, l'initiale en italique.", "Les curseurs flous : un halo de lampe, caramel au centre, qui s'efface sur les bords ; une perle marque le point net.", "La révélation de 18h : on allume la lampe. Toujours en palette du soir ; un marque-place plié bascule sur son pli et montre le prénom."],
+    trap: "Faire « vieillot », ou « famille traditionnelle ». Parade : on dessine une table, jamais une famille-type.",
+    surprise: "Ça alors !", vide: "Rien à deviner aujourd'hui.", legend: '<span>● Toi</span><span>◎ Hugo</span>'
+  },
+  partie: {
+    name: "La Partie", cls: "u-partie", font: "'Rubik', system-ui, sans-serif",
+    intent: "On ouvre le jeu comme on sort une boîte de jeu un soir : on se défie, on mise sur quelqu'un, on retourne les jetons.",
+    adj: "Joueur · tactile · malicieux",
+    sacrifice: "La gravité : les vrais textes de l'Assemblée risquent de paraître pris à la légère, et le jeton peut faire penser au casino.",
+    voice: [["Invitation", "Tu crois me connaître ? Prouve-le. J'ai répondu à 3 vraies questions de l'Assemblée : devine ce que j'ai dit. Une partie, 2 minutes."], ["Message de 18h", "18h, cartes sur table. Qui avait dit quoi ? La révélation d'hier t'attend, et la question d'aujourd'hui."], ["Verdicts", "Surprise ! · Dans le mille ! · Dans le mille, raison comprise !"], ["Rien à deviner", "Pas de manche aujourd'hui."]],
+    pal: [["Fond", "Tapis / Tapis de nuit", "#D6EEEB", "#0C2726"], ["Surface", "Carte", "#FFFFFF", "#153634"], ["Texte", "Encre / Craie", "#141A1A", "#EEF6F4"], ["Texte secondaire", "Graphite", "#4A5655", "#A9C2BE"], ["Accent", "Lagon", "#006A64", "#46D2C4"], ["Tapis de la révélation", "Turquoise", "#21B3A8", "#21B3A8"]],
+    typo: [["Rubik", "titres", "'Rubik', system-ui, sans-serif", "800", "Des angles à peine arrondis, comme un jeton découpé dans du carton ; des chiffres larges."], ["Atkinson Hyperlegible Next", "texte", "'Atkinson Hyperlegible Next', system-ui, sans-serif", "400", "Dessinée pour les malvoyants : l, I et 1 ne se confondent jamais."]],
+    sig: ["Les visages : des jetons à motif (rayures, pois, damier…), un par personne : on reconnaît Hugo sans couleur, daltoniens compris.", "Les curseurs flous : des cartes étalées en éventail, larges quand c'est flou ; le point est le jeton de la personne.", "La révélation de 18h : sur le tapis turquoise, un grand jeton « ? » se retourne comme un pion et montre le motif de Hugo."],
+    trap: "Faire enfantin, ou casino.",
+    surprise: "Surprise !", vide: "Pas de manche aujourd'hui.", legend: '<span><span class="pt f-M" style="position:static;display:inline-block;transform:none;vertical-align:middle"></span> Toi</span><span><span class="pt f-H" style="position:static;display:inline-block;transform:none;vertical-align:middle"></span> Hugo</span>'
+  },
+  edition: {
+    name: "L'Édition du soir", cls: "u-edition", font: "'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif",
+    intent: "On ouvre le jeu comme on déplie le journal du soir : c'est net, vif, et ce soir la une parle de ton cercle.",
+    adj: "Vif · net · piquant",
+    sacrifice: "La chaleur et la couleur : l'univers fait plus « média » que « proches », au risque de faire croire à une ligne éditoriale.",
+    voice: [["Invitation", "Tu crois me connaître ? 3 vraies questions de l'Assemblée, mes réponses : à toi de deviner. 2 minutes."], ["Message de 18h", "18h, l'édition du soir. Qui avait dit quoi ? La révélation d'hier, et la question d'aujourd'hui."], ["Verdicts", "Coup de théâtre · Vu juste · Vu juste, raison comprise"], ["Rien à deviner", "Aujourd'hui : rien à deviner."]],
+    pal: [["Fond", "Papier / Noir d'encre", "#F4F3EE", "#121212"], ["Surface", "Blanc / Plomb", "#FFFFFF", "#1D1D1C"], ["Texte", "Encre / Papier", "#111111", "#F2F1EC"], ["Texte secondaire", "Gris de presse", "#5C5C57", "#A8A7A1"], ["Accent", "Noir / Blanc", "#000000", "#FFFFFF"], ["Trame, décor", "Trame", "#9C9B95", "#6E6D68"]],
+    typo: [["Big Shoulders Display", "titres", "'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif", "900", "Des capitales étroites de une : « C'était Hugo. » tient en très grand sur un téléphone."], ["Newsreader", "texte", "'Newsreader', Georgia, serif", "400", "Dessinée à Paris pour lire l'actualité à l'écran."]],
+    sig: ["Les visages : des lettrines, un carré bordé d'un filet, l'initiale en grande capitale.", "Les curseurs flous : une trame d'imprimerie, large et pâle quand c'est flou ; le point devient un trait vertical.", "La révélation de 18h : la une de 18h, imprimée à l'envers de ta journée ; « C'était Hugo. » sort comme une page de la presse."],
+    trap: "Faire « média engagé ». Proche d'une mode actuelle (grandes capitales étroites en noir et blanc).",
+    surprise: "Coup de théâtre", vide: "Aujourd'hui : rien à deviner.", legend: '<span>▮ Toi</span><span>▯ Hugo</span>'
+  }
+};
+var KEYS = ["tablee", "partie", "edition"];
+var SCREENS = [["1.2", "Premier texte"], ["2.1", "Deviner"], ["2.7a", "La révélation de 18h"], ["4.3", "L'écran d'un proche"], ["5.12", "Rien à deviner"]];
+
+function face(k, o) { o = o || {}; return '<span class="face f-' + k + (o.sel ? " sel" : "") + (o.off ? " off" : "") + (o.big ? " big" : "") + '"><b>' + k + '</b></span>'; }
+function who(k, o) { return '<span class="who">' + face(k, o) + (o && o.name === false ? "" : '<span>' + NAMES[k] + '</span>') + '</span>'; }
+function opts(sel) { return '<div class="opts">' + POS.map(function (p, i) { return '<div class="opt' + (i === sel ? " on" : "") + '">' + p + '</div>'; }).join("") + '</div>'; }
+function tabbar(on) { return '<div class="tabbar">' + ["Aujourd'hui", "Le Cercle", "Moi"].map(function (t, i) { return '<span class="tab' + (i === on ? " on" : "") + '">' + t + '</span>'; }).join("") + '</div>'; }
+function zone(c, w, h) { var l = Math.max(0, Math.min(100 - w * 100, c * 100 - w * 50)); return '<span class="zone' + (h ? " h" : "") + '" style="left:' + l + '%;width:' + (w * 100) + '%"></span>'; }
+function pt(p, h) { return '<span class="pt' + (h ? " h f-H" : " f-M") + '" style="left:' + (p * 100) + '%"></span>'; }
+function sl(i, me, him) {
+  var inner = (me.w ? zone(me.c, me.w) : "") + (him.w ? zone(him.c, him.w, true) : "") + (me.p !== undefined ? pt(me.p) : "") + (him.p !== undefined ? pt(him.p, true) : "");
+  return '<div class="sl"><div class="poles"><span>' + T8[i][0] + '</span><span>' + T8[i][1] + '</span></div><div class="trk">' + inner + '</div></div>';
+}
+function guess(ans, f, o) {
+  o = o || {};
+  return '<div class="card' + (o.passed ? " passed" : "") + '"><div class="ans">' + ans + '</div>' + (o.why ? '<div class="why">' + o.why + '</div><button type="button" class="btn2">Devine aussi pourquoi</button>' : "") +
+    '<div class="row"><div class="faces">' + f.map(function (x) { return who(x[0], { sel: x[1] === 1, off: x[1] === 2 }); }).join("") + '</div><span class="pass">' + (o.passed ? "Passée" : "Passer") + '</span></div></div>';
+}
+
+function screen(key, id) {
+  var u = U[key], sb = function (t) { return '<div class="sb"><span>' + t + '</span><span>▮▮▮ ◔</span></div>'; };
+  if (id === "1.2") return { cls: "", h: sb("12:03") + '<div class="scr"><div class="band">Défi de Thomas · Texte 1 sur 3</div><div class="label">Un vrai texte de l\'Assemblée nationale · auteur masqué</div><div class="ttl">Portable interdit au collège et au lycée</div><div class="lines"><span>Le téléphone serait interdit dans tout l\'établissement, pauses comprises.</span><span>Les élèves le déposeraient à l\'entrée.</span><span>Chaque établissement fixerait ses exceptions.</span></div><div class="q">Ton avis ?</div>' + opts(3) + '</div><div class="bot"><button type="button" class="btn">Suivant</button></div>' };
+  if (id === "2.1") return { cls: "", h: sb("08:10") + '<div class="scr"><div class="hd">Aujourd\'hui · jeudi</div><div class="steps"><span class="on">Deviner ●</span><span>Répondre ○</span></div><div class="label">Famille · hier : Cantine gratuite en primaire</div><div class="q">À qui sont ces réponses ?</div>' +
+      guess("Défavorable · « Ça coûte trop cher. »", [["T", 2], ["H", 0], ["P", 1], ["I", 0]]) +
+      guess("Très favorable · raison cachée", [["T", 1], ["H", 0], ["P", 2], ["I", 0]], { why: "Ta devinette : « Aucun enfant ne devrait sauter le déjeuner. »" }) +
+      guess("Neutre · « Les familles aisées n'en ont pas besoin. »", [["T", 2], ["H", 0], ["P", 2], ["I", 0]], { passed: true }) +
+      '</div><div class="bot"><button type="button" class="btn">Valider</button>' + tabbar(0) + '</div>' };
+  if (id === "2.7a") {
+    var obj, wrapCls;
+    if (key === "tablee") { wrapCls = "evening"; obj = '<div class="rv-stage"><button type="button" class="flip tent flipped" data-flip aria-label="Retourner le marque-place"><span class="in"><span class="fr"><b>?</b></span><span class="bk"><b>Hugo</b></span></span></button><div class="verdict">' + u.surprise + '</div><div>C\'était Hugo.</div><div class="hint">Touche le marque-place pour rejouer</div></div>'; }
+    if (key === "partie") { wrapCls = "tapis"; obj = '<button type="button" class="flip tok flipped" data-flip aria-label="Retourner le jeton"><span class="in"><span class="fr"><b>?</b></span><span class="bk f-H"><b>H</b></span></span></button><div class="verdict">' + u.surprise + '</div><div>C\'était Hugo.</div><div class="hint">Touche le jeton pour rejouer</div>'; }
+    if (key === "edition") { wrapCls = "invert"; obj = '<div class="press">[Nom] · édition du jeudi 3 avril, 18h</div><div class="kicker">' + u.surprise + '</div><button type="button" class="flip wipe" data-flip aria-label="Rejouer l\'impression"><span class="verdict">C\'était Hugo.</span></button><div class="hint">Touche le titre pour rejouer</div>'; }
+    var head = '<div class="dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>' + (key === "edition" ? "" : '<div class="band">Famille · Cantine gratuite en primaire</div>');
+    var answer = '<div class="card" style="width:100%;text-align:left"><div class="ans">Défavorable · « Ça coûte trop cher. »</div><div class="small">Ton pari : Paul.</div></div>';
+    return { cls: wrapCls, h: sb("18:01") + '<div class="scr">' + head + '<div class="rv">' + (key === "edition" ? obj + answer : answer + obj) + '</div></div><div class="bot"><button type="button" class="btn">Suivant</button></div>' };
+  }
+  if (id === "4.3") return { cls: "", h: sb("21:17") + '<div class="scr"><div class="small">← Le Cercle</div><div class="who" style="justify-items:start">' + face("H", { big: true }) + '<b style="font-size:17px">Hugo</b><span class="small">Le Devin cette semaine</span></div><div class="legend">' + u.legend + '</div>' +
+      sl(0, { p: 0.78 }, { p: 0.68 }) + sl(2, { p: 0.2 }, { p: 0.32 }) + sl(4, { p: 0.76 }, { p: 0.25 }) + sl(7, { p: 0.5 }, { p: 0.44 }) + sl(1, { w: 0.8, c: 0.5 }, { w: 0.7, c: 0.42 }) +
+      '<div class="label">Ses surprises</div><div class="row2"><span>Cantine gratuite en primaire : Défavorable</span><span>Tu pensais à Paul</span></div><div class="row2"><span>Éoliennes en mer : Très favorable</span><span>Tu pensais à Thomas</span></div></div><div class="bot">' + tabbar(1) + '</div>' };
+  if (id === "5.12") return { cls: "", h: sb("08:10") + '<div class="scr"><div class="hd">Aujourd\'hui · vendredi</div><div class="steps"><span class="strike">Deviner</span><span class="on">Répondre ●</span></div><div class="banner">' + u.vide + '</div><div class="label">Un vrai texte de l\'Assemblée nationale · auteur masqué</div><div class="ttl">Permis de conduire dès 17 ans</div><div class="lines"><span>On pourrait passer le permis B dès 17 ans.</span><span>Jusqu\'à 18 ans, il faudrait un adulte à bord la nuit.</span><span>La mesure serait évaluée après trois ans.</span></div><div class="q">Ton avis ?</div>' + opts(-1) + '</div><div class="bot"><button type="button" class="btn">Suivant</button>' + tabbar(0) + '</div>' };
+}
+function phone(key, id) { var s = screen(key, id); return '<div class="phone ' + U[key].cls + (s.cls ? " " + s.cls : "") + '" role="img" aria-label="' + U[key].name + ', écran ' + id + '">' + s.h + '</div>'; }
+
+function info(key) {
+  var u = U[key], n = KEYS.indexOf(key) + 1;
+  var voice = u.voice.map(function (v) { return '<div><span>' + v[0] + (v[2] ? " · " + v[2] : "") + '</span><q>' + v[1] + '</q></div>'; }).join("");
+  var sw = u.pal.map(function (p) { return '<div class="sw"><i><span style="background:' + p[2] + '"></span><span style="background:' + p[3] + '"></span></i><span>' + p[1] + '</span><small>' + p[0] + '</small></div>'; }).join("");
+  var ty = u.typo.map(function (t) { return '<div><b style="font-family:' + t[2] + ';font-weight:' + t[3] + '">' + (t[1] === "titres" ? "Portable interdit au collège" : "Le téléphone serait interdit dans tout l'établissement.") + '</b><small>' + t[0] + ', ' + t[1] + ' · ' + t[4] + '</small></div>'; }).join("");
+  return '<section class="uinfo"><div><p class="eyebrow">Univers ' + n + ' sur 3</p><h2 style="font-family:' + u.font + '">' + u.name + '</h2><p class="intent">' + u.intent + '</p><p class="adj">' + u.adj + '</p><p><b>Ce qu\'il sacrifie :</b> ' + u.sacrifice + '</p>' +
+    '<h3>Sa façon de parler</h3><div class="voice">' + voice + '</div>' +
+    '<h3>Ce qui n\'appartient qu\'à lui</h3><ul>' + u.sig.map(function (s) { return "<li>" + s + "</li>"; }).join("") + '</ul></div>' +
+    '<div><h3 style="margin-top:0">Ses couleurs <span class="eyebrow" style="display:inline">· clair | sombre</span></h3><div class="swatches">' + sw + '</div><h3>Ses lettres</h3><div class="typo">' + ty + '</div><h3>Son piège</h3><p class="trap">' + u.trap + '</p></div></section>';
+}
+
+var view = document.getElementById("view"), tabs = document.getElementById("tabs"), state = { tab: "tablee", cmp: "2.7a" };
+try { var saved = JSON.parse(localStorage.getItem("univers-vue") || "null"); if (saved && saved.tab) state = saved; } catch (e) {}
+var TABLIST = KEYS.map(function (k) { return [k, U[k].name]; }).concat([["cmp", "Comparer un écran"]]);
+tabs.innerHTML = TABLIST.map(function (t) { return '<button type="button" data-tab="' + t[0] + '">' + t[1] + '</button>'; }).join("");
+
+function render() {
+  try { localStorage.setItem("univers-vue", JSON.stringify(state)); } catch (e) {}
+  Array.prototype.forEach.call(tabs.children, function (b) { b.setAttribute("aria-pressed", b.dataset.tab === state.tab ? "true" : "false"); });
+  if (state.tab === "cmp") {
+    view.innerHTML = '<div style="display:grid;gap:12px"><p class="lede">Le même écran dans les trois univers.</p><div class="pills">' + SCREENS.map(function (s) { return '<button type="button" data-cmp="' + s[0] + '" aria-pressed="' + (s[0] === state.cmp) + '">' + s[1] + '</button>'; }).join("") + '</div><div class="strip">' +
+      KEYS.map(function (k) { return '<div class="cell"><span class="cap"><b>' + U[k].name + '</b></span>' + phone(k, state.cmp) + '</div>'; }).join("") + '</div></div>';
+  } else {
+    view.innerHTML = '<div style="display:grid;gap:14px">' + info(state.tab) + '<div class="strip">' + SCREENS.map(function (s) { return '<div class="cell"><span class="cap">' + s[0] + ' · <b>' + s[1] + '</b></span>' + phone(state.tab, s[0]) + '</div>'; }).join("") + '</div></div>';
+  }
+}
+document.addEventListener("click", function (e) {
+  var t = e.target.closest("[data-tab]"); if (t) { state.tab = t.dataset.tab; render(); return; }
+  var c = e.target.closest("[data-cmp]"); if (c) { state.cmp = c.dataset.cmp; render(); return; }
+  var f = e.target.closest("[data-flip]");
+  if (f) { var cls = f.classList.contains("wipe") ? "hide" : "flipped"; f.classList.toggle(cls); if (cls === "hide" || !f.classList.contains("flipped")) setTimeout(function () { f.classList.toggle(cls); }, 520); }
+});
+render();
+</script>
