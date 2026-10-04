@@ -8,7 +8,7 @@ Nom de code : *elenchos* (ἔλεγχος, l'examen socratique). Jeu quotidien g
 
 1. `docs/decisions.md` — journal des arbitrages du porteur. Une entrée récente l'emporte sur une entrée ancienne et sur `docs/projet.md`.
 2. `docs/projet.md` — document de projet du porteur (état au 3 octobre 2026). Ses sections sont citées « §n ».
-3. `docs/vision.md` — explication validée de la cohérence du jeu (n'existe qu'une fois validée par le porteur).
+3. `docs/vision.md` — explication validée de la cohérence du jeu ; `docs/onboarding.md` — parcours d'entrée validé (remplace le §7). D'autres fichiers validés pourront s'ajouter au même rang.
 
 Tout agent relit 1 et 2 (et 3 si présent) **avant** de travailler. Toute proposition qui modifie une décision antérieure le dit explicitement, en citant la section ou l'entrée concernée. Aucune contradiction tolérée.
 
