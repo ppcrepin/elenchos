@@ -240,7 +240,7 @@ Tout ce qui est dans le téléphone est le produit, en « tu », tel que validé
   - 5.2 : sans la ligne « Tempérament ».
   - 2.7f : partout sauf à la séance 15.
   - 3.2 : seulement s'il y a un badge.
-  - 5.4 : présent, avec sa variante d'avant la révélation, ouverte depuis l'Historique : « Le vote et les auteurs : {jour} à 18h », sans lien officiel.
+  - 5.4 : présent, avec sa variante d'avant la révélation, ouverte depuis l'Historique : « Le vote et les auteurs : {jour} à 18h », sans lien officiel. Une source : la ligne validée « Sources : extraits des débats » est le lien. Deux sources ou plus : cette ligne devient un intitulé, et dessous une ligne-lien par source, « Extrait 1 », « Extrait 2 », « Extrait 3 » (44 px de haut au moins, nouvel onglet ; une liste pour un lecteur d'écran).
   - 5.12 : géré, si aucun personnage n'a répondu la veille ; son « Suivant » mène à la raison, puis à 2.5 ; le lendemain, la révélation commence au vote.
   - 4.2 : huit barres, dans l'ordre fixe ; avant le premier dimanche, aucun titre sous les visages et pas d'encadré « Surprise de la semaine ».
 - **Liens vers un écran absent** : rien n'est masqué ; un toucher affiche dans le cadre, sous le téléphone, « Pas dans l'essai. », jusqu'au toucher suivant. Masquer « + Inviter » changerait un écran validé, et le porteur pourrait y lire une règle du produit. Concernés : « + Inviter » et « Amis ▾ » (4.2) ; « Changer · Créer · Quitter » et l'interrupteur du message de 18h (5.7) ; « Renvoyer le code » (1.9).
@@ -287,6 +287,16 @@ Tout ce qui est dans le téléphone est le produit, en « tu », tel que validé
 - Une surprise = une carte de ce proche, déjà révélée, que le porteur a attribuée à quelqu'un d'autre. Exclus : les cartes passées, la bonne personne avec une raison fausse, les textes d'entrée.
 - Sans aucune surprise, le titre « Ses surprises » disparaît aussi : « Pas encore de surprise » serait un score de zéro déguisé.
 - Aucun nombre ; jamais la réponse du porteur à côté. Différence avec la maquette 4.3, dont une ligne n'a pas de raison : dans l'essai, la raison est toujours écrite.
+
+### 7.8 Typographie à l'affichage (UX)
+
+Les gabarits de cette spécification, les maquettes et le fichier scellé restent écrits en typographie simple. Au moment de l'affichage, la page et le programme de contrôle appliquent à chaque chaîne, avant d'y insérer le pseudo, ces règles dans cet ordre :
+1. ' (U+0027) devient ’ (U+2019) ;
+2. une espace U+0020 placée juste avant « ? », « ! » ou « ; » devient une espace fine insécable U+202F ;
+3. une espace U+0020 placée juste avant « : », juste après « « », juste avant « » », juste avant « · » ou juste après « ← » devient une espace insécable U+00A0 ;
+4. dans un compte à rebours « {h} h {mm} », les deux espaces deviennent U+00A0.
+
+Le carnet n'applique que la règle 1. « 18h » reste tel quel (validé, D-014). La trace enregistre les phrases sous leur forme affichée. Aucun mot validé ne change ; seule la forme de l'apostrophe et de l'espace avant « ? », « ! », « ; » se voit (par exemple dans le message de 18h, « Ça alors ! », « Et Agathe ? Sa réponse ? »). Raison : avec des espaces ordinaires, un « ? » ou un « » » peut se retrouver seul en début de ligne sur un téléphone de 360 px ; et en Alegreya l'apostrophe droite ressemble à une marque de machine à écrire. À dire au porteur à la livraison.
 
 ## 8. Le cadre de l'essai, hors du téléphone
 
@@ -341,10 +351,16 @@ Sous le téléphone, après « En attendant » (séances 1 à 14 ; séance 0 : �
 
 Règle (Juridique) : un chiffre qui changerait si le porteur avait répondu autrement à un texte n'est jamais donné texte par texte. L'équipe connaît les réponses scellées des personnages et les règles : un tel chiffre, par séance, se recouperait.
 
-- **Par séance** (ce que le porteur fait, pas ce qu'il répond) : jour et heure d'ouverture de la séance (à l'heure près) et jours écoulés depuis la précédente, seule mesure du retour observée plutôt que déclarée ; durées de la séance, de Deviner et de Répondre ; nombre de « Relire » et de « Passer » ; dans sa manche Deviner, attributions justes, raison cachée tentée puis trouvée. Risque assumé : la durée de Répondre et le nombre de « Relire » sont attachés à un texte ; ils disent l'hésitation, pas la réponse.
-- **Par semaine** (résultats affichés dans le jeu) : titres reçus par le porteur ; titulaires de chaque titre.
-- **Sur l'ensemble de l'essai**, un seul chiffre chacun, jamais par séance, par texte, par tension ni par personnage (agrégats pour le contrôle 15) : justesse des personnages sur toutes les cartes ; justesse des personnages sur les réponses du porteur (proportion seule) ; part de réponses atypiques parmi les cartes proposées au porteur ; cartes identiques remplacées, et servies ensemble, dans la manche du porteur ; nombre de raisons « aucune » chez les personnages ; nombre de départages par tirage.
-- **Jamais** : une position, une raison, une phrase du jour ou de la semaine, un curseur, le pseudo du porteur ; ni un chiffre lié à un texte précis qui dépend de ses réponses (par exemple « au texte 5, Valentin a trouvé la réponse du porteur »).
+Constat (Game design) : les cartes servies au porteur ne dépendent que du fichier scellé (sa propre réponse n'entre pas dans le calcul). Un chiffre qui ne porte que sur ces cartes est donc le même pour tout joueur : il décrit le fichier, pas l'essai. Ces chiffres vont au rapport de scellement (§9), pas au carnet. Inversement, ce que le porteur fait de ces cartes peut être donné séance par séance sans sortir de la règle ci-dessus.
+
+- **Ouverture d'une séance** : le premier toucher du porteur dans la séance (aux séances 3 à 14, le toucher du message de 18h, l'équivalent de l'ouverture de la notification dans le produit), pas l'affichage qui suit « Jour suivant ». Les jours écoulés, l'heure d'ouverture et la durée de la séance partent de ce toucher.
+- **Par séance** (ce que le porteur fait, pas ce qu'il répond) : jour et heure d'ouverture (à l'heure près) et jours écoulés depuis la précédente (différence des dates locales de Paris), seule mesure du retour observée plutôt que déclarée ; durées de la séance, de Deviner et de Répondre ; nombre de « Relire » et de « Passer » ; à chaque révélation, le verdict de chaque carte de sa manche dans l'ordre d'affichage (juste, avec la raison ; juste ; faux ; passé, cartes laissées sans attribution comprises) et la raison cachée tentée ou non. Ces verdicts ne dépendent pas de ses réponses ; avec le fichier scellé, ils permettent au bilan de croiser ses erreurs avec la question 1 du carnet. Risque assumé : la durée de Répondre et le nombre de « Relire » sont attachés à un texte ; ils disent l'hésitation, pas la réponse.
+- **Par semaine** (résultats affichés dans le jeu) : titulaires du Sans-Faute (semaine 2), du Devin, du Mystère et du Fidèle ; le porteur s'y écrit « vous ». La surprise de la semaine et Le Pas de Côté n'y figurent pas : la première nomme un texte et dépend de sa réponse à ce texte ; le second dirait qu'une de ses réponses va contre son portrait.
+- **Sur l'ensemble de l'essai**, un seul chiffre chacun, jamais par séance, par texte, par tension ni par personnage, et « pas de chiffre » tant que moins de 5 textes ont été révélés (seuil à confirmer par Juridique) :
+  - justesse des personnages entre eux : cartes des manches des personnages dont l'auteur (après redistribution) est un personnage, attribuées juste, sur ces mêmes cartes ; manches révélées seulement ;
+  - justesse des personnages sur les réponses du porteur : la même chose pour les cartes dont l'auteur est le porteur ; proportion seule, en pourcentage ;
+  - titres attribués par tirage au sort faute de départage (Devin, Mystère, surprise de la semaine ; semaines 1 et 2 ; de 0 à 6) : s'il vaut 0, la convention « départage final par tirage » n'a rien décidé (C-013).
+- **Jamais** : une position, une raison, une phrase du jour ou de la semaine, un curseur, le pseudo du porteur ; ni un chiffre lié à un texte précis qui dépend de ses réponses (par exemple « au texte 5, Valentin a trouvé la réponse du porteur ») ; ni le mot « atypique » ou une mesure des réponses atypiques, qui dévoileraient un mécanisme caché.
 
 ### 8.5 Fin d'essai (séance 15, avant le dévoilement)
 
@@ -414,13 +430,76 @@ Le message remplace tout le cadre : pas de téléphone, pas de barre, ni « Qui 
 3. **Autre onglet** : « **La page est ouverte deux fois.** Vous avez continué la partie dans un autre onglet. Pour ne pas effacer ce que vous y avez joué, celui-ci s'est arrêté ; votre dernier geste ici n'a pas été gardé. » ; bouton « Reprendre ici » ; dessous, plus petit : « Vous retrouverez la partie telle que vous l'avez laissée dans l'autre onglet. » Le bouton recharge la page, qui relit l'état gardé ; rien n'est jamais écrasé.
 4. **Empreinte**, identique dans la page et dans la conversation : 16 groupes de 4 caractères, sur 4 lignes de 4 groupes ; minuscules ; chasse fixe, en couleur pleine ; une espace entre les groupes, un vrai retour à la ligne après chaque ligne. Message dans la conversation, avant la séance 0 : « Voici l'empreinte du fichier qui fixe d'avance les textes et toutes les réponses des quatre personnages : si une seule lettre du fichier changeait, l'empreinte changerait du tout au tout. Rien à faire d'ici là : à la fin de l'essai, la page affichera l'empreinte du fichier qu'elle contient, et si c'est la même que celle-ci, rien n'a été retouché pendant que vous jouiez. » Suivent l'empreinte, puis « Publiée le {date} à {heure}. »
 
+### 8.12 Format du carnet (UX, fusionné avec Game design)
+
+Le carnet se lit comme un formulaire : une ligne « intitulé : valeur. » par mesure, un bloc par séance, puis les titres, les chiffres globaux et les questions de fin. Les choix sont recopiés tels qu'ils sont écrits sur les boutons ; aucun code.
+
+**Règles.**
+- UTF-8 en forme NFC ; lignes séparées par U+000A seulement, sans tabulation ; blocs séparés par exactement une ligne vide ; pas de ligne vide au début ; le texte finit par une ligne vide, puis « Fin du carnet », sans retour à la ligne final.
+- Seule l'espace U+0020 ; jamais deux espaces de suite, ni en début ou fin de ligne. Apostrophe U+2019 (§7.8, règle 1 seulement).
+- Aucune ligne ne commence par « - », « * », « # », « > » ou par un chiffre suivi d'un point (le texte collé ne doit jamais être lu comme une liste ou un titre).
+- Nombres en décimal, sans zéro initial ni séparateur de milliers. Accords : « 1 juste », « 2 justes » ; « fois » invariable.
+- Durée, une seule forme : « {m} min {ss} s », m = ⌊d/60⌋ sans zéro initial, ss = d mod 60 sur deux chiffres (« 0 min 42 s », « 125 min 03 s »). Expression régulière : `\b(?:0|[1-9][0-9]*) min [0-5][0-9] s\b`. Aucune autre partie du carnet ne contient « min ».
+- Comptes bruts « x fois sur y », sans arrondi. Seule exception, la justesse des personnages sur les réponses du porteur, en pourcentage (« proportion seule ») : n = ⌊(200·p + q) / (2·q)⌋ sur la fraction exacte p/q ; n = 0 avec p > 0 donne 1 ; n = 100 avec p < q donne 99 ; on écrit « {n} % ».
+- Date d'ouverture : date locale de Paris (« lundi 19 octobre 2026 », « 1er » pour le premier du mois) ; heure tronquée, « entre {h}h00 et {h}h59 ».
+
+**Gabarit** (crochets : ligne présente selon le cas) :
+
+```
+Carnet de l’essai Elenchos
+Ce carnet ne contient ni vos avis ni leurs raisons, ni vos phrases du jour ou de la semaine, ni votre portrait, ni votre pseudo.
+{Essai mené jusqu’à la clôture. | Essai arrêté au jour {k}. | Essai arrêté à l’entrée.}
+[Raison de l’arrêt : {bouton | pas de réponse}.]
+[Correctif de la page publié avant {le jour {k} | la clôture}.]
+
+{Entrée | Jour {k} sur 14 | Clôture}
+Ouverture : {lundi 19 octobre 2026}, entre {h}h00 et {h}h59.[ Ouverture précédente : {le même jour | la veille | l’avant-veille | {n} jours avant}.]
+Durée : {D}{suite}.
+Boutons touchés : Relire {n} fois, Passer {n} fois.
+[Révélation : {verdict}, {verdict}, {verdict}.[ Raison cachée : {tentée | pas tentée}.]]
+[Vos erreurs à la révélation : {bouton}.]
+[{Le texte du jour et ses quatre raisons | Les trois textes et leurs raisons} : {bouton}.]
+[Votre moment préféré : {bouton}.]
+
+Titres de la semaine {1 | 2}
+[Le Sans-Faute : {titulaires}.]
+Le Devin : {titulaires}.
+Le Mystère : {titulaires}.
+Le Fidèle : {titulaires}.
+
+Sur tout l’essai
+Quand un personnage devinait la réponse d’un autre personnage, il a trouvé son auteur : {x fois sur y | pas de chiffre}.
+Quand un personnage devinait l’une de vos réponses, il a trouvé que c’était vous : {dans n % des cas | pas de chiffre}.
+Titres attribués par tirage au sort, faute de départage : {n | pas de chiffre}.
+
+Questions de fin
+{Au fil des deux semaines | Jusqu’ici}, deviner était : {bouton | pas de réponse}.
+Où vous placez chacun : {question passée.}
+Agathe : {S} · {P} · {T} · {L}.
+Nassim : …
+Odile : …
+Valentin : …
+
+Fin du carnet
+```
+
+- {verdict} : « juste, avec la raison », « juste », « faux » ou « passé », dans l'ordre d'affichage des cartes de la manche révélée ce jour-là (jouée la veille). La ligne « Révélation » n'existe qu'aux séances 3 à 15, quand une révélation a eu lieu ; « rien à révéler » si la manche était vide (écran 5.12) ; « Raison cachée » seulement s'il y avait une carte à raison cachée. Placée dans le même bloc que « Vos erreurs à la révélation », elle permet de les croiser.
+- {suite} : « , dont {D} pour deviner et {D} pour répondre », « , dont {D} pour deviner », « , dont {D} pour répondre » ou rien ; une durée absente disparaît ; si la durée de la séance est absente, toute la ligne disparaît.
+- {titulaires} : « pas attribué », ou la liste dans l'ordre Agathe, Nassim, Odile, Valentin, vous (« A », « A et B », « A, B et C »).
+- {S} : « Sécurité », « Liberté individuelle », « au milieu entre Sécurité et Liberté individuelle » ou « sans choix entre Sécurité et Liberté individuelle » ; de même pour P, T et L.
+- {bouton} : le libellé exact du bouton, majuscule comprise. Une question sans réponse ne donne pas de ligne.
+- Le bloc « Titres de la semaine » suit le bloc du jour 7 ou du jour 14. Le bloc « Questions de fin » est absent en cas d'arrêt avant le jour 3 ; « Où vous placez chacun : question passée. » si F1 a été passée.
+- « séance k » s'écrit « jour k », le mot de la barre que voit le porteur.
+
 ## 9. Ce qui est contrôlé
 
 Les recalculs sont faits par un programme écrit à part, à partir de cette spécification et des fichiers de `a-ne-pas-ouvrir/` seuls, sans lire le code de la page. Le Vérificateur relit les résultats et les différences.
 
 **Avant d'écrire la page.** Front-end a relu §0, §8.7, §8.8 et §9 (faisabilité confirmée, précisions intégrées) ; Back-end relit l'annexe B et le schéma ; UX a écrit les textes des arrêts techniques et la présentation de l'empreinte (§8.11) ; la Direction artistique a confirmé les polices (§8.8) et donné la consigne visuelle du cadre (§8.1).
 
-**Avant d'écrire le fichier scellé.** Le schéma du fichier scellé (noms de champs, types) et le format de la trace (par séance : cartes servies dans l'ordre, auteur, niveau, raison, carte à raison cachée, attributions du joueur et des personnages, côtés attendus, points, titres, phrases, curseurs, personnages affichés dans « Déjà joué aujourd'hui » pour l'heure fournie par le harnais, l'horloge de la page étant injectable dans la version témoin) sont fixés dans `a-ne-pas-ouvrir/schema.md` (Back-end ; rangé dans le dossier caché parce que les noms de certains champs laissent entrevoir les règles de calcul), à faire relire par l'auteur du programme de contrôle. Restent à fixer avant d'écrire le programme de contrôle (partie 6 du schéma) : le format exact du carnet (UX, avec Front-end) ; la définition des agrégats du §8.4 (Game design) ; la typographie des phrases (apostrophe, espaces fines) ; l'affichage de plusieurs sources pour un texte (écran 5.4). La difficulté est réglée une seule fois sur 200 parties simulées. Protocole : `a-ne-pas-ouvrir/regles-de-calcul.md`, §9 bis.
+**Avant d'écrire le fichier scellé.** Le schéma du fichier scellé (noms de champs, types) et le format de la trace (par séance : cartes servies dans l'ordre, auteur, niveau, raison, carte à raison cachée, attributions du joueur et des personnages, côtés attendus, points, titres, phrases, curseurs, personnages affichés dans « Déjà joué aujourd'hui » pour l'heure fournie par le harnais, l'horloge de la page étant injectable dans la version témoin) sont fixés dans `a-ne-pas-ouvrir/schema.md` (Back-end ; rangé dans le dossier caché parce que les noms de certains champs laissent entrevoir les règles de calcul), à faire relire par l'auteur du programme de contrôle. Les points que la partie 6 du schéma laissait ouverts sont réglés : format du carnet (§8.12), mesures globales (§8.4), typographie (§7.8), plusieurs sources (§7.1). La difficulté est réglée une seule fois sur 200 parties simulées. Protocole : `a-ne-pas-ouvrir/regles-de-calcul.md`, §9 bis.
+
+**Rapport de scellement** (rangé dans `a-ne-pas-ouvrir/`, daté, écrit avec le fichier scellé) : les chiffres qui ne dépendent que du fichier (§8.4) — part de réponses atypiques parmi les cartes servies au porteur ; remplacements de cartes identiques et cartes identiques servies ensemble dans sa manche ; raisons « aucune » parmi ses cartes (affichées et cachées à part) et parmi les réponses scellées (vérifie l'annexe A du fichier caché) ; égalités de classement dans sa manche — et les résultats du réglage du §9 bis.
 
 **Avant la séance 0.** L'empreinte du fichier scellé est publiée dans la conversation, avec la date et l'heure.
 
@@ -430,7 +509,7 @@ Les recalculs sont faits par un programme écrit à part, à partir de cette sp�
 - Le moteur (sélection, carte à raison cachée, devinettes, points, titres, badges, portrait, phrases) n'accède ni à l'écran, ni au stockage, ni à l'horloge, ni au hasard : il reçoit les coups, le fichier scellé et l'heure. Seule l'interface lit l'heure (heure locale, à la minute, tronquée, à chaque affichage de « Déjà joué aujourd'hui ») ; la trace consigne l'heure lue et les visages affichés.
 - Rejeu, sans rien ajouter à la page : un navigateur sans tête (Chromium et WebKit au moins), heure et fuseau (Europe/Paris) fixés par l'outil de test, joue par l'interface les parties témoins et au moins dix parties au hasard, une fois sur chaque version, en trouvant les boutons par leur rôle et leur nom. Il vérifie : texte affiché identique, écran par écran, dans les deux versions ; coups gardés dans le stockage identiques aux coups joués ; trace témoin identique à celle du programme indépendant. Les 200 parties au hasard sont rejouées par le moteur de la version témoin.
 
-1. Empreinte : SHA-256 du fichier scellé (JSON canonique) égal à l'empreinte publiée ; données embarquées identiques ; vecteurs de test reproduits.
+1. Empreinte : SHA-256 du fichier scellé (JSON canonique) égal à l'empreinte publiée ; données embarquées identiques ; vecteurs de test reproduits ; typographie simple dans les chaînes affichées du fichier scellé (ni U+2019, ni U+00A0, ni U+202F ; « ? », « ! », « ; », « : », « » » toujours précédés d'une espace, « « » toujours suivi d'une espace ; adresses non concernées).
 2. Profils : conformes au §1 et aux contraintes de `a-ne-pas-ouvrir/profils.md` ; aucune étiquette politique.
 3. Réponses : toutes les réponses des personnages, recalculées par les règles de `a-ne-pas-ouvrir/regles-de-calcul.md`, réponses atypiques comprises.
 4. Absences : celles prévues ; un absent ne répond pas et ne devine pas.
@@ -440,16 +519,16 @@ Les recalculs sont faits par un programme écrit à part, à partir de cette sp�
 8. Parties témoins et au hasard : points, titres et badges reproduits.
 9. Parties témoins et au hasard : portrait et phrases reproduits.
 10. Parties témoins et au hasard : lignes rouges sur tout ce qui a été affiché (jamais la réponse du porteur à côté d'une autre, aucun taux d'accord, aucun classement, jamais « n'a pas joué »).
-11. Textes : toutes les chaînes affichées sur les parties témoins sont relevées et comparées aux maquettes finales et à l'annexe C ; une chaîne absente des deux est un défaut, ponctuation (§4.6), élisions et accords (§7.6) compris. Relevé relu par UX.
+11. Textes : toutes les chaînes affichées sur les parties témoins sont relevées et comparées aux maquettes finales et à l'annexe C ; une chaîne absente des deux est un défaut, ponctuation (§4.6), élisions et accords (§7.6) compris ; les règles du §7.8 sont appliquées aux chaînes des maquettes et de l'annexe C avant la comparaison ; au rejeu à 320 px de large, aucune ligne affichée ne commence par « ? », « ! », « : », « ; », « » » ou « · ». Relevé relu par UX.
 12. Export : sur les parties témoins et au hasard, le texte exporté ne contient que les champs listés au §8.4. Deux parties jouées avec les mêmes devinettes et des réponses opposées du porteur donnent, séance par séance, les mêmes champs, hors durées, nombre de « Relire » et heures d'ouverture.
 13. Version du porteur : les trois parties témoins sont rejouées par automate sur la version donnée au porteur ; le carnet qu'elle exporte est comparé à celui que le programme de contrôle calcule d'après la trace de la version témoin. Toute différence est un défaut.
-14. Navigateur. Avant de donner la page, avec un joueur témoin, d'abord sur le fichier construit dans un navigateur sans tête, puis sur la version publiée dans la mesure où l'équipe peut l'ouvrir (le porteur n'a aucune manipulation technique à faire, D-005) : (a) pendant une séance entière, le panneau réseau du navigateur ne montre aucune requête émise par la page après son chargement ; (b) une réponse survit à la fermeture de l'onglet, au lendemain et à une nouvelle publication ; (c) une autre page, publiée pour le test et ouverte dans le même navigateur, ne lit rien de ce que la page a gardé ; (d) après « Tout effacer », il ne reste rien. Si (b) ou (c) échoue, la page n'est pas donnée sous cette forme : l'orchestrateur trouve une autre façon de l'ouvrir qui garde les réponses dans le navigateur, et refait les mêmes tests. Le stockage de claude.ai n'est pas une solution de repli sans décision du porteur, car il modifierait D-016. Chez le porteur, la page refait sa vérification du stockage à chaque chargement (§8.8), et la barre affiche « Jour n sur 14 » à la réouverture : une partie perdue se voit aussitôt. Toute nouvelle publication refait les contrôles 5, 12, 13 et 14, et la comparaison octet pour octet de la page servie (§8.8).
+14. Navigateur. Avant de donner la page, avec un joueur témoin, d'abord sur le fichier construit dans un navigateur sans tête, puis sur la version publiée dans la mesure où l'équipe peut l'ouvrir (le porteur n'a aucune manipulation technique à faire, D-005) : (a) pendant une séance entière, le panneau réseau du navigateur ne montre aucune requête émise par la page après son chargement ; (b) une réponse survit à la fermeture de l'onglet, au lendemain et à une nouvelle publication ; (c) une autre page, publiée pour le test et ouverte dans le même navigateur, ne lit rien de ce que la page a gardé ; (d) après « Tout effacer », il ne reste rien ; (e) le carnet copié depuis la page publiée, puis collé dans une conversation, est identique octet pour octet (apostrophes, lignes vides). Si (b) ou (c) échoue, la page n'est pas donnée sous cette forme : l'orchestrateur trouve une autre façon de l'ouvrir qui garde les réponses dans le navigateur, et refait les mêmes tests. Le stockage de claude.ai n'est pas une solution de repli sans décision du porteur, car il modifierait D-016. Chez le porteur, la page refait sa vérification du stockage à chaque chargement (§8.8), et la barre affiche « Jour n sur 14 » à la réouverture : une partie perdue se voit aussitôt. Toute nouvelle publication refait les contrôles 5, 12, 13 et 14, et la comparaison octet pour octet de la page servie (§8.8).
 
-**Correctif.** Un défaut trouvé avant la séance 0 : on corrige, on re-scelle, on publie une nouvelle empreinte datée, on rejoue tous les contrôles. Après la séance 0, le fichier scellé ne change plus. Un correctif de la page est daté, refait les contrôles 5 et 11 à 14, et est noté dans le carnet (« Correctif publié avant la séance k »). Si le défaut touche un calcul déjà montré, le rapport final marque l'essai comme affecté à partir de cette séance.
+**Correctif.** Un défaut trouvé avant la séance 0 : on corrige, on re-scelle, on publie une nouvelle empreinte datée, on rejoue tous les contrôles. Après la séance 0, le fichier scellé ne change plus. Un correctif de la page est daté, refait les contrôles 5 et 11 à 14, et est noté dans le carnet (« Correctif de la page publié avant le jour k. »). Si le défaut touche un calcul déjà montré, le rapport final marque l'essai comme affecté à partir de cette séance.
 
 **Après l'essai, sur le carnet du porteur.**
 
-15. Chiffres à rapporter : justesse du porteur en semaines 1 et 2 ; repère indicatif, hypothèse de Game design non validée : 35 à 65 % en semaine 2 (au hasard, environ 25 %) ; pas un critère de décision (D-008) ; agrégats du §8.4.
+15. Chiffres à rapporter : justesse du porteur par semaine, comptée à la révélation (semaine 1 : textes 1 à 5 ; semaine 2 : textes 6 à 12 ; texte 13 à part), sur toutes les cartes servies, passes et cartes sans attribution comprises (sinon passer ferait monter le chiffre) ; la même justesse sans les réponses atypiques, calculée par l'équipe avec le fichier scellé (vraie mesure de l'apprentissage : les réponses atypiques sont faites pour ne pas se deviner) ; repère indicatif, hypothèse de Game design non validée : 35 à 65 % en semaine 2 (au hasard, environ 25 %) ; pas un critère de décision (D-008) ; croisement des erreurs avec la question 1 du carnet ; chiffres globaux du §8.4. Le §9 bis calcule le joueur simulé de la même façon.
 
 ## Annexe A : ce que Contenu fournit
 
@@ -485,6 +564,8 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 7. « Pas encore de titre. Les titres tombent le dimanche, à 18h. » (5.2 et 5.5, avant les premiers titres).
 8. Dates : le jour seul (« mercredi ») sur l'écran verrouillé et dans l'Historique ; « Semaine 1 », « Semaine 2 » en 5.2 et 5.5 (à confirmer avec Front-end).
 9. Seulement si Contenu retient un projet de loi : « Proposé par le Gouvernement. »
+10. Plusieurs sources en 5.4 : « Extrait 1 », « Extrait 2 », « Extrait 3 ».
+11. Typographie à l'affichage (§7.8) : apostrophe courbe, espace fine avant « ? », « ! », « ; », dans toutes les chaînes ; aucun mot ne change.
 
 **Dans le téléphone, validés ailleurs mais jamais dessinés :** « Rien à deviner pour l'instant. Réponds : à 18h, ton cercle pourra te deviner. » ; « Agathe a réussi à te surprendre deux fois. » ; « Le vote et les auteurs : {jour} à 18h » ; une carte bien devinée à 18h (« Ton pari : {prénom}. », le visage, « Tu connais ton monde. »).
 
@@ -504,7 +585,7 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 - ce que contient le carnet qu'il copiera (§8.4, §8.7), et ce qu'il ne contient jamais ;
 - les limites du stockage (navigation privée, Safari, ouvrir toujours la page de la même façon, §8.8) ;
 - le fichier embarqué se décode, et la v2 de cette spécification, qui contenait les règles de calcul, reste lisible dans l'historique Git : l'essai repose sur sa bonne foi ;
-- les textes nouveaux à l'écran (annexe C).
+- les textes nouveaux à l'écran (annexe C), dont la typographie à l'affichage (§7.8), le vrai italique d'Alegreya Sans et la barre d'état en police du système (§8.8).
 
 **Conventions propres à l'essai :**
 - quatre tensions seulement ;

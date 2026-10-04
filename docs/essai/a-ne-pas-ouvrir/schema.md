@@ -248,7 +248,7 @@ Ici, `hex8` et `n` sont cohérents entre eux : 1a2b3c4d en hexadécimal vaut 439
   - Le harnais consigne ces entrées dans son **journal**. Le journal a la forme de la trace, réduite à ces champs.
   - Tout le reste de la trace est une sortie.
   - Dans la trace de P, les entrées sont ce que la page a lu et gardé. Dans celle de C, ce sont les valeurs du journal. Les comparer prouve qu'aucun coup ne s'est perdu en route.
-- **Horloge.** Le harnais fixe l'heure, dans le fuseau Europe/Paris, à deux moments : à l'ouverture de chaque séance, et avant chaque affichage d'« En attendant ». Il la tient immobile pendant cet affichage. L'heure que lit la page doit être celle qu'il a fixée, à la minute près.
+- **Horloge.** Le harnais fixe l'heure, dans le fuseau Europe/Paris, à deux moments : au premier toucher du joueur dans chaque séance (son « ouverture », §8.4), et avant chaque affichage d'« En attendant ». Il la tient immobile pendant cet affichage. L'heure que lit la page doit être celle qu'il a fixée, à la minute près.
 - **Deux modes.**
   - `interface` : la partie est jouée par l'interface, dans un navigateur sans tête. C'est le cas des parties témoins et d'au moins dix parties au hasard (§9).
   - `moteur` : la partie est rejouée par le moteur seul. C'est le cas des 200 parties au hasard.
@@ -276,7 +276,7 @@ Ici, `hex8` et `n` sont cohérents entre eux : 1a2b3c4d en hexadécimal vaut 439
 | Clé | Type | Présente quand (sinon `null`) | Contenu |
 |---|---|---|---|
 | `k` | entier | toujours | numéro de séance |
-| `ouverture` | instant | toujours | entrée : l'heure à l'ouverture de la séance |
+| `ouverture` | instant | toujours | entrée : l'heure du premier toucher du joueur dans la séance (aux séances 3 à 14, le toucher du message de 18h), pas l'affichage qui suit « Jour suivant » (§8.4) |
 | `coups` | objet | toujours | entrée (partie 3.4) |
 | `entree` | objet | séance 0 | partie 3.5 |
 | `revelation` | objet | séances 3 à 15 | partie 3.7 |
@@ -457,21 +457,19 @@ On calcule en minutes : r(m) = (m − 1080 + 1440) mod 1440. Un personnage figur
 | `attributions_justes` | entier ou `null` | dans la manche de cette séance ; `null` s'il n'y a pas de manche |
 | `raison_tentee`, `raison_trouvee` | booléen ou `null` | dans la manche de cette séance ; `null` s'il n'y a pas de carte à raison cachée |
 
-`agregats` couvre l'ensemble de la partie (§8.4). Les définitions proposées sont à la partie 6, point 2.
+`agregats` couvre l'ensemble de la partie (§8.4). Chaque chiffre vaut `null` tant que moins de 5 textes ont été révélés (seuil du §8.4, à confirmer par Juridique).
 
-| Clé | Type |
-|---|---|
-| `justesse_personnages` | fraction ou `null` |
-| `justesse_personnages_sur_porteur` | fraction ou `null` |
-| `part_atypiques_porteur` | fraction ou `null` |
-| `identiques_remplacees` | entier |
-| `identiques_ensemble` | entier |
-| `raisons_aucune_personnages` | entier |
-| `departages` | entier |
+| Clé | Type | Définition (Game design) |
+|---|---|---|
+| `justesse_personnages_entre_eux` | fraction ou `null` | cartes des manches des personnages dont `auteur_compte` est un personnage, attribuées juste, sur ces mêmes cartes ; manches révélées seulement |
+| `justesse_personnages_sur_porteur` | fraction ou `null` | la même chose pour les cartes dont `auteur_compte` est le porteur ; le carnet n'en donne que le pourcentage |
+| `titres_tires_au_sort` | entier ou `null` | nombre de titres (Devin, Mystère, surprise ; semaines 1 et 2) dont `departage` vaut `"tirage"`, de 0 à 6 |
+
+Les chiffres qui ne dépendent que du fichier scellé (réponses atypiques, cartes identiques, raisons « aucune », égalités de classement dans la manche du porteur) ne sont pas dans la trace : ils vont au rapport de scellement (§9).
 
 Une proportion dont le dénominateur serait nul (aucune carte) vaut `null`.
 
-`carnet.texte` est le texte exact que « Copier mon carnet » a donné à la fin de la partie (clôture ou arrêt), jusqu'à « Fin du carnet » compris. Son format est à fixer (partie 6, point 1).
+`carnet.texte` est le texte exact que « Copier mon carnet » a donné à la fin de la partie (clôture ou arrêt), jusqu'à « Fin du carnet » compris. Son format est au §8.12.
 
 ### 3.11 Exemple
 
@@ -535,7 +533,7 @@ Fragment 5. Un extrait de la séance 9. Seule la tension T du portrait est montr
   "attente": {"lectures": [{"heure": "09:00", "visages": ["Hugo"]}]},
   "mesures": {"attributions_justes": 1, "duree_deviner": 41, "duree_repondre": 37, "duree_seance": 118, "jours_ecoules": 1, "passer": 1, "raison_tentee": true, "raison_trouvee": false, "relire": 1},
   "ouverture": "2026-10-21T08:52+02:00",
-  "phrase_jour": {"classe": "penchant", "phrase": "Aujourd'hui, tu as penché vers le changement.", "pole": 1, "texte": "9", "w": "1/2"},
+  "phrase_jour": {"classe": "penchant", "phrase": "Aujourd’hui, tu as penché vers le changement.", "pole": 1, "texte": "9", "w": "1/2"},
   "portrait": {
     "ordre_moi": ["T", "S", "P", "L"],
     "tensions": {"T": {"c": "8/13", "l": "31/40", "net": false, "somme_w": "5/2"}}
@@ -596,11 +594,11 @@ Où regarder une différence :
 
 ### 4.3 Le carnet (contrôles 12 et 13)
 
-- **Contrôle 13.** Le harnais rejoue les trois parties témoins sur la version du porteur, avec le même journal, et récupère le carnet copié. Il le compare au `carnet.texte` de la trace de C pour la même partie. Avant la comparaison, chaque durée est remplacée par « ‹durée› » dans les deux textes. Pour cela, le format du carnet donne aux durées une forme qu'on peut repérer (partie 6, point 1). Les heures, fixées par le harnais, sont comparées.
+- **Contrôle 13.** Le harnais rejoue les trois parties témoins sur la version du porteur, avec le même journal, et récupère le carnet copié. Il le compare au `carnet.texte` de la trace de C pour la même partie. Avant la comparaison, chaque durée est remplacée par « ‹durée› » dans les deux textes. Les durées se repèrent par l'expression régulière du §8.12. Les heures, fixées par le harnais, sont comparées.
 - **Contrôle 12.**
   - `carnet.texte` ne contient jamais le pseudo (`seances[0].coups.pseudo`).
   - On prend deux parties jouées avec les mêmes devinettes et des réponses opposées. Séance par séance, leurs `seances[k].mesures` sont identiques, sauf les `duree_*` et `relire`. Le harnais leur donne les mêmes heures d'ouverture.
-  - La règle « le carnet ne contient que les champs du §8.4 » ne pourra s'écrire qu'une fois le format du carnet fixé.
+  - Le carnet suit exactement le gabarit du §8.12 : toute ligne qui n'y figure pas est un défaut.
 
 ### 4.4 Mettre l'horloge à l'épreuve
 
@@ -615,26 +613,10 @@ Au moins une partie témoin contient les cas suivants :
 - La page refuse un fichier scellé dont le format ou la version est inattendu (étape V4). C refuse une trace ou un journal de version inattendue.
 - Après la séance 0, le fichier scellé ne change plus (§9, « Correctif »), et son format non plus. Un correctif de la page peut changer la trace : on refait alors les contrôles (§9).
 
-## 6. Points à fixer avant d'écrire le programme de contrôle
+## 6. Points fixés depuis la version 1 de ce document
 
-1. **Le format du carnet n'existe encore nulle part.**
-   - Il est à écrire par UX, avec Front-end.
-   - Ce document lui pose des contraintes :
-     - lignes séparées par U+000A seulement ;
-     - aucune tabulation ;
-     - le texte finit exactement par « Fin du carnet », sans retour à la ligne final ;
-     - chaque durée réelle s'écrit sous une seule forme, qu'une seule expression régulière, donnée avec le format, sait repérer ;
-     - le pseudo n'y figure jamais ;
-     - une proportion s'affiche selon une règle d'arrondi exacte, calculée sur la fraction et jamais en virgule flottante.
-   - Sans ce format, les contrôles 12 et 13 ne peuvent pas être écrits en entier.
-2. **Définitions des agrégats du §8.4.** Voici les lectures proposées, à confirmer par Game design :
-   - `justesse_personnages` : cartes attribuées juste par les personnages, rapportées à toutes leurs cartes, sur les manches dont la révélation a eu lieu ;
-   - `justesse_personnages_sur_porteur` : la même chose, limitée aux cartes dont `auteur_compte` est le porteur ;
-   - `part_atypiques_porteur` : on prend toutes les manches du porteur, jouées ou non. Le numérateur compte les cartes dont l'auteur d'origine et le texte figurent dans `reponses_atypiques`. Le dénominateur compte toutes les cartes de ces manches ;
-   - `identiques_remplacees` : nombre total de `remplacements` dans les manches du porteur ;
-   - `identiques_ensemble` : nombre de manches du porteur où au moins deux cartes servies restent identiques ;
-   - `raisons_aucune_personnages` : deux lectures sont possibles, à trancher. Première lecture : on compte sur les réponses scellées ; le chiffre est alors le même dans toutes les parties. Seconde lecture : on compte sur les cartes proposées au porteur ;
-   - `departages` : somme des `departages` de toutes les manches, plus le nombre de titres (Devin, Mystère, surprise) dont `departage` vaut `"tirage"`.
-3. **`jours_ecoules`.** Lecture proposée : la différence entre les dates locales (heure de Paris) de deux ouvertures successives.
-4. **Typographie des phrases.** La page et C prennent les gabarits caractère pour caractère dans la spécification et dans les maquettes finales : apostrophe droite, espaces ordinaires. Si l'on veut des espaces fines insécables ou une apostrophe courbe, il faut l'écrire dans la spécification avant de construire. Sinon la comparaison des phrases échouera, et elle aura raison.
-5. **Plusieurs sources pour un texte.** L'écran 5.4 dessine un seul lien, « Sources : extraits des débats ». L'affichage de plusieurs sources est à fixer par UX et Front-end.
+1. **Format du carnet** : §8.12 de la simulation (UX). Contraintes respectées : U+000A seulement, pas de tabulation, « Fin du carnet » sans retour final, durées repérables par une expression régulière, pas de pseudo, pourcentage calculé en entiers sur la fraction exacte.
+2. **Mesures globales** : §8.4 (Game design) et partie 3.10. Trois chiffres restent dans la trace ; les autres, constants pour un fichier donné, vont au rapport de scellement.
+3. **`jours_ecoules`** : différence entre les dates locales (heure de Paris) de deux ouvertures successives ; l'ouverture est le premier toucher du joueur dans la séance.
+4. **Typographie** : §7.8 (UX). Le fichier scellé reste en typographie simple ; la page et C appliquent les mêmes règles à l'affichage ; la trace enregistre les phrases sous leur forme affichée.
+5. **Plusieurs sources** : §7.1, écran 5.4 (UX).
