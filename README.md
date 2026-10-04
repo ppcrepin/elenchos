@@ -6,7 +6,7 @@ Nom de code du projet « Tu crois connaître tes proches » : un jeu quotidien o
 - `docs/decisions.md` — journal des arbitrages (source de vérité n°1)
 - `docs/vision.md` — explication validée du jeu
 - `docs/onboarding.md` — parcours d'entrée validé (remplace le §7 du document de projet)
-- `docs/feuille-de-route.md` — les phases jusqu'au lancement, ce que le porteur décide et quand
+- `docs/feuille-de-route.md` — les étapes de création de l'application, dans l'ordre, et où on en est
 - `CLAUDE.md` — règles de travail et circuit des livrables
 - `.claude/agents/` — définitions des agents spécialistes
 - `docs/socle-agents.md` — socle commun à tous les agents

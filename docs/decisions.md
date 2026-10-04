@@ -63,6 +63,16 @@ La décision de continuer, d'ajuster ou d'arrêter se prend au bilan du test, sa
 
 L'ordre de travail proposé par la feuille de route (règles, test, puis conception avec le design, puis construction ; change le §0) n'est pas encore validé.
 
+### D-009 — Remettre le travail dans l'ordre · Décidé
+
+Le porteur constate qu'on n'a qu'un concept, pas un produit ni un design, et que des choix de fabrication (web ou application) et un test lui ont été soumis trop tôt, sans qu'il se sente réellement consulté. Décision : on suit l'ordre normal de création d'une application, décrit dans `docs/feuille-de-route.md` (définir le produit, dessiner, donner un visage, faire essayer, choix de fabrication, construire, lancer). On ne pose au porteur que les questions de l'étape en cours, regroupées à la fin d'un livrable, et sur le fond.
+
+Conséquences :
+- **D-005 (web ou application) est suspendu.** Il sera repris à l'étape 5, quand le produit sera défini et dessiné. Son contenu reste une hypothèse de travail, pas une décision.
+- **D-007 (test solo) est suspendu.** La forme du test sera reprise à l'étape 4, sur des maquettes.
+- La vision (D-004) et l'onboarding (D-006) restent acquis comme matière de départ ; ils peuvent évoluer aux étapes 1 et 2.
+- La feuille de route précédente est remplacée.
+
 ### C-001 — Le « pourquoi » reste cadré · Constaté
 
 Le « pourquoi » passe uniquement par ce qui est validé : choix d'une considération parmi 4 arguments réels de députés (§2), réponse à considération masquée (§2), révélation de l'auteur de l'argument à 18h (§2). La question quotidienne « d'où vient ta conviction » reste écartée (§10). Toute proposition de « pourquoi » plus profond rouvrirait le §10 et devrait être tranchée explicitement par le porteur.
