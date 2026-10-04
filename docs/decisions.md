@@ -136,6 +136,20 @@ Le §2 liste en une seule « révélation commune à 18h » quatre éléments (a
 
 L'explication de la vision suit (A). Avis du game design : (A), nettement ; sous (B), l'auteur du texte et son groupe sont connus pendant qu'on devine, donc on devine par camp au lieu de deviner la personne, et le rendez-vous de 18h s'étale sur deux soirs. À trancher par le porteur à l'étape des règles. Si (B) est retenu, une phrase de la vision est à ajuster.
 
+### C-007 à C-015 — Manques du produit révélés par la préparation de l'essai · Constaté, non tranché
+
+Relevés par Game design, Cohérence et UX en écrivant la simulation de l'essai (`docs/essai/simulation.md`). L'essai les règle par convention, sans rien décider pour le produit ; ils seront soumis au porteur au bilan de l'étape 4.
+
+- **C-007 — Phrase du jour quand la réponse ne fait pas passer une valeur avant l'autre.** La règle 18 et le §5 de `produit.md` ne prévoient que « tu as fait passer X avant Y ». Rien n'est prévu pour une réponse neutre, une raison hors tension ou « aucune », ni une raison qui sert le pôle opposé à la position.
+- **C-008 — Phrase de la semaine sans curseur net.** La règle 18 et le §5 disent que la phrase du dimanche porte « sur une tension devenue nette ». Or il faut environ trois mois pour un premier curseur net (écran 4.1) : pendant une douzaine de dimanches, l'écran 3.3e n'a rien à dire.
+- **C-009 — Réponses « inattendues » tant que le curseur de l'auteur est flou.** La règle 8 choisit deux réponses « parmi les plus inattendues de la part de leur auteur » (§2 : « où la personne s'écarte de son profil »). Les premiers mois, aucun profil n'est net, et rien ne dit ce qui est inattendu de la part de quelqu'un dont on ne sait encore presque rien.
+- **C-010 — Deux réponses identiques à deviner.** Deux membres peuvent donner exactement la même réponse (même position, même raison). La règle 8 ne dit ni s'il faut servir ces deux cartes ensemble, ni comment compter l'attribution.
+- **C-011 — Révélation d'une carte à raison cachée mal devinée.** La règle 10 et l'écran 2.7b ne dessinent que le cas où la personne et la raison sont justes. Ne sont fixés ni l'affichage de la vraie raison quand la devinette est fausse, ni le verdict quand la personne est juste et la raison fausse, ou l'inverse.
+- **C-012 — Message de 18h un jour sans révélation.** Le §5 prévoit un seul message, le même pour tout le cercle : « La révélation d'hier t'attend, et la question d'aujourd'hui. » Son texte n'est pas fixé pour les jours où il n'y a rien à révéler : lendemain du lancement d'un cercle, cercle à deux ou endormi (écrans 1.13 et 5.10 : « rien à révéler à 18h, seulement un nouveau texte »).
+- **C-013 — Égalités et minimums des titres de la semaine.** Le §4 donne un seul titulaire au Devin et au Mystère (D-010 n'a changé que Le Fidèle). La règle 12 ne départage Le Devin que par les raisons cachées et ne départage pas Le Mystère. Elle ne fixe pas non plus de minimum (Mystère sur une seule tentative, Devin à zéro point), ni le sort des passes pour « le texte qui a le plus trompé le cercle ».
+- **C-014 — Le Sans-Faute : raison cachée et jours sans carte.** La règle 14 dit « sept jours sans erreur ni passe ». Deux choses ne sont pas fixées : une raison cachée mal devinée, avec la bonne personne, est-elle une erreur ? Un jour sans rien à deviner interrompt-il la série ?
+- **C-015 — Libellés courts des pôles dans les phrases.** Les phrases raccourcissent certains pôles (« la liberté » pour Liberté individuelle) et en gardent d'autres en entier (« la solidarité collective », écran 1.13). Aucun libellé n'existe pour Local ↔ National ni pour les autres tensions. La liste est à fixer pour les huit tensions.
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
