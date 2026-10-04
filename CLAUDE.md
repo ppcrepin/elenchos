@@ -34,6 +34,7 @@ Définitions dans `.claude/agents/`. Ce sont les seules définitions valables : 
 | Juridique & éthique | `juridique.md` | RGPD (opinions = données sensibles), mineurs, période électorale | À la demande ; bloquant avant lancement |
 | Back-end | `backend.md` | Données, API, notifications, rendez-vous de 18h | Construction |
 | Front-end | `frontend.md` | Interface mobile / web | Construction |
+| Direction artistique | `direction-artistique.md` | Univers, ton, palette, typographie, système visuel | Dès l'étape 3 |
 | Vérificateur | `verificateur.md` | Dernier rempart avant le porteur | Toujours |
 
 ## Circuit d'un livrable

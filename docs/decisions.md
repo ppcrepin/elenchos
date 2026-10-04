@@ -83,6 +83,12 @@ Quatre questions de fond tranchées :
 3. **§11.5, clos** : quand un proche décroche, rien de visible ; pause après sept jours, cercle endormi sous trois membres actifs, réveil automatique ; aucune relance.
 4. Les changements au document de projet sont validés avec ce document.
 
+### D-011 — Maquettes validées ; le porteur choisit le design · Décidé
+
+Les maquettes en noir et blanc (`docs/maquettes/maquettes.html`, 51 écrans) sont validées, avec les quatre changements listés en fin de page : position choisie dans une liste de cinq rangées ; phrases sans genre (« Marie a trouvé 2 de tes 3 réponses. À ton tour de deviner Marie. », « Thomas a réussi à te surprendre deux fois. », « Et Thomas ? Sa réponse ? ») ; « dès que vous serez trois » et « Nouveau texte dans… » tant que le cercle a moins de trois membres ; ordre de la révélation de 18h : qui avait dit quoi (cercle par cercle), puis le vote, puis les auteurs (règle 3 de `docs/produit.md` alignée sur sa section 5). Précisions de Game design retenues : à l'entrée, une devinette est juste si elle trouve le bon côté (défavorable, neutre, favorable) ; au Deviner, tous les autres membres sont proposés, y compris ceux en pause, pour ne jamais montrer qui a décroché.
+
+Le porteur veut être impliqué dans le choix du design. L'étape 3 se fait donc en trois temps, avec un choix du porteur à chacun : l'univers (trois directions appliquées aux mêmes écrans), le nom, les maquettes finales ; le logo ensuite, avec un graphiste. Un agent Direction artistique rejoint l'équipe (`.claude/agents/direction-artistique.md`).
+
 ### C-001 — Le « pourquoi » reste cadré · Constaté
 
 Le « pourquoi » passe uniquement par ce qui est validé : choix d'une considération parmi 4 arguments réels de députés (§2), réponse à considération masquée (§2), révélation de l'auteur de l'argument à 18h (§2). La question quotidienne « d'où vient ta conviction » reste écartée (§10). Toute proposition de « pourquoi » plus profond rouvrirait le §10 et devrait être tranchée explicitement par le porteur.

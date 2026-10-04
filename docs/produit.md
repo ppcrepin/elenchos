@@ -32,7 +32,7 @@ Pour qui (proposé) : des adultes, et des ados dès quinze ans en famille, qui o
 **Le cercle**
 1. Trois à dix membres, sous pseudo. La partie démarre à trois.
 2. Tout membre peut inviter, par un lien personnel à usage unique.
-3. Trois cercles au plus par personne (proposé). Ta réponse du jour vaut pour tous tes cercles ; tu joues ensuite une manche par cercle, à la suite. Une personne présente dans deux de tes cercles ne t'est proposée qu'une fois par jour ; si une manche se vide, elle est sautée : « Rien à deviner dans ce cercle aujourd'hui » (proposé). À 18h, une seule révélation : le vote et les auteurs une fois, puis tes attributions cercle par cercle (proposé). Points et titres se comptent par cercle ; le portrait est unique.
+3. Trois cercles au plus par personne (proposé). Ta réponse du jour vaut pour tous tes cercles ; tu joues ensuite une manche par cercle, à la suite. Une personne présente dans deux de tes cercles ne t'est proposée qu'une fois par jour ; si une manche se vide, elle est sautée : « Rien à deviner dans ce cercle aujourd'hui » (proposé). À 18h, une seule révélation : tes attributions cercle par cercle, puis le vote et les auteurs une seule fois (D-011). Points et titres se comptent par cercle ; le portrait est unique.
 4. Quand quelqu'un part, ses réponses partent avec lui ; ses titres passés restent.
 5. Après sept jours sans répondre, on est mis en pause, sans que le cercle en soit averti. S'il reste moins de trois membres actifs, le cercle s'endort, puis se réveille seul (proposé, voir la question 3 en fin de document).
 
