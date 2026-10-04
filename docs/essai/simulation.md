@@ -2,7 +2,9 @@
 
 *Rédigée par Game design le 4 octobre 2026 pour l'essai décidé en D-015 et D-016 (page jouable, quatre personnages inventés, une journée de jeu par séance, 14 jours). Version 3, intégrée par l'orchestrateur après les relectures de Cohérence, UX, Juridique et du Vérificateur. Spécification de travail, pas un texte pour le porteur. Personnages, vies et exemples fictifs.*
 
-*Ce fichier se lit sans gâcher l'essai. **Tout ce qui aide à deviner est dans `a-ne-pas-ouvrir/`** : profils cachés, règles de calcul des personnages (comment ils répondent, devinent, et comment les cartes sont choisies), réponses atypiques, absences, corrigé de fin d'essai.*
+*Ce fichier se lit sans gâcher l'essai : profils cachés, règles de calcul des personnages (comment ils répondent, devinent, et comment les cartes sont choisies), réponses atypiques, absences et corrigé de fin d'essai sont dans `a-ne-pas-ouvrir/`. Reste ici, assumé : l'heure de jeu des fiches et la ligne « Déjà joué aujourd'hui » (§7.5), comme dans le produit. Le porteur n'a pas à lire ce fichier : « En bref » et « Décisions touchées » suffisent.*
+
+*Ordre de lecture pour un agent qui applique : §0, §5.1 à §5.4, §6, puis `a-ne-pas-ouvrir/regles-de-calcul.md`, puis le reste.*
 
 ## En bref
 
@@ -116,7 +118,7 @@ Règles complètes : `a-ne-pas-ouvrir/regles-de-calcul.md`. Rien à l'écran ne 
 
 ### 4.5 Affichage
 
-- Ordre des cartes : t("ordre|g|k|auteur"), jamais par surprise (g : le devineur ; « porteur » quand c'est lui).
+- Ordre des cartes : t("ordre|g|k|auteur"), jamais par surprise (g : le devineur, « porteur » quand c'est lui ; auteur : l'auteur d'origine, avant toute redistribution entre cartes identiques).
 - Visages : Agathe, Nassim, Odile, Valentin, toujours dans cet ordre.
 - Une carte dont la raison est « aucune » s'écrit : « Défavorable · aucune des quatre raisons ».
 - Jamais montrés : le score de surprise, une étiquette « inattendue », qui est absent.
@@ -134,7 +136,7 @@ Les verdicts validés ne changent pas. On ajoute la ligne « Sa raison : « … 
 
 - Ponctuation, comme dans toutes les maquettes (1.6, 2.1, 2.7a à 2.7e, 4.3, 5.4) : en fin de ligne (carte, « Ta devinette : », « Sa raison : », « Ta réponse : », lignes de 4.3), la raison garde son point, à l'intérieur des guillemets, et rien ne suit. Dans une phrase (« parce que … », « Ta raison, …, était … »), elle perd son point, et la ponctuation de la phrase vient après le guillemet fermant. Un « ? » ou un « ! » final reste toujours à l'intérieur ; il n'est jamais suivi d'un point, mais une virgule peut le suivre. « aucune » n'est pas une citation : pas de guillemets.
 - Ligne rouge respectée (`projet.md` §9, rien de côte à côte) : « Ton pari » est une devinette, pas un avis (note validée de l'écran 1.6). La raison du porteur reste sur la carte des auteurs (2.7e), un autre écran. Si la raison du porteur est « aucune », la ligne « Ta raison… » de 2.7e disparaît.
-- Cartes identiques servies ensemble : désigner l'un de leurs auteurs sur l'une d'elles est toujours juste ; la révélation montre sous chaque carte l'auteur qui lui revient (C-010).
+- Cartes identiques servies ensemble : règle de redistribution des auteurs dans `a-ne-pas-ouvrir/regles-de-calcul.md`, §4.3 ; la révélation montre sous chaque carte l'auteur qui lui revient (C-010).
 
 ## 5. Le portrait
 
@@ -157,7 +159,7 @@ Les verdicts validés ne changent pas. On ajoute la ligne « Sa raison : « … 
 
 ### 5.3 Dessin
 
-Flou : zone de largeur ℓ centrée sur c. Net : un point à c. Ordre dans Moi : nets, puis flous du plus étroit au plus large ; à égalité S, P, T, L, puis les tensions écartées.
+Flou : zone de largeur ℓ centrée sur c, rognée au bord du curseur, jamais décalée. Net : un point à c. Ordre dans Moi : nets, puis flous du plus étroit au plus large ; à égalité S, P, T, L, puis les tensions écartées.
 
 ### 5.4 Ce qui est compté
 
@@ -193,14 +195,14 @@ Flou : zone de largeur ℓ centrée sur c. Net : un point à c. Ordre dans Moi :
 
 ### 5.7 Phrase de la semaine (séances 7 et 14 ; C-008)
 
-Elle porte sur les réponses de la semaine (textes 1 à 6, puis 7 à 13). Un arbitrage est une réponse de poids w > 0 (§5.1). Le poids d'un pôle est la somme des w des réponses de la semaine qui vont vers lui. Parmi les tensions qui ont au moins 2 arbitrages dans la semaine, on retient celle où la différence entre les poids de ses deux pôles est la plus grande ; à différence égale, celle au plus fort poids total ; puis S, P, T, L.
+Elle porte sur les réponses de la semaine (textes 1 à 6, puis 7 à 13). Une réponse qui compte est une réponse de poids w > 0 (§5.1 : arbitrage net ou penchant). Le poids d'un pôle est la somme des w des réponses de la semaine qui vont vers lui. Parmi les tensions qui ont au moins 2 réponses qui comptent dans la semaine, on retient celle où la différence entre les poids de ses deux pôles est la plus grande ; à différence égale, celle au plus fort poids total ; puis S, P, T, L.
 
 | Cas | Phrase | Statut |
 |---|---|---|
 | Une tension nette (la plus éloignée de 0,5) | « Entre {…} et {…}, tu choisis le plus souvent {…}. » | validée (écran 3.3e) ; n'apparaîtra pas dans l'essai |
 | Sinon : tension retenue, différence non nulle (le pôle nommé est celui de plus fort poids) | « Cette semaine, entre {…} et {…}, tu as le plus souvent choisi {…}. » | nouvelle, convention d'essai |
 | Tension retenue, différence nulle | « Cette semaine, entre {…} et {…}, tu as penché autant d'un côté que de l'autre. » | nouvelle, convention d'essai |
-| Aucune tension n'a 2 arbitrages | « Cette semaine, ton portrait est encore flou. Chaque réponse le précise. » | nouvelle, convention d'essai |
+| Aucune tension n'a 2 réponses qui comptent | « Cette semaine, ton portrait est encore flou. Chaque réponse le précise. » | nouvelle, convention d'essai |
 
 - Le curseur flou de la tension retenue s'affiche dessous (aucun curseur dans le dernier cas).
 - Retenir d'abord la plus grande différence fait dire à la phrase la chose la plus nette de la semaine, comme la phrase validée retient la tension « la plus éloignée de 0,5 » (Game design).
@@ -318,9 +320,9 @@ Sous le téléphone, après « En attendant » (séances 1 à 14 ; séance 0 : �
 
 Règle (Juridique) : un chiffre qui changerait si le porteur avait répondu autrement à un texte n'est jamais donné texte par texte. L'équipe connaît les réponses scellées des personnages et les règles : un tel chiffre, par séance, se recouperait.
 
-- **Par séance** (ce que le porteur fait, pas ce qu'il répond) : durées de la séance, de Deviner et de Répondre ; nombre de « Relire » et de « Passer » ; dans sa manche Deviner, attributions justes, raison cachée tentée puis trouvée.
+- **Par séance** (ce que le porteur fait, pas ce qu'il répond) : jour et heure d'ouverture de la séance (à l'heure près) et jours écoulés depuis la précédente, seule mesure du retour observée plutôt que déclarée ; durées de la séance, de Deviner et de Répondre ; nombre de « Relire » et de « Passer » ; dans sa manche Deviner, attributions justes, raison cachée tentée puis trouvée. Risque assumé : la durée de Répondre et le nombre de « Relire » sont attachés à un texte ; ils disent l'hésitation, pas la réponse.
 - **Par semaine** (résultats affichés dans le jeu) : titres reçus par le porteur ; titulaires de chaque titre.
-- **Sur l'ensemble de l'essai**, un seul chiffre chacun, jamais par séance, par texte, par tension ni par personnage (agrégats pour le contrôle 10) : justesse des personnages sur toutes les cartes ; justesse des personnages sur les réponses du porteur (proportion seule) ; part de réponses atypiques parmi les cartes proposées au porteur ; cartes identiques remplacées, et servies ensemble, dans la manche du porteur ; nombre de raisons « aucune » chez les personnages ; nombre de départages par tirage.
+- **Sur l'ensemble de l'essai**, un seul chiffre chacun, jamais par séance, par texte, par tension ni par personnage (agrégats pour le contrôle 15) : justesse des personnages sur toutes les cartes ; justesse des personnages sur les réponses du porteur (proportion seule) ; part de réponses atypiques parmi les cartes proposées au porteur ; cartes identiques remplacées, et servies ensemble, dans la manche du porteur ; nombre de raisons « aucune » chez les personnages ; nombre de départages par tirage.
 - **Jamais** : une position, une raison, une phrase du jour ou de la semaine, un curseur, le pseudo du porteur ; ni un chiffre lié à un texte précis qui dépend de ses réponses (par exemple « au texte 5, Valentin a trouvé la réponse du porteur »).
 
 ### 8.5 Fin d'essai (séance 15, avant le dévoilement)
@@ -333,7 +335,7 @@ F1 et F2 ne disent rien des opinions du porteur : F1 porte sur des personnes inv
 ### 8.6 Dévoilement
 
 - D'abord ce qui se lit : profils, réponses atypiques texte par texte, absences, corrigé de F1 face aux choix du porteur. Ces textes restent à écrire, avec UX, avant de construire la page.
-- Ensuite, une partie repliée « Pour le contrôle » : graine, fichier scellé, et « Empreinte de ce fichier : {…}. Elle doit être identique à celle publiée le {date} dans la conversation. » La page affiche l'empreinte, mais n'affirme pas elle-même qu'elle correspond.
+- Ensuite, une partie repliée « Pour le contrôle » : graine, fichier scellé, et « Empreinte de ce fichier : {…}. Elle doit être identique à celle publiée le {date} dans la conversation. » La page affiche l'empreinte, calculée à l'affichage sur les octets décodés du fichier embarqué, jamais écrite en dur ; elle n'affirme pas elle-même qu'elle correspond.
 
 ### 8.7 Export
 
@@ -342,7 +344,7 @@ Un seul export, « Copier mon carnet » (D-016), proposé à la clôture et dans
 ### 8.8 Ce que la page garde, et où
 
 - Les réponses du porteur (positions, raisons, devinettes), son portrait, son pseudo, son consentement, son carnet, F1, F2 et la séance atteinte sont gardés dans le stockage de son navigateur, et nulle part ailleurs. La page n'envoie rien (D-016).
-- Sur claude.ai, chaque page publiée a sa propre origine : ce qu'elle garde reste dans le navigateur de celui qui la consulte, survit aux nouvelles versions publiées à la même adresse, et n'est visible ni des autres visiteurs ni des autres pages. Le stockage peut revenir vide en navigation privée ou si les données du site sont effacées ; Safari peut effacer de lui-même le stockage d'un site après sept jours sans visite. Ces points sont vérifiés en pratique au contrôle 5 bis.
+- Sur claude.ai, chaque page publiée a sa propre origine : ce qu'elle garde reste dans le navigateur de celui qui la consulte, survit aux nouvelles versions publiées à la même adresse, et n'est visible ni des autres visiteurs ni des autres pages. Le stockage peut revenir vide en navigation privée ou si les données du site sont effacées ; Safari peut effacer de lui-même le stockage d'un site après sept jours sans visite. Ces points sont vérifiés en pratique au contrôle 14.
 - Interdits dans la page : le stockage d'artefact de claude.ai (gardé chez Anthropic ; en mode partagé, visible de tous les visiteurs) ; l'appel à Claude, les connecteurs, le téléchargement ; tout script, style, police ou image venus d'ailleurs (Google Fonts, cdnjs, unpkg, jsDelivr…) ; tout envoi (fetch, XHR, WebSocket, formulaire, balise). Seules sorties : les liens que le porteur touche lui-même (scrutin, sources).
 - Polices embarquées : Alegreya et Alegreya Sans, sous licence SIL Open Font License 1.1, qui le permet ; leur mention de copyright et de licence reste dans la page.
 - La page reste privée : jamais partagée, ni par lien public ni dans une organisation (« publier » veut dire ici mettre en ligne une version privée). Le porteur joue sur une version figée.
@@ -362,7 +364,9 @@ La carte de consentement validée (1.3) promet « Tu peux tout effacer, quand tu
 
 Les recalculs sont faits par un programme écrit à part, à partir de cette spécification et des fichiers de `a-ne-pas-ouvrir/` seuls, sans lire le code de la page. Le Vérificateur relit les résultats et les différences.
 
-**Avant d'écrire le fichier scellé.** Le schéma du fichier scellé (noms de champs, types) et le format de la trace (par séance : cartes servies dans l'ordre, auteur, niveau, raison, carte à raison cachée, attributions du joueur et des personnages, côtés attendus, points, titres, phrases, curseurs) seront fixés dans `docs/essai/schema.md`, à écrire et à faire relire par l'auteur du programme de contrôle. La difficulté est réglée une seule fois sur 200 parties simulées. Protocole : `a-ne-pas-ouvrir/regles-de-calcul.md`, §9 bis.
+**Avant d'écrire la page.** Front-end relit §0, §8.7, §8.8 et §9 pour la faisabilité ; Back-end relit l'annexe B et le schéma.
+
+**Avant d'écrire le fichier scellé.** Le schéma du fichier scellé (noms de champs, types) et le format de la trace (par séance : cartes servies dans l'ordre, auteur, niveau, raison, carte à raison cachée, attributions du joueur et des personnages, côtés attendus, points, titres, phrases, curseurs, personnages affichés dans « Déjà joué aujourd'hui » pour l'heure fournie par le harnais, l'horloge de la page étant injectable dans la version témoin) seront fixés dans `docs/essai/schema.md`, à écrire et à faire relire par l'auteur du programme de contrôle. La difficulté est réglée une seule fois sur 200 parties simulées. Protocole : `a-ne-pas-ouvrir/regles-de-calcul.md`, §9 bis.
 
 **Avant la séance 0.** L'empreinte du fichier scellé est publiée dans la conversation, avec la date et l'heure.
 
@@ -377,13 +381,17 @@ Les recalculs sont faits par un programme écrit à part, à partir de cette sp�
 7. Parties témoins et au hasard : devinettes des personnages reproduites.
 8. Parties témoins et au hasard : points, titres et badges reproduits.
 9. Parties témoins et au hasard : portrait et phrases reproduits.
+10. Parties témoins et au hasard : lignes rouges sur tout ce qui a été affiché (jamais la réponse du porteur à côté d'une autre, aucun taux d'accord, aucun classement, jamais « n'a pas joué »).
+11. Textes : toutes les chaînes affichées sur les parties témoins sont relevées et comparées aux maquettes finales et à l'annexe C ; une chaîne absente des deux est un défaut, ponctuation (§4.6), élisions et accords (§7.6) compris. Relevé relu par UX.
+12. Export : sur les parties témoins et au hasard, le texte exporté ne contient que les champs listés au §8.4. Deux parties jouées avec les mêmes devinettes et des réponses opposées du porteur donnent, séance par séance, les mêmes champs, hors durées, nombre de « Relire » et heures d'ouverture.
+13. Version du porteur : les trois parties témoins sont rejouées par automate sur la version donnée au porteur ; le carnet qu'elle exporte est comparé à celui que le programme de contrôle calcule d'après la trace de la version témoin. Toute différence est un défaut.
+14. Navigateur. Avant de donner la page, sur la version publiée, avec un joueur témoin : (a) pendant une séance entière, le panneau réseau du navigateur ne montre aucune requête émise par la page après son chargement ; (b) une réponse survit à la fermeture de l'onglet, au lendemain et à une nouvelle publication ; (c) une autre page, publiée pour le test et ouverte dans le même navigateur, ne lit rien de ce que la page a gardé ; (d) après « Tout effacer », il ne reste rien. Si (b) ou (c) échoue, la page n'est pas donnée sous cette forme : l'orchestrateur trouve une autre façon de l'ouvrir qui garde les réponses dans le navigateur, et refait les mêmes tests. Le stockage de claude.ai n'est pas une solution de repli sans décision du porteur, car il modifierait D-016. Toute nouvelle publication refait les contrôles 5, 12, 13 et 14.
 
-5 bis. Avant de donner la page, sur la version publiée, avec un joueur témoin : (a) pendant une séance entière, le panneau réseau du navigateur ne montre aucune requête émise par la page après son chargement ; (b) une réponse survit à la fermeture de l'onglet, au lendemain et à une nouvelle publication ; (c) une autre page, publiée pour le test et ouverte dans le même navigateur, ne lit rien de ce que la page a gardé ; (d) après « Tout effacer », il ne reste rien. Si (b) ou (c) échoue, la page n'est pas donnée sous cette forme : l'orchestrateur trouve une autre façon de l'ouvrir qui garde les réponses dans le navigateur, et refait les mêmes tests. Le stockage de claude.ai n'est pas une solution de repli sans décision du porteur, car il modifierait D-016. Toute nouvelle publication refait les contrôles 5 et 5 bis.
+**Correctif.** Un défaut trouvé avant la séance 0 : on corrige, on re-scelle, on publie une nouvelle empreinte datée, on rejoue tous les contrôles. Après la séance 0, le fichier scellé ne change plus. Un correctif de la page est daté, refait les contrôles 5 et 11 à 14, et est noté dans le carnet (« Correctif publié avant la séance k »). Si le défaut touche un calcul déjà montré, le rapport final marque l'essai comme affecté à partir de cette séance.
 
 **Après l'essai, sur le carnet du porteur.**
 
-10. Chiffres à rapporter : justesse du porteur en semaines 1 et 2 ; repère indicatif, hypothèse de Game design non validée : 35 à 65 % en semaine 2 (au hasard, environ 25 %) ; pas un critère de décision (D-008) ; agrégats du §8.4.
-11. Lignes rouges, sur les parties témoins et le code : jamais la réponse du porteur à côté d'une autre, aucun taux d'accord, aucun classement, jamais « n'a pas joué ».
+15. Chiffres à rapporter : justesse du porteur en semaines 1 et 2 ; repère indicatif, hypothèse de Game design non validée : 35 à 65 % en semaine 2 (au hasard, environ 25 %) ; pas un critère de décision (D-008) ; agrégats du §8.4.
 
 ## Annexe A : ce que Contenu fournit
 
@@ -430,7 +438,15 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 
 ## Décisions touchées, conventions et constats
 
-**Décisions modifiées : aucune.** L'export est unique (D-016) ; les contrôles qui demanderaient les réponses du porteur passent par les parties témoins et au hasard (§9). D-015 (« contrôlées à la fin par le Vérificateur ») est adapté par D-016, plus récent : les réponses du porteur ne quittent pas son navigateur ; le Vérificateur contrôle donc avant l'essai, sur les parties témoins et au hasard, et à la fin sur le carnet (contrôles 10 et 11) ; le porteur compare lui-même l'empreinte (§8.6). La page, le fichier scellé et le programme de contrôle sont de l'outillage d'essai décidé en D-015 et D-016 (« maquette animée, pas l'application »), pas du code applicatif au sens de D-001 : à dire au porteur à la livraison.
+**Décisions modifiées : aucune, une précision.** D-015 prévoyait un contrôle final, par le Vérificateur, de ce que le porteur a joué. D-016, plus récent, garde ses réponses dans son navigateur : ce contrôle n'est plus possible sur sa partie. Il est remplacé par les parties témoins et au hasard (§9), par la comparaison du carnet de la version du porteur (contrôle 13) et, à la fin, par le contrôle du carnet (contrôle 15) ; le porteur compare lui-même l'empreinte (§8.6). L'export est unique (D-016) ; « carnet de bilan » est lu comme incluant les mesures automatiques du §8.4. La page est décidée en D-016 (« maquette animée, pas l'application ») ; le fichier scellé et le programme de contrôle découlent de D-015 : c'est de l'outillage d'essai, pas du code applicatif au sens de D-001.
+
+**À dire au porteur à la livraison de la page :**
+- la page, le fichier scellé et le programme de contrôle sont de l'outillage d'essai, pas l'application (D-001) ;
+- la précision sur D-015 ci-dessus ;
+- ce que contient le carnet qu'il copiera (§8.4, §8.7), et ce qu'il ne contient jamais ;
+- les limites du stockage (navigation privée, Safari, §8.8) ;
+- le fichier embarqué se décode, et la v2 de cette spécification, qui contenait les règles de calcul, reste lisible dans l'historique Git : l'essai repose sur sa bonne foi ;
+- les textes nouveaux à l'écran (annexe C).
 
 **Conventions propres à l'essai :**
 - quatre tensions seulement ;
@@ -452,7 +468,7 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 - Le Mystère : erreurs sur ses propres réponses rapportées aux tentatives, passes exclues, au moins 6 tentatives ;
 - surprise de la semaine : passes exclues, au moins 4 attributions ;
 - Le Pas de Côté : penchant clair à |c − 0,5| ≥ 0,2 ;
-- « inattendue de la part de son auteur » : lecture provisoire tant que le curseur est flou (C-009 ; détail dans `a-ne-pas-ouvrir/regles-de-calcul.md`) ;
+- « inattendue de la part de son auteur » : lecture provisoire (C-009 ; détail dans `a-ne-pas-ouvrir/regles-de-calcul.md`) ;
 - « Ses surprises » (4.3) : textes d'entrée exclus (D-010 ne fixe pas cette limite) ;
 - cartes identiques servies ensemble : auteurs redistribués (C-010) ;
 - phrase de la semaine : tension retenue par la plus grande différence entre les poids de ses pôles (C-008).
@@ -472,11 +488,10 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 
 - Le Sans-Faute est presque inatteignable : une vingtaine d'attributions justes de suite en semaine 2.
 - Quatorze jours ne montrent ni le Pas de Côté, ni les curseurs nets, ni les tempéraments ; c'est voulu.
-- Risque à long terme (règles 8 et 19 ensemble) : des joueurs pourraient apprendre à « lire à l'envers » ; à surveiller en bêta.
 - Les justesses visées sont des hypothèses (§9).
 - Des profils figés risquent d'être « résolus » dès la deuxième semaine ; F2 le mesure.
 - Tradition/Changement garde un risque partisan ; le choix des textes est la seule protection.
-- Les contrôles 6 à 9 portent sur les parties témoins et au hasard, jamais sur la partie du porteur (D-016) : leur couverture est la seule garantie sur le code qu'il utilisera.
+- Les contrôles 6 à 11 portent sur les parties témoins et au hasard, jamais sur la partie du porteur (D-016) ; la comparaison du carnet (contrôle 13) est le seul lien entre la version témoin et celle qu'il utilise.
 - Le porteur n'est pas un lecteur neuf (D-015) : la clarté des textes et des phrases ne sera vraiment vérifiée qu'en bêta. Il veut aussi que le jeu marche, et aucun libellé ne corrige ce biais ; les mesures automatiques font contrepoids.
 - F1 n'a pas de « Je ne sais pas » : le doute se reporte sur « Au milieu », ce qui fausse un peu la justesse sur un profil proche du centre, s'il y en a. F1 mesure aussi à la fois la lecture du portrait des autres et l'inférence.
 - « Pas dans l'essai. » coupe un peu l'immersion ; c'est le prix pour ne pas modifier les écrans validés.

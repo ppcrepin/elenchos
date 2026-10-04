@@ -50,7 +50,7 @@ Issues de la conception relue avant D-015 (non consignée dans le dépôt).
 - Exactement 3 par personnage, sur les textes 1 à 13 ; aucune sur l'entrée ni sur le texte 14 (12 sur 48 réponses devinables, 25 %).
 - Contraintes : (a) jamais un jour d'absence ; (b) jamais deux textes consécutifs pour un même personnage ; (c) au plus deux personnages en écart sur un même texte ; (d) pour chaque personnage, au moins un écart dans les textes 1 à 6 et au moins un dans les textes 7 à 13.
 - Le nombre (3) peut passer à 4 ou à 2 au réglage d'avant scellement (`regles-de-calcul.md`, §9 bis) ; ce fichier est alors mis à jour.
-- Procédure : personnages dans l'ordre Agathe, Nassim, Odile, Valentin ; textes 1 à 13 classés par t("ecart|prénom|n") croissant ; on retient, en respectant (a) à (c) : le premier valable entre 1 et 6, le premier valable entre 7 et 13, puis le premier valable restant.
+- Procédure : personnages dans l'ordre Agathe, Nassim, Odile, Valentin ; textes 1 à 13 classés par t("ecart|prénom|n") croissant ; on retient, en respectant (a) à (c) : le premier valable entre 1 et 6, le premier valable entre 7 et 13, puis le premier valable restant. Pour 2 écarts (réglage) : s'arrêter après les deux premières étapes. Pour 4 : après la troisième, le premier valable restant encore.
 
 ## Absences (complète le §2.4 de `regles-de-calcul.md`)
 

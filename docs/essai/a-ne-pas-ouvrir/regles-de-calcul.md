@@ -10,7 +10,7 @@ Les notations communes (k, n, s, v, w, c, ℓ), le tirage déterministe et le ca
 |---|---|
 | p | position cachée d'un personnage sur une tension, de 0 à 1 |
 | x | valeur d'une position ramenée sur l'axe de la tension (§4.2) |
-| σ | côté d'une carte : +1, 0 ou −1 (§3) |
+| σ | côté d'une carte, dans les termes du texte, sans alignement : +1 si Favorable ou Très favorable, 0 si Neutre, −1 si Défavorable ou Très défavorable (§3). Le côté attendu (§3.2) s'exprime de la même façon : +1 = favorable. |
 
 « Écart » désigne uniquement une réponse atypique (§2.3). La distance entre une réponse et un curseur s'appelle « distance ».
 
@@ -102,11 +102,11 @@ La carte de la dernière place (3, sinon 2, sinon 1). Si sa raison est « aucune
 
 ## 9 bis. Réglage avant scellement et parties témoins
 
-**Avant de sceller, une seule fois.** Le programme indépendant joue 200 parties sur les textes et les réponses prêts à sceller. La place du porteur est tenue par un joueur simulé au profil cohérent tiré au hasard (position et fermeté par tension, règles 2.1 à 2.3, trois réponses atypiques). Il devine par la règle du §3, le côté attendu de chaque personnage étant tiré de son curseur tel que le porteur le voit (§5.4 de `simulation.md`). On relève : justesse des personnages entre eux ; justesse des personnages sur les réponses du joueur simulé, semaines 1 et 2 ; justesse du joueur simulé, semaines 1 et 2 ; fréquence des cartes identiques, des raisons « aucune », des manches à deux cartes ; titulaires des titres.
+**Avant de sceller, une seule fois.** Le programme indépendant joue 200 parties sur les textes et les réponses prêts à sceller. La place du porteur est tenue par un joueur simulé au profil cohérent tiré au hasard (position et fermeté par tension, règles 2.1 à 2.3, trois réponses atypiques). Il devine par la règle du §3, le côté attendu de chaque personnage étant tiré de son curseur tel que le porteur le voit (§5.4 de `simulation.md`). On relève : justesse des personnages entre eux ; justesse des personnages sur les réponses du joueur simulé, semaines 1 et 2 ; justesse du joueur simulé, semaines 1 et 2 ; fréquence des cartes identiques, des raisons « aucune », des manches à deux cartes ; titulaires des titres ; pour chaque personnage et chaque tension, combien de fois sa réponse est servie au joueur simulé en 14 séances. Une case personnage × tension servie moins de 3 fois en moyenne (seuil proposé par le Vérificateur, à confirmer par Game design) est signalée, et exclue de la justesse de F1 au bilan.
 
 Deux réglages possibles, et seulement ceux-là :
 - joueur simulé au-dessus de 70 % en semaine 2 → quatre réponses atypiques par personnage au lieu de trois ; sous 35 % → deux (`profils.md` mis à jour) ;
-- personnages au-dessus de 60 % sur les réponses du joueur simulé en semaine 2 → seuils stricts pour le côté attendu du porteur (> 3/5 et < 2/5 : il faut deux arbitrages, ou un arbitrage et un penchant).
+- personnages au-dessus de 60 % sur les réponses du joueur simulé en semaine 2 → seuils stricts pour le côté attendu du porteur (> 3/5 et < 2/5 : il faut deux arbitrages nets, ou un arbitrage net et un penchant).
 
 Le seuil haut (70 %) laisse une marge au-dessus du repère indicatif de `simulation.md` (35 à 65 % en semaine 2) : on ne règle que si le joueur simulé sort nettement de la fourchette, pas pour un écart de quelques points dû au hasard des textes.
 
@@ -134,13 +134,14 @@ Ce que les données scellées rendent impossible (un titre sans titulaire, par e
 ## Annexe A : contraintes de Contenu (complète l'annexe A de `simulation.md`)
 
 - Au moins une considération « pour » et une « contre » (deux et deux recommandé) ; au moins une sur chaque pôle.
-- Hors tension : au plus une considération par texte. Parmi les 4 textes quotidiens S, exactement 2 en ont une et 2 n'en ont aucune ; de même parmi les 4 textes quotidiens T. Ailleurs, libre. Effet attendu : au plus 4 « aucune » chez les personnages (estimation ; mesurée au §9 bis). Si Contenu ne peut pas tenir cette répartition avec de vrais arguments, il le signale ; la règle 2.2 ne change pas, seul ce nombre varie.
+- Hors tension : au plus une considération par texte. Parmi les 4 textes quotidiens S, exactement 2 en ont une et 2 n'en ont aucune ; de même parmi les 4 textes quotidiens T. Ailleurs, libre. Effet attendu : seul un personnage neutre de fermeté faible, sur un texte sans considération hors tension, répond « aucune » ; soit au plus 4 sur les textes quotidiens (Agathe sur T, Valentin sur S) et 5 avec l'entrée (Valentin sur le texte d'entrée S, s'il n'a pas de considération hors tension) ; mesuré au §9 bis. Si Contenu ne peut pas tenir cette répartition avec de vrais arguments, il le signale ; la règle 2.2 ne change pas, seul ce nombre varie.
 - Textes d'entrée : clivants (`docs/onboarding.md`), un par tension, sur S, P et L.
 - Textes quotidiens : S 4, P 3, T 4, L 3 ; jamais la même tension deux jours de suite ; chaque tension au moins une fois dans les textes 1 à 6 et dans les textes 7 à 13 ; pour chaque tension, au moins un texte de chaque sens ; le texte 1 n'a pas la tension de E3. Exemple d'ordre valable (Vérificateur) : S T P L S T | P S L T S P T | L.
 - Réserve de faisabilité : quatre vrais textes Tradition/Changement hors mœurs et religion, avec quatre arguments de quatre groupes et au moins un par pôle, seront difficiles à trouver. Contenu confirme avant de sceller.
 
 ## Limites propres aux règles de calcul
 
+- Risque à long terme (règles 8 et 19 ensemble) : des joueurs pourraient apprendre à « lire à l'envers » la sélection ; à surveiller en bêta.
 - Titres biaisés : les personnages gagneront probablement Le Devin ; le porteur sera probablement Le Mystère en semaine 1.
 - Les personnages devinent mécaniquement (le côté, pas l'intensité).
 - Agathe et Nassim sur les textes P : tant qu'aucun des deux n'a fait d'écart sur P, une carte de l'un ou de l'autre ne peut pas être départagée ; c'est pile ou face, le prix du profil « deux proches ». La réponse « Je ne pouvais pas trouver » du carnet le mesurera.
