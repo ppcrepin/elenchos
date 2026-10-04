@@ -89,6 +89,14 @@ Les maquettes en noir et blanc (`docs/maquettes/maquettes.html`, 51 écrans) son
 
 Le porteur veut être impliqué dans le choix du design. L'étape 3 se fait donc en trois temps, avec un choix du porteur à chacun : l'univers (trois directions appliquées aux mêmes écrans), le nom, les maquettes finales ; le logo ensuite, avec un graphiste. Un agent Direction artistique rejoint l'équipe (`.claude/agents/direction-artistique.md`).
 
+### D-012 — Univers : La Tablée · Décidé
+
+Le porteur choisit l'univers **La Tablée** (`docs/maquettes/univers.html`), parmi trois proposés par la direction artistique : chaleureux, complice, posé ; « on ouvre le jeu comme on s'assoit à table avec ses proches ». Palette lin grisé, brou de noix, caramel et miel (clair) / brou, noyer, lin et miel (sombre) ; typographie Alegreya (titres) et Alegreya Sans (texte) ; visages en ronds de serviette, curseurs en halo de lampe, révélation de 18h en palette du soir avec un marque-place qui se retourne. Les trois règles communes sont retenues : aucune couleur ne distingue une position d'une autre ; « Surprise » n'est pas une erreur ; une seule teinte, jamais deux qui forment un drapeau.
+
+**Le ton vient avec l'univers**, revalidé phrase par phrase dans les maquettes finales : message de 18h « 18h, la table est mise. Qui avait dit quoi ? … » ; verdicts « Ça alors ! », « Tu connais ton monde. », « Tu connais ton monde, et ses raisons. » ; l'invitation et « Rien à deviner aujourd'hui. » inchangés.
+
+Risques à tester à l'étape 4 : paraître vieillot aux 15-25 ans ; faire « famille traditionnelle » (parade : une table, jamais une famille-type) ; le miel ne doit évoquer aucun parti (à vérifier).
+
 ### C-001 — Le « pourquoi » reste cadré · Constaté
 
 Le « pourquoi » passe uniquement par ce qui est validé : choix d'une considération parmi 4 arguments réels de députés (§2), réponse à considération masquée (§2), révélation de l'auteur de l'argument à 18h (§2). La question quotidienne « d'où vient ta conviction » reste écartée (§10). Toute proposition de « pourquoi » plus profond rouvrirait le §10 et devrait être tranchée explicitement par le porteur.
