@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="__CSP__">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -11,7 +12,6 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#EEF0EE" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#141516" media="(prefers-color-scheme: dark)">
-<meta http-equiv="Content-Security-Policy" content="__CSP__">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="apple-touch-icon.png">
 <title>Essai</title>
@@ -106,7 +106,7 @@ details > div { display: grid; gap: 10px; padding-top: 8px; justify-items: start
     <ol>
       <li>Touchez le bouton Partager : un carré d'où sort une flèche vers le haut, en bas ou en haut de l'écran. Vous ne le voyez pas ? Touchez le bouton à trois points (•••), puis « Partager ».</li>
       <li>Dans la liste, touchez « Sur l'écran d'accueil ». Faites défiler vers le bas si besoin.</li>
-      <li>Le nom proposé est « Essai » : ne le changez pas. Si un interrupteur parle d'« app web », il doit être activé (vert).</li>
+      <li>Le nom proposé est « Essai » : ne le changez pas. L'image à côté doit montrer une fiche blanche sur fond gris, avec un trait bleu ; sinon, touchez « Annuler » et dites-le dans la conversation. Si un interrupteur parle d'« app web », il doit être activé (vert).</li>
       <li>Touchez « Ajouter », en haut à droite.</li>
       <li>Sur votre écran d'accueil, touchez la nouvelle icône « Essai ». Le test commence là.</li>
     </ol>
@@ -355,7 +355,7 @@ details > div { display: grid; gap: 10px; padding-top: 8px; justify-items: start
       etapes([COPIER, "Gardez l'icône « Essai » sur votre écran d'accueil : l'essai se jouera depuis elle. Ne la supprimez pas."]);
     }
   }
-  document.getElementById("note-resultat").textContent = texteAppareil("Ce texte est pour l'équipe. Il contient le temps écoulé entre vos ouvertures et le nom technique de votre navigateur, version d'iOS comprise ; rien qui vous nomme. La page n'envoie rien : seul ce que vous collez sort de votre {appareil}.");
+  document.getElementById("note-resultat").textContent = texteAppareil("Ce texte est pour l'équipe. Il contient le temps écoulé entre vos ouvertures, l'adresse de la page et le nom technique de votre navigateur, version d'iOS comprise ; rien d'autre sur vous. La page n'envoie rien : seul ce que vous collez sort de votre {appareil}.");
 
   var stockageDemande = "indisponible", stockageAccorde = "indisponible";
   function ecrireResultat() {
