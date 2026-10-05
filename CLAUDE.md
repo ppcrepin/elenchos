@@ -56,12 +56,14 @@ Rien n'atteint le porteur sans l'étape 4. Un livrable rejeté par le porteur re
 - **Tenir le porteur au courant** : au début de chaque étape, dire en deux lignes ce qu'on fait et ce qu'il recevra ; ensuite, ne lui écrire que pour livrer.
 
 - Les agents parallèles partagent le même scratchpad : tout fichier de travail d'un agent est préfixé par son nom (`ux-…`, `game-design-…`).
-- Aucune question technique au porteur avant l'étape 6, même pour un test jetable : il l'a demandé explicitement (D-005).
+- Aucune question technique au porteur avant l'étape 6, même pour un test jetable : il l'a demandé explicitement (D-005). Seule exception : ce qui conditionne l'essai de l'étape 4 (D-016, D-017, D-019), posé en QCM de fond.
 - Une synthèse de plusieurs avis nomme les désaccords et attribue chaque position ; « les cinq s'accordent » ne s'écrit que si c'est vrai mot pour mot.
 
 ## Pousser sur GitHub (demande du porteur)
 
 Après chaque commit, pousser la branche de travail **et** `main` sur GitHub, pour que `main` reflète toujours l'état du projet. `main` avance en avance rapide depuis la branche de travail (`git push origin <branche>:main`) ; jamais de réécriture d'historique sur `main`. Si l'avance rapide est impossible (quelqu'un a poussé sur `main` entre-temps), fusionner `main` dans la branche de travail, puis pousser.
+
+Exception (D-019) : la branche `gh-pages` ne porte que les pages publiées de l'essai (page-test comprise) et un fichier `.nojekyll` ; elle est poussée à part, jamais fusionnée dans `main`, jamais réécrite pendant l'essai. Les fichiers sources de ces pages suivent la règle normale (branche de travail et `main`).
 
 ## Après chaque arbitrage du porteur
 

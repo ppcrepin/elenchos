@@ -123,6 +123,15 @@ Le porteur jouera l'essai sur **un iPhone ou un iPad** : l'équipe vérifie avan
 
 Le porteur laisse l'orchestrateur choisir le modèle de chaque agent. Règle appliquée par l'orchestrateur, qui peut l'ajuster en le disant : ce qui produit (rédaction, conception, correction, fabrication) tourne sur le modèle de la session principale (Claude Opus 5.5) ; ce qui vérifie (Cohérence, Vérificateur, vérifications du contenu, annotations à l'aveugle, relevés faits en double) tourne sur Claude Fable 5.1, le modèle le plus capable, différent à la fois du producteur et de la session principale (D-001 tenu). Un modèle plus petit seulement pour une tâche mécanique, sans jugement. Un agent coupé par une limite d'utilisation est relancé quand elle se lève, jamais remplacé en silence par un modèle moins capable.
 
+### D-019 — Où jouer l'essai : sur iPhone, depuis une icône de l'écran d'accueil · Décidé (5 octobre 2026)
+
+Le test de mémoire a montré que, sur iPhone, une page affichée dans claude.ai perd tout quand l'application se ferme (le moteur d'Apple, commun à tous les navigateurs de l'iPhone, efface la mémoire d'une page affichée dans le cadre d'un autre site). Le porteur choisit, sur l'avis concordant de Front-end et de Juridique : la page de l'essai est publiée sur GitHub Pages depuis son dépôt (`ppcrepin.github.io/elenchos/essai/`), avec une demande de non-référencement ; il l'ajoute une fois à l'écran d'accueil de son iPhone (ou iPad), joue toujours depuis cette icône et ne la supprime pas avant la fin de l'essai.
+- D-016 tenu : les réponses restent dans l'appareil, la page n'envoie rien. D-017 précisé : c'est l'icône de l'écran d'accueil (moteur de Safari) qui garde l'avancement.
+- Une page-test publiée à la même adresse le vérifie d'abord (première ouverture, une minute après fermeture, le lendemain). Si la mémoire ne tient pas, il restera la même page ouverte sur un ordinateur, ce qui modifierait D-017 (nouvelle question).
+- Ce choix vaut accord pour la publication et pour une branche `gh-pages`, poussée à part et jamais fusionnée dans `main` : exception à la règle de poussée de `CLAUDE.md`.
+- Le geste d'ajout ne sert qu'à l'essai ; il ne décide rien du choix « lien ou application » pour le jeu (D-005, suspendu).
+- Écartés : jouer sur ordinateur dans claude.ai (aurait modifié D-017) ; garder les réponses sur claude.ai (aurait modifié D-016).
+
 ### C-001 — Le « pourquoi » reste cadré · Constaté
 
 Le « pourquoi » passe uniquement par ce qui est validé : choix d'une considération parmi 4 arguments réels de députés (§2), réponse à considération masquée (§2), révélation de l'auteur de l'argument à 18h (§2). La question quotidienne « d'où vient ta conviction » reste écartée (§10). Toute proposition de « pourquoi » plus profond rouvrirait le §10 et devrait être tranchée explicitement par le porteur.
