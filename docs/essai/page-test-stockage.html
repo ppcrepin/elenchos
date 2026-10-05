@@ -1,0 +1,199 @@
+<title>Elenchos · test de mémoire</title>
+<meta name="referrer" content="no-referrer">
+<style>
+/* Mise en page : une seule colonne étroite, comme le cadre de l'essai (gris froid, police du système, un seul accent bleu). */
+:root {
+  --fond: #EEF0EE;
+  --panneau: #FFFFFF;
+  --filet: #C4C7C3;
+  --texte: #1C1D1F;
+  --second: #676A67;
+  --accent: #23729C;
+  --sur-accent: #FFFFFF;
+  --ok: #2E6B3F;
+  --alerte: #9A3B1E;
+  --police: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --chasse-fixe: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fond: #141516; --panneau: #1D1E20; --filet: #3D3F41; --texte: #EBECE9; --second: #A3A6A2;
+    --accent: #86C4E6; --sur-accent: #141516; --ok: #8FD0A0; --alerte: #F0A58A; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --fond: #141516; --panneau: #1D1E20; --filet: #3D3F41; --texte: #EBECE9; --second: #A3A6A2;
+  --accent: #86C4E6; --sur-accent: #141516; --ok: #8FD0A0; --alerte: #F0A58A; color-scheme: dark;
+}
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--fond); color: var(--texte);
+  font: 400 15px/1.45 var(--police);
+  padding-inline: 16px; padding-block: 24px 40px;
+}
+main { max-width: 34rem; margin-inline: auto; display: grid; gap: 20px; }
+h1 { font-size: 1.35rem; font-weight: 600; line-height: 1.25; margin: 0; text-wrap: balance; }
+.sous-titre { color: var(--second); margin: 0; }
+.panneau {
+  background: var(--panneau); border: 1px solid var(--filet); border-radius: 8px;
+  padding: 16px; display: grid; gap: 12px;
+}
+.etat { font-size: 1.1rem; font-weight: 600; margin: 0; }
+.etat.ok { color: var(--ok); }
+.etat.alerte { color: var(--alerte); }
+p { margin: 0; }
+ol { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; }
+.note { border-left: 3px solid var(--accent); padding-left: 12px; color: var(--second); }
+.resultat {
+  font: 400 14px/1.5 var(--chasse-fixe); background: var(--fond); border: 1px solid var(--filet);
+  border-radius: 8px; padding: 12px; white-space: pre-wrap; overflow-wrap: anywhere; user-select: all; -webkit-user-select: all;
+}
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+button {
+  font: 600 15px/1 var(--police); min-height: 44px; padding: 0 16px; border-radius: 8px;
+  border: 1.5px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer;
+}
+button.principal { background: var(--accent); color: var(--sur-accent); }
+button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.petit { font-size: 13px; color: var(--second); }
+</style>
+
+<main>
+  <header style="display:grid;gap:6px">
+    <h1>Test de mémoire de Safari</h1>
+    <p class="sous-titre">Avant l'essai, on vérifie que votre iPhone garde l'avancement d'un jour à l'autre. Rien d'autre n'est testé ici, et rien ne quitte votre téléphone.</p>
+  </header>
+
+  <section class="panneau" aria-live="polite">
+    <p class="etat" id="etat">Vérification…</p>
+    <p id="detail"></p>
+  </section>
+
+  <section class="panneau" id="bloc-consigne">
+    <p><strong>Ce qu'il reste à faire</strong></p>
+    <ol id="consigne"></ol>
+  </section>
+
+  <section class="panneau">
+    <p><strong>À recopier dans la conversation</strong></p>
+    <div class="resultat" id="resultat"></div>
+    <div class="actions">
+      <button type="button" class="principal" id="copier">Copier le résultat</button>
+    </div>
+    <p class="note" id="copie-note" hidden></p>
+  </section>
+
+  <section class="panneau">
+    <p class="petit">Ouvrez toujours cette page de la même façon : dans Safari, depuis le même lien. La page n'enregistre qu'une date et un compteur de visites, dans ce navigateur seulement.</p>
+    <div class="actions">
+      <button type="button" id="recommencer">Recommencer le test</button>
+    </div>
+    <div class="actions" id="confirmer" hidden>
+      <p style="flex-basis:100%">Effacer la date de première visite et repartir de zéro ?</p>
+      <button type="button" id="annuler">Annuler</button>
+      <button type="button" class="principal" id="effacer">Effacer et recommencer</button>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  var CLE = "elenchos-essai:sonde-memoire";
+  var etatEl = document.getElementById("etat");
+  var detailEl = document.getElementById("detail");
+  var consigneEl = document.getElementById("consigne");
+  var resultatEl = document.getElementById("resultat");
+
+  function dateFr(ms) {
+    try {
+      return new Intl.DateTimeFormat("fr-FR", {
+        weekday: "long", day: "numeric", month: "long", hour: "numeric", minute: "2-digit",
+        timeZone: "Europe/Paris"
+      }).format(new Date(ms)).replace(":", "h");
+    } catch (e) { return new Date(ms).toISOString(); }
+  }
+  function heuresEntre(a, b) { return Math.floor((b - a) / 3600000); }
+  function lire() {
+    try { var v = localStorage.getItem(CLE); return v ? JSON.parse(v) : null; }
+    catch (e) { return undefined; }
+  }
+  function ecrire(o) {
+    try { localStorage.setItem(CLE, JSON.stringify(o)); return lire() !== undefined && lire() !== null; }
+    catch (e) { return false; }
+  }
+  function etapes(liste) {
+    consigneEl.textContent = "";
+    liste.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; consigneEl.appendChild(li); });
+  }
+  var dansCadre;
+  try { dansCadre = window.self !== window.top; } catch (e) { dansCadre = true; }
+  var maintenant = Date.now();
+  var lignes = [];
+
+  var o = lire();
+  if (o === undefined || !ecrire(o || { premiere: maintenant, visites: 0 })) {
+    etatEl.textContent = "Ce navigateur ne peut rien garder.";
+    etatEl.className = "etat alerte";
+    detailEl.textContent = "La page n'arrive pas à enregistrer quoi que ce soit ici. C'est le cas, par exemple, en navigation privée.";
+    etapes(["Si vous êtes en navigation privée, rouvrez ce lien dans un onglet ordinaire.", "Sinon, copiez le résultat et collez-le dans la conversation : l'équipe cherchera une autre façon d'ouvrir l'essai."]);
+    lignes.push("Résultat : stockage impossible.");
+  } else if (!o) {
+    o = { premiere: maintenant, visites: 1, derniere: maintenant };
+    ecrire(o);
+    etatEl.textContent = "Première visite enregistrée.";
+    detailEl.textContent = "Le " + dateFr(maintenant) + ".";
+    etapes([
+      "Fermez Safari complètement : depuis le bas de l'écran, remontez et maintenez pour voir les applications ouvertes, puis balayez Safari vers le haut.",
+      "Rouvrez ce lien dans Safari dans quelques heures, puis une dernière fois demain.",
+      "À chaque fois, copiez le résultat et collez-le dans la conversation."
+    ]);
+    lignes.push("Résultat : première visite, rien à comparer encore.");
+  } else {
+    var avant = o.derniere || o.premiere;
+    o.visites = (o.visites || 1) + 1;
+    o.derniere = maintenant;
+    ecrire(o);
+    var h = heuresEntre(o.premiere, maintenant);
+    etatEl.textContent = "Mémoire conservée.";
+    etatEl.className = "etat ok";
+    detailEl.textContent = "Première visite le " + dateFr(o.premiere) + ". Visite n° " + o.visites + ", " + h + " h plus tard.";
+    if (h < 20) {
+      etapes(["Fermez de nouveau Safari complètement.", "Rouvrez ce lien demain, une dernière fois, puis copiez le résultat dans la conversation."]);
+    } else {
+      etapes(["C'est tout : copiez le résultat et collez-le dans la conversation. Le test est terminé."]);
+    }
+    lignes.push("Résultat : mémoire conservée, visite n° " + o.visites + ", " + h + " h après la première, " + heuresEntre(avant, maintenant) + " h après la précédente.");
+  }
+  lignes.push("Page affichée " + (dansCadre ? "dans un cadre" : "seule") + ".");
+  lignes.push("Navigateur : " + navigator.userAgent);
+  resultatEl.textContent = lignes.join("\n");
+
+  var note = document.getElementById("copie-note");
+  document.getElementById("copier").addEventListener("click", function () {
+    var texte = resultatEl.textContent;
+    function selectionner() {
+      try {
+        var r = document.createRange(); r.selectNodeContents(resultatEl);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      } catch (e) {}
+      note.textContent = "La copie automatique n'a pas fonctionné. Le texte est sélectionné : touchez « Copier » dans le menu qui s'affiche, puis collez-le dans la conversation.";
+      note.hidden = false;
+    }
+    try {
+      navigator.clipboard.writeText(texte).then(function () {
+        note.textContent = "Résultat copié : collez-le dans la conversation.";
+        note.hidden = false;
+      }, selectionner);
+    } catch (e) { selectionner(); }
+  });
+
+  var confirmer = document.getElementById("confirmer");
+  document.getElementById("recommencer").addEventListener("click", function () { confirmer.hidden = false; });
+  document.getElementById("annuler").addEventListener("click", function () { confirmer.hidden = true; });
+  document.getElementById("effacer").addEventListener("click", function () {
+    try { localStorage.removeItem(CLE); } catch (e) {}
+    location.reload();
+  });
+})();
+</script>
