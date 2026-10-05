@@ -19,7 +19,7 @@
 - Il n'y a aucun nombre à virgule. On n'écrit que des entiers, et des fractions exactes écrites en chaînes « p/q ».
 - Chaque trace est écrite deux fois, à partir des mêmes coups : par la version témoin de la page et par le programme de contrôle. On compare les deux octet pour octet, après avoir effacé les durées réelles. Une seule différence est un défaut.
 - La partie du porteur ne produit jamais de trace : sa version de la page n'en a pas (§9, D-016).
-- Ne sont pas couverts ici : le format du stockage de la page (§8.8), le relevé des chaînes affichées (contrôle 11) et le texte du carnet (partie 6).
+- Ne sont pas couverts ici : le format du stockage de la page (§8.8), le relevé des chaînes affichées (contrôle 11) et le texte du carnet (§8.12).
 
 ## 1. Règles communes aux deux fichiers
 
@@ -324,6 +324,16 @@ Codes des réponses :
 | F2 | `"de_plus_en_plus"`, `"toujours_autant"`, `"de_moins_en_moins"`, `"jamais"` |
 | F1 (une case) | `"pole0"`, `"milieu"`, `"pole1"` : le rond de gauche, du milieu ou de droite |
 
+Libellés correspondants, tels qu'écrits sur les boutons et recopiés dans le carnet (§8.12) :
+
+| Code | Libellé |
+|---|---|
+| `aurais_pu`, `ne_pouvais_pas`, `les_deux` | « J’aurais pu trouver », « Je ne pouvais pas trouver », « Les deux » |
+| `premier_coup`, `en_relisant`, `pas_tout` | « Compris du premier coup », « Compris en relisant », « Pas tout compris » |
+| `revelation`, `titres`, `phrase_semaine`, `deviner`, `donner_avis`, `phrase_jour`, `aucun` | « La révélation », « Les titres », « Ma phrase de la semaine », « Deviner », « Donner mon avis », « Ma phrase du jour », « Aucun » |
+| `pas_amuse`, `pas_compris`, `pas_le_temps`, `vu_assez`, `autre` | « Je ne m’amuse pas », « Je ne comprends pas tout », « Je n’ai pas le temps », « J’ai vu ce que je voulais voir », « Autre raison » |
+| `de_plus_en_plus`, `toujours_autant`, `de_moins_en_moins`, `jamais` | « De plus en plus amusant », « Toujours aussi amusant », « De moins en moins amusant », « Jamais amusant » |
+
 Entrées au niveau de la partie :
 - `arret` vaut `{"k": entier, "raison": code ou null, "f2": code ou null, "f1": objet ou null}` ;
 - `fin` vaut `{"f2": code ou null, "f1": objet ou null}` ;
@@ -531,7 +541,7 @@ Fragment 5. Un extrait de la séance 9. Seule la tension T du portrait est montr
 ```json
 {
   "attente": {"lectures": [{"heure": "09:00", "visages": ["Hugo"]}]},
-  "mesures": {"attributions_justes": 1, "duree_deviner": 41, "duree_repondre": 37, "duree_seance": 118, "jours_ecoules": 1, "passer": 1, "raison_tentee": true, "raison_trouvee": false, "relire": 1},
+  "mesures": {"duree_deviner": 41, "duree_repondre": 37, "duree_seance": 118, "jours_ecoules": 1, "passer": 1, "relire": 1, "revelation_raison_tentee": false, "revelation_verdicts": ["juste", "faux", "passe"]},
   "ouverture": "2026-10-21T08:52+02:00",
   "phrase_jour": {"classe": "penchant", "phrase": "Aujourd’hui, tu as penché vers le changement.", "pole": 1, "texte": "9", "w": "1/2"},
   "portrait": {
