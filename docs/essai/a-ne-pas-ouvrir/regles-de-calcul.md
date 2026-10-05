@@ -125,8 +125,8 @@ Plus 200 parties au hasard, graine inscrite au rapport de contrôle (le rapport 
 - côté attendu du porteur « inconnu », 0, +1, −1 ;
 - les quatre lignes du §4.6 de `simulation.md` ; carte à raison cachée déplacée parce que sa raison était « aucune » ; carte « aucune des quatre raisons » ;
 - les quatre phrases du jour ; les trois phrases de la semaine ;
-- cartes laissées sans attribution au passage au jour suivant ; position donnée sans raison ; texte laissé sans réponse ;
-- arrêt avant le jour 3, arrêt après le jour 3 avec F1 remplie, arrêt avec F1 sautée ; carnet copié depuis la confirmation de « Tout effacer » en cours d'essai ;
+- cartes laissées sans attribution, ou attribuées sans « Valider », au passage au jour suivant ; position donnée sans raison ; texte laissé sans réponse ;
+- arrêt à l'entrée, avant 1.9 ; arrêt avant le jour 3, arrêt après le jour 3 avec F1 remplie, arrêt avec F1 sautée ; carnet copié depuis la confirmation de « Tout effacer » en cours d'essai ;
 - Le Devin départagé par les raisons cachées ; Le Sans-Faute obtenu et manqué ; Le Fidèle avec et sans le porteur ;
 - chaque départage par t ;
 - l'écran 5.12 (personne n'a répondu la veille), s'il peut arriver.

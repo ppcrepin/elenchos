@@ -449,7 +449,7 @@ Le champ `seances[k].coups` contient :
 - `designe` :
   - c'est le visage choisi ;
   - il vaut `"passe"` après un toucher sur « Passer » ;
-  - il vaut `null` pour une carte laissée sans attribution quand le joueur passe au jour suivant. Cette carte compte alors comme passée (§8.2).
+  - il vaut `null` pour une carte laissée sans attribution quand le joueur passe au jour suivant, et pour une carte attribuée sans « Valider » (seul « Valider » enregistre la manche, §7.1). Cette carte compte alors comme passée (§8.2).
 - `raison`, dans `deviner`, est la raison devinée. Elle ne figure que sur la carte à raison cachée. Elle vaut `null` sur les autres cartes, ou si le joueur ne l'a pas tentée.
 - Une position sans raison n'est pas une réponse : `reponse` vaut alors `null` (§8.2).
 - Dans une partie jouée par le harnais, une attribution ou une passe n'est jamais défaite. La trace donne l'état final, et le nombre de « Passer » se lit sans ambiguïté.
