@@ -68,6 +68,14 @@ details > div { display: grid; gap: 10px; padding-top: 8px; justify-items: start
 <body>
 <main>
 
+<!-- Secours : visible tant que le script n'a pas affiché une situation -->
+<section id="vue-secours">
+  <div class="entete">
+    <h1>La page n’a pas pu démarrer.</h1>
+    <p class="sous-titre">Ce n’est pas une erreur de votre part. Dites-le dans la conversation, en précisant d’où vous avez ouvert la page : Safari, l’icône « Essai », ou ailleurs.</p>
+  </div>
+</section>
+
 <!-- Situation 3 : ordinateur, ou page dans un cadre -->
 <section id="vue-ailleurs" hidden>
   <div class="entete">
@@ -249,6 +257,7 @@ details > div { display: grid; gap: 10px; padding-top: 8px; justify-items: start
   }
 
   function montrer(id) {
+    document.getElementById("vue-secours").hidden = true;
     var v = document.getElementById(id); v.hidden = false; typoNoeuds(v); brancherCopies(v);
   }
 
@@ -258,11 +267,14 @@ details > div { display: grid; gap: 10px; padding-top: 8px; justify-items: start
   if (!standalone && autreNavigateur) { montrer("vue-autre-navigateur"); return; }
   // Situation 1 : rien n'est enregistré
   if (!standalone) {
+    var lisible;
+    try { lisible = localStorage.getItem(CLE) === null ? "non" : "oui"; } catch (e) { lisible = "indisponible"; }
     document.getElementById("diagnostic").textContent = [
       "Test de mémoire de l’essai",
       "Version de la page : " + VERSION,
       "Résultat : test non lancé, page ouverte dans un onglet"
     ].concat(lignesCommunes(), [
+      "Mémoire de l\u2019icône lisible depuis cet onglet : " + lisible,
       "Écran tactile : " + (tactile ? "oui" : "non"),
       "Navigateur : " + ua,
       "",
@@ -393,7 +405,7 @@ details > div { display: grid; gap: 10px; padding-top: 8px; justify-items: start
   // Stockage durable : demandé et accordé, pour information.
   try {
     if (etat !== "E3" && navigator.storage && navigator.storage.persist) {
-      stockageDemande = "oui";
+      stockageDemande = "oui"; ecrireResultat();
       navigator.storage.persist().then(function (ok) { stockageAccorde = ok ? "oui" : "non"; ecrireResultat(); },
         function () { stockageAccorde = "non"; ecrireResultat(); });
     }
