@@ -1,6 +1,6 @@
 # Règles de calcul des personnages (à ne pas ouvrir avant la fin de l'essai)
 
-*Spécification Game design, 4 octobre 2026 ; version 3, après Cohérence, UX, Juridique et le Vérificateur. Modifications après le gel, le 5 octobre 2026, en circuit avec le lot de textes : annexe A (« Effet attendu », avec le lot scellé) ; §9 bis (« Texte rejeté. » jamais affiché ; liste à couvrir : arrêt à l'entrée avant 1.9, cartes attribuées sans « Valider »). Complète `docs/essai/simulation.md`, dont elle garde la numérotation (§2, §3, §4.1 à §4.4, annexe A) pour que les renvois restent justes. Lire ces règles avant la fin de l'essai aiderait à deviner : comment les personnages répondent, devinent, et comment les cartes sont choisies.*
+*Spécification Game design, 4 octobre 2026 ; version 3, après Cohérence, UX, Juridique et le Vérificateur. Modifications après le gel, le 5 octobre 2026, en circuit avec le lot de textes : annexe A (« Effet attendu », avec le lot scellé) ; §9 bis (« Texte rejeté. » jamais affiché ; liste à couvrir : arrêt à l'entrée avant 1.9, cartes attribuées sans « Valider ») ; puis, passe de spécification avant fabrication (Game design, 5 octobre 2026) : §2 (ordre d'affichage des raisons, tiré au scellement), §3, points 1 et 4, §4.3 (étape 3), §9 bis (protocole du réglage ; chiffres constants, calculés deux fois). Complète `docs/essai/simulation.md`, dont elle garde la numérotation (§2, §3, §4.1 à §4.4, annexe A) pour que les renvois restent justes. Lire ces règles avant la fin de l'essai aiderait à deviner : comment les personnages répondent, devinent, et comment les cartes sont choisies.*
 
 Les notations communes (k, n, s, v, w, c, ℓ), le tirage déterministe et le calcul exact sont au §0 de `simulation.md`. Le calcul exact s'applique aux données et constantes (p, v, m, 0,07, 0,95, 0,70, seuils) et à toutes les grandeurs calculées (a, d, c, ℓ, q, distance, médiane, rareté, surprise, poids). Profils, réponses atypiques et absences : `profils.md`.
 
@@ -16,7 +16,7 @@ Les notations communes (k, n, s, v, w, c, ℓ), le tirage déterministe et le ca
 
 ## 2. Comment un personnage répond
 
-Contenu fournit pour chaque texte (annexe A) : la tension ; le sens s ; quatre considérations dans l'ordre d'affichage, chacune avec un côté (pour ou contre) et un pôle (0, 1 ou aucun).
+Contenu fournit pour chaque texte (annexe A) : la tension ; le sens s ; quatre considérations numérotées de 1 à 4 dans la fiche, chacune avec un côté (pour ou contre) et un pôle (0, 1 ou aucun). **Ordre d'affichage**, tiré au scellement : les quatre considérations du texte X sont mélangées au sens du §0 de `simulation.md`, c'est-à-dire triées par t("ordre-raisons|X|i") croissant, i étant leur numéro dans la fiche. La première du tri reçoit le rang 1, et ainsi de suite. Le rang est l'« id » des clés de tirage et la valeur de `raison`. Le programme de contrôle refait ce tirage à partir des fiches.
 
 ### 2.1 Position type
 
@@ -58,13 +58,13 @@ Les personnages répondent à E1, E2, E3 par 2.1 et 2.2, sans écart. Le porteur
 
 ## 3. Comment un personnage devine
 
-1. À chaque séance k de 2 à 14, chaque personnage présent joue une manche sur le texte k−1. Ses cartes sont choisies comme au §4, avec lui pour devineur. Candidats : les quatre autres membres, porteur et absents compris.
+1. À chaque séance k de 2 à 14, chaque personnage présent (le texte k n'est pas dans ses absences) joue une manche sur le texte k−1. Ses cartes sont choisies comme au §4, avec lui pour devineur. Candidats : les quatre autres membres, porteur et absents compris.
 2. Côté attendu d'un candidat X vu par le devineur g, aligné sur le sens du texte : +1, 0 ou −1.
    - X personnage : a = p de X aligné (2.1) ; +1 si a ≥ 0,6 ; −1 si a ≤ 0,4 ; sinon 0.
    - X porteur : g n'utilise que les réponses du porteur qu'il a eues dans ses propres cartes, déjà révélées (textes ≤ k−2), sur la même tension ; on calcule le centre c du §5.2 de `simulation.md` sur ces seules réponses ; Σ w = 0 → « inconnu » ; sinon on aligne c sur le sens du texte (c si s = 1, 1 − c si s = 0) et on applique les mêmes seuils. Voulu : un seul arbitrage net vu suffit à donner un côté (c = 3/5 ou 2/5, seuils compris), comme deux penchants de même sens ; un seul penchant ne suffit pas (c = 5/9).
    - Ce curseur du porteur vu par g (§3.2) n'est pas celui du §4.2 (réponses d'entrée et toutes ses réponses aux textes ≤ k−2) : c'est voulu, g ne connaît que ce qu'il a deviné.
 3. Score d'une carte de côté σ pour X : 2 si σ égale le côté attendu (0 et 0 compris) ; sinon 1 si l'un des deux vaut 0 ou si X est « inconnu » ; sinon 0.
-4. Attribution : les candidats sont mélangés par t("devine|g|k|candidat") ; chacun reçoit son rang, de 1 à 4, dans cette liste. Une affectation (une carte = une personne, chaque personne au plus une fois) s'écrit comme la suite des rangs des candidats attribués aux cartes, prises dans l'ordre d'affichage du §4.5 de `simulation.md`, calculé pour g comme pour le porteur. Parmi les affectations de total maximal, on retient la plus petite dans l'ordre lexicographique : (1, 4, 2) passe avant (2, 1, 3). Les personnages ne passent jamais.
+4. Attribution : les candidats sont mélangés par t("devine|g|k|candidat") ; chacun reçoit son rang, de 1 à 4, dans cette liste. Une affectation (une carte = une personne, chaque personne au plus une fois) s'écrit comme la suite des rangs des candidats attribués aux cartes, prises dans l'ordre d'affichage du §4.5 de `simulation.md`, calculé pour g comme pour le porteur. Parmi les affectations de total maximal, on retient la plus petite dans l'ordre lexicographique : (1, 4, 2) passe avant (2, 1, 3). Les personnages ne passent jamais. Une manche sans réponse possible n'a pas de carte : rangs et côtés calculés, total 0. C'est impossible avec ce lot, où chaque texte a au moins deux réponses de personnages.
 5. Raison cachée : parmi les considérations du côté de la carte (les quatre si elle est neutre). Candidat choisi attendu à +1 ou −1 : la première, dans l'ordre d'affichage, dont le pôle correspond (+1 → s ; −1 → 1 − s) ; s'il n'y en a pas, la règle suivante. Candidat attendu à 0 ou « inconnu » : la première hors tension, sinon la première. « aucune » seulement si le côté de la carte n'a aucune considération, ce que l'annexe A exclut : un personnage ne devine jamais « aucune ».
 6. Justesse visée (hypothèse de Game design, non validée ni par le calcul ni par un essai) : 60 à 70 % sur les cartes des personnages ; 30 à 50 % sur les réponses du porteur devinées par les personnages, en hausse. Remplacée avant le scellement par les valeurs mesurées (§9 bis).
 
@@ -93,7 +93,7 @@ Pour le devineur g à la séance k : les réponses au texte k−1 des membres au
 
 1. Classer les réponses possibles par surprise décroissante ; à surprise égale, par t("surprise|g|k|auteur") croissant.
 2. Places 1 et 2 : les deux premières. Place 3 : parmi les suivantes, celle de plus petit t("hasard|g|k|auteur"). Avec trois réponses possibles, la place 3 revient à la troisième ; avec deux, il n'y a pas de place 3 ; avec une, seulement la place 1.
-3. Cartes identiques : même niveau et même raison, « aucune » comprise, que la raison soit affichée ou cachée. Tant que deux cartes placées sont identiques et qu'une réponse non placée n'est identique à aucune carte placée : écarter la moins bien classée des deux (ordre de l'étape 1) et mettre à sa place, au même numéro, la première de ces réponses dans l'ordre de l'étape 1.
+3. Cartes identiques : même niveau et même raison, « aucune » comprise, que la raison soit affichée ou cachée. Tant que deux cartes placées sont identiques et qu'une réponse non placée n'est identique à aucune carte placée : écarter, parmi les cartes placées qui ont une jumelle placée, la moins bien classée (ordre de l'étape 1) et mettre à sa place, au même numéro, la première de ces réponses dans l'ordre de l'étape 1.
 4. Cartes identiques restées ensemble (C-010) : avant tout compte (révélation, points, titres, badges), on redistribue leurs auteurs entre elles. Chaque auteur du groupe désigné sur l'une de ces cartes devient l'auteur de cette carte ; les autres auteurs du groupe vont aux cartes restantes, dans l'ordre des visages (porteur en dernier) et l'ordre d'affichage. Désigner l'un des auteurs sur l'une de ces cartes est donc toujours juste. La révélation montre sous chaque carte son auteur redistribué. Le §6 de `simulation.md` s'applique ensuite sans exception.
 
 ### 4.4 Carte à raison cachée
@@ -102,15 +102,58 @@ La carte de la dernière place (3, sinon 2, sinon 1). Si sa raison est « aucune
 
 ## 9 bis. Réglage avant scellement et parties témoins
 
-**Avant de sceller, une seule fois.** Le programme indépendant joue 200 parties de réglage sur les textes et les réponses prêts à sceller. La place du porteur est tenue par un joueur simulé au profil cohérent tiré au hasard (position et fermeté par tension, règles 2.1 à 2.3, trois réponses atypiques). Il devine par la règle du §3, le côté attendu de chaque personnage étant tiré de son curseur tel que le porteur le voit (§5.4 de `simulation.md`). On relève : justesse des personnages entre eux ; justesse des personnages sur les réponses du joueur simulé, semaines 1 et 2 ; justesse du joueur simulé, semaines 1 et 2 ; fréquence des cartes identiques, des raisons « aucune », des manches à deux cartes ; titulaires des titres ; pour chaque personnage et chaque tension, combien de fois sa réponse est servie au joueur simulé en 14 séances. Une case personnage × tension vue moins de 2 fois (cartes des manches révélées jusqu'à la séance atteinte, plus les trois réponses d'Agathe à l'entrée) est signalée. La justesse de F1 est donnée deux fois au bilan : sur les 16 cases, et sans les cases signalées (Game design : un seuil de 3 serait hors d'atteinte pour certaines cases, et les cases exclues seraient surtout les profils modérés, les plus durs à placer ; les exclure seules gonflerait la justesse).
+**Avant de sceller, une seule fois.** Le programme de contrôle joue 200 parties de réglage sur le fichier candidat, avec le réglage par défaut (trois réponses atypiques par personnage, seuils non stricts). La place du porteur est tenue par un joueur simulé.
 
-Deux réglages possibles, et seulement ceux-là :
-- joueur simulé au-dessus de 70 % en semaine 2 → quatre réponses atypiques par personnage au lieu de trois ; sous 35 % → deux (`profils.md` mis à jour) ;
-- personnages au-dessus de 60 % sur les réponses du joueur simulé en semaine 2 → seuils stricts pour le côté attendu du porteur (> 3/5 et < 2/5 : il faut deux arbitrages nets, ou un arbitrage net et un penchant).
+- **Hasard propre au réglage.**
+  - Graine de réglage g_R : les 16 premiers chiffres hexadécimaux de SHA-256("elenchos-essai|reglage|" + graine du fichier candidat).
+  - Pour la partie i (1 à 200, en décimal sans zéro initial), t_i(clé) = N / 16⁸, où N est tiré comme au §0 de SHA-256(g_R + "|" + i + "|" + clé) ; départages et égalités exactes comme au §0.
+  - Un entier de 0 à 100 vaut ⌊101·N / 2³²⌋. Un choix parmi trois vaut ⌊3·N / 2³²⌋ (0, 1 ou 2).
+- **Profil.** Pour chaque tension T, tirés indépendamment :
+  - position : entier de 0 à 100, de la clé « position|T » ;
+  - fermeté : faible, moyenne ou forte (0, 1 ou 2), de la clé « fermete|T ».
+- **Réponses.**
+  - À tous les textes, entrée comprise, par les règles 2.1 et 2.2, avec t_i("raison|porteur|texte|id").
+  - Trois réponses atypiques par la procédure de `profils.md`, avec t_i("ecart|porteur|n") et t_i("cote-ecart|porteur|n"). Seules les contraintes (b) et (d) s'appliquent : il n'est jamais absent, et (c) ne compte que les personnages.
+  - Il répond chaque jour et ne passe jamais.
+- **Devinettes.**
+  - Règle du §3, avec t_i("devine|porteur|k|candidat") pour les rangs.
+  - Côté attendu d'un personnage : le centre c de son curseur tel que le porteur le voit (§5.4 de `simulation.md` : réponses d'entrée et textes ≤ k−2), aligné sur le sens du texte (c si s = 1, 1 − c sinon). +1 si ≥ 3/5, −1 si ≤ 2/5, 0 entre les deux, « inconnu » si Σ w = 0. Ces seuils ne sont jamais stricts : le réglage strict ne vise que le côté attendu du porteur.
+  - Il tente toujours la raison cachée (règle 3.5).
+- **Le reste suit le jeu.** Cartes, devinettes des personnages et titres suivent les règles du jeu, avec la graine du fichier.
+- **Pourquoi des tirages propres à chaque partie.** Les cartes servies au joueur simulé et les côtés qu'il attend ne dépendent que du fichier. Avec les rangs de la graine du fichier, sa justesse serait la même dans les 200 parties et ne mesurerait qu'un seul tirage des départages.
+
+**Mesures.**
+- La justesse compte les cartes attribuées juste (auteur après redistribution), sur toutes les cartes servies des manches révélées dans la semaine (semaine 1 : textes 1 à 5 ; semaine 2 : textes 6 à 12).
+- Elle est cumulée sur les 200 parties (Σ justes / Σ cartes) et comparée en fraction exacte.
+- Ce qu'on relève :
+  - justesse des personnages entre eux ;
+  - justesse des personnages sur les cartes du joueur simulé, semaines 1 et 2 ;
+  - justesse du joueur simulé, semaines 1 et 2 ;
+  - fréquences des cartes identiques, des raisons « aucune » et des manches à deux cartes, pour sa manche et pour celles des personnages ;
+  - titulaires des titres.
+- Les cases vues sont des chiffres constants : on les reprend du rapport de scellement.
+- La justesse de F1 est donnée deux fois au bilan : sur les 16 cases, et sans les cases signalées.
+
+Deux réglages possibles, et seulement ceux-là. Ils se lisent sur les mêmes 200 parties et ne sont jamais rejoués :
+- joueur simulé en semaine 2 strictement au-dessus de 7/10 → quatre réponses atypiques par personnage ; strictement sous 7/20 → deux. Le candidat est alors refait, avec la même graine, et `profils.md` est mis à jour ;
+- personnages sur les cartes du joueur simulé en semaine 2 strictement au-dessus de 3/5 → seuils stricts pour le côté attendu du porteur (> 3/5 et < 2/5 : il faut deux arbitrages nets, ou un arbitrage net et un penchant).
 
 Le seuil haut (70 %) laisse une marge au-dessus du repère indicatif de `simulation.md` (35 à 65 % en semaine 2) : on ne règle que si le joueur simulé sort nettement de la fourchette, pas pour un écart de quelques points dû au hasard des textes.
 
-Résultats et réglages sont inscrits au rapport de scellement, datés, avant le scellement ; ensuite rien ne change. Le rapport de scellement contient aussi les chiffres constants du fichier : part de réponses atypiques parmi les cartes servies au porteur ; remplacements de cartes identiques et cartes identiques servies ensemble dans sa manche ; raisons « aucune » parmi ses cartes (affichées et cachées à part) et parmi les réponses scellées (vérifie l'annexe A) ; égalités de classement dans sa manche ; nombre de fois où chaque case personnage × tension est vue par le porteur.
+Résultats et réglages sont inscrits au rapport de scellement, datés, avant le scellement ; ensuite rien ne change. Le rapport de scellement contient aussi les chiffres constants du fichier, ceux qui ne dépendent pas des coups du porteur. Ils portent sur ses manches des séances 2 à 14 (textes 1 à 13, tous révélés à la séance 15) :
+- **part de réponses atypiques** parmi ses cartes : cartes dont (auteur, texte) figure dans `reponses_atypiques`, sur toutes ses cartes. Le compte est le même avant et après redistribution des cartes identiques ;
+- **remplacements** de cartes identiques (§4.3, étape 3) ;
+- **cartes identiques servies ensemble** : nombre de manches et nombre de cartes ;
+- **raisons « aucune »** parmi ses cartes :
+  - affichées : cartes non cachées dont la raison est « aucune » ;
+  - cachées : carte à raison cachée dont la vraie raison est « aucune », ce qui n'arrive que si toutes ses cartes sont « aucune » (§4.4) ;
+  - cartes à raison cachée déplacées par le §4.4 ;
+- **raisons « aucune » parmi les réponses scellées** : entrée, textes devinés et texte 14 à part ; cela vérifie l'annexe A ;
+- **égalités de classement** : somme des `departages` (schéma, partie 3.6) de ses treize manches ;
+- **cases vues** : pour chaque personnage et chaque tension, le nombre de ses cartes sur un texte de cette tension, plus une case par réponse d'entrée d'Agathe (E1 S, E2 P, E3 L), pour une partie menée à la clôture. Une case vue moins de 2 fois est signalée ;
+- **impossibilités** : l'écran 5.12 peut-il arriver (plus petit nombre de réponses de personnages à un texte) ; « Texte rejeté. » peut-il apparaître.
+
+Ces chiffres sont calculés deux fois, sans que l'un voie le code de l'autre : par le programme de contrôle et par le programme de scellement. Ils doivent être égaux ; une différence est un défaut, réglé avant le scellement.
 
 **Après le scellement, avant de donner la page.** Trois parties témoins jouées sur la page, réponses et devinettes consignées :
 - (a) toujours Neutre, passe tout, ne répond pas au texte 10 (manches d'une carte) ;

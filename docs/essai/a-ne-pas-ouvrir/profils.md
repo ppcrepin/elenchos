@@ -1,6 +1,6 @@
 # Profils cachés des personnages (à ne pas ouvrir avant la fin de l'essai)
 
-*Spécification Game design, 4 octobre 2026 ; version 3, après Cohérence et le Vérificateur. Personnages fictifs. Les fiches visibles (prénom, âge, métier, ville, ligne de vie, heure de jeu) sont dans `docs/essai/simulation.md` ; les règles de calcul, dans `regles-de-calcul.md`. Ce fichier contient ce que le porteur doit deviner, et ce qui l'aiderait à deviner.*
+*Spécification Game design, 4 octobre 2026 ; version 3, après Cohérence et le Vérificateur. Modifications du 5 octobre 2026 (passe de spécification avant fabrication, Game design) : « Procédure » des réponses atypiques précisée ; « Comptes qui en découlent » (Le Sans-Faute et les absences du jour 10). Personnages fictifs. Les fiches visibles (prénom, âge, métier, ville, ligne de vie, heure de jeu) sont dans `docs/essai/simulation.md` ; les règles de calcul, dans `regles-de-calcul.md`. Ce fichier contient ce que le porteur doit deviner, et ce qui l'aiderait à deviner.*
 
 ## Profils cachés : position p (0 à 1) et fermeté
 
@@ -50,7 +50,7 @@ Issues de la conception relue avant D-015 (non consignée dans le dépôt).
 - Exactement 3 par personnage, sur les textes 1 à 13 ; aucune sur l'entrée ni sur le texte 14 (12 sur 48 réponses devinables, 25 %).
 - Contraintes : (a) jamais un jour d'absence ; (b) jamais deux textes consécutifs pour un même personnage ; (c) au plus deux personnages en écart sur un même texte ; (d) pour chaque personnage, au moins un écart dans les textes 1 à 6 et au moins un dans les textes 7 à 13.
 - Le nombre (3) peut passer à 4 ou à 2 au réglage d'avant scellement (`regles-de-calcul.md`, §9 bis) ; ce fichier est alors mis à jour.
-- Procédure : personnages dans l'ordre Agathe, Nassim, Odile, Valentin ; textes 1 à 13 classés par t("ecart|prénom|n") croissant ; on retient, en respectant (a) à (c) : le premier valable entre 1 et 6, le premier valable entre 7 et 13, puis le premier valable restant. Pour 2 écarts (réglage) : s'arrêter après les deux premières étapes. Pour 4 : après la troisième, le premier valable restant encore.
+- Procédure : personnages dans l'ordre Agathe, Nassim, Odile, Valentin ; textes 1 à 13 classés par t("ecart|prénom|n") croissant ; on retient, en respectant (a) à (c) : le premier valable entre 1 et 6, le premier valable entre 7 et 13, puis le premier valable restant. Pour 2 écarts (réglage) : s'arrêter après les deux premières étapes. Pour 4 : après la troisième, le premier valable restant encore. Précisions : (c) se compte sur les personnages déjà traités, dans l'ordre ci-dessus ; (b) porte sur les textes que ce personnage a déjà retenus ; « restant » veut dire « pas encore retenu, entre 1 et 13 ». Si aucun texte n'est valable à une étape, c'est un défaut. Sur le lot, la procédure aboutit avec 2, 3 et 4 écarts (vérifié sur le candidat).
 
 ## Absences (complète le §2.4 de `regles-de-calcul.md`)
 
@@ -77,3 +77,4 @@ Toutes tombent sur des textes 1 à 13 : 52 réponses quotidiennes (56 moins 4), 
 ## Comptes qui en découlent
 
 - Le Sans-Faute demande au porteur 20 attributions justes de suite en semaine 2 : six révélations de 3 cartes et une de 2 (texte 10).
+- Dans l'essai, Nassim et Odile ne peuvent pas obtenir Le Sans-Faute : absents au jour 10, ils n'ont pas de carte à la révélation du texte 9 (règle : `simulation.md`, §6, point 6).

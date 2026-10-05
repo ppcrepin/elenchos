@@ -178,6 +178,15 @@ Relevés par Game design, Cohérence et UX en écrivant la simulation de l'essai
 - **C-020 — Heure de référence.** Rien ne dit ce que devient une réponse commencée avant 18h et validée après, ni quelle heure vaut pour un joueur qui vit hors de France. Relevé par Front-end.
 - **C-021 — Chiffres sur les choix des joueurs.** `projet.md` §8 prévoit un suivi du « taux de choix par option » et du taux de « aucune » pour surveiller les biais du contenu ; `produit.md` §8 (D-010) limite les mesures à ce que les joueurs font, « jamais sur ce qu'ils pensent » ; le §9 interdit tout chiffre public sur ce que pensent les joueurs. Positions : Back-end ne le prévoit pas par défaut ; Contenu propose des chiffres internes, regroupés par texte, jamais publiés ; Juridique : internes seulement, jamais publics, même dans le registre de méthode (en campagne, un chiffre public pourrait être lu comme un sondage) ; Contenu demande l'avis de Juridique (données sensibles).
 
+### C-022 à C-025 — Manques relevés en préparant la fabrication de l'essai · Constaté, non tranché (5 octobre 2026)
+
+À soumettre au porteur au bilan de l'étape 4, avec C-007 à C-021. Pour l'essai, une convention les règle (`docs/essai/simulation.md`, §7.1, §7.2, §7.10) ; pour le produit, rien n'est décidé.
+
+- **C-022 — Mandat et groupe de l'auteur d'un texte.** À quel moment les prendre (dépôt ou vote) et sous quelle forme les écrire (sigle ou nom). L'essai prend le dépôt et le libellé court imprimé par l'institution ; un groupe d'une législature passée peut donc s'afficher. Relevé par UX.
+- **C-023 — Les textes d'entrée dans l'Historique.** Les trois textes d'entrée (D-006) n'ont pas de jour ; l'essai ne les met pas dans l'Historique (5.3). Relevé par UX.
+- **C-024 — Où vit Le Sans-Faute après son annonce.** Le badge rare n'a pas de place dans les écrans 4.2, 4.3 ni 5.2 ; l'essai ne le montre qu'en 3.2 et dans le carnet. Relevé par UX.
+- **C-025 — Deux membres avec le même pseudo.** Rien n'empêche qu'un pseudo soit celui d'un autre membre du cercle ; l'essai refuse seulement les prénoms des quatre personnages. Relevé par UX.
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
