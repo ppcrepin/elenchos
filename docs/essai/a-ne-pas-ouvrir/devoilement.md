@@ -14,7 +14,7 @@ Si F1 a été rempli (`f1` non nul, cases vides comprises), dessous :
 {x} : cases dont le choix est égal au corrigé. Accords : « 0 case juste », « 1 case juste », « 2 cases justes ».
 
 **2. Comment lire** (titre du panneau)
-« Chaque personnage avait un profil fixé avant l'essai. Pour chaque tension, une position de 0 à 100 : 0 pour la première valeur (Sécurité), 100 pour la seconde (Liberté individuelle) ; de 41 à 59, au milieu. Et une fermeté : plus elle était forte, plus ses réponses s'éloignaient de Neutre, jusqu'à « Très ». »
+« Chaque personnage avait un profil fixé avant l'essai. Pour chaque tension, une place de 0 à 100 : 0 pour la première valeur (Sécurité), 100 pour la seconde (Liberté individuelle) ; de 41 à 59, au milieu. Et une fermeté : plus elle était forte, plus ses réponses s'éloignaient de Neutre, jusqu'à « Très ». »
 « Les réponses de chacun découlaient de son profil, sauf {trois} par personnage, données exprès contre ce profil pour que rien ne se devine à coup sûr. Toutes ont été calculées par des règles fixes, écrites et scellées avant l'essai, sans rien savoir des vôtres. »
 « « Jour 5 » : le texte auquel vous avez répondu le jour 5, deviné le jour 6, révélé le jour 7. Un jour sans jouer : ni réponse, ni devinette. »
 {trois} vaut « deux », « trois » ou « quatre » : la longueur des tableaux `reponses_atypiques`, la même pour tous.

@@ -461,7 +461,7 @@ Le champ `seances[k].coups` contient :
 - `raison`, dans `deviner`, est la raison devinée. Elle ne figure que sur la carte à raison cachée. Elle vaut `null` sur les autres cartes, ou si le joueur ne l'a pas tentée.
 - Une position sans raison n'est pas une réponse : `reponse` vaut alors `null` (§8.2).
 - Dans une partie jouée par le harnais, une attribution ou une passe n'est jamais défaite. La trace donne l'état final, et le nombre de « Passer » se lit sans ambiguïté.
-- Dans une copie (partie 3.2), `coups` donne l'état au toucher de la copie, et non l'état final : une carte pas encore attribuée y a `designe` à `null`, une réponse pas encore validée y vaut `null`, une question du carnet pas encore répondue aussi ; `relire` y compte les touchers faits avant la copie.
+- Dans une copie (partie 3.2), `coups` donne l'état au toucher de la copie, et non l'état final : toute carte d'une manche pas encore validée y a `designe` à `null` (seul « Valider » enregistre la manche, §7.1), une réponse pas encore validée y vaut `null`, une question du carnet pas encore répondue aussi ; `relire` y compte les touchers faits avant la copie.
 
 Codes des réponses :
 
@@ -786,7 +786,7 @@ D'où vient ce fichier :
     - Les codes sont ceux de la partie 3.4.
 14. **Copies.**
     - `k` va de 0 à K ; les copies sont dans l'ordre du jeu.
-    - Le harnais ne défait jamais un geste (partie 3.4). Donc chaque `designe`, `raison` ou `reponse` non nulle d'une copie se retrouve, identique, dans les coups de sa séance, sauf dans une manche restée non validée.
+    - Le harnais ne défait jamais un geste (partie 3.4). Donc chaque `designe`, `raison` ou `reponse` non nulle d'une copie se retrouve, identique, dans les coups de sa séance (une copie faite avant « Valider » n'a que des `null` dans `deviner` : règle 7, fragment 6).
     - `relire` y est au plus égal à celui de la séance.
     - `versions` de la copie est un début de `versions` de la séance.
     - Un `etapes` vrai dans la copie l'est aussi dans la séance.
