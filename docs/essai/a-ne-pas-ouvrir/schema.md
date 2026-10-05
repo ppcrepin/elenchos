@@ -1,6 +1,6 @@
 # Schéma du fichier scellé et format de la trace (essai solo)
 
-*Rédigé par Back-end le 4 octobre 2026, comme le demande le §9 de `docs/essai/simulation.md` (« Avant d'écrire le fichier scellé ») ; mis à jour le 5 octobre 2026 : vote daté (§7.9), puis auteurs, groupes et élision (§7.10, §7.6) nombres (§7.8, règle 6), groupes en toutes lettres ou à plusieurs organes (partie 2.7) et élision fixée nom par nom (§7.6, partie 2.8). Fichier scellé : version 4 du format ; trace : version 1 (partie 5). L'auteur du programme de contrôle le relit avant le scellement. Le document sert ensuite à l'agent qui scelle, à Contenu (parties 2.7 et 2.8), à l'auteur de la page et à l'auteur du programme de contrôle. C'est une spécification de travail, pas un texte pour le porteur.*
+*Rédigé par Back-end le 4 octobre 2026, comme le demande le §9 de `docs/essai/simulation.md` (« Avant d'écrire le fichier scellé ») ; mis à jour le 5 octobre 2026 : vote daté (§7.9), puis auteurs, groupes et élision (§7.10, §7.6), nombres (§7.8, règle 6), groupes en toutes lettres ou à plusieurs organes (partie 2.7), élision fixée nom par nom (§7.6, partie 2.8), puis, dans la trace, version de la page, copies du carnet et durées au premier plan (§8.12, §8.4 ; parties 3.2, 3.3, 3.10). Fichier scellé : version 4 du format ; trace : version 2 (partie 5). L'auteur du programme de contrôle le relit avant le scellement. Le document sert ensuite à l'agent qui scelle, à Contenu (parties 2.7 et 2.8), à l'auteur de la page et à l'auteur du programme de contrôle. C'est une spécification de travail, pas un texte pour le porteur.*
 
 *Rangé dans `a-ne-pas-ouvrir/` (choix de l'orchestrateur) : les noms de certains champs laissent entrevoir comment les cartes sont choisies et comment les personnages devinent. Tous les lecteurs de ce document lisent déjà ce dossier. **Exemples** : toutes les valeurs sont inventées, sans lien entre elles ni avec l'essai. Elles ne suivent aucune règle cachée : ne pas s'en servir pour tester un calcul. Les personnages d'exemple portent des prénoms des maquettes (Hugo, Paul, Thomas), qui ne sont pas dans l'essai. Les textes d'exemple sont des gabarits. Exception : les tableaux des parties 2.7 et 2.8 portent les vraies valeurs du lot ; ce ne sont pas des exemples.*
 
@@ -382,15 +382,16 @@ Les trois H sont muets, et aucun nom ne commence par un Y. « Ian » se dit comm
   - **P** est la version témoin de la page. Son bloc de trace lit deux choses : les résultats du moteur, et ce que l'interface a lu (l'heure) ou affiché (les visages, le carnet). Il les écrit sans rien recalculer. Le moteur doit donc rendre ses grandeurs intermédiaires (x, c, ℓ, q, etc.) dans ses résultats, dans les deux versions de la page ; seul le bloc de trace les écrit, en fractions « p/q ». Un bloc qui recalculerait ces grandeurs ferait comparer deux copies du même calcul.
   - **C** est le programme de contrôle, écrit à part (§9). Il part du fichier scellé et du journal du harnais. Il ne lit jamais le code de la page, ni sa trace, sauf les durées (partie 4.2).
 - **Entrées et sorties.**
-  - Les entrées sont ce que le harnais joue ou fixe : l'en-tête `partie` ; pour chaque séance, `ouverture`, `coups` et l'heure de chaque lecture d'« En attendant » ; `arret` et `fin`.
+  - Les entrées sont ce que le harnais joue ou fixe : l'en-tête `partie` ; pour chaque séance, `ouverture`, `versions`, `coups` et l'heure de chaque lecture d'« En attendant » ; pour chaque copie du carnet faite en cours d'essai, `k`, `coups` et `versions` à l'instant de la copie (partie 3.2) ; `arret` et `fin`.
   - Le harnais consigne ces entrées dans son **journal**. Le journal a la forme de la trace, réduite à ces champs.
   - Tout le reste de la trace est une sortie.
   - Dans la trace de P, les entrées sont ce que la page a lu et gardé. Dans celle de C, ce sont les valeurs du journal. Les comparer prouve qu'aucun coup ne s'est perdu en route.
 - **Horloge.** Le harnais fixe l'heure, dans le fuseau Europe/Paris, à deux moments : au premier toucher du joueur dans chaque séance (son « ouverture », §8.4), et avant chaque affichage d'« En attendant ». Il la tient immobile pendant cet affichage. L'heure que lit la page doit être celle qu'il a fixée, à la minute près.
+- **Version de la page.** Le harnais choisit la construction qu'il sert à chaque chargement. Il en tient le numéro du programme de construction, qui l'écrit à côté du fichier construit, jamais du code de la page (§9, contrôle 13). Il consigne pour chaque séance la suite `versions` (partie 3.3), et pour chaque copie celle de l'instant de la copie (partie 3.2). La version du porteur et la version témoin d'une même construction portent le même numéro : elles ne diffèrent que par le bloc de trace (contrôle 5).
 - **Deux modes.**
   - `interface` : la partie est jouée par l'interface, dans un navigateur sans tête. C'est le cas des parties témoins et d'au moins dix parties au hasard (§9).
   - `moteur` : la partie est rejouée par le moteur seul. C'est le cas des 200 parties au hasard.
-  - En mode `moteur`, `carnet` et toutes les durées valent `null`. Le harnais donne au moteur les mêmes entrées qu'en mode `interface`.
+  - En mode `moteur`, `carnet`, `versions` et toutes les durées valent `null`, et `copies` est vide. Le harnais donne au moteur les mêmes entrées qu'en mode `interface`, sauf `versions` et les copies, qui ne servent qu'au carnet.
 - **Sortie de la trace.** Le harnais la lit dans le navigateur sans tête. La page ne l'envoie jamais (§8.8).
 - **Pseudo des joueurs témoins.** On choisit une chaîne qu'on ne risque pas de trouver par hasard ailleurs, sans espace et qui ne finit pas par un chiffre, par exemple « Témoin-b-4821-k ». Le contrôle 12 vérifie qu'elle n'apparaît pas dans le carnet. Pourquoi pas de chiffre final : le pseudo est inséré après les règles du §7.8. « Témoin-b-4821 décroche… » garderait une espace ordinaire après « 1 », et une ligne finissant par « 4821 » serait un faux défaut au contrôle 11.
 - **Taille.** Une trace pèse de l'ordre de 100 à 300 Ko (estimation).
@@ -400,7 +401,7 @@ Les trois H sont muets, et aucun nom ne commence par un Y. « Ian » se dit comm
 | Clé | Type | Contenu |
 |---|---|---|
 | `format` | chaîne | `"elenchos-essai-trace"` |
-| `version` | entier | `1` |
+| `version` | entier | `2` |
 | `empreinte_scelle` | hex64 | le SHA-256 du fichier scellé utilisé |
 | `partie` | objet | écrit par le harnais. `id` : chaîne (`"a"`, `"b"`, `"c"`, `"hasard-001"`…). `mode` : `"interface"` ou `"moteur"`. `graine` : hex16 qui a servi à tirer les coups d'une partie au hasard, ou `null` pour une partie témoin. |
 | `seances` | tableau | l'élément d'indice k est la séance k (partie 3.3), de 0 à 15, ou jusqu'à la séance de l'arrêt |
@@ -408,14 +409,15 @@ Les trois H sont muets, et aucun nom ne commence par un Y. « Ian » se dit comm
 | `fin` | objet ou `null` | les réponses à F2 et à F1 à la clôture (§8.5), partie 3.4 |
 | `agregats` | objet | calculés à la fin de la partie (partie 3.10) |
 | `carnet` | objet ou `null` | `{"texte": chaîne}` (partie 3.10) |
-| `copies` | tableau | copies du carnet faites en cours d'essai, depuis la confirmation de « Tout effacer » : `{"k": entier, "texte": chaîne}`, dans l'ordre ; vide sinon. Le journal du harnais porte l'entrée correspondante `copie` (numéro de séance). |
+| `copies` | tableau | copies du carnet faites en cours d'essai, depuis la confirmation de « Tout effacer » (§8.12), dans l'ordre ; vide sinon, et en mode `moteur`. Chaque copie vaut `{"k", "coups", "versions", "mesures", "texte"}` : `k`, la séance ; `coups` (partie 3.4) et `versions` (partie 3.3), entrées, tels qu'au toucher « Copier mon carnet d'abord » ; `mesures` (partie 3.10), à ce même toucher ; `texte`, le texte copié. P les écrit à ce toucher, d'après ce que la page a gardé à cet instant. Le journal du harnais porte, pour chaque copie, `k`, `coups` et `versions`. |
 
 ### 3.3 La séance
 
 | Clé | Type | Présente quand (sinon `null`) | Contenu |
 |---|---|---|---|
 | `k` | entier | toujours | numéro de séance |
-| `ouverture` | instant | toujours | entrée : l'heure du premier toucher du joueur dans la séance (aux séances 3 à 14, le toucher du message de 18h), pas l'affichage qui suit « Jour suivant » (§8.4) |
+| `ouverture` | instant | toujours | entrée : l'heure du premier toucher du joueur dans la séance (aux séances 3 à 14, le toucher du message de 18h), pas l'affichage qui suit « Aller au jour suivant » (§8.4) |
+| `versions` | tableau d'entiers | toujours en mode `interface` ; `null` en mode `moteur` | entrée : la valeur {version} de la ligne « Version de la page » du carnet (§8.12) : le numéro de version de la page sous lequel la séance a été ouverte (premier toucher, §8.4), puis, chaque fois qu'un toucher compté dans la durée de la séance (§8.4) a lieu sous un autre numéro que le dernier du tableau, ce numéro. Le plus souvent un seul élément, par exemple `[1]`. Une séance affichée par une version mais ouverte sous la suivante n'a que la suivante. |
 | `coups` | objet | toujours | entrée (partie 3.4) |
 | `entree` | objet | séance 0 | partie 3.5 |
 | `revelation` | objet | séances 3 à 15 | partie 3.7 |
@@ -428,7 +430,7 @@ Les trois H sont muets, et aucun nom ne commence par un Y. « Ian » se dit comm
 | `surprises_proches` | objet | toujours | partie 3.8 |
 | `mesures` | objet | toujours | partie 3.10 |
 
-Une séance atteinte a toujours son entrée (règles de calendrier, §0). À la séance d'un arrêt, `coups`, `phrase_jour`, `attente` et `mesures` décrivent ce qui a eu lieu avant l'arrêt ; `ouverture`, `manches`, `revelation`, `dimanche`, `portrait` et `curseurs_vus` suivent le calendrier (un texte est révélé dès que la séance n+2 est atteinte, lu ou non).
+Une séance atteinte a toujours son entrée (règles de calendrier, §0). À la séance d'un arrêt, `versions`, `coups`, `phrase_jour`, `attente` et `mesures` décrivent ce qui a eu lieu avant l'arrêt ; `ouverture`, `manches`, `revelation`, `dimanche`, `portrait` et `curseurs_vus` suivent le calendrier (un texte est révélé dès que la séance n+2 est atteinte, lu ou non).
 
 ### 3.4 Les coups (entrées)
 
@@ -451,6 +453,7 @@ Le champ `seances[k].coups` contient :
 - `raison`, dans `deviner`, est la raison devinée. Elle ne figure que sur la carte à raison cachée. Elle vaut `null` sur les autres cartes, ou si le joueur ne l'a pas tentée.
 - Une position sans raison n'est pas une réponse : `reponse` vaut alors `null` (§8.2).
 - Dans une partie jouée par le harnais, une attribution ou une passe n'est jamais défaite. La trace donne l'état final, et le nombre de « Passer » se lit sans ambiguïté.
+- Dans une copie (partie 3.2), `coups` donne l'état au toucher de la copie, et non l'état final : une carte pas encore attribuée y a `designe` à `null`, une réponse pas encore validée y vaut `null`, une question du carnet pas encore répondue aussi ; `relire` y compte les touchers faits avant la copie.
 
 Codes des réponses :
 
@@ -595,12 +598,12 @@ On calcule en minutes : r(m) = (m − 1080 + 1440) mod 1440. Un personnage figur
 
 ### 3.10 Mesures, agrégats, carnet
 
-`mesures` existe à chaque séance (§8.4). Le jour et l'heure d'ouverture sont dans `ouverture`.
+`mesures` existe à chaque séance (§8.4), et dans chaque copie du carnet, où il donne l'état au toucher de la copie (partie 3.2). Le jour et l'heure d'ouverture sont dans `ouverture`.
 
 | Clé | Type | Contenu |
 |---|---|---|
 | `jours_ecoules` | entier ou `null` | depuis la séance précédente (partie 6, point 3). `null` à la séance 0. |
-| `duree_seance`, `duree_deviner`, `duree_repondre` | entier ou `null` | en secondes entières, tronquées. `null` si l'étape n'a pas eu lieu, et en mode `moteur`. Ces durées ne sont jamais comparées. |
+| `duree_seance`, `duree_deviner`, `duree_repondre` | entier ou `null` | en secondes entières, tronquées, en ne comptant que le temps où l'app « Essai » est au premier plan (§8.4) ; de l'ouverture au dernier toucher de la séance, « Aller au jour suivant » compris (§8.4, §8.12). Dans une copie, la valeur au toucher de la copie (§8.12). `null` si l'étape n'a pas eu lieu, et en mode `moteur`. Ces durées ne sont jamais comparées. |
 | `relire` | entier | les touchers sur « Relire », comptés par la page |
 | `passer` | entier | les cartes passées par un toucher sur « Passer » |
 | `revelation_verdicts` | tableau ou `null` | les verdicts de la manche du joueur révélée à cette séance (jouée à la séance précédente), dans l'ordre d'affichage : codes de la partie 3.7 ; `null` s'il n'y a pas de révélation ; tableau vide si la manche était vide (5.12) |
@@ -618,11 +621,11 @@ Les chiffres qui ne dépendent que du fichier scellé (réponses atypiques, cart
 
 Un compte dont le total serait nul (aucune carte) vaut `null`.
 
-`carnet.texte` est le texte exact que « Copier mon carnet » a donné à la fin de la partie (clôture ou arrêt), jusqu'à « Fin du carnet » compris. Son format est au §8.12.
+`carnet.texte` est le texte exact que « Copier mon carnet » a donné à la fin de la partie (clôture ou arrêt), jusqu'à « Fin du carnet » compris. Son format est au §8.12. Sa ligne « Version de la page » vient de `versions`, séance par séance (partie 3.3). Une copie en cours d'essai (`copies[].texte`) suit le même format ; le bloc de sa séance vient des `coups`, `versions` et `mesures` de la copie, et non de ceux de la séance, qui ont pu changer ensuite.
 
 ### 3.11 Exemple
 
-Voici cinq fragments, mis en retrait. Chacun est du JSON valide pris isolément. Les valeurs sont inventées (voir l'avertissement en tête).
+Voici six fragments, mis en retrait. Chacun est du JSON valide pris isolément. Les valeurs sont inventées (voir l'avertissement en tête).
 
 Fragment 1. Les coups de la séance 9, `seances[9].coups` :
 
@@ -686,8 +689,15 @@ Fragment 5. Un extrait de la séance 9. Seule la tension T du portrait est montr
   "portrait": {
     "ordre_moi": ["T", "S", "P", "L"],
     "tensions": {"T": {"c": "8/13", "l": "31/40", "net": false, "somme_w": "5/2"}}
-  }
+  },
+  "versions": [1]
 }
+```
+
+Fragment 6. Une copie faite à la séance 9, `copies[0]`, après la première carte de Deviner et avant tout « Relire ». Comparée aux fragments 1 et 5 (état final de la même séance), elle garde l'état du moment. Le texte est abrégé ici ; le vrai est le carnet entier.
+
+```json
+{"coups": {"carnet": {"q1": null, "q2": null, "q3": null}, "consentement": null, "deviner": [{"designe": "Thomas", "raison": null}, {"designe": null, "raison": null}, {"designe": null, "raison": null}], "entree": null, "pseudo": null, "relire": 0, "reponse": null}, "k": 9, "mesures": {"duree_deviner": 12, "duree_repondre": null, "duree_seance": 40, "jours_ecoules": 1, "passer": 0, "relire": 0, "revelation_raison_tentee": false, "revelation_verdicts": ["juste", "faux", "passe"]}, "texte": "Carnet de l’essai Elenchos\n…\nFin du carnet", "versions": [1]}
 ```
 
 ## 4. Vérifications et comparaison
@@ -742,17 +752,19 @@ La page garde ses vérifications V1 à V5 (§0, §8.11). À l'étape V4, elle v�
 ### 4.2 Les traces
 
 1. P écrit sa trace. Le harnais écrit son journal.
-2. C écrit sa trace à partir du fichier scellé et du journal. Il ne prend qu'une chose dans la trace de P : les durées, pour pouvoir écrire le même carnet.
+2. C écrit sa trace à partir du fichier scellé et du journal. Il ne prend qu'une chose dans la trace de P : les durées (`duree_*`, des séances et des copies), pour pouvoir écrire les mêmes textes de carnet.
 3. Dans les deux traces, toute valeur dont la clé commence par `duree_` devient `null`.
 4. Les deux traces sont mises en forme canonique (partie 1.1), puis comparées octet pour octet.
 5. Si elles sont identiques, le contrôle est passé. Sinon, c'est un défaut. L'outil liste alors chaque différence avec son chemin et les deux valeurs. Le chemin s'écrit en JSON Pointer (RFC 6901), par exemple `/seances/9/manches/porteur/ordre/1`. Le Vérificateur lit cette liste (§9).
 
-Tout le reste est comparé, entrées comprises. Une différence sur `ouverture`, `coups` ou `attente.lectures[].heure` révèle l'un de ces défauts :
+Tout le reste est comparé, entrées comprises. Une différence sur `ouverture`, `versions`, `coups`, `attente.lectures[].heure`, `copies[].coups` ou `copies[].versions` révèle l'un de ces défauts :
 - une page qui garde un autre coup que celui qui a été joué ;
 - une page qui lit l'heure en temps universel, ou dans le fuseau de la machine de test ;
-- une page qui arrondit l'heure au lieu de la tronquer.
+- une page qui arrondit l'heure au lieu de la tronquer ;
+- une page qui écrit un autre numéro de version que celui de la construction servie, ou qui compte une version sous laquelle aucun toucher de la séance n'a eu lieu ;
+- une copie qui ne part pas de l'état gardé au moment de son toucher.
 
-**Jamais comparé :** les durées réelles (`duree_*`), et rien d'autre. Aucun autre champ de la trace ne peut légitimement différer entre P et C : il n'y a ni date de production, ni version de programme, ni nom de machine. Si l'on veut garder ces renseignements, ils vont dans un fichier à côté de la trace.
+**Jamais comparé :** les durées réelles (`duree_*`), et rien d'autre. Aucun autre champ de la trace ne peut légitimement différer entre P et C : il n'y a ni date de production, ni version du harnais ou du programme de contrôle, ni nom de machine. Le numéro de version de la page n'est pas un tel renseignement : le carnet l'écrit, c'est donc une entrée (`versions`), comparée comme les autres. Si l'on veut garder ces renseignements, ils vont dans un fichier à côté de la trace.
 
 Où regarder une différence :
 
@@ -763,27 +775,32 @@ Où regarder une différence :
 | `entree`, `cartes[].auteur_compte`, `revelation`, `dimanche` (sauf `phrase_semaine`) | 8 |
 | `portrait`, `curseurs_vus`, `phrase_jour`, `dimanche.phrase_semaine` | 9 |
 | `attente` (jamais « n'a pas joué »), `surprises_proches` | 10 |
-| `mesures`, `agregats`, `carnet` | 12 et 13 |
-| `ouverture`, `coups`, `attente.lectures[].heure` | rejeu : coups gardés égaux aux coups joués, heure locale |
+| `mesures`, `agregats`, `carnet`, `copies[].mesures`, `copies[].texte` | 12 et 13 |
+| `ouverture`, `versions`, `coups`, `attente.lectures[].heure`, `copies[].coups`, `copies[].versions` | rejeu : coups gardés égaux aux coups joués, heure locale, version servie, état au moment de la copie |
 
 ### 4.3 Le carnet (contrôles 12 et 13)
 
-- **Contrôle 13.** Le harnais rejoue les trois parties témoins sur la version du porteur, avec le même journal, et récupère le carnet copié. Il le compare au `carnet.texte` de la trace de C pour la même partie. Avant la comparaison, chaque durée est remplacée par « ‹durée› » dans les deux textes. Les durées se repèrent par l'expression régulière du §8.12. Les heures, fixées par le harnais, sont comparées.
+- **Contrôle 13.** Le harnais rejoue les trois parties témoins sur la version du porteur, avec le même journal, et récupère le carnet copié à la fin ainsi que chaque copie faite en cours d'essai. Il les compare au `carnet.texte` et aux `copies[].texte` de la trace de C pour la même partie. Le journal vaut pour les deux versions d'une même construction, qui portent le même numéro (partie 3.1). Avant la comparaison, chaque durée est remplacée par « ‹durée› » dans les deux textes. Les durées se repèrent par l'expression régulière du §8.12. Les heures, fixées par le harnais, sont comparées. La ligne « Version de la page : {version}. » est comparée elle aussi, jamais masquée : elle prouve que la construction servie porte le numéro que le programme de construction a écrit à côté d'elle.
 - **Contrôle 12.**
   - `carnet.texte` ne contient jamais le pseudo (`seances[0].coups.pseudo`).
-  - Trois variantes d'une même partie, rejouées avec la même horloge et les mêmes gestes, seules les réponses du joueur changeant (§9, contrôle 12) : séance par séance, les blocs de séance du carnet (et `seances[k].mesures`, hors `duree_*`) sont identiques ; seuls « Titres de la semaine » et « Sur tout l'essai » peuvent différer.
+  - Trois variantes d'une même partie, rejouées avec la même horloge, les mêmes gestes et les mêmes `versions`, seules les réponses du joueur changeant (§9, contrôle 12) : séance par séance, les blocs de séance du carnet (et `seances[k].mesures`, hors `duree_*`) sont identiques ; de même pour chaque copie (`copies[].texte` et `copies[].mesures`, hors `duree_*`) ; seuls « Titres de la semaine » et « Sur tout l'essai » peuvent différer.
   - Le carnet suit exactement le gabarit du §8.12 : toute ligne qui n'y figure pas est un défaut.
 
-### 4.4 Mettre l'horloge à l'épreuve
+### 4.4 Mettre l'horloge, la version et les copies à l'épreuve
 
 Au moins une partie témoin contient les cas suivants :
 - une séance ouverte pendant l'heure jouée deux fois le 25 octobre 2026, avec une lecture à 02:30 à chacun des deux passages. Entre 02:00 et 03:00, l'heure passe une première fois à +02:00, puis une seconde fois à +01:00 ;
 - deux lectures à 17:59 et à 18:00, aux bords de la journée de jeu ;
 - une ouverture au moins deux jours après la précédente.
 
+Au moins une partie témoin contient aussi :
+- une séance où la version change entre deux touchers : le harnais recharge la page sur une version témoin construite avec le numéro suivant (ligne attendue : deux numéros, « n, puis n+1 ») ;
+- une séance atteinte sous un numéro, puis ouverte, après rechargement, sous le suivant (ligne attendue : le seul numéro suivant) ;
+- une copie du carnet en cours de séance, suivie d'« Annuler », puis, dans la même séance, d'au moins un « Relire », un « Passer », une réponse au carnet et un changement de version : la copie garde l'état d'avant, le carnet final celui d'après.
+
 ## 5. Changer le format
 
-- Chaque fichier a son propre numéro de version : le fichier scellé est en version 4 ; la trace, et le journal du harnais qui en a la forme, sont en version 1.
+- Chaque fichier a son propre numéro de version : le fichier scellé est en version 4 ; la trace, et le journal du harnais qui en a la forme, sont en version 2.
 - Tout changement de champ, de type ou de sens d'un fichier fait passer ce fichier, et lui seul, à la version suivante. On met alors ce document à jour, et l'auteur du programme de contrôle le relit.
 - Les lignes des tableaux des parties 2.7 et 2.8, et les règles d'écriture de ces tableaux, que seul le programme de contrôle lit, ne sont pas le format : les changer ne change aucune version, tant que les champs du fichier scellé gardent leur type et leur sens. L'auteur du programme de contrôle relit tout changement de ces règles. Lignes et règles sont arrêtées avant le scellement. Le rapport de scellement donne le commit de ce document que le programme de contrôle a lu ; après l'essai, le Vérificateur rejoue le contrôle 1 avec ce même commit.
 - La page refuse un fichier scellé dont le format ou la version est inattendu (étape V4). C refuse un fichier scellé, une trace ou un journal de version inattendue.
@@ -791,7 +808,8 @@ Au moins une partie témoin contient les cas suivants :
   - fichier scellé, version 1 (4 octobre 2026) : `vote` était une chaîne, `"adopte"` ou `"rejete"` ;
   - fichier scellé, version 2 (5 octobre 2026) : `vote` devient un objet daté (partie 2.3, §7.9). La trace ne contient pas le vote : elle reste en version 1 ;
   - fichier scellé, version 3 (5 octobre 2026) : `auteur.type` admet `"senateur"` ; `groupe` devient un sigle de la liste fermée de la partie 2.7, pris au dépôt pour l'auteur et à la séance de l'extrait pour une considération (§7.10) ; nouveaux contrôles en partie 4.1 (groupes, initiales et élision, nombres). La trace ne contient ni auteur, ni groupe, ni nom d'élu, ni nombre écrit par tranches : elle reste en version 1 ;
-  - fichier scellé, version 4 (5 octobre 2026) : le `depute` d'une considération reçoit le champ `elision` (partie 2.3) ; la page ne regarde plus l'initiale, elle lit ce champ (partie 2.8, §7.6). La trace ne contient aucun nom d'élu : elle reste en version 1.
+  - fichier scellé, version 4 (5 octobre 2026) : le `depute` d'une considération reçoit le champ `elision` (partie 2.3) ; la page ne regarde plus l'initiale, elle lit ce champ (partie 2.8, §7.6). La trace ne contient aucun nom d'élu : elle reste en version 1 ;
+  - trace et journal, version 2 (5 octobre 2026) : chaque séance reçoit l'entrée `versions` (partie 3.3), que le carnet écrit dans sa ligne « Version de la page » (§8.12) ; chaque copie du carnet porte les coups, les versions et les mesures de l'instant de la copie (partie 3.2), pour que C recalcule le bloc copié ; le journal porte ces mêmes entrées ; `duree_*` ne compte plus que le temps où l'app est au premier plan (§8.4). Le fichier scellé ne change pas : il reste en version 4.
 - Un fichier déjà scellé en version 1, 2 ou 3 doit être scellé de nouveau en version 4 : nouvelle empreinte datée, et tous les contrôles rejoués (§9, « Correctif »). Ce n'est possible qu'avant la séance 0. (Au 5 octobre 2026, aucun fichier n'est encore scellé.)
 - Après la séance 0, le fichier scellé ne change plus (§9, « Correctif »), et son format non plus. Un correctif de la page peut changer la trace : on refait alors les contrôles (§9).
 
@@ -809,3 +827,5 @@ Au moins une partie témoin contient les cas suivants :
 10. **Pseudo des joueurs témoins** : il ne finit pas par un chiffre (partie 3.1).
 11. **Groupes** : §7.10 (UX) et partie 2.7. La colonne `groupe` admet une espace entre deux lettres (groupe écrit en toutes lettres par l'institution) ; une ligne peut porter plusieurs identifiants quand le groupe a changé d'organe sans changer de sigle. Le groupe ne se coupe jamais à son trait d'union ; à son espace, il peut passer à la ligne comme deux mots ordinaires (UX, §7.10). Les champs du fichier scellé gardent leur type et leur sens : pas de nouvelle version (partie 5).
 12. **Élision nom par nom** : §7.6 (UX). Le `depute` d'une considération porte `elision` (partie 2.3), fixé par le tableau de la partie 2.8 et contrôlé en partie 4.1, étapes 4 et 5 ; la page ne regarde plus l'initiale. Le fichier scellé passe en version 4 ; la trace reste en version 1 (partie 5).
+13. **Version de la page et copies du carnet** : §8.12. Chaque séance de la trace porte l'entrée `versions` (partie 3.3) ; chaque copie du carnet porte les coups, les versions et les mesures de l'instant de la copie (partie 3.2). Le harnais les consigne dans son journal ; C écrit à partir d'eux la ligne « Version de la page » et le bloc copié. Mis à l'épreuve en partie 4.4.
+14. **Durées au premier plan** : §8.4 (Game design). `duree_*` ne compte que le temps où l'app est au premier plan, jusqu'à « Aller au jour suivant » compris (partie 3.10) ; les durées ne sont jamais comparées. Avec le point 13, la trace et le journal passent en version 2 ; le fichier scellé reste en version 4 (partie 5).
