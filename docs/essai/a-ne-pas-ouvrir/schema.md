@@ -270,6 +270,7 @@ Ici, `hex8` et `n` sont cohérents entre eux : 1a2b3c4d en hexadécimal vaut 439
 | `fin` | objet ou `null` | les réponses à F2 et à F1 à la clôture (§8.5), partie 3.4 |
 | `agregats` | objet | calculés à la fin de la partie (partie 3.10) |
 | `carnet` | objet ou `null` | `{"texte": chaîne}` (partie 3.10) |
+| `copies` | tableau | copies du carnet faites en cours d'essai, depuis la confirmation de « Tout effacer » : `{"k": entier, "texte": chaîne}`, dans l'ordre ; vide sinon. Le journal du harnais porte l'entrée correspondante `copie` (numéro de séance). |
 
 ### 3.3 La séance
 
@@ -289,7 +290,7 @@ Ici, `hex8` et `n` sont cohérents entre eux : 1a2b3c4d en hexadécimal vaut 439
 | `surprises_proches` | objet | toujours | partie 3.8 |
 | `mesures` | objet | toujours | partie 3.10 |
 
-À la séance d'un arrêt, chaque champ décrit ce qui a eu lieu avant l'arrêt.
+Une séance atteinte a toujours son entrée (règles de calendrier, §0). À la séance d'un arrêt, `coups`, `phrase_jour`, `attente` et `mesures` décrivent ce qui a eu lieu avant l'arrêt ; `ouverture`, `manches`, `revelation`, `dimanche`, `portrait` et `curseurs_vus` suivent le calendrier (un texte est révélé dès que la séance n+2 est atteinte, lu ou non).
 
 ### 3.4 Les coups (entrées)
 
