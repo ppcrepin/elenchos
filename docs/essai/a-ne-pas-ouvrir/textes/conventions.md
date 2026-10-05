@@ -1,0 +1,12 @@
+# Conventions de rédaction des fiches de l'essai
+
+*Fixées par l'orchestrateur le 5 octobre 2026, après la première vérification indépendante des quatre lots, pour trancher les questions qu'elle laissait ouvertes. Elles complètent le brief de rédaction (format des fiches, `docs/essai/simulation.md` annexe A, `regles-de-calcul.md` annexe A) et l'emportent sur lui en cas d'écart. En relecture avec le lot de contenu.*
+
+
+1. **Côté d'une raison.** Le côté est le sens de l'argument : « pour » s'il plaide pour le texte, « contre » s'il plaide contre. On choisit de préférence un orateur dont le vote personnel (fichier du scrutin) suit l'argument. Un orateur qui s'est abstenu, ou dont le vote n'est pas trouvé, est admis seulement si aucun orateur d'un groupe encore libre ne porte un argument de même force ; c'est alors écrit dans « Doutes ». Un orateur qui a voté dans le sens opposé à sa raison est remplacé.
+2. **Compte des mots.** Mots séparés par des espaces, tels qu'affichés : « c'est » compte pour un mot. Au plus 12.
+3. **Nom du pôle.** Une raison n'écrit pas le nom d'un pôle de sa tension (sécurité, liberté, précaution, innovation, tradition, changement, local, national). Le lien entre une raison et un pôle n'est jamais montré au joueur (`.claude/agents/contenu.md`).
+4. **Pôle « aucun ».** Le pôle se juge sur la phrase affichée, pas sur le discours entier ni sur le côté. Une raison qui parle seulement d'argent, d'emploi, de biens matériels, de récoltes ou de commerce, sans parler de la valeur en tension, est « aucun ». Un texte a au plus une raison « aucun » (annexe A de `regles-de-calcul.md`), et le nombre fixé pour son lot ne change pas. Si la seconde annotation lit « aucun » ou hésite sur une raison qui doit porter un pôle, on la réécrit pour que son pôle soit net, ou on la remplace.
+5. **Fidélité.** Ni durcir ni adoucir : un conditionnel (« pourrait ») reste un conditionnel ; une condition (« lorsque… ») reste dans la raison ou l'extrait ; une question rhétorique ne devient pas une règle absolue ; on ne prête pas à un orateur les mots d'un autre groupe. L'extrait cité contient ce que la raison affirme.
+6. **Titre et lignes.** Ils décrivent le texte tel qu'il a été voté à ce scrutin (pas sa version d'origine, pas sa suite au Sénat), avec les mots d'un observateur neutre, jamais le vocabulaire d'un camp (« assouplies », « bannis », « reconnaîtrait »…). Chaque affirmation a sa source dans la fiche.
+7. **Annotation à refaire.** Toute raison nouvelle ou réécrite repasse par une annotation à l'aveugle avant le scellement.
