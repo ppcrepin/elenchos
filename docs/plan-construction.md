@@ -1,6 +1,6 @@
 # Plan de construction : de l'essai au lancement
 
-*Synthèse de l'orchestrateur, 5 octobre 2026, à partir des plans de Back-end, Front-end, Contenu, Juridique et Game design (avec UX). Relue par Cohérence et le Vérificateur. Elle complète `docs/feuille-de-route.md` sans rien décider : les choix de l'étape 5 vous seront posés en QCM à ce moment-là (D-009), et le code ne commence qu'avec votre accord explicite (D-001). Les durées ne sont données que lorsqu'un spécialiste peut les justifier. Les points de droit viennent de l'agent Juridique : il n'est pas avocat, et il a vérifié une partie des faits dans des sources secondaires ; un avocat relira tout avant la bêta ou avant l'ouverture (choix 8).*
+*Synthèse de l'orchestrateur, 5 octobre 2026, à partir des plans de Back-end, Front-end, Contenu, Juridique et Game design (avec UX). Relue par Cohérence puis par le Vérificateur (« OK avec corrections », appliquées). Elle complète `docs/feuille-de-route.md` sans rien décider : les choix de l'étape 5 vous seront posés en QCM à ce moment-là (D-009), et le code ne commence qu'avec votre accord explicite (D-001). Les durées ne sont données que lorsqu'un spécialiste peut les justifier. Les points de droit viennent de l'agent Juridique : il n'est pas avocat, et il a vérifié une partie des faits dans des sources secondaires ; un avocat relira tout avant la bêta ou avant l'ouverture (choix 8 de l'étape 5).*
 
 ## 1. Où on en est
 
@@ -11,11 +11,11 @@
 Fait :
 - les règles de la simulation, écrites, vérifiées et figées ;
 - 17 vrais textes de l'Assemblée et 68 vrais arguments de députés : choisis, rédigés, vérifiés par un second modèle, puis corrigés ;
-- le classement des arguments, fait deux fois à l'aveugle : 67 arguments sur 68 classés pareil ;
+- le classement des arguments, fait deux fois à l'aveugle : après correction, 67 arguments sur 68 classés pareil ;
 - le vote de chaque texte, relevé deux fois.
 
 En cours :
-- la dernière relecture du lot de textes, avec l'affichage du vote, désormais daté, et quatre points d'affichage (un cas d'auteur que le gabarit ne prévoyait pas, le nom des groupes, les nombres, l'élision) ;
+- la dernière relecture du lot de textes, avec l'affichage du vote, désormais daté, et quatre points d'affichage (un cas d'auteur que le gabarit ne prévoyait pas, le nom des groupes, l'écriture des nombres et des apostrophes) ;
 - la page-test de l'icône : votre première ouverture a réussi.
 
 Changé en route : le test de mémoire a montré que, sur iPhone, une page ouverte dans claude.ai perd tout quand l'application se ferme. L'essai se jouera donc depuis une icône de votre écran d'accueil (D-019).
@@ -24,11 +24,11 @@ Changé en route : le test de mémoire a montré que, sur iPhone, une page ouver
 
 1. **Page-test de l'icône.** Vous rouvrez l'icône une minute après l'avoir fermée, puis une dernière fois demain. Entre les deux, l'équipe publie une version 2 ; vous n'avez rien à faire.
 2. **Fin de la préparation.** Dernière relecture du lot de textes ; mise à jour de la simulation pour l'icône et pour l'affichage (circuit complet).
-3. **Scellement.** Un agent distinct écrit le fichier qui fige à l'avance toutes les réponses des personnages, puis il est réglé sur 200 parties d'essai. Son empreinte est publiée dans la conversation et sur `main` avant votre première séance : vous pourrez vérifier à la fin que rien n'a bougé.
-4. **La page de l'essai.** Elle est construite, puis contrôlée par un programme écrit à part, sur des parties de joueurs témoins et 200 parties au hasard (contrôles 1 à 14 de la simulation).
+3. **Scellement.** Un agent distinct écrit le fichier qui fige à l'avance toutes les réponses des personnages ; la difficulté est réglée une fois pour toutes sur 200 parties simulées. Son empreinte est publiée dans la conversation et sur `main` avant votre première séance : vous pourrez vérifier à la fin que rien n'a bougé.
+4. **La page de l'essai.** Elle est construite, puis contrôlée par un programme écrit à part, sur trois parties jouées par des joueurs fictifs écrits pour couvrir des cas précis, et sur 200 parties jouées au hasard (contrôles 1 à 14 de la simulation).
 5. **Livraison.** L'équipe vous donne le lien et une courte liste de ce qu'il faut savoir.
-6. **Vous jouez.** 16 séances (l'entrée, 14 jours de jeu, la clôture), à votre rythme, idéalement une par jour. Pendant l'essai, vous n'avez rien à envoyer. À la fin, ou si vous l'arrêtez avant, vous copiez votre carnet dans la conversation.
-7. **Bilan de l'essai.** Les chiffres, ce que vous avez ressenti, et les règles restées ouvertes vous sont soumis en QCM : les constats C-007 à C-016 (manques du produit relevés en préparant l'essai) et C-017 à C-021 (relevés depuis). Le produit est corrigé. C'est la fin de l'étape 4.
+6. **Vous jouez.** 16 séances (l'entrée, 14 jours de jeu, la clôture), à votre rythme (D-016). Pendant l'essai, vous n'avez rien à envoyer. À la fin, ou si vous l'arrêtez avant, vous copiez votre carnet dans la conversation.
+7. **Bilan de l'essai.** Le bilan croise les chiffres de votre carnet et ce que vous avez ressenti : le plaisir de deviner au fil des jours, la difficulté, la durée d'une journée de jeu, la clarté des textes. Puis les règles restées ouvertes vous sont soumises en QCM : les constats C-007 à C-016 (manques du produit relevés en préparant l'essai), C-017 à C-021 (relevés depuis) et les conventions prises pour l'essai. Le produit est corrigé. C'est la fin de l'étape 4.
 
 ## 3. Étape 5 : les choix de fabrication
 
@@ -40,7 +40,7 @@ Vous les trancherez après le bilan, en QCM, chacun avec ses options et ce qui f
 
 **2. Lien ou application** (D-005, suspendu).
 - Options : le lien d'abord, puis les deux boutiques ; l'application tout de suite ; le lien seul.
-- Ce qui fait pencher : sur iPhone, le message de 18h n'arrive par le lien qu'après l'ajout d'une icône. Si le lien est retenu, la bêta mesurera ce geste. Autre contrainte : l'invitée ouvre un lien et voit le premier texte tout de suite, sans compte (D-006). Une installation préalable casserait ce parcours (Front-end, Game design).
+- Ce qui fait pencher : sur iPhone, le message de 18h n'arrive par le lien qu'après l'ajout d'une icône. Si le lien est retenu, la bêta mesurera ce geste. Autre contrainte : l'invitée ouvre un lien et voit le premier texte tout de suite, sans compte (D-006). Une installation préalable casserait ce parcours (Front-end, Game design). Enfin, Apple peut refuser une application qui n'est qu'un site mis dans une boîte : la version des boutiques devra apporter un vrai plus, le message de 18h (Front-end, à revérifier à l'étape 5).
 
 **3. Qui code.**
 - Options : des agents Claude, que vous validez en jouant sur un lien d'aperçu ; un prestataire ; ou des agents, plus un développeur qui relit le code et assure la permanence du soir.
@@ -54,7 +54,7 @@ Vous les trancherez après le bilan, en QCM, chacun avec ses options et ce qui f
 - À fixer aussi : les fournisseurs de modèles, l'avance de textes, la règle d'équilibre entre groupes, le contenu du registre public.
 - Ce qui fait pencher :
   - aucun lot de l'essai n'a passé sa première vérification sans correction ;
-  - depuis le 2 août 2026, un texte d'intérêt général écrit par une IA doit le dire, sauf vraie relecture humaine (AI Act, art. 50.4 ; l'avocat devra confirmer que cet article s'applique à un jeu).
+  - depuis le 2 août 2026, un texte d'intérêt général écrit par une IA doit le dire, sauf vraie relecture humaine (règlement européen sur l'IA, dit AI Act, art. 50.4 ; l'avocat devra confirmer que cet article s'applique à un jeu).
 - Attention : la validation humaine, la relecture d'un échantillon ou un seul fournisseur de modèles modifieraient le §8 de votre document (« production entièrement automatisée », vérification chez un autre fournisseur), que vous aviez choisi.
 
 **5. Où vivent les données.**
@@ -64,14 +64,14 @@ Vous les trancherez après le bilan, en QCM, chacun avec ses options et ce qui f
 **6. L'engagement « ni vente, ni exploitation, ni publicité ».**
 - D'abord le confirmer : votre document le recommande (§9) ; `produit.md` §6 le laisse à confirmer à cette étape.
 - Puis choisir sa force : conditions d'utilisation, statuts, clause en cas de rachat.
-- Ce qui fait pencher : seuls le contrat et les statuts le rendent opposable.
+- Ce qui fait pencher : seuls le contrat et les statuts permettent de vous le faire respecter en justice.
 
 **7. Durées de conservation.**
 - Options : un compte inactif est effacé sans prévenir, au bout d'une durée annoncée dès le départ, ou bien après un e-mail ; les titres d'un membre parti restent sous son pseudo, ou sous « un ancien membre » (ce qui préciserait la règle 4 de `produit.md`).
-- Ce qui fait pencher : « aucune relance » (D-010), et le droit à l'effacement.
+- Ce qui fait pencher : un e-mail d'avertissement toucherait « aucune relance » (D-010) ; le droit à l'effacement penche pour « un ancien membre ».
 
 **8. Avocat et délégué à la protection des données.**
-- Options : une relecture par l'avocat avant la bêta et une autre avant l'ouverture, ou une seule avant l'ouverture.
+- Options : une relecture par l'avocat avant la bêta et une autre avant l'ouverture, ou une seule avant l'ouverture. Le délégué à la protection des données (la personne qui veille au respect de la loi sur les données) : obligatoire ou non selon la taille du service, à faire trancher par l'avocat.
 - Ce qui fait pencher : dès la bêta, de vraies opinions sont gardées sur un serveur.
 
 **9. Modèle économique et budget.**
@@ -79,7 +79,7 @@ Vous les trancherez après le bilan, en QCM, chacun avec ses options et ce qui f
 - Ce qui fait pencher : rien de payant ne doit toucher les points ni le rendez-vous, ni l'absence de publicité (recommandation du §9, à confirmer au choix 6).
 
 **10. Marque et adresse.**
-- Le dépôt de la marque, en classes 9, 41 et 42, se fait après la bêta et avant l'ouverture (Juridique).
+- Le dépôt de la marque, dans trois catégories (applications, jeux, logiciel en ligne), se fait après la bêta et avant l'ouverture (Juridique).
 - L'adresse web définitive : l'adresse et l'icône ne peuvent plus changer une fois les joueurs installés.
 - La vérification du nom et le logo restent la fin de l'étape 3 (D-013).
 
@@ -121,11 +121,12 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - Fini quand : tout calcul rejoué donne le même résultat.
 
 **7. Les écrans** : les 51 écrans validés, le catalogue des éléments graphiques, le jeu du jour, la révélation, l'entrée et l'invitation, Le Cercle et Moi.
+- Quelques écrans jamais dessinés (réglages, code reçu par e-mail, réveil d'un cercle, quitter un cercle, la vraie page « Qui, durée, droits ») sont dessinés à leur tour.
 - Fini quand :
   - chaque écran est posé à côté de sa maquette ;
   - la boucle quotidienne dure environ 90 secondes ;
   - rien de la révélation n'arrive dans le téléphone avant 18h.
-- Vous : vous jouez sur un lien d'aperçu.
+- Vous : vous validez les nouveaux écrans, comme en D-011 et D-014, puis vous jouez sur un lien d'aperçu.
 
 **8. Moteur de calcul** : cartes, points, titres, badges, portrait, phrases.
 - Fini quand : il donne les mêmes résultats que le programme de contrôle de l'essai, plus des cas à plusieurs cercles.
@@ -140,7 +141,7 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 **10. Chaîne des textes.**
 - On construit le relevé quotidien de l'open data, la sélection et le calendrier, la rédaction, la vérification, la règle d'erratum et le registre public.
 - Puis une marche à blanc : la chaîne tourne chaque jour sans rien publier, et remplit l'avance.
-- Fini quand : toutes les erreurs plantées exprès dans un jeu de fiches d'épreuve sont trouvées.
+- Fini quand : toutes les erreurs plantées exprès dans un jeu de textes d'épreuve sont trouvées, ou chaque oubli est expliqué.
 - Vous : vous validez la page « Méthode ».
 
 **11. Juridique.**
@@ -228,7 +229,7 @@ Des repères chiffrés vous seront proposés en QCM avant la bêta. Ils éclaire
 - **Délais justifiés :**
   - le test du message de 18h prend environ une semaine ;
   - la bêta dure 8 à 12 semaines ;
-  - le numéro d'entreprise exigé par Google demande jusqu'à 30 jours ;
+  - si les boutiques sont retenues et que le compte Google est au nom d'une société, le numéro d'entreprise qu'il exige prend jusqu'à 30 jours (un compte personnel impose à la place un test fermé de 14 jours) ;
   - si une consultation de la CNIL est nécessaire, elle prend 8 semaines, prolongeables.
 - **Coûts, en ordres de grandeur non vérifiés en ligne :**
   - pendant la bêta : hébergement de 20 à 60 € par mois, e-mails de 0 à 20 € par mois, domaine d'environ 15 € par an ;
