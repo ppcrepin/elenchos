@@ -67,6 +67,8 @@ Sources : D-006, D-010, D-011, D-014, D-015, D-016 ; `docs/produit.md`, règles 
 - Le texte 13, révélé à la séance 15, ne compte dans aucune semaine. Le texte 14 n'est jamais deviné.
 - Les points repartent de zéro à la séance 8.
 
+**Règles de calendrier (Game design).** Une séance est atteinte dès que la barre l'affiche (« Entrée », « Jour k sur 14 » ou « Clôture »). Le texte quotidien n est révélé dès que la séance n+2 est atteinte, que le porteur ait lu la révélation ou non ; ses points, les titres, les curseurs vus (§5.4), les chiffres « Sur tout l'essai » du §8.4 (seuil de 5 compris) et la ligne « Révélation » du carnet le comptent alors. De même, les titres d'une semaine tombent dès que la séance 7 ou 14 est atteinte, vus ou non. Les textes d'entrée E1 à E3 ne sont jamais des « textes révélés ». L'ouverture d'une séance est le premier toucher du porteur dans cette séance, quel qu'il soit : d'ordinaire le message de 18h (séances 3 à 14), sinon n'importe quel élément du téléphone ou du cadre, « Jour suivant » et « Arrêter l'essai » compris. On ne quitte une séance et on ne copie le carnet que par un toucher : une séance atteinte a donc toujours une ouverture, un bloc de carnet et une entrée dans la trace.
+
 ### Positions
 
 | Niveau | Libellé | Valeur v |
@@ -490,7 +492,8 @@ Fin du carnet
 - {titulaires} : « pas attribué », ou la liste dans l'ordre Agathe, Nassim, Odile, Valentin, vous (« A », « A et B », « A, B et C »).
 - {S} : « Sécurité », « Liberté individuelle », « au milieu entre Sécurité et Liberté individuelle » ou « sans choix entre Sécurité et Liberté individuelle » ; de même pour P, T et L.
 - {bouton} : le libellé exact du bouton, majuscule comprise. Une question de séance sans réponse ne donne pas de ligne ; la raison de l'arrêt et F2 écrivent « pas de réponse ».
-- Copie en cours d'essai (depuis la confirmation de « Tout effacer ») : première ligne « Essai en cours : carnet copié au jour {k}. » (ou « à l’entrée. ») ; ni « Raison de l’arrêt » ni « Questions de fin » ; pas de « Titres de la semaine » pour une semaine non terminée ; le bloc du jour en cours ne contient que ce qui a déjà eu lieu ; « Sur tout l’essai » suit les mêmes règles qu'à l'arrêt.
+- Copie en cours d'essai (depuis la confirmation de « Tout effacer ») : le carnet porte « Essai en cours : carnet copié au jour {k}. » (ou « … à l’entrée. »), ne porte ni « Raison de l’arrêt » ni « Questions de fin », et s'arrête au bloc de la séance en cours ; les durées encore ouvertes de ce bloc s'arrêtent au toucher de « Copier mon carnet d'abord ». Les « Titres de la semaine » déjà tombés restent à leur place, après le bloc du jour 7 ou 14 ; vient ensuite « Sur tout l’essai » (mêmes règles qu'à l'arrêt). Le carnet ne dévoile rien avant le téléphone : avant d'avoir lu la révélation du jour, le porteur ne peut pas atteindre Moi › Réglages (la séance s'ouvre sur le message de 18h et la croix des révélations est inactive, §7.1).
+- À l'arrêt, les durées encore ouvertes s'arrêtent au toucher de confirmation « Arrêter l'essai ».
 - Le bloc « Titres de la semaine » suit le bloc du jour 7 ou du jour 14. Le bloc « Questions de fin » est absent en cas d'arrêt avant le jour 3 ; « Où vous placez chacun : question passée. » si F1 a été sautée ; sinon « Où vous placez chacun : » (deux-points final, sans point), suivi des quatre lignes. Une case laissée vide s'écrit « sans choix entre … ».
 - « séance k » s'écrit « jour k », le mot de la barre que voit le porteur.
 
@@ -649,6 +652,7 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 - Les contrôles 6 à 11 portent sur les parties témoins et au hasard, jamais sur la partie du porteur (D-016) ; la version témoin et celle qu'il utilise sont reliées par la comparaison des deux fichiers (contrôle 5), le rejeu par l'interface et la comparaison du carnet (contrôle 13).
 - Le porteur n'est pas un lecteur neuf (D-015) : la clarté des textes et des phrases ne sera vraiment vérifiée qu'en bêta. Il veut aussi que le jeu marche, et aucun libellé ne corrige ce biais ; les mesures automatiques font contrepoids.
 - Les questions de fin ont leurs limites, décrites dans `a-ne-pas-ouvrir/regles-de-calcul.md`.
+- Si les séances 1 à 14 tiennent sur moins de 10 jours distincts (dates de Paris ; seuil : hypothèse de Game design), l'essai ne dit rien de l'habitude quotidienne : il reste un test de compréhension et de déduction, et des révélations rapprochées aident la mémoire, donc gonflent la justesse et F1. Ce seuil ne s'annonce pas au porteur : D-016 dit « à son rythme », et l'annoncer ferait de la mesure du retour une consigne.
 - « Pas dans l'essai. » coupe un peu l'immersion ; c'est le prix pour ne pas modifier les écrans validés.
 - Avant un lancement public, à faire relire par un avocat (Juridique) : la page « Qui, durée, droits » complète (RGPD, art. 13) ; le sens de « Tout effacer » face aux titres passés gardés sous le pseudo (art. 17) ; l'analyse d'impact (art. 35) ; l'exemption de consentement pour le stockage du navigateur (art. 82 de la loi Informatique et Libertés). Les polices seront alors hébergées par le service.
 - Rien ici ne dit ce que ressentent de vrais proches (D-015).
