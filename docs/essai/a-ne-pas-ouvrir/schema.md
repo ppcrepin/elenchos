@@ -1,6 +1,6 @@
 # Schéma du fichier scellé et format de la trace (essai solo)
 
-*Rédigé par Back-end le 4 octobre 2026, comme le demande le §9 de `docs/essai/simulation.md` (« Avant d'écrire le fichier scellé ») ; mis à jour le 5 octobre 2026 : vote daté (§7.9), puis auteurs, groupes et élision (§7.10, §7.6) et nombres (§7.8, règle 6). Fichier scellé : version 3 du format ; trace : version 1 (partie 5). L'auteur du programme de contrôle le relit avant le scellement. Le document sert ensuite à l'agent qui scelle, à Contenu (parties 2.7 et 2.8), à l'auteur de la page et à l'auteur du programme de contrôle. C'est une spécification de travail, pas un texte pour le porteur.*
+*Rédigé par Back-end le 4 octobre 2026, comme le demande le §9 de `docs/essai/simulation.md` (« Avant d'écrire le fichier scellé ») ; mis à jour le 5 octobre 2026 : vote daté (§7.9), puis auteurs, groupes et élision (§7.10, §7.6) nombres (§7.8, règle 6), groupes en toutes lettres ou à plusieurs organes (partie 2.7) et élision fixée nom par nom (§7.6, partie 2.8). Fichier scellé : version 4 du format ; trace : version 1 (partie 5). L'auteur du programme de contrôle le relit avant le scellement. Le document sert ensuite à l'agent qui scelle, à Contenu (parties 2.7 et 2.8), à l'auteur de la page et à l'auteur du programme de contrôle. C'est une spécification de travail, pas un texte pour le porteur.*
 
 *Rangé dans `a-ne-pas-ouvrir/` (choix de l'orchestrateur) : les noms de certains champs laissent entrevoir comment les cartes sont choisies et comment les personnages devinent. Tous les lecteurs de ce document lisent déjà ce dossier. **Exemples** : toutes les valeurs sont inventées, sans lien entre elles ni avec l'essai. Elles ne suivent aucune règle cachée : ne pas s'en servir pour tester un calcul. Les personnages d'exemple portent des prénoms des maquettes (Hugo, Paul, Thomas), qui ne sont pas dans l'essai. Les textes d'exemple sont des gabarits. Exception : les tableaux des parties 2.7 et 2.8 portent les vraies valeurs du lot ; ce ne sont pas des exemples.*
 
@@ -82,7 +82,7 @@ L'essai ajoute trois règles que la RFC n'impose pas :
 | Clé | Type | Contenu |
 |---|---|---|
 | `format` | chaîne | toujours `"elenchos-essai-scelle"` |
-| `version` | entier | `3` (partie 5) |
+| `version` | entier | `4` (partie 5) |
 | `graine` | hex16 | la graine du tirage déterministe (§0) |
 | `vecteurs_test` | tableau de 3 objets | partie 2.5 |
 | `cercle` | objet | `{"nom": "Amis", "inviteuse": "Agathe"}` (§1) |
@@ -150,15 +150,16 @@ Chaque considération `considerations[i]` contient :
 | `texte` | chaîne | l'argument, sans guillemets, avec sa ponctuation finale (« . », « ? » ou « ! »). La page ajoute les guillemets et applique la ponctuation du §4.6. |
 | `cote` | `"pour"` ou `"contre"` | |
 | `pole` | entier 0 ou 1, ou `"aucun"` | |
-| `depute` | objet | `{"nom", "feminin", "groupe"}` |
+| `depute` | objet | `{"nom", "feminin", "groupe", "elision"}` |
 
-Un élu (l'`auteur` de type `"depute"` ou `"senateur"`, ou le `depute` d'une considération) a trois champs. Le champ d'une considération garde son nom, `depute` : un argument vient toujours d'un député, en séance (annexe A de la simulation).
+Un élu (l'`auteur` de type `"depute"` ou `"senateur"`, ou le `depute` d'une considération) a les trois premiers champs ci-dessous. Le `depute` d'une considération a aussi le quatrième, `elision` ; l'`auteur` ne l'a pas, car « Proposé par {nom} » n'élide jamais. Le champ d'une considération garde son nom, `depute` : un argument vient toujours d'un député, en séance (annexe A de la simulation).
 
 | Clé | Type | Contenu |
 |---|---|---|
 | `nom` | chaîne | prénom et nom, tels qu'affichés. Son premier caractère est une initiale permise (partie 2.8). |
 | `feminin` | booléen | `true` donne « députée » ou « sénatrice », `false` « député » ou « sénateur » (§7.6, §7.10) |
-| `groupe` | chaîne | le sigle du groupe, tel qu'affiché, pris dans la liste fermée de la partie 2.7 : groupe de l'Assemblée pour un député, du Sénat pour un sénateur ; au dépôt pour l'auteur, à la séance de l'extrait pour une considération (§7.10) |
+| `groupe` | chaîne | le sigle du groupe (ou son nom en toutes lettres quand l'institution l'imprime ainsi), tel qu'affiché, pris dans la liste fermée de la partie 2.7 : groupe de l'Assemblée pour un député, du Sénat pour un sénateur ; au dépôt pour l'auteur, à la séance de l'extrait pour une considération (§7.10) |
+| `elision` | booléen | `depute` d'une considération seulement. `true` : la page écrit « d' » devant le nom (« était l'argument d'… ») ; `false` : « de ». Fixé par la partie 2.8 ; la page ne le déduit jamais de l'initiale. |
 
 - Les adresses sont en https et en ASCII : un caractère spécial s'écrit encodé, sous la forme %xx. Elles ne contiennent pas d'espace.
 - Les chaînes affichées sont écrites en typographie simple : apostrophe droite, espaces ordinaires (contrôle 1). Dans un nombre, les tranches de trois chiffres sont séparées par une espace ordinaire (« 30 000 ») ; « % » suit le nombre après une espace ordinaire (« 20 % »). La page applique le §4.6 (guillemets, point final), puis les règles d'affichage du §7.8.
@@ -231,10 +232,10 @@ Ceci est un extrait, mis en retrait pour la lecture. Le vrai fichier tient sur u
     "8": {
       "auteur": {"feminin": true, "groupe": "SIGLE-A", "nom": "Prénom Nom A", "type": "senateur"},
       "considerations": [
-        {"cote": "pour", "depute": {"feminin": false, "groupe": "SIGLE-B", "nom": "Prénom Nom B"}, "pole": 1, "rang": 1, "texte": "Raison d'exemple n° 1, côté pour."},
-        {"cote": "contre", "depute": {"feminin": true, "groupe": "SIGLE-C", "nom": "Prénom Nom C"}, "pole": 0, "rang": 2, "texte": "Raison d'exemple n° 2, côté contre ?"},
-        {"cote": "contre", "depute": {"feminin": false, "groupe": "SIGLE-D", "nom": "Prénom Nom D"}, "pole": "aucun", "rang": 3, "texte": "Raison d'exemple n° 3, sans pôle."},
-        {"cote": "pour", "depute": {"feminin": true, "groupe": "SIGLE-E", "nom": "Prénom Nom E"}, "pole": 1, "rang": 4, "texte": "Raison d'exemple n° 4, côté pour !"}
+        {"cote": "pour", "depute": {"elision": false, "feminin": false, "groupe": "SIGLE-B", "nom": "Prénom Nom B"}, "pole": 1, "rang": 1, "texte": "Raison d'exemple n° 1, côté pour."},
+        {"cote": "contre", "depute": {"elision": false, "feminin": true, "groupe": "SIGLE-C", "nom": "Prénom Nom C"}, "pole": 0, "rang": 2, "texte": "Raison d'exemple n° 2, côté contre ?"},
+        {"cote": "contre", "depute": {"elision": false, "feminin": false, "groupe": "SIGLE-D", "nom": "Prénom Nom D"}, "pole": "aucun", "rang": 3, "texte": "Raison d'exemple n° 3, sans pôle."},
+        {"cote": "pour", "depute": {"elision": false, "feminin": true, "groupe": "SIGLE-E", "nom": "Prénom Nom E"}, "pole": 1, "rang": 4, "texte": "Raison d'exemple n° 4, côté pour !"}
       ],
       "lien_scrutin": "https://www.assemblee-nationale.fr/exemple-scrutin",
       "lignes": ["Ligne d'exemple n° 1.", "Ligne d'exemple n° 2.", "Ligne d'exemple n° 3."],
@@ -248,7 +249,7 @@ Ceci est un extrait, mis en retrait pour la lecture. Le vrai fichier tient sur u
   "vecteurs_test": [
     {"chaine": "0123456789abcdef|raison|Odile|E2|3", "cle": "raison|Odile|E2|3", "hex8": "1a2b3c4d", "n": 439041101}
   ],
-  "version": 3
+  "version": 4
 }
 ```
 
@@ -270,51 +271,85 @@ L'auteur du texte 8, en forme canonique :
 
 `type` vient en dernier : « t » suit « n ».
 
+Le député de la première considération, en forme canonique :
+
+`"depute":{"elision":false,"feminin":false,"groupe":"SIGLE-B","nom":"Prénom Nom B"}`
+
+`elision` vient en premier : « e » précède « f ».
+
 ### 2.7 Groupes permis (§7.10)
 
-Chaque `groupe` du fichier scellé est un sigle de ce tableau, et de lui seul. Contenu remplit les lignes avant le scellement, à partir des fiches corrigées. Le second agent de l'annexe A de la simulation les vérifie. La page ne lit pas ce tableau ; le programme de contrôle le lit (partie 4.1, étape 5).
+Chaque `groupe` du fichier scellé est un sigle de ce tableau, et de lui seul, pris dans la bonne chambre (partie 4.1, étape 5). Contenu remplit les lignes avant le scellement, à partir des fiches corrigées. Le second agent de l'annexe A de la simulation les vérifie. La page ne lit pas ce tableau ; le programme de contrôle le lit.
+
+**Règle d'écriture (Contenu).** Le sigle est le libellé abrégé de l'organe dans l'open data (`libelleAbrege`), écrit comme l'institution l'imprime dans ses comptes rendus (nom de l'orateur, « groupe … ») : « GDR-NUPES », jamais « GDR - NUPES ». Jamais le code `libelleAbrev` (« UDDPLR », « SOC-A », « ECOLO », « UMPPO »), ni le préfixe des fichiers `cr-texte`, qui en vient. Dans ce document, « sigle » désigne cette écriture, même quand l'institution écrit le nom en toutes lettres (`Les Républicains`). Moment : au dépôt pour l'auteur, à la séance de l'extrait pour une considération (§7.10). Lignes remplies par Contenu le 5 octobre 2026 ; identifiants recoupés par Back-end dans l'open data local.
 
 | `groupe` | Chambre | Législature | Nom complet | Identifiant | Source du sigle |
 |---|---|---|---|---|---|
-| *(lignes à remplir par Contenu)* | | | | | |
+| `Dem` | Assemblée | 15 | Mouvement Démocrate (MoDem) et Démocrates apparentés | PO774834 | PO774834 (24 septembre 2020 – 21 juin 2022), libelleAbrege « Dem » ; forme imprimée non vérifiée localement ; « MODEM » est le sigle de l'organe précédent, PO730970, fermé le 23 septembre 2020 |
+| `Dem` | Assemblée | 16 | Démocrate (MoDem et Indépendants) | PO800484 | PO800484, libelleAbrege « Dem » (libelleAbrev « DEM ») ; « (Dem) », CRSANR5L16S2024O1N059, l. 621 |
+| `Écolo-NUPES` | Assemblée | 16 | Écologiste - NUPES | PO800526 | PO800526, libelleAbrege « Ecolo - NUPES » (libelleAbrev « ECOLO ») ; forme imprimée « (Écolo-NUPES) », CRSANR5L16S2023O1N205, l. 57 ; auteur du texte 12 au dépôt |
+| `GDR-NUPES` | Assemblée | 16 | Gauche démocrate et républicaine - NUPES | PO800502 | PO800502, libelleAbrege « GDR - NUPES » ; forme imprimée « (GDR-NUPES) », CRSANR5L16S2024O1N059, l. 637 |
+| `HOR` | Assemblée | 16 | Horizons et apparentés | PO800514 | PO800514 ; CRSANR5L16S2024O1N059, l. 631 |
+| `LFI-NUPES` | Assemblée | 16 | La France insoumise - Nouvelle Union Populaire écologique et sociale | PO800490 | PO800490, libelleAbrege « LFI - NUPES » ; forme imprimée « (LFI-NUPES) », CRSANR5L16S2024O1N059, l. 607 |
+| `LR` | Assemblée | 16 | Les Républicains | PO800508 | PO800508 ; CRSANR5L16S2024O1N059, l. 617 |
+| `RE` | Assemblée | 16 | Renaissance | PO800538 | PO800538 ; CRSANR5L16S2024O1N059, l. 650 |
+| `RN` | Assemblée | 16 | Rassemblement National | PO800520 | PO800520 ; CRSANR5L16S2024O1N059, l. 656 |
+| `SOC` | Assemblée | 16 | Socialistes et apparentés (membre de l'intergroupe NUPES), puis, dès le 19 octobre 2023, Socialistes et apparentés | PO800496, PO830170 | PO800496 (jusqu'au 18 octobre 2023) et PO830170 (libelleAbrev « SOC-A », code) ; libelleAbrege « SOC » pour les deux organes ; « (SOC) », CRSANR5L16S2024O1N059, l. 623 |
+| `Dem` | Assemblée | 17 | Les Démocrates | PO845454 | PO845454, libelleAbrege « Dem » (libelleAbrev « DEM », code) ; « M. Hubert Ott (Dem) », CRSANR5L17S2025O1N082, l. 142 |
+| `DR` | Assemblée | 17 | Droite Républicaine | PO845425 | PO845425 ; « M. Ian Boucard (DR) », CRSANR5L17S2025O1N097, l. 141 |
+| `EcoS` | Assemblée | 17 | Écologiste et Social | PO845439 | PO845439, libelleAbrege « EcoS » (libelleAbrev « ECOS », code) ; « Mme Sabrina Sebaihi (EcoS) », CRSANR5L17S2025O1N244, l. 486 |
+| `EPR` | Assemblée | 17 | Ensemble pour la République | PO845407 | PO845407 ; « M. Pierre Cazeneuve (EPR) », CRSANR5L17S2026O1N280, l. 251 |
+| `GDR` | Assemblée | 17 | Gauche Démocrate et Républicaine | PO845514 | PO845514 ; « Mme Elsa Faucillon (GDR) », CRSANR5L17S2026E1N005, l. 818 |
+| `HOR` | Assemblée | 17 | Horizons & Indépendants | PO845470 | PO845470 ; « M. Jean Moulliere (HOR) », CRSANR5L17S2025O1N097, l. 154 |
+| `LFI-NFP` | Assemblée | 17 | La France insoumise - Nouveau Front Populaire | PO845413 | PO845413 ; « M. Éric Coquerel (LFI-NFP) », CRSANR5L17S2026O1N280, l. 255 |
+| `LIOT` | Assemblée | 17 | Libertés, Indépendants, Outre-mer et Territoires | PO845485 | PO845485 ; « M. Paul Molac (LIOT) », CRSANR5L17S2026O1N195, l. 493 |
+| `RN` | Assemblée | 17 | Rassemblement National | PO845401 | PO845401 ; « Mme Alexandra Masson (RN) », CRSANR5L17S2025O1N244, l. 518 |
+| `SOC` | Assemblée | 17 | Socialistes et apparentés | PO845419 | PO845419 ; « M. Roger Vicot (SOC) », CRSANR5L17S2025O1N097, l. 137 |
+| `UDR` | Assemblée | 17 | Union des droites pour la République | PO872880 | PO872880 depuis le 5 septembre 2025, libelleAbrege « UDR » (libelleAbrev « UDDPLR », code) ; avant : PO847173 « UDR » (12 septembre 2024 – 4 septembre 2025), PO845520 « À Droite », AD (18 juillet – 11 septembre 2024) ; « M. Olivier Fayssat (UDR) », CRSANR5L17S2026O1N280, l. 224 |
+| `Les Républicains` | Sénat | — | Les Républicains | PO286005 | PO286005 (codeType GROUPESENAT), libelleAbrege « Les Républicains » (libelleAbrev « UMPPO », code) ; auteur du texte 1 au dépôt |
 
 Colonnes :
-- `groupe` : le sigle, entre accents graves, écrit exactement comme dans le fichier scellé et comme à l'écran. Il ne contient que des lettres, des chiffres et des traits d'union U+002D : ni espace, ni autre signe. Il ne commence ni ne finit par un trait d'union. Ainsi, le seul endroit où une ligne pourrait le couper est son trait d'union, ce que le §7.10 interdit.
+- `groupe` : le sigle, entre accents graves, écrit exactement comme dans le fichier scellé et comme à l'écran. Caractères permis : les lettres de A à Z et de a à z ; À Â Ä Ç É È Ê Ë Î Ï Ô Ö Ù Û Ü Ÿ Æ Œ et leurs minuscules ; les chiffres de 0 à 9 ; le trait d'union U+002D ; l'espace U+0020. Le trait d'union est entre deux lettres ou chiffres ; l'espace est entre deux lettres ; ni l'un ni l'autre n'est au début, à la fin ou doublé. Au plus 20 caractères. Pourquoi : une espace entre deux lettres n'est jamais touchée par les règles du §7.8, qui n'agissent qu'après un chiffre ou autour d'un signe ; et 20 caractères tiennent sur une ligne de 320 px. Une ligne ne coupe jamais un sigle à son trait d'union (§7.10) ; un groupe écrit en plusieurs mots peut passer à la ligne à son espace, comme deux mots ordinaires (UX, §7.10).
 - Chambre : « Assemblée » ou « Sénat ».
 - Législature : « 15 », « 16 » ou « 17 » pour l'Assemblée ; « — » pour le Sénat, qui n'a pas de législature.
-- Nom complet : le nom officiel du groupe à cette date. Il ne s'affiche jamais.
-- Identifiant : celui du groupe dans l'open data de l'Assemblée (« PO » suivi de chiffres). Les groupes du Sénat en ont un aussi : la fiche du texte 1 en cite un. Il garantit qu'à un groupe ne correspond qu'un sigle.
-- Source du sigle : le champ de l'open data, ou la page du site, d'où le sigle est tiré.
+- Nom complet : le nom officiel de l'organe à cette date ; s'il y a plusieurs identifiants, un nom par organe, dans le même ordre. Il ne s'affiche jamais.
+- Identifiant : l'identifiant de l'organe du groupe dans l'open data de l'Assemblée (« PO » suivi de chiffres) ; les groupes du Sénat en ont un aussi. Un par organe en vigueur à une date où le lot emploie ce sigle (dépôt d'un auteur, séance d'un extrait), dans l'ordre chronologique, séparés par une virgule et une espace. Un groupe qui a changé d'organe sans changer de sigle pendant la législature a donc plusieurs identifiants sur sa ligne : `SOC` en 16e, PO800496 jusqu'au 18 octobre 2023, puis PO830170. Les organes que le lot n'emploie pas (pour `UDR`, ceux d'avant PO872880) vont dans la colonne Source, pas ici.
+- Source du sigle : le `libelleAbrege` de l'organe et, quand elle existe, une ligne de compte rendu où l'institution imprime le sigle.
 
 Règles, vérifiées par le programme de contrôle quand il lit le tableau :
-- chaque cellule est remplie ;
-- une ligne par groupe et par législature : un sigle qui sert dans deux législatures a deux lignes (par exemple `SOC`, en 16e et en 17e) ;
-- dans une même chambre et une même législature, un sigle n'a qu'une ligne, et deux lignes n'ont jamais le même identifiant ;
-- jamais un code interne de l'open data à la place du sigle public : `UDR`, jamais `UDDPLR` ;
-- les lignes sont rangées par chambre (Assemblée, puis Sénat), puis par législature croissante, puis par ordre alphabétique des sigles. Cet ordre aide la lecture ; le contrôle n'en dépend pas.
+- la ligne d'en-tête est exactement celle du tableau ci-dessus ; chaque ligne a six cellules, toutes remplies ;
+- `groupe`, Chambre, Législature et Identifiant suivent les écritures ci-dessus. En Python : `LETTRE = "A-Za-zÀÂÄÇÉÈÊËÎÏÔÖÙÛÜŸÆŒàâäçéèêëîïôöùûüÿæœ"` ; le sigle passe `re.fullmatch(rf"[{LETTRE}0-9]+(?:-[{LETTRE}0-9]+|(?<=[{LETTRE}]) [{LETTRE}][{LETTRE}0-9]*)*", groupe)` et `len(groupe) <= 20` ; l'identifiant passe `re.fullmatch(r"PO[0-9]+(?:, PO[0-9]+)*", identifiant)` ;
+- une ligne par sigle, par chambre et par législature : un sigle qui sert dans deux législatures a deux lignes (par exemple `SOC`, en 16e et en 17e) ;
+- un identifiant n'apparaît qu'une fois dans tout le tableau, toutes lignes confondues : un organe n'a qu'un sigle ;
+- aucun `groupe` n'est l'un des codes internes relevés par Contenu : `UDDPLR`, `DEM`, `ECOS`, `ECOLO`, `SOC-A`, `UMPPO` (comparaison exacte, casse comprise : `Dem` passe, `DEM` non). Un autre code interne ne se verrait qu'à la vérification humaine (colonne Source) ;
+- les lignes sont rangées par chambre (Assemblée, puis Sénat), puis par législature croissante, puis par ordre alphabétique des sigles, sans tenir compte de la casse ni des accents. Cet ordre aide la lecture ; le contrôle n'en dépend pas.
 
-Lecture par le programme : une ligne du tableau par groupe ; cellules séparées par « | », espaces de bord retirées ; accents graves du sigle retirés. Le programme se sert des colonnes `groupe`, Chambre, Législature et Identifiant. Les autres colonnes servent à la vérification humaine (partie 4.1, après l'étape 7).
+Lecture par le programme : il lit le seul tableau de cette partie, de la ligne qui suit la ligne de séparation (« |---| … ») jusqu'à la première ligne qui ne commence pas par « | ». Chaque ligne est découpée sur « | » ; le premier et le dernier morceau, vides, sont écartés ; il doit rester exactement six cellules (une barre « | » dans une cellule en ferait sept : défaut). Dans chaque cellule, on retire les espaces U+0020 du début et de la fin, et rien d'autre. La cellule `groupe` doit commencer et finir par un accent grave : on retire ces deux accents graves, et eux seuls ; les espaces intérieures restent (`Les Républicains` donne « Les Républicains »). La cellule Identifiant se découpe sur la virgule suivie d'une espace. Chaque cellule lue doit être en NFC, sinon c'est un défaut ; elle est ensuite comparée telle quelle. Le programme se sert des colonnes `groupe`, Chambre, Législature et Identifiant ; les autres servent à la vérification humaine (partie 4.1, après l'étape 7).
 
 ### 2.8 Initiales et élision (§7.6)
 
 Seul le gabarit « était l'argument de {nom} » (1.6, 2.7e) place un nom d'élu après « de ». « Proposé par {nom} » et les lignes de 5.4 n'élident jamais. Ce qui suit vaut donc pour les `depute` des considérations ; seule la première liste vaut aussi pour l'auteur.
 
-Trois listes fermées de caractères :
+Deux listes fermées de caractères :
 1. **Initiales permises.** Le premier caractère de chaque `nom` (auteur et députés) est une majuscule : de A à Z, ou l'une de À Â Ä Ç É È Ê Ë Î Ï Ô Ö Ù Û Ü Ÿ Æ Œ.
 2. **Initiales qui demandent un choix** : A E I O U Y H, et À Â Ä É È Ê Ë Î Ï Ô Ö Ù Û Ü Ÿ Æ Œ.
-3. **Règle de la page** : « d' » si l'initiale est l'une de A À Â Ä E É È Ê Ë I Î Ï O Ô Ö U Ù Û Ü H ; « de » sinon. La page compare le premier caractère du `nom` à cette liste, sans changer la casse, sans normaliser et sans `Intl` (contrôle 5). Le fichier étant en NFC, « É » est un seul caractère.
 
-Le tableau contient chaque `depute` dont l'initiale demande un choix, et personne d'autre. Il a une ligne par personne : un orateur cité deux fois n'a qu'une ligne.
+**Ce que fait la page.** Elle écrit « d' » si le `depute` a `elision` à `true`, « de » s'il l'a à `false` (partie 2.3). Elle ne regarde pas l'initiale et ne compare aucune chaîne. Raison : l'élision suit la prononciation, que la lettre ne donne pas toujours ; « Ian » se dit comme « Yann », et l'on écrit « de Ian », comme devant un h aspiré.
 
-| `nom` | Initiale | Forme |
-|---|---|---|
+**Valeur de `elision`**, écrite par l'agent qui scelle, vérifiée par le programme de contrôle (partie 4.1, étape 5) :
+- `false` si l'initiale du `nom` n'est pas dans la liste 2 ;
+- sinon, `true` si la Forme de sa ligne, dans le tableau ci-dessous, est `d'` ; `false` si elle est `de`.
 
+Le tableau contient chaque `depute` dont l'initiale demande un choix, et personne d'autre. Il a une ligne par personne : un orateur cité deux fois n'a qu'une ligne. Colonnes :
 - `nom` : entre accents graves, exactement comme dans le fichier scellé.
-- Initiale : « voyelle », « h muet », « h aspiré » ou « y ».
-- Forme : `d'` ou `de`, l'usage retenu devant ce nom (apostrophe droite, typographie simple). UX décide de la forme ; Contenu remplit le tableau à partir du lot final. Les lignes sont rangées par ordre alphabétique, sans effet sur le contrôle.
-- Le programme de contrôle s'en sert deux fois. Au contrôle 1, il vérifie que le tableau correspond au fichier et que la règle de la page le couvre (partie 4.1, étape 5). Au contrôle 11, il en tire « d' » ou « de » sans refaire la règle.
+- Initiale : ce qu'on entend au début du nom : « voyelle » (un Y qui se dit comme dans « Yves » en est une), « h muet », « h aspiré » ou « son y » (un I ou un Y qui se dit comme dans « Yann »).
+- Forme : `d'` ou `de`, l'usage retenu devant ce nom (apostrophe droite, typographie simple). Elle s'accorde avec l'Initiale : `d'` pour « voyelle » et « h muet », `de` pour « h aspiré » et « son y ». UX décide de la forme ; Contenu remplit le tableau à partir du lot final. Les lignes sont rangées par ordre alphabétique, sans effet sur le contrôle.
 
-Lignes relevées le 5 octobre 2026 (relevé d'UX, recoupé par Back-end sur les fiches : 17 noms, 18 citations), à confirmer par Contenu sur le lot final :
+Lecture par le programme : comme en partie 2.7. Le seul tableau de cette partie est celui ci-dessous ; son en-tête est exactement « | `nom` | Initiale | Forme | » ; chaque ligne a trois cellules remplies ; les accents graves de `nom` et de Forme sont retirés (`d'` donne « d' »), les espaces intérieures gardées.
+
+Le programme de contrôle s'en sert deux fois. Au contrôle 1, il vérifie que le tableau correspond au fichier, que Forme et Initiale s'accordent, et que chaque `elision` en découle (partie 4.1, étape 5). Au contrôle 11, il en tire « d' » ou « de » sans refaire de règle. Aucun programme ne peut dire si une Forme est juste : c'est un choix d'usage, relu par UX sur le relevé du contrôle 11.
+
+Lignes relevées le 5 octobre 2026 (relevé d'UX, recoupé par Back-end sur les fiches, puis par Contenu : 17 noms, 18 citations) ; Contenu les met à jour si le lot change :
 
 | `nom` | Initiale | Forme |
 |---|---|---|
@@ -333,10 +368,10 @@ Lignes relevées le 5 octobre 2026 (relevé d'UX, recoupé par Back-end sur les 
 | `Henri Alfandari` | h muet | `d'` |
 | `Hervé Saulignac` | h muet | `d'` |
 | `Hubert Ott` | h muet | `d'` |
-| `Ian Boucard` | voyelle | `d'` |
+| `Ian Boucard` | son y | `de` |
 | `Olivier Fayssat` | voyelle | `d'` |
 
-Les trois H sont muets, et aucun nom ne commence par un Y. Annaïg Le Meur et Hervé Saulignac ne sont cités qu'au texte 14, qui n'est jamais révélé en 2.7e (§7.4). Ils restent au tableau, car le contrôle porte sur tout le fichier.
+Les trois H sont muets, et aucun nom ne commence par un Y. « Ian » se dit comme « Yann » : « de Ian Boucard », comme l'écrit le compte rendu de l'Assemblée (choix d'UX). Annaïg Le Meur et Hervé Saulignac ne sont cités qu'au texte 14, qui n'est jamais révélé en 2.7e (§7.4). Ils restent au tableau, car le contrôle porte sur tout le fichier.
 
 ## 3. La trace de la version témoin (§9)
 
@@ -662,12 +697,13 @@ Fragment 5. Un extrait de la séance 9. Seule la tension T du portrait est montr
 Le programme de contrôle fait ces vérifications dans l'ordre, avant tout autre calcul. Le premier échec arrête le contrôle (§0).
 
 1. **Empreinte.** Le SHA-256 des octets du fichier est égal à l'empreinte publiée : 64 chiffres hexadécimaux minuscules, présentés comme au §8.11.
-2. **Données embarquées.** On décode le base64 de la page : alphabet standard de la RFC 4648, avec les « = » de fin, sans retour à la ligne. On doit retrouver exactement ces octets.
+2. **Données embarquées.** On décode le base64 de la page, dans le fichier construit de la version du porteur, celui que reçoit la branche `gh-pages` (D-019) : alphabet standard de la RFC 4648, avec les « = » de fin, sans retour à la ligne. On doit retrouver exactement ces octets. Que la page servie soit bien ce fichier construit relève du §8.8 et du contrôle 14, pas de ce contrôle.
 3. **Forme.** Le fichier est en UTF-8 strict. Relu puis remis en forme canonique, il redonne exactement les mêmes octets. Ce seul test attrape un espace en trop, une clé en double, des clés mal ordonnées, un échappement inutile et un nombre mal écrit.
 4. **Schéma.**
    - Le schéma est fermé (partie 1.1). Types et valeurs sont permis.
-   - `format` vaut `"elenchos-essai-scelle"` et `version` vaut `3`.
+   - `format` vaut `"elenchos-essai-scelle"` et `version` vaut `4`.
    - `auteur` a l'une des trois formes de la partie 2.3 : avec `type` égal à `"depute"` ou `"senateur"`, quatre clés ; avec `"gouvernement"`, la seule clé `type`.
+   - Chaque `depute` a quatre clés : `elision`, `feminin`, `groupe` et `nom`.
    - Les chaînes sont en NFC, les adresses en https et en ASCII.
    - Chaque `vote.date` désigne un jour qui existe au calendrier (ni « 2025-02-29 », ni « 2025-04-31 »), au plus tard le jour du scellement. Ce jour n'est pas dans le fichier : le programme de contrôle le reçoit en paramètre, recopié du rapport de scellement (§9).
 5. **Cohérence interne.**
@@ -686,7 +722,8 @@ Le programme de contrôle fait ces vérifications dans l'ordre, avant tout autre
    - **Initiales et élision** (partie 2.8).
      - Le premier caractère de chaque `nom` est une initiale permise.
      - Les `nom` des `depute` dont l'initiale demande un choix forment exactement l'ensemble des noms du tableau : pas un de plus, pas un de moins (chaînes comparées telles quelles, en NFC).
-     - Pour chaque ligne, la Forme est celle que donne la règle de la page. Si elles diffèrent (h aspiré, Y, Æ, Œ), le contrôle s'arrête : la règle de la page ne couvre plus le lot, et UX tranche.
+     - Dans chaque ligne du tableau, Forme et Initiale s'accordent : `d'` avec « voyelle » ou « h muet », `de` avec « h aspiré » ou « son y ».
+     - Chaque `elision` est celle que donne la partie 2.8 : `false` si l'initiale du `nom` ne demande pas de choix ; sinon `true` si la Forme de sa ligne est `d'`, `false` si elle est `de`. Un orateur cité deux fois a donc deux fois la même valeur.
 6. **Vecteurs de test.** On les recalcule à partir de `graine` ; ils doivent être identiques.
 7. **Typographie simple** (§9, contrôle 1).
    - Chaînes concernées, les seules qui s'affichent telles quelles : `cercle.nom` et `cercle.inviteuse` ; dans chaque fiche, `metier`, `ville` et `ligne_de_vie` ; dans chaque texte, `titre`, chaque élément de `lignes`, le `nom` et le `groupe` de l'auteur et de chaque député, et le `texte` de chaque considération.
@@ -700,7 +737,7 @@ Aucun programme ne vérifie que les trois champs de `vote` sont vrais (le bon jo
 
 De même, aucun programme ne vérifie que le mandat et le groupe sont exacts, ni qu'ils sont pris au bon moment (§7.10) : ni la date du dépôt ni celle de chaque séance ne sont scellées, et un même sigle peut servir dans deux législatures. Cette vérification relève du relevé et de sa vérification par un second agent (annexe A de la simulation), avec les colonnes Législature, Nom complet, Identifiant et Source de la partie 2.7.
 
-La page garde ses vérifications V1 à V5 (§0, §8.11). À l'étape V4, elle vérifie aussi que `format` vaut `"elenchos-essai-scelle"` et que `version` vaut `3`. Elle refuse donc un fichier en version 1 ou 2. Elle ne lit pas les tableaux des parties 2.7 et 2.8 : elle affiche `groupe` tel quel et élide selon la règle de la partie 2.8.
+La page garde ses vérifications V1 à V5 (§0, §8.11). À l'étape V4, elle vérifie aussi que `format` vaut `"elenchos-essai-scelle"` et que `version` vaut `4`. Elle refuse donc un fichier en version 1, 2 ou 3. Elle ne lit pas les tableaux des parties 2.7 et 2.8 : elle affiche `groupe` tel quel et écrit « d' » ou « de » selon `elision` (partie 2.8).
 
 ### 4.2 Les traces
 
@@ -746,15 +783,16 @@ Au moins une partie témoin contient les cas suivants :
 
 ## 5. Changer le format
 
-- Chaque fichier a son propre numéro de version : le fichier scellé est en version 3 ; la trace, et le journal du harnais qui en a la forme, sont en version 1.
+- Chaque fichier a son propre numéro de version : le fichier scellé est en version 4 ; la trace, et le journal du harnais qui en a la forme, sont en version 1.
 - Tout changement de champ, de type ou de sens d'un fichier fait passer ce fichier, et lui seul, à la version suivante. On met alors ce document à jour, et l'auteur du programme de contrôle le relit.
-- Les lignes des tableaux des parties 2.7 et 2.8 sont des données du lot, pas le format : les remplir ou les corriger ne change aucune version. Elles sont arrêtées avant le scellement. Le rapport de scellement donne le commit de ce document que le programme de contrôle a lu ; après l'essai, le Vérificateur rejoue le contrôle 1 avec ce même commit.
+- Les lignes des tableaux des parties 2.7 et 2.8, et les règles d'écriture de ces tableaux, que seul le programme de contrôle lit, ne sont pas le format : les changer ne change aucune version, tant que les champs du fichier scellé gardent leur type et leur sens. L'auteur du programme de contrôle relit tout changement de ces règles. Lignes et règles sont arrêtées avant le scellement. Le rapport de scellement donne le commit de ce document que le programme de contrôle a lu ; après l'essai, le Vérificateur rejoue le contrôle 1 avec ce même commit.
 - La page refuse un fichier scellé dont le format ou la version est inattendu (étape V4). C refuse un fichier scellé, une trace ou un journal de version inattendue.
 - Historique :
   - fichier scellé, version 1 (4 octobre 2026) : `vote` était une chaîne, `"adopte"` ou `"rejete"` ;
   - fichier scellé, version 2 (5 octobre 2026) : `vote` devient un objet daté (partie 2.3, §7.9). La trace ne contient pas le vote : elle reste en version 1 ;
-  - fichier scellé, version 3 (5 octobre 2026) : `auteur.type` admet `"senateur"` ; `groupe` devient un sigle de la liste fermée de la partie 2.7, pris au dépôt pour l'auteur et à la séance de l'extrait pour une considération (§7.10) ; nouveaux contrôles en partie 4.1 (groupes, initiales et élision, nombres). La trace ne contient ni auteur, ni groupe, ni nom d'élu, ni nombre écrit par tranches : elle reste en version 1.
-- Un fichier déjà scellé en version 1 ou 2 doit être scellé de nouveau en version 3 : nouvelle empreinte datée, et tous les contrôles rejoués (§9, « Correctif »). Ce n'est possible qu'avant la séance 0. (Au 5 octobre 2026, aucun fichier n'est encore scellé.)
+  - fichier scellé, version 3 (5 octobre 2026) : `auteur.type` admet `"senateur"` ; `groupe` devient un sigle de la liste fermée de la partie 2.7, pris au dépôt pour l'auteur et à la séance de l'extrait pour une considération (§7.10) ; nouveaux contrôles en partie 4.1 (groupes, initiales et élision, nombres). La trace ne contient ni auteur, ni groupe, ni nom d'élu, ni nombre écrit par tranches : elle reste en version 1 ;
+  - fichier scellé, version 4 (5 octobre 2026) : le `depute` d'une considération reçoit le champ `elision` (partie 2.3) ; la page ne regarde plus l'initiale, elle lit ce champ (partie 2.8, §7.6). La trace ne contient aucun nom d'élu : elle reste en version 1.
+- Un fichier déjà scellé en version 1, 2 ou 3 doit être scellé de nouveau en version 4 : nouvelle empreinte datée, et tous les contrôles rejoués (§9, « Correctif »). Ce n'est possible qu'avant la séance 0. (Au 5 octobre 2026, aucun fichier n'est encore scellé.)
 - Après la séance 0, le fichier scellé ne change plus (§9, « Correctif »), et son format non plus. Un correctif de la page peut changer la trace : on refait alors les contrôles (§9).
 
 ## 6. Points fixés depuis la version 1 de ce document
@@ -769,3 +807,5 @@ Au moins une partie témoin contient les cas suivants :
 8. **Auteurs, groupes, élision** : §7.10 et §7.6 (UX). `auteur.type` admet `"senateur"` ; `groupe` est un sigle de la liste fermée (partie 2.7) ; initiales et élision en partie 2.8. Contrôlés en partie 4.1, étapes 4 et 5. Le fichier scellé passe en version 3 ; la trace reste en version 1 (partie 5).
 9. **Nombres** : §7.8, règle 6 (UX). Le fichier scellé reste en typographie simple : « 30 000 » et « 20 % » s'écrivent avec une espace U+0020, contrôlée en partie 4.1, étape 7. La page et le programme de contrôle appliquent la règle à l'affichage, sur la phrase entière, avant d'insérer le pseudo. Rien ne change dans la trace : les phrases qu'elle enregistre n'ont pas de chiffre (§5.6, §5.7), et le carnet n'applique que la règle 1 du §7.8.
 10. **Pseudo des joueurs témoins** : il ne finit pas par un chiffre (partie 3.1).
+11. **Groupes** : §7.10 (UX) et partie 2.7. La colonne `groupe` admet une espace entre deux lettres (groupe écrit en toutes lettres par l'institution) ; une ligne peut porter plusieurs identifiants quand le groupe a changé d'organe sans changer de sigle. Le groupe ne se coupe jamais à son trait d'union ; à son espace, il peut passer à la ligne comme deux mots ordinaires (UX, §7.10). Les champs du fichier scellé gardent leur type et leur sens : pas de nouvelle version (partie 5).
+12. **Élision nom par nom** : §7.6 (UX). Le `depute` d'une considération porte `elision` (partie 2.3), fixé par le tableau de la partie 2.8 et contrôlé en partie 4.1, étapes 4 et 5 ; la page ne regarde plus l'initiale. Le fichier scellé passe en version 4 ; la trace reste en version 1 (partie 5).

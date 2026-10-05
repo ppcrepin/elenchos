@@ -280,7 +280,7 @@ Tout ce qui est dans le téléphone est le produit, en « tu », tel que validé
 ### 7.6 Élision et accords
 
 - Agathe et Odile commencent par une voyelle : « Défi d'Agathe », « Tu as trouvé 2 réponses d'Agathe sur 3 », « Les réponses d'Odile », « Pour qu'Agathe sache que c'était toi… ». Tout gabarit « de {prénom} » ou « que {prénom} » sait élider.
-- Devant un nom de député, « était l'argument de {nom} » (1.6, 2.7e) élide de même : « d' » devant une voyelle, accentuée ou non, ou devant un h muet ; « de » sinon. Exemples inventés : « l'argument d'Inès Morel », « l'argument d'Élise Caron », « l'argument d'Hélène Brun », « l'argument de Paul Roux ». Dans l'essai, la page élide devant A, E, I, O, U, accentuées ou non, et devant H : les noms du lot n'ont ni h aspiré ni Y initial. La liste exacte des lettres, et celle des noms du lot concernés, sont dans `a-ne-pas-ouvrir/schema.md` (partie 2.8) ; le contrôle 11 se sert du tableau, sans refaire la règle.
+- Devant un nom de député, « était l'argument de {nom} » (1.6, 2.7e) suit l'usage, qui se règle à l'oreille : « d' » devant un son de voyelle, h muet compris ; « de » devant un nom qui commence par le son « y » (« Yann », « Iouri ») ou par un h aspiré ; en cas de doute, la forme qu'écrit le compte rendu de l'Assemblée. Exemples inventés : « l'argument d'Inès Morel », « l'argument d'Élise Caron », « l'argument d'Hélène Brun », « l'argument de Paul Roux », « l'argument de Iouri Lenoir ». Dans l'essai, la page ne déduit pas la forme de la seule initiale : la forme de chaque nom qui commence par une voyelle, un H ou un Y est fixée nom par nom dans le tableau de `a-ne-pas-ouvrir/schema.md` (partie 2.8), et le fichier scellé la porte pour chaque député (partie 2.3) : la page la lit, sans regarder l'initiale. Le contrôle 11 se sert du même tableau, sans refaire la règle.
 - Accords : « a répondu » / « ont répondu » ; « député » / « députée » ; « sénateur » / « sénatrice » (§7.10) ; « 0 point », « 2 points ».
 
 ### 7.7 Écran d'un proche (4.3, « ses surprises », D-010)
@@ -333,10 +333,10 @@ Raison : la vérification des textes a montré que « Texte adopté. » seul peu
 Les maquettes n'écrivent que « député » et « [Groupe A] ». Le lot demande trois précisions : un auteur peut être sénateur, un mandat peut avoir changé avant le vote, un même groupe ne doit s'écrire que d'une façon.
 
 - **Mandat.** En 1.6 et 2.7e : « Proposé par {nom}, {mandat}, {groupe}. », où {mandat} vaut « député » ou « députée » (`auteur.type` = `depute`), « sénateur » ou « sénatrice » (`senateur`), selon `feminin`. En 5.4 : « Proposé par {nom}, {groupe}. » pour un député (gabarit validé) ; « Proposé par {nom}, sénateur, {groupe}. » (ou « sénatrice ») pour un sénateur : la fiche s'ouvre aussi sans passer par 2.7e, et sans le mot on lirait « député ». Un projet de loi : « Proposé par le Gouvernement. » (annexe C, point 9).
-- **Moment.** Mandat et groupe sont ceux de l'acte que la phrase prête à la personne : le dépôt du texte pour « Proposé par », même si l'auteur a changé de mandat ou de groupe avant le vote ; la séance d'où vient l'extrait pour « était l'argument de ».
-- **Groupe.** Son sigle, une seule écriture par groupe, pris dans la liste fermée de `a-ne-pas-ouvrir/schema.md` (partie 2.7) : groupe de l'Assemblée, dans sa législature, pour un député ; groupe du Sénat pour un sénateur. Jamais un code interne de l'open data.
-- **D'un seul tenant.** Un sigle ne se coupe pas en fin de ligne (« LFI- », puis « NFP » à la ligne suivante, est un défaut). La chaîne affichée garde son trait d'union U+002D ; le moyen revient à Front-end.
-- **Pour le produit, rien n'est décidé.** Le sigle est une convention d'essai : la plupart des sigles ne disent rien à qui ne suit pas la politique. Sigle ou nom : à trancher en bêta, avec de vraies personnes (D-015).
+- **Moment.** Mandat et groupe sont ceux de l'acte que la phrase prête à la personne : le dépôt du texte pour « Proposé par », même si l'auteur a changé de mandat ou de groupe avant le vote, et même si ce groupe ne porte plus ce nom au moment du vote (le dépôt peut précéder le vote d'une législature) ; la séance d'où vient l'extrait pour « était l'argument de ». Raison : c'est la seule règle qui reste vraie pour un auteur qui n'a plus de mandat au moment du vote ; un groupe d'une législature passée n'est pas une erreur.
+- **Groupe.** Son libellé court, tel que l'institution l'imprime dans ses comptes rendus, casse comprise : le plus souvent un sigle (« EcoS », « Dem », « LFI-NFP »), parfois le nom en toutes lettres, quand c'est la seule forme courte de l'open data (par exemple pour un groupe du Sénat). Une seule écriture par groupe, prise dans la liste fermée de `a-ne-pas-ouvrir/schema.md` (partie 2.7) : groupe de l'Assemblée, dans sa législature, pour un député ; groupe du Sénat pour un sénateur. Jamais un code interne de l'open data (« ECOS », « DEM », « UDDPLR »).
+- **D'un seul tenant.** Un sigle ne se coupe pas en fin de ligne (« LFI- », puis « NFP » à la ligne suivante, est un défaut). La chaîne affichée garde son trait d'union U+002D ; le moyen revient à Front-end. Un groupe écrit en plusieurs mots (nom en toutes lettres) peut passer à la ligne à son espace, comme deux mots ordinaires (UX).
+- **Pour le produit, rien n'est décidé.** Le libellé court est une convention d'essai : la plupart des sigles ne disent rien à qui ne suit pas la politique, et certains surprennent par leur casse. Sigle ou nom : à trancher en bêta, avec de vraies personnes (D-015). Le moment retenu (dépôt ou vote) est aussi à trancher pour le produit.
 
 ## 8. Le cadre de l'essai, hors du téléphone
 
@@ -580,7 +580,7 @@ Les recalculs sont faits par un programme écrit à part, à partir de cette sp�
 
 18 textes : 17 retenus (E1 à E3, puis 1 à 14) et 1 de réserve (T). La seconde réserve prévue (P) est vide : aucun texte P de sens 1 avec un vrai argument au pôle 1 dans le matériau (constat de Contenu, 5 octobre 2026).
 
-Pour chaque texte : titre et trois lignes ; vote : issue, date et étape (§7.9), relevées sur la page du scrutin et le dossier législatif, puis vérifiées par un second agent, tout écart tranché avant le scellement ; auteur, avec son mandat (député ou sénateur) et son groupe au dépôt (§7.10) ; lien du scrutin et sources ; tension (S, P, T ou L) et sens s ; quatre considérations dans l'ordre d'affichage, chacune avec texte, côté, pôle (0, 1 ou aucun), député et groupe à la séance de l'extrait (§7.10). Chaque groupe s'écrit par son sigle, pris dans la liste fermée de `a-ne-pas-ouvrir/schema.md` (partie 2.7), que Contenu remplit avant le scellement, avec la source de chaque ligne.
+Pour chaque texte : titre et trois lignes ; vote : issue, date et étape (§7.9), relevées sur la page du scrutin et le dossier législatif, puis vérifiées par un second agent, tout écart tranché avant le scellement ; auteur, avec son mandat (député ou sénateur) et son groupe au dépôt (§7.10) ; lien du scrutin et sources ; tension (S, P, T ou L) et sens s ; quatre considérations dans l'ordre d'affichage, chacune avec texte, côté, pôle (0, 1 ou aucun), député et groupe à la séance de l'extrait (§7.10). Chaque groupe s'écrit par son libellé court (§7.10), pris dans la liste fermée de `a-ne-pas-ouvrir/schema.md` (partie 2.7), que Contenu remplit avant le scellement, avec la source de chaque ligne.
 
 Contraintes :
 - Vrais textes examinés à l'Assemblée et vrais arguments de députés, jamais inventés.
@@ -614,6 +614,7 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 11. Sous le vote (2.7d, 1.6, 5.4), la date : « Le 9 octobre 2024. » en 2.7d, « texte adopté le 9 octobre 2024 » en 1.6, « adopté le 9 octobre 2024 » en 5.4 (date inventée) ; puis, selon le texte, « Le Sénat devait encore voter. » ou « C'était le vote définitif du Parlement. » (§7.9).
 12. Pour un texte seulement : « Texte ni adopté ni rejeté. » ; « Le {date}, son article unique a été adopté, mais la séance a pris fin à minuit sans vote sur l'ensemble du texte. » ; en 5.4, « Vote : ni adopté ni rejeté. » (§7.9).
 13. Pour un texte déposé par un sénateur : « Proposé par {nom}, sénateur, {groupe}. » (ou « sénatrice »), en 2.7e et en 5.4 ; en 5.4, le mot du mandat s'ajoute au gabarit validé, qui ne l'écrit pas pour un député (§7.10).
+14. Règle d'affichage, à dire avec la liste : le mandat et le groupe de l'auteur sont ceux du jour du dépôt, même si le vote a eu lieu plus tard, parfois dans une autre législature ; un groupe peut donc s'afficher sous un nom qu'il ne porte plus. Le groupe de l'auteur d'une raison est celui du jour où il l'a dite (§7.10).
 
 **Dans le téléphone, forme seulement (aucun mot ne change) :** typographie à l'affichage (§7.8 : apostrophe courbe, espace fine avant « ? », « ! », « ; », « % » et entre les tranches d'un nombre, espaces insécables dans les dates et après un nombre) ; sigle de groupe jamais coupé en fin de ligne (§7.10) ; en 5.4, « Proposé par … » passe au paragraphe suivant (§7.9) ; vrai italique d'Alegreya Sans pour la raison devinée ; barre d'état en police du système (§8.8).
 
@@ -621,7 +622,7 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 
 **Dans le téléphone, texte validé employé dans un cas nouveau :** « Nouveau texte dans … » dans un cercle de cinq (D-011 ne le prévoit que sous trois membres).
 
-**Dans le téléphone, seuls les noms changent :** prénoms, « Amis », vrais textes, vrais députés, groupes (par leur sigle, §7.10) et votes ; « Tu as rejoint Amis. », « Agathe te lance un défi », « Les titres de la semaine · Amis », « {Pseudo} décroche Le Sans-Faute. », « toi@exemple.fr » ; élisions et accords (§7.6).
+**Dans le téléphone, seuls les noms changent :** prénoms, « Amis », vrais textes, vrais députés, groupes (par le libellé court qu'imprime l'institution, le plus souvent un sigle, §7.10) et votes ; « Tu as rejoint Amis. », « Agathe te lance un défi », « Les titres de la semaine · Amis », « {Pseudo} décroche Le Sans-Faute. », « toi@exemple.fr » ; élisions et accords (§7.6).
 
 **Dans le cadre, tout est nouveau :** la barre, « Arrêter l'essai » et son parcours (§8.10), la confirmation de « Jour suivant », la note sur 18h et le message de la séance 0 (§8.2) ; la fiche « Qui est qui » ; « Pas dans l'essai. » ; la note du compte simulé ; la note « Qui, durée, droits » ; le carnet ; la note du texte 14, « Continuer », « L'essai est fini. Deux questions, votre carnet à copier, puis le dévoilement. » ; F2 et F1 ; le dévoilement ; « Copier mon carnet », « Carnet copié : collez-le dans la conversation. », la consigne de copie manuelle et « Fin du carnet » ; les trois arrêts techniques et le message d'empreinte (§8.11) ; les textes d'effacement (§8.9).
 
@@ -654,7 +655,7 @@ Textes visibles dans l'essai qui ne figurent pas mot pour mot dans les maquettes
 - écran d'un proche (4.3) : la raison toujours écrite sur les lignes de « Ses surprises » ;
 - fiche « Qui est qui » et cadre de l'essai hors du téléphone ;
 - vote de l'Assemblée daté et au passé, avec son étape (§7.9) ;
-- auteurs et groupes : mandat et groupe au dépôt, groupe de l'orateur à la séance de l'extrait, groupes écrits par leur sigle ; « sénateur » en 2.7e et en 5.4 (§7.10) ;
+- auteurs et groupes : mandat et groupe au dépôt, groupe de l'orateur à la séance de l'extrait, groupes écrits par leur libellé court, tel que l'institution l'imprime ; « sénateur » en 2.7e et en 5.4 (§7.10) ;
 - textes nouveaux à l'écran : annexe C.
 
 **Interprétations à confirmer :**
