@@ -168,6 +168,16 @@ Relevés par Game design, Cohérence et UX en écrivant la simulation de l'essai
 - **C-015 — Libellés courts des pôles dans les phrases.** Les phrases raccourcissent certains pôles (« la liberté » pour Liberté individuelle) et en gardent d'autres en entier (« la solidarité collective », écran 1.13). Aucun libellé n'existe pour Local ↔ National ni pour les autres tensions. La liste est à fixer pour les huit tensions.
 - **C-016 — Rouvrir une révélation, toucher son propre visage.** Les maquettes disent que la croix de la révélation ramène à Aujourd'hui (écran 2.7a), mais ni `produit.md` ni les maquettes ne disent comment rouvrir une révélation fermée avant la fin, ni ce que fait un toucher sur son propre visage dans Le Cercle, ni comment ouvrir la révélation sans passer par le message de 18h (l'écran 2.5 ne mène qu'à 2.6).
 
+### C-017 à C-021 — Manques relevés en préparant les textes de l'essai et le plan de construction · Constaté, non tranché (5 octobre 2026)
+
+À soumettre au porteur au bilan de l'étape 4, avec C-007 à C-016.
+
+- **C-017 — Le vote daté dans le produit.** `produit.md` (« le vote », écrans 2.7d et 5.4) ne prévoit ni la date ni l'étape du vote. Or la plupart des textes du jour seront des premières lectures : « Texte adopté. » seul ferait croire à une loi en vigueur. L'essai règle le cas par convention (simulation §7.9 : ligne datée, au passé, avec l'étape) ; pour le produit, Back-end propose de garder le fait de procédure (lecture, chambre, date) et d'en tirer la phrase. Relevé par UX et Back-end.
+- **C-018 — Une personne présente dans deux de mes cercles.** Les règles ne disent pas dans quel cercle elle m'est proposée à deviner (une personne n'est proposée qu'une fois par jour). Relevé par Back-end.
+- **C-019 — Tempéraments par cercle ou pour toute la personne.** L'Original et Le Pont dépendent du cercle, mais l'écran Moi n'en affiche qu'un. Relevé par Back-end.
+- **C-020 — Heure de référence.** Rien ne dit ce que devient une réponse commencée avant 18h et validée après, ni quelle heure vaut pour un joueur qui vit hors de France. Relevé par Front-end.
+- **C-021 — Chiffres sur les choix des joueurs.** `projet.md` §8 prévoit un suivi du « taux de choix par option » et du taux de « aucune » pour surveiller les biais du contenu ; `produit.md` §8 (D-010) limite les mesures à ce que les joueurs font, « jamais sur ce qu'ils pensent » ; le §9 interdit tout chiffre public sur ce que pensent les joueurs. Positions : Back-end ne le prévoit pas par défaut ; Contenu propose des chiffres internes, regroupés par texte, jamais publiés ; Juridique : internes seulement, après avis de l'avocat (données sensibles ; en campagne, un chiffre public pourrait être lu comme un sondage).
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
