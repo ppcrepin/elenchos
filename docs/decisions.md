@@ -119,6 +119,10 @@ Pour l'essai seul (D-015) : **une page jouable aux couleurs de La Tablée**, tir
 
 Le porteur jouera l'essai sur **un iPhone ou un iPad** : l'équipe vérifie avant de lui donner la page que Safari garde bien l'avancement (une page-test d'abord, voir `docs/essai/simulation.md`, §8.8 et contrôle 14). Son **carnet de bilan reste dans la conversation** : le dépôt, public sur GitHub, ne reçoit que le bilan chiffré qui en est tiré, sans dates ni heures. L'accès aux sites de l'Assemblée nationale (data. et www.assemblee-nationale.fr) est ouvert dans l'environnement.
 
+### D-018 — Modèle des agents · Décidé (5 octobre 2026)
+
+Le porteur laisse l'orchestrateur choisir le modèle de chaque agent. Règle appliquée par l'orchestrateur, qui peut l'ajuster en le disant : ce qui produit (rédaction, conception, correction, fabrication) tourne sur le modèle de la session principale (Claude Opus 5.5) ; ce qui vérifie (Cohérence, Vérificateur, vérifications du contenu, annotations à l'aveugle, relevés faits en double) tourne sur Claude Fable 5.1, le modèle le plus capable, différent à la fois du producteur et de la session principale (D-001 tenu). Un modèle plus petit seulement pour une tâche mécanique, sans jugement. Un agent coupé par une limite d'utilisation est relancé quand elle se lève, jamais remplacé en silence par un modèle moins capable.
+
 ### C-001 — Le « pourquoi » reste cadré · Constaté
 
 Le « pourquoi » passe uniquement par ce qui est validé : choix d'une considération parmi 4 arguments réels de députés (§2), réponse à considération masquée (§2), révélation de l'auteur de l'argument à 18h (§2). La question quotidienne « d'où vient ta conviction » reste écartée (§10). Toute proposition de « pourquoi » plus profond rouvrirait le §10 et devrait être tranchée explicitement par le porteur.
