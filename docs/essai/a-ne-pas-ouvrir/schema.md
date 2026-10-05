@@ -1,6 +1,6 @@
 # Schéma du fichier scellé et format de la trace (essai solo)
 
-*Rédigé par Back-end le 4 octobre 2026, comme le demande le §9 de `docs/essai/simulation.md` (« Avant d'écrire le fichier scellé »). Version 1 du format. L'auteur du programme de contrôle le relit avant le scellement. Le document sert ensuite à l'agent qui scelle, à l'auteur de la page et à l'auteur du programme de contrôle. C'est une spécification de travail, pas un texte pour le porteur.*
+*Rédigé par Back-end le 4 octobre 2026, comme le demande le §9 de `docs/essai/simulation.md` (« Avant d'écrire le fichier scellé ») ; mis à jour le 5 octobre 2026 (vote daté, §7.9). Fichier scellé : version 2 du format ; trace : version 1 (partie 5). L'auteur du programme de contrôle le relit avant le scellement. Le document sert ensuite à l'agent qui scelle, à l'auteur de la page et à l'auteur du programme de contrôle. C'est une spécification de travail, pas un texte pour le porteur.*
 
 *Rangé dans `a-ne-pas-ouvrir/` (choix de l'orchestrateur) : les noms de certains champs laissent entrevoir comment les cartes sont choisies et comment les personnages devinent. Tous les lecteurs de ce document lisent déjà ce dossier. **Exemples** : toutes les valeurs sont inventées, sans lien entre elles ni avec l'essai. Elles ne suivent aucune règle cachée : ne pas s'en servir pour tester un calcul. Les personnages d'exemple portent des prénoms des maquettes (Hugo, Paul, Thomas), qui ne sont pas dans l'essai. Les textes d'exemple sont des gabarits.*
 
@@ -53,6 +53,7 @@ L'essai ajoute trois règles que la RFC n'impose pas :
 | fraction | chaîne « p/q » irréductible, avec q ≥ 2 ; ou « p » si la valeur est entière. Le signe éventuel est au numérateur. Zéro s'écrit « 0 ». C'est la forme de `str(Fraction)` en Python. | `"3/20"`, `"-1/2"`, `"1"`, `"0"` |
 | heure | chaîne « HH:MM », heure locale de Paris, de 00:00 à 23:59 | `"07:05"` |
 | instant | chaîne « AAAA-MM-JJTHH:MM±hh:mm » : la RFC 3339 à la minute, avec le décalage horaire de Paris ce jour-là | `"2026-10-25T02:30+01:00"` |
+| date | chaîne « AAAA-MM-JJ » : un jour du calendrier, sans heure ni fuseau (la « full-date » de la RFC 3339), mois et jour sur deux chiffres. Elle se lit telle qu'écrite, sans conversion. | `"2025-03-01"` |
 | hex16, hex64 | chaîne de 16 ou de 64 chiffres hexadécimaux minuscules | |
 | texte | `"E1"`, `"E2"`, `"E3"`, puis `"1"` à `"14"`, écrits comme dans les clés de tirage (§0) | `"7"` |
 | personnage | `"Agathe"`, `"Nassim"`, `"Odile"` ou `"Valentin"` | |
@@ -61,6 +62,10 @@ L'essai ajoute trois règles que la RFC n'impose pas :
 | niveau | entier de 1 (Très défavorable) à 5 (Très favorable) | `4` |
 | raison | entier de 1 à 4 (rang d'affichage de la considération), ou la chaîne `"aucune"` | `2`, `"aucune"` |
 | côté | entier, dans les termes du texte : 1 favorable, 0 neutre, −1 défavorable | `-1` |
+
+**Pièges du type `date`.**
+- En JavaScript, ne jamais lire une `date` avec `new Date("2025-03-01")`. Une date seule y est prise pour minuit en temps universel : sur un appareil réglé à l'ouest de Greenwich, la page afficherait la veille. On découpe la chaîne en trois entiers. Le mois s'écrit avec une table fixe (§7.9), jamais avec `Intl` ni `toLocaleDateString`.
+- En Python, vérifier d'abord l'écriture exacte avec `re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", s)`, puis l'existence du jour avec `datetime.date.fromisoformat(s)`. Ne pas employer `\d` : en Python, il accepte aussi les chiffres d'autres écritures. Ne pas employer `fromisoformat` seul : depuis Python 3.11, il accepte aussi « 20250301 ».
 
 ### 1.3 Conventions
 
@@ -76,7 +81,7 @@ L'essai ajoute trois règles que la RFC n'impose pas :
 | Clé | Type | Contenu |
 |---|---|---|
 | `format` | chaîne | toujours `"elenchos-essai-scelle"` |
-| `version` | entier | `1` (partie 5) |
+| `version` | entier | `2` (partie 5) |
 | `graine` | hex16 | la graine du tirage déterministe (§0) |
 | `vecteurs_test` | tableau de 3 objets | partie 2.5 |
 | `cercle` | objet | `{"nom": "Amis", "inviteuse": "Agathe"}` (§1) |
@@ -112,13 +117,29 @@ Chaque entrée `textes.<texte>` contient :
 |---|---|---|
 | `titre` | chaîne | tel qu'affiché |
 | `lignes` | tableau de 3 chaînes | les trois lignes, dans l'ordre d'affichage |
-| `vote` | `"adopte"` ou `"rejete"` | l'issue du scrutin (« Texte adopté. », « Texte rejeté. ») |
+| `vote` | objet | le vote de l'Assemblée : issue, jour et étape (tableau ci-dessous). Affichage : §7.9. |
 | `auteur` | objet | `{"type": "depute", "nom", "feminin", "groupe"}`, ou `{"type": "gouvernement"}` (« Proposé par le Gouvernement. », annexe C, point 9) |
 | `lien_scrutin` | chaîne | adresse https de la page du scrutin sur le site de l'Assemblée |
 | `sources` | tableau non vide de chaînes | adresses https des extraits des débats |
 | `tension` | tension | |
 | `sens` | entier 0 ou 1 | le sens s (§0) |
 | `considerations` | tableau de 4 objets | dans l'ordre d'affichage |
+
+L'objet `vote` contient :
+
+| Clé | Type | Contenu |
+|---|---|---|
+| `date` | date | le jour du vote, tel qu'écrit sur la page du scrutin. C'est la seule source : on n'y corrige rien, même pour un vote tenu après minuit. Pour `"sans_vote_ensemble"`, c'est le jour du vote de l'article. |
+| `etape` | `"navette"`, `"definitif"` ou `"aucune"` | la phrase d'étape : « Le Sénat devait encore voter. », « C'était le vote définitif du Parlement. », ou aucune phrase. Conditions de vérité : §7.9. |
+| `issue` | `"adopte"`, `"rejete"` ou `"sans_vote_ensemble"` | « Texte adopté. », « Texte rejeté. », « Texte ni adopté ni rejeté. » (§7.9) |
+
+Combinaisons permises (partie 4.1, étape 5) :
+
+| `issue` | `etape` |
+|---|---|
+| `"adopte"` | `"navette"` ou `"definitif"` |
+| `"rejete"` | `"navette"` ou `"aucune"` |
+| `"sans_vote_ensemble"` | `"aucune"` |
 
 Chaque considération `considerations[i]` contient :
 
@@ -140,6 +161,7 @@ Un député (l'`auteur` de type `"depute"`, ou le `depute` d'une considération)
 
 - Les adresses sont en https et en ASCII : un caractère spécial s'écrit encodé, sous la forme %xx. Elles ne contiennent pas d'espace.
 - Les chaînes affichées sont écrites en typographie simple : apostrophe droite, espaces ordinaires (contrôle 1). La page applique le §4.6 (guillemets, point final), puis les règles d'affichage du §7.8.
+- Les trois champs de `vote` ne s'affichent jamais tels quels : la page en tire les phrases du §7.9. Ils ne relèvent donc pas de la typographie simple (partie 4.1, étape 7).
 
 ### 2.4 Réponses, absences, réponses atypiques
 
@@ -219,13 +241,13 @@ Ceci est un extrait, mis en retrait pour la lecture. Le vrai fichier tient sur u
       "sources": ["https://www.assemblee-nationale.fr/exemple-debats"],
       "tension": "P",
       "titre": "Titre d'exemple",
-      "vote": "rejete"
+      "vote": {"date": "2025-01-30", "etape": "aucune", "issue": "rejete"}
     }
   },
   "vecteurs_test": [
     {"chaine": "0123456789abcdef|raison|Odile|E2|3", "cle": "raison|Odile|E2|3", "hex8": "1a2b3c4d", "n": 439041101}
   ],
-  "version": 1
+  "version": 2
 }
 ```
 
@@ -234,6 +256,12 @@ Le même vecteur, en forme canonique, tel qu'il figure dans le fichier :
 `{"chaine":"0123456789abcdef|raison|Odile|E2|3","cle":"raison|Odile|E2|3","hex8":"1a2b3c4d","n":439041101}`
 
 Ici, `hex8` et `n` sont cohérents entre eux : 1a2b3c4d en hexadécimal vaut 439 041 101. En revanche, 1a2b3c4d n'est pas le vrai début du SHA-256 de cette chaîne.
+
+La paire `vote` du texte 8, en forme canonique, telle qu'elle figure dans le fichier :
+
+`"vote":{"date":"2025-01-30","etape":"aucune","issue":"rejete"}`
+
+Ses clés sont dans l'ordre des octets (partie 1.1) : `date`, `etape`, `issue`. `vote` reste la dernière clé de l'objet du texte, après `titre`.
 
 ## 3. La trace de la version témoin (§9)
 
@@ -561,20 +589,31 @@ Le programme de contrôle fait ces vérifications dans l'ordre, avant tout autre
 1. **Empreinte.** Le SHA-256 des octets du fichier est égal à l'empreinte publiée : 64 chiffres hexadécimaux minuscules, présentés comme au §8.11.
 2. **Données embarquées.** On décode le base64 de la page : alphabet standard de la RFC 4648, avec les « = » de fin, sans retour à la ligne. On doit retrouver exactement ces octets.
 3. **Forme.** Le fichier est en UTF-8 strict. Relu puis remis en forme canonique, il redonne exactement les mêmes octets. Ce seul test attrape un espace en trop, une clé en double, des clés mal ordonnées, un échappement inutile et un nombre mal écrit.
-4. **Schéma.** Le schéma est fermé (partie 1.1). Types et valeurs sont permis. Les chaînes sont en NFC, les adresses en https et en ASCII.
+4. **Schéma.**
+   - Le schéma est fermé (partie 1.1). Types et valeurs sont permis.
+   - `format` vaut `"elenchos-essai-scelle"` et `version` vaut `2`.
+   - Les chaînes sont en NFC, les adresses en https et en ASCII.
+   - Chaque `vote.date` désigne un jour qui existe au calendrier (ni « 2025-02-29 », ni « 2025-04-31 »), au plus tard le jour du scellement. Ce jour n'est pas dans le fichier : le programme de contrôle le reçoit en paramètre, recopié du rapport de scellement (§9).
 5. **Cohérence interne.**
    - `textes` et `reponses` ont exactement les 17 clés ; `personnages`, `absences` et `reponses_atypiques` ont exactement les quatre prénoms.
    - Dans chaque texte, `rang` est égal à la place dans le tableau, et les quatre `groupe` sont différents (`projet.md` §8).
    - Le `texte` de chaque considération finit par « . », « ? » ou « ! », et n'a pas de guillemets à ses bords.
+   - Dans chaque `vote`, `issue` et `etape` forment une combinaison permise (partie 2.3) : `"adopte"` avec `"navette"` ou `"definitif"`, jamais sans étape ; `"rejete"` avec `"navette"` ou `"aucune"` ; `"sans_vote_ensemble"` avec `"aucune"`.
    - Un personnage a une réponse à un texte si et seulement si ce texte n'est pas dans ses absences. Les absences ne portent que sur des textes quotidiens.
    - Chaque réponse atypique désigne un texte quotidien où le personnage a une réponse.
    - Les fiches sont identiques au §1. `cercle` vaut Amis et Agathe.
    - Pour chaque vecteur, `chaine` est égal à `graine` + « | » + `cle`, et `n` est la valeur de `hex8`.
 6. **Vecteurs de test.** On les recalcule à partir de `graine` ; ils doivent être identiques.
+7. **Typographie simple** (§9, contrôle 1).
+   - Chaînes concernées, les seules qui s'affichent telles quelles : `cercle.nom` et `cercle.inviteuse` ; dans chaque fiche, `metier`, `ville` et `ligne_de_vie` ; dans chaque texte, `titre`, chaque élément de `lignes`, le `nom` et le `groupe` de l'auteur et de chaque député, et le `texte` de chaque considération.
+   - Ces chaînes ne contiennent ni U+2019, ni U+00A0, ni U+202F. « ? », « ! », « ; », « : » et « » » y sont toujours précédés d'une espace U+0020, et « « » est toujours suivi d'une espace U+0020.
+   - Toutes les autres chaînes ne sont pas concernées : codes, `vote.date`, `heure_de_jeu`, adresses, graine, vecteurs de test. Par exemple, « 07:40 » contient un « : » sans espace, et c'est normal.
 
 Ensuite viennent les contrôles 2 à 4 (profils, réponses, absences). Ils suivent le fichier caché, y compris son annexe A.
 
-La page garde ses vérifications V1 à V5 (§0, §8.11). À l'étape V4, elle vérifie aussi que `format` et `version` ont la valeur attendue.
+Aucun programme ne vérifie que les trois champs de `vote` sont vrais (le bon jour, la bonne issue, la bonne étape). Cette vérification relève de l'annexe A de la simulation : relevé sur la page du scrutin et le dossier législatif, puis vérification par un second agent.
+
+La page garde ses vérifications V1 à V5 (§0, §8.11). À l'étape V4, elle vérifie aussi que `format` vaut `"elenchos-essai-scelle"` et que `version` vaut `2`. Elle refuse donc un fichier en version 1.
 
 ### 4.2 Les traces
 
@@ -620,8 +659,13 @@ Au moins une partie témoin contient les cas suivants :
 
 ## 5. Changer le format
 
-- `version` vaut 1 dans les deux fichiers. Tout changement de champ, de type ou de sens fait passer à la version 2. On met alors ce document à jour, et l'auteur du programme de contrôle le relit.
-- La page refuse un fichier scellé dont le format ou la version est inattendu (étape V4). C refuse une trace ou un journal de version inattendue.
+- Chaque fichier a son propre numéro de version : le fichier scellé est en version 2 ; la trace, et le journal du harnais qui en a la forme, sont en version 1.
+- Tout changement de champ, de type ou de sens d'un fichier fait passer ce fichier, et lui seul, à la version suivante. On met alors ce document à jour, et l'auteur du programme de contrôle le relit.
+- La page refuse un fichier scellé dont le format ou la version est inattendu (étape V4). C refuse un fichier scellé, une trace ou un journal de version inattendue.
+- Historique :
+  - fichier scellé, version 1 (4 octobre 2026) : `vote` était une chaîne, `"adopte"` ou `"rejete"` ;
+  - fichier scellé, version 2 (5 octobre 2026) : `vote` devient un objet daté (partie 2.3, §7.9). La trace ne contient pas le vote : elle reste en version 1.
+- Un fichier déjà scellé en version 1 doit être scellé de nouveau en version 2 : nouvelle empreinte datée, et tous les contrôles rejoués (§9, « Correctif »). Ce n'est possible qu'avant la séance 0. (Au 5 octobre 2026, aucun fichier n'est encore scellé.)
 - Après la séance 0, le fichier scellé ne change plus (§9, « Correctif »), et son format non plus. Un correctif de la page peut changer la trace : on refait alors les contrôles (§9).
 
 ## 6. Points fixés depuis la version 1 de ce document
@@ -631,3 +675,5 @@ Au moins une partie témoin contient les cas suivants :
 3. **`jours_ecoules`** : différence entre les dates locales (heure de Paris) de deux ouvertures successives ; l'ouverture est le premier toucher du joueur dans la séance.
 4. **Typographie** : §7.8 (UX). Le fichier scellé reste en typographie simple ; la page et C appliquent les mêmes règles à l'affichage ; la trace enregistre les phrases sous leur forme affichée.
 5. **Plusieurs sources** : §7.1, écran 5.4 (UX).
+6. **Vote de l'Assemblée** : §7.9 de la simulation (UX). `vote` devient un objet `{"date", "etape", "issue"}` (partie 2.3), contrôlé en partie 4.1, étapes 4 et 5. Le fichier scellé passe en version 2 ; la trace reste en version 1 (partie 5).
+7. **Typographie simple du fichier scellé** : la liste des chaînes concernées est fixée en partie 4.1, étape 7.
