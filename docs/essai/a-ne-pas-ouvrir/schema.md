@@ -36,7 +36,7 @@ Les deux fichiers sont du JSON canonique au sens de la RFC 8785. Concrètement :
 
 L'essai ajoute trois règles que la RFC n'impose pas :
 - toute chaîne est en forme normalisée NFC. Sinon, « é » peut s'écrire de deux façons : l'empreinte change sans que l'affichage change ;
-- les chaînes ne contiennent aucun caractère de contrôle. Seule exception : le retour à la ligne (U+000A) dans le texte du carnet (partie 3.10) ;
+- les chaînes ne contiennent aucun caractère de contrôle. Seule exception : le retour à la ligne (U+000A) dans les textes de carnet, `carnet.texte` (partie 3.10) et `copies[].texte` (partie 3.2) ;
 - le schéma est fermé : chaque champ listé ici est présent, et aucun autre n'existe. `null` n'apparaît que là où ce document le permet.
 
 **Mise en œuvre et pièges.**

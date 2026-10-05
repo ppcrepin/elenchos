@@ -63,7 +63,7 @@ Rien n'atteint le porteur sans l'étape 4. Un livrable rejeté par le porteur re
 
 Après chaque commit, pousser la branche de travail **et** `main` sur GitHub, pour que `main` reflète toujours l'état du projet. `main` avance en avance rapide depuis la branche de travail (`git push origin <branche>:main`) ; jamais de réécriture d'historique sur `main`. Si l'avance rapide est impossible (quelqu'un a poussé sur `main` entre-temps), fusionner `main` dans la branche de travail, puis pousser.
 
-Exception (D-019) : la branche `gh-pages` ne porte que les pages publiées de l'essai (page-test comprise) et un fichier `.nojekyll` ; elle est poussée à part, jamais fusionnée dans `main`, jamais réécrite pendant l'essai. Les fichiers sources de ces pages suivent la règle normale (branche de travail et `main`).
+Exception (D-019) : la branche `gh-pages` ne porte que les pages publiées de l'essai (page-test comprise), l'image de leur icône (`essai/apple-touch-icon.png`) et un fichier `.nojekyll` ; elle est poussée à part, jamais fusionnée dans `main`, jamais réécrite pendant l'essai. Les fichiers sources de ces pages suivent la règle normale (branche de travail et `main`).
 
 ## Après chaque arbitrage du porteur
 

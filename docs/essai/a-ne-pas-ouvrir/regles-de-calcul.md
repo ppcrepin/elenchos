@@ -1,6 +1,6 @@
 # Règles de calcul des personnages (à ne pas ouvrir avant la fin de l'essai)
 
-*Spécification Game design, 4 octobre 2026 ; version 3, après Cohérence, UX, Juridique et le Vérificateur. Complète `docs/essai/simulation.md`, dont elle garde la numérotation (§2, §3, §4.1 à §4.4, annexe A) pour que les renvois restent justes. Lire ces règles avant la fin de l'essai aiderait à deviner : comment les personnages répondent, devinent, et comment les cartes sont choisies.*
+*Spécification Game design, 4 octobre 2026 ; version 3, après Cohérence, UX, Juridique et le Vérificateur. Modifications après le gel, le 5 octobre 2026, en circuit avec le lot de textes : annexe A (« Effet attendu », avec le lot scellé) ; §9 bis (« Texte rejeté. » jamais affiché ; liste à couvrir : arrêt à l'entrée avant 1.9, cartes attribuées sans « Valider »). Complète `docs/essai/simulation.md`, dont elle garde la numérotation (§2, §3, §4.1 à §4.4, annexe A) pour que les renvois restent justes. Lire ces règles avant la fin de l'essai aiderait à deviner : comment les personnages répondent, devinent, et comment les cartes sont choisies.*
 
 Les notations communes (k, n, s, v, w, c, ℓ), le tirage déterministe et le calcul exact sont au §0 de `simulation.md`. Le calcul exact s'applique aux données et constantes (p, v, m, 0,07, 0,95, 0,70, seuils) et à toutes les grandeurs calculées (a, d, c, ℓ, q, distance, médiane, rareté, surprise, poids). Profils, réponses atypiques et absences : `profils.md`.
 
