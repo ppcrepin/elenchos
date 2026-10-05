@@ -56,7 +56,7 @@
   - Raison 2 : elle vient de la rapporteure.
   - Raison 3 : « plus de cent-cinquante ans » (N162:352) contre « 1884 » pour la forme actuelle (N162:51) ; « plus d'un siècle » est vrai dans les deux lectures.
   - L'autrice n'était plus députée au vote. Lecture retenue : « Proposé par » décrit le dépôt, où elle était députée ; le gabarit validé s'applique tel quel, avec le groupe au dépôt, « Dem » (organe PO774834, partie 2.7 du schéma). À écrire au registre et au rapport de scellement.
-  - « 1 000 » peut être coupé en fin de ligne, comme « 30 000 », « 1 500 » (E1) et « 20 % » (E2) : règle de typographie à ajouter au §7.8 (en cours chez UX).
+  - « 1 000 » peut être coupé en fin de ligne, comme « 30 000 », « 1 500 » (E1) et « 20 % » (E2) : règle 6 du §7.8, ajoutée le 5 octobre 2026 : la coupure est empêchée à l'affichage.
 
 ### 11 · scrutin 3514 (16e législature)
 - Titre : Député et adjoint au maire en même temps

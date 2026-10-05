@@ -1,6 +1,6 @@
 # Conventions de rédaction des fiches de l'essai
 
-*Fixées par l'orchestrateur le 5 octobre 2026, après la première vérification indépendante des quatre lots, pour trancher les questions qu'elle laissait ouvertes. Elles complètent le brief de rédaction (format des fiches, `docs/essai/simulation.md` annexe A, `regles-de-calcul.md` annexe A) et l'emportent sur lui en cas d'écart. En relecture avec le lot de contenu.*
+*Fixées par l'orchestrateur le 5 octobre 2026, après la première vérification indépendante des quatre lots, pour trancher les questions qu'elle laissait ouvertes. Elles complètent le brief de rédaction (format des fiches, `docs/essai/simulation.md` annexe A, `regles-de-calcul.md` annexe A) et l'emportent sur lui en cas d'écart. Relues avec le lot par Cohérence et le Vérificateur le 5 octobre 2026.*
 
 
 1. **Côté d'une raison.** Le côté est le sens de l'argument : « pour » s'il plaide pour le texte, « contre » s'il plaide contre. On choisit de préférence un orateur dont le vote personnel (fichier du scrutin) suit l'argument. Un orateur qui s'est abstenu, ou dont le vote n'est pas trouvé, est admis seulement si aucun orateur d'un groupe encore libre ne porte un argument de même force ; c'est alors écrit dans « Doutes ». Un orateur qui a voté dans le sens opposé à sa raison est remplacé.
