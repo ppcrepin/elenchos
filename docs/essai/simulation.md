@@ -566,7 +566,7 @@ Les recalculs sont faits par un programme écrit à part, à partir de cette sp�
 
 ## Annexe A : ce que Contenu fournit
 
-19 textes : 17 retenus (E1 à E3, puis 1 à 14) et 2 de réserve.
+18 textes : 17 retenus (E1 à E3, puis 1 à 14) et 1 de réserve (T). La seconde réserve prévue (P) est vide : aucun texte P de sens 1 avec un vrai argument au pôle 1 dans le matériau (constat de Contenu, 5 octobre 2026).
 
 Pour chaque texte : titre et trois lignes ; vote : issue, date et étape (§7.9), relevées sur la page du scrutin et le dossier législatif, puis vérifiées par un second agent, tout écart tranché avant le scellement ; auteur et groupe ; lien du scrutin et sources ; tension (S, P, T ou L) et sens s ; quatre considérations dans l'ordre d'affichage, chacune avec texte, côté, pôle (0, 1 ou aucun), député et groupe.
 

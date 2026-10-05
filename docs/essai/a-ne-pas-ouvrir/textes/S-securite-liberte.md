@@ -7,7 +7,7 @@ Remarques du rédacteur sur le lot :
 - Les six textes S ont tous été adoptés. Dans les textes de la 17e, le côté « contre » vient de la gauche seule (SOC, LFI-NFP, ECOS, GDR), comme dans les votes (aucun « contre » au centre ni à droite à ces scrutins, sauf au texte 10, où aucun orateur de ces groupes n'a argumenté « contre ») ; le côté « pour » vient du centre et de la droite, sauf au texte 4 (une voix SOC, groupe qui a voté pour). Le texte 7 croise les camps.
 - Répartition des 24 raisons. 17e : SOC 4, LFI-NFP 3, HOR 2, EPR 2, ECOS 2, RN 2, GDR 2, DR 1, LIOT 1, DEM 1. 16e : SOC, LR, DEM, RE.
 - Votes personnels : 21 sur 24 vérifiés dans le fichier du scrutin, tous dans le sens de la raison. Trois orateurs sont absents des listes nominatives (E1 Raux, 1 Vicot, 14 Le Meur) ; ils sont admis selon la convention 1, avec la raison écrite dans leurs Doutes.
-- À réannoter à l'aveugle avant scellement (convention 7) : E1 R1, R2, R3 ; 1 R1 ; 4 R1 à R4 ; 7 R1, R3 ; 10 R1 à R4 ; 14 R1, R2, R4.
+- Réannotées à l'aveugle le 5 octobre 2026, 24 accords sur 24 (`annotations.md`) : E1 R1, R2, R3 ; 1 R1 ; 4 R1 à R4 ; 7 R1, R3 ; 10 R1 à R4 ; 14 R1, R2, R4.
 
 ### E1 · scrutin 6124 (17e législature)
 - Titre : Rave-parties illégales : sanctions plus lourdes
@@ -20,7 +20,7 @@ Remarques du rédacteur sur le lot :
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/6124
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N198
-  - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N199
+- Autres comptes rendus utilisés pour les lignes, le vote ou l'auteur (hors `sources`, convention 9) : https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N199
 - Tension : S ; sens s = 0
 - Raisons :
   1. « On n'interdit pas pour interdire, on protège participants et forces de l'ordre. » — pour · pôle 0 — Michel Criaud, député, HOR [vote : pour] — extrait : « Le texte ne vise donc pas à interdire pour interdire ; il entend faire appliquer la loi afin de garantir le respect de l'autorité de l'État et de protéger les participants, les élus locaux et les propriétaires concernés ainsi que les forces de l'ordre qui procèdent à des évacuations comportant souvent de lourds risques humains » (CRSANR5L17S2026O1N198.txt:14)
@@ -41,8 +41,8 @@ Remarques du rédacteur sur le lot :
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/788
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2025O1N097
-  - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2025O1N098
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2025O1N099
+- Autres comptes rendus utilisés pour les lignes, le vote ou l'auteur (hors `sources`, convention 9) : https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2025O1N098
 - Tension : S ; sens s = 0
 - Raisons :
   1. « Les femmes sont les premières victimes des vols et des violences. » — pour · pôle 0 — Jean Moulliere, député, HOR [vote : pour] — extrait : « ce sont les femmes qui subissent le plus ces vols et ces violences : elles sont victimes de plus de 56 % des vols avec ou sans violence et de plus de 95 % des violences sexuelles » (CRSANR5L17S2025O1N097.txt:251)
@@ -71,7 +71,7 @@ Remarques du rédacteur sur le lot :
   3. « Ça revient à nier l'autonomie des ados et leur discernement. » — contre · pôle 1 — Arnaud Saint-Martin, député, LFI-NFP [vote : contre] — extrait : « ce qui vous conduit à accuser les jeunes et à nier leur autonomie et leur capacité de discernement » (CRSANR5L17S2026O1N126.txt:684)
   4. « On courra d'interdiction en interdiction, des réseaux aux jeux en ligne. » — contre · pôle 1 — Cyrielle Chatelain, députée, ECOS [vote : contre] — extrait : « Aujourd'hui, nous voulons interdire Instagram, Snapchat et TikTok. Demain, ce sera les jeux en ligne. » ; « On courra d'interdiction en interdiction. » (CRSANR5L17S2026O1N125.txt:418)
 - Vérifications de l'auteur : 4 groupes (SOC, LIOT, LFI-NFP, ECOS) ; 2 pour (1, 2), 2 contre (3, 4) ; pôle 0 : 2 (1, 2), pôle 1 : 2 (3, 4) ; hors tension 0 (consigne : sans) ; votes vérifiés dans VTANR5L17V5192.json : 1 pour, 2 pour, 3 contre, 4 contre ; nouvelles : 1, 4 ; réécrites : 2, 3. Titre 45 car. ; lignes 88/64/84 car. ; raisons de 11/12/10/11 mots. Sources des lignes : N125:394 (« exclut ainsi les messageries privées interpersonnelles ») et N125:24 ; N125:364 et N125:18 (responsabilité et amendes des plateformes) ; N126:491 et :502 (amendement no 24 rectifié adopté).
-- Doutes : scrutin de première lecture ; le texte de la commission mixte paritaire (scrutin 8431, juillet 2026) n'a pas été relu et peut différer, notamment sur le lycée. Ligne 3 : le règlement intérieur fixe les zones ; l'interdiction dans les bâtiments et l'autorisation dans la cour sont la règle « par défaut » (N126:491). La mesure est très associée au président de la République : le camp de l'auteure peut se deviner. Le groupe SOC annonçait une abstention majoritaire (N126:695) ; le vote personnel de Hadizadeh est « pour ». Écartés : Trébuchet (UDDPLR), absent de la liste nominative, au profit de Bruneau, au vote vérifié (convention 1) ; Gustave (ECOS), qui s'est abstenu ; Iordanoff (ECOS), qui se dit favorable (N125:304) ; l'ancien extrait de Saint-Martin (N126:46), qui visait la loi australienne. La raison 4 est la deuxième raison « pente » du lot (avec E1 R4), un autre jour. Annotation : tension S, avec P en concurrente ; s ne change pas.
+- Doutes : scrutin de première lecture ; le texte de la commission mixte paritaire (scrutin 8431, juillet 2026) n'a pas été relu et peut différer, notamment sur le lycée. Ligne 3 : le règlement intérieur fixe les zones ; l'interdiction dans les bâtiments et l'autorisation dans la cour sont la règle « par défaut » (N126:491). La mesure est très associée au président de la République : le camp de l'auteure peut se deviner. Le groupe SOC annonçait une abstention majoritaire (N126:695) ; le vote personnel de Hadizadeh est « pour ». Écartés : Trébuchet (UDR), absent de la liste nominative, au profit de Bruneau, au vote vérifié (convention 1) ; Gustave (ECOS), qui s'est abstenu ; Iordanoff (ECOS), qui se dit favorable (N125:304) ; l'ancien extrait de Saint-Martin (N126:46), qui visait la loi australienne. La raison 4 est la deuxième raison « pente » du lot (avec E1 R4), un autre jour. Annotation : tension S, avec P en concurrente ; s ne change pas.
 
 ### 7 · scrutin 1462 (16e législature)
 - Titre : Vaccin covid des soignants : lever l'obligation
@@ -99,13 +99,13 @@ Remarques du rédacteur sur le lot :
   1. Quand un policier national ou un gendarme tire, son tir serait présumé conforme à la loi.
   2. Une preuve contraire pourrait faire tomber cette présomption.
   3. Face à un tueur qui risque de recommencer, ils pourraient tirer sans signe distinctif.
-- Vote : adopté, 313 pour, 199 contre, 5 abstentions (7 juillet 2026) ; vote sur l'ensemble, en première lecture, sur l'article unique réécrit par l'amendement du gouvernement no 39 (adopté le 22 janvier 2026, CRSANR5L17S2026O1N123.txt:324) ; vote : CRSANR5L17S2026E1N005.txt:864.
+- Vote : adopté, 313 pour, 199 contre, 5 abstentions (7 juillet 2026) ; vote sur l'ensemble, en première lecture (texte à article unique, réécrit par l'amendement du gouvernement no 39 adopté le 22 janvier 2026, CRSANR5L17S2026O1N123.txt:324) ; vote : CRSANR5L17S2026E1N005.txt:864.
 - Auteur : Éric Pauget, député, DR ; dossier DLR5L17N51037 (initiateur PA718784) ; CRSANR5L17S2026O1N122.txt:399 et :423.
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/7987
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N122
-  - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N123
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026E1N005
+- Autres comptes rendus utilisés pour les lignes, le vote ou l'auteur (hors `sources`, convention 9) : https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N123
 - Tension : S ; sens s = 0
 - Raisons :
   1. « Par peur des conséquences, un policier peut hésiter, et en mourir. » — pour · pôle 0 — Michaël Taverne, député, RN [vote : pour] — extrait : « Cette policière avait sorti son arme mais n'avait pas tiré. Pourquoi ? Très certainement par peur des conséquences de son usage. Cette décision lui a coûté la vie » (CRSANR5L17S2026O1N122.txt:552)
@@ -125,9 +125,9 @@ Remarques du rédacteur sur le lot :
 - Auteur : Paul Midy, député, EPR ; CRSANR5L17S2026O1N135.txt:296 et :298.
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/5427
 - Sources :
-  - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N135
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N136
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N150
+- Autres comptes rendus utilisés pour les lignes, le vote ou l'auteur (hors `sources`, convention 9) : https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N135
 - Tension : S ; sens s = 0
 - Raisons :
   1. « Vols, dégradations, agressions, ce sont des réalités qui épuisent les commerçants. » — pour · pôle 0 — Katiana Levavasseur, députée, RN [vote : pour] — extrait : « Les vols, les dégradations et les agressions ne sont pas des abstractions ; ce sont des réalités qui épuisent les commerçants » (CRSANR5L17S2026O1N150.txt:310)
@@ -135,4 +135,4 @@ Remarques du rédacteur sur le lot :
   3. « Des miroirs ou un vendeur de plus, c'est moins intrusif. » — contre · pôle 1 — Julien Brugerolles, député, GDR [vote : contre] — extrait : « Il existe en effet de nombreux moyens de prévention beaucoup moins intrusifs que la surveillance algorithmique, tels que l'aménagement des espaces de vente, les miroirs de surveillance ou – bien sûr ! – la présence humaine » (CRSANR5L17S2026O1N136.txt:64)
   4. « Tout le monde serait surveillé en permanence, sans preuve que ça marche. » — contre · pôle 1 — Hervé Saulignac, député, SOC [vote : contre] — extrait : « faire peser sur l'ensemble de la population une surveillance permanente au nom d'une efficacité qui n'est ni démontrée, ni proportionnée » (CRSANR5L17S2026O1N136.txt:88)
 - Vérifications de l'auteur : 4 groupes (RN, EPR, GDR, SOC) ; 2 pour (1, 2), 2 contre (3, 4) ; pôle 0 : 2 (1, 2), pôle 1 : 2 (3, 4) ; hors tension 0 (texte 14 : au plus une) ; votes vérifiés dans VTANR5L17V5427.json : 1 pour, 2 absente, 3 contre, 4 contre ; réécrites : 1, 2 ; nouvelle : 4 (même orateur, autre argument) ; extrait de la raison 3 allongé. Titre 54 car. ; lignes 88/77/63 car. ; raisons de 11/11/10/12 mots. Sources des lignes : N136:74 (commerces de détail, grandes surfaces, centres commerciaux) et N135:300 (alerte sur un comportement pouvant correspondre à un vol) ; N150:236 (« L'information du public est en effet obligatoire »), N135:302 (« c'est toujours un être humain qui prendra la décision d'agir ou non ») et N150:310 (« exclut ... la décision automatisée ») ; N136:198, N136:224 et N150:195 (31 décembre 2027), N150:310 (reconnaissance faciale exclue).
-- Doutes : texte en première lecture seulement ; hémicycle presque vide (78 votants), DEM abstenu. Le Meur, absente de la liste (EPR 35 pour, 0 contre), est admise (convention 1) : aucun orateur « pour » d'un groupe libre au vote vérifié n'a d'argument de pôle 0 comparable (Firmin Le Bodo, HOR, et Fayssat, UDDPLR, sont absents de la liste) ; Midy, du même groupe et auteur, avance surtout des arguments économiques (N135:298). La raison 1 cite les agressions alors que le texte se limite au vol ; Levavasseur le regrette elle-même (N150:310). La raison 2 peut se lire « aucun » (vol = biens, convention 4) : le texte aurait alors une raison hors tension, ce qui reste permis. La ligne 3 rend l'expérimentation par « permis jusqu'à fin 2027 », sans le mot « essai ». Le titre et les lignes ne reprennent plus « caméras intelligentes » (maquette CAMERAS) et placent la question sur la surveillance des clients face au vol (annotation : S, avec P en concurrente).
+- Doutes : texte en première lecture seulement ; hémicycle presque vide (78 votants), DEM abstenu. Le Meur, absente de la liste (EPR 35 pour, 0 contre), est admise (convention 1) : aucun orateur « pour » d'un groupe libre au vote vérifié n'a d'argument de pôle 0 comparable (Firmin Le Bodo, HOR, et Fayssat, UDR, sont absents de la liste) ; Midy, du même groupe et auteur, avance surtout des arguments économiques (N135:298). La raison 1 cite les agressions alors que le texte se limite au vol ; Levavasseur le regrette elle-même (N150:310). La raison 2 peut se lire « aucun » (vol = biens, convention 4) : le texte aurait alors une raison hors tension, ce qui reste permis. La ligne 3 rend l'expérimentation par « permis jusqu'à fin 2027 », sans le mot « essai ». Le titre et les lignes ne reprennent plus « caméras intelligentes » (maquette CAMERAS) et placent la question sur la surveillance des clients face au vol (annotation : S, avec P en concurrente).

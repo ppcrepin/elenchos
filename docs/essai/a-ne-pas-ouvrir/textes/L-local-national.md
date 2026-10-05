@@ -1,6 +1,6 @@
 # Fiches L · Local (pôle 0) – National (pôle 1)
 
-*Rédigées par Contenu le 5 octobre 2026, à partir des comptes rendus officiels (open data de l'Assemblée nationale, 17e législature) ; vérifié une fois, corrigé. Typographie simple ; ordre des raisons tiré au scellement. Toute raison nouvelle ou réécrite repasse par une annotation à l'aveugle avant le scellement (convention 7).*
+*Rédigées par Contenu le 5 octobre 2026, à partir des comptes rendus officiels (open data de l'Assemblée nationale, 17e législature) ; vérifié une fois, corrigé. Typographie simple ; ordre des raisons tiré au scellement. Les raisons nouvelles ou réécrites ont repassé l'annotation à l'aveugle le 5 octobre 2026 (`annotations.md` : 16 accords sur 16).*
 
 ### E3 · scrutin 7454 (17e législature)
 - Titre : Autonomie de la Corse dans la Constitution
@@ -14,9 +14,8 @@
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/7454
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N272
-  - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N275
-  - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N276
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N280
+- Autres comptes rendus utilisés pour les lignes, le vote ou l'auteur (hors `sources`, convention 9) : https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N275 ; https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N276
 - Tension : L ; sens s = 0
 - Raisons :
   1. « On ne bâtit pas Ajaccio avec les règles d'une banlieue parisienne. » — pour · pôle 0 — Pierre Cazeneuve, député, EPR [vote : pour] — extrait : « personne ne peut croire que le code de l'urbanisme peut s'appliquer de la même façon à Rueil-Malmaison et à Ajaccio » (CRSANR5L17S2026O1N280.txt:251)
@@ -24,7 +23,7 @@
   3. « Une communauté liée à la terre, ça fragilise la cohésion du pays. » — contre · pôle 1 — Stéphane Peu, député, GDR [vote : contre] — extrait : « Les notions de « communauté historique » et de « lien singulier à sa terre » [...] Une telle approche charrie une vision essentialiste de la relation des Corses à leur territoire, qui fragilise la cohésion nationale » (CRSANR5L17S2026O1N272.txt:503)
   4. « Le Parlement n'aurait plus la main sur les règles écrites en Corse. » — contre · pôle 1 — Olivier Fayssat, député, UDR [vote : contre] — extrait : « Il n'existe en revanche aucun contrôle de notre assemblée, c'est-à-dire aucun regard politique exercé en amont par les représentants de la nation. Nous créons un pouvoir et, dans le même geste, nous nous interdisons de garder la main. » (CRSANR5L17S2026O1N280.txt:224)
 - Vérifications de l'auteur : 4 groupes (EPR, LFI-NFP, GDR, UDR) ; 2 pour (1, 2), 2 contre (3, 4), chaque orateur a voté dans le sens de sa raison (VTANR5L17V7454) ; pôle 0 : 2 (1, 2), pôle 1 : 2 (3, 4) ; hors tension 0 (au plus 1, annexe A) ; titre 42 caractères, lignes 78 / 84 / 87 ; raisons 11 / 12 (deux-points compris) / 12 / 12 mots ; extraits vérifiés par Grep ; raisons nouvelles ou réécrites : 2, 3, 4.
-- Doutes : la ligne 1 résume l'alinéa 2 (« intérêts propres, liés à ses caractéristiques d'île méditerranéenne, au relief montagneux et à sa communauté insulaire, historique, linguistique, culturelle, ayant développé un lien singulier à la terre corse ») ; faute de place, elle ne dit pas que la loi organique pourrait consolider le statut de la langue corse (N272:481). « Avis des Corses » = consultation obligatoire des électeurs inscrits en Corse sur les projets de loi organique. Raison 3 : discours du 16 juin, sur la rédaction initiale ; les deux notions visées subsistent, amendées, dans le texte voté (N275:11) ; la raison ne reprend ni « sa terre » ni « d'origine » ; Faucillon (GDR) répète l'objection sur le texte final (N280:222) mais s'est abstenue. Raison 4 : la ministre annonce un contrôle « sous le regard de la représentation nationale » (N272:471) ; la raison rapporte l'argument de l'orateur, pas un fait. Raison 2 : l'orateur appuie le « choix » sur les majorités autonomistes élues et l'appel des maires (N280:260). Le RN (contre, majoritaire parmi les 202) n'est pas représenté : son argument principal, la préférence régionale (N280:230-244), demande plus de pouvoir local et ne porte donc pas le pôle 1. GDR partagé (6 pour, 6 contre, 2 abstentions). À 18h, « adopté » doit être suivi de « en première lecture » (UX).
+- Doutes : la ligne 1 résume l'alinéa 2 (« intérêts propres, liés à ses caractéristiques d'île méditerranéenne, au relief montagneux et à sa communauté insulaire, historique, linguistique, culturelle, ayant développé un lien singulier à la terre corse ») ; faute de place, elle ne dit pas que la loi organique pourrait consolider le statut de la langue corse (N272:481). « Avis des Corses » = consultation obligatoire des électeurs inscrits en Corse sur les projets de loi organique. Raison 3 : discours du 16 juin, sur la rédaction initiale ; les deux notions visées subsistent, amendées, dans le texte voté (N275:11) ; la raison ne reprend ni « sa terre » ni « d'origine » ; Faucillon (GDR) répète l'objection sur le texte final (N280:222) mais s'est abstenue. Raison 4 : la ministre annonce un contrôle « sous le regard de la représentation nationale » (N272:471) ; la raison rapporte l'argument de l'orateur, pas un fait. Raison 2 : l'orateur appuie le « choix » sur les majorités autonomistes élues et l'appel des maires (N280:260). Le RN (contre, majoritaire parmi les 202) n'est pas représenté : son argument principal, la préférence régionale (N280:230-244), demande plus de pouvoir local et ne porte donc pas le pôle 1. GDR partagé (6 pour, 6 contre, 2 abstentions). Affichage du vote (§7.9), en 1.6 : « L'Assemblée : texte adopté le 23 juin 2026. Le Sénat devait encore voter. » ; « première lecture » ne s'écrit pas.
 
 ### 5 · scrutin 6045 (17e législature)
 - Titre : L'Alsace hors de la région Grand Est
@@ -60,8 +59,8 @@
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/3056
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N004
-  - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2025O1N193
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2025O1N194
+- Autres comptes rendus utilisés pour les lignes, le vote ou l'auteur (hors `sources`, convention 9) : https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2025O1N193
 - Tension : L ; sens s = 0
 - Raisons :
   1. « Faisons confiance aux maires, donnons-leur les outils pour construire et rénover. » — pour · pôle 0 — Mickaël Cosson, député, DEM [vote : pour] — extrait : « les maires ne doivent plus être des funambules, marchant sur le fil d'un droit de l'urbanisme toujours plus complexe, mais des bâtisseurs armés pour agir avec efficacité. [...] Faisons confiance aux maires, donnons-leur les outils pour aménager, réhabiliter, densifier » (CRSANR5L17S2026O1N004.txt:297)

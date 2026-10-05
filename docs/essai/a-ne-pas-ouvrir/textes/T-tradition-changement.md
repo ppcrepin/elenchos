@@ -1,6 +1,6 @@
 # Fiches T · Tradition (pôle 0) – Changement (pôle 1)
 
-*Rédigées par Contenu le 5 octobre 2026, à partir des comptes rendus officiels (open data de l'Assemblée nationale, 16e et 17e législatures) ; vérifié une fois, corrigé (5 octobre 2026). Les raisons nouvelles ou réécrites repassent par une annotation à l'aveugle avant le scellement (convention 7). Typographie simple ; ordre des raisons tiré au scellement.*
+*Rédigées par Contenu le 5 octobre 2026, à partir des comptes rendus officiels (open data de l'Assemblée nationale, 16e et 17e législatures) ; vérifié une fois, corrigé (5 octobre 2026). Les raisons nouvelles ou réécrites ont repassé l'annotation à l'aveugle le 5 octobre 2026 (`annotations.md` : 12 accords sur 12). Typographie simple ; ordre des raisons tiré au scellement.*
 
 ### 2 · scrutin 3115 (16e législature)
 - Titre : Un accueil au guichet dans chaque service public
@@ -14,7 +14,7 @@
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/16/comptes-rendus/seance/CRSANR5L16S2024O1N069
   - https://www.assemblee-nationale.fr/dyn/16/comptes-rendus/seance/CRSANR5L16S2024O1N070
-  - Titre et lignes (48, 74, 82, 84 caractères) : ligne 1, N070:23 (« recevoir les usagers qui en feront la demande ») et N069:916 ; ligne 2, N070:23 (« accompagné à chaque étape de toute démarche administrative »), N069:847, amendement n° 3 « délai raisonnable » (N070:56) adopté (N070:71-72) ; ligne 3, démarches en ligne : N070:23 (« Sans revenir sur la montée en puissance du téléservice »), N069:916 (« en plus »), N070:305 (les mesures « n'entraient pas en contradiction » avec la politique du groupe RE), source déclarative, texte de la PPL n° 1773 absent du matériau local ; agents formés : amendement n° 2 (N070:74) adopté (N070:89-90).
+- Sources des lignes (titre et lignes : 48, 74, 82, 84 caractères) : ligne 1, N070:23 (« recevoir les usagers qui en feront la demande ») et N069:916 ; ligne 2, N070:23 (« accompagné à chaque étape de toute démarche administrative »), N069:847, amendement n° 3 « délai raisonnable » (N070:56) adopté (N070:71-72) ; ligne 3, démarches en ligne : N070:23 (« Sans revenir sur la montée en puissance du téléservice »), N069:916 (« en plus »), N070:305 (les mesures « n'entraient pas en contradiction » avec la politique du groupe RE), source déclarative, texte de la PPL n° 1773 absent du matériau local ; agents formés : amendement n° 2 (N070:74) adopté (N070:89-90).
 - Tension : T ; sens s = 0
 - Raisons :
   1. « Les gens veulent retrouver un guichet, pas une plateforme téléphonique. » — pour · pôle 0 — Géraldine Grangier, députée, RN [vote : pour] — extrait : « ils en ont assez de la dématérialisation et des services vocaux des plateformes téléphoniques. Oui, ils veulent légitimement retrouver un accueil physique où ils seront traités en citoyens » (CRSANR5L16S2024O1N070.txt:35)
@@ -40,7 +40,7 @@
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/1303
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2025O1N162
-  - Titre et lignes (40, 74, 51, 75 caractères) : ligne 1, N162:32 (« en étendant aux communes de moins de 1 000 habitants le scrutin de liste paritaire ») ; ligne 2, N162:38 (« il permet au citoyen de rayer le nom d'un candidat ») et N162:281 (« la fin du panachage ») ; ligne 3, N162:32 (« scrutin de liste paritaire ») et N162:93 (« deux personnes de moins que l'effectif légal »).
+- Sources des lignes (titre et lignes : 40, 74, 51, 75 caractères) : ligne 1, N162:32 (« en étendant aux communes de moins de 1 000 habitants le scrutin de liste paritaire ») ; ligne 2, N162:38 (« il permet au citoyen de rayer le nom d'un candidat ») et N162:281 (« la fin du panachage ») ; ligne 3, N162:32 (« scrutin de liste paritaire ») et N162:93 (« deux personnes de moins que l'effectif légal »).
 - Tension : T ; sens s = 1
 - Raisons :
   1. « Rayer des noms, c'est sympathique, mais ça n'a plus sa place. » — pour · pôle 1 — Guillaume Gouffier Valente, député, EPR [vote : pour] — extrait : « Le panachage, aussi sympathique soit-il [...] n'a plus sa place dans notre fonctionnement démocratique » (CRSANR5L17S2025O1N162.txt:68)
@@ -55,8 +55,8 @@
   - Raison 4 : l'orateur dit aussi « L'enjeu de nos débats n'est pas la préservation de cette législation centenaire » (N162:51). La raison s'en tient à ses mots sur l'habitude (N162:54).
   - Raison 2 : elle vient de la rapporteure.
   - Raison 3 : « plus de cent-cinquante ans » (N162:352) contre « 1884 » pour la forme actuelle (N162:51) ; « plus d'un siècle » est vrai dans les deux lectures.
-  - L'autrice n'était plus députée au vote : libellé d'auteur à valider (texte nouveau à l'écran).
-  - « 1 000 » peut être coupé en fin de ligne (§7.8 ne le prévoit pas).
+  - L'autrice n'était plus députée au vote. Lecture retenue : « Proposé par » décrit le dépôt, où elle était députée ; le gabarit validé s'applique tel quel, avec le groupe au dépôt, dont le libellé affiché doit être établi avant le scellement (`auteur.groupe` est obligatoire). À écrire au registre et au rapport de scellement.
+  - « 1 000 » peut être coupé en fin de ligne, comme « 30 000 », « 1 500 » (E1) et « 20 % » (E2) : règle de typographie à ajouter au §7.8 (en cours chez UX).
 
 ### 11 · scrutin 3514 (16e législature)
 - Titre : Député et adjoint au maire en même temps
@@ -64,13 +64,13 @@
   1. Un député ou un sénateur pourrait aussi être adjoint au maire.
   2. Ou vice-président de département ou de région, mais ni maire de commune ni président.
   3. Une seule de ces fonctions à la fois ; depuis 2017, aucune n'est permise.
-- Vote : adopté, 64 pour, 44 contre, 8 abstentions (14 mars 2024). Ce scrutin porte sur l'article unique, amendé, et non sur l'ensemble (titre du scrutin ; CRSANR5L16S2024O1N150.txt:516-519). La discussion a continué sur d'autres amendements, puis la séance a été levée à minuit et la suite renvoyée à une prochaine séance, sans vote sur l'ensemble ce jour-là (N150:520-561).
+- Vote : article unique adopté, sans vote sur l'ensemble (`issue` = `sans_vote_ensemble`, `votes.md`), 64 pour, 44 contre, 8 abstentions (14 mars 2024). Ce scrutin porte sur l'article unique, amendé, et non sur l'ensemble (titre du scrutin ; CRSANR5L16S2024O1N150.txt:516-519). La discussion a continué sur d'autres amendements, puis la séance a été levée à minuit et la suite renvoyée à une prochaine séance, sans vote sur l'ensemble ce jour-là (N150:520-561).
 - Auteur : Henri Alfandari, député, HOR ; source : CRSANR5L16S2024O1N149.txt:723.
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/16/scrutins/3514
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/16/comptes-rendus/seance/CRSANR5L16S2024O1N149
-  - https://www.assemblee-nationale.fr/dyn/16/comptes-rendus/seance/CRSANR5L16S2024O1N150
-  - Titre et lignes (40, 62, 85, 73 caractères) : ligne 1, N149:727 (« en tant qu'adjoint au maire ou en tant que vice-président d'une collectivité ») et N149:782 ; ligne 2, N149:780 (« à l'exception de celui de maire et de président de conseil départemental ou régional »), N149:764, amendement n° 79 sur les maires d'arrondissement (N150:266) adopté (N150:280) ; ligne 3, amendement n° 92 (N150:361) adopté (N150:391), N149:739 (« Depuis 2017, moment où la loi du 14 février 2014 est entrée en vigueur »), N149:757.
+- Autres comptes rendus utilisés pour les lignes, le vote ou l'auteur (hors `sources`, convention 9) : https://www.assemblee-nationale.fr/dyn/16/comptes-rendus/seance/CRSANR5L16S2024O1N150
+- Sources des lignes (titre et lignes : 40, 62, 85, 73 caractères) : ligne 1, N149:727 (« en tant qu'adjoint au maire ou en tant que vice-président d'une collectivité ») et N149:782 ; ligne 2, N149:780 (« à l'exception de celui de maire et de président de conseil départemental ou régional »), N149:764, amendement n° 79 sur les maires d'arrondissement (N150:266) adopté (N150:280) ; ligne 3, amendement n° 92 (N150:361) adopté (N150:391), N149:739 (« Depuis 2017, moment où la loi du 14 février 2014 est entrée en vigueur »), N149:757.
 - Tension : T ; sens s = 0
 - Raisons :
   1. « Le cumul n'est pas un gros mot, c'est propre à notre culture. » — pour · pôle 0 — Henri Alfandari, député, HOR [vote : pour] — extrait : « Le cumul n'est pas un gros mot mais une spécificité de la culture française. » (CRSANR5L16S2024O1N149.txt:725)
@@ -79,7 +79,7 @@
   4. « Le non-cumul a renouvelé les parlementaires, revenir dessus serait une régression. » — contre · pôle 1 — Gérard Leseul, député, SOC [vote : contre] — extrait : « La mesure principale réintroduisant le cumul du mandat parlementaire avec une fonction locale exécutive, telle qu'adjoint au maire ou vice-président d'un conseil départemental ou régional, est pour nous un renoncement et une régression. [...] L'application de la loi de 2014 a permis, d'une part, de faire émerger une nouvelle génération de députés et de sénateurs » (CRSANR5L16S2024O1N149.txt:757)
 - Vérifications de l'auteur : groupes HOR, RN, RE, SOC (4 différents) ; côtés : 2 pour (1, 2), 2 contre (3, 4), chaque vote personnel dans le sens de la raison (VTANR5L16V3514 : PA793992 pour, PA720822 pour, PA720370 contre, PA774958 contre) ; pôles : 0 = raison 1, 1 = raisons 3 et 4, aucun = raison 2 ; hors tension : 1 (annexe A : 1) ; mots : 12, 11, 11, 11 ; raisons nouvelles ou réécrites : 1, 4.
 - Doutes :
-  - Phrase d'écran : « Texte adopté. » serait faux ; elle est traitée à part par UX.
+  - Affichage du vote : §7.9, « Texte ni adopté ni rejeté. », puis « Le 14 mars 2024, son article unique a été adopté, mais la séance a pris fin à minuit sans vote sur l'ensemble du texte. » ; en 5.4, « Vote : ni adopté ni rejeté. »
   - Tension. T est contestable : L est possible (intitulé « renforcer l'ancrage territorial », N149:723). Le sens s = 0 suppose que le cumul est la pratique ancienne ; les raisons 3 et 4 le disent maintenant en toutes lettres.
   - L'argument contre le plus courant (le temps, N149:768 ; le conflit d'intérêts, N149:759) est hors tension : l'annexe A l'exclut ici, car la place est prise par la raison 2.
   - Les raisons 3 et 4 rangent toutes deux le « pour » du côté du passé (« passé », « régression », mots des orateurs) : la droite peut en faire grief.
