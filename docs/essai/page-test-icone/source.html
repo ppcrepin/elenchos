@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Essai">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#EEF0EE" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141516" media="(prefers-color-scheme: dark)">
+<meta http-equiv="Content-Security-Policy" content="__CSP__">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
+<title>Essai</title>
+<style>
+/* Page-test v2 de l'essai (D-019) : mémoire de l'icône de l'écran d'accueil. Palette et règles du cadre (§8.1). */
+:root {
+  --fond: #EEF0EE; --panneau: #FFFFFF; --filet: #C4C7C3; --texte: #1C1D1F; --second: #676A67; --accent: #23729C;
+  --police: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --chasse-fixe: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --fond: #141516; --panneau: #1D1E20; --filet: #3D3F41; --texte: #EBECE9; --second: #A3A6A2; --accent: #86C4E6; color-scheme: dark; }
+}
+html { -webkit-text-size-adjust: 100%; background: var(--fond); }
+body {
+  margin: 0; background: var(--fond); color: var(--texte);
+  font: 400 15px/1.45 var(--police); font-variant-numeric: tabular-nums;
+  padding: max(24px, calc(env(safe-area-inset-top) + 12px)) max(16px, env(safe-area-inset-right)) max(40px, calc(env(safe-area-inset-bottom) + 24px)) max(16px, env(safe-area-inset-left));
+}
+main { max-width: 34rem; margin-inline: auto; display: grid; gap: 20px; }
+section { display: grid; gap: 20px; }
+.entete { display: grid; gap: 6px; }
+h1 { font-size: 1.35rem; font-weight: 600; line-height: 1.25; margin: 0; }
+.sous-titre { color: var(--second); margin: 0; }
+.panneau { background: var(--panneau); border: 1px solid var(--filet); border-radius: 8px; padding: 16px; display: grid; gap: 12px; }
+.etat { font-size: 1.1rem; font-weight: 600; margin: 0; }
+p { margin: 0; }
+strong { font-weight: 600; }
+[hidden] { display: none !important; }
+ol { margin: 0; padding-left: 1.3em; display: grid; gap: 10px; }
+li > .action { margin-top: 8px; display: grid; gap: 8px; justify-items: start; }
+.note { border-left: 3px solid var(--accent); padding-left: 12px; color: var(--second); }
+.bandeau { border-left: 3px solid var(--accent); padding-left: 12px; }
+.resultat {
+  font: 400 14px/1.5 var(--chasse-fixe); background: var(--fond); border: 1px solid var(--filet);
+  border-radius: 8px; padding: 12px; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0;
+  user-select: text; -webkit-user-select: text;
+}
+.adresse { font: 400 14px/1.5 var(--chasse-fixe); overflow-wrap: anywhere; user-select: all; -webkit-user-select: all; }
+button {
+  font: 600 15px/1 var(--police); min-height: 44px; padding: 0 16px; border-radius: 8px;
+  border: 1.5px solid var(--second); background: transparent; color: var(--texte); cursor: pointer;
+}
+button.principal { border-color: var(--accent); color: var(--accent); }
+button:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+details { border-top: 1px solid var(--filet); padding-top: 12px; }
+summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 600; }
+details > div { display: grid; gap: 10px; padding-top: 8px; justify-items: start; }
+.petit { font-size: 13px; color: var(--second); }
+.retour { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+
+<!-- Situation 3 : ordinateur, ou page dans un cadre -->
+<section id="vue-ailleurs" hidden>
+  <div class="entete">
+    <h1>Ce test se fait sur votre iPhone ou votre iPad.</h1>
+    <p class="sous-titre">Ouvrez cette adresse dans Safari, sur l'iPhone ou l'iPad : <span class="adresse">https://ppcrepin.github.io/elenchos/essai/</span></p>
+  </div>
+</section>
+
+<!-- Situation 1 b : autre navigateur sur iPhone ou iPad -->
+<section id="vue-autre-navigateur" hidden>
+  <div class="entete">
+    <h1>Ouvrez cette page dans Safari</h1>
+    <p class="sous-titre">Le test se fait depuis une icône de votre écran d'accueil, et cette icône s'ajoute depuis Safari. Ici, la page n'enregistre rien.</p>
+  </div>
+  <div class="panneau">
+    <ol>
+      <li>Touchez « Copier l'adresse ».
+        <div class="action">
+          <span class="adresse">https://ppcrepin.github.io/elenchos/essai/</span>
+          <button type="button" class="principal" data-copier="adresse">Copier l'adresse</button>
+          <p class="note" data-message-copie hidden></p>
+        </div>
+      </li>
+      <li>Ouvrez Safari et collez l'adresse dans la barre d'adresse : la page vous guidera.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Situation 1 : onglet de Safari sur iPhone ou iPad -->
+<section id="vue-onglet" hidden>
+  <div class="entete">
+    <h1>Ajoutez cette page à votre écran d'accueil</h1>
+    <p class="sous-titre">Le test, puis l'essai, se font depuis une icône de votre écran d'accueil : c'est elle qui gardera votre avancement d'un jour à l'autre. Ici, dans Safari, la page n'enregistre rien.</p>
+  </div>
+  <div class="panneau">
+    <ol>
+      <li>Touchez le bouton Partager : un carré d'où sort une flèche vers le haut, en bas ou en haut de l'écran. Vous ne le voyez pas ? Touchez le bouton à trois points (•••), puis « Partager ».</li>
+      <li>Dans la liste, touchez « Sur l'écran d'accueil ». Faites défiler vers le bas si besoin.</li>
+      <li>Le nom proposé est « Essai » : ne le changez pas. Si un interrupteur parle d'« app web », il doit être activé (vert).</li>
+      <li>Touchez « Ajouter », en haut à droite.</li>
+      <li>Sur votre écran d'accueil, touchez la nouvelle icône « Essai ». Le test commence là.</li>
+    </ol>
+    <p class="note">L'icône est déjà sur votre écran d'accueil ? Ouvrez-la plutôt. Une seule icône suffit.</p>
+    <details>
+      <summary>« Sur l'écran d'accueil » n'apparaît pas ?</summary>
+      <div>
+        <p>Faites d'abord défiler la liste jusqu'en bas. Toujours rien ? La page est sans doute ouverte à l'intérieur d'une autre application (la conversation, par exemple), et non dans Safari. Copiez l'adresse, ouvrez Safari, collez-la dans la barre d'adresse, puis reprenez à l'étape 1. Si rien ne marche, dites-le dans la conversation.</p>
+        <span class="adresse">https://ppcrepin.github.io/elenchos/essai/</span>
+        <button type="button" data-copier="adresse">Copier l'adresse</button>
+        <p class="note" data-message-copie hidden></p>
+      </div>
+    </details>
+    <details>
+      <summary>Vous avez touché l'icône « Essai » et vous voyez cette page ?</summary>
+      <div>
+        <p>L'icône s'est ouverte dans Safari au lieu de s'ouvrir comme une app. Copiez ces lignes, collez-les dans la conversation et gardez l'icône : l'équipe vous dira quoi faire.</p>
+        <pre class="resultat" id="diagnostic"></pre>
+        <button type="button" data-copier="diagnostic">Copier ces lignes</button>
+        <p class="note" data-message-copie hidden></p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- Situation 2 : ouverte depuis l'icône -->
+<section id="vue-icone" hidden>
+  <div class="entete">
+    <h1>Test de mémoire</h1>
+    <p class="sous-titre">Avant l'essai, on vérifie que cette icône garde ce que la page enregistre. Le test compte trois ouvertures : une première, une deuxième une minute après avoir fermé l'app, une dernière le lendemain.</p>
+  </div>
+  <div class="panneau" aria-live="polite">
+    <p class="bandeau retour" id="bandeau-retour" hidden>Vous revenez dans l'app sans l'avoir fermée : ce retour ne compte pas comme une ouverture. Pour la suite du test, fermez l'app (voir les étapes), puis touchez l'icône.</p>
+    <p class="etat" id="etat"></p>
+    <p id="detail"></p>
+  </div>
+  <div class="panneau">
+    <p><strong>Ce qu'il reste à faire</strong></p>
+    <ol id="etapes"></ol>
+    <p class="note" id="note-e1" hidden>Vous aviez déjà ouvert l'icône, puis fermé l'app, et vous voyez ce message ? La mémoire a été perdue. Ce n'est pas une erreur de votre part : collez quand même le résultat dans la conversation.</p>
+  </div>
+  <div class="panneau">
+    <p><strong>Le résultat, pour l'équipe</strong></p>
+    <pre class="resultat" id="resultat"></pre>
+    <p class="petit" id="note-resultat"></p>
+  </div>
+</section>
+
+</main>
+<script>
+(function () {
+  "use strict";
+  var VERSION = 1;
+  var CLE = "elenchos-essai:sonde-icone";
+  var ADRESSE = "https://ppcrepin.github.io/elenchos/essai/";
+  var ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+  var JOURS = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+  var MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+
+  // Typographie à l'affichage (§7.8, règles 1 à 3), appliquée aux textes de la page, jamais au résultat.
+  function typo(s) {
+    return s.replace(/'/g, "’")
+      .replace(/ ([?!;])/g, " $1")
+      .replace(/ :/g, " :").replace(/« /g, "« ").replace(/ »/g, " »");
+  }
+  function typoNoeuds(racine) {
+    var w = document.createTreeWalker(racine, NodeFilter.SHOW_TEXT, null), n, liste = [];
+    while ((n = w.nextNode())) {
+      var p = n.parentNode;
+      if (p.closest && (p.closest(".adresse") || p.closest(".resultat"))) continue;
+      liste.push(n);
+    }
+    liste.forEach(function (t) { t.nodeValue = typo(t.nodeValue); });
+  }
+
+  var ua = navigator.userAgent;
+  var points = navigator.maxTouchPoints || 0;
+  var tactile = points > 0;
+  var ipadBureau = /Macintosh/.test(ua) && points > 1;
+  var estIOS = /iPhone|iPad|iPod/.test(ua) || ipadBureau;
+  var appareil = (/iPad/.test(ua) || ipadBureau) ? "iPad" : "iPhone";
+  var dansCadre; try { dansCadre = window.self !== window.top; } catch (e) { dansCadre = true; }
+  var standalone = window.navigator.standalone === true ||
+    (window.matchMedia ? window.matchMedia("(display-mode: standalone)").matches : false);
+  var autreNavigateur = /CriOS|FxiOS|EdgiOS|OPiOS|OPT\/|YaBrowser|GSA\//.test(ua);
+
+  function deux(n) { return (n < 10 ? "0" : "") + n; }
+  function dureeResultat(ms) {
+    var m = Math.max(0, Math.floor(ms / 60000));
+    return Math.floor(m / 60) + " h " + deux(m % 60) + " min";
+  }
+  function dureeDetail(ms) {
+    var m = Math.max(0, Math.floor(ms / 60000));
+    if (m < 1) return "moins d'une minute";
+    if (m < 60) return m + " min";
+    return Math.floor(m / 60) + " h " + deux(m % 60);
+  }
+  function pasAvant(ms) {
+    var d = new Date(Math.ceil((ms + 20 * 3600000) / 60000) * 60000);
+    var j = d.getDate();
+    return JOURS[d.getDay()] + " " + (j === 1 ? "1er" : j) + " " + MOIS[d.getMonth()] + " à " + d.getHours() + "h" + deux(d.getMinutes());
+  }
+  function texteAppareil(s) { return s.replace(/\{appareil\}/g, appareil); }
+
+  function lignesCommunes() {
+    return [
+      "Site : " + location.origin,
+      "Page : " + (dansCadre ? "dans un cadre" : "seule"),
+      "Ouverte depuis : " + (standalone ? "l’icône de l’écran d’accueil" : "un onglet du navigateur")
+    ];
+  }
+
+  // Copie : presse-papiers, sinon sélection et consigne (§8.7).
+  function copier(source, bouton, messageReussite, messageEchec) {
+    var message = bouton.parentNode.querySelector("[data-message-copie]") || document.getElementById("message-copie-resultat");
+    var texte = source === "adresse" ? ADRESSE : document.getElementById(source).textContent;
+    function echec() {
+      if (source !== "adresse") {
+        try {
+          var r = document.createRange(); r.selectNodeContents(document.getElementById(source));
+          var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        } catch (e) {}
+      }
+      message.textContent = typo(messageEchec); message.hidden = false;
+    }
+    try {
+      navigator.clipboard.writeText(texte).then(function () {
+        message.textContent = typo(messageReussite); message.hidden = false;
+      }, echec);
+    } catch (e) { echec(); }
+  }
+  function brancherCopies(racine) {
+    racine.querySelectorAll("[data-copier]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var src = b.getAttribute("data-copier");
+        if (src === "adresse") copier(src, b, "Adresse copiée : collez-la dans Safari.", "La copie n'a pas fonctionné : recopiez l'adresse ci-dessus dans Safari.");
+        else copier(src, b, "Lignes copiées : collez-les dans la conversation.", "La copie automatique n'a pas fonctionné. Sélectionnez tout le texte des lignes, jusqu'à « Fin du résultat », copiez-le, puis collez-le dans la conversation.");
+      });
+    });
+  }
+
+  function montrer(id) {
+    var v = document.getElementById(id); v.hidden = false; typoNoeuds(v); brancherCopies(v);
+  }
+
+  // Situation 3
+  if (dansCadre || !estIOS) { montrer("vue-ailleurs"); return; }
+  // Situation 1 b
+  if (!standalone && autreNavigateur) { montrer("vue-autre-navigateur"); return; }
+  // Situation 1 : rien n'est enregistré
+  if (!standalone) {
+    document.getElementById("diagnostic").textContent = [
+      "Test de mémoire de l’essai",
+      "Version de la page : " + VERSION,
+      "Résultat : test non lancé, page ouverte dans un onglet"
+    ].concat(lignesCommunes(), [
+      "Écran tactile : " + (tactile ? "oui" : "non"),
+      "Navigateur : " + ua,
+      "",
+      "Fin du résultat"
+    ]).join("\n");
+    montrer("vue-onglet");
+    return;
+  }
+
+  // Situation 2 : depuis l'icône
+  var maintenant = Date.now();
+  function lire() {
+    var v;
+    try { v = localStorage.getItem(CLE); } catch (e) { return undefined; }
+    if (!v) return null;
+    try { var o = JSON.parse(v); return (o && typeof o.premiere === "number") ? o : null; } catch (e) { return null; }
+  }
+  function ecrire(o) {
+    try { localStorage.setItem(CLE, JSON.stringify(o)); } catch (e) { return false; }
+    var relu = lire();
+    return !!relu && relu.visites === o.visites && relu.repere === o.repere;
+  }
+  function repereNeuf() {
+    var t = new Uint8Array(4), s = "";
+    try { crypto.getRandomValues(t); } catch (e) { for (var i = 0; i < 4; i++) t[i] = Math.floor(Math.random() * 256); }
+    for (var k = 0; k < 4; k++) s += ALPHABET[t[k] % ALPHABET.length];
+    return s;
+  }
+
+  var etat, o = lire(), precedente = null;
+  if (o === undefined) {
+    etat = "E3";
+  } else if (o === null) {
+    o = { premiere: maintenant, derniere: maintenant, visites: 1, repere: repereNeuf() };
+    etat = ecrire(o) ? "E1" : "E3";
+  } else {
+    precedente = o.derniere || o.premiere;
+    o = { premiere: o.premiere, derniere: maintenant, visites: (o.visites || 1) + 1, repere: o.repere || "????" };
+    etat = ecrire(o) ? "E2" : "E3";
+  }
+  var depuisPremiere = (etat === "E3") ? 0 : maintenant - o.premiere;
+  var plusDe20h = depuisPremiere >= 20 * 3600000;
+
+  var etatEl = document.getElementById("etat"), detailEl = document.getElementById("detail");
+  var etapesEl = document.getElementById("etapes");
+  var FERMER = "Fermez l'app « Essai » : balayez l'écran vers le haut depuis le bas et faites une pause au milieu. Balayez de côté jusqu'à l'aperçu « Essai », puis balayez-le vers le haut. Si votre {appareil} a un bouton rond sous l'écran, appuyez deux fois dessus au lieu du premier geste.";
+  var COPIER = "Copiez le résultat, puis collez-le dans la conversation.";
+  function etapes(liste) {
+    etapesEl.textContent = "";
+    liste.forEach(function (t, i) {
+      var li = document.createElement("li");
+      li.appendChild(document.createTextNode(texteAppareil(t)));
+      if (i === 0) {
+        var a = document.createElement("div"); a.className = "action";
+        var b = document.createElement("button"); b.type = "button"; b.className = "principal";
+        b.setAttribute("data-copier-resultat", ""); b.textContent = "Copier le résultat";
+        var m = document.createElement("p"); m.className = "note"; m.id = "message-copie-resultat"; m.hidden = true;
+        a.appendChild(b); a.appendChild(m); li.appendChild(a);
+      }
+      etapesEl.appendChild(li);
+    });
+  }
+
+  var demandeFermeture = false;
+  if (etat === "E3") {
+    etatEl.textContent = "La page ne peut rien enregistrer ici.";
+    detailEl.textContent = texteAppareil("Pour garder l'avancement de l'essai, elle doit enregistrer dans votre {appareil}. Ouverte depuis cette icône, elle n'y arrive pas.");
+    etapes([COPIER, "Gardez l'icône et attendez : l'équipe vous dira quoi faire."]);
+  } else if (etat === "E1") {
+    etatEl.textContent = "Première ouverture enregistrée.";
+    detailEl.textContent = texteAppareil("Il reste à vérifier que votre {appareil} s'en souvient.");
+    etapes([COPIER, FERMER, "Attendez une minute, puis touchez à nouveau l'icône « Essai »."]);
+    document.getElementById("note-e1").hidden = false;
+    demandeFermeture = true;
+  } else {
+    detailEl.textContent = "La page se souvient de votre première ouverture, il y a " + dureeDetail(depuisPremiere) + ".";
+    if (VERSION === 1 && !plusDe20h) {
+      etatEl.textContent = "Mémoire conservée.";
+      etapes([COPIER, "Fermez l'app « Essai », comme la première fois.", "Rouvrez l'icône une dernière fois, pas avant " + pasAvant(o.premiere) + ". D'ici là, l'équipe met en ligne une nouvelle version de la page : vous n'avez rien à faire."]);
+      demandeFermeture = true;
+    } else if (VERSION === 1) {
+      etatEl.textContent = "Mémoire conservée.";
+      etapes(["Copiez le résultat, puis collez-le dans la conversation. L'équipe vous dira s'il faut rouvrir l'icône."]);
+    } else if (!plusDe20h) {
+      etatEl.textContent = "Mémoire conservée.";
+      etapes([COPIER, "Fermez l'app « Essai », comme la première fois.", "Rouvrez l'icône une dernière fois, pas avant " + pasAvant(o.premiere) + "."]);
+      demandeFermeture = true;
+    } else {
+      etatEl.textContent = "Mémoire conservée : le test est terminé.";
+      etapes([COPIER, "Gardez l'icône « Essai » sur votre écran d'accueil : l'essai se jouera depuis elle. Ne la supprimez pas."]);
+    }
+  }
+  document.getElementById("note-resultat").textContent = texteAppareil("Ce texte est pour l'équipe. Il contient le temps écoulé entre vos ouvertures et le nom technique de votre navigateur, version d'iOS comprise ; rien qui vous nomme. La page n'envoie rien : seul ce que vous collez sort de votre {appareil}.");
+
+  var stockageDemande = "indisponible", stockageAccorde = "indisponible";
+  function ecrireResultat() {
+    var l = ["Test de mémoire de l’essai", "Version de la page : " + VERSION];
+    l.push("Résultat : " + (etat === "E1" ? "première ouverture" : etat === "E2" ? "mémoire conservée" : "stockage impossible"));
+    if (etat !== "E3") {
+      l.push("Repère : " + o.repere);
+      l.push("Ouvertures comptées : " + o.visites);
+      l.push("Depuis la première ouverture : " + dureeResultat(depuisPremiere));
+      l.push("Depuis l’ouverture précédente : " + (precedente === null ? "aucune" : dureeResultat(maintenant - precedente)));
+    }
+    l = l.concat(lignesCommunes(), [
+      "Stockage durable demandé : " + stockageDemande,
+      "Stockage durable accordé : " + stockageAccorde,
+      "Écran tactile : " + (tactile ? "oui" : "non"),
+      "Navigateur : " + ua,
+      "",
+      "Contrôle de la copie, à laisser tel quel :",
+      "l'apostrophe droite et l’apostrophe courbe",
+      "« des guillemets » et un deux-points : ici",
+      "une espace fine ? ici",
+      "",
+      "Fin du résultat"
+    ]);
+    document.getElementById("resultat").textContent = l.join("\n");
+  }
+  ecrireResultat();
+  montrer("vue-icone");
+  document.querySelectorAll("[data-copier-resultat]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      copier("resultat", b, "Résultat copié : collez-le dans la conversation.", "La copie automatique n'a pas fonctionné. Sélectionnez tout le texte du résultat, jusqu'à « Fin du résultat », copiez-le, puis collez-le dans la conversation.");
+    });
+  });
+
+  // Stockage durable : demandé et accordé, pour information.
+  try {
+    if (etat !== "E3" && navigator.storage && navigator.storage.persist) {
+      stockageDemande = "oui";
+      navigator.storage.persist().then(function (ok) { stockageAccorde = ok ? "oui" : "non"; ecrireResultat(); },
+        function () { stockageAccorde = "non"; ecrireResultat(); });
+    }
+  } catch (e) {}
+
+  // Retour dans l'app sans fermeture : bandeau, sur les écrans qui demandent de fermer l'app.
+  var cachee = false;
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden") { cachee = true; return; }
+    if (cachee && demandeFermeture) document.getElementById("bandeau-retour").hidden = false;
+  });
+  window.addEventListener("pageshow", function (ev) {
+    if (ev.persisted && demandeFermeture) document.getElementById("bandeau-retour").hidden = false;
+  });
+})();
+</script>
+</body>
+</html>
