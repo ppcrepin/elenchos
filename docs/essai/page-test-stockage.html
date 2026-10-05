@@ -1,5 +1,4 @@
-<title>Elenchos · test de mémoire</title>
-<meta name="referrer" content="no-referrer">
+<title>Test de mémoire Safari</title>
 <style>
 /* Mise en page : une seule colonne étroite, comme le cadre de l'essai (gris froid, police du système, un seul accent bleu). */
 :root {
@@ -9,29 +8,28 @@
   --texte: #1C1D1F;
   --second: #676A67;
   --accent: #23729C;
-  --sur-accent: #FFFFFF;
-  --ok: #2E6B3F;
-  --alerte: #9A3B1E;
   --police: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --chasse-fixe: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --fond: #141516; --panneau: #1D1E20; --filet: #3D3F41; --texte: #EBECE9; --second: #A3A6A2;
-    --accent: #86C4E6; --sur-accent: #141516; --ok: #8FD0A0; --alerte: #F0A58A; color-scheme: dark;
+    --accent: #86C4E6; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --fond: #141516; --panneau: #1D1E20; --filet: #3D3F41; --texte: #EBECE9; --second: #A3A6A2;
-  --accent: #86C4E6; --sur-accent: #141516; --ok: #8FD0A0; --alerte: #F0A58A; color-scheme: dark;
+  --accent: #86C4E6; color-scheme: dark;
 }
 html { -webkit-text-size-adjust: 100%; }
 body {
   background: var(--fond); color: var(--texte);
   font: 400 15px/1.45 var(--police);
+  font-variant-numeric: tabular-nums;
   padding-inline: 16px; padding-block: 24px 40px;
 }
 main { max-width: 34rem; margin-inline: auto; display: grid; gap: 20px; }
+.entete { display: grid; gap: 6px; }
 h1 { font-size: 1.35rem; font-weight: 600; line-height: 1.25; margin: 0; text-wrap: balance; }
 .sous-titre { color: var(--second); margin: 0; }
 .panneau {
@@ -39,9 +37,9 @@ h1 { font-size: 1.35rem; font-weight: 600; line-height: 1.25; margin: 0; text-wr
   padding: 16px; display: grid; gap: 12px;
 }
 .etat { font-size: 1.1rem; font-weight: 600; margin: 0; }
-.etat.ok { color: var(--ok); }
-.etat.alerte { color: var(--alerte); }
 p { margin: 0; }
+strong { font-weight: 600; }
+[hidden] { display: none !important; }
 ol { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; }
 .note { border-left: 3px solid var(--accent); padding-left: 12px; color: var(--second); }
 .resultat {
@@ -49,19 +47,20 @@ ol { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; }
   border-radius: 8px; padding: 12px; white-space: pre-wrap; overflow-wrap: anywhere; user-select: all; -webkit-user-select: all;
 }
 .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.pleine { flex-basis: 100%; }
 button {
   font: 600 15px/1 var(--police); min-height: 44px; padding: 0 16px; border-radius: 8px;
-  border: 1.5px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer;
+  border: 1.5px solid var(--second); background: transparent; color: var(--texte); cursor: pointer;
 }
-button.principal { background: var(--accent); color: var(--sur-accent); }
+button.principal { border-color: var(--accent); color: var(--accent); }
 button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .petit { font-size: 13px; color: var(--second); }
 </style>
 
 <main>
-  <header style="display:grid;gap:6px">
+  <header class="entete">
     <h1>Test de mémoire de Safari</h1>
-    <p class="sous-titre">Avant l'essai, on vérifie que votre iPhone garde l'avancement d'un jour à l'autre. Rien d'autre n'est testé ici, et rien ne quitte votre téléphone.</p>
+    <p class="sous-titre">Avant l'essai, on vérifie que votre iPhone ou iPad garde l'avancement d'un jour à l'autre. Rien d'autre n'est testé ici. La page n'envoie rien : seul ce que vous collerez vous-même dans la conversation sort de votre appareil.</p>
   </header>
 
   <section class="panneau" aria-live="polite">
@@ -69,7 +68,7 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
     <p id="detail"></p>
   </section>
 
-  <section class="panneau" id="bloc-consigne">
+  <section class="panneau">
     <p><strong>Ce qu'il reste à faire</strong></p>
     <ol id="consigne"></ol>
   </section>
@@ -77,6 +76,7 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   <section class="panneau">
     <p><strong>À recopier dans la conversation</strong></p>
     <div class="resultat" id="resultat"></div>
+    <p class="petit">Ce texte est pour l'équipe. Il contient les dates et heures de vos visites et le nom technique de votre navigateur (version d'iOS comprise). Il ne contient rien qui vous nomme.</p>
     <div class="actions">
       <button type="button" class="principal" id="copier">Copier le résultat</button>
     </div>
@@ -84,14 +84,14 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   </section>
 
   <section class="panneau">
-    <p class="petit">Ouvrez toujours cette page de la même façon : dans Safari, depuis le même lien. La page n'enregistre qu'une date et un compteur de visites, dans ce navigateur seulement.</p>
+    <p class="petit">Ouvrez toujours cette page de la même façon : dans Safari, dans un onglet ordinaire (la navigation privée efface tout à la fermeture), depuis le même lien. La page n'enregistre qu'une date et un compteur de visites, dans ce navigateur seulement.</p>
     <div class="actions">
       <button type="button" id="recommencer">Recommencer le test</button>
     </div>
     <div class="actions" id="confirmer" hidden>
-      <p style="flex-basis:100%">Effacer la date de première visite et repartir de zéro ?</p>
-      <button type="button" id="annuler">Annuler</button>
-      <button type="button" class="principal" id="effacer">Effacer et recommencer</button>
+      <p class="pleine">Effacer la date de première visite et repartir de zéro ?</p>
+      <button type="button" class="principal" id="annuler">Annuler</button>
+      <button type="button" id="effacer">Effacer et recommencer</button>
     </div>
   </section>
 </main>
@@ -114,13 +114,22 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
     } catch (e) { return new Date(ms).toISOString(); }
   }
   function heuresEntre(a, b) { return Math.floor((b - a) / 3600000); }
+  function duree(a, b) {
+    var m = Math.max(0, Math.floor((b - a) / 60000));
+    if (m < 60) return m + " min";
+    var r = m % 60;
+    return Math.floor(m / 60) + " h " + (r < 10 ? "0" : "") + r;
+  }
   function lire() {
-    try { var v = localStorage.getItem(CLE); return v ? JSON.parse(v) : null; }
-    catch (e) { return undefined; }
+    var v;
+    try { v = localStorage.getItem(CLE); } catch (e) { return undefined; }
+    if (!v) return null;
+    try { return JSON.parse(v) || null; } catch (e) { return null; }
   }
   function ecrire(o) {
-    try { localStorage.setItem(CLE, JSON.stringify(o)); return lire() !== undefined && lire() !== null; }
-    catch (e) { return false; }
+    try { localStorage.setItem(CLE, JSON.stringify(o)); } catch (e) { return false; }
+    var relu = lire();
+    return relu !== undefined && relu !== null;
   }
   function etapes(liste) {
     consigneEl.textContent = "";
@@ -133,10 +142,12 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
   var o = lire();
   if (o === undefined || !ecrire(o || { premiere: maintenant, visites: 0 })) {
-    etatEl.textContent = "Ce navigateur ne peut rien garder.";
-    etatEl.className = "etat alerte";
-    detailEl.textContent = "La page n'arrive pas à enregistrer quoi que ce soit ici. C'est le cas, par exemple, en navigation privée.";
-    etapes(["Si vous êtes en navigation privée, rouvrez ce lien dans un onglet ordinaire.", "Sinon, copiez le résultat et collez-le dans la conversation : l'équipe cherchera une autre façon d'ouvrir l'essai."]);
+    etatEl.textContent = "La page ne peut pas garder d'information ici.";
+    detailEl.textContent = "La page n'arrive pas à enregistrer quoi que ce soit dans ce navigateur.";
+    etapes([
+      "Vérifiez que vous êtes bien dans Safari, dans un onglet ordinaire (pas en navigation privée), puis rechargez la page.",
+      "Si le message reste le même, copiez le résultat et collez-le dans la conversation : l'équipe cherchera une autre façon d'ouvrir l'essai."
+    ]);
     lignes.push("Résultat : stockage impossible.");
   } else if (!o) {
     o = { premiere: maintenant, visites: 1, derniere: maintenant };
@@ -144,9 +155,10 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
     etatEl.textContent = "Première visite enregistrée.";
     detailEl.textContent = "Le " + dateFr(maintenant) + ".";
     etapes([
-      "Fermez Safari complètement : depuis le bas de l'écran, remontez et maintenez pour voir les applications ouvertes, puis balayez Safari vers le haut.",
-      "Rouvrez ce lien dans Safari dans quelques heures, puis une dernière fois demain.",
-      "À chaque fois, copiez le résultat et collez-le dans la conversation."
+      "Copiez le résultat ci-dessous et collez-le dans la conversation.",
+      "Fermez Safari complètement : depuis le bas de l'écran, balayez vers le haut jusqu'au milieu, faites une pause, puis balayez la fiche de Safari vers le haut.",
+      "Rouvrez ce lien dans Safari dans quelques heures, puis une dernière fois, pas avant le " + dateFr(maintenant + 20 * 3600000) + ".",
+      "À chaque retour, la page doit dire « Mémoire conservée ». Si elle dit encore « Première visite enregistrée », Safari a tout oublié : ce n'est pas une erreur de votre part, copiez le résultat et collez-le quand même."
     ]);
     lignes.push("Résultat : première visite, rien à comparer encore.");
   } else {
@@ -154,17 +166,20 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
     o.visites = (o.visites || 1) + 1;
     o.derniere = maintenant;
     ecrire(o);
-    var h = heuresEntre(o.premiere, maintenant);
     etatEl.textContent = "Mémoire conservée.";
-    etatEl.className = "etat ok";
-    detailEl.textContent = "Première visite le " + dateFr(o.premiere) + ". Visite n° " + o.visites + ", " + h + " h plus tard.";
-    if (h < 20) {
-      etapes(["Fermez de nouveau Safari complètement.", "Rouvrez ce lien demain, une dernière fois, puis copiez le résultat dans la conversation."]);
+    detailEl.textContent = "Première visite le " + dateFr(o.premiere) + ". Visite n° " + o.visites + ", " + duree(o.premiere, maintenant) + " plus tard.";
+    if (heuresEntre(o.premiere, maintenant) < 20) {
+      etapes([
+        "Copiez le résultat ci-dessous et collez-le dans la conversation.",
+        "Fermez de nouveau Safari complètement.",
+        "Rouvrez ce lien une dernière fois, pas avant le " + dateFr(o.premiere + 20 * 3600000) + "."
+      ]);
     } else {
       etapes(["C'est tout : copiez le résultat et collez-le dans la conversation. Le test est terminé."]);
     }
-    lignes.push("Résultat : mémoire conservée, visite n° " + o.visites + ", " + h + " h après la première, " + heuresEntre(avant, maintenant) + " h après la précédente.");
+    lignes.push("Résultat : mémoire conservée, visite n° " + o.visites + ", " + duree(o.premiere, maintenant) + " après la première, " + duree(avant, maintenant) + " après la précédente.");
   }
+  lignes.unshift("Ouverture : " + dateFr(maintenant) + ".");
   lignes.push("Page affichée " + (dansCadre ? "dans un cadre" : "seule") + ".");
   lignes.push("Navigateur : " + navigator.userAgent);
   resultatEl.textContent = lignes.join("\n");
@@ -177,7 +192,7 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
         var r = document.createRange(); r.selectNodeContents(resultatEl);
         var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
       } catch (e) {}
-      note.textContent = "La copie automatique n'a pas fonctionné. Le texte est sélectionné : touchez « Copier » dans le menu qui s'affiche, puis collez-le dans la conversation.";
+      note.textContent = "La copie automatique n'a pas fonctionné. Le texte ci-dessus est sélectionné : touchez-le, puis « Copier » ; si rien n'apparaît, appuyez longuement sur le texte. Collez-le ensuite dans la conversation.";
       note.hidden = false;
     }
     try {
