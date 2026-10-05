@@ -1,13 +1,14 @@
 # Schéma du fichier scellé et format de la trace (essai solo)
 
-*Rédigé par Back-end le 4 octobre 2026, comme le demande le §9 de `docs/essai/simulation.md` (« Avant d'écrire le fichier scellé ») ; mis à jour le 5 octobre 2026 (vote daté, §7.9). Fichier scellé : version 2 du format ; trace : version 1 (partie 5). L'auteur du programme de contrôle le relit avant le scellement. Le document sert ensuite à l'agent qui scelle, à l'auteur de la page et à l'auteur du programme de contrôle. C'est une spécification de travail, pas un texte pour le porteur.*
+*Rédigé par Back-end le 4 octobre 2026, comme le demande le §9 de `docs/essai/simulation.md` (« Avant d'écrire le fichier scellé ») ; mis à jour le 5 octobre 2026 : vote daté (§7.9), puis auteurs, groupes et élision (§7.10, §7.6) et nombres (§7.8, règle 6). Fichier scellé : version 3 du format ; trace : version 1 (partie 5). L'auteur du programme de contrôle le relit avant le scellement. Le document sert ensuite à l'agent qui scelle, à Contenu (parties 2.7 et 2.8), à l'auteur de la page et à l'auteur du programme de contrôle. C'est une spécification de travail, pas un texte pour le porteur.*
 
-*Rangé dans `a-ne-pas-ouvrir/` (choix de l'orchestrateur) : les noms de certains champs laissent entrevoir comment les cartes sont choisies et comment les personnages devinent. Tous les lecteurs de ce document lisent déjà ce dossier. **Exemples** : toutes les valeurs sont inventées, sans lien entre elles ni avec l'essai. Elles ne suivent aucune règle cachée : ne pas s'en servir pour tester un calcul. Les personnages d'exemple portent des prénoms des maquettes (Hugo, Paul, Thomas), qui ne sont pas dans l'essai. Les textes d'exemple sont des gabarits.*
+*Rangé dans `a-ne-pas-ouvrir/` (choix de l'orchestrateur) : les noms de certains champs laissent entrevoir comment les cartes sont choisies et comment les personnages devinent. Tous les lecteurs de ce document lisent déjà ce dossier. **Exemples** : toutes les valeurs sont inventées, sans lien entre elles ni avec l'essai. Elles ne suivent aucune règle cachée : ne pas s'en servir pour tester un calcul. Les personnages d'exemple portent des prénoms des maquettes (Hugo, Paul, Thomas), qui ne sont pas dans l'essai. Les textes d'exemple sont des gabarits. Exception : les tableaux des parties 2.7 et 2.8 portent les vraies valeurs du lot ; ce ne sont pas des exemples.*
 
 *Renvois : « §n » renvoie à `docs/essai/simulation.md`, sauf mention contraire ; « le fichier caché » désigne `a-ne-pas-ouvrir/regles-de-calcul.md`. « Partie n » renvoie à ce document.*
 
 *Ordre de lecture :*
 - *agent qui scelle : parties 1 et 2 ;*
+- *Contenu : parties 2.3, 2.7 et 2.8 ;*
 - *auteur de la page : parties 1 à 5 ;*
 - *auteur du programme de contrôle : partie 6 d'abord, puis tout le reste.*
 
@@ -81,7 +82,7 @@ L'essai ajoute trois règles que la RFC n'impose pas :
 | Clé | Type | Contenu |
 |---|---|---|
 | `format` | chaîne | toujours `"elenchos-essai-scelle"` |
-| `version` | entier | `2` (partie 5) |
+| `version` | entier | `3` (partie 5) |
 | `graine` | hex16 | la graine du tirage déterministe (§0) |
 | `vecteurs_test` | tableau de 3 objets | partie 2.5 |
 | `cercle` | objet | `{"nom": "Amis", "inviteuse": "Agathe"}` (§1) |
@@ -118,7 +119,7 @@ Chaque entrée `textes.<texte>` contient :
 | `titre` | chaîne | tel qu'affiché |
 | `lignes` | tableau de 3 chaînes | les trois lignes, dans l'ordre d'affichage |
 | `vote` | objet | le vote de l'Assemblée : issue, jour et étape (tableau ci-dessous). Affichage : §7.9. |
-| `auteur` | objet | `{"type": "depute", "nom", "feminin", "groupe"}`, ou `{"type": "gouvernement"}` (« Proposé par le Gouvernement. », annexe C, point 9) |
+| `auteur` | objet | `{"type": "depute", "nom", "feminin", "groupe"}`, `{"type": "senateur", "nom", "feminin", "groupe"}`, ou `{"type": "gouvernement"}` (« Proposé par le Gouvernement. », annexe C, point 9). Mandat et groupe au dépôt du texte (§7.10). |
 | `lien_scrutin` | chaîne | adresse https de la page du scrutin sur le site de l'Assemblée |
 | `sources` | tableau non vide de chaînes | adresses https des extraits des débats |
 | `tension` | tension | |
@@ -151,16 +152,16 @@ Chaque considération `considerations[i]` contient :
 | `pole` | entier 0 ou 1, ou `"aucun"` | |
 | `depute` | objet | `{"nom", "feminin", "groupe"}` |
 
-Un député (l'`auteur` de type `"depute"`, ou le `depute` d'une considération) a trois champs :
+Un élu (l'`auteur` de type `"depute"` ou `"senateur"`, ou le `depute` d'une considération) a trois champs. Le champ d'une considération garde son nom, `depute` : un argument vient toujours d'un député, en séance (annexe A de la simulation).
 
 | Clé | Type | Contenu |
 |---|---|---|
-| `nom` | chaîne | prénom et nom, tels qu'affichés |
-| `feminin` | booléen | `true` donne « députée », `false` donne « député » (§7.6) |
-| `groupe` | chaîne | le nom du groupe, tel qu'affiché |
+| `nom` | chaîne | prénom et nom, tels qu'affichés. Son premier caractère est une initiale permise (partie 2.8). |
+| `feminin` | booléen | `true` donne « députée » ou « sénatrice », `false` « député » ou « sénateur » (§7.6, §7.10) |
+| `groupe` | chaîne | le sigle du groupe, tel qu'affiché, pris dans la liste fermée de la partie 2.7 : groupe de l'Assemblée pour un député, du Sénat pour un sénateur ; au dépôt pour l'auteur, à la séance de l'extrait pour une considération (§7.10) |
 
 - Les adresses sont en https et en ASCII : un caractère spécial s'écrit encodé, sous la forme %xx. Elles ne contiennent pas d'espace.
-- Les chaînes affichées sont écrites en typographie simple : apostrophe droite, espaces ordinaires (contrôle 1). La page applique le §4.6 (guillemets, point final), puis les règles d'affichage du §7.8.
+- Les chaînes affichées sont écrites en typographie simple : apostrophe droite, espaces ordinaires (contrôle 1). Dans un nombre, les tranches de trois chiffres sont séparées par une espace ordinaire (« 30 000 ») ; « % » suit le nombre après une espace ordinaire (« 20 % »). La page applique le §4.6 (guillemets, point final), puis les règles d'affichage du §7.8.
 - Les trois champs de `vote` ne s'affichent jamais tels quels : la page en tire les phrases du §7.9. Ils ne relèvent donc pas de la typographie simple (partie 4.1, étape 7).
 
 ### 2.4 Réponses, absences, réponses atypiques
@@ -194,7 +195,7 @@ Chaque objet contient :
 
 ### 2.6 Exemple
 
-Ceci est un extrait, mis en retrait pour la lecture. Le vrai fichier tient sur une seule ligne, sans espace hors des chaînes. L'extrait ne compte qu'un personnage, un texte et un vecteur : il est donc invalide tel quel. Les valeurs sont inventées (voir l'avertissement en tête).
+Ceci est un extrait, mis en retrait pour la lecture. Le vrai fichier tient sur une seule ligne, sans espace hors des chaînes. L'extrait ne compte qu'un personnage, un texte et un vecteur, et ses sigles ne figurent pas dans la partie 2.7 : il est donc invalide tel quel. Son auteur est un sénateur, pour montrer ce cas. Les valeurs sont inventées (voir l'avertissement en tête).
 
 ```json
 {
@@ -228,12 +229,12 @@ Ceci est un extrait, mis en retrait pour la lecture. Le vrai fichier tient sur u
   "reponses_atypiques": {"Hugo": [{"cote_tire": null, "texte": "5"}]},
   "textes": {
     "8": {
-      "auteur": {"feminin": true, "groupe": "[Groupe A]", "nom": "Prénom Nom A", "type": "depute"},
+      "auteur": {"feminin": true, "groupe": "SIGLE-A", "nom": "Prénom Nom A", "type": "senateur"},
       "considerations": [
-        {"cote": "pour", "depute": {"feminin": false, "groupe": "[Groupe B]", "nom": "Prénom Nom B"}, "pole": 1, "rang": 1, "texte": "Raison d'exemple n° 1, côté pour."},
-        {"cote": "contre", "depute": {"feminin": true, "groupe": "[Groupe C]", "nom": "Prénom Nom C"}, "pole": 0, "rang": 2, "texte": "Raison d'exemple n° 2, côté contre ?"},
-        {"cote": "contre", "depute": {"feminin": false, "groupe": "[Groupe D]", "nom": "Prénom Nom D"}, "pole": "aucun", "rang": 3, "texte": "Raison d'exemple n° 3, sans pôle."},
-        {"cote": "pour", "depute": {"feminin": true, "groupe": "[Groupe E]", "nom": "Prénom Nom E"}, "pole": 1, "rang": 4, "texte": "Raison d'exemple n° 4, côté pour !"}
+        {"cote": "pour", "depute": {"feminin": false, "groupe": "SIGLE-B", "nom": "Prénom Nom B"}, "pole": 1, "rang": 1, "texte": "Raison d'exemple n° 1, côté pour."},
+        {"cote": "contre", "depute": {"feminin": true, "groupe": "SIGLE-C", "nom": "Prénom Nom C"}, "pole": 0, "rang": 2, "texte": "Raison d'exemple n° 2, côté contre ?"},
+        {"cote": "contre", "depute": {"feminin": false, "groupe": "SIGLE-D", "nom": "Prénom Nom D"}, "pole": "aucun", "rang": 3, "texte": "Raison d'exemple n° 3, sans pôle."},
+        {"cote": "pour", "depute": {"feminin": true, "groupe": "SIGLE-E", "nom": "Prénom Nom E"}, "pole": 1, "rang": 4, "texte": "Raison d'exemple n° 4, côté pour !"}
       ],
       "lien_scrutin": "https://www.assemblee-nationale.fr/exemple-scrutin",
       "lignes": ["Ligne d'exemple n° 1.", "Ligne d'exemple n° 2.", "Ligne d'exemple n° 3."],
@@ -247,7 +248,7 @@ Ceci est un extrait, mis en retrait pour la lecture. Le vrai fichier tient sur u
   "vecteurs_test": [
     {"chaine": "0123456789abcdef|raison|Odile|E2|3", "cle": "raison|Odile|E2|3", "hex8": "1a2b3c4d", "n": 439041101}
   ],
-  "version": 2
+  "version": 3
 }
 ```
 
@@ -262,6 +263,80 @@ La paire `vote` du texte 8, en forme canonique, telle qu'elle figure dans le fic
 `"vote":{"date":"2025-01-30","etape":"aucune","issue":"rejete"}`
 
 Ses clés sont dans l'ordre des octets (partie 1.1) : `date`, `etape`, `issue`. `vote` reste la dernière clé de l'objet du texte, après `titre`.
+
+L'auteur du texte 8, en forme canonique :
+
+`"auteur":{"feminin":true,"groupe":"SIGLE-A","nom":"Prénom Nom A","type":"senateur"}`
+
+`type` vient en dernier : « t » suit « n ».
+
+### 2.7 Groupes permis (§7.10)
+
+Chaque `groupe` du fichier scellé est un sigle de ce tableau, et de lui seul. Contenu remplit les lignes avant le scellement, à partir des fiches corrigées. Le second agent de l'annexe A de la simulation les vérifie. La page ne lit pas ce tableau ; le programme de contrôle le lit (partie 4.1, étape 5).
+
+| `groupe` | Chambre | Législature | Nom complet | Identifiant | Source du sigle |
+|---|---|---|---|---|---|
+| *(lignes à remplir par Contenu)* | | | | | |
+
+Colonnes :
+- `groupe` : le sigle, entre accents graves, écrit exactement comme dans le fichier scellé et comme à l'écran. Il ne contient que des lettres, des chiffres et des traits d'union U+002D : ni espace, ni autre signe. Il ne commence ni ne finit par un trait d'union. Ainsi, le seul endroit où une ligne pourrait le couper est son trait d'union, ce que le §7.10 interdit.
+- Chambre : « Assemblée » ou « Sénat ».
+- Législature : « 15 », « 16 » ou « 17 » pour l'Assemblée ; « — » pour le Sénat, qui n'a pas de législature.
+- Nom complet : le nom officiel du groupe à cette date. Il ne s'affiche jamais.
+- Identifiant : celui du groupe dans l'open data de l'Assemblée (« PO » suivi de chiffres). Les groupes du Sénat en ont un aussi : la fiche du texte 1 en cite un. Il garantit qu'à un groupe ne correspond qu'un sigle.
+- Source du sigle : le champ de l'open data, ou la page du site, d'où le sigle est tiré.
+
+Règles, vérifiées par le programme de contrôle quand il lit le tableau :
+- chaque cellule est remplie ;
+- une ligne par groupe et par législature : un sigle qui sert dans deux législatures a deux lignes (par exemple `SOC`, en 16e et en 17e) ;
+- dans une même chambre et une même législature, un sigle n'a qu'une ligne, et deux lignes n'ont jamais le même identifiant ;
+- jamais un code interne de l'open data à la place du sigle public : `UDR`, jamais `UDDPLR` ;
+- les lignes sont rangées par chambre (Assemblée, puis Sénat), puis par législature croissante, puis par ordre alphabétique des sigles. Cet ordre aide la lecture ; le contrôle n'en dépend pas.
+
+Lecture par le programme : une ligne du tableau par groupe ; cellules séparées par « | », espaces de bord retirées ; accents graves du sigle retirés. Le programme se sert des colonnes `groupe`, Chambre, Législature et Identifiant. Les autres colonnes servent à la vérification humaine (partie 4.1, après l'étape 7).
+
+### 2.8 Initiales et élision (§7.6)
+
+Seul le gabarit « était l'argument de {nom} » (1.6, 2.7e) place un nom d'élu après « de ». « Proposé par {nom} » et les lignes de 5.4 n'élident jamais. Ce qui suit vaut donc pour les `depute` des considérations ; seule la première liste vaut aussi pour l'auteur.
+
+Trois listes fermées de caractères :
+1. **Initiales permises.** Le premier caractère de chaque `nom` (auteur et députés) est une majuscule : de A à Z, ou l'une de À Â Ä Ç É È Ê Ë Î Ï Ô Ö Ù Û Ü Ÿ Æ Œ.
+2. **Initiales qui demandent un choix** : A E I O U Y H, et À Â Ä É È Ê Ë Î Ï Ô Ö Ù Û Ü Ÿ Æ Œ.
+3. **Règle de la page** : « d' » si l'initiale est l'une de A À Â Ä E É È Ê Ë I Î Ï O Ô Ö U Ù Û Ü H ; « de » sinon. La page compare le premier caractère du `nom` à cette liste, sans changer la casse, sans normaliser et sans `Intl` (contrôle 5). Le fichier étant en NFC, « É » est un seul caractère.
+
+Le tableau contient chaque `depute` dont l'initiale demande un choix, et personne d'autre. Il a une ligne par personne : un orateur cité deux fois n'a qu'une ligne.
+
+| `nom` | Initiale | Forme |
+|---|---|---|
+
+- `nom` : entre accents graves, exactement comme dans le fichier scellé.
+- Initiale : « voyelle », « h muet », « h aspiré » ou « y ».
+- Forme : `d'` ou `de`, l'usage retenu devant ce nom (apostrophe droite, typographie simple). UX décide de la forme ; Contenu remplit le tableau à partir du lot final. Les lignes sont rangées par ordre alphabétique, sans effet sur le contrôle.
+- Le programme de contrôle s'en sert deux fois. Au contrôle 1, il vérifie que le tableau correspond au fichier et que la règle de la page le couvre (partie 4.1, étape 5). Au contrôle 11, il en tire « d' » ou « de » sans refaire la règle.
+
+Lignes relevées le 5 octobre 2026 (relevé d'UX, recoupé par Back-end sur les fiches : 17 noms, 18 citations), à confirmer par Contenu sur le lot final :
+
+| `nom` | Initiale | Forme |
+|---|---|---|
+| `Alexandra Masson` | voyelle | `d'` |
+| `Annaïg Le Meur` | voyelle | `d'` |
+| `Anne-Sophie Ronceret` | voyelle | `d'` |
+| `Arnaud Saint-Martin` | voyelle | `d'` |
+| `Aurélie Trouvé` | voyelle | `d'` |
+| `Ayda Hadizadeh` | voyelle | `d'` |
+| `Édouard Bénard` | voyelle | `d'` |
+| `Élisa Martin` | voyelle | `d'` |
+| `Elsa Faucillon` | voyelle | `d'` |
+| `Emeric Salmon` | voyelle | `d'` |
+| `Éric Coquerel` | voyelle | `d'` |
+| `Éric Martineau` | voyelle | `d'` |
+| `Henri Alfandari` | h muet | `d'` |
+| `Hervé Saulignac` | h muet | `d'` |
+| `Hubert Ott` | h muet | `d'` |
+| `Ian Boucard` | voyelle | `d'` |
+| `Olivier Fayssat` | voyelle | `d'` |
+
+Les trois H sont muets, et aucun nom ne commence par un Y. Annaïg Le Meur et Hervé Saulignac ne sont cités qu'au texte 14, qui n'est jamais révélé en 2.7e (§7.4). Ils restent au tableau, car le contrôle porte sur tout le fichier.
 
 ## 3. La trace de la version témoin (§9)
 
@@ -282,7 +357,7 @@ Ses clés sont dans l'ordre des octets (partie 1.1) : `date`, `etape`, `issue`. 
   - `moteur` : la partie est rejouée par le moteur seul. C'est le cas des 200 parties au hasard.
   - En mode `moteur`, `carnet` et toutes les durées valent `null`. Le harnais donne au moteur les mêmes entrées qu'en mode `interface`.
 - **Sortie de la trace.** Le harnais la lit dans le navigateur sans tête. La page ne l'envoie jamais (§8.8).
-- **Pseudo des joueurs témoins.** On choisit une chaîne qu'on ne risque pas de trouver par hasard ailleurs, par exemple « Témoin-b-4821 ». Le contrôle 12 vérifie qu'elle n'apparaît pas dans le carnet.
+- **Pseudo des joueurs témoins.** On choisit une chaîne qu'on ne risque pas de trouver par hasard ailleurs, sans espace et qui ne finit pas par un chiffre, par exemple « Témoin-b-4821-k ». Le contrôle 12 vérifie qu'elle n'apparaît pas dans le carnet. Pourquoi pas de chiffre final : le pseudo est inséré après les règles du §7.8. « Témoin-b-4821 décroche… » garderait une espace ordinaire après « 1 », et une ligne finissant par « 4821 » serait un faux défaut au contrôle 11.
 - **Taille.** Une trace pèse de l'ordre de 100 à 300 Ko (estimation).
 
 ### 3.2 La partie
@@ -591,29 +666,41 @@ Le programme de contrôle fait ces vérifications dans l'ordre, avant tout autre
 3. **Forme.** Le fichier est en UTF-8 strict. Relu puis remis en forme canonique, il redonne exactement les mêmes octets. Ce seul test attrape un espace en trop, une clé en double, des clés mal ordonnées, un échappement inutile et un nombre mal écrit.
 4. **Schéma.**
    - Le schéma est fermé (partie 1.1). Types et valeurs sont permis.
-   - `format` vaut `"elenchos-essai-scelle"` et `version` vaut `2`.
+   - `format` vaut `"elenchos-essai-scelle"` et `version` vaut `3`.
+   - `auteur` a l'une des trois formes de la partie 2.3 : avec `type` égal à `"depute"` ou `"senateur"`, quatre clés ; avec `"gouvernement"`, la seule clé `type`.
    - Les chaînes sont en NFC, les adresses en https et en ASCII.
    - Chaque `vote.date` désigne un jour qui existe au calendrier (ni « 2025-02-29 », ni « 2025-04-31 »), au plus tard le jour du scellement. Ce jour n'est pas dans le fichier : le programme de contrôle le reçoit en paramètre, recopié du rapport de scellement (§9).
 5. **Cohérence interne.**
    - `textes` et `reponses` ont exactement les 17 clés ; `personnages`, `absences` et `reponses_atypiques` ont exactement les quatre prénoms.
-   - Dans chaque texte, `rang` est égal à la place dans le tableau, et les quatre `groupe` sont différents (`projet.md` §8).
+   - Dans chaque texte, `rang` est égal à la place dans le tableau, et les quatre `groupe` sont différents (`projet.md` §8). Les sigles se comparent comme des chaînes : la partie 2.7 ne donne qu'une écriture à chaque groupe.
    - Le `texte` de chaque considération finit par « . », « ? » ou « ! », et n'a pas de guillemets à ses bords.
    - Dans chaque `vote`, `issue` et `etape` forment une combinaison permise (partie 2.3) : `"adopte"` avec `"navette"` ou `"definitif"`, jamais sans étape ; `"rejete"` avec `"navette"` ou `"aucune"` ; `"sans_vote_ensemble"` avec `"aucune"`.
    - Un personnage a une réponse à un texte si et seulement si ce texte n'est pas dans ses absences. Les absences ne portent que sur des textes quotidiens.
    - Chaque réponse atypique désigne un texte quotidien où le personnage a une réponse.
    - Les fiches sont identiques au §1. `cercle` vaut Amis et Agathe.
    - Pour chaque vecteur, `chaine` est égal à `graine` + « | » + `cle`, et `n` est la valeur de `hex8`.
+   - **Groupes** (partie 2.7). Le programme lit le tableau et vérifie ses règles. Ensuite :
+     - le `groupe` de chaque `auteur` de type `"depute"` et de chaque `depute` figure au tableau avec la chambre « Assemblée » ;
+     - le `groupe` d'un `auteur` de type `"senateur"` y figure avec la chambre « Sénat » ;
+     - chaque couple (chambre, sigle) du tableau sert au moins une fois dans le fichier.
+   - **Initiales et élision** (partie 2.8).
+     - Le premier caractère de chaque `nom` est une initiale permise.
+     - Les `nom` des `depute` dont l'initiale demande un choix forment exactement l'ensemble des noms du tableau : pas un de plus, pas un de moins (chaînes comparées telles quelles, en NFC).
+     - Pour chaque ligne, la Forme est celle que donne la règle de la page. Si elles diffèrent (h aspiré, Y, Æ, Œ), le contrôle s'arrête : la règle de la page ne couvre plus le lot, et UX tranche.
 6. **Vecteurs de test.** On les recalcule à partir de `graine` ; ils doivent être identiques.
 7. **Typographie simple** (§9, contrôle 1).
    - Chaînes concernées, les seules qui s'affichent telles quelles : `cercle.nom` et `cercle.inviteuse` ; dans chaque fiche, `metier`, `ville` et `ligne_de_vie` ; dans chaque texte, `titre`, chaque élément de `lignes`, le `nom` et le `groupe` de l'auteur et de chaque député, et le `texte` de chaque considération.
-   - Ces chaînes ne contiennent ni U+2019, ni U+00A0, ni U+202F. « ? », « ! », « ; », « : » et « » » y sont toujours précédés d'une espace U+0020, et « « » est toujours suivi d'une espace U+0020.
+   - Ces chaînes ne contiennent ni U+2019, ni U+00A0, ni U+202F. « ? », « ! », « ; », « : », « » » et « % » y sont toujours précédés d'une espace U+0020, et « « » est toujours suivi d'une espace U+0020.
+   - Toute espace placée entre deux chiffres appartient à un nombre écrit par tranches : un à trois chiffres, puis une ou plusieurs tranches faites d'une espace et de trois chiffres, sans chiffre juste avant ni juste après. « 30 000 » et « 1 500 000 » passent ; « en 2027 300 communes » et « 12 34 » sont refusés. Raison : la règle 6 du §7.8 reconnaît une tranche à ses trois chiffres ; ce contrôle garantit qu'elle ne colle jamais deux nombres. Un chiffre est un caractère de 0 à 9 : en Python, `[0-9]`, jamais `\d` (partie 1.2).
    - Toutes les autres chaînes ne sont pas concernées : codes, `vote.date`, `heure_de_jeu`, adresses, graine, vecteurs de test. Par exemple, « 07:40 » contient un « : » sans espace, et c'est normal.
 
 Ensuite viennent les contrôles 2 à 4 (profils, réponses, absences). Ils suivent le fichier caché, y compris son annexe A.
 
 Aucun programme ne vérifie que les trois champs de `vote` sont vrais (le bon jour, la bonne issue, la bonne étape). Cette vérification relève de l'annexe A de la simulation : relevé sur la page du scrutin et le dossier législatif, puis vérification par un second agent.
 
-La page garde ses vérifications V1 à V5 (§0, §8.11). À l'étape V4, elle vérifie aussi que `format` vaut `"elenchos-essai-scelle"` et que `version` vaut `2`. Elle refuse donc un fichier en version 1.
+De même, aucun programme ne vérifie que le mandat et le groupe sont exacts, ni qu'ils sont pris au bon moment (§7.10) : ni la date du dépôt ni celle de chaque séance ne sont scellées, et un même sigle peut servir dans deux législatures. Cette vérification relève du relevé et de sa vérification par un second agent (annexe A de la simulation), avec les colonnes Législature, Nom complet, Identifiant et Source de la partie 2.7.
+
+La page garde ses vérifications V1 à V5 (§0, §8.11). À l'étape V4, elle vérifie aussi que `format` vaut `"elenchos-essai-scelle"` et que `version` vaut `3`. Elle refuse donc un fichier en version 1 ou 2. Elle ne lit pas les tableaux des parties 2.7 et 2.8 : elle affiche `groupe` tel quel et élide selon la règle de la partie 2.8.
 
 ### 4.2 Les traces
 
@@ -659,13 +746,15 @@ Au moins une partie témoin contient les cas suivants :
 
 ## 5. Changer le format
 
-- Chaque fichier a son propre numéro de version : le fichier scellé est en version 2 ; la trace, et le journal du harnais qui en a la forme, sont en version 1.
+- Chaque fichier a son propre numéro de version : le fichier scellé est en version 3 ; la trace, et le journal du harnais qui en a la forme, sont en version 1.
 - Tout changement de champ, de type ou de sens d'un fichier fait passer ce fichier, et lui seul, à la version suivante. On met alors ce document à jour, et l'auteur du programme de contrôle le relit.
+- Les lignes des tableaux des parties 2.7 et 2.8 sont des données du lot, pas le format : les remplir ou les corriger ne change aucune version. Elles sont arrêtées avant le scellement. Le rapport de scellement donne le commit de ce document que le programme de contrôle a lu ; après l'essai, le Vérificateur rejoue le contrôle 1 avec ce même commit.
 - La page refuse un fichier scellé dont le format ou la version est inattendu (étape V4). C refuse un fichier scellé, une trace ou un journal de version inattendue.
 - Historique :
   - fichier scellé, version 1 (4 octobre 2026) : `vote` était une chaîne, `"adopte"` ou `"rejete"` ;
-  - fichier scellé, version 2 (5 octobre 2026) : `vote` devient un objet daté (partie 2.3, §7.9). La trace ne contient pas le vote : elle reste en version 1.
-- Un fichier déjà scellé en version 1 doit être scellé de nouveau en version 2 : nouvelle empreinte datée, et tous les contrôles rejoués (§9, « Correctif »). Ce n'est possible qu'avant la séance 0. (Au 5 octobre 2026, aucun fichier n'est encore scellé.)
+  - fichier scellé, version 2 (5 octobre 2026) : `vote` devient un objet daté (partie 2.3, §7.9). La trace ne contient pas le vote : elle reste en version 1 ;
+  - fichier scellé, version 3 (5 octobre 2026) : `auteur.type` admet `"senateur"` ; `groupe` devient un sigle de la liste fermée de la partie 2.7, pris au dépôt pour l'auteur et à la séance de l'extrait pour une considération (§7.10) ; nouveaux contrôles en partie 4.1 (groupes, initiales et élision, nombres). La trace ne contient ni auteur, ni groupe, ni nom d'élu, ni nombre écrit par tranches : elle reste en version 1.
+- Un fichier déjà scellé en version 1 ou 2 doit être scellé de nouveau en version 3 : nouvelle empreinte datée, et tous les contrôles rejoués (§9, « Correctif »). Ce n'est possible qu'avant la séance 0. (Au 5 octobre 2026, aucun fichier n'est encore scellé.)
 - Après la séance 0, le fichier scellé ne change plus (§9, « Correctif »), et son format non plus. Un correctif de la page peut changer la trace : on refait alors les contrôles (§9).
 
 ## 6. Points fixés depuis la version 1 de ce document
@@ -677,3 +766,6 @@ Au moins une partie témoin contient les cas suivants :
 5. **Plusieurs sources** : §7.1, écran 5.4 (UX).
 6. **Vote de l'Assemblée** : §7.9 de la simulation (UX). `vote` devient un objet `{"date", "etape", "issue"}` (partie 2.3), contrôlé en partie 4.1, étapes 4 et 5. Le fichier scellé passe en version 2 ; la trace reste en version 1 (partie 5).
 7. **Typographie simple du fichier scellé** : la liste des chaînes concernées est fixée en partie 4.1, étape 7.
+8. **Auteurs, groupes, élision** : §7.10 et §7.6 (UX). `auteur.type` admet `"senateur"` ; `groupe` est un sigle de la liste fermée (partie 2.7) ; initiales et élision en partie 2.8. Contrôlés en partie 4.1, étapes 4 et 5. Le fichier scellé passe en version 3 ; la trace reste en version 1 (partie 5).
+9. **Nombres** : §7.8, règle 6 (UX). Le fichier scellé reste en typographie simple : « 30 000 » et « 20 % » s'écrivent avec une espace U+0020, contrôlée en partie 4.1, étape 7. La page et le programme de contrôle appliquent la règle à l'affichage, sur la phrase entière, avant d'insérer le pseudo. Rien ne change dans la trace : les phrases qu'elle enregistre n'ont pas de chiffre (§5.6, §5.7), et le carnet n'applique que la règle 1 du §7.8.
+10. **Pseudo des joueurs témoins** : il ne finit pas par un chiffre (partie 3.1).
