@@ -767,9 +767,9 @@ D'où vient ce fichier :
 8. **Répondre.** `reponse` n'est non nulle que si la manche du jour est validée ou vide (séance 1, écran 5.12) : Répondre ne s'ouvre qu'après Deviner (§8.2).
 9. **Relire.** `relire` vaut 0 hors des séances 2 à 14.
 10. **Carnet du jour.**
-    - q1, q2 et q3 ne sont non nuls que si la journée est finie (§8.3) :
-      - à la séance 0, `pseudo` est non nul ;
-      - aux séances 1 à 14, la manche est validée ou vide, et `reponse` est non nulle ;
+    - q1, q2 et q3 ne dépendent jamais de `reponse` (§8.3, §8.4) :
+      - à la séance 0, ils ne sont non nuls que si `pseudo` est non nul ;
+      - aux séances 1 à 14, ils peuvent l'être que la journée soit finie ou non ; q2 seulement si `etapes.repondre` est vrai ;
       - à la séance 15, seule q1 peut l'être.
     - q1 suppose au moins un « Ça alors ! » à la révélation de la séance (à la séance 0 : un pari faux), et `"les_deux"` en suppose au moins deux.
     - q2 n'existe pas à la séance 15.
@@ -945,7 +945,7 @@ Où regarder une différence :
 - **Contrôle 13.** Le harnais rejoue les trois parties témoins sur la version du porteur, avec le même journal, et récupère le carnet copié à la fin ainsi que chaque copie faite en cours d'essai. Il les compare au `carnet.texte` et aux `copies[].texte` de la trace de C pour la même partie. Le journal vaut pour les deux versions d'une même construction, qui portent le même numéro (partie 3.1). Avant la comparaison, chaque durée est remplacée par « ‹durée› » dans les deux textes. Les durées se repèrent par l'expression régulière du §8.12. Les heures, fixées par le harnais, sont comparées. La ligne « Version de la page : {version}. » est comparée elle aussi, jamais masquée : elle prouve que la construction servie porte le numéro que le programme de construction a écrit à côté d'elle.
 - **Contrôle 12.**
   - `carnet.texte` ne contient jamais le pseudo (`seances[0].coups.pseudo`).
-  - Quatre variantes d'une même partie, rejouées avec la même horloge, les mêmes gestes, les mêmes `versions` et les mêmes `etapes`, seules les réponses du joueur changeant (§9, contrôle 12 : positions opposées ; toutes neutres ; mêmes positions avec d'autres raisons ; un texte laissé sans réponse après l'affichage de Répondre, questions du carnet laissées vides dans toutes les variantes) : séance par séance, les blocs de séance du carnet (et `seances[k].mesures`, hors la valeur des `duree_*`) sont identiques ; de même pour chaque copie (`copies[].texte` et `copies[].mesures`, hors la valeur des `duree_*`) ; seuls « Titres de la semaine » et « Sur tout l'essai » peuvent différer.
+  - Quatre variantes d'une même partie, rejouées avec la même horloge, les mêmes gestes, les mêmes `versions` et les mêmes `etapes`, seules les réponses du joueur changeant (§9, contrôle 12 : positions opposées ; toutes neutres ; mêmes positions avec d'autres raisons ; un texte laissé sans réponse après l'affichage de Répondre, avec en plus le toucher « Continuer » de la confirmation ; mêmes choix au carnet du jour dans toutes les variantes, toutes les questions qui s'appliquent ayant un choix à la séance de ce texte) : séance par séance, les blocs de séance du carnet (et `seances[k].mesures`, hors la valeur des `duree_*`) sont identiques ; de même pour chaque copie (`copies[].texte` et `copies[].mesures`, hors la valeur des `duree_*`) ; seuls « Titres de la semaine » et « Sur tout l'essai » peuvent différer.
   - Le carnet suit exactement le gabarit du §8.12 : toute ligne qui n'y figure pas est un défaut.
 
 ### 4.4 Mettre l'horloge, la version et les copies à l'épreuve

@@ -23,8 +23,10 @@ Ce que fait le programme, face par face :
 1. lit la police source (sans recalcul de l'horodatage) ;
 2. police variable : la fixe à la graisse voulue (varLib.instancer, noms
    mis à jour d'après la table STAT) ;
-3. ajoute à la table cmap l'espace fine insécable U+202F, absente des
-   sources, sur le glyphe de l'espace fine U+2009 (QUESTIONS.md, Q-F1) ;
+3. ajoute l'espace fine insécable U+202F, absente des sources : un glyphe
+   vide, de la chasse de l'espace fine U+2009 de la face, ou des deux tiers
+   de l'espace ordinaire si l'espace fine n'est pas plus étroite qu'elle
+   (Alegreya Sans gras) (QUESTIONS.md, Q-F1) ;
 4. réduit (fontTools.subset) au jeu de caractères ci-dessous, avec les
    fonctions OpenType par défaut de l'outil plus tnum, sans hinting
    (ignoré par iOS) ; noms gardés : aucun OFL.txt ne réserve de nom ;
@@ -160,11 +162,40 @@ def jeu_de_caracteres(scelle):
     return sorted(jeu)
 
 
+def largeur_espace_fine_insecable(fine, espace):
+    """Chasse de U+202F : celle de l'espace fine de la face, sauf si elle
+    n'est pas plus étroite que l'espace ordinaire (Alegreya Sans gras :
+    317 contre 151) ; alors les deux tiers de l'espace ordinaire, arrondis
+    à l'entier le plus proche (QUESTIONS.md, Q-F1)."""
+    if fine < espace:
+        return fine
+    return (2 * espace + 1) // 3
+
+
 def ajouter_espace_fine_insecable(police):
-    """U+202F -> glyphe de U+2009, dans chaque sous-table Unicode de cmap."""
+    """Ajoute un glyphe vide « uni202F » et le relie à U+202F dans chaque
+    sous-table Unicode de cmap. Les sources n'ont pas U+202F."""
+    from fontTools.ttLib.tables._g_l_y_f import Glyph
+
+    cmap = police.getBestCmap()
+    if 0x202F in cmap:
+        sys.exit("U+202F existe déjà dans la source : revoir l'étape 3")
+    hmtx = police["hmtx"]
+    largeur = largeur_espace_fine_insecable(hmtx[cmap[0x2009]][0], hmtx[cmap[0x20]][0])
+    nom = "uni202F"
+    if nom in police.getGlyphOrder():
+        sys.exit("glyphe uni202F déjà présent")
+    police["glyf"][nom] = Glyph()  # glyphe vide, sans contour
+    if nom not in police.getGlyphOrder():
+        police.setGlyphOrder(police.getGlyphOrder() + [nom])
+    if police.getGlyphOrder().count(nom) != 1 or police["glyf"].glyphOrder.count(nom) != 1:
+        sys.exit("glyphe uni202F mal ajouté")
+    police.getReverseGlyphMap(rebuild=True)
+    hmtx[nom] = (largeur, 0)
     for table in police["cmap"].tables:
-        if table.isUnicode() and 0x2009 in table.cmap and 0x202F not in table.cmap:
-            table.cmap[0x202F] = table.cmap[0x2009]
+        if table.isUnicode():
+            table.cmap[0x202F] = nom
+    return largeur
 
 
 def plages_texte(points):
@@ -186,7 +217,7 @@ def reduire(octets_source, graisse, unicodes):
     police = TTFont(io.BytesIO(octets_source), recalcTimestamp=False, recalcBBoxes=True)
     if graisse is not None:
         police = instancer.instantiateVariableFont(police, {"wght": graisse}, updateFontNames=True)
-    ajouter_espace_fine_insecable(police)
+    largeur = ajouter_espace_fine_insecable(police)
     options = subset.Options()
     options.layout_features = FONCTIONS
     options.hinting = False
@@ -197,7 +228,7 @@ def reduire(octets_source, graisse, unicodes):
     sous.subset(police)
     sortie = io.BytesIO()
     subset.save_font(police, sortie, options)
-    return sortie.getvalue()
+    return sortie.getvalue(), largeur
 
 
 def main():
@@ -233,7 +264,7 @@ def main():
             f.write(lus[nom])
 
     for sortie, source, graisse, usage in FACES:
-        octets = reduire(lus[source], graisse, unicodes)
+        octets, largeur_202f = reduire(lus[source], graisse, unicodes)
         with open(os.path.join(args.sortie, sortie), "wb") as f:
             f.write(octets)
         relue = TTFont(io.BytesIO(octets))
@@ -250,6 +281,9 @@ def main():
             "graisse_fixee": graisse,
             "usage": usage,
             "nom_interne": nom_table.getDebugName(4),
+            "chasse_U+202F": largeur_202f,
+            "chasse_U+0020": relue["hmtx"][relue.getBestCmap()[0x20]][0],
+            "unites_par_cadratin": relue["head"].unitsPerEm,
             "sha256": sha256(octets),
             "octets": len(octets),
             "glyphes": len(relue.getGlyphOrder()),
