@@ -1,0 +1,42 @@
+CAS CHIFFRÉ : AFFECTATION LEXICOGRAPHIQUE DES DEVINETTES (regles-de-calcul.md §3, point 4)
+Règle : les candidats (les quatre autres membres, absents compris) reçoivent un rang de 1 à 4 par t("devine|g|k|candidat") croissant ; une affectation (une carte = une personne, chaque personne au plus une fois) s'écrit comme la suite des rangs attribués aux cartes dans l'ordre d'affichage ; parmi celles de total maximal, on retient la plus petite dans l'ordre lexicographique.
+Les manches des personnages dépendent de la réponse du porteur (il est candidat, et réponse possible quand il a répondu). Les cas ci-dessous sont pris dans la partie témoin (a) : porteur (3, aucune), côté attendu « inconnu » (feuille A du carnet 2). Les t sont dans tirages.txt.
+
+----------------------------------------------------------------------
+1. Cas principal : séance 2, texte 1 (S, s = 0), devineur Valentin — quatre affectations à égalité
+----------------------------------------------------------------------
+cartes (ordre d'affichage, §4.5) | feuille A, séance 2, g = Valentin | 1. Odile (5,3) σ +1 ; 2. Nassim* (1,1) σ −1 ; 3. porteur (3,aucune) σ 0
+rangs | t("devine|Valentin|2|·") : porteur 1373860397 < Agathe 2425374147 < Nassim 3140736259 < Odile 4192138825 | porteur 1, Agathe 2, Nassim 3, Odile 4
+cotes_attendus | commun-tables.txt, E (S, s = 0) ; porteur inconnu | Agathe −1, Nassim −1, Odile +1, porteur inconnu
+scores (§3, point 3) | 2 si σ = côté attendu ; 1 si σ = 0, côté attendu 0 ou candidat inconnu ; 0 sinon |
+ carte 1 (σ +1) | Agathe 0 ; Nassim 0 ; Odile 2 ; porteur 1 |
+ carte 2 (σ −1) | Agathe 2 ; Nassim 2 ; Odile 0 ; porteur 1 |
+ carte 3 (σ 0) | Agathe 1 ; Nassim 1 ; Odile 1 ; porteur 1 |
+Toutes les affectations et leur total (24 au plus ; on ne liste que celles qui atteignent 5, le maximum) :
+ [Odile, Nassim, Agathe] | 2 + 2 + 1 | 5 → rangs (4, 3, 2)
+ [Odile, Nassim, porteur] | 2 + 2 + 1 | 5 → rangs (4, 3, 1)
+ [Odile, Agathe, Nassim] | 2 + 2 + 1 | 5 → rangs (4, 2, 3)
+ [Odile, Agathe, porteur] | 2 + 2 + 1 | 5 → rangs (4, 2, 1)
+ (preuve du maximum : la carte 1 vaut au plus 2, la carte 2 au plus 2, la carte 3 au plus 1 ; 2 + 2 + 1 = 5, atteint ; toute affectation qui ne met pas Odile en 1 ou qui met Odile ou le porteur en 2 perd au moins 1)
+ordre lexicographique | on compare le premier rang, puis le deuxième, puis le troisième | (4, 2, 1) < (4, 2, 3) < (4, 3, 1) < (4, 3, 2)
+designe | | [Odile, Agathe, porteur]
+total | | 5
+révélation | justes [true, false, true] ; points 2 | la carte de Nassim est attribuée à Agathe, par le seul effet du tirage des rangs (Agathe 2 < Nassim 3)
+Ce que montre le cas | les rangs ne départagent pas « au mieux » : ils fixent un ordre arbitraire mais déterministe. Un programme qui choisirait la première affectation trouvée, ou la dernière, ou celle qui garde l'auteur, se tromperait ici une fois sur quatre au moins. |
+
+----------------------------------------------------------------------
+2. Second cas : séance 2, texte 1, devineur Odile — deux affectations à égalité, sur deux cartes de même côté
+----------------------------------------------------------------------
+cartes | feuille A, séance 2, g = Odile | 1. Valentin (3,aucune) σ 0 ; 2. Nassim (1,1) σ −1 ; 3. Agathe* (2,2) σ −1
+rangs | t("devine|Odile|2|·") : Nassim 1042300029 < porteur 1098468470 < Valentin 1696017770 < Agathe 3586021832 | Nassim 1, porteur 2, Valentin 3, Agathe 4
+cotes_attendus | | Agathe −1, Nassim −1, Valentin 0, porteur inconnu
+scores | carte 1 (σ 0) : A 1, N 1, V 2, p 1 ; carte 2 (σ −1) : A 2, N 2, V 1, p 1 ; carte 3 (σ −1) : A 2, N 2, V 1, p 1 |
+total maximal | 6 : Valentin en 1, Agathe et Nassim en 2 et 3 dans un ordre ou l'autre | [V, N, A] → (3, 1, 4) ; [V, A, N] → (3, 4, 1)
+designe | (3, 1, 4) < (3, 4, 1) | [Valentin, Nassim, Agathe]
+révélation | justes [true, true, true] ; points 3 | ici le tirage des rangs tombe sur la bonne affectation
+
+----------------------------------------------------------------------
+3. Autres égalités de la partie (a), pour mettre le programme à l'épreuve
+----------------------------------------------------------------------
+Séance 3, Odile (2 affectations) ; séance 3, Valentin (4) ; séance 4, Agathe (4), Nassim (4), Odile (4), Valentin (4) ; séance 5, Odile (2) ; séance 6, Agathe (4), Nassim (4), Odile (4), Valentin (4) ; séance 7, Agathe (4), Nassim (2), Odile (2), Valentin (2) ; séance 8, Agathe (2), Odile (2), Valentin (4) ; séance 9, Agathe (4), Nassim (4), Odile (4), Valentin (4) ; séance 10, Agathe (4), Valentin (4) ; séance 12, Odile (2), Valentin (2) ; séance 13, Agathe (2), Nassim (4), Odile (4), Valentin (4) ; séance 14, Agathe (2), Nassim (4), Odile (4), Valentin (4). Détail : feuilles A à C2 du carnet 2, ligne « total maximal ».
+Dans cette partie, 36 manches de personnages sur 48 ont plusieurs affectations de total maximal : la règle lexicographique n'est pas un cas limite, c'est le cas courant (un porteur « inconnu » vaut 1 partout, et deux personnages du même côté valent autant l'un que l'autre).

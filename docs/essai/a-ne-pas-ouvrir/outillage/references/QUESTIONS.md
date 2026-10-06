@@ -1,6 +1,8 @@
 # Questions et lectures de l'auteur des carnets de référence
 
-Ambiguïtés rencontrées en appliquant la spécification à la main (brief commun : « ne la tranchez pas en silence »). Pour chacune : section, citation, ma lecture, ce que j'ai fait. À faire repasser par le circuit.
+Ambiguïtés rencontrées en appliquant la spécification à la main (brief commun : « ne la tranchez pas en silence »). Pour chacune : section, citation, ma lecture, ce que j'ai fait.
+
+**Sort des questions (6 octobre 2026).** Q1 à Q11 ont reçu réponse aux commits `2c66a93` et `1df9aa5` : toutes mes lectures sont confirmées et désormais écrites dans la spécification (partie (a) au §9 bis du fichier caché ; identifiants « r » et « a » au §9 ; médiane sans réponse du porteur au §4.2 ; Mystère et surprise de la semaine à au moins 1 erreur, §6). Les carnets sont conformes à ces textes. Les questions restent ci-dessous pour mémoire. Ce qui a changé dans mes carnets par suite de ces réponses : rien dans le carnet 1 ; dans le carnet 2, la ligne « Révélation » de la séance 12 porte deux verdicts (deux cartes), et les titres ont été calculés avec les seuils « au moins 1 erreur » (sans effet sur les titulaires de (a) : tous les membres ont des erreurs).
 
 ## Q1 — Partie témoin (a) : raison des réponses « Neutre »
 
@@ -50,3 +52,16 @@ Ambiguïtés rencontrées en appliquant la spécification à la main (brief comm
 ## Q11 — Points de la semaine (`points_semaine`) à la séance 7
 
 - Le texte 5 est révélé à la séance 7 et compte en semaine 1 ; les titres de la semaine 1 tombent à la même séance, après la révélation (§6, point 8). Lecture : les points du texte 5 comptent pour Le Devin de la semaine 1. Idem texte 12 à la séance 14 pour la semaine 2.
+
+## Q12 — Partie (a) : heures, questions du carnet, F1
+
+- §9 bis ne fixe ni les heures d'ouverture et de lecture, ni les choix au carnet du jour, ni F1 et F2. Le §9 (commit `1df9aa5`) dit que mon journal « a » est rejoué tel quel.
+- Fait : une séance par jour à 19h, du dimanche 18 octobre 2026 au lundi 2 novembre 2026 (passage à l'heure d'hiver le 25 octobre, séance 7, +01:00) ; lectures d'« En attendant » à des heures variées pour couvrir les visages (feuille D, partie 9) ; q2 et q3 choisies parmi les choix permis par les écrans affichés, q2 sautée au jour 6 ; F2 « De moins en moins amusant » ; F1 « Au milieu » partout.
+
+## Q13 — Rang d'un candidat absent
+
+- §3, point 1 et 4 : les candidats sont « les quatre autres membres, porteur et absents compris » ; un absent reçoit un rang et peut être désigné. Appliqué : Nassim, sans réponse au texte 3, est candidat (et désigné) dans les manches de la séance 4. Noté parce que la carte d'un absent n'existe pas : la désigner est toujours faux.
+
+## Q14 — Chiffres constants du fichier (rapport de scellement)
+
+- Je n'ai pas lu le rapport de scellement (§9). Mon récapitulatif de `manches-porteur.txt` donne mes propres comptes (38 cartes ; 2 remplacements ; 2 manches à cartes identiques, 5 cartes ; 2 raisons « aucune » affichées, 0 cachée ; 2 cartes cachées déplacées ; 2 égalités de classement ; 10 réponses atypiques servies). S'ils diffèrent du rapport, c'est à régler ligne par ligne, comme pour les carnets.
