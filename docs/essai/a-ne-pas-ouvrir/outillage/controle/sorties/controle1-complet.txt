@@ -3,7 +3,7 @@ Programme de contrôle (C) — contrôle du fichier scellé (schéma, partie 4.1
 Fichier contrôlé : docs/essai/a-ne-pas-ouvrir/fichier-scelle.json
 SHA-256 du fichier : 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64  (30978 octets)
 Jour du scellement (paramètre, recopié du rapport de scellement) : 2026-10-06
-Commit du dépôt au moment du contrôle : fcf19d1e31fb868e25e527708c98a0ad5c2639d7 (sources identiques à ce commit)
+Commit du dépôt au moment du contrôle : 785f78ec919b739c671e06a29062b9036d21de6e (sources identiques à ce commit)
 
 Sources lues (SHA-256) :
   633bedeccc271c6dae5f030db81f3750d9261f8eb66fb83b551d03d8e5b802f8  docs/essai/a-ne-pas-ouvrir/textes/S-securite-liberte.md
@@ -27,7 +27,7 @@ Contrôle 1 (fichier scellé)
   Étape 5 (cohérence interne) : passée — rangs, groupes distincts, ponctuation et guillemets, votes, absences, réponses atypiques, fiches du §1, cercle, vecteurs ; partie 2.7 (22 lignes, règles tenues, chaque couple sert) ; partie 2.8 (17 noms)
   Étape 6 (vecteurs de test) : passée — les trois vecteurs recalculés sont identiques
   Étape 7 (typographie simple) : passée — 316 chaînes affichées
-  Étape 8 (fidélité aux fiches) : passée — 17 fiches et votes.md relus ; titre, lignes, vote, auteur, lien, sources, tension, sens et raisons identiques, raisons dans l'ordre tiré
+  Étape 8 (fidélité aux fiches) : passée — 17 fiches et votes.md relus ; titre, lignes, vote, auteur, lien, sources, tension, sens et raisons identiques, raisons dans l'ordre tiré ; mêmes sources que l'agent qui scelle
     Ordre d'affichage tiré (clé « ordre-raisons|texte|i ») : numéro de fiche → rang
       E1 : 1→4, 2→2, 3→3, 4→1
       E2 : 1→3, 2→1, 3→2, 4→4
@@ -48,6 +48,7 @@ Contrôle 1 (fichier scellé)
       14 : 1→4, 2→2, 3→1, 4→3
   Contrôle 1 : complet, huit étapes passées
   Hors étapes (ajout de C) : graine recalculée par la dérivation du §0 = 23e3ee6ccdc3fb38 ; identique à celle du fichier
+  Hors étapes (ajout de C) : entrees-construction.json (§8.8) : empreinte 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64 = SHA-256 du fichier = empreinte publiée ; version_page 1 ; consultes_le 2026-10-05 ; empreinte publiée le 2026-10-06 à 15:13 (ces quatre champs : recopiés, non vérifiables par C)
 
 Nombre de réponses atypiques lu dans profils.md : 3 ; rapport de scellement : 3 — égaux
 Longueur des tableaux reponses_atypiques : {'Agathe': 3, 'Nassim': 3, 'Odile': 3, 'Valentin': 3}

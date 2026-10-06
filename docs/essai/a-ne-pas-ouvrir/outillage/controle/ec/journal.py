@@ -231,17 +231,18 @@ def choix_q3(k, etapes):
 
 
 def pseudo_conforme(p):
-    """§7.2 : forme NFC, sans Cc ni Cf, blancs ramenés à une espace, sans espace
-    double ni au bord, 1 à 20 points de code, pas un prénom (capitales non comptées)."""
+    """Schéma 3.12, règle 6 (§7.2) : NFC ; aucun caractère Cc, Cf ou Cs ; aucun blanc
+    autre que U+0020 (str.isspace()), ni espace double, ni espace au bord ; 1 à 20 points
+    de code ; mis en minuscules par str.lower() (jamais casefold()), pas un prénom."""
     if not isinstance(p, str) or not 1 <= len(p) <= 20:
-        return "longueur hors de 1 à 20 caractères"
+        return "longueur hors de 1 à 20 points de code"
     if unicodedata.normalize("NFC", p) != p:
         return "pas en NFC"
-    if any(unicodedata.category(ch) in ("Cc", "Cf") for ch in p):
-        return "caractère invisible (Cc ou Cf)"
+    if any(unicodedata.category(ch) in ("Cc", "Cf", "Cs") for ch in p):
+        return "caractère des catégories Cc, Cf ou Cs"
     if any(ch.isspace() and ch != " " for ch in p) or "  " in p or p != p.strip(" "):
-        return "blancs non ramenés à une espace, espace double ou au bord"
-    if p.casefold() in {x.casefold() for x in PERSONNAGES}:
+        return "blanc autre que U+0020, espace double ou espace au bord"
+    if p.lower() in {x.lower() for x in PERSONNAGES}:
         return "prénom d'un personnage"
     return None
 

@@ -82,12 +82,17 @@ def cmd_controle_scelle(a):
         pass  # les retours à la ligne sont retirés par l'étape 1
     page = Path(a.page).read_bytes() if a.page else None
     es = json.loads(Path(a.empreintes_scellement).read_text(encoding="utf-8")) if a.empreintes_scellement else None
+    ec_ = None
+    if a.entrees_construction:
+        from ec import canon
+        ec_ = canon.lire_strict(Path(a.entrees_construction).read_bytes())
     texte, verdict = controle_scelle(
         octets, lire_sources(), a.date_scellement, a.nb_atypiques, emp, page, es,
         chemin_fichier=str(Path(a.fichier).resolve().relative_to(RACINE))
         if str(Path(a.fichier).resolve()).startswith(str(RACINE)) else a.fichier,
         commit=commit_courant(), detail_complet=a.detail,
-        appliquees=[(str(p.relative_to(RACINE)), p.read_bytes()) for p in APPLIQUEES.values()])
+        appliquees=[(str(p.relative_to(RACINE)), p.read_bytes()) for p in APPLIQUEES.values()],
+        entrees_construction=ec_)
     ecrire(texte, a.sortie)
     return 0 if "DÉFAUT" not in texte.splitlines()[-1] else 1
 
@@ -119,6 +124,8 @@ def main(argv=None):
     c.add_argument("--empreinte-publiee", help="fichier texte : l'empreinte telle que publiée")
     c.add_argument("--page", help="fichier construit de la version du porteur (étape 2)")
     c.add_argument("--empreintes-scellement", help="JSON {nom de fichier: SHA-256} relevé par l'agent qui scelle")
+    c.add_argument("--entrees-construction",
+                   help="docs/essai/a-ne-pas-ouvrir/entrees-construction.json (§8.8) : son champ empreinte est comparé")
     c.add_argument("--detail", action="store_true", help="détail du calcul de chaque réponse")
     c.add_argument("--sortie")
     c.set_defaults(f=cmd_controle_scelle)

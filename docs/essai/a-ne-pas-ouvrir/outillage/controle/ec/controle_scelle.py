@@ -479,7 +479,8 @@ class Rapport:
 
 def controle_scelle(octets, srcs, date_scellement, nb_atypiques_rapport=None,
                     empreinte_publiee=None, page=None, empreintes_scellement=None,
-                    chemin_fichier="", commit=None, detail_complet=False, appliquees=None):
+                    chemin_fichier="", commit=None, detail_complet=False, appliquees=None,
+                    entrees_construction=None):
     """srcs : {nom de source : (chemin affiché, texte, octets)} pour les clés
     simulation, profils, schema, votes, S, P, T, L. Rend (texte du rapport, verdict)."""
     R = Rapport()
@@ -529,6 +530,7 @@ def controle_scelle(octets, srcs, date_scellement, nb_atypiques_rapport=None,
     R("Contrôle 1 (fichier scellé)")
     R("-" * 78)
     etats = []
+    manque_c1 = []
     ok, msgs = etape1(octets, empreinte_publiee)
     if ok is False:
         return stop(1, msgs)
@@ -576,21 +578,48 @@ def controle_scelle(octets, srcs, date_scellement, nb_atypiques_rapport=None,
     e, detail_ordre = etape8(d, fiches, votes)
     if e:
         return stop(8, e)
+    # « Mêmes sources » fait partie de l'étape 8 (schéma, partie 4.1) : deux empreintes
+    # différentes d'un même fichier sont un échec ; sans le relevé, le contrôle 1 n'est pas complet.
+    if verdict["sources"] is False:
+        return stop(8, ["Mêmes sources : le programme de contrôle et l'agent qui scelle n'ont pas lu "
+                        "les mêmes sources"] + [x.strip() for x in diff])
     R("  Étape 8 (fidélité aux fiches) : passée — 17 fiches et votes.md relus ; titre, lignes, vote, "
-      "auteur, lien, sources, tension, sens et raisons identiques, raisons dans l'ordre tiré")
+      "auteur, lien, sources, tension, sens et raisons identiques, raisons dans l'ordre tiré ; "
+      + ("mêmes sources que l'agent qui scelle" if verdict["sources"] else
+         "Mêmes sources : non comparé (relevé non fourni)"))
     R("    Ordre d'affichage tiré (clé « ordre-raisons|texte|i ») : numéro de fiche → rang")
     for tid in TEXTES:
         R(f"      {tid:>2} : " + ", ".join(f"{i}→{r}" for i, r, _ in detail_ordre[tid]))
-    complet = all(etats)
+    complet = all(etats) and verdict["sources"] is True
     verdict["controle1"] = True if complet else "partiel"
+    manque = [f"étape {n} non faite (son entrée manque)" for n, ok in zip((1, 2), etats) if not ok]
+    if verdict["sources"] is not True:
+        manque.append("Mêmes sources non comparé (étape 8)")
+    manque_c1[:] = manque
     R("  Contrôle 1 : " + ("complet, huit étapes passées" if complet else
-                           "étapes 3 à 8 passées ; étapes 1 et 2 non faites (leur entrée manque) : "
-                           "le contrôle 1 n'est pas complet"))
+                           "étapes passées : " + ", ".join(str(n) for n, ok in zip((1, 2), etats) if ok)
+                           + (", " if any(etats) else "") + "3 à 8 ; " + " ; ".join(manque)
+                           + " : le contrôle 1 n'est pas complet"))
     # Vérification ajoutée : la graine
     g_att = sha256_hex(("elenchos-essai|graine|" + COMMIT_GRAINE).encode())[:16]
     verdict["graine"] = d["graine"] == g_att
     R(f"  Hors étapes (ajout de C) : graine recalculée par la dérivation du §0 = {g_att} ; "
       + ("identique à celle du fichier" if verdict["graine"] else f"DIFFÉRENTE de celle du fichier ({d['graine']})"))
+    if entrees_construction is not None:
+        # §8.8 : fichier d'entrées de la construction, hors du dossier de la page.
+        x = entrees_construction
+        h = sha256_hex(octets)
+        pub = None if empreinte_publiee is None else empreinte_publiee.replace(" ", "").replace("\n", "")
+        champs = ("version_page", "consultes_le", "empreinte", "empreinte_publiee_le", "empreinte_publiee_a")
+        manquants = [c for c in champs if c not in x]
+        ok = not manquants and x["empreinte"] == h and (pub is None or x["empreinte"] == pub)
+        verdict["entrees_construction"] = ok
+        R("  Hors étapes (ajout de C) : entrees-construction.json (§8.8) : "
+          + (f"champ(s) absent(s) : {', '.join(manquants)}" if manquants else
+             f"empreinte {x['empreinte']} " + ("= SHA-256 du fichier" if x["empreinte"] == h else "≠ SHA-256 du fichier")
+             + ("" if pub is None else (" = empreinte publiée" if x["empreinte"] == pub else " ≠ empreinte publiée"))
+             + f" ; version_page {x['version_page']} ; consultes_le {x['consultes_le']} ; empreinte publiée le "
+             f"{x['empreinte_publiee_le']} à {x['empreinte_publiee_a']} (ces quatre champs : recopiés, non vérifiables par C)"))
     R("")
 
     try:
@@ -688,8 +717,8 @@ def controle_scelle(octets, srcs, date_scellement, nb_atypiques_rapport=None,
     ok_tout = (verdict["controle1"] is True or verdict["controle1"] == "partiel") and \
         verdict["controle2"] and verdict["controle3"] and verdict["controle4"] and \
         verdict["annexe_a"] and verdict["graine"] and verdict.get("nb_atypiques", True) is not False \
-        and verdict["sources"] is not False
+        and verdict["sources"] is not False and verdict.get("entrees_construction", True) is not False
     R("Verdict : " + ("aucun défaut trouvé" if ok_tout else "DÉFAUT(S) TROUVÉ(S)")
       + ("" if verdict["controle1"] is True else
-         " (contrôle 1 partiel : étapes 1 et 2 non faites)"))
+         " (contrôle 1 partiel : " + " ; ".join(manque_c1) + ")"))
     return R.texte(), verdict

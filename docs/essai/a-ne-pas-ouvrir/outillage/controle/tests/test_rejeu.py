@@ -187,6 +187,16 @@ class TestJournal(unittest.TestCase):
         j["seances"][0]["coups"]["pseudo"] = "a  b"
         self.assertIn(6, self.regles(j))
 
+    def test_regle6_pseudo(self):
+        from ec.journal import pseudo_conforme
+        # refusés : prénom en capitales, Cs, Cf, blanc autre que U+0020, bords, longueur
+        for p in ("AGATHE", "Valentin", "a\ud800b", "a\u200bb", "a\u00a0b", "a\u2009b", " ab", "ab ",
+                  "", "x" * 21, "e\u0301"):
+            self.assertIsNotNone(pseudo_conforme(p), repr(p))
+        # acceptés : « Naſſim » (str.lower() le garde, casefold() le changerait), 20 points de code, une espace
+        for p in ("Na\u017f\u017fim", "x" * 20, "Le Cercle", "\u00e9mile"):
+            self.assertIsNone(pseudo_conforme(p), repr(p))
+
     def trouver(self, j, f):
         for s in j["seances"]:
             if f(s):

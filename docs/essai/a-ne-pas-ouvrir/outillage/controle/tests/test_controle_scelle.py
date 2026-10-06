@@ -39,7 +39,27 @@ class TestCandidat(unittest.TestCase):
         pres = "\n".join(" ".join(h[16 * l + 4 * g:16 * l + 4 * g + 4] for g in range(4)) for l in range(4)) + "\n"
         page = b"<script>var a=1;/*elenchos-scelle*/\"" + base64.b64encode(o) + b"\";</script>"
         texte, v = lancer(o, empreinte_publiee=pres, page=page)
+        # sans le relevé des sources de l'agent qui scelle, le contrôle 1 n'est pas complet (étape 8)
+        self.assertEqual(v["controle1"], "partiel")
+        self.assertIn("Mêmes sources non comparé (étape 8)", texte)
+        releve = {chemin: hashlib.sha256(oct_).hexdigest() for chemin, _, oct_ in controle.lire_sources().values()}
+        texte, v = lancer(o, empreinte_publiee=pres, page=page, empreintes_scellement=releve)
         self.assertIs(v["controle1"], True)
+        self.assertIn("Contrôle 1 : complet, huit étapes passées", texte)
+        cle = next(c for c in releve if c.endswith("simulation.md"))
+        autre = dict(releve, **{cle: "0" * 64})
+        texte, v = lancer(o, empreinte_publiee=pres, page=page, empreintes_scellement=autre)
+        self.assertEqual(etape_en_echec(texte), 8)
+        self.assertIn("simulation.md : agent qui scelle", texte)
+        ent = {"version_page": 1, "consultes_le": "2026-10-05", "empreinte": h,
+               "empreinte_publiee_le": "2026-10-06", "empreinte_publiee_a": "15:13"}
+        texte, v = lancer(o, empreinte_publiee=pres, page=page, empreintes_scellement=releve, entrees_construction=ent)
+        self.assertIs(v["entrees_construction"], True)
+        self.assertTrue(texte.splitlines()[-1].startswith("Verdict : aucun défaut"))
+        texte, v = lancer(o, empreinte_publiee=pres, page=page, empreintes_scellement=releve,
+                          entrees_construction=dict(ent, empreinte="0" * 64))
+        self.assertIs(v["entrees_construction"], False)
+        self.assertIn("DÉFAUT", texte.splitlines()[-1])
         texte, v = lancer(o, empreinte_publiee=pres.replace(h[0], "0" if h[0] != "0" else "1", 1))
         self.assertEqual(etape_en_echec(texte), 1)
         texte, v = lancer(o, page=page + b"/*elenchos-scelle*/")
