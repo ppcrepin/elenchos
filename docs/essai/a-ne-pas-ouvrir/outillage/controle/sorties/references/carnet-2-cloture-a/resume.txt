@@ -1,0 +1,884 @@
+Partie « a », mode interface ; fichier scellé 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64
+Séances 0 à 15 ; menée jusqu'à la clôture
+
+==============================================================================
+Séance 0 — ouverture 2026-10-18T19:05+02:00 ; versions [1] ; étapes None
+  coups : réponse None ; relire 0 ; carnet {'q1': 'les_deux', 'q2': 'premier_coup', 'q3': 'donner_avis'}
+  entrée E1 : Agathe Défavorable · raison 1 ; réponse {'niveau': 3, 'raison': 'aucune'} ; pari 3 ; juste False
+  entrée E2 : Agathe Favorable · raison 3 ; réponse {'niveau': 3, 'raison': 'aucune'} ; pari 3 ; juste False
+  entrée E3 : Agathe Favorable · raison 4 ; réponse {'niveau': 3, 'raison': 'aucune'} ; pari 3 ; juste False
+  paris justes : 0
+  portrait : L Σw 0 c 1/2 ℓ 19/20 ; P Σw 0 c 1/2 ℓ 19/20 ; S Σw 0 c 1/2 ℓ 19/20 ; T Σw 0 c 1/2 ℓ 19/20 ; ordre de Moi ['S', 'P', 'T', 'L']
+  curseurs vus : Agathe S 1/3/5, P 1/3/5, T 0/1/2, L 1/2/5 | Nassim S 1/3/5, P 1/3/5, T 0/1/2, L 1/3/5 | Odile S 1/2/5, P 1/2/5, T 0/1/2, L 1/2/5 | Valentin S 0/1/2, P 1/2/5, T 0/1/2, L 1/3/5   (Σw/c)
+  surprises des proches : {'Agathe': [], 'Nassim': [], 'Odile': [], 'Valentin': []}
+  mesures : {'duree_deviner': None, 'duree_repondre': None, 'duree_seance': 80, 'jours_ecoules': None, 'passer': 0, 'relire': 0, 'revelation_raison_tentee': None, 'revelation_verdicts': None}
+
+==============================================================================
+Séance 1 — ouverture 2026-10-19T19:06+02:00 ; versions [1] ; étapes {'deviner': False, 'repondre': True}
+  coups : réponse {'niveau': 3, 'raison': 'aucune'} ; relire 0 ; carnet {'q1': None, 'q2': 'en_relisant', 'q3': 'phrase_jour'}
+  phrase du jour (texte 1) : neutre, w 0, pôle None : « Aujourd’hui, tu n’as penché ni vers la sécurité ni vers la liberté. »
+  En attendant : 19:12 → []
+  portrait : L Σw 0 c 1/2 ℓ 19/20 ; P Σw 0 c 1/2 ℓ 19/20 ; S Σw 0 c 1/2 ℓ 19/20 ; T Σw 0 c 1/2 ℓ 19/20 ; ordre de Moi ['S', 'P', 'T', 'L']
+  curseurs vus : Agathe S 1/3/5, P 1/3/5, T 0/1/2, L 1/2/5 | Nassim S 1/3/5, P 1/3/5, T 0/1/2, L 1/3/5 | Odile S 1/2/5, P 1/2/5, T 0/1/2, L 1/2/5 | Valentin S 0/1/2, P 1/2/5, T 0/1/2, L 1/3/5   (Σw/c)
+  surprises des proches : {'Agathe': [], 'Nassim': [], 'Odile': [], 'Valentin': []}
+  mesures : {'duree_deviner': None, 'duree_repondre': 35, 'duree_seance': 151, 'jours_ecoules': 1, 'passer': 0, 'relire': 0, 'revelation_raison_tentee': None, 'revelation_verdicts': None}
+
+==============================================================================
+Séance 2 — ouverture 2026-10-20T19:07+02:00 ; versions [1] ; étapes {'deviner': True, 'repondre': True}
+  coups : réponse {'niveau': 3, 'raison': 'aucune'} ; relire 0 ; carnet {'q1': None, 'q2': 'premier_coup', 'q3': 'deviner'}
+  manche de Agathe, texte 1 :
+    Nassim    Très défavorable · raison 1    Σw 1    x 1    c 3/5   ℓ 22/25  q 1/10  dist 2/5     rareté 1/2    surprise 49/100
+    Odile     Très favorable · raison 3      Σw 1    x 0    c 2/5   ℓ 22/25  q 1/10  dist 2/5     rareté 1/2    surprise 49/100
+    Valentin  Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    médiane 1/2 ; classement ['Odile', 'Nassim', 'porteur', 'Valentin'] ; départages 2
+    remplacements [] ; places ['Odile', 'Nassim', 'porteur'] ; raison cachée Nassim ; ordre ['porteur', 'Odile', 'Nassim']
+    rangs {'Nassim': 2, 'Odile': 4, 'Valentin': 3, 'porteur': 1} ; côtés attendus {'Nassim': -1, 'Odile': 1, 'Valentin': 0, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 6
+    carte porteur   compté porteur          → Valentin
+    carte Odile     compté Odile            → Odile
+    carte Nassim    compté Nassim    cachée → Nassim, raison 1
+  manche de Nassim, texte 1 :
+    Agathe    Défavorable · raison 2         Σw 1    x 3/4  c 3/5   ℓ 22/25  q 1/10  dist 3/20    rareté 1/4    surprise 6/25
+    Odile     Très favorable · raison 3      Σw 1    x 0    c 2/5   ℓ 22/25  q 1/10  dist 2/5     rareté 1/2    surprise 49/100
+    Valentin  Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    médiane 1/2 ; classement ['Odile', 'Agathe', 'porteur', 'Valentin'] ; départages 1
+    remplacements [] ; places ['Odile', 'Agathe', 'Valentin'] ; raison cachée Agathe ; ordre ['Odile', 'Valentin', 'Agathe']
+    rangs {'Agathe': 4, 'Odile': 3, 'Valentin': 1, 'porteur': 2} ; côtés attendus {'Agathe': -1, 'Odile': 1, 'Valentin': 0, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 6
+    carte Odile     compté Odile            → Odile
+    carte Valentin  compté Valentin         → Valentin
+    carte Agathe    compté Agathe    cachée → Agathe, raison 1
+  manche de Odile, texte 1 :
+    Agathe    Défavorable · raison 2         Σw 1    x 3/4  c 3/5   ℓ 22/25  q 1/10  dist 3/20    rareté 1/8    surprise 51/400
+    Nassim    Très défavorable · raison 1    Σw 1    x 1    c 3/5   ℓ 22/25  q 1/10  dist 2/5     rareté 3/8    surprise 151/400
+    Valentin  Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 5/8 ; classement ['Nassim', 'Agathe', 'Valentin', 'porteur'] ; départages 1
+    remplacements [] ; places ['Nassim', 'Agathe', 'Valentin'] ; raison cachée Agathe ; ordre ['Valentin', 'Nassim', 'Agathe']
+    rangs {'Agathe': 4, 'Nassim': 1, 'Valentin': 3, 'porteur': 2} ; côtés attendus {'Agathe': -1, 'Nassim': -1, 'Valentin': 0, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 6
+    carte Valentin  compté Valentin         → Valentin
+    carte Nassim    compté Nassim           → Nassim
+    carte Agathe    compté Agathe    cachée → Agathe, raison 1
+  manche de Valentin, texte 1 :
+    Agathe    Défavorable · raison 2         Σw 1    x 3/4  c 3/5   ℓ 22/25  q 1/10  dist 3/20    rareté 1/8    surprise 51/400
+    Nassim    Très défavorable · raison 1    Σw 1    x 1    c 3/5   ℓ 22/25  q 1/10  dist 2/5     rareté 3/8    surprise 151/400
+    Odile     Très favorable · raison 3      Σw 1    x 0    c 2/5   ℓ 22/25  q 1/10  dist 2/5     rareté 5/8    surprise 241/400
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 5/8 ; classement ['Odile', 'Nassim', 'Agathe', 'porteur'] ; départages 0
+    remplacements [] ; places ['Odile', 'Nassim', 'porteur'] ; raison cachée Nassim ; ordre ['Odile', 'Nassim', 'porteur']
+    rangs {'Agathe': 2, 'Nassim': 3, 'Odile': 4, 'porteur': 1} ; côtés attendus {'Agathe': -1, 'Nassim': -1, 'Odile': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Odile     compté Odile            → Odile
+    carte Nassim    compté Nassim    cachée → Agathe, raison 1
+    carte porteur   compté porteur          → porteur
+  manche de porteur, texte 1 :
+    Agathe    Défavorable · raison 2         Σw 1    x 3/4  c 3/5   ℓ 22/25  q 1/10  dist 3/20    rareté 1/8    surprise 51/400
+    Nassim    Très défavorable · raison 1    Σw 1    x 1    c 3/5   ℓ 22/25  q 1/10  dist 2/5     rareté 3/8    surprise 151/400
+    Odile     Très favorable · raison 3      Σw 1    x 0    c 2/5   ℓ 22/25  q 1/10  dist 2/5     rareté 5/8    surprise 241/400
+    Valentin  Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 5/8 ; classement ['Odile', 'Nassim', 'Agathe', 'Valentin'] ; départages 0
+    remplacements [] ; places ['Odile', 'Nassim', 'Agathe'] ; raison cachée Agathe ; ordre ['Odile', 'Agathe', 'Nassim']
+    carte Odile     compté Odile            → passe
+    carte Agathe    compté Agathe    cachée → passe, raison None
+    carte Nassim    compté Nassim           → passe
+  phrase du jour (texte 2) : neutre, w 0, pôle None : « Aujourd’hui, tu n’as penché ni vers la tradition ni vers le changement. »
+  En attendant : 08:00 → ['Agathe', 'Valentin']
+  portrait : L Σw 0 c 1/2 ℓ 19/20 ; P Σw 0 c 1/2 ℓ 19/20 ; S Σw 0 c 1/2 ℓ 19/20 ; T Σw 0 c 1/2 ℓ 19/20 ; ordre de Moi ['S', 'P', 'T', 'L']
+  curseurs vus : Agathe S 1/3/5, P 1/3/5, T 0/1/2, L 1/2/5 | Nassim S 1/3/5, P 1/3/5, T 0/1/2, L 1/3/5 | Odile S 1/2/5, P 1/2/5, T 0/1/2, L 1/2/5 | Valentin S 0/1/2, P 1/2/5, T 0/1/2, L 1/3/5   (Σw/c)
+  surprises des proches : {'Agathe': [], 'Nassim': [], 'Odile': [], 'Valentin': []}
+  mesures : {'duree_deviner': 50, 'duree_repondre': 35, 'duree_seance': 152, 'jours_ecoules': 1, 'passer': 3, 'relire': 0, 'revelation_raison_tentee': None, 'revelation_verdicts': None}
+
+==============================================================================
+Séance 3 — ouverture 2026-10-21T19:08+02:00 ; versions [1] ; étapes {'deviner': True, 'repondre': True}
+  coups : réponse {'niveau': 3, 'raison': 'aucune'} ; relire 0 ; carnet {'q1': None, 'q2': 'pas_tout', 'q3': 'revelation'}
+  révélation du texte 1 :
+    Agathe    justes [False, True, True] ; raison trouvée True ; points 2 ; semaine 2
+    Nassim    justes [True, True, True] ; raison trouvée False ; points 3 ; semaine 3
+    Odile     justes [True, True, True] ; raison trouvée False ; points 3 ; semaine 3
+    Valentin  justes [True, False, True] ; raison trouvée False ; points 2 ; semaine 2
+    porteur   justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 0 ; verdicts ['passe', 'passe', 'passe']
+  manche de Agathe, texte 2 :
+    Nassim    Neutre · raison 2              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    Odile     Très défavorable · raison 1    Σw 0    x 1    c 1/2   ℓ 19/20  q 0     dist 1/2     rareté 1/2    surprise 1/2
+    Valentin  Favorable · raison 4           Σw 0    x 1/4  c 1/2   ℓ 19/20  q 0     dist 1/4     rareté 1/4    surprise 1/4
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    médiane 1/2 ; classement ['Odile', 'Valentin', 'porteur', 'Nassim'] ; départages 1
+    remplacements [] ; places ['Odile', 'Valentin', 'Nassim'] ; raison cachée Nassim ; ordre ['Odile', 'Nassim', 'Valentin']
+    rangs {'Nassim': 1, 'Odile': 3, 'Valentin': 2, 'porteur': 4} ; côtés attendus {'Nassim': 0, 'Odile': -1, 'Valentin': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 6
+    carte Odile     compté Odile            → Odile
+    carte Nassim    compté Nassim    cachée → Nassim, raison 3
+    carte Valentin  compté Valentin         → Valentin
+  manche de Odile, texte 2 :
+    Agathe    Favorable · raison 3           Σw 0    x 1/4  c 1/2   ℓ 19/20  q 0     dist 1/4     rareté 1/8    surprise 1/8
+    Nassim    Neutre · raison 2              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    Valentin  Favorable · raison 4           Σw 0    x 1/4  c 1/2   ℓ 19/20  q 0     dist 1/4     rareté 1/8    surprise 1/8
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 3/8 ; classement ['Nassim', 'Valentin', 'porteur', 'Agathe'] ; départages 1
+    remplacements [] ; places ['Nassim', 'Valentin', 'porteur'] ; raison cachée Valentin ; ordre ['Nassim', 'porteur', 'Valentin']
+    rangs {'Agathe': 3, 'Nassim': 4, 'Valentin': 2, 'porteur': 1} ; côtés attendus {'Agathe': 0, 'Nassim': 0, 'Valentin': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 6
+    carte Nassim    compté Nassim           → Agathe
+    carte porteur   compté porteur          → Nassim
+    carte Valentin  compté Valentin  cachée → Valentin, raison 4
+  manche de Valentin, texte 2 :
+    Agathe    Favorable · raison 3           Σw 0    x 1/4  c 1/2   ℓ 19/20  q 0     dist 1/4     rareté 1/4    surprise 1/4
+    Nassim    Neutre · raison 2              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    Odile     Très défavorable · raison 1    Σw 0    x 1    c 1/2   ℓ 19/20  q 0     dist 1/2     rareté 1/2    surprise 1/2
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    médiane 1/2 ; classement ['Odile', 'Agathe', 'porteur', 'Nassim'] ; départages 1
+    remplacements [] ; places ['Odile', 'Agathe', 'Nassim'] ; raison cachée Nassim ; ordre ['Nassim', 'Odile', 'Agathe']
+    rangs {'Agathe': 1, 'Nassim': 2, 'Odile': 4, 'porteur': 3} ; côtés attendus {'Agathe': 0, 'Nassim': 0, 'Odile': -1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Nassim    compté Nassim    cachée → Agathe, raison 3
+    carte Odile     compté Odile            → Odile
+    carte Agathe    compté Agathe           → Nassim
+  manche de porteur, texte 2 :
+    Agathe    Favorable · raison 3           Σw 0    x 1/4  c 1/2   ℓ 19/20  q 0     dist 1/4     rareté 1/8    surprise 1/8
+    Nassim    Neutre · raison 2              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    Odile     Très défavorable · raison 1    Σw 0    x 1    c 1/2   ℓ 19/20  q 0     dist 1/2     rareté 5/8    surprise 5/8
+    Valentin  Favorable · raison 4           Σw 0    x 1/4  c 1/2   ℓ 19/20  q 0     dist 1/4     rareté 1/8    surprise 1/8
+    médiane 3/8 ; classement ['Odile', 'Valentin', 'Nassim', 'Agathe'] ; départages 1
+    remplacements [] ; places ['Odile', 'Valentin', 'Nassim'] ; raison cachée Nassim ; ordre ['Odile', 'Valentin', 'Nassim']
+    carte Odile     compté Odile            → passe
+    carte Valentin  compté Valentin         → passe
+    carte Nassim    compté Nassim    cachée → passe, raison None
+  phrase du jour (texte 3) : neutre, w 0, pôle None : « Aujourd’hui, tu n’as penché ni vers la précaution ni vers l’innovation. »
+  En attendant : 13:00 → ['Agathe', 'Odile', 'Valentin']
+  portrait : L Σw 0 c 1/2 ℓ 19/20 ; P Σw 0 c 1/2 ℓ 19/20 ; S Σw 0 c 1/2 ℓ 19/20 ; T Σw 0 c 1/2 ℓ 19/20 ; ordre de Moi ['S', 'P', 'T', 'L']
+  curseurs vus : Agathe S 2/2/3, P 1/3/5, T 0/1/2, L 1/2/5 | Nassim S 2/2/3, P 1/3/5, T 0/1/2, L 1/3/5 | Odile S 2/1/3, P 1/2/5, T 0/1/2, L 1/2/5 | Valentin S 0/1/2, P 1/2/5, T 0/1/2, L 1/3/5   (Σw/c)
+  surprises des proches : {'Agathe': [], 'Nassim': [], 'Odile': [], 'Valentin': []}
+  mesures : {'duree_deviner': 50, 'duree_repondre': 35, 'duree_seance': 153, 'jours_ecoules': 1, 'passer': 3, 'relire': 0, 'revelation_raison_tentee': False, 'revelation_verdicts': ['passe', 'passe', 'passe']}
+
+==============================================================================
+Séance 4 — ouverture 2026-10-22T19:09+02:00 ; versions [1] ; étapes {'deviner': True, 'repondre': True}
+  coups : réponse {'niveau': 3, 'raison': 'aucune'} ; relire 0 ; carnet {'q1': None, 'q2': 'premier_coup', 'q3': 'deviner'}
+  révélation du texte 2 :
+    Agathe    justes [True, True, True] ; raison trouvée False ; points 3 ; semaine 5
+    Odile     justes [False, False, True] ; raison trouvée True ; points 1 ; semaine 4
+    Valentin  justes [False, True, False] ; raison trouvée False ; points 1 ; semaine 3
+    porteur   justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 0 ; verdicts ['passe', 'passe', 'passe']
+  manche de Agathe, texte 3 :
+    Odile     Favorable · raison 2           Σw 1    x 3/4  c 2/5   ℓ 22/25  q 1/10  dist 7/20    rareté 0      surprise 7/200
+    Valentin  Favorable · raison 2           Σw 1    x 3/4  c 2/5   ℓ 22/25  q 1/10  dist 7/20    rareté 0      surprise 7/200
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/4    surprise 1/4
+    médiane 3/4 ; classement ['porteur', 'Valentin', 'Odile'] ; départages 1
+    remplacements [] ; places ['porteur', 'Valentin', 'Odile'] ; raison cachée Odile ; ordre ['porteur', 'Odile', 'Valentin']
+    rangs {'Nassim': 2, 'Odile': 1, 'Valentin': 3, 'porteur': 4} ; côtés attendus {'Nassim': 1, 'Odile': -1, 'Valentin': -1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 4
+    carte porteur   compté porteur          → Odile
+    carte Odile     compté Odile     cachée → Nassim, raison 2
+    carte Valentin  compté Valentin         → porteur
+  manche de Nassim, texte 3 :
+    Agathe    Favorable · raison 2           Σw 1    x 3/4  c 3/5   ℓ 22/25  q 1/10  dist 3/20    rareté 0      surprise 3/200
+    Odile     Favorable · raison 2           Σw 1    x 3/4  c 2/5   ℓ 22/25  q 1/10  dist 7/20    rareté 0      surprise 7/200
+    Valentin  Favorable · raison 2           Σw 1    x 3/4  c 2/5   ℓ 22/25  q 1/10  dist 7/20    rareté 0      surprise 7/200
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/4    surprise 1/4
+    médiane 3/4 ; classement ['porteur', 'Valentin', 'Odile', 'Agathe'] ; départages 1
+    remplacements [] ; places ['porteur', 'Valentin', 'Odile'] ; raison cachée Odile ; ordre ['Valentin', 'porteur', 'Odile']
+    rangs {'Agathe': 2, 'Odile': 4, 'Valentin': 1, 'porteur': 3} ; côtés attendus {'Agathe': 1, 'Odile': -1, 'Valentin': -1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 4
+    carte Valentin  compté Odile            → Agathe
+    carte porteur   compté porteur          → Valentin
+    carte Odile     compté Valentin  cachée → porteur, raison 3
+  manche de Odile, texte 3 :
+    Agathe    Favorable · raison 2           Σw 1    x 3/4  c 3/5   ℓ 22/25  q 1/10  dist 3/20    rareté 0      surprise 3/200
+    Valentin  Favorable · raison 2           Σw 1    x 3/4  c 2/5   ℓ 22/25  q 1/10  dist 7/20    rareté 0      surprise 7/200
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/4    surprise 1/4
+    médiane 3/4 ; classement ['porteur', 'Valentin', 'Agathe'] ; départages 0
+    remplacements [] ; places ['porteur', 'Valentin', 'Agathe'] ; raison cachée Agathe ; ordre ['Agathe', 'porteur', 'Valentin']
+    rangs {'Agathe': 4, 'Nassim': 2, 'Valentin': 3, 'porteur': 1} ; côtés attendus {'Agathe': 1, 'Nassim': 1, 'Valentin': -1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Agathe    compté Valentin  cachée → Nassim, raison 2
+    carte porteur   compté porteur          → porteur
+    carte Valentin  compté Agathe           → Agathe
+  manche de Valentin, texte 3 :
+    Agathe    Favorable · raison 2           Σw 1    x 3/4  c 3/5   ℓ 22/25  q 1/10  dist 3/20    rareté 0      surprise 3/200
+    Odile     Favorable · raison 2           Σw 1    x 3/4  c 2/5   ℓ 22/25  q 1/10  dist 7/20    rareté 0      surprise 7/200
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/4    surprise 1/4
+    médiane 3/4 ; classement ['porteur', 'Odile', 'Agathe'] ; départages 0
+    remplacements [] ; places ['porteur', 'Odile', 'Agathe'] ; raison cachée Agathe ; ordre ['Agathe', 'Odile', 'porteur']
+    rangs {'Agathe': 1, 'Nassim': 3, 'Odile': 2, 'porteur': 4} ; côtés attendus {'Agathe': 1, 'Nassim': 1, 'Odile': -1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Agathe    compté Agathe    cachée → Agathe, raison 2
+    carte Odile     compté Odile            → Nassim
+    carte porteur   compté porteur          → Odile
+  manche de porteur, texte 3 :
+    Agathe    Favorable · raison 2           Σw 1    x 3/4  c 3/5   ℓ 22/25  q 1/10  dist 3/20    rareté 0      surprise 3/200
+    Odile     Favorable · raison 2           Σw 1    x 3/4  c 2/5   ℓ 22/25  q 1/10  dist 7/20    rareté 0      surprise 7/200
+    Valentin  Favorable · raison 2           Σw 1    x 3/4  c 2/5   ℓ 22/25  q 1/10  dist 7/20    rareté 0      surprise 7/200
+    médiane 3/4 ; classement ['Odile', 'Valentin', 'Agathe'] ; départages 1
+    remplacements [] ; places ['Odile', 'Valentin', 'Agathe'] ; raison cachée Agathe ; ordre ['Odile', 'Valentin', 'Agathe']
+    carte Odile     compté Agathe           → passe
+    carte Valentin  compté Odile            → passe
+    carte Agathe    compté Valentin  cachée → passe, raison None
+  phrase du jour (texte 4) : neutre, w 0, pôle None : « Aujourd’hui, tu n’as penché ni vers la sécurité ni vers la liberté. »
+  En attendant : 09:30 → ['Agathe', 'Odile', 'Valentin']
+  portrait : L Σw 0 c 1/2 ℓ 19/20 ; P Σw 0 c 1/2 ℓ 19/20 ; S Σw 0 c 1/2 ℓ 19/20 ; T Σw 0 c 1/2 ℓ 19/20 ; ordre de Moi ['S', 'P', 'T', 'L']
+  curseurs vus : Agathe S 2/2/3, P 1/3/5, T 1/2/4/9, L 1/2/5 | Nassim S 2/2/3, P 1/3/5, T 0/1/2, L 1/3/5 | Odile S 2/1/3, P 1/2/5, T 1/3/5, L 1/2/5 | Valentin S 0/1/2, P 1/2/5, T 1/2/5, L 1/3/5   (Σw/c)
+  surprises des proches : {'Agathe': [], 'Nassim': [], 'Odile': [], 'Valentin': []}
+  mesures : {'duree_deviner': 50, 'duree_repondre': 35, 'duree_seance': 154, 'jours_ecoules': 1, 'passer': 3, 'relire': 0, 'revelation_raison_tentee': False, 'revelation_verdicts': ['passe', 'passe', 'passe']}
+
+==============================================================================
+Séance 5 — ouverture 2026-10-23T19:10+02:00 ; versions [1] ; étapes {'deviner': True, 'repondre': True}
+  coups : réponse {'niveau': 3, 'raison': 'aucune'} ; relire 0 ; carnet {'q1': None, 'q2': 'en_relisant', 'q3': 'donner_avis'}
+  révélation du texte 3 :
+    Agathe    justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 5
+    Nassim    justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 3
+    Odile     justes [False, True, True] ; raison trouvée False ; points 2 ; semaine 6
+    Valentin  justes [True, False, False] ; raison trouvée True ; points 1 ; semaine 4
+    porteur   justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 0 ; verdicts ['passe', 'passe', 'passe']
+  manche de Agathe, texte 4 :
+    Nassim    Très défavorable · raison 1    Σw 2    x 1    c 2/3   ℓ 81/100 q 1/5   dist 1/3     rareté 1/2    surprise 7/15
+    Odile     Très favorable · raison 2      Σw 2    x 0    c 1/3   ℓ 81/100 q 1/5   dist 1/3     rareté 1/2    surprise 7/15
+    Valentin  Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    médiane 1/2 ; classement ['Nassim', 'Odile', 'porteur', 'Valentin'] ; départages 2
+    remplacements [] ; places ['Nassim', 'Odile', 'Valentin'] ; raison cachée Odile ; ordre ['Valentin', 'Nassim', 'Odile']
+    rangs {'Nassim': 3, 'Odile': 2, 'Valentin': 4, 'porteur': 1} ; côtés attendus {'Nassim': -1, 'Odile': 1, 'Valentin': 0, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 6
+    carte Valentin  compté Valentin         → Valentin
+    carte Nassim    compté Nassim           → Nassim
+    carte Odile     compté Odile     cachée → Odile, raison 2
+  manche de Nassim, texte 4 :
+    Agathe    Défavorable · raison 4         Σw 2    x 3/4  c 2/3   ℓ 81/100 q 1/5   dist 1/12    rareté 1/4    surprise 13/60
+    Odile     Très favorable · raison 2      Σw 2    x 0    c 1/3   ℓ 81/100 q 1/5   dist 1/3     rareté 1/2    surprise 7/15
+    Valentin  Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    médiane 1/2 ; classement ['Odile', 'Agathe', 'porteur', 'Valentin'] ; départages 1
+    remplacements [] ; places ['Odile', 'Agathe', 'porteur'] ; raison cachée Agathe ; ordre ['Odile', 'Agathe', 'porteur']
+    rangs {'Agathe': 1, 'Odile': 3, 'Valentin': 4, 'porteur': 2} ; côtés attendus {'Agathe': -1, 'Odile': 1, 'Valentin': 0, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 6
+    carte Odile     compté Odile            → Odile
+    carte Agathe    compté Agathe    cachée → Agathe, raison 1
+    carte porteur   compté porteur          → Valentin
+  manche de Odile, texte 4 :
+    Agathe    Défavorable · raison 4         Σw 2    x 3/4  c 2/3   ℓ 81/100 q 1/5   dist 1/12    rareté 1/8    surprise 7/60
+    Nassim    Très défavorable · raison 1    Σw 2    x 1    c 2/3   ℓ 81/100 q 1/5   dist 1/3     rareté 3/8    surprise 11/30
+    Valentin  Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 5/8 ; classement ['Nassim', 'porteur', 'Valentin', 'Agathe'] ; départages 1
+    remplacements [{'ecartee': 'Valentin', 'place': 3, 'remplacante': 'Agathe'}] ; places ['Nassim', 'porteur', 'Agathe'] ; raison cachée Agathe ; ordre ['porteur', 'Nassim', 'Agathe']
+    rangs {'Agathe': 2, 'Nassim': 4, 'Valentin': 1, 'porteur': 3} ; côtés attendus {'Agathe': -1, 'Nassim': -1, 'Valentin': 0, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 6
+    carte porteur   compté porteur          → Valentin
+    carte Nassim    compté Nassim           → Agathe
+    carte Agathe    compté Agathe    cachée → Nassim, raison 1
+  manche de porteur, texte 4 :
+    Agathe    Défavorable · raison 4         Σw 2    x 3/4  c 2/3   ℓ 81/100 q 1/5   dist 1/12    rareté 1/8    surprise 7/60
+    Nassim    Très défavorable · raison 1    Σw 2    x 1    c 2/3   ℓ 81/100 q 1/5   dist 1/3     rareté 3/8    surprise 11/30
+    Odile     Très favorable · raison 2      Σw 2    x 0    c 1/3   ℓ 81/100 q 1/5   dist 1/3     rareté 5/8    surprise 17/30
+    Valentin  Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 5/8 ; classement ['Odile', 'Nassim', 'Valentin', 'Agathe'] ; départages 0
+    remplacements [] ; places ['Odile', 'Nassim', 'Valentin'] ; raison cachée Nassim ; ordre ['Valentin', 'Odile', 'Nassim']
+    carte Valentin  compté Valentin         → passe
+    carte Odile     compté Odile            → passe
+    carte Nassim    compté Nassim    cachée → passe, raison None
+  phrase du jour (texte 5) : neutre, w 0, pôle None : « Aujourd’hui, tu n’as penché ni vers la décision locale ni vers la décision nationale. »
+  En attendant : 23:59 → []
+  portrait : L Σw 0 c 1/2 ℓ 19/20 ; P Σw 0 c 1/2 ℓ 19/20 ; S Σw 0 c 1/2 ℓ 19/20 ; T Σw 0 c 1/2 ℓ 19/20 ; ordre de Moi ['S', 'P', 'T', 'L']
+  curseurs vus : Agathe S 2/2/3, P 2/2/3, T 1/2/4/9, L 1/2/5 | Nassim S 2/2/3, P 1/3/5, T 0/1/2, L 1/3/5 | Odile S 2/1/3, P 2/1/2, T 1/3/5, L 1/2/5 | Valentin S 0/1/2, P 2/1/2, T 1/2/5, L 1/3/5   (Σw/c)
+  surprises des proches : {'Agathe': [], 'Nassim': [], 'Odile': [], 'Valentin': []}
+  mesures : {'duree_deviner': 50, 'duree_repondre': 35, 'duree_seance': 155, 'jours_ecoules': 1, 'passer': 3, 'relire': 0, 'revelation_raison_tentee': False, 'revelation_verdicts': ['passe', 'passe', 'passe']}
+
+==============================================================================
+Séance 6 — ouverture 2026-10-24T19:11+02:00 ; versions [1] ; étapes {'deviner': True, 'repondre': True}
+  coups : réponse {'niveau': 3, 'raison': 'aucune'} ; relire 0 ; carnet {'q1': None, 'q2': None, 'q3': 'phrase_jour'}
+  révélation du texte 4 :
+    Agathe    justes [True, True, True] ; raison trouvée True ; points 3 ; semaine 8
+    Nassim    justes [True, True, False] ; raison trouvée False ; points 2 ; semaine 5
+    Odile     justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 6
+    porteur   justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 0 ; verdicts ['passe', 'passe', 'passe']
+  manche de Agathe, texte 5 :
+    Nassim    Favorable · raison 4           Σw 1    x 1/4  c 3/5   ℓ 22/25  q 1/10  dist 7/20    rareté 0      surprise 7/200
+    Odile     Très favorable · raison 2      Σw 1    x 0    c 2/5   ℓ 22/25  q 1/10  dist 2/5     rareté 1/4    surprise 53/200
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/4    surprise 1/4
+    médiane 1/4 ; classement ['Odile', 'porteur', 'Nassim'] ; départages 0
+    remplacements [] ; places ['Odile', 'porteur', 'Nassim'] ; raison cachée Nassim ; ordre ['Nassim', 'porteur', 'Odile']
+    rangs {'Nassim': 2, 'Odile': 1, 'Valentin': 4, 'porteur': 3} ; côtés attendus {'Nassim': -1, 'Odile': 1, 'Valentin': -1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 4
+    carte Nassim    compté Nassim    cachée → Odile, raison 2
+    carte porteur   compté porteur          → Nassim
+    carte Odile     compté Odile            → porteur
+  manche de Nassim, texte 5 :
+    Agathe    Favorable · raison 2           Σw 1    x 1/4  c 2/5   ℓ 22/25  q 1/10  dist 3/20    rareté 0      surprise 3/200
+    Odile     Très favorable · raison 2      Σw 1    x 0    c 2/5   ℓ 22/25  q 1/10  dist 2/5     rareté 1/4    surprise 53/200
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/4    surprise 1/4
+    médiane 1/4 ; classement ['Odile', 'porteur', 'Agathe'] ; départages 0
+    remplacements [] ; places ['Odile', 'porteur', 'Agathe'] ; raison cachée Agathe ; ordre ['porteur', 'Odile', 'Agathe']
+    rangs {'Agathe': 3, 'Odile': 4, 'Valentin': 2, 'porteur': 1} ; côtés attendus {'Agathe': 1, 'Odile': 1, 'Valentin': -1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte porteur   compté porteur          → porteur
+    carte Odile     compté Odile            → Agathe
+    carte Agathe    compté Agathe    cachée → Odile, raison 2
+  manche de Odile, texte 5 :
+    Agathe    Favorable · raison 2           Σw 1    x 1/4  c 2/5   ℓ 22/25  q 1/10  dist 3/20    rareté 0      surprise 3/200
+    Nassim    Favorable · raison 4           Σw 1    x 1/4  c 3/5   ℓ 22/25  q 1/10  dist 7/20    rareté 0      surprise 7/200
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/4    surprise 1/4
+    médiane 1/4 ; classement ['porteur', 'Nassim', 'Agathe'] ; départages 0
+    remplacements [] ; places ['porteur', 'Nassim', 'Agathe'] ; raison cachée Agathe ; ordre ['porteur', 'Nassim', 'Agathe']
+    rangs {'Agathe': 2, 'Nassim': 1, 'Valentin': 4, 'porteur': 3} ; côtés attendus {'Agathe': 1, 'Nassim': -1, 'Valentin': -1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 4
+    carte porteur   compté porteur          → Nassim
+    carte Nassim    compté Nassim           → Agathe
+    carte Agathe    compté Agathe    cachée → porteur, raison 2
+  manche de Valentin, texte 5 :
+    Agathe    Favorable · raison 2           Σw 1    x 1/4  c 2/5   ℓ 22/25  q 1/10  dist 3/20    rareté 0      surprise 3/200
+    Nassim    Favorable · raison 4           Σw 1    x 1/4  c 3/5   ℓ 22/25  q 1/10  dist 7/20    rareté 0      surprise 7/200
+    Odile     Très favorable · raison 2      Σw 1    x 0    c 2/5   ℓ 22/25  q 1/10  dist 2/5     rareté 1/4    surprise 53/200
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/4    surprise 1/4
+    médiane 1/4 ; classement ['Odile', 'porteur', 'Nassim', 'Agathe'] ; départages 0
+    remplacements [] ; places ['Odile', 'porteur', 'Nassim'] ; raison cachée Nassim ; ordre ['porteur', 'Nassim', 'Odile']
+    rangs {'Agathe': 1, 'Nassim': 3, 'Odile': 4, 'porteur': 2} ; côtés attendus {'Agathe': 1, 'Nassim': -1, 'Odile': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte porteur   compté porteur          → porteur
+    carte Nassim    compté Nassim    cachée → Agathe, raison 2
+    carte Odile     compté Odile            → Odile
+  manche de porteur, texte 5 :
+    Agathe    Favorable · raison 2           Σw 1    x 1/4  c 2/5   ℓ 22/25  q 1/10  dist 3/20    rareté 0      surprise 3/200
+    Nassim    Favorable · raison 4           Σw 1    x 1/4  c 3/5   ℓ 22/25  q 1/10  dist 7/20    rareté 0      surprise 7/200
+    Odile     Très favorable · raison 2      Σw 1    x 0    c 2/5   ℓ 22/25  q 1/10  dist 2/5     rareté 1/4    surprise 53/200
+    médiane 1/4 ; classement ['Odile', 'Nassim', 'Agathe'] ; départages 0
+    remplacements [] ; places ['Odile', 'Nassim', 'Agathe'] ; raison cachée Agathe ; ordre ['Nassim', 'Odile', 'Agathe']
+    carte Nassim    compté Nassim           → passe
+    carte Odile     compté Odile            → passe
+    carte Agathe    compté Agathe    cachée → passe, raison None
+  phrase du jour (texte 6) : neutre, w 0, pôle None : « Aujourd’hui, tu n’as penché ni vers la tradition ni vers le changement. »
+  En attendant : 12:45 → ['Agathe', 'Nassim', 'Odile', 'Valentin']
+  portrait : L Σw 0 c 1/2 ℓ 19/20 ; P Σw 0 c 1/2 ℓ 19/20 ; S Σw 0 c 1/2 ℓ 19/20 ; T Σw 0 c 1/2 ℓ 19/20 ; ordre de Moi ['S', 'P', 'T', 'L']
+  curseurs vus : Agathe S 3/5/7, P 2/2/3, T 1/2/4/9, L 1/2/5 | Nassim S 3/5/7, P 1/3/5, T 0/1/2, L 1/3/5 | Odile S 3/2/7, P 2/1/2, T 1/3/5, L 1/2/5 | Valentin S 0/1/2, P 2/1/2, T 1/2/5, L 1/3/5   (Σw/c)
+  surprises des proches : {'Agathe': [], 'Nassim': [], 'Odile': [], 'Valentin': []}
+  mesures : {'duree_deviner': 50, 'duree_repondre': 35, 'duree_seance': 156, 'jours_ecoules': 1, 'passer': 3, 'relire': 0, 'revelation_raison_tentee': False, 'revelation_verdicts': ['passe', 'passe', 'passe']}
+
+==============================================================================
+Séance 7 — ouverture 2026-10-25T19:12+01:00 ; versions [1] ; étapes {'deviner': True, 'repondre': True}
+  coups : réponse {'niveau': 3, 'raison': 'aucune'} ; relire 0 ; carnet {'q1': None, 'q2': 'premier_coup', 'q3': 'titres'}
+  révélation du texte 5 :
+    Agathe    justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 8
+    Nassim    justes [True, False, False] ; raison trouvée False ; points 1 ; semaine 6
+    Odile     justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 6
+    Valentin  justes [True, False, True] ; raison trouvée False ; points 2 ; semaine 6
+    porteur   justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 0 ; verdicts ['passe', 'passe', 'passe']
+  dimanche, semaine 1 :
+    Sans-Faute [] ; Pas de Côté []
+    Devin Agathe (aucun) ; points {'Agathe': 8, 'Nassim': 6, 'Odile': 6, 'Valentin': 6, 'porteur': 0} ; raisons {'Agathe': 2, 'Nassim': 0, 'Odile': 1, 'Valentin': 1, 'porteur': 0}
+    Mystère porteur (aucun) ; tentatives {'Agathe': 9, 'Nassim': 11, 'Odile': 13, 'Valentin': 8, 'porteur': 13} ; erreurs {'Agathe': 4, 'Nassim': 7, 'Odile': 5, 'Valentin': 3, 'porteur': 9}
+    Fidèle ['Agathe', 'Odile', 'porteur']
+    surprise : texte 3 (tirage) ; attributions {'1': 12, '2': 9, '3': 12, '4': 9, '5': 12} ; erreurs {'1': 2, '2': 4, '3': 9, '4': 4, '5': 9}
+    phrase de la semaine : cas floue, tension None ; poids {'L': {'comptent': 0, 'pole0': '0', 'pole1': '0'}, 'P': {'comptent': 0, 'pole0': '0', 'pole1': '0'}, 'S': {'comptent': 0, 'pole0': '0', 'pole1': '0'}, 'T': {'comptent': 0, 'pole0': '0', 'pole1': '0'}}
+      « Cette semaine, ton portrait est encore flou. Chaque réponse le précise. »
+  manche de Agathe, texte 6 :
+    Nassim    Neutre · raison 1              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    Odile     Défavorable · raison 4         Σw 1    x 1/4  c 3/5   ℓ 22/25  q 1/10  dist 7/20    rareté 1/8    surprise 59/400
+    Valentin  Défavorable · raison 4         Σw 1    x 1/4  c 2/5   ℓ 22/25  q 1/10  dist 3/20    rareté 1/8    surprise 51/400
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 3/8 ; classement ['Odile', 'Valentin', 'porteur', 'Nassim'] ; départages 1
+    remplacements [{'ecartee': 'Valentin', 'place': 2, 'remplacante': 'Nassim'}] ; places ['Odile', 'Nassim', 'porteur'] ; raison cachée Nassim ; ordre ['porteur', 'Odile', 'Nassim']
+    rangs {'Nassim': 1, 'Odile': 4, 'Valentin': 3, 'porteur': 2} ; côtés attendus {'Nassim': 0, 'Odile': 1, 'Valentin': -1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte porteur   compté porteur          → Nassim
+    carte Odile     compté Odile            → Valentin
+    carte Nassim    compté Nassim    cachée → porteur, raison 1
+  manche de Nassim, texte 6 :
+    Agathe    Neutre · raison aucune         Σw 1/2  x 1/2  c 4/9   ℓ 183/200 q 1/20  dist 1/18    rareté 1/8    surprise 35/288
+    Odile     Défavorable · raison 4         Σw 1    x 1/4  c 3/5   ℓ 22/25  q 1/10  dist 7/20    rareté 1/8    surprise 59/400
+    Valentin  Défavorable · raison 4         Σw 1    x 1/4  c 2/5   ℓ 22/25  q 1/10  dist 3/20    rareté 1/8    surprise 51/400
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 3/8 ; classement ['Odile', 'Valentin', 'porteur', 'Agathe'] ; départages 0
+    remplacements [] ; places ['Odile', 'Valentin', 'Agathe'] ; raison cachée Valentin ; ordre ['Odile', 'Agathe', 'Valentin']
+    rangs {'Agathe': 4, 'Odile': 1, 'Valentin': 2, 'porteur': 3} ; côtés attendus {'Agathe': 0, 'Odile': 1, 'Valentin': -1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Odile     compté Valentin         → Valentin
+    carte Agathe    compté Agathe           → Agathe
+    carte Valentin  compté Odile     cachée → porteur, raison 2
+  manche de Odile, texte 6 :
+    Agathe    Neutre · raison aucune         Σw 1/2  x 1/2  c 4/9   ℓ 183/200 q 1/20  dist 1/18    rareté 0      surprise 1/360
+    Nassim    Neutre · raison 1              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    Valentin  Défavorable · raison 4         Σw 1    x 1/4  c 2/5   ℓ 22/25  q 1/10  dist 3/20    rareté 1/4    surprise 6/25
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    médiane 1/2 ; classement ['Valentin', 'Agathe', 'Nassim', 'porteur'] ; départages 1
+    remplacements [{'ecartee': 'porteur', 'place': 3, 'remplacante': 'Nassim'}] ; places ['Valentin', 'Agathe', 'Nassim'] ; raison cachée Nassim ; ordre ['Nassim', 'Valentin', 'Agathe']
+    rangs {'Agathe': 1, 'Nassim': 3, 'Valentin': 2, 'porteur': 4} ; côtés attendus {'Agathe': 0, 'Nassim': 0, 'Valentin': -1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 6
+    carte Nassim    compté Nassim    cachée → Agathe, raison 1
+    carte Valentin  compté Valentin         → Valentin
+    carte Agathe    compté Agathe           → Nassim
+  manche de Valentin, texte 6 :
+    Agathe    Neutre · raison aucune         Σw 1/2  x 1/2  c 4/9   ℓ 183/200 q 1/20  dist 1/18    rareté 0      surprise 1/360
+    Nassim    Neutre · raison 1              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    Odile     Défavorable · raison 4         Σw 1    x 1/4  c 3/5   ℓ 22/25  q 1/10  dist 7/20    rareté 1/4    surprise 13/50
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    médiane 1/2 ; classement ['Odile', 'Agathe', 'Nassim', 'porteur'] ; départages 1
+    remplacements [{'ecartee': 'porteur', 'place': 3, 'remplacante': 'Nassim'}] ; places ['Odile', 'Agathe', 'Nassim'] ; raison cachée Nassim ; ordre ['Nassim', 'Agathe', 'Odile']
+    rangs {'Agathe': 3, 'Nassim': 2, 'Odile': 4, 'porteur': 1} ; côtés attendus {'Agathe': 0, 'Nassim': 0, 'Odile': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Nassim    compté Nassim    cachée → Nassim, raison 1
+    carte Agathe    compté Agathe           → Agathe
+    carte Odile     compté Odile            → porteur
+  manche de porteur, texte 6 :
+    Agathe    Neutre · raison aucune         Σw 1/2  x 1/2  c 4/9   ℓ 183/200 q 1/20  dist 1/18    rareté 1/8    surprise 35/288
+    Nassim    Neutre · raison 1              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    Odile     Défavorable · raison 4         Σw 1    x 1/4  c 3/5   ℓ 22/25  q 1/10  dist 7/20    rareté 1/8    surprise 59/400
+    Valentin  Défavorable · raison 4         Σw 1    x 1/4  c 2/5   ℓ 22/25  q 1/10  dist 3/20    rareté 1/8    surprise 51/400
+    médiane 3/8 ; classement ['Odile', 'Valentin', 'Nassim', 'Agathe'] ; départages 0
+    remplacements [{'ecartee': 'Valentin', 'place': 2, 'remplacante': 'Nassim'}] ; places ['Odile', 'Nassim', 'Agathe'] ; raison cachée Nassim ; ordre ['Odile', 'Nassim', 'Agathe']
+    carte Odile     compté Odile            → passe
+    carte Nassim    compté Nassim    cachée → passe, raison None
+    carte Agathe    compté Agathe           → passe
+  phrase du jour (texte 7) : neutre, w 0, pôle None : « Aujourd’hui, tu n’as penché ni vers la sécurité ni vers la liberté. »
+  En attendant : 07:40 → ['Agathe', 'Valentin']
+  portrait : L Σw 0 c 1/2 ℓ 19/20 ; P Σw 0 c 1/2 ℓ 19/20 ; S Σw 0 c 1/2 ℓ 19/20 ; T Σw 0 c 1/2 ℓ 19/20 ; ordre de Moi ['S', 'P', 'T', 'L']
+  curseurs vus : Agathe S 3/5/7, P 2/2/3, T 1/2/4/9, L 2/1/3 | Nassim S 3/5/7, P 1/3/5, T 0/1/2, L 2/1/2 | Odile S 3/2/7, P 2/1/2, T 1/3/5, L 2/1/3 | Valentin S 0/1/2, P 2/1/2, T 1/2/5, L 1/3/5   (Σw/c)
+  surprises des proches : {'Agathe': [], 'Nassim': [], 'Odile': [], 'Valentin': []}
+  mesures : {'duree_deviner': 50, 'duree_repondre': 35, 'duree_seance': 157, 'jours_ecoules': 1, 'passer': 3, 'relire': 0, 'revelation_raison_tentee': False, 'revelation_verdicts': ['passe', 'passe', 'passe']}
+
+==============================================================================
+Séance 8 — ouverture 2026-10-26T19:13+01:00 ; versions [1] ; étapes {'deviner': True, 'repondre': True}
+  coups : réponse {'niveau': 3, 'raison': 'aucune'} ; relire 0 ; carnet {'q1': None, 'q2': 'en_relisant', 'q3': 'aucun'}
+  révélation du texte 6 :
+    Agathe    justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 0
+    Nassim    justes [True, True, False] ; raison trouvée False ; points 2 ; semaine 2
+    Odile     justes [False, True, False] ; raison trouvée False ; points 1 ; semaine 1
+    Valentin  justes [True, True, False] ; raison trouvée True ; points 2 ; semaine 2
+    porteur   justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 0 ; verdicts ['passe', 'passe', 'passe']
+  manche de Agathe, texte 7 :
+    Nassim    Défavorable · raison 2         Σw 3    x 1/4  c 5/7   ℓ 37/50  q 3/10  dist 13/28   rareté 1/8    surprise 127/560
+    Odile     Très défavorable · raison 2    Σw 3    x 0    c 2/7   ℓ 37/50  q 3/10  dist 2/7     rareté 3/8    surprise 39/112
+    Valentin  Neutre · raison 4              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 3/8 ; classement ['Odile', 'Nassim', 'porteur', 'Valentin'] ; départages 1
+    remplacements [] ; places ['Odile', 'Nassim', 'Valentin'] ; raison cachée Valentin ; ordre ['Valentin', 'Odile', 'Nassim']
+    rangs {'Nassim': 1, 'Odile': 3, 'Valentin': 4, 'porteur': 2} ; côtés attendus {'Nassim': 1, 'Odile': -1, 'Valentin': 0, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Valentin  compté Valentin  cachée → Valentin, raison 4
+    carte Odile     compté Odile            → porteur
+    carte Nassim    compté Nassim           → Odile
+  manche de Nassim, texte 7 :
+    Agathe    Favorable · raison 3           Σw 3    x 3/4  c 5/7   ℓ 37/50  q 3/10  dist 1/28    rareté 1/4    surprise 13/70
+    Odile     Très défavorable · raison 2    Σw 3    x 0    c 2/7   ℓ 37/50  q 3/10  dist 2/7     rareté 1/2    surprise 61/140
+    Valentin  Neutre · raison 4              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    médiane 1/2 ; classement ['Odile', 'Agathe', 'Valentin', 'porteur'] ; départages 1
+    remplacements [] ; places ['Odile', 'Agathe', 'Valentin'] ; raison cachée Valentin ; ordre ['Odile', 'Agathe', 'Valentin']
+    rangs {'Agathe': 2, 'Odile': 3, 'Valentin': 1, 'porteur': 4} ; côtés attendus {'Agathe': 1, 'Odile': -1, 'Valentin': 0, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 6
+    carte Odile     compté Odile            → Odile
+    carte Agathe    compté Agathe           → Agathe
+    carte Valentin  compté Valentin  cachée → Valentin, raison 4
+  manche de Odile, texte 7 :
+    Agathe    Favorable · raison 3           Σw 3    x 3/4  c 5/7   ℓ 37/50  q 3/10  dist 1/28    rareté 1/4    surprise 13/70
+    Nassim    Défavorable · raison 2         Σw 3    x 1/4  c 5/7   ℓ 37/50  q 3/10  dist 13/28   rareté 1/4    surprise 11/35
+    Valentin  Neutre · raison 4              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    médiane 1/2 ; classement ['Nassim', 'Agathe', 'Valentin', 'porteur'] ; départages 1
+    remplacements [] ; places ['Nassim', 'Agathe', 'Valentin'] ; raison cachée Valentin ; ordre ['Agathe', 'Valentin', 'Nassim']
+    rangs {'Agathe': 4, 'Nassim': 3, 'Valentin': 1, 'porteur': 2} ; côtés attendus {'Agathe': 1, 'Nassim': 1, 'Valentin': 0, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Agathe    compté Agathe           → Nassim
+    carte Valentin  compté Valentin  cachée → Valentin, raison 4
+    carte Nassim    compté Nassim           → porteur
+  manche de Valentin, texte 7 :
+    Agathe    Favorable · raison 3           Σw 3    x 3/4  c 5/7   ℓ 37/50  q 3/10  dist 1/28    rareté 3/8    surprise 153/560
+    Nassim    Défavorable · raison 2         Σw 3    x 1/4  c 5/7   ℓ 37/50  q 3/10  dist 13/28   rareté 1/8    surprise 127/560
+    Odile     Très défavorable · raison 2    Σw 3    x 0    c 2/7   ℓ 37/50  q 3/10  dist 2/7     rareté 3/8    surprise 39/112
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 3/8 ; classement ['Odile', 'Agathe', 'Nassim', 'porteur'] ; départages 0
+    remplacements [] ; places ['Odile', 'Agathe', 'Nassim'] ; raison cachée Nassim ; ordre ['Nassim', 'Odile', 'Agathe']
+    rangs {'Agathe': 2, 'Nassim': 4, 'Odile': 1, 'porteur': 3} ; côtés attendus {'Agathe': 1, 'Nassim': 1, 'Odile': -1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Nassim    compté Nassim    cachée → Odile, raison 1
+    carte Odile     compté Odile            → porteur
+    carte Agathe    compté Agathe           → Agathe
+  manche de porteur, texte 7 :
+    Agathe    Favorable · raison 3           Σw 3    x 3/4  c 5/7   ℓ 37/50  q 3/10  dist 1/28    rareté 3/8    surprise 153/560
+    Nassim    Défavorable · raison 2         Σw 3    x 1/4  c 5/7   ℓ 37/50  q 3/10  dist 13/28   rareté 1/8    surprise 127/560
+    Odile     Très défavorable · raison 2    Σw 3    x 0    c 2/7   ℓ 37/50  q 3/10  dist 2/7     rareté 3/8    surprise 39/112
+    Valentin  Neutre · raison 4              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 3/8 ; classement ['Odile', 'Agathe', 'Nassim', 'Valentin'] ; départages 0
+    remplacements [] ; places ['Odile', 'Agathe', 'Valentin'] ; raison cachée Valentin ; ordre ['Agathe', 'Odile', 'Valentin']
+    carte Agathe    compté Agathe           → passe
+    carte Odile     compté Odile            → passe
+    carte Valentin  compté Valentin  cachée → passe, raison None
+  phrase du jour (texte 8) : neutre, w 0, pôle None : « Aujourd’hui, tu n’as penché ni vers la précaution ni vers l’innovation. »
+  En attendant : 00:15 → ['Valentin']
+  portrait : L Σw 0 c 1/2 ℓ 19/20 ; P Σw 0 c 1/2 ℓ 19/20 ; S Σw 0 c 1/2 ℓ 19/20 ; T Σw 0 c 1/2 ℓ 19/20 ; ordre de Moi ['S', 'P', 'T', 'L']
+  curseurs vus : Agathe S 3/5/7, P 2/2/3, T 1/2/4/9, L 2/1/3 | Nassim S 3/5/7, P 1/3/5, T 0/1/2, L 2/1/2 | Odile S 3/2/7, P 2/1/2, T 2/1/2, L 2/1/3 | Valentin S 0/1/2, P 2/1/2, T 2/1/3, L 1/3/5   (Σw/c)
+  surprises des proches : {'Agathe': [], 'Nassim': [], 'Odile': [], 'Valentin': []}
+  mesures : {'duree_deviner': 50, 'duree_repondre': 35, 'duree_seance': 158, 'jours_ecoules': 1, 'passer': 3, 'relire': 0, 'revelation_raison_tentee': False, 'revelation_verdicts': ['passe', 'passe', 'passe']}
+
+==============================================================================
+Séance 9 — ouverture 2026-10-27T19:14+01:00 ; versions [1] ; étapes {'deviner': True, 'repondre': True}
+  coups : réponse {'niveau': 3, 'raison': 'aucune'} ; relire 0 ; carnet {'q1': None, 'q2': 'pas_tout', 'q3': 'revelation'}
+  révélation du texte 7 :
+    Agathe    justes [True, False, False] ; raison trouvée True ; points 1 ; semaine 1
+    Nassim    justes [True, True, True] ; raison trouvée True ; points 3 ; semaine 5
+    Odile     justes [False, True, False] ; raison trouvée True ; points 1 ; semaine 2
+    Valentin  justes [False, False, True] ; raison trouvée False ; points 1 ; semaine 3
+    porteur   justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 0 ; verdicts ['passe', 'passe', 'passe']
+  manche de Agathe, texte 8 :
+    Nassim    Défavorable · raison 3         Σw 1    x 3/4  c 3/5   ℓ 22/25  q 1/10  dist 3/20    rareté 1/8    surprise 51/400
+    Odile     Très favorable · raison 1      Σw 2    x 0    c 1/2   ℓ 81/100 q 1/5   dist 1/2     rareté 5/8    surprise 3/5
+    Valentin  Défavorable · raison 3         Σw 2    x 3/4  c 1/2   ℓ 81/100 q 1/5   dist 1/4     rareté 1/8    surprise 3/20
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 5/8 ; classement ['Odile', 'Valentin', 'Nassim', 'porteur'] ; départages 0
+    remplacements [] ; places ['Odile', 'Valentin', 'porteur'] ; raison cachée Valentin ; ordre ['Odile', 'Valentin', 'porteur']
+    rangs {'Nassim': 4, 'Odile': 1, 'Valentin': 2, 'porteur': 3} ; côtés attendus {'Nassim': -1, 'Odile': 1, 'Valentin': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Odile     compté Odile            → Odile
+    carte Valentin  compté Valentin  cachée → Nassim, raison 3
+    carte porteur   compté porteur          → Valentin
+  manche de Nassim, texte 8 :
+    Agathe    Défavorable · raison 3         Σw 2    x 3/4  c 2/3   ℓ 81/100 q 1/5   dist 1/12    rareté 1/8    surprise 7/60
+    Odile     Très favorable · raison 1      Σw 2    x 0    c 1/2   ℓ 81/100 q 1/5   dist 1/2     rareté 5/8    surprise 3/5
+    Valentin  Défavorable · raison 3         Σw 2    x 3/4  c 1/2   ℓ 81/100 q 1/5   dist 1/4     rareté 1/8    surprise 3/20
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 5/8 ; classement ['Odile', 'Valentin', 'porteur', 'Agathe'] ; départages 0
+    remplacements [{'ecartee': 'Agathe', 'place': 3, 'remplacante': 'porteur'}] ; places ['Odile', 'Valentin', 'porteur'] ; raison cachée Valentin ; ordre ['porteur', 'Valentin', 'Odile']
+    rangs {'Agathe': 1, 'Odile': 4, 'Valentin': 3, 'porteur': 2} ; côtés attendus {'Agathe': -1, 'Odile': 1, 'Valentin': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte porteur   compté porteur          → porteur
+    carte Valentin  compté Valentin  cachée → Agathe, raison 3
+    carte Odile     compté Odile            → Valentin
+  manche de Odile, texte 8 :
+    Agathe    Défavorable · raison 3         Σw 2    x 3/4  c 2/3   ℓ 81/100 q 1/5   dist 1/12    rareté 0      surprise 1/60
+    Nassim    Défavorable · raison 3         Σw 1    x 3/4  c 3/5   ℓ 22/25  q 1/10  dist 3/20    rareté 0      surprise 3/200
+    Valentin  Défavorable · raison 3         Σw 2    x 3/4  c 1/2   ℓ 81/100 q 1/5   dist 1/4     rareté 0      surprise 1/20
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/4    surprise 1/4
+    médiane 3/4 ; classement ['porteur', 'Valentin', 'Agathe', 'Nassim'] ; départages 0
+    remplacements [] ; places ['porteur', 'Valentin', 'Agathe'] ; raison cachée Agathe ; ordre ['Agathe', 'Valentin', 'porteur']
+    rangs {'Agathe': 3, 'Nassim': 1, 'Valentin': 4, 'porteur': 2} ; côtés attendus {'Agathe': -1, 'Nassim': -1, 'Valentin': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Agathe    compté Valentin  cachée → Nassim, raison 3
+    carte Valentin  compté Agathe           → Agathe
+    carte porteur   compté porteur          → porteur
+  manche de Valentin, texte 8 :
+    Agathe    Défavorable · raison 3         Σw 2    x 3/4  c 2/3   ℓ 81/100 q 1/5   dist 1/12    rareté 1/8    surprise 7/60
+    Nassim    Défavorable · raison 3         Σw 1    x 3/4  c 3/5   ℓ 22/25  q 1/10  dist 3/20    rareté 1/8    surprise 51/400
+    Odile     Très favorable · raison 1      Σw 2    x 0    c 1/2   ℓ 81/100 q 1/5   dist 1/2     rareté 5/8    surprise 3/5
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 5/8 ; classement ['Odile', 'Nassim', 'porteur', 'Agathe'] ; départages 0
+    remplacements [] ; places ['Odile', 'Nassim', 'porteur'] ; raison cachée Nassim ; ordre ['Nassim', 'Odile', 'porteur']
+    rangs {'Agathe': 2, 'Nassim': 1, 'Odile': 4, 'porteur': 3} ; côtés attendus {'Agathe': -1, 'Nassim': -1, 'Odile': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Nassim    compté Nassim    cachée → Nassim, raison 3
+    carte Odile     compté Odile            → Odile
+    carte porteur   compté porteur          → Agathe
+  manche de porteur, texte 8 :
+    Agathe    Défavorable · raison 3         Σw 2    x 3/4  c 2/3   ℓ 81/100 q 1/5   dist 1/12    rareté 0      surprise 1/60
+    Nassim    Défavorable · raison 3         Σw 1    x 3/4  c 3/5   ℓ 22/25  q 1/10  dist 3/20    rareté 0      surprise 3/200
+    Odile     Très favorable · raison 1      Σw 2    x 0    c 1/2   ℓ 81/100 q 1/5   dist 1/2     rareté 3/4    surprise 7/10
+    Valentin  Défavorable · raison 3         Σw 2    x 3/4  c 1/2   ℓ 81/100 q 1/5   dist 1/4     rareté 0      surprise 1/20
+    médiane 3/4 ; classement ['Odile', 'Valentin', 'Agathe', 'Nassim'] ; départages 0
+    remplacements [] ; places ['Odile', 'Valentin', 'Agathe'] ; raison cachée Agathe ; ordre ['Odile', 'Agathe', 'Valentin']
+    carte Odile     compté Odile            → passe
+    carte Agathe    compté Agathe    cachée → passe, raison None
+    carte Valentin  compté Valentin         → passe
+  phrase du jour (texte 9) : neutre, w 0, pôle None : « Aujourd’hui, tu n’as penché ni vers la décision locale ni vers la décision nationale. »
+  En attendant : 09:10 → ['Agathe', 'Odile', 'Valentin']
+  portrait : L Σw 0 c 1/2 ℓ 19/20 ; P Σw 0 c 1/2 ℓ 19/20 ; S Σw 0 c 1/2 ℓ 19/20 ; T Σw 0 c 1/2 ℓ 19/20 ; ordre de Moi ['S', 'P', 'T', 'L']
+  curseurs vus : Agathe S 4/3/4, P 2/2/3, T 1/2/4/9, L 2/1/3 | Nassim S 4/5/8, P 1/3/5, T 0/1/2, L 2/1/2 | Odile S 4/1/4, P 2/1/2, T 2/1/2, L 2/1/3 | Valentin S 0/1/2, P 2/1/2, T 2/1/3, L 1/3/5   (Σw/c)
+  surprises des proches : {'Agathe': [], 'Nassim': [], 'Odile': [], 'Valentin': []}
+  mesures : {'duree_deviner': 50, 'duree_repondre': 35, 'duree_seance': 159, 'jours_ecoules': 1, 'passer': 3, 'relire': 0, 'revelation_raison_tentee': False, 'revelation_verdicts': ['passe', 'passe', 'passe']}
+
+==============================================================================
+Séance 10 — ouverture 2026-10-28T19:15+01:00 ; versions [1] ; étapes {'deviner': True, 'repondre': True}
+  coups : réponse None ; relire 0 ; carnet {'q1': None, 'q2': 'premier_coup', 'q3': 'deviner'}
+  révélation du texte 8 :
+    Agathe    justes [True, False, False] ; raison trouvée False ; points 1 ; semaine 2
+    Nassim    justes [True, False, False] ; raison trouvée False ; points 1 ; semaine 6
+    Odile     justes [False, True, True] ; raison trouvée False ; points 2 ; semaine 4
+    Valentin  justes [True, True, False] ; raison trouvée True ; points 2 ; semaine 5
+    porteur   justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 0 ; verdicts ['passe', 'passe', 'passe']
+  manche de Agathe, texte 9 :
+    Nassim    Défavorable · raison 3         Σw 2    x 3/4  c 1/2   ℓ 81/100 q 1/5   dist 1/4     rareté 0      surprise 1/20
+    Odile     Défavorable · raison 3         Σw 2    x 3/4  c 1/3   ℓ 81/100 q 1/5   dist 5/12    rareté 0      surprise 1/12
+    Valentin  Défavorable · raison 2         Σw 1    x 3/4  c 3/5   ℓ 22/25  q 1/10  dist 3/20    rareté 0      surprise 3/200
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/4    surprise 1/4
+    médiane 3/4 ; classement ['porteur', 'Odile', 'Nassim', 'Valentin'] ; départages 0
+    remplacements [{'ecartee': 'Nassim', 'place': 3, 'remplacante': 'Valentin'}] ; places ['porteur', 'Odile', 'Valentin'] ; raison cachée Valentin ; ordre ['Odile', 'Valentin', 'porteur']
+    rangs {'Nassim': 3, 'Odile': 1, 'Valentin': 4, 'porteur': 2} ; côtés attendus {'Nassim': -1, 'Odile': 1, 'Valentin': -1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Odile     compté Odile            → Nassim
+    carte Valentin  compté Valentin  cachée → Valentin, raison 3
+    carte porteur   compté porteur          → Odile
+  manche de Valentin, texte 9 :
+    Agathe    Favorable · raison 1           Σw 2    x 1/4  c 1/3   ℓ 81/100 q 1/5   dist 1/12    rareté 3/8    surprise 19/60
+    Nassim    Défavorable · raison 3         Σw 2    x 3/4  c 1/2   ℓ 81/100 q 1/5   dist 1/4     rareté 1/8    surprise 3/20
+    Odile     Défavorable · raison 3         Σw 2    x 3/4  c 1/3   ℓ 81/100 q 1/5   dist 5/12    rareté 1/8    surprise 11/60
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 5/8 ; classement ['Agathe', 'Odile', 'Nassim', 'porteur'] ; départages 0
+    remplacements [{'ecartee': 'Nassim', 'place': 3, 'remplacante': 'porteur'}] ; places ['Agathe', 'Odile', 'porteur'] ; raison cachée Odile ; ordre ['Agathe', 'porteur', 'Odile']
+    rangs {'Agathe': 3, 'Nassim': 2, 'Odile': 1, 'porteur': 4} ; côtés attendus {'Agathe': 1, 'Nassim': -1, 'Odile': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Agathe    compté Agathe           → Odile
+    carte porteur   compté porteur          → Agathe
+    carte Odile     compté Odile     cachée → Nassim, raison 3
+  manche de porteur, texte 9 :
+    Agathe    Favorable · raison 1           Σw 2    x 1/4  c 1/3   ℓ 81/100 q 1/5   dist 1/12    rareté 1/2    surprise 5/12
+    Nassim    Défavorable · raison 3         Σw 2    x 3/4  c 1/2   ℓ 81/100 q 1/5   dist 1/4     rareté 0      surprise 1/20
+    Odile     Défavorable · raison 3         Σw 2    x 3/4  c 1/3   ℓ 81/100 q 1/5   dist 5/12    rareté 0      surprise 1/12
+    Valentin  Défavorable · raison 2         Σw 1    x 3/4  c 3/5   ℓ 22/25  q 1/10  dist 3/20    rareté 0      surprise 3/200
+    médiane 3/4 ; classement ['Agathe', 'Odile', 'Nassim', 'Valentin'] ; départages 0
+    remplacements [] ; places ['Agathe', 'Odile', 'Valentin'] ; raison cachée Valentin ; ordre ['Agathe', 'Valentin', 'Odile']
+    carte Agathe    compté Agathe           → passe
+    carte Valentin  compté Valentin  cachée → passe, raison None
+    carte Odile     compté Odile            → passe
+  portrait : L Σw 0 c 1/2 ℓ 19/20 ; P Σw 0 c 1/2 ℓ 19/20 ; S Σw 0 c 1/2 ℓ 19/20 ; T Σw 0 c 1/2 ℓ 19/20 ; ordre de Moi ['S', 'P', 'T', 'L']
+  curseurs vus : Agathe S 4/3/4, P 3/5/7, T 1/2/4/9, L 2/1/3 | Nassim S 4/5/8, P 2/2/3, T 0/1/2, L 2/1/2 | Odile S 4/1/4, P 3/3/7, T 2/1/2, L 2/1/3 | Valentin S 0/1/2, P 3/4/7, T 2/1/3, L 1/3/5   (Σw/c)
+  surprises des proches : {'Agathe': [], 'Nassim': [], 'Odile': [], 'Valentin': []}
+  mesures : {'duree_deviner': 50, 'duree_repondre': 20, 'duree_seance': 160, 'jours_ecoules': 1, 'passer': 3, 'relire': 0, 'revelation_raison_tentee': False, 'revelation_verdicts': ['passe', 'passe', 'passe']}
+
+==============================================================================
+Séance 11 — ouverture 2026-10-29T19:16+01:00 ; versions [1] ; étapes {'deviner': True, 'repondre': True}
+  coups : réponse {'niveau': 3, 'raison': 'aucune'} ; relire 0 ; carnet {'q1': None, 'q2': 'en_relisant', 'q3': 'donner_avis'}
+  révélation du texte 9 :
+    Agathe    justes [False, True, False] ; raison trouvée False ; points 1 ; semaine 3
+    Valentin  justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 5
+    porteur   justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 0 ; verdicts ['passe', 'passe', 'passe']
+  manche de Agathe, texte 10 :
+    Valentin  Neutre · raison 2              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    médiane 1/2 ; classement ['Valentin'] ; départages 0
+    remplacements [] ; places ['Valentin'] ; raison cachée Valentin ; ordre ['Valentin']
+    rangs {'Nassim': 2, 'Odile': 1, 'Valentin': 4, 'porteur': 3} ; côtés attendus {'Nassim': -1, 'Odile': 1, 'Valentin': 0, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 2
+    carte Valentin  compté Valentin  cachée → Valentin, raison 2
+  manche de Nassim, texte 10 :
+    Agathe    Favorable · raison 4           Σw 4    x 1/4  c 3/4   ℓ 67/100 q 2/5   dist 1/2     rareté 1/8    surprise 11/40
+    Valentin  Neutre · raison 2              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 3/8 ; classement ['Agathe', 'Valentin'] ; départages 0
+    remplacements [] ; places ['Agathe', 'Valentin'] ; raison cachée Valentin ; ordre ['Valentin', 'Agathe']
+    rangs {'Agathe': 2, 'Odile': 1, 'Valentin': 4, 'porteur': 3} ; côtés attendus {'Agathe': -1, 'Odile': 1, 'Valentin': 0, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 4
+    carte Valentin  compté Valentin  cachée → Valentin, raison 2
+    carte Agathe    compté Agathe           → Odile
+  manche de Odile, texte 10 :
+    Agathe    Favorable · raison 4           Σw 4    x 1/4  c 3/4   ℓ 67/100 q 2/5   dist 1/2     rareté 1/8    surprise 11/40
+    Valentin  Neutre · raison 2              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 3/8 ; classement ['Agathe', 'Valentin'] ; départages 0
+    remplacements [] ; places ['Agathe', 'Valentin'] ; raison cachée Valentin ; ordre ['Valentin', 'Agathe']
+    rangs {'Agathe': 4, 'Nassim': 3, 'Valentin': 2, 'porteur': 1} ; côtés attendus {'Agathe': -1, 'Nassim': -1, 'Valentin': 0, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 3
+    carte Valentin  compté Valentin  cachée → Valentin, raison 2
+    carte Agathe    compté Agathe           → porteur
+  manche de Valentin, texte 10 :
+    Agathe    Favorable · raison 4           Σw 4    x 1/4  c 3/4   ℓ 67/100 q 2/5   dist 1/2     rareté 0      surprise 1/5
+    médiane 1/4 ; classement ['Agathe'] ; départages 0
+    remplacements [] ; places ['Agathe'] ; raison cachée Agathe ; ordre ['Agathe']
+    rangs {'Agathe': 4, 'Nassim': 2, 'Odile': 3, 'porteur': 1} ; côtés attendus {'Agathe': -1, 'Nassim': -1, 'Odile': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 2
+    carte Agathe    compté Agathe    cachée → Odile, raison 1
+  manche de porteur, texte 10 :
+    Agathe    Favorable · raison 4           Σw 4    x 1/4  c 3/4   ℓ 67/100 q 2/5   dist 1/2     rareté 1/8    surprise 11/40
+    Valentin  Neutre · raison 2              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 3/8 ; classement ['Agathe', 'Valentin'] ; départages 0
+    remplacements [] ; places ['Agathe', 'Valentin'] ; raison cachée Valentin ; ordre ['Agathe', 'Valentin']
+    carte Agathe    compté Agathe           → passe
+    carte Valentin  compté Valentin  cachée → passe, raison None
+  phrase du jour (texte 11) : neutre, w 0, pôle None : « Aujourd’hui, tu n’as penché ni vers la tradition ni vers le changement. »
+  En attendant : 17:59 → ['Agathe', 'Nassim', 'Odile', 'Valentin']
+  portrait : L Σw 0 c 1/2 ℓ 19/20 ; P Σw 0 c 1/2 ℓ 19/20 ; S Σw 0 c 1/2 ℓ 19/20 ; T Σw 0 c 1/2 ℓ 19/20 ; ordre de Moi ['S', 'P', 'T', 'L']
+  curseurs vus : Agathe S 4/3/4, P 3/5/7, T 1/2/4/9, L 3/2/7 | Nassim S 4/5/8, P 2/2/3, T 0/1/2, L 3/4/7 | Odile S 4/1/4, P 3/3/7, T 2/1/2, L 3/3/7 | Valentin S 0/1/2, P 3/4/7, T 2/1/3, L 3/2/7/11   (Σw/c)
+  surprises des proches : {'Agathe': [], 'Nassim': [], 'Odile': [], 'Valentin': []}
+  mesures : {'duree_deviner': 50, 'duree_repondre': 35, 'duree_seance': 161, 'jours_ecoules': 1, 'passer': 2, 'relire': 0, 'revelation_raison_tentee': False, 'revelation_verdicts': ['passe', 'passe', 'passe']}
+
+==============================================================================
+Séance 12 — ouverture 2026-10-30T19:17+01:00 ; versions [1] ; étapes {'deviner': True, 'repondre': True}
+  coups : réponse {'niveau': 3, 'raison': 'aucune'} ; relire 0 ; carnet {'q1': None, 'q2': 'premier_coup', 'q3': 'aucun'}
+  révélation du texte 10 :
+    Agathe    justes [True] ; raison trouvée True ; points 1 ; semaine 4
+    Nassim    justes [True, False] ; raison trouvée True ; points 1 ; semaine 7
+    Odile     justes [True, False] ; raison trouvée True ; points 1 ; semaine 5
+    Valentin  justes [False] ; raison trouvée False ; points 0 ; semaine 5
+    porteur   justes [False, False] ; raison trouvée False ; points 0 ; semaine 0 ; verdicts ['passe', 'passe']
+  manche de Agathe, texte 11 :
+    Nassim    Neutre · raison 1              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    Odile     Très défavorable · raison 1    Σw 2    x 1    c 1/2   ℓ 81/100 q 1/5   dist 1/2     rareté 1/2    surprise 1/2
+    Valentin  Favorable · raison 2           Σw 2    x 1/4  c 1/3   ℓ 81/100 q 1/5   dist 1/12    rareté 1/4    surprise 13/60
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    médiane 1/2 ; classement ['Odile', 'Valentin', 'Nassim', 'porteur'] ; départages 1
+    remplacements [] ; places ['Odile', 'Valentin', 'porteur'] ; raison cachée Valentin ; ordre ['Valentin', 'porteur', 'Odile']
+    rangs {'Nassim': 4, 'Odile': 1, 'Valentin': 2, 'porteur': 3} ; côtés attendus {'Nassim': 0, 'Odile': -1, 'Valentin': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 6
+    carte Valentin  compté Valentin  cachée → Valentin, raison 2
+    carte porteur   compté porteur          → Nassim
+    carte Odile     compté Odile            → Odile
+  manche de Nassim, texte 11 :
+    Agathe    Neutre · raison 4              Σw 1/2  x 1/2  c 4/9   ℓ 183/200 q 1/20  dist 1/18    rareté 0      surprise 1/360
+    Odile     Très défavorable · raison 1    Σw 2    x 1    c 1/2   ℓ 81/100 q 1/5   dist 1/2     rareté 1/2    surprise 1/2
+    Valentin  Favorable · raison 2           Σw 2    x 1/4  c 1/3   ℓ 81/100 q 1/5   dist 1/12    rareté 1/4    surprise 13/60
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    médiane 1/2 ; classement ['Odile', 'Valentin', 'Agathe', 'porteur'] ; départages 0
+    remplacements [] ; places ['Odile', 'Valentin', 'porteur'] ; raison cachée Valentin ; ordre ['porteur', 'Valentin', 'Odile']
+    rangs {'Agathe': 4, 'Odile': 3, 'Valentin': 1, 'porteur': 2} ; côtés attendus {'Agathe': 0, 'Odile': -1, 'Valentin': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 6
+    carte porteur   compté porteur          → Agathe
+    carte Valentin  compté Valentin  cachée → Valentin, raison 2
+    carte Odile     compté Odile            → Odile
+  manche de Odile, texte 11 :
+    Agathe    Neutre · raison 4              Σw 1/2  x 1/2  c 4/9   ℓ 183/200 q 1/20  dist 1/18    rareté 0      surprise 1/360
+    Nassim    Neutre · raison 1              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    Valentin  Favorable · raison 2           Σw 2    x 1/4  c 1/3   ℓ 81/100 q 1/5   dist 1/12    rareté 1/4    surprise 13/60
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    médiane 1/2 ; classement ['Valentin', 'Agathe', 'Nassim', 'porteur'] ; départages 1
+    remplacements [] ; places ['Valentin', 'Agathe', 'porteur'] ; raison cachée Agathe ; ordre ['Valentin', 'Agathe', 'porteur']
+    rangs {'Agathe': 4, 'Nassim': 3, 'Valentin': 1, 'porteur': 2} ; côtés attendus {'Agathe': 0, 'Nassim': 0, 'Valentin': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 6
+    carte Valentin  compté Valentin         → Valentin
+    carte Agathe    compté Agathe    cachée → Nassim, raison 4
+    carte porteur   compté porteur          → Agathe
+  manche de Valentin, texte 11 :
+    Agathe    Neutre · raison 4              Σw 1/2  x 1/2  c 4/9   ℓ 183/200 q 1/20  dist 1/18    rareté 0      surprise 1/360
+    Nassim    Neutre · raison 1              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    Odile     Très défavorable · raison 1    Σw 2    x 1    c 1/2   ℓ 81/100 q 1/5   dist 1/2     rareté 1/2    surprise 1/2
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    médiane 1/2 ; classement ['Odile', 'Agathe', 'porteur', 'Nassim'] ; départages 1
+    remplacements [] ; places ['Odile', 'Agathe', 'Nassim'] ; raison cachée Nassim ; ordre ['Agathe', 'Nassim', 'Odile']
+    rangs {'Agathe': 4, 'Nassim': 1, 'Odile': 2, 'porteur': 3} ; côtés attendus {'Agathe': 0, 'Nassim': 0, 'Odile': -1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 6
+    carte Agathe    compté Agathe           → Nassim
+    carte Nassim    compté Nassim    cachée → Agathe, raison 4
+    carte Odile     compté Odile            → Odile
+  manche de porteur, texte 11 :
+    Agathe    Neutre · raison 4              Σw 1/2  x 1/2  c 4/9   ℓ 183/200 q 1/20  dist 1/18    rareté 0      surprise 1/360
+    Nassim    Neutre · raison 1              Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 0      surprise 0
+    Odile     Très défavorable · raison 1    Σw 2    x 1    c 1/2   ℓ 81/100 q 1/5   dist 1/2     rareté 1/2    surprise 1/2
+    Valentin  Favorable · raison 2           Σw 2    x 1/4  c 1/3   ℓ 81/100 q 1/5   dist 1/12    rareté 1/4    surprise 13/60
+    médiane 1/2 ; classement ['Odile', 'Valentin', 'Agathe', 'Nassim'] ; départages 0
+    remplacements [] ; places ['Odile', 'Valentin', 'Nassim'] ; raison cachée Nassim ; ordre ['Nassim', 'Odile', 'Valentin']
+    carte Nassim    compté Nassim    cachée → passe, raison None
+    carte Odile     compté Odile            → passe
+    carte Valentin  compté Valentin         → passe
+  phrase du jour (texte 12) : neutre, w 0, pôle None : « Aujourd’hui, tu n’as penché ni vers la précaution ni vers l’innovation. »
+  En attendant : 18:00 → []
+  portrait : L Σw 0 c 1/2 ℓ 19/20 ; P Σw 0 c 1/2 ℓ 19/20 ; S Σw 0 c 1/2 ℓ 19/20 ; T Σw 0 c 1/2 ℓ 19/20 ; ordre de Moi ['S', 'P', 'T', 'L']
+  curseurs vus : Agathe S 5/2/3, P 3/5/7, T 1/2/4/9, L 3/2/7 | Nassim S 4/5/8, P 2/2/3, T 0/1/2, L 3/4/7 | Odile S 4/1/4, P 3/3/7, T 2/1/2, L 3/3/7 | Valentin S 0/1/2, P 3/4/7, T 2/1/3, L 3/2/7/11   (Σw/c)
+  surprises des proches : {'Agathe': [], 'Nassim': [], 'Odile': [], 'Valentin': []}
+  mesures : {'duree_deviner': 50, 'duree_repondre': 35, 'duree_seance': 162, 'jours_ecoules': 1, 'passer': 3, 'relire': 0, 'revelation_raison_tentee': False, 'revelation_verdicts': ['passe', 'passe']}
+
+==============================================================================
+Séance 13 — ouverture 2026-10-31T19:18+01:00 ; versions [1] ; étapes {'deviner': True, 'repondre': True}
+  coups : réponse {'niveau': 3, 'raison': 'aucune'} ; relire 0 ; carnet {'q1': None, 'q2': 'en_relisant', 'q3': 'phrase_jour'}
+  révélation du texte 11 :
+    Agathe    justes [True, False, True] ; raison trouvée True ; points 2 ; semaine 6
+    Nassim    justes [False, True, True] ; raison trouvée True ; points 2 ; semaine 9
+    Odile     justes [True, False, False] ; raison trouvée False ; points 1 ; semaine 6
+    Valentin  justes [False, False, True] ; raison trouvée False ; points 1 ; semaine 6
+    porteur   justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 0 ; verdicts ['passe', 'passe', 'passe']
+  manche de Agathe, texte 12 :
+    Nassim    Favorable · raison 4           Σw 2    x 1/4  c 2/3   ℓ 81/100 q 1/5   dist 5/12    rareté 1/8    surprise 11/60
+    Odile     Très favorable · raison 4      Σw 3    x 0    c 3/7   ℓ 37/50  q 3/10  dist 3/7     rareté 3/8    surprise 219/560
+    Valentin  Défavorable · raison 2         Σw 3    x 3/4  c 4/7   ℓ 37/50  q 3/10  dist 5/28    rareté 3/8    surprise 177/560
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 3/8 ; classement ['Odile', 'Valentin', 'Nassim', 'porteur'] ; départages 0
+    remplacements [] ; places ['Odile', 'Valentin', 'Nassim'] ; raison cachée Nassim ; ordre ['Odile', 'Nassim', 'Valentin']
+    rangs {'Nassim': 4, 'Odile': 3, 'Valentin': 2, 'porteur': 1} ; côtés attendus {'Nassim': -1, 'Odile': 1, 'Valentin': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 6
+    carte Odile     compté Odile            → Valentin
+    carte Nassim    compté Nassim    cachée → Odile, raison 1
+    carte Valentin  compté Valentin         → Nassim
+  manche de Nassim, texte 12 :
+    Agathe    Défavorable · raison 2         Σw 3    x 3/4  c 5/7   ℓ 37/50  q 3/10  dist 1/28    rareté 1/8    surprise 11/112
+    Odile     Très favorable · raison 4      Σw 3    x 0    c 3/7   ℓ 37/50  q 3/10  dist 3/7     rareté 5/8    surprise 317/560
+    Valentin  Défavorable · raison 2         Σw 3    x 3/4  c 4/7   ℓ 37/50  q 3/10  dist 5/28    rareté 1/8    surprise 79/560
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 5/8 ; classement ['Odile', 'Valentin', 'porteur', 'Agathe'] ; départages 0
+    remplacements [] ; places ['Odile', 'Valentin', 'porteur'] ; raison cachée Valentin ; ordre ['porteur', 'Odile', 'Valentin']
+    rangs {'Agathe': 1, 'Odile': 3, 'Valentin': 2, 'porteur': 4} ; côtés attendus {'Agathe': -1, 'Odile': 1, 'Valentin': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte porteur   compté porteur          → Valentin
+    carte Odile     compté Odile            → Odile
+    carte Valentin  compté Valentin  cachée → Agathe, raison 2
+  manche de Odile, texte 12 :
+    Agathe    Défavorable · raison 2         Σw 3    x 3/4  c 5/7   ℓ 37/50  q 3/10  dist 1/28    rareté 1/8    surprise 11/112
+    Nassim    Favorable · raison 4           Σw 2    x 1/4  c 2/3   ℓ 81/100 q 1/5   dist 5/12    rareté 3/8    surprise 23/60
+    Valentin  Défavorable · raison 2         Σw 3    x 3/4  c 4/7   ℓ 37/50  q 3/10  dist 5/28    rareté 1/8    surprise 79/560
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 5/8 ; classement ['Nassim', 'Valentin', 'porteur', 'Agathe'] ; départages 0
+    remplacements [{'ecartee': 'Agathe', 'place': 3, 'remplacante': 'porteur'}] ; places ['Nassim', 'Valentin', 'porteur'] ; raison cachée Valentin ; ordre ['Valentin', 'porteur', 'Nassim']
+    rangs {'Agathe': 2, 'Nassim': 3, 'Valentin': 4, 'porteur': 1} ; côtés attendus {'Agathe': -1, 'Nassim': -1, 'Valentin': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Valentin  compté Valentin  cachée → Agathe, raison 2
+    carte porteur   compté porteur          → porteur
+    carte Nassim    compté Nassim           → Valentin
+  manche de Valentin, texte 12 :
+    Agathe    Défavorable · raison 2         Σw 3    x 3/4  c 5/7   ℓ 37/50  q 3/10  dist 1/28    rareté 3/8    surprise 153/560
+    Nassim    Favorable · raison 4           Σw 2    x 1/4  c 2/3   ℓ 81/100 q 1/5   dist 5/12    rareté 1/8    surprise 11/60
+    Odile     Très favorable · raison 4      Σw 3    x 0    c 3/7   ℓ 37/50  q 3/10  dist 3/7     rareté 3/8    surprise 219/560
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 3/8 ; classement ['Odile', 'Agathe', 'Nassim', 'porteur'] ; départages 0
+    remplacements [] ; places ['Odile', 'Agathe', 'Nassim'] ; raison cachée Nassim ; ordre ['Agathe', 'Nassim', 'Odile']
+    rangs {'Agathe': 2, 'Nassim': 4, 'Odile': 1, 'porteur': 3} ; côtés attendus {'Agathe': -1, 'Nassim': -1, 'Odile': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Agathe    compté Agathe           → Agathe
+    carte Nassim    compté Nassim    cachée → Odile, raison 1
+    carte Odile     compté Odile            → porteur
+  manche de porteur, texte 12 :
+    Agathe    Défavorable · raison 2         Σw 3    x 3/4  c 5/7   ℓ 37/50  q 3/10  dist 1/28    rareté 1/4    surprise 13/70
+    Nassim    Favorable · raison 4           Σw 2    x 1/4  c 2/3   ℓ 81/100 q 1/5   dist 5/12    rareté 1/4    surprise 17/60
+    Odile     Très favorable · raison 4      Σw 3    x 0    c 3/7   ℓ 37/50  q 3/10  dist 3/7     rareté 1/2    surprise 67/140
+    Valentin  Défavorable · raison 2         Σw 3    x 3/4  c 4/7   ℓ 37/50  q 3/10  dist 5/28    rareté 1/4    surprise 8/35
+    médiane 1/2 ; classement ['Odile', 'Nassim', 'Valentin', 'Agathe'] ; départages 0
+    remplacements [] ; places ['Odile', 'Nassim', 'Valentin'] ; raison cachée Valentin ; ordre ['Nassim', 'Odile', 'Valentin']
+    carte Nassim    compté Nassim           → passe
+    carte Odile     compté Odile            → passe
+    carte Valentin  compté Valentin  cachée → passe, raison None
+  phrase du jour (texte 13) : neutre, w 0, pôle None : « Aujourd’hui, tu n’as penché ni vers la décision locale ni vers la décision nationale. »
+  En attendant : 14:00 → ['Agathe', 'Nassim', 'Odile', 'Valentin']
+  portrait : L Σw 0 c 1/2 ℓ 19/20 ; P Σw 0 c 1/2 ℓ 19/20 ; S Σw 0 c 1/2 ℓ 19/20 ; T Σw 0 c 1/2 ℓ 19/20 ; ordre de Moi ['S', 'P', 'T', 'L']
+  curseurs vus : Agathe S 5/2/3, P 3/5/7, T 1/2/4/9, L 3/2/7 | Nassim S 4/5/8, P 2/2/3, T 0/1/2, L 3/4/7 | Odile S 4/1/4, P 3/3/7, T 3/4/7, L 3/3/7 | Valentin S 0/1/2, P 3/4/7, T 3/2/7, L 3/2/7/11   (Σw/c)
+  surprises des proches : {'Agathe': [], 'Nassim': [], 'Odile': [], 'Valentin': []}
+  mesures : {'duree_deviner': 50, 'duree_repondre': 35, 'duree_seance': 163, 'jours_ecoules': 1, 'passer': 3, 'relire': 0, 'revelation_raison_tentee': False, 'revelation_verdicts': ['passe', 'passe', 'passe']}
+
+==============================================================================
+Séance 14 — ouverture 2026-11-01T19:19+01:00 ; versions [1] ; étapes {'deviner': True, 'repondre': True}
+  coups : réponse {'niveau': 3, 'raison': 'aucune'} ; relire 0 ; carnet {'q1': None, 'q2': 'premier_coup', 'q3': 'phrase_semaine'}
+  révélation du texte 12 :
+    Agathe    justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 6
+    Nassim    justes [False, True, False] ; raison trouvée False ; points 1 ; semaine 10
+    Odile     justes [False, True, False] ; raison trouvée False ; points 1 ; semaine 7
+    Valentin  justes [True, False, False] ; raison trouvée False ; points 1 ; semaine 7
+    porteur   justes [False, False, False] ; raison trouvée False ; points 0 ; semaine 0 ; verdicts ['passe', 'passe', 'passe']
+  dimanche, semaine 2 :
+    Sans-Faute [] ; Pas de Côté []
+    Devin Nassim (aucun) ; points {'Agathe': 6, 'Nassim': 10, 'Odile': 7, 'Valentin': 7, 'porteur': 0} ; raisons {'Agathe': 3, 'Nassim': 3, 'Odile': 2, 'Valentin': 2, 'porteur': 0}
+    Mystère Nassim (aucun) ; tentatives {'Agathe': 14, 'Nassim': 11, 'Odile': 17, 'Valentin': 18, 'porteur': 12} ; erreurs {'Agathe': 8, 'Nassim': 9, 'Odile': 10, 'Valentin': 6, 'porteur': 9}
+    Fidèle ['Agathe', 'Valentin']
+    surprise : texte 9 (aucun) ; attributions {'10': 6, '11': 12, '12': 12, '6': 12, '7': 12, '8': 12, '9': 6} ; erreurs {'10': 3, '11': 6, '12': 9, '6': 7, '7': 6, '8': 6, '9': 5}
+    phrase de la semaine : cas floue, tension None ; poids {'L': {'comptent': 0, 'pole0': '0', 'pole1': '0'}, 'P': {'comptent': 0, 'pole0': '0', 'pole1': '0'}, 'S': {'comptent': 0, 'pole0': '0', 'pole1': '0'}, 'T': {'comptent': 0, 'pole0': '0', 'pole1': '0'}}
+      « Cette semaine, ton portrait est encore flou. Chaque réponse le précise. »
+  manche de Agathe, texte 13 :
+    Nassim    Favorable · raison 2           Σw 3    x 3/4  c 4/7   ℓ 37/50  q 3/10  dist 5/28    rareté 1/8    surprise 79/560
+    Odile     Très défavorable · raison 1    Σw 3    x 0    c 3/7   ℓ 37/50  q 3/10  dist 3/7     rareté 5/8    surprise 317/560
+    Valentin  Favorable · raison 4           Σw 3/2  x 3/4  c 7/11  ℓ 169/200 q 3/20  dist 5/44    rareté 1/8    surprise 217/1760
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 5/8 ; classement ['Odile', 'Nassim', 'porteur', 'Valentin'] ; départages 0
+    remplacements [] ; places ['Odile', 'Nassim', 'Valentin'] ; raison cachée Valentin ; ordre ['Nassim', 'Valentin', 'Odile']
+    rangs {'Nassim': 2, 'Odile': 1, 'Valentin': 4, 'porteur': 3} ; côtés attendus {'Nassim': 1, 'Odile': -1, 'Valentin': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 6
+    carte Nassim    compté Nassim           → Nassim
+    carte Valentin  compté Valentin  cachée → Valentin, raison 2
+    carte Odile     compté Odile            → Odile
+  manche de Nassim, texte 13 :
+    Agathe    Favorable · raison 2           Σw 3    x 3/4  c 2/7   ℓ 37/50  q 3/10  dist 13/28   rareté 1/8    surprise 127/560
+    Odile     Très défavorable · raison 1    Σw 3    x 0    c 3/7   ℓ 37/50  q 3/10  dist 3/7     rareté 5/8    surprise 317/560
+    Valentin  Favorable · raison 4           Σw 3/2  x 3/4  c 7/11  ℓ 169/200 q 3/20  dist 5/44    rareté 1/8    surprise 217/1760
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 5/8 ; classement ['Odile', 'Agathe', 'porteur', 'Valentin'] ; départages 0
+    remplacements [] ; places ['Odile', 'Agathe', 'porteur'] ; raison cachée Agathe ; ordre ['Agathe', 'porteur', 'Odile']
+    rangs {'Agathe': 4, 'Odile': 2, 'Valentin': 1, 'porteur': 3} ; côtés attendus {'Agathe': -1, 'Odile': -1, 'Valentin': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Agathe    compté Agathe    cachée → Valentin, raison 2
+    carte porteur   compté porteur          → Odile
+    carte Odile     compté Odile            → Agathe
+  manche de Odile, texte 13 :
+    Agathe    Favorable · raison 2           Σw 3    x 3/4  c 2/7   ℓ 37/50  q 3/10  dist 13/28   rareté 0      surprise 39/280
+    Nassim    Favorable · raison 2           Σw 3    x 3/4  c 4/7   ℓ 37/50  q 3/10  dist 5/28    rareté 0      surprise 3/56
+    Valentin  Favorable · raison 4           Σw 3/2  x 3/4  c 7/11  ℓ 169/200 q 3/20  dist 5/44    rareté 0      surprise 3/176
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/4    surprise 1/4
+    médiane 3/4 ; classement ['porteur', 'Agathe', 'Nassim', 'Valentin'] ; départages 0
+    remplacements [{'ecartee': 'Nassim', 'place': 3, 'remplacante': 'Valentin'}] ; places ['porteur', 'Agathe', 'Valentin'] ; raison cachée Valentin ; ordre ['Valentin', 'Agathe', 'porteur']
+    rangs {'Agathe': 3, 'Nassim': 2, 'Valentin': 4, 'porteur': 1} ; côtés attendus {'Agathe': -1, 'Nassim': 1, 'Valentin': 1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte Valentin  compté Valentin  cachée → Nassim, raison 2
+    carte Agathe    compté Agathe           → Valentin
+    carte porteur   compté porteur          → porteur
+  manche de Valentin, texte 13 :
+    Agathe    Favorable · raison 2           Σw 3    x 3/4  c 2/7   ℓ 37/50  q 3/10  dist 13/28   rareté 1/8    surprise 127/560
+    Nassim    Favorable · raison 2           Σw 3    x 3/4  c 4/7   ℓ 37/50  q 3/10  dist 5/28    rareté 1/8    surprise 79/560
+    Odile     Très défavorable · raison 1    Σw 3    x 0    c 3/7   ℓ 37/50  q 3/10  dist 3/7     rareté 5/8    surprise 317/560
+    porteur   Neutre · raison aucune         Σw 0    x 1/2  c 1/2   ℓ 19/20  q 0     dist 0       rareté 1/8    surprise 1/8
+    médiane 5/8 ; classement ['Odile', 'Agathe', 'Nassim', 'porteur'] ; départages 0
+    remplacements [] ; places ['Odile', 'Agathe', 'porteur'] ; raison cachée Agathe ; ordre ['porteur', 'Agathe', 'Odile']
+    rangs {'Agathe': 1, 'Nassim': 3, 'Odile': 4, 'porteur': 2} ; côtés attendus {'Agathe': -1, 'Nassim': 1, 'Odile': -1, 'porteur': 'inconnu'} ; curseur porteur {'c': '1/2', 'somme_w': '0'} ; total 5
+    carte porteur   compté porteur          → Agathe
+    carte Agathe    compté Agathe    cachée → Nassim, raison 2
+    carte Odile     compté Odile            → Odile
+  manche de porteur, texte 13 :
+    Agathe    Favorable · raison 2           Σw 3    x 3/4  c 2/7   ℓ 37/50  q 3/10  dist 13/28   rareté 0      surprise 39/280
+    Nassim    Favorable · raison 2           Σw 3    x 3/4  c 4/7   ℓ 37/50  q 3/10  dist 5/28    rareté 0      surprise 3/56
+    Odile     Très défavorable · raison 1    Σw 3    x 0    c 3/7   ℓ 37/50  q 3/10  dist 3/7     rareté 3/4    surprise 183/280
+    Valentin  Favorable · raison 4           Σw 3/2  x 3/4  c 7/11  ℓ 169/200 q 3/20  dist 5/44    rareté 0      surprise 3/176
+    médiane 3/4 ; classement ['Odile', 'Agathe', 'Nassim', 'Valentin'] ; départages 0
+    remplacements [{'ecartee': 'Nassim', 'place': 3, 'remplacante': 'Valentin'}] ; places ['Odile', 'Agathe', 'Valentin'] ; raison cachée Valentin ; ordre ['Valentin', 'Odile', 'Agathe']
+    carte Valentin  compté Valentin  cachée → passe, raison None
+    carte Odile     compté Odile            → passe
+    carte Agathe    compté Agathe           → passe
+  phrase du jour (texte 14) : neutre, w 0, pôle None : « Aujourd’hui, tu n’as penché ni vers la sécurité ni vers la liberté. »
+  En attendant : 06:00 → ['Valentin']
+  portrait : L Σw 0 c 1/2 ℓ 19/20 ; P Σw 0 c 1/2 ℓ 19/20 ; S Σw 0 c 1/2 ℓ 19/20 ; T Σw 0 c 1/2 ℓ 19/20 ; ordre de Moi ['S', 'P', 'T', 'L']
+  curseurs vus : Agathe S 5/2/3, P 4/3/4, T 1/2/4/9, L 3/2/7 | Nassim S 4/5/8, P 3/4/7, T 0/1/2, L 3/4/7 | Odile S 4/1/4, P 4/3/8, T 3/4/7, L 3/3/7 | Valentin S 0/1/2, P 4/5/8, T 3/2/7, L 3/2/7/11   (Σw/c)
+  surprises des proches : {'Agathe': [], 'Nassim': [], 'Odile': [], 'Valentin': []}
+  mesures : {'duree_deviner': 50, 'duree_repondre': 35, 'duree_seance': 164, 'jours_ecoules': 1, 'passer': 3, 'relire': 0, 'revelation_raison_tentee': False, 'revelation_verdicts': ['passe', 'passe', 'passe']}
+
+==============================================================================
+Séance 15 — ouverture 2026-11-02T19:20+01:00 ; versions [1] ; étapes None
+  coups : réponse None ; relire 0 ; carnet {'q1': None, 'q2': None, 'q3': None}
+  révélation du texte 13 :
+    Agathe    justes [True, True, True] ; raison trouvée False ; points 3 ; semaine None
+    Nassim    justes [False, False, False] ; raison trouvée False ; points 0 ; semaine None
+    Odile     justes [False, False, True] ; raison trouvée False ; points 1 ; semaine None
+    Valentin  justes [False, False, True] ; raison trouvée False ; points 1 ; semaine None
+    porteur   justes [False, False, False] ; raison trouvée False ; points 0 ; semaine None ; verdicts ['passe', 'passe', 'passe']
+  portrait : L Σw 0 c 1/2 ℓ 19/20 ; P Σw 0 c 1/2 ℓ 19/20 ; S Σw 0 c 1/2 ℓ 19/20 ; T Σw 0 c 1/2 ℓ 19/20 ; ordre de Moi ['S', 'P', 'T', 'L']
+  curseurs vus : Agathe S 5/2/3, P 4/3/4, T 1/2/4/9, L 4/3/8 | Nassim S 4/5/8, P 3/4/7, T 0/1/2, L 4/5/8 | Odile S 4/1/4, P 4/3/8, T 3/4/7, L 4/3/8 | Valentin S 0/1/2, P 4/5/8, T 3/2/7, L 2/2/3   (Σw/c)
+  surprises des proches : {'Agathe': [], 'Nassim': [], 'Odile': [], 'Valentin': []}
+  mesures : {'duree_deviner': None, 'duree_repondre': None, 'duree_seance': 60, 'jours_ecoules': 1, 'passer': 0, 'relire': 0, 'revelation_raison_tentee': False, 'revelation_verdicts': ['passe', 'passe', 'passe']}
+
+==============================================================================
+Agrégats : {'justesse_personnages_entre_eux': {'justes': 53, 'total': 110}, 'justesse_personnages_sur_porteur': {'justes': 8, 'total': 28}, 'titres_tires_au_sort': 1}

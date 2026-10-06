@@ -344,6 +344,17 @@ test('Validité du journal : des journaux fautifs sont refusés', () => {
   assert.notDeepEqual(muter(x => { x.seances[5].etapes.repondre = false; }), []);
   assert.notDeepEqual(muter(x => { x.seances[5].coups.deviner.forEach(d => { d.raison = null; }); x.seances[5].coups.deviner[0].raison = 9; }), []);
   assert.notDeepEqual(muter(x => { x.arret = { k: 15, raison: null, f2: null, f1: null }; }), []);
+  // pseudo tel que la page le garde (§7.2, Q-F7)
+  for (const p of ['', ' Lou', 'Lou ', 'Lou  B', 'Lou\u00a0B', 'Lou\u200bB', 'e\u0301', 'ODILE', 'Témoin-b-4821-k-trop-long']) {
+    assert.notDeepEqual(muter(x => { x.seances[0].coups.pseudo = p; }), [], JSON.stringify(p));
+  }
+  assert.deepEqual(muter(x => { x.seances[0].coups.pseudo = 'Témoin-b-4821-k'; }), []);
+  // copies : règles 7 et 10 sur leurs coups (règle 14)
+  assert.equal(j.copies.length, 1);
+  assert.deepEqual(muter(() => {}), []);
+  assert.notDeepEqual(muter(x => { x.copies[0].coups.carnet.q3 = 'titres'; }), []);
+  assert.notDeepEqual(muter(x => { x.copies[0].coups.deviner = x.copies[0].coups.deviner.concat([{ designe: null, raison: null }]); }), []);
+  assert.notDeepEqual(muter(x => { x.copies[0].k = 15; }), []);
   assert.throws(() => TR.tracer(N, M, scelle, Object.assign({}, j, { seances: j.seances.slice(0, 4) }), null, EMPREINTE));
 });
 

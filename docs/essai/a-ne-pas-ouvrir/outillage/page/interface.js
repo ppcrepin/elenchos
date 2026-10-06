@@ -627,7 +627,7 @@ var ElenchosInterface = (function (N, M, X) {
       var visages = PERSOS.map(function (pp) {
         var surCette = choix.designe === pp;
         var ailleurs = !surCette && poses.indexOf(pp) >= 0;
-        return dot(pp.charAt(0), 'S', pp, null, surCette ? 'on' : (ailleurs ? 'off' : ''), 'visage', { carte: i, membre: pp });
+        return dot(pp.charAt(0), 'S', pp, null, surCette ? 'on' : (ailleurs ? 'off' : ''), 'visage', { carte: i, membre: pp }, pp);
       });
       return h('div', { class: 'guess' + (passee ? ' passed' : ''), role: 'group', 'aria-label': 'Réponse ' + (i + 1) },
         lignesCarte,
@@ -778,7 +778,7 @@ var ElenchosInterface = (function (N, M, X) {
     var visages = membresTous().map(function (m) {
       var legende = ts.titres[m].map(t);
       if (m === 'porteur') { return dot(initiale(m), '', pseudo(), legende); }
-      return dot(m.charAt(0), '', m, legende, '', 'proche', { membre: m });
+      return dot(m.charAt(0), '', m, legende, '', 'proche', { membre: m }, [m].concat(legende).join(', '));
     });
     var corps = [hd(h('button', { type: 'button', class: 'plain hd-gauche', action: 'absent' }, t(X.cercleTete)),
       h('button', { type: 'button', class: 'plain right', action: 'absent' }, t(X.inviter))), faces(visages)];
@@ -1791,7 +1791,9 @@ var ElenchosInterface = (function (N, M, X) {
       durees: function () { return etat ? dureesToutes(ppMaintenant()) : null; },
       carnet: function () { return etat && (etat.fin || etat.arret) ? M.carnet(scelle, journal(), R(), dureesToutes(null), etat.fin ? { type: 'fin' } : { type: 'arret' }) : null; },
       copies: function () { return JSON.parse(JSON.stringify(copiesDuChargement)); },
-      lectures: function () { return JSON.parse(JSON.stringify(lectures)); }
+      lectures: function () { return JSON.parse(JSON.stringify(lectures)); },
+      /** Le moteur de la page sur un journal donné (rejeu en mode moteur, §9) : calcul pur, rien n'est écrit. */
+      calculer: function (j) { return scelle ? M.calculer(scelle, j) : null; }
     });
   }
 

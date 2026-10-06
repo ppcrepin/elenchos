@@ -25,7 +25,8 @@ body {
 }
 [hidden] { display: none !important; }
 button { font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
-button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visible, .titre-page:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.titre-page:focus, pre.carnet:focus, .apres:focus { outline: none; }
 p { margin: 0; }
 strong, b { font-weight: 600; }
 

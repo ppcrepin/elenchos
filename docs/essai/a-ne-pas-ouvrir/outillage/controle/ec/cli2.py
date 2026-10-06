@@ -80,6 +80,14 @@ def cmd_rejouer(a):
     _ecrire(canon.octets_canoniques(t), a.sortie)
     if a.carnet and t["carnet"] is not None:
         Path(a.carnet).write_text(t["carnet"]["texte"], encoding="utf-8")
+    if a.textes and t["carnet"] is not None:
+        from .carnet import masquer_durees
+        d = Path(a.textes)
+        d.mkdir(parents=True, exist_ok=True)
+        textes = [("carnet", t["carnet"]["texte"])] + [(f"copie-{i}", c["texte"]) for i, c in enumerate(t["copies"])]
+        for nom, x in textes:
+            (d / f"{nom}.txt").write_text(x, encoding="utf-8")
+            (d / f"{nom}-durees-masquees.txt").write_text(masquer_durees(x), encoding="utf-8")
     return 1 if defauts else 0
 
 
@@ -148,6 +156,12 @@ def cmd_variantes(a):
     return 1
 
 
+def cmd_resumer(a):
+    from .resume import resumer
+    _ecrire(resumer(_json(a.trace)), a.sortie)
+    return 0
+
+
 def cmd_phrases(a):
     from .phrases import phrases_attendues
     d, o = _scelle(a.scelle)
@@ -169,6 +183,7 @@ def ajouter(sp):
     c.add_argument("--durees", help="fichier des durées (mode interface)")
     c.add_argument("--sortie", help="trace C (JSON canonique)")
     c.add_argument("--carnet", help="écrit aussi le texte du carnet final")
+    c.add_argument("--textes", help="dossier : carnet final et copies, tels quels et durées masquées")
     c.set_defaults(f=cmd_rejouer)
 
     c = sp.add_parser("durees", help="fichier des durées tiré d'une trace de la page")
@@ -190,6 +205,11 @@ def ajouter(sp):
     c = sp.add_parser("variantes", help="contrôle 12 : traces C des variantes d'une même partie")
     c.add_argument("traces", nargs="+")
     c.set_defaults(f=cmd_variantes)
+
+    c = sp.add_parser("resumer", help="résumé lisible d'une trace")
+    c.add_argument("trace")
+    c.add_argument("--sortie")
+    c.set_defaults(f=cmd_resumer)
 
     c = sp.add_parser("phrases", help="phrases attendues du contrôle 11 (partie 4.5)")
     c.add_argument("--scelle", default=defaut)

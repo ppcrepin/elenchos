@@ -930,6 +930,18 @@ var ElenchosMoteur = (function (N) {
   function estReponse(r) { return r && typeof r === 'object' && estNiveau(r.niveau) && estRaison(r.raison) && Object.keys(r).length === 2; }
 
   /** Rend la liste des écarts (« règle n, /chemin : … »), vide si le journal est valide. */
+  /** Pseudo tel que la page le garde (§7.2 ; Q-F7) : non vide, au plus 20
+   *  points de code, en NFC, sans caractère Cc, Cf ni Cs, sans blanc autre que
+   *  U+0020, sans espace double ni espace au bord, pas un prénom des quatre
+   *  personnages (minuscules par la correspondance par défaut). */
+  function pseudoGardable(x) {
+    if (typeof x !== 'string') { return false; }
+    var n = Array.from(x).length;
+    if (n < 1 || n > 20 || x.normalize('NFC') !== x) { return false; }
+    if (/[\p{Cc}\p{Cf}\p{Cs}]/u.test(x) || /[^\S ]/u.test(x) || /  /.test(x) || x !== x.trim()) { return false; }
+    return !PERSONNAGES.some(function (p) { return p.toLowerCase() === x.toLowerCase(); });
+  }
+
   function validerJournal(scelle, journal) {
     var e = [];
     function err(regle, chemin, msg) { e.push('règle ' + regle + ', ' + chemin + ' : ' + msg); }
@@ -953,9 +965,11 @@ var ElenchosMoteur = (function (N) {
     var R = null;
     try { R = calculer(scelle, journal); } catch (x) { err(7, '/seances', 'calcul impossible : ' + x.message); return e; }
 
-    S.forEach(function (s, k) {
-      var ch = '/seances/' + k;
+    /* Règles d'une séance ; pour une copie (cp vrai), seules les règles 1,
+     * 7 et 10 (règle 14), sur l'état de la copie, avec R calculé sur cet état. */
+    function verifierSeance(s, k, R, ch, cp) {
       var c = s.coups;
+      if (!cp) {
       if (s.k !== k) { err(3, ch + '/k', 'numéro'); }
       try {
         var ms = N.lireInstant(s.ouverture);
@@ -977,13 +991,14 @@ var ElenchosMoteur = (function (N) {
         if (k === 0 || k === 15) { if (s.etapes !== null) { err(12, ch + '/etapes', 'nul attendu'); } }
         else if (!s.etapes || typeof s.etapes.deviner !== 'boolean' || typeof s.etapes.repondre !== 'boolean') { err(12, ch + '/etapes', 'absent'); }
       }
+      }
       var cles = ['carnet', 'consentement', 'deviner', 'entree', 'pseudo', 'relire', 'reponse'];
       if (!c || Object.keys(c).sort().join() !== cles.join()) { err(1, ch + '/coups', 'clés inattendues'); return; }
       if (!Number.isSafeInteger(c.relire) || c.relire < 0) { err(1, ch + '/coups/relire', 'entier attendu'); }
-      if ((k < 2 || k > 14) && c.relire !== 0) { err(9, ch + '/coups/relire', '0 attendu hors des séances 2 à 14'); }
+      if (!cp && (k < 2 || k > 14) && c.relire !== 0) { err(9, ch + '/coups/relire', '0 attendu hors des séances 2 à 14'); }
 
       // Entrée (règle 6)
-      if (k === 0) {
+      if (k === 0 && !cp) {
         var ent = c.entree;
         if (!ent || Object.keys(ent).sort().join() !== 'E1,E2,E3') { err(6, ch + '/coups/entree', 'E1, E2, E3 attendus'); }
         else {
@@ -1000,12 +1015,9 @@ var ElenchosMoteur = (function (N) {
           if (nbRep > 0 && c.consentement !== true) { err(6, ch + '/coups/consentement', 'true attendu dès une réponse'); }
           if (c.pseudo !== null && !(ent.E3.pari !== null)) { err(6, ch + '/coups/pseudo', 'pseudo avant le troisième pari'); }
         }
-        if (c.pseudo !== null) {
-          if (typeof c.pseudo !== 'string' || !c.pseudo.length || c.pseudo.normalize('NFC') !== c.pseudo || /[\u0000-\u001f\u007f]/.test(c.pseudo) ||
-            Array.from(c.pseudo).length > 20 || c.pseudo !== c.pseudo.trim()) { err(6, ch + '/coups/pseudo', 'pseudo invalide'); }
-        }
+        if (c.pseudo !== null && !pseudoGardable(c.pseudo)) { err(6, ch + '/coups/pseudo', 'pseudo invalide'); }
         if (K >= 1 && c.pseudo === null) { err(6, ch + '/coups/pseudo', 'pseudo attendu pour quitter l’entrée'); }
-      } else {
+      } else if (k !== 0) {
         if (c.entree !== null || c.pseudo !== null || c.consentement !== null) { err(6, ch + '/coups', 'entrée hors séance 0'); }
       }
 
@@ -1036,7 +1048,7 @@ var ElenchosMoteur = (function (N) {
       } else if (c.deviner !== null) { err(7, ch + '/coups/deviner', 'nul attendu'); }
 
       // Répondre (règle 8)
-      if (k >= 1 && k <= 14) {
+      if (cp) { /* règle 14 : comparée à la séance */ } else if (k >= 1 && k <= 14) {
         if (c.reponse !== null && !estReponse(c.reponse)) { err(8, ch + '/coups/reponse', 'réponse invalide'); }
         if (c.reponse !== null && !validee) { err(8, ch + '/coups/reponse', 'réponse avant « Valider »'); }
       } else if (c.reponse !== null) { err(8, ch + '/coups/reponse', 'nul attendu'); }
@@ -1060,11 +1072,11 @@ var ElenchosMoteur = (function (N) {
         if (k === 15) { err(10, ch + '/coups/carnet/q2', 'pas de q2 à la clôture'); }
         if (k >= 1 && k <= 14 && mode === 'interface' && !(s.etapes && s.etapes.repondre)) { err(10, ch + '/coups/carnet/q2', 'Répondre pas affiché'); }
       }
-      var etq3 = mode === 'interface' ? s.etapes : (sansCarte ? { deviner: false, repondre: true } : null);
+      var etq3 = mode === 'interface' ? s.etapes : null; // mode moteur : tous les choix (règle 10)
       if (q.q3 !== null && choixQ3(k, etq3).indexOf(q.q3) < 0) { err(10, ch + '/coups/carnet/q3', 'choix non proposé'); }
 
       // Attente (règle 11)
-      if (s.attente !== null) {
+      if (!cp && s.attente !== null) {
         var finie = k >= 1 && k <= 14 && c.reponse !== null && validee;
         if (!finie) { err(11, ch + '/attente', '« En attendant » sur une journée pas finie'); }
         if (!s.attente.lectures || !s.attente.lectures.length) { err(11, ch + '/attente/lectures', 'au moins une lecture'); }
@@ -1072,13 +1084,14 @@ var ElenchosMoteur = (function (N) {
       }
 
       // Étapes (règle 12)
-      if (mode === 'interface' && s.etapes && k >= 1 && k <= 14) {
+      if (!cp && mode === 'interface' && s.etapes && k >= 1 && k <= 14) {
         if (k === 1 && s.etapes.deviner) { err(12, ch + '/etapes/deviner', 'faux attendu à la séance 1'); }
         if (Array.isArray(c.deviner) && c.deviner.some(function (d) { return d.designe !== null; }) && !s.etapes.deviner) { err(12, ch + '/etapes/deviner', 'vrai attendu'); }
         if (c.reponse !== null && !s.etapes.repondre) { err(12, ch + '/etapes/repondre', 'vrai attendu'); }
         if (sansCarte && s.etapes.deviner) { err(12, ch + '/etapes/deviner', 'faux un jour sans carte'); }
       }
-    });
+    }
+    S.forEach(function (s, k) { verifierSeance(s, k, R, '/seances/' + k, false); });
 
     // Arrêt et fin (règle 13)
     function validerF1(f1, ch) {
@@ -1117,6 +1130,23 @@ var ElenchosMoteur = (function (N) {
       }
       if (!Array.isArray(cp.versions) || cp.versions.some(function (v, j) { return s.versions[j] !== v; })) { err(14, ch + '/versions', 'pas un début de celles de la séance'); }
       if (cp.etapes && s.etapes && ((cp.etapes.deviner && !s.etapes.deviner) || (cp.etapes.repondre && !s.etapes.repondre))) { err(14, ch + '/etapes', 'étape vraie dans la copie, fausse dans la séance'); }
+      if (cp.k === 0) {
+        if (cp.coups.pseudo !== null && cp.coups.pseudo !== s.coups.pseudo) { err(14, ch + '/coups/pseudo', 'différent de la séance'); }
+        if (cp.coups.entree && s.coups.entree) {
+          ENTREE.forEach(function (x) {
+            var a = cp.coups.entree[x], b = s.coups.entree[x];
+            if (!a || !b) { return; }
+            if (a.reponse !== null && JSON.stringify(a.reponse) !== JSON.stringify(b.reponse)) { err(14, ch + '/coups/entree/' + x + '/reponse', 'différente de la séance'); }
+            if (a.pari !== null && a.pari !== b.pari) { err(14, ch + '/coups/entree/' + x + '/pari', 'différent de la séance'); }
+          });
+        }
+      }
+      // Règles 7 et 10 sur les coups de la copie, calculés dans l'état de la copie.
+      var jc = { partie: journal.partie, seances: S.slice(0, cp.k).concat([{ k: cp.k, ouverture: s.ouverture, versions: cp.versions, etapes: cp.etapes, coups: cp.coups, attente: null }]),
+        copies: [], arret: { k: cp.k, raison: null, f2: null, f1: null }, fin: null };
+      var Rc = null;
+      try { Rc = calculer(scelle, jc); } catch (x) { err(14, ch + '/coups', 'calcul impossible : ' + x.message); return; }
+      verifierSeance(jc.seances[cp.k], cp.k, Rc, ch, true);
     });
     return e;
   }
