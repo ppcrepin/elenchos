@@ -3,7 +3,7 @@
 *Textes d'UX, 5 octobre 2026, pour le §8.6 de `docs/essai/simulation.md`. Cadre de l'essai, en « vous » ; mise en page des pages du cadre (§8.1). Gabarits en typographie simple ; à l'affichage, règles 1 à 6 du §7.8, sauf l'empreinte, la graine et le fichier scellé. Sources : `profils.md` (profils, contraintes, corrigé de F1) ; fichier scellé (`personnages`, `reponses`, `reponses_atypiques`, `absences`) ; F1 du porteur ; cartes calculées de sa manche (`places`).*
 
 ## Place
-Page du cadre « Le dévoilement », ouverte par « Voir le dévoilement » (§7.4, point 7 ; §8.10). Un seul défilement. Dans la bande : « Tout effacer » (§8.9), à bordure neutre. Rouverte, la page revient ici (§8.10). Pour le lecteur d'écran, chaque prénom est un titre de section.
+Page du cadre « Le dévoilement » (c'est aussi son titre, affiché en tête, §8.1 ; recommandation d'UX du 6 octobre 2026), ouverte par « Voir le dévoilement » (§7.4, point 7 ; §8.10). Un seul défilement. Dans la bande : « Tout effacer » (§8.9), à bordure neutre. Rouverte, la page revient ici (§8.10). Pour le lecteur d'écran, chaque prénom est un titre de section.
 
 ## Panneaux, dans cet ordre
 
