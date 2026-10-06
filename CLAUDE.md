@@ -53,7 +53,7 @@ Rien n'atteint le porteur sans l'étape 4. Un livrable rejeté par le porteur re
 ## Règles pratiques apprises
 
 - **L'ordre d'abord (D-009).** On suit `docs/feuille-de-route.md` étape par étape. Aucune question de fabrication (technique, test, contenu, juridique) tant que le produit n'est pas défini et dessiné. Pas de questions de détail en cours de route : un livrable complet, puis les rares questions de fond, regroupées à la fin.
-- **Tenir le porteur au courant** : au début de chaque étape, dire en deux lignes ce qu'on fait et ce qu'il recevra ; ensuite, ne lui écrire que pour livrer.
+- **Tenir le porteur au courant** : au début de chaque étape, dire en deux lignes ce qu'on fait et ce qu'il recevra ; ensuite, un point d'étape court à chaque jalon franchi, et tout de suite si un choix important se présente. Pendant un point d'étape, les tâches déjà lancées se terminent, mais rien de nouveau ne démarre avant son « on continue » (D-020).
 
 - Les agents parallèles partagent le même scratchpad : tout fichier de travail d'un agent est préfixé par son nom (`ux-…`, `game-design-…`).
 - Aucune question technique au porteur avant l'étape 6, même pour un test jetable : il l'a demandé explicitement (D-005). Seule exception : ce qui conditionne l'essai de l'étape 4 (D-016, D-017, D-019), posé en QCM de fond.

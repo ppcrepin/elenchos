@@ -132,6 +132,14 @@ Le test de mémoire a montré que, sur iPhone, une page affichée dans claude.ai
 - Le geste d'ajout ne sert qu'à l'essai ; il ne décide rien du choix « lien ou application » pour le jeu (D-005, suspendu).
 - Écartés : jouer sur ordinateur dans claude.ai (aurait modifié D-017) ; garder les réponses sur claude.ai (aurait modifié D-016).
 
+### D-020 — Points d'étape pendant la fabrication · Décidé (6 octobre 2026)
+
+Le porteur trouvait que l'orchestrateur déroulait la fabrication sans le prévenir. Il choisit :
+- un point d'étape court à chaque jalon franchi (relecture finie, scellement, page finie, vérifications, livraison), et tout de suite si un choix important se présente ;
+- pendant un point d'étape, les tâches déjà lancées se terminent ; rien de nouveau ne démarre avant son « on continue ».
+- Précise la règle « Tenir le porteur au courant » de `CLAUDE.md` (deux lignes au début de chaque étape, puis n'écrire que pour livrer), qui laissait de longues plages sans nouvelles.
+- Écartés : un point toutes les deux heures ; un point à chaque rapport d'agent ; tout arrêter net pendant un point ; continuer sans attendre.
+
 ### C-001 — Le « pourquoi » reste cadré · Constaté
 
 Le « pourquoi » passe uniquement par ce qui est validé : choix d'une considération parmi 4 arguments réels de députés (§2), réponse à considération masquée (§2), révélation de l'auteur de l'argument à 18h (§2). La question quotidienne « d'où vient ta conviction » reste écartée (§10). Toute proposition de « pourquoi » plus profond rouvrirait le §10 et devrait être tranchée explicitement par le porteur.

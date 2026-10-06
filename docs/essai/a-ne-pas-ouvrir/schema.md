@@ -753,7 +753,7 @@ D'où vient ce fichier :
 4. **Ouvertures.** Chaque instant existe à Paris avec ce décalage. Le 25 octobre 2026, 02:30+02:00 et 02:30+01:00 existent tous deux ; une heure locale sautée au passage à l'heure d'été n'existe pas. Aucune ouverture n'est antérieure à la précédente.
 5. **Versions.** Ce sont des entiers d'au moins 1, strictement croissants dans une séance. Le premier d'une séance n'est pas inférieur au dernier de la précédente. La page, elle, écrit le numéro qu'elle porte, même s'il est plus ancien que le précédent (une app restée ouverte, un cache) : ce cas ne se produit pas dans les journaux du harnais, qui choisit lui-même la construction servie (Front-end).
 6. **Entrée.**
-   - `pseudo` est non vide, en NFC, sans caractère de contrôle ; sa longueur suit la règle d'UX (§7.2).
+   - `pseudo` est en NFC ; il ne contient aucun caractère des catégories Cc, Cf ou Cs, aucun blanc autre que U+0020 (propriété Unicode White_Space ; en Python, `str.isspace()`, qui donne le même ensemble hors Cc), ni espace double, ni espace au bord ; il compte de 1 à 20 points de code (`len()` en Python) ; mis en minuscules par `str.lower()`, comme `toLowerCase()` dans la page, et jamais par `casefold()`, qui changerait « Naſſim » en « nassim », il ne vaut ni « agathe », ni « nassim », ni « odile », ni « valentin » (§7.2 ; Front-end, Q-F7).
    - E1, E2 et E3 se jouent dans l'ordre : un texte n'a une réponse que si le précédent a sa réponse et son pari.
    - Un pari n'existe qu'avec une réponse.
    - `consentement` vaut `true` dès qu'une réponse existe.
