@@ -30,8 +30,9 @@ async function jouerSur(options) {
   const { scelle, journal, gestes, constructions, sorte, navigateur, fuseau, langue, icone, relever, captures, appareil, largeur, hauteur, sombre } = options;
   const chemins = cheminsConstructions(constructions, sorte);
   const premier = N.lireInstant(journal.seances[0].ouverture) - 60000;
+  const gp = (gestes && gestes.partie) || {};
   const env = await NAV.ouvrir({ navigateur, fuseau: fuseau || 'Europe/Paris', langue: langue || 'fr-FR', page: chemins[journal.seances[0].versions ? journal.seances[0].versions[0] : 1],
-    icone, heure: premier, appareil, largeur, hauteur, sombre });
+    icone, heure: premier, appareil, largeur, hauteur, sombre, scriptsInit: gp.copieRefusee ? [NAV.SCRIPT_COPIE_REFUSEE] : [] });
   const j = new Joueur(env, journal, chemins, { temoin: sorte === 'temoin', relever: relever !== false, gestes: gestes || { seances: {} }, captures: captures || null });
   try {
     const r = await j.jouer(scelle);
@@ -95,10 +96,16 @@ async function rejouerPartie(options) {
   if (ecartsReleves.length) { res.defauts.push({ controle: 'rejeu', quoi: 'texte affiché différent entre les deux versions', ecarts: ecartsReleves.slice(0, 10) }); }
   // coups gardés identiques aux coups joués (mémoire de chaque version)
   for (const [nom, r] of [['témoin', t], ['porteur', p]]) {
-    const brut = r.memoire['elenchos-essai:partie'];
-    let garde = null;
-    try { garde = JSON.parse(brut); } catch (e) { /* rien */ }
-    if (!garde) { res.defauts.push({ controle: 'rejeu', quoi: 'mémoire illisible (' + nom + ')' }); continue; }
+    const efface = !!(options.gestes && options.gestes.partie && options.gestes.partie.effacerApres);
+    if (efface) {
+      // « Tout effacer » joué à la fin : plus aucune clé de la page (§8.9 ; contrôle 14 d) ; coups comparés à ce que la page tient encore
+      if (Object.keys(r.memoire).some(c => c.indexOf('elenchos-essai:') === 0)) { res.defauts.push({ controle: '14 d', quoi: 'clé « elenchos-essai: » restée après « Tout effacer » (' + nom + ')' }); }
+    } else {
+      const brut = r.memoire['elenchos-essai:partie'];
+      let garde = null;
+      try { garde = JSON.parse(brut); } catch (e) { /* rien */ }
+      if (!garde) { res.defauts.push({ controle: 'rejeu', quoi: 'mémoire illisible (' + nom + ')' }); continue; }
+    }
     const e1 = comparerCoups(journal, r.journalPage);
     if (e1.length) { res.defauts.push({ controle: 'rejeu', quoi: 'coups gardés différents des coups joués (' + nom + ')', ecarts: e1.slice(0, 10) }); }
     const cles = Object.keys(r.memoire).filter(c => c.indexOf('elenchos-essai:') !== 0);

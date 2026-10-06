@@ -347,6 +347,9 @@ var ElenchosTextes = (function (N) {
     arretVerif: "À chaque ouverture, elle vérifie ses données et ses calculs. Cette fois, une vérification n'a pas donné le bon résultat : plutôt que de vous faire jouer sur un calcul peut-être faux, elle préfère s'arrêter.",
     arretVerifGardee: function (appareil) { return "Rien n'est effacé : ce que vous avez déjà joué reste dans votre " + appareil + '.'; },
     arretVerifRepere: ['Dites-le dans la conversation, avec ce repère : ', '. On vous dira quand rouvrir la page.'],
+    // M1, partie gardée illisible (§8.11, commit 413abb0)
+    arretVerifRienEfface: "Cette page n'a rien effacé.",
+    arretVerifRepereM1: ["Gardez l'icône « Essai » et dites-le dans la conversation, avec ce repère : ", '. On vous dira quand rouvrir la page.'],
     arretStockageTitre: 'La page ne peut pas garder vos réponses.',
     arretStockage: function (appareil) { return 'Pour les retrouver d\'un jour à l\'autre, elle doit les enregistrer dans votre ' + appareil + ". Ouverte depuis cette icône, elle n'y arrive pas : elle s'arrête donc avant de vous faire jouer. Si vous aviez déjà commencé l'essai, cette page n'a rien effacé. Gardez l'icône et dites-le dans la conversation : l'équipe vous dira quoi faire."; },
     arretDoubleTitre: "La page s'est ouverte deux fois en même temps.",

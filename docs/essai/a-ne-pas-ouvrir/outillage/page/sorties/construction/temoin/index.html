@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-ne1drDfMpXeLY6Mo5fCiW0+sfBVftissbLQeYOFKXuI=' 'sha256-luj+h8d2ITRWiuJZNGVksi15PKyK/a/peNlF1+r3sCo='; style-src 'sha256-zP2WteVqvxX74enWgAOuI8fQRitL+ULNDLvJA9hmpBA='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-ne1drDfMpXeLY6Mo5fCiW0+sfBVftissbLQeYOFKXuI=' 'sha256-amu4c5j3AbhuAG41F5Ik1uHNlqquYdxNmfPMsP7dQnI='; style-src 'sha256-zP2WteVqvxX74enWgAOuI8fQRitL+ULNDLvJA9hmpBA='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
@@ -2922,6 +2922,9 @@ var ElenchosTextes = (function (N) {
     arretVerif: "À chaque ouverture, elle vérifie ses données et ses calculs. Cette fois, une vérification n'a pas donné le bon résultat : plutôt que de vous faire jouer sur un calcul peut-être faux, elle préfère s'arrêter.",
     arretVerifGardee: function (appareil) { return "Rien n'est effacé : ce que vous avez déjà joué reste dans votre " + appareil + '.'; },
     arretVerifRepere: ['Dites-le dans la conversation, avec ce repère : ', '. On vous dira quand rouvrir la page.'],
+    // M1, partie gardée illisible (§8.11, commit 413abb0)
+    arretVerifRienEfface: "Cette page n'a rien effacé.",
+    arretVerifRepereM1: ["Gardez l'icône « Essai » et dites-le dans la conversation, avec ce repère : ", '. On vous dira quand rouvrir la page.'],
     arretStockageTitre: 'La page ne peut pas garder vos réponses.',
     arretStockage: function (appareil) { return 'Pour les retrouver d\'un jour à l\'autre, elle doit les enregistrer dans votre ' + appareil + ". Ouverte depuis cette icône, elle n'y arrive pas : elle s'arrête donc avant de vous faire jouer. Si vous aviez déjà commencé l'essai, cette page n'a rien effacé. Gardez l'icône et dites-le dans la conversation : l'équipe vous dira quoi faire."; },
     arretDoubleTitre: "La page s'est ouverte deux fois en même temps.",
@@ -3747,7 +3750,8 @@ var ElenchosInterface = (function (N, M, X) {
     return { titres: t2, dimanche: d };
   }
   function membresTous() { return PERSOS.concat(['porteur']); }
-  function encoreFlou() { return tp(X.encoreFlou(N.listeEt(PERSOS).replace(' et ', ', ') + ' et {pseudo}')); }
+  /** « Encore flou : » suivi de tous les membres, séparés par des virgules seules (§5.4 ; maquettes 1.15, 4.2, 5.9). */
+  function encoreFlou() { return tp(X.encoreFlou(PERSOS.concat(['{pseudo}']).join(', '))); }
 
   function eCercle() {
     var ts = titresSemaine();
@@ -4239,8 +4243,12 @@ var ElenchosInterface = (function (N, M, X) {
     arretTechnique = true;
     var lisible = false;
     try { lisible = lireEtat() !== null; } catch (e) { lisible = false; }
-    montrerVueSeule([h('h1', null, t(X.arretVerifTitre)), h('p', null, t(X.arretVerif)), lisible ? h('p', null, t(X.arretVerifGardee(appareil))) : null,
-      h('p', null, t(X.arretVerifRepere[0].replace(/ $/, '')), ' ', h('strong', { class: 'repere' }, v), t(X.arretVerifRepere[1]))]);
+    // M1 (partie gardée illisible) : « Cette page n'a rien effacé. », puis la consigne qui fait garder l'icône (§8.11)
+    var m1 = v === 'M1';
+    var consigne = m1 ? X.arretVerifRepereM1 : X.arretVerifRepere;
+    montrerVueSeule([h('h1', null, t(X.arretVerifTitre)), h('p', null, t(X.arretVerif)),
+      m1 ? h('p', null, t(X.arretVerifRienEfface)) : (lisible ? h('p', null, t(X.arretVerifGardee(appareil))) : null),
+      h('p', null, t(consigne[0].replace(/ $/, '')), ' ', h('strong', { class: 'repere' }, v), t(consigne[1]))]);
   }
   function arreter2() {
     arretTechnique = true;

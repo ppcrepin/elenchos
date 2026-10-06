@@ -777,7 +777,8 @@ var ElenchosInterface = (function (N, M, X) {
     return { titres: t2, dimanche: d };
   }
   function membresTous() { return PERSOS.concat(['porteur']); }
-  function encoreFlou() { return tp(X.encoreFlou(N.listeEt(PERSOS).replace(' et ', ', ') + ' et {pseudo}')); }
+  /** « Encore flou : » suivi de tous les membres, séparés par des virgules seules (§5.4 ; maquettes 1.15, 4.2, 5.9). */
+  function encoreFlou() { return tp(X.encoreFlou(PERSOS.concat(['{pseudo}']).join(', '))); }
 
   function eCercle() {
     var ts = titresSemaine();
@@ -1269,8 +1270,12 @@ var ElenchosInterface = (function (N, M, X) {
     arretTechnique = true;
     var lisible = false;
     try { lisible = lireEtat() !== null; } catch (e) { lisible = false; }
-    montrerVueSeule([h('h1', null, t(X.arretVerifTitre)), h('p', null, t(X.arretVerif)), lisible ? h('p', null, t(X.arretVerifGardee(appareil))) : null,
-      h('p', null, t(X.arretVerifRepere[0].replace(/ $/, '')), ' ', h('strong', { class: 'repere' }, v), t(X.arretVerifRepere[1]))]);
+    // M1 (partie gardée illisible) : « Cette page n'a rien effacé. », puis la consigne qui fait garder l'icône (§8.11)
+    var m1 = v === 'M1';
+    var consigne = m1 ? X.arretVerifRepereM1 : X.arretVerifRepere;
+    montrerVueSeule([h('h1', null, t(X.arretVerifTitre)), h('p', null, t(X.arretVerif)),
+      m1 ? h('p', null, t(X.arretVerifRienEfface)) : (lisible ? h('p', null, t(X.arretVerifGardee(appareil))) : null),
+      h('p', null, t(consigne[0].replace(/ $/, '')), ' ', h('strong', { class: 'repere' }, v), t(consigne[1]))]);
   }
   function arreter2() {
     arretTechnique = true;

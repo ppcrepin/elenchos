@@ -232,7 +232,11 @@ async function controleMemoire(o, rapport) {
       const t = await texteVisible(e2.page);
       const repere = await e2.page.locator('.repere').textContent().catch(() => null);
       const apres = await memoire(e2.page);
-      rapport.ok('(b) partie gardée illisible (' + nom + ') : arrêt 1, repère M1, sans « Rien n’est effacé »', repere === 'M1' && /La page s’est arrêtée par précaution/.test(t) && !/Rien n’est effacé/.test(t), String(repere));
+      const attendus = [X.arretVerifTitre, X.arretVerifRienEfface, X.arretVerifRepereM1[0].replace(/ $/, '') + ' M1' + X.arretVerifRepereM1[1]].map(x => N.typographier(x));
+      const lignes = t.split('\n').map(x => x.trim()).filter(Boolean);
+      rapport.ok('(b) partie gardée illisible (' + nom + ') : arrêt 1, repère M1, « Cette page n’a rien effacé. », consigne de garder l’icône, sans « Rien n’est effacé »',
+        repere === 'M1' && attendus.every(x => lignes.indexOf(x) >= 0) && !/Rien n’est effacé/.test(t) &&
+        lignes.indexOf(attendus[1]) < lignes.indexOf(attendus[2]), String(repere) + ' ; ' + JSON.stringify(lignes));
       rapport.ok('(b) … mémoire inchangée, l’entrée ne commence pas', O.canonique(avant) === O.canonique(apres) && !/Continuer/.test(t));
     } finally { await NAV.fermer(e2); }
   }
@@ -411,7 +415,8 @@ async function controleArrets(o, rapport) {
       const r = await env.page.locator('.repere').textContent().catch(() => null);
       const t = await texteVisible(env.page);
       const m = await memoire(env.page);
-      rapport.ok('(§8.11) vérification ' + repere + ' ratée : arrêt 1, repère ' + repere + ', rien d’écrit', r === repere && /La page s’est arrêtée par précaution/.test(t) && Object.keys(m).length === 0, String(r));
+      rapport.ok('(§8.11) vérification ' + repere + ' ratée : arrêt 1, repère ' + repere + ', consigne ordinaire, rien d’écrit', r === repere && /La page s’est arrêtée par précaution/.test(t) &&
+        !/Cette page n’a rien effacé|Gardez l’icône/.test(t) && Object.keys(m).length === 0, String(r));
     } finally { await NAV.fermer(env); }
   }
   // stockage absent (le navigateur refuse d'écrire : l'outil le règle avant tout script, comme le mode app)

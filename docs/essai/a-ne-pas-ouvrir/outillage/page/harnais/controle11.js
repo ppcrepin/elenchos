@@ -81,8 +81,10 @@ function lignesRouges(releves) {
 /** Texte révélé à l'écran du relevé ? n : numéro du texte quotidien ; vue : celle du relevé. */
 function estRevele(n, k) { return +n <= 13 && +n + 2 <= k; }
 
-function verifierPhrases(releves, journal, scelle, phrases) {
+function verifierPhrases(releves, journal, scelle, phrases, compte) {
   const e = [];
+  compte = compte || {};
+  const compter = (x) => { compte[x] = (compte[x] || 0) + 1; };
   const reponse = (n) => { const s = journal.seances[+n]; return s ? s.coups.reponse : null; };
   for (const r of releves) {
     const v = r.vue;
@@ -99,6 +101,7 @@ function verifierPhrases(releves, journal, scelle, phrases) {
     if (!id || !ecran) { continue; }
     const p = phrases.textes[id];
     if (!p) { continue; }
+    compter(ecran);
     if (ecran === '2.1' || ecran === '5.4-avant') {
       for (const x of p.interdites_avant_revelation) {
         if (blocs.some(b => b.indexOf(x) >= 0)) { e.push({ seance: r.seance, geste: r.geste, ecran, texte: id, quoi: 'chaîne interdite avant la révélation', chaine: x }); }
@@ -112,6 +115,7 @@ function verifierPhrases(releves, journal, scelle, phrases) {
       const rep = ecran === '1.6' ? journal.seances[0].coups.entree[id].reponse : reponse(id);
       const ta = blocs.filter(b => /^Ta raison, /.test(b));
       if (rep && rep.raison !== 'aucune') {
+        compter('Ta raison');
         if (ta.length !== 1 || !ta[0].endsWith(p.arguments[rep.raison - 1])) { e.push({ seance: r.seance, geste: r.geste, ecran, texte: id, quoi: '« Ta raison, … » ne finit pas par l’argument attendu', chaine: ta.join(' | ') }); }
       } else if (ta.length) { e.push({ seance: r.seance, geste: r.geste, ecran, texte: id, quoi: '« Ta raison, … » affichée sans raison' }); }
     }
@@ -143,8 +147,12 @@ async function main() {
   let faux = 0;
   const ok = (quoi, juste, detail) => { if (!juste) { faux++; } const l = (juste ? 'juste : ' : 'FAUX : ') + quoi + (detail && !juste ? ' — ' + detail : ''); lignes.push(l); process.stdout.write(l + '\n'); };
   const phrases = a.phrases ? O.lireJson(a.phrases) : phrasesProvisoires(scelle);
+  if (!phrases.provisoire) {
+    ok('11 : fichier des phrases attendues : format « elenchos-essai-phrases » version 1, même fichier scellé',
+      phrases.format === 'elenchos-essai-phrases' && phrases.version === 1 && phrases.empreinte_scelle === N.sha256(octets), phrases.empreinte_scelle);
+  }
   if (phrases.provisoire) { lignes.push('Phrases attendues : fichier du programme de contrôle non fourni ; vérification provisoire des noms et des dates du vote avant la révélation seulement.'); }
-  const parties = (a.parties || 'a,b,c,d,e,f,g,h,i').split(',');
+  const parties = (a.parties || 'a,b,c,d,e,f,g,h,i,j').split(',');
   const chaines = new Map();
   for (const id of parties) {
     const journal = O.lireJson(path.join(a.journaux, id + '.journal.json'));
@@ -156,8 +164,10 @@ async function main() {
     ok('10 : partie ' + id + ' : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché', lr.length === 0, lr.slice(0, 3).map(x => x.quoi + ' : « ' + x.bloc + ' »').join(' ; '));
     const ce = chiffresEspace(releves);
     ok('11 : partie ' + id + ' : aucun chiffre suivi d’une espace U+0020', ce.length === 0, ce.slice(0, 3).map(x => '« ' + x.bloc + ' »').join(' ; '));
-    const ep = verifierPhrases(releves, journal, scelle, phrases);
-    ok('11 : partie ' + id + ' : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation' + (phrases.provisoire ? ' (provisoire)' : ''), ep.length === 0,
+    const compte = {};
+    const ep = verifierPhrases(releves, journal, scelle, phrases, compte);
+    ok('11 : partie ' + id + ' : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation' + (phrases.provisoire ? ' (provisoire)' : '') +
+      ' — écrans vus : ' + Object.keys(compte).sort().map(k => k + ' × ' + compte[k]).join(', '), ep.length === 0,
       ep.slice(0, 3).map(x => x.ecran + ' texte ' + x.texte + ' : ' + x.quoi + ' « ' + (x.chaine || '') + ' »').join(' ; '));
     // à 320 px de large
     if (!a['sans-320']) {

@@ -63,6 +63,7 @@ class Joueur {
     this.env = env; this.page = env.page; this.j = journal; this.constructions = constructions;
     this.o = Object.assign({ temoin: false, relever: true, gestes: { seances: {} } }, options || {});
     this.gestes = this.o.gestes.seances || {};
+    this.gestesPartie = this.o.gestes.partie || {};
     this.releves = [];        // relevés écran par écran
     this.precedents = [];     // relevés du bloc témoin des chargements précédents
     this.copiesTextes = [];   // textes copiés en cours d'essai (« Copier mon carnet d'abord »)
@@ -216,7 +217,17 @@ class Joueur {
     if (c.pseudo === null) { return 'entree'; }
     await this.bouton(this.tel, X.creerCompte);
     // frappe caractère par caractère (§7.2 : mise en forme à la saisie, champ jamais réécrit)
-    await this.tel.getByRole('textbox', { name: motif(X.champPseudo) }).pressSequentially(this.o.saisiePseudo || c.pseudo);
+    const champ = this.tel.getByRole('textbox', { name: motif(X.champPseudo) });
+    const g0 = this.gestes[0] || {};
+    if (g0.pseudoPrenom) {
+      // d'abord un prénom de personnage : « Recevoir mon code » inactif, message du pseudo dans la bande ; puis effacé
+      await champ.pressSequentially(g0.pseudoPrenom);
+      await this.releverSiVoulu('saisie d’un prénom');
+      if (await this.tel.getByRole('button', { name: motif(X.recevoirCode) }).getAttribute('aria-disabled') !== 'true') { throw new ErreurJeu('« Recevoir mon code » actif avec un prénom'); }
+      await champ.fill('');
+      await this.releverSiVoulu('champ vidé');
+    }
+    await champ.pressSequentially(this.o.saisiePseudo || c.pseudo);
     await this.releverSiVoulu('saisie du pseudo');
     await this.bouton(this.tel, X.recevoirCode);
     await this.bouton(this.tel, X.valider);
@@ -250,6 +261,12 @@ class Joueur {
         continue;
       }
       if (this.croixAFaire) { this.croixAFaire = false; await this.bouton(this.tel, X.fermer); }
+      if (this.ficheAFaire && await this.present(this.tel, 'button', X.texteEtSources)) {
+        // fiche 5.4 du texte qui vient d'être révélé, puis retour à la fin de la révélation
+        this.ficheAFaire = false;
+        await this.bouton(this.tel, X.texteEtSources);
+        await this.bouton(this.tel, '← ' + X.retour);
+      }
       if (await this.present(this.tel, 'button', X.jouer)) {
         if (jusquAJouer) { return 'jouer'; }
         await this.bouton(this.tel, X.jouer);
@@ -352,6 +369,7 @@ class Joueur {
     await this.heure(ms(s.ouverture));
     // premier toucher : message de 18h (3 à 14), sinon l'en-tête du jour
     this.croixAFaire = !!g.croix;
+    this.ficheAFaire = !!g.ficheRevelation;
     if (k >= 3) {
       await this.bouton(this.tel, X.notifMeta, { debut: true });
     } else {
@@ -446,6 +464,16 @@ class Joueur {
     await this.bouton(this.bande, X.copierCarnet, { attendre: () => this.messageCopie() });
     this.carnetCopie = await this.lirePressePapiers();
     await this.bouton(this.bande, X.voirDevoilement);
+    if (this.gestesPartie.effacerApres) { await this.effacerApresDevoilement(); }
+  }
+  /** Après le dévoilement (§8.9) : confirmation, « Copier mon carnet d'abord », copie, « Fermer », puis « Tout effacer ». */
+  async effacerApresDevoilement() {
+    await this.bouton(this.bande, X.toutEffacer);
+    await this.bouton(this.bande, X.copierCarnetDabord);
+    await this.bouton(this.bande, X.copierCarnet, { attendre: () => this.messageCopie() });
+    await this.bouton(this.bande, X.fermer);
+    await this.bouton(this.bande, X.toutEffacer);
+    this.efface = true;
   }
   async arret(a) {
     await this.bouton(this.barre, X.arreterLEssai);

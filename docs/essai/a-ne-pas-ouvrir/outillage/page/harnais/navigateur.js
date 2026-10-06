@@ -39,6 +39,11 @@ const ADRESSE = 'https://ppcrepin.github.io/elenchos/essai/';
 const ADRESSE_ICONE = ADRESSE + 'apple-touch-icon.png';
 const APPAREIL = 'iPhone 15';
 
+/** Navigateur qui refuse la copie : presse-papiers refusé, seconde méthode sans effet (§8.7, consigne de copie manuelle). */
+const SCRIPT_COPIE_REFUSEE = `Object.defineProperty(Navigator.prototype, 'clipboard', { configurable: true, get: function () {
+  return { writeText: function () { return Promise.reject(new Error('copie refusée')); }, readText: function () { return Promise.reject(new Error('lecture refusée')); } }; } });
+Document.prototype.execCommand = function () { return false; };`;
+
 /**
  * Service des octets. `page` : chemin du fichier servi pour l'adresse de
  * l'essai (changeable : correctif) ; `icone` : chemin de l'image.
@@ -120,6 +125,8 @@ async function ouvrir(options) {
   const service = creerService(o.page, o.icone);
   await contexte.route('**/*', service.gestionnaire);
   await contexte.addInitScript(scriptModeApp(o.app));
+  // réglages de l'appareil fixés par l'outil avant tout script de la page (par exemple, une copie refusée)
+  for (const sc of o.scriptsInit || []) { await contexte.addInitScript(sc); }
   if (o.navigateur === 'chromium') {
     try { await contexte.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: 'https://ppcrepin.github.io' }); } catch (x) { /* rien */ }
   }
@@ -146,4 +153,4 @@ async function charger(env) {
 /** Fixe l'heure lue par la page (Date.now) ; les minuteries continuent (setFixedTime). */
 async function fixerHeure(env, ms) { await env.contexte.clock.setFixedTime(ms); }
 
-module.exports = { PW, VERSION_PLAYWRIGHT, ADRESSE, ADRESSE_ICONE, APPAREIL, ouvrir, fermer, charger, fixerHeure, creerService };
+module.exports = { PW, VERSION_PLAYWRIGHT, ADRESSE, ADRESSE_ICONE, APPAREIL, SCRIPT_COPIE_REFUSEE, ouvrir, fermer, charger, fixerHeure, creerService };

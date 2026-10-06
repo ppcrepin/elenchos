@@ -202,6 +202,50 @@ async function controleDurees(o, rapport) {
       }
       await sc.apres(1 * S, 'bande', T.jourSuivant);
       await sc.apres(1 * S, 'bande', T.allerJourSuivant);
+
+      /* Cas 5 bis (§9, 14 i ; §8.8) : arrêt brutal moins d'une seconde après trois coups validés en moins de cinq
+       * secondes (« Valider » de Deviner, « Valider » de la réponse, un choix du carnet du jour). La page reprend après
+       * le dernier coup gardé, à l'étape du premier coup perdu, jamais entre deux coups. */
+      await sc.apres(1 * S, 'tel', /^\s*Elenchos/);
+      for (let g = 0; g < 30; g++) {
+        if (await sc.page.locator('.telephone').getByRole('button', { name: motif(T.jouer) }).count()) { break; }
+        if (await sc.page.locator('.telephone').getByRole('button', { name: motif(T.retournerCarte) }).count()) { await sc.apres(1 * S, 'tel', T.retournerCarte); await sc.avancer(500); continue; }
+        await sc.apres(1 * S, 'tel', T.suivant);
+      }
+      await sc.apres(1 * S, 'tel', T.jouer);
+      const kb = await sc.page.evaluate(() => window.ElenchosEssai.etat().seances.length - 1);
+      await sc.page.waitForTimeout(11000); // tout ce qui précède est sur le disque
+      const groupesB = sc.page.locator('.telephone').getByRole('group', { name: /^Réponse [0-9]$/ });
+      const nB = await groupesB.count();
+      const t0 = Date.now();
+      for (let i = 0; i < nB; i++) { await groupesB.nth(i).getByRole('button', { name: motif(T.passer) }).click(); }
+      await sc.toucher('tel', T.valider);                                    // coup 1 : la manche
+      await sc.toucher('tel', T.POSITIONS[1]); await sc.toucher('tel', T.suivant); await sc.toucher('tel', T.aucuneRaison);
+      await sc.toucher('tel', T.valider);                                    // coup 2 : la réponse
+      await sc.toucher('bande', T.jourSuivant);
+      await sc.toucher('cadre', T.choixQ2.premier_coup);                     // coup 3 : le carnet du jour
+      const ecoule = Date.now() - t0;
+      couperNet(sc.profil);
+      await sc.fermer();
+      await sc.ouvrir(o.porteur, JOUR0 + 4 * 24 * H + 2 * H);
+      const eb = await sc.page.evaluate(() => window.ElenchosEssai.etat());
+      const sb = eb.seances[kb];
+      const c1 = Array.isArray(sb.coups.deviner) && sb.coups.deviner.length > 0 && sb.coups.deviner.every(d => d.designe !== null);
+      const c2 = sb.coups.reponse !== null, c3 = sb.coups.carnet.q2 !== null;
+      const garde = c3 ? 3 : (c2 ? 2 : (c1 ? 1 : 0));
+      const prefixe = (!c3 || c2) && (!c2 || c1);
+      const cadre = eb.vue.cadre ? eb.vue.cadre.page : null, ecran = eb.vue.tel.ecran;
+      const etape = garde === 0 ? (!cadre && ecran === 'deviner') : (garde === 1 ? (!cadre && (ecran === 'repondre' || ecran === 'raison'))
+        : (garde === 2 ? ((!cadre && ecran === 'attente') || cadre === 'carnet') : cadre === 'carnet'));
+      rapport.ok('(i) cas 5 bis (arrêt brutal moins d’une seconde après trois coups validés en ' + (ecoule / 1000).toFixed(1) + ' s) : la page reprend après le coup ' + garde +
+        ' gardé sur 3, à l’étape du premier coup perdu, jamais entre deux coups', ecoule < 5000 && eb.seances.length - 1 === kb && prefixe && etape,
+        JSON.stringify({ garde, prefixe, cadre, ecran, ecoule }));
+      // la suite rejoue les coups perdus
+      if (!c1) { const g2 = sc.page.locator('.telephone').getByRole('group', { name: /^Réponse [0-9]$/ }); for (let i = 0; i < nB; i++) { await g2.nth(i).getByRole('button', { name: motif(T.passer) }).click(); } await sc.apres(1 * S, 'tel', T.valider); }
+      if (!c2) { await sc.apres(1 * S, 'tel', T.POSITIONS[1]); await sc.apres(1 * S, 'tel', T.suivant); await sc.apres(1 * S, 'tel', T.aucuneRaison); await sc.apres(1 * S, 'tel', T.valider); }
+      if (!(eb.vue.cadre && eb.vue.cadre.page === 'carnet' && c2)) { if (!(await sc.page.locator('.cadre-milieu').isVisible())) { await sc.apres(1 * S, 'bande', T.jourSuivant); } }
+      if (!c3) { await sc.apres(1 * S, 'cadre', T.choixQ2.premier_coup); }
+      await sc.apres(1 * S, 'bande', T.allerJourSuivant);
     }
 
     /* Séance suivante. Cas 6 : passage par l'écran couché (son temps compte, son toucher non).

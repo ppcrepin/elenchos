@@ -9,6 +9,7 @@
  *   partie 4.4 ; tente toutes les raisons cachées.
  * - (c) : lit le fichier scellé et attribue tout juste (Le Sans-Faute).
  * - (d) à (i) : arrêts (liste du §9 bis ; contrôle 12, jour 8).
+ * - (j) : écrans que les autres parties témoins n'affichent pas (relevé du contrôle 11).
  * - hasard-001 à hasard-200 : coups tirés au hasard, graine de chaque partie
  *   dérivée d'une graine maîtresse inscrite au rapport de contrôle.
  *
@@ -86,6 +87,7 @@ function jouer(scelle, joueur) {
     seances: [], copies: [], arret: null, fin: null
   };
   const gestes = { seances: {} };
+  if (joueur.gestesPartie) { gestes.partie = joueur.gestesPartie; }
   const inter = joueur.mode === 'interface';
   const kFin = joueur.arret ? joueur.arret.k : 15;
   for (let k = 0; k <= kFin; k++) {
@@ -364,6 +366,37 @@ function temoinArret(scelle, empreinte, id, k, o) {
   };
 }
 
+/** (j) : écrans qu'aucune autre partie témoin n'affiche, pour le relevé du contrôle 11 (demande d'UX, 6 octobre 2026) :
+ *  le message du pseudo égal à un prénom ; la fiche 5.4 d'un texte du jour déjà révélé (« Le texte et ses sources », fin de
+ *  la révélation) ; la consigne de copie manuelle (copie refusée par le navigateur, réglée par l'outil avant tout script,
+ *  comme le mode app) ; la confirmation de « Tout effacer » d'après le dévoilement, la copie qui en part, puis « La page a
+ *  tout effacé. ». Arrêt au jour 4, F1 remplie. */
+function temoinJ(scelle, empreinte) {
+  return {
+    id: 'j', mode: 'interface', empreinte,
+    ouverture: k => instant(2026, 10, 20 + k, '10:00'),
+    versions: () => [1],
+    entree: (E) => ({ E1: { reponse: { niveau: 2, raison: 1 }, pari: 2 }, E2: { reponse: { niveau: 4, raison: 'aucune' }, pari: 4 },
+      E3: { reponse: { niveau: 3, raison: 2 }, pari: 3 } })[E],
+    pseudo: 'Témoin-j-3604-w',
+    deviner: (k, cartes) => {
+      const libres = PERSOS.slice();
+      return cartes.map((c, i) => {
+        if (i === 0) { return { designe: 'passe', raison: null }; }
+        const d = c.auteur !== 'porteur' && libres.indexOf(c.auteur) >= 0 ? c.auteur : libres[0];
+        libres.splice(libres.indexOf(d), 1);
+        return { designe: d, raison: c.cachee ? 1 : null };
+      });
+    },
+    repondre: () => ({ niveau: 4, raison: 1 }),
+    attente: () => ['10:30'],
+    carnet: (k, i) => ({ q1: 'ne_pouvais_pas', q2: 'en_relisant', q3: i.choixQ3.length ? i.choixQ3[0] : null }),
+    gestes: k => ({ 0: { pseudoPrenom: 'odile' }, 3: { ficheRevelation: true } })[k],
+    gestesPartie: { copieRefusee: true, effacerApres: true },
+    arret: { k: 4, raison: 'autre', f2: 'toujours_autant', f1: f1Plein('milieu'), carnet: false }
+  };
+}
+
 function partiesTemoins(scelle, empreinte) {
   return [
     jouer(scelle, temoinB(scelle, empreinte)),
@@ -378,7 +411,8 @@ function partiesTemoins(scelle, empreinte) {
     jouer(scelle, temoinArret(scelle, empreinte, 'g', 5, { sansF1: true, carnet: true, lectures: { 5: ['12:12', '12:30'] } })),
     // contrôle 12 : arrêt au jour 8, réponses à 4 des 6 textes révélés, puis à 5 des 6
     jouer(scelle, temoinArret(scelle, empreinte, 'h', 8, { sansReponse: [2, 5] })),
-    jouer(scelle, temoinArret(scelle, empreinte, 'i', 8, { sansReponse: [2] }))
+    jouer(scelle, temoinArret(scelle, empreinte, 'i', 8, { sansReponse: [2] })),
+    jouer(scelle, temoinJ(scelle, empreinte))
   ];
 }
 
@@ -388,4 +422,4 @@ function partiesHasard(scelle, empreinte, maitresse, debut, n, mode) {
   return r;
 }
 
-module.exports = { jouer, partiesTemoins, partiesHasard, grainePartie, generateur, instant, raisonPour, f1Plein, temoinB, temoinC, temoinArret, joueurHasard };
+module.exports = { jouer, partiesTemoins, partiesHasard, grainePartie, generateur, instant, raisonPour, f1Plein, temoinB, temoinC, temoinArret, temoinJ, joueurHasard };
