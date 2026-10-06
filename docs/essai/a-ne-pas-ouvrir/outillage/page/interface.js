@@ -670,11 +670,6 @@ var ElenchosInterface = (function (N, M, X) {
         h('span', null, t(k === 7 || k === 14 ? X.message18hDimanche : X.message18h))))], null, { aria: 'Écran verrouillé' });
   }
 
-  function points(nb, total) {
-    var n = h('span', null);
-    return t(X.points(nb, total));
-  }
-
   function eRevelation() {
     var s = seanceCourante(), k = s.k;
     var seq = sequenceRevelation(k);
@@ -722,7 +717,6 @@ var ElenchosInterface = (function (N, M, X) {
       corps.push(band(t(tx.titre)), q(t(X.etLAssemblee)), big(t(X.issue[tx.vote.issue])),
         p(t(tx.vote.issue === 'sans_vote_ensemble' ? X.articleUnique(dateVote(tx)) : joindre('Le ' + dateVote(tx) + '.', etapeVote(tx)))));
     } else if (el.type === 'auteurs') {
-      var rp = R().seances[k].mesures; // (la réponse du porteur au texte n est dans ses coups)
       var maRep = etat.seances[+n].coups.reponse;
       corps.push(band(t(tx.titre)), h('div', { class: 'p' }, avecSigles(t(proposePar(tx, '2.7e')), sigles)));
       if (maRep && maRep.raison !== 'aucune') { corps.push(rule(), h('div', { class: 'p' }, avecSigles(t(taRaison(tx, maRep.raison)), sigles))); }
@@ -1413,7 +1407,6 @@ var ElenchosInterface = (function (N, M, X) {
     }
     if (s.versions.length === 0 || s.versions[s.versions.length - 1] !== VERSION) { s.versions.push(VERSION); }
     s.pp.dernier = pp;
-    var actionCible = cible && cible.closest ? (cible.closest('[data-action]') || {}).getAttribute : null;
     var action = cible && cible.closest && cible.closest('[data-action]') ? cible.closest('[data-action]').getAttribute('data-action') : null;
     if (!etat.vue.cadre && etat.vue.tel.ecran === 'deviner' && s.pp.devDebut !== null && !mancheValidee(s)) { s.pp.devDernier = pp; }
     if (action === 'confirmation-continuer') {

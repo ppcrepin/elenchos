@@ -71,7 +71,7 @@ strong, b { font-weight: 600; }
 .vue-couchee { display: none; }
 @media (max-height: 499px) and (orientation: landscape) {
   .app { display: none; }
-  .vue-couchee { display: block; }
+  .vue-couchee { display: grid; }
 }
 
 /* Pages du cadre (§8.1) */
@@ -99,9 +99,10 @@ details.panneau > summary { min-height: 44px; display: flex; align-items: center
 
 /* Vues seules : arrêts techniques, hors de l'icône, secours, couché (§8.1, §8.11, §8.13) */
 .vue-seule, .vue-couchee {
-  max-width: 34rem; margin: 0 auto; display: grid; gap: 16px; align-content: start;
+  max-width: 34rem; margin: 0 auto; gap: 16px; align-content: start;
   padding: max(24px, calc(var(--zh) + 12px)) max(16px, var(--zd)) max(40px, calc(var(--zb) + 24px)) max(16px, var(--zg));
 }
+.vue-seule { display: grid; }
 .vue-seule h1, .vue-couchee h1 { font-size: 21.6px; font-weight: 600; line-height: 1.25; margin: 0; }
 .vue-seule details > summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 600; }
 .vue-seule details > * + * { margin-top: 10px; }
