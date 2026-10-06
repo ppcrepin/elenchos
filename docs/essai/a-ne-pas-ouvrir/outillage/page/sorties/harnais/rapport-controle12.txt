@@ -1,0 +1,84 @@
+juste : 12 : a.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : b.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : b.copie-1.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : c.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : d.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : e.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : f.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : f.copie-1.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : g.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : h.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-201.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-201.copie-1.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-202.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-203.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-204.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-204.copie-1.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-205.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-205.copie-1.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-206.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-206.copie-1.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-207.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-207.copie-1.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-207.copie-2.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-208.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-209.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-209.copie-1.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-210.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : hasard-210.copie-1.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : i.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : arrêt au jour 8, partie h : « pas de chiffre » aux trois lignes
+juste : 12 : arrêt au jour 8, partie i : des chiffres
+juste : 12 : partie a, variante « positions opposées » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie a, variante « toutes neutres » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie a, variante « autres raisons, dont « aucune » » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie a, variante « texte 3 laissé sans réponse » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie b, variante « positions opposées » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie b, variante « toutes neutres » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie b, variante « autres raisons, dont « aucune » » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie b, variante « texte 3 laissé sans réponse » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie c, variante « positions opposées » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie c, variante « toutes neutres » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie c, variante « autres raisons, dont « aucune » » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie c, variante « texte 3 laissé sans réponse » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-201, variante « positions opposées » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-201, variante « toutes neutres » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-201, variante « autres raisons, dont « aucune » » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-201, variante « texte 3 laissé sans réponse » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-202, variante « positions opposées » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-202, variante « toutes neutres » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-202, variante « autres raisons, dont « aucune » » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-202, variante « texte 7 laissé sans réponse » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-203, variante « positions opposées » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-203, variante « toutes neutres » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-203, variante « autres raisons, dont « aucune » » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-203, variante « texte 3 laissé sans réponse » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-204, variante « positions opposées » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-204, variante « toutes neutres » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-204, variante « autres raisons, dont « aucune » » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-204, variante « texte 4 laissé sans réponse » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-205, variante « positions opposées » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-205, variante « toutes neutres » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-205, variante « autres raisons, dont « aucune » » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-205, variante « texte 3 laissé sans réponse » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-206, variante « positions opposées » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-206, variante « toutes neutres » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-206, variante « autres raisons, dont « aucune » » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-206, variante « texte 8 laissé sans réponse » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-207, variante « positions opposées » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-207, variante « toutes neutres » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-207, variante « autres raisons, dont « aucune » » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-207, variante « texte 6 laissé sans réponse » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-208, variante « positions opposées » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-208, variante « toutes neutres » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-208, variante « autres raisons, dont « aucune » » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-208, variante « texte 3 laissé sans réponse » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-209, variante « positions opposées » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-209, variante « toutes neutres » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-209, variante « autres raisons, dont « aucune » » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-209, variante « texte 4 laissé sans réponse » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-210, variante « positions opposées » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-210, variante « toutes neutres » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-210, variante « autres raisons, dont « aucune » » : blocs de séance, questions de fin, mesures et copies identiques
+juste : 12 : partie hasard-210, variante « texte 6 laissé sans réponse » : blocs de séance, questions de fin, mesures et copies identiques
+Toutes les vérifications sont justes.

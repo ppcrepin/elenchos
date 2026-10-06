@@ -24,8 +24,13 @@ const O = require('./outils.js');
 
 const TEMOINS = ['a', 'b', 'c'];
 
+const X = require('../textes.js');
+// Le message de copie dépend du presse-papiers du navigateur de l'outil (réussite ou seconde méthode) : il est
+// remplacé par un repère ; le texte copié lui-même est vérifié à part (contrôle 14 e).
+const MESSAGES_COPIE = [N.typographier(X.carnetCopie), N.typographier(X.copieEchec)];
 function empreinteEcran(r) {
-  return O.sha256Texte(O.canonique({ geste: r.geste, vue: r.vue, blocs: r.blocs.map(b => ({ texte: O.masquerCarnet(b.texte), zone: b.zone })) }));
+  return O.sha256Texte(O.canonique({ geste: r.geste, vue: r.vue, blocs: r.blocs.map(b => ({
+    texte: MESSAGES_COPIE.indexOf(b.texte) >= 0 ? '‹message de copie›' : O.masquerCarnet(b.texte), zone: b.zone })) }));
 }
 function empreinteCoups(j) {
   return O.sha256Texte(O.canonique({ seances: j.seances.map(s => ({ k: s.k, ouverture: s.ouverture, versions: s.versions, etapes: s.etapes, coups: s.coups })), arret: j.arret, fin: j.fin }));
@@ -58,6 +63,7 @@ async function passe(a) {
   const C14 = require('./controle14.js');
   const NAV = require('./navigateur.js');
   const att = O.lireJson(a.attendus);
+  const nav = a.navigateur || 'webkit'; // « chromium » : essai à blanc de la passe dans l'environnement de l'équipe
   const { scelle } = C14.lireScelle(a.scelle);
   const r = C14.creerRapport(true);
   const ecart = (chemin) => r.ok('différence : ' + chemin, false);
@@ -74,7 +80,7 @@ async function passe(a) {
     const journal = O.lireJson(path.join(a.journaux, id + '.journal.json'));
     const gestes = O.lireJson(path.join(a.journaux, id + '.gestes.json'));
     let res;
-    try { res = await RJ.jouerSur({ scelle, journal, gestes, constructions, sorte: 'porteur', navigateur: 'webkit' }); }
+    try { res = await RJ.jouerSur({ scelle, journal, gestes, constructions, sorte: 'porteur', navigateur: nav }); }
     catch (e) { r.ok('partie ' + id + ' jouée par l’interface', false); continue; }
     const attendu = att.temoins[id];
     const ecrans = res.releves.map(empreinteEcran);
@@ -95,18 +101,19 @@ async function passe(a) {
   const ids = Object.keys(att.moteur).sort();
   const journaux = ids.map(id => O.lireJson(path.join(a.journaux, id + '.journal.json')));
   try {
-    const m = await RJ.rejouerMoteur({ journaux, constructions, navigateur: 'webkit' });
+    const m = await RJ.rejouerMoteur({ journaux, constructions, navigateur: nav });
     let n = 0;
     m.traces.forEach((t, i) => { if (O.sha256Texte(O.canonique(O.masquerTrace(t))) !== att.moteur[ids[i]]) { if (n++ < 20) { ecart('/moteur/' + ids[i]); } } });
     r.ok('parties au hasard : ' + ids.length + ' traces égales à celles de Chromium (durées masquées)', n === 0 && m.erreurs.length === 0);
   } catch (e) { r.ok('parties au hasard rejouées par le moteur', false); }
   // 4. contrôles (a), (b), (c), (d), (f), (h) ; largeur de U+202F ; (i) sans arrêt brutal
-  const o = { navigateur: 'webkit', icone: a.icone || path.join(__dirname, '..', '..', '..', '..', 'page-test-icone', 'apple-touch-icon.png'),
+  const o = { navigateur: nav, icone: a.icone || path.join(__dirname, '..', '..', '..', '..', 'page-test-icone', 'apple-touch-icon.png'),
     pageTest: a['page-test'] || path.join(__dirname, '..', '..', '..', '..', 'page-test-icone', 'index.html'), scelle, cheminScelle: a.scelle,
     construction: a.construction, construction2: a['construction-2'], construction3: a['construction-3'],
     porteur: C14.porteurDe(a.construction), porteur2: C14.porteurDe(a['construction-2']), journaux: a.journaux };
   for (const [nom, f] of [['(a) (c)', C14.controleHors], ['(f)', C14.controleCsp], ['(b)', C14.controleMemoire], ['(d)', C14.controleEffacer], ['§8.11', C14.controleArrets],
     ['U+202F', C14.controleEspaceFine], ['(h) retours', C14.controleRetours], ['(h) tailles', C14.controleMiseEnPage], ['(i)', require('./durees.js').controleDurees]]) {
+    if (a.rapide && nom === '(h) tailles') { continue; } // essai à blanc seulement
     try { await f(o, r); } catch (e) { r.ok(nom + ' joué jusqu’au bout', false); }
   }
   process.stdout.write((r.faux ? 'échoué' : 'réussi') + ' (Playwright ' + NAV.VERSION_PLAYWRIGHT + ')\n');

@@ -51,9 +51,17 @@ function releverEcran() {
   var parBloc = new Map();
   var ordre = [];
   racines.forEach(function (r) {
-    var w = document.createTreeWalker(r, NodeFilter.SHOW_TEXT, null);
+    var w = document.createTreeWalker(r, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, null);
     var n;
     while ((n = w.nextNode())) {
+      if (n.nodeType === 1) {
+        // un <br> est un retour à la ligne voulu : il entre dans le texte du bloc comme « \n »
+        if (n.tagName === 'BR' && visible(n.parentElement)) {
+          var bb = blocParent(n);
+          if (bb) { if (!parBloc.has(bb)) { parBloc.set(bb, []); ordre.push(bb); } parBloc.get(bb).push({ br: true }); }
+        }
+        continue;
+      }
       if (!n.nodeValue) { continue; }
       if (n.parentElement && (n.parentElement.tagName === 'SCRIPT' || n.parentElement.tagName === 'STYLE')) { continue; }
       if (!visible(n.parentElement)) { continue; }
@@ -65,7 +73,7 @@ function releverEcran() {
   });
   ordre.forEach(function (b) {
     var noeuds = parBloc.get(b);
-    var texte = noeuds.map(function (n) { return n.nodeValue; }).join('');
+    var texte = noeuds.map(function (n) { return n.br ? '\n' : n.nodeValue; }).join('');
     if (!/\S/.test(texte.replace(/[\u00a0\u202f]/g, 'x'))) { return; }
     var zone = zoneDe(b);
     blocs.push({ texte: texte, zone: zone });
@@ -73,6 +81,7 @@ function releverEcran() {
     var pre = getComputedStyle(b).whiteSpace;
     var cars = [];
     noeuds.forEach(function (n) {
+      if (n.br) { cars.push({ c: '\n', top: null, h: 0, w: 0 }); return; }
       for (var i = 0; i < n.nodeValue.length; i++) {
         var c = n.nodeValue.charAt(i);
         var r = document.createRange(); r.setStart(n, i); r.setEnd(n, i + 1);
@@ -111,10 +120,22 @@ function mesurerDisposition() {
     var r = b.getBoundingClientRect();
     if (r.width && r.height) { cibles.push({ zone: 'cadre', texte: b.textContent, x: r.left, y: r.top, l: r.width, h: r.height }); }
   });
+  // cibles du téléphone, rognées à ce qui s'en voit (défilement de l'écran, contour du téléphone)
   var telCibles = [];
+  var tel = document.querySelector('.telephone');
+  var rt = tel && !tel.hidden ? tel.getBoundingClientRect() : null;
   document.querySelectorAll('.telephone button, .telephone a, .telephone input').forEach(function (b) {
+    if (!rt) { return; }
     var r = b.getBoundingClientRect();
-    if (r.width && r.height) { telCibles.push({ x: r.left, y: r.top, l: r.width, h: r.height }); }
+    var g = Math.max(r.left, rt.left), d = Math.min(r.right, rt.right), hh = Math.max(r.top, rt.top), bb = Math.min(r.bottom, rt.bottom);
+    for (var e = b.parentElement; e && e !== tel; e = e.parentElement) {
+      var ov = getComputedStyle(e).overflowY;
+      if (ov === 'auto' || ov === 'scroll' || ov === 'hidden') { var rc = e.getBoundingClientRect(); hh = Math.max(hh, rc.top); bb = Math.min(bb, rc.bottom); g = Math.max(g, rc.left); d = Math.min(d, rc.right); }
+    }
+    // une feuille ouverte (2.2, « Relire ») couvre le bas de l'écran : ce qui est dessous ne se touche pas
+    var feuille = document.querySelector('.telephone .feuille');
+    if (feuille && !feuille.contains(b)) { bb = Math.min(bb, feuille.getBoundingClientRect().top); }
+    if (d - g > 0 && bb - hh > 0 && getComputedStyle(b).visibility !== 'hidden') { telCibles.push({ x: g, y: hh, l: d - g, h: bb - hh }); }
   });
   return {
     fenetre: { l: window.innerWidth, h: window.innerHeight },

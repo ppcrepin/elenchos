@@ -1,0 +1,1 @@
+{"empreinte_scelle":"59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64","graine_maitresse":"59db748499fd1ece","regle":"graine de la partie i = 16 premiers caractères de SHA-256(maîtresse « | » i) ; 1 à 200 : mode moteur ; 201 à 210 : mode interface"}

@@ -138,6 +138,7 @@ class Joueur {
     }
     if (await l.getAttribute('aria-disabled') === 'true') { throw new ErreurJeu('séance ' + this.k + ' : bouton inactif ' + m); }
     await l.click();
+    if (options.attendre) { await options.attendre(); }
     this.nbGestes++;
     await this.releverSiVoulu(role + ' ' + (nom instanceof RegExp ? nom.source : nom));
   }
@@ -171,7 +172,7 @@ class Joueur {
     await this.bouton(this.tel, X.toutEffacer);
     await this.bouton(this.bande, X.copierCarnetDabord);
     const zone = await this.page.locator('#zone-carnet').textContent();
-    await this.bouton(this.bande, X.copierCarnet);
+    await this.bouton(this.bande, X.copierCarnet, { attendre: () => this.messageCopie() });
     const presse = await this.lirePressePapiers();
     this.copiesTextes.push({ k: this.k, zone, presse });
     await this.bouton(this.bande, X.fermer);
@@ -180,6 +181,8 @@ class Joueur {
     if (ecranAvant === 'attente') { await this.avantAttente(); }
     await this.bouton(this.tel, X.ongletAujourdhui);
   }
+  /** La copie se fait par une promesse (presse-papiers) : le message de la bande vient après le geste. */
+  async messageCopie() { await this.bande.getByRole('status').waitFor({ state: 'visible', timeout: 5000 }); }
   async lirePressePapiers() {
     try { return await this.page.evaluate(() => navigator.clipboard.readText()); } catch (e) { return null; }
   }
@@ -246,6 +249,7 @@ class Joueur {
         await this.releverSiVoulu('carte retournée');
         continue;
       }
+      if (this.croixAFaire) { this.croixAFaire = false; await this.bouton(this.tel, X.fermer); }
       if (await this.present(this.tel, 'button', X.jouer)) {
         if (jusquAJouer) { return 'jouer'; }
         await this.bouton(this.tel, X.jouer);
@@ -347,6 +351,7 @@ class Joueur {
     if (s.versions[0] !== this.version) { await this.recharger(s.versions[0]); }
     await this.heure(ms(s.ouverture));
     // premier toucher : message de 18h (3 à 14), sinon l'en-tête du jour
+    this.croixAFaire = !!g.croix;
     if (k >= 3) {
       await this.bouton(this.tel, X.notifMeta, { debut: true });
     } else {
@@ -393,10 +398,14 @@ class Joueur {
     await this.bouton(this.bande, X.allerJourSuivant);
   }
 
+  /** Le Cercle (4.2), chaque proche (4.3), titres passés (5.5), Moi (5.11, 5.2, 5.3), une fiche (5.4), Réglages (5.7) et
+   *  « Qui, durée, droits », un lien vers un écran absent (« + Inviter »). */
   async visiterCercle(finie) {
     await this.bouton(this.tel, X.ongletCercle);
+    await this.bouton(this.tel, X.inviter);
     for (const p of PERSOS) {
       await this.bouton(this.tel, new RegExp('^' + p + '\\b'));
+      if (await this.present(this.tel, 'button', X.voirTout)) { await this.bouton(this.tel, X.voirTout); }
       await this.bouton(this.tel, '← ' + X.leCercle);
     }
     await this.bouton(this.tel, X.titresPassesLien);
@@ -404,7 +413,17 @@ class Joueur {
     await this.bouton(this.tel, X.ongletMoi);
     await this.bouton(this.tel, X.sousOnglets[1]);
     await this.bouton(this.tel, X.sousOnglets[2]);
+    const lignes = this.tel.locator('.listrow[data-action="fiche"]');
+    if (await lignes.count()) {
+      await lignes.first().click();
+      this.nbGestes++;
+      await this.releverSiVoulu('fiche depuis l’Historique');
+      await this.bouton(this.tel, '← ' + X.retour);
+    }
     await this.bouton(this.tel, X.sousOnglets[0]);
+    await this.bouton(this.tel, X.reglagesNom);
+    await this.bouton(this.tel, X.quiDureeDroits);
+    await this.bouton(this.bande, X.fermer);
     if (finie) { await this.avantAttente(); }
     await this.bouton(this.tel, X.ongletAujourdhui);
   }
@@ -424,7 +443,7 @@ class Joueur {
   }
   async exporterEtDevoiler() {
     this.carnetZone = await this.page.locator('#zone-carnet').textContent();
-    await this.bouton(this.bande, X.copierCarnet);
+    await this.bouton(this.bande, X.copierCarnet, { attendre: () => this.messageCopie() });
     this.carnetCopie = await this.lirePressePapiers();
     await this.bouton(this.bande, X.voirDevoilement);
   }

@@ -97,6 +97,10 @@ async function controleHors(o, rapport) {
         rapport.ok('(c) ' + c.nom + ' : vue « ' + c.vue + ' »', /L’essai ne s’ouvre pas ici/.test(t), t.slice(0, 60));
       } else {
         await NAV.charger(env);
+        if (c.tactile && (await env.page.evaluate(() => navigator.maxTouchPoints || 0)) < 2) {
+          rapport.note('(c) ' + c.nom + ' : non reproduit par l’outil sous ' + o.navigateur + ' (navigator.maxTouchPoints < 2)');
+          continue;
+        }
         const t = await texteVisible(env.page);
         const attendu = c.vue === 'onglet' ? /Ouvrez plutôt l’icône/ : (c.vue === 'autre' ? /dans ce navigateur, la page ne lance pas/ : /L’essai ne s’ouvre pas ici/);
         rapport.ok('(c) ' + c.nom + ' : vue « ' + c.vue + ' »', attendu.test(t), t.slice(0, 60));
@@ -136,7 +140,7 @@ async function controleCsp(o, rapport) {
       const viol = [];
       document.addEventListener('securitypolicyviolation', e => viol.push(e.violatedDirective + ' ' + e.blockedURI));
       try { await fetch('https://ppcrepin.github.io/elenchos/essai/sonde-fetch'); r.fetch = 'passé'; } catch (e) { r.fetch = 'refusé'; }
-      await new Promise(res => { const i = new Image(); i.onload = () => { r.image = 'passé'; res(); }; i.onerror = () => { r.image = 'refusé'; res(); }; i.src = 'https://ppcrepin.github.io/elenchos/essai/sonde.png'; });
+      await new Promise(res => { const i = new Image(); i.onload = () => { r.image = 'passé'; res(); }; i.onerror = () => { r.image = 'refusé'; res(); }; i.src = 'https://autre-origine.invalid/sonde.png'; });
       await new Promise(res => { const s = document.createElement('script'); s.onload = () => { r.script = 'passé'; res(); }; s.onerror = () => { r.script = 'refusé'; res(); }; s.src = 'https://ppcrepin.github.io/elenchos/essai/sonde.js'; document.head.appendChild(s); });
       await new Promise(res => { const l = document.createElement('link'); l.rel = 'stylesheet'; l.onload = () => { r.style = 'passé'; res(); }; l.onerror = () => { r.style = 'refusé'; res(); }; l.href = 'https://ppcrepin.github.io/elenchos/essai/sonde.css'; document.head.appendChild(l); });
       try { const f = new FontFace('Sonde', 'url(https://ppcrepin.github.io/elenchos/essai/sonde.woff2)'); await f.load(); r.police = 'passé'; } catch (e) { r.police = 'refusé'; }
@@ -146,7 +150,8 @@ async function controleCsp(o, rapport) {
       return r;
     });
     const sorties = env.service.servies.slice(avant).concat(env.service.refusees);
-    for (const k of ['fetch', 'image', 'script', 'style', 'police']) { rapport.ok('(f) requête « ' + k + ' » lancée depuis la page : refusée', essais[k] === 'refusé', essais[k]); }
+    for (const k of ['fetch', 'image', 'script', 'style', 'police']) { rapport.ok('(f) requête « ' + k + ' » lancée depuis la page' + (k === 'image' ? ' (image d’une autre adresse)' : ' (à l’adresse de la page)') + ' : refusée', essais[k] === 'refusé', essais[k]); }
+    rapport.note('(f) note : une image demandée à l’adresse de la page elle-même passe la politique (img-src \'self\', voulu pour l’image de l’icône, §8.8) ; que la page n’en crée aucune relève du contrôle 5.');
     rapport.ok('(f) formulaire : refusé, aucune requête n’atteint l’outil', sorties.length === 0, sorties.join(', ') + ' ; violations : ' + essais.violations.join(' | '));
   } finally { await NAV.fermer(env); }
   // une copie dont le bloc de script diffère d'un octet : vue de secours
@@ -340,7 +345,8 @@ async function controleMiseEnPage(o, rapport) {
   const journal = O.lireJson(path.join(o.journaux, 'b.journal.json'));
   const gestes = O.lireJson(path.join(o.journaux, 'b.gestes.json'));
   const constructions = { 1: porteurDe(o.construction), 2: porteurDe(o.construction2), 3: porteurDe(o.construction3 || o.construction2) };
-  for (const [l, h, nom] of taillesH()) {
+  const choisies = o.tailles ? o.tailles.split(',').map(x => x.split('x').map(Number)) : null;
+  for (const [l, h, nom] of taillesH().filter(t => !choisies || choisies.some(c => c[0] === t[0] && c[1] === t[1]))) {
     const couche = h <= 499 && l > h;
     const planche = l >= 600 && h >= 900;
     const env = await NAV.ouvrir({ navigateur: o.navigateur, page: constructions[1], icone: o.icone, largeur: l, hauteur: h, heure: N.lireInstant(journal.seances[0].ouverture) - 60000 });
@@ -506,6 +512,15 @@ async function controleRetours(o, rapport) {
     const e1 = await page.evaluate(() => window.ElenchosEssai.etat());
     rapport.ok('(h) relance sur le carnet du jour d’une journée pas finie : téléphone à l’écran d’avant « Jour suivant », choix du carnet gardés',
       !e1.vue.cadre && e1.vue.tel.ecran === 'repondre' && e1.seances[1].coups.carnet.q2 === 'pas_tout', JSON.stringify({ cadre: e1.vue.cadre, ecran: e1.vue.tel.ecran, q2: e1.seances[1].coups.carnet.q2 }));
+    // une note apparaît : l'élément touché garde sa place (« + Inviter », lien vers un écran absent)
+    await b(tel, X.ongletCercle);
+    const inviter = tel.getByRole('button', { name: motif(X.inviter) });
+    const r0 = await inviter.boundingBox();
+    await inviter.click();
+    const r1 = await inviter.boundingBox();
+    const note = await bande.getByRole('status').textContent().catch(() => '');
+    rapport.ok('(h) note « Pas dans l’essai. » : l’élément touché garde sa place', note === N.typographier(X.pasDansLEssai) && r0 && r1 && r0.x === r1.x && r0.y === r1.y, JSON.stringify([r0, r1, note]));
+    await b(tel, X.ongletAujourdhui);
     // relance pendant la copie ouverte par « Copier mon carnet d'abord » : ni copie ni confirmation, l'écran d'où la confirmation a été ouverte
     await b(tel, X.ongletMoi);
     await tel.getByRole('button', { name: motif(X.reglagesNom) }).click();
@@ -568,7 +583,7 @@ async function main() {
   const o = {
     navigateur: a.navigateur || 'chromium', icone: a.icone || ICONE_DEFAUT, pageTest: a['page-test'] || PAGE_TEST_DEFAUT, scelle, cheminScelle: a.scelle,
     construction: a.construction, construction2: a['construction-2'], construction3: a['construction-3'],
-    porteur: porteurDe(a.construction), porteur2: a['construction-2'] ? porteurDe(a['construction-2']) : null, journaux: a.journaux
+    porteur: porteurDe(a.construction), porteur2: a['construction-2'] ? porteurDe(a['construction-2']) : null, journaux: a.journaux, tailles: a.tailles || null
   };
   const points = (a.points || 'a,b,c,d,f,t,h,i').split(',');
   const r = creerRapport();
@@ -578,7 +593,8 @@ async function main() {
   if (points.indexOf('b') >= 0) { await controleMemoire(o, r); }
   if (points.indexOf('d') >= 0) { await controleEffacer(o, r); }
   if (points.indexOf('t') >= 0) { await controleArrets(o, r); }
-  if (points.indexOf('h') >= 0) { await controleEspaceFine(o, r); await controleRetours(o, r); if (!a['sans-tailles']) { await controleMiseEnPage(o, r); } }
+  if (points.indexOf('h') >= 0) { await controleEspaceFine(o, r); await controleRetours(o, r); }
+  if (points.indexOf('h') >= 0 || points.indexOf('tailles') >= 0) { if (!a['sans-tailles']) { await controleMiseEnPage(o, r); } }
   if (points.indexOf('i') >= 0) { await require('./durees.js').controleDurees(o, r); }
   r.note(r.faux ? r.faux + ' vérification(s) fausse(s)' : 'Toutes les vérifications sont justes.');
   if (a.sortie) { O.ecrireTexte(path.join(a.sortie, 'rapport-controle14-' + o.navigateur + '.txt'), r.lignes.join('\n') + '\n'); }

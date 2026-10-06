@@ -109,7 +109,10 @@ async function rejeu(a) {
   const parties = lireJournaux(a.journaux, a.parties);
   const lignes = [];
   let defauts = 0;
-  const dire = s => { lignes.push(s); process.stdout.write(s + '\n'); };
+  const fichierRapport = path.join(sortie, 'rapport-rejeu-' + navigateur + '.txt');
+  fs.mkdirSync(sortie, { recursive: true });
+  fs.writeFileSync(fichierRapport, '');
+  const dire = s => { lignes.push(s); process.stdout.write(s + '\n'); fs.appendFileSync(fichierRapport, s + '\n'); };
   dire('Rejeu : ' + navigateur + ' (Playwright ' + NAV.VERSION_PLAYWRIGHT + '), constructions ' + Object.keys(constructions).map(v => 'v' + v + ' ' + O.sha256Fichier(path.join(constructions[v], 'porteur', 'index.html')).slice(0, 12) + '/' + O.sha256Fichier(path.join(constructions[v], 'temoin', 'index.html')).slice(0, 12)).join(', '));
   const moteur = parties.filter(p => p.journal.partie.mode === 'moteur');
   const inter = parties.filter(p => p.journal.partie.mode === 'interface');
@@ -128,8 +131,8 @@ async function rejeu(a) {
     O.ecrireJson(path.join(sortie, 'page', p.id + '.trace.json'), r.trace);
     if (r.carnet !== null) { O.ecrireTexte(path.join(sortie, 'page', p.id + '.carnet.txt'), r.carnet); O.ecrireTexte(path.join(sortie, 'page', p.id + '.carnet-masque.txt'), O.masquerCarnet(r.carnet)); }
     r.copies.forEach((c, i) => { O.ecrireTexte(path.join(sortie, 'page', p.id + '.copie-' + (i + 1) + '.txt'), c); O.ecrireTexte(path.join(sortie, 'page', p.id + '.copie-' + (i + 1) + '-masque.txt'), O.masquerCarnet(c)); });
-    O.ecrireJson(path.join(sortie, 'releves', p.id + '.temoin.json'), r.relevesTemoin);
-    O.ecrireJson(path.join(sortie, 'releves', p.id + '.porteur.json'), r.relevesPorteur);
+    // relevé de la version du porteur (celui de la version témoin lui est identique, vérifié ci-dessus) ; coupures : voir le contrôle 11
+    O.ecrireJson(path.join(sortie, 'releves', p.id + '.porteur.json'), r.relevesPorteur.map(x => ({ seance: x.seance, geste: x.geste, vue: x.vue, blocs: x.blocs })));
     // contrôle interne : la trace de la page égale celle du moteur de la page rejoué dans Node (mêmes durées)
     const tn = TR.tracer(N, M, scelle, Object.assign({}, p.journal), dureesDe(r.trace), empreinte);
     const cn = O.comparerTraces(r.trace, tn);
@@ -160,7 +163,6 @@ async function rejeu(a) {
     dire('parties au hasard, mode moteur : ' + r.traces.length + ' traces écrites');
   }
   dire('Rejeu : ' + (defauts ? defauts + ' défaut(s)' : 'aucun défaut'));
-  O.ecrireTexte(path.join(sortie, 'rapport-rejeu-' + navigateur + '.txt'), lignes.join('\n') + '\n');
   return defauts;
 }
 

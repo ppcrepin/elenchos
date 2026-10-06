@@ -54,7 +54,8 @@ class Scenario {
   async avancer(ms) { await this.env.contexte.clock.runFor(ms); }
   async toucher(zone, nom) {
     const z = { tel: '.telephone', bande: '.bande', barre: 'header.barre', cadre: '.cadre-milieu' }[zone];
-    await this.page.locator(z).getByRole(nom === 'heading' ? 'heading' : 'button', { name: nom instanceof RegExp ? nom : motif(nom) }).first().click();
+    const l = nom === 'heading' ? this.page.locator(z).getByRole('heading') : this.page.locator(z).getByRole('button', { name: nom instanceof RegExp ? nom : motif(nom) });
+    await l.first().click();
   }
   /** Avance de `ms` au premier plan, puis touche. */
   async apres(ms, zone, nom) { await this.avancer(ms); await this.toucher(zone, nom); }
@@ -183,6 +184,9 @@ async function controleDurees(o, rapport) {
       await sc.apres(1 * S, 'tel', T.POSITIONS[4]);
       await sc.apres(1 * S, 'tel', T.suivant);
       await sc.apres(1 * S, 'tel', T.aucuneRaison);
+      // les écritures d'avant sont sur le disque (Chromium les y met par lots, au plus tard 5 s après) : 11 s réelles ;
+      // puis « Valider » et coupure aussitôt
+      await sc.page.waitForTimeout(11000);
       await sc.toucher('tel', T.valider);
       couperNet(sc.profil);
       await sc.fermer();

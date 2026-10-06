@@ -65,6 +65,19 @@ function chiffresEspace(releves) {
   return e;
 }
 
+/** Contrôle 10, la part qui se lit dans le relevé : jamais « n'a pas joué », aucun taux d'accord, aucun classement. */
+function lignesRouges(releves) {
+  const e = [];
+  const motifs = [[/n[’']a pas joué|n[’']ont pas joué/i, '« n’a pas joué »'], [/taux|pourcentage|% d[’']accord/i, 'taux d’accord'], [/classement|\bclassé|\b[0-9]+e sur\b/i, 'classement']];
+  for (const r of releves) {
+    for (const b of r.blocs) {
+      if (b.zone === 'exclue') { continue; }
+      for (const [m, quoi] of motifs) { if (m.test(b.texte)) { e.push({ seance: r.seance, geste: r.geste, quoi, bloc: b.texte.slice(0, 80) }); } }
+    }
+  }
+  return e;
+}
+
 /** Texte révélé à l'écran du relevé ? n : numéro du texte quotidien ; vue : celle du relevé. */
 function estRevele(n, k) { return +n <= 13 && +n + 2 <= k; }
 
@@ -139,6 +152,8 @@ async function main() {
     const releves = lireReleves(path.join(a.rejeu, 'releves'), id, 'porteur');
     if (!releves) { ok('11 : partie ' + id + ' : relevé du rejeu présent', false); continue; }
     for (const r of releves) { for (const b of r.blocs) { if (b.zone === 'exclue') { continue; } const cle = b.zone + '\t' + b.texte; if (!chaines.has(cle)) { chaines.set(cle, (r.vue ? (r.vue.cadre || r.vue.tel) : 'chargement') + ' (partie ' + id + ', séance ' + r.seance + ')'); } } }
+    const lr = lignesRouges(releves);
+    ok('10 : partie ' + id + ' : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché', lr.length === 0, lr.slice(0, 3).map(x => x.quoi + ' : « ' + x.bloc + ' »').join(' ; '));
     const ce = chiffresEspace(releves);
     ok('11 : partie ' + id + ' : aucun chiffre suivi d’une espace U+0020', ce.length === 0, ce.slice(0, 3).map(x => '« ' + x.bloc + ' »').join(' ; '));
     const ep = verifierPhrases(releves, journal, scelle, phrases);
@@ -164,4 +179,4 @@ async function main() {
 
 if (require.main === module) { main().catch(e => { process.stderr.write((e && e.stack) || String(e)); process.stderr.write('\n'); process.exitCode = 2; }); }
 
-module.exports = { coupuresFautives, chiffresEspace, verifierPhrases };
+module.exports = { coupuresFautives, chiffresEspace, verifierPhrases, lignesRouges };

@@ -970,27 +970,27 @@ var ElenchosMoteur = (function (N) {
     function verifierSeance(s, k, R, ch, cp) {
       var c = s.coups;
       if (!cp) {
-      if (s.k !== k) { err(3, ch + '/k', 'numéro'); }
-      try {
-        var ms = N.lireInstant(s.ouverture);
-        if (prevMs !== null && ms < prevMs) { err(4, ch + '/ouverture', 'ouverture antérieure à la précédente'); }
-        prevMs = ms;
-      } catch (x) { err(4, ch + '/ouverture', x.message); }
-      if (mode === 'moteur') {
-        if (s.versions !== null || s.etapes !== null) { err(2, ch, 'versions et etapes nuls en mode moteur'); }
-      } else {
-        if (!Array.isArray(s.versions) || !s.versions.length) { err(5, ch + '/versions', 'absentes'); }
-        else {
-          s.versions.forEach(function (v, i) {
-            if (!Number.isSafeInteger(v) || v < 1) { err(5, ch + '/versions/' + i, 'entier ≥ 1 attendu'); }
-            if (i > 0 && v <= s.versions[i - 1]) { err(5, ch + '/versions/' + i, 'non croissant'); }
-          });
-          if (prevVersion !== null && s.versions[0] < prevVersion) { err(5, ch + '/versions/0', 'inférieur à la séance précédente'); }
-          prevVersion = s.versions[s.versions.length - 1];
+        if (s.k !== k) { err(3, ch + '/k', 'numéro'); }
+        try {
+          var ms = N.lireInstant(s.ouverture);
+          if (prevMs !== null && ms < prevMs) { err(4, ch + '/ouverture', 'ouverture antérieure à la précédente'); }
+          prevMs = ms;
+        } catch (x) { err(4, ch + '/ouverture', x.message); }
+        if (mode === 'moteur') {
+          if (s.versions !== null || s.etapes !== null) { err(2, ch, 'versions et etapes nuls en mode moteur'); }
+        } else {
+          if (!Array.isArray(s.versions) || !s.versions.length) { err(5, ch + '/versions', 'absentes'); }
+          else {
+            s.versions.forEach(function (v, i) {
+              if (!Number.isSafeInteger(v) || v < 1) { err(5, ch + '/versions/' + i, 'entier ≥ 1 attendu'); }
+              if (i > 0 && v <= s.versions[i - 1]) { err(5, ch + '/versions/' + i, 'non croissant'); }
+            });
+            if (prevVersion !== null && s.versions[0] < prevVersion) { err(5, ch + '/versions/0', 'inférieur à la séance précédente'); }
+            prevVersion = s.versions[s.versions.length - 1];
+          }
+          if (k === 0 || k === 15) { if (s.etapes !== null) { err(12, ch + '/etapes', 'nul attendu'); } }
+          else if (!s.etapes || typeof s.etapes.deviner !== 'boolean' || typeof s.etapes.repondre !== 'boolean') { err(12, ch + '/etapes', 'absent'); }
         }
-        if (k === 0 || k === 15) { if (s.etapes !== null) { err(12, ch + '/etapes', 'nul attendu'); } }
-        else if (!s.etapes || typeof s.etapes.deviner !== 'boolean' || typeof s.etapes.repondre !== 'boolean') { err(12, ch + '/etapes', 'absent'); }
-      }
       }
       var cles = ['carnet', 'consentement', 'deviner', 'entree', 'pseudo', 'relire', 'reponse'];
       if (!c || Object.keys(c).sort().join() !== cles.join()) { err(1, ch + '/coups', 'clés inattendues'); return; }

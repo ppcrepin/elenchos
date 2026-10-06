@@ -11,7 +11,7 @@ const J = require('./joueurs.js');
 const T = require('./temoins.js');
 const M = require('../moteur.js');
 
-const chemin = process.argv[2] || path.join(__dirname, '../../scellement/candidat/fichier-scelle-candidat.json');
+const chemin = process.argv[2] || path.join(__dirname, '../../../fichier-scelle.json');
 const octets = new Uint8Array(fs.readFileSync(chemin));
 const empreinte = N.sha256(octets);
 const scelle = JSON.parse(N.utf8Decoder(octets));

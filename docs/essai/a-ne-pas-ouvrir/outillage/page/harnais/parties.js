@@ -317,7 +317,7 @@ function temoinB(scelle, empreinte) {
     copies: (k, etape) => k === 9 && etape === 'deviner',
     carnet: (k, i) => ({ q1: i.faux >= 2 ? 'les_deux' : 'aurais_pu', q2: ['premier_coup', 'en_relisant', 'pas_tout'][k % 3],
       q3: i.choixQ3.length ? i.choixQ3[k % i.choixQ3.length] : null }),
-    gestes: k => ({ 8: { positionSansRaison: 4, annulerConfirmation: true }, 9: { rechargerApres: 'copie' },
+    gestes: k => ({ 4: { croix: true }, 8: { positionSansRaison: 4, annulerConfirmation: true }, 9: { rechargerApres: 'copie' },
       10: { cercle: true }, 12: { attribuerSansValider: [{ carte: 0, membre: 'Odile' }, { carte: 1, membre: 'passe' }] }, 14: { cercle: true } })[k],
     fin: { f2: 'de_plus_en_plus', f1: f1Plein((p, t) => ['pole0', 'milieu', 'pole1', null][(p.length + t.charCodeAt(0)) % 4]) }
   };

@@ -1,4 +1,4 @@
-# Page de l'essai : dépendances et commandes (lots 1 à 3)
+# Page de l'essai : dépendances et commandes (lots 1 à 8)
 
 Outillage d'essai (D-001 tenu ; `simulation.md`, « Décisions touchées »). Écrit par Front-end le 6 octobre 2026.
 
@@ -18,19 +18,28 @@ Outillage d'essai (D-001 tenu ; `simulation.md`, « Décisions touchées »). É
 
 Les cinq polices sources ne sont pas versionnées : `polices/reduire.py` les télécharge au commit noté et vérifie leur SHA-256 (table `SOURCES`). Les six faces réduites, les deux `OFL.txt` et leurs SHA-256 (`polices/empreintes.txt`, `polices/polices.json`) sont versionnés : la construction ne télécharge rien (§8.8).
 
-Licences : SIL Open Font License 1.1 pour les deux familles. Aucun des deux `OFL.txt` ne réserve de nom (« Reserved Font Name » n'apparaît que dans le texte général de la licence ; la ligne de copyright n'en déclare aucun) : les faces réduites gardent leur nom interne (Alegreya Bold, Alegreya Medium Italic, Alegreya Bold Italic, Alegreya Sans Regular, Alegreya Sans Bold, Alegreya Sans Italic). Les deux textes de licence et les copyrights iront en commentaire dans la page (lot 7).
+Licences : SIL Open Font License 1.1 pour les deux familles. Aucun des deux `OFL.txt` ne réserve de nom (« Reserved Font Name » n'apparaît que dans le texte général de la licence ; la ligne de copyright n'en déclare aucun) : les faces réduites gardent leur nom interne (Alegreya Bold, Alegreya Medium Italic, Alegreya Bold Italic, Alegreya Sans Regular, Alegreya Sans Bold, Alegreya Sans Italic). Les deux textes de licence, les copyrights et la ligne « Polices réduites ; glyphe vide U+202F (espace fine insécable) ajouté à chaque face. » sont dans le commentaire de la page (vérifié par le contrôle 5).
 
 ## Déjà présent dans l'environnement (non téléchargé)
 
-- Node 22.22.0 : noyau, moteur, tests, `rejouer.js`. Aucun paquet npm.
+- Node 22.22.0 : noyau, moteur, tests, `rejouer.js`, vérification de U+202F (`polices/verifier-202f.js`, brotli de la bibliothèque standard), harnais. Aucun paquet npm téléchargé.
 - Python 3.11.15 : `polices/reduire.py` seulement, dans un environnement virtuel où fontTools et brotli sont installés depuis les roues ci-dessus (`pip install --require-hashes -r polices/exigences-polices.txt`).
-- `playwright-core` 1.56.1 et Chromium 1194 (`/opt/node-tools/node_modules/`, `/opt/pw-browsers/`) : servi seulement à deux vérifications ponctuelles, hors tests versionnés (les six faces passent le contrôle des polices de Chromium ; le noyau et le moteur, concaténés sans leurs lignes Node, donnent dans Chromium les mêmes traces que dans Node). Ils serviront au harnais (lot 8).
+- `playwright-core` 1.56.1 et Chromium 1194 (`/opt/node-tools/node_modules/`, `/opt/pw-browsers/`) : le harnais (`harnais/`). Chemin du paquet réglable par la variable `ELENCHOS_PLAYWRIGHT`. Chromium est lancé sans hinting des polices (`--font-render-hinting=none`), rendu géométrique comme sur l'iPhone (QUESTIONS.md, C-F3).
+- ImageMagick (`convert`, `montage`), déjà présent : niveaux de gris des captures de la Direction artistique (`harnais/captures.js`) ; facultatif.
+
+## Téléchargé sur la machine macOS de la passe WebKit seulement
+
+`harnais/essai-passe-webkit.yml` (à ranger dans `.github/workflows/`) installe, à chaque lancement manuel, sur la machine de GitHub Actions : `playwright` 1.56.1 (npm, version exacte) et son navigateur WebKit (`npx playwright install webkit`). Actions employées : `actions/checkout@v5`, `actions/setup-node@v5` (Node 22). Rien n'est installé dans l'environnement de l'équipe ; aucun secret ; rien de téléversé.
 
 ## Commandes
 
 Depuis ce dossier (`docs/essai/a-ne-pas-ouvrir/outillage/page/`) :
 
-- Polices : `python3 -I polices/reduire.py --sources DOSSIER_VIDE --scelle ../scellement/candidat/fichier-scelle-candidat.json --sortie polices` (même résultat octet pour octet à chaque exécution ; à refaire sur le fichier scellé final).
-- Tests : `node --test tests/test-noyau.js tests/test-moteur.js` (29 tests, environ 25 s). Variable `ELENCHOS_SCELLE` pour un autre fichier scellé.
+- Polices : `python3 -I polices/reduire.py --sources DOSSIER_VIDE --scelle ../../fichier-scelle.json --sortie polices` (même résultat octet pour octet à chaque exécution ; refait le 6 octobre 2026 sur le fichier scellé définitif, identique au candidat : les six faces sont identiques octet pour octet).
+- Tests : `node --test tests/test-noyau.js tests/test-moteur.js tests/test-polices.js` (35 tests, environ 25 s ; fichier scellé définitif par défaut, `../../fichier-scelle.json`). Variable `ELENCHOS_SCELLE` pour un autre fichier scellé.
+- Construction : `python3 -I construire.py --scelle ../../fichier-scelle.json --entrees ../../entrees-construction.json --sortie DOSSIER [--version-page N]` (Node requis : vérification de U+202F par `polices/verifier-202f.js`).
+- Tous les contrôles de la page, dans l'ordre (environ trois heures et demie) : `sh harnais/tout.sh ../../fichier-scelle.json ../../entrees-construction.json SORTIE` ; ou, un par un : `harnais/controle5.js`, `harnais/lancer.js journaux|rejeu`, `harnais/controle11.js`, `harnais/controle12.js`, `harnais/controle14.js`, `harnais/captures.js`, `harnais/passe-webkit.js attendus` (chaque fichier dit ses arguments en tête).
+- Comparaison à la trace du programme de contrôle : `node harnais/comparer.js --page SORTIE/page --controle DOSSIER_DE_C --sortie RAPPORT.txt`.
+- U+202F dans des polices WOFF2 : `node polices/verifier-202f.js FICHIER.woff2:CHASSE …`.
 - Journaux de mes joueurs témoins : `node tests/ecrire-journaux.js` (écrits dans `tests/journaux/`, à réécrire si le fichier scellé change).
 - Rejouer un journal par le moteur : `node rejouer.js --scelle FICHIER --journal JOURNAL [--durees DUREES] --sortie DOSSIER` (écrit `trace.json`, `carnet.txt`, `copie-n.txt`).

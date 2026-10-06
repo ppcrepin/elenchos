@@ -9,7 +9,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const N = require('../noyau.js');
 
-const SCELLE = process.env.ELENCHOS_SCELLE || path.join(__dirname, '../../scellement/candidat/fichier-scelle-candidat.json');
+const SCELLE = process.env.ELENCHOS_SCELLE || path.join(__dirname, '../../../fichier-scelle.json');
 const NB = N.NBSP, FI = N.FINE;
 
 function octetsDeterministes(n, graine) {

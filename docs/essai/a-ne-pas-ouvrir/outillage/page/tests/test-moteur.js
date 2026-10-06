@@ -10,7 +10,7 @@ const TR = require('../trace.js');
 const J = require('./joueurs.js');
 const T = require('./temoins.js');
 
-const SCELLE = process.env.ELENCHOS_SCELLE || path.join(__dirname, '../../scellement/candidat/fichier-scelle-candidat.json');
+const SCELLE = process.env.ELENCHOS_SCELLE || path.join(__dirname, '../../../fichier-scelle.json');
 const OCTETS = new Uint8Array(fs.readFileSync(SCELLE));
 const EMPREINTE = N.sha256(OCTETS);
 const scelle = JSON.parse(N.utf8Decoder(OCTETS));

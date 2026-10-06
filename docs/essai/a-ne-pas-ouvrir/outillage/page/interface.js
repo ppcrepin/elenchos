@@ -658,7 +658,8 @@ var ElenchosInterface = (function (N, M, X) {
   function feuille(contenu) {
     return h('div', { class: 'feuille-fond' },
       h('button', { type: 'button', class: 'voile', action: 'feuille-fermer', 'aria-label': t(X.retour) }),
-      h('div', { class: 'feuille', role: 'dialog', 'aria-modal': 'true' }, h('div', { class: 'grab', 'aria-hidden': 'true' }), contenu));
+      h('div', { class: 'feuille', role: 'dialog', 'aria-modal': 'true' }, h('div', { class: 'grab', 'aria-hidden': 'true' }),
+        h('div', { class: 'feuille-defile' }, contenu)));
   }
   function feuilleRaison(tx, i) {
     var choisie = temp.raisonFeuille !== undefined ? temp.raisonFeuille : temp.choix[i].raison;

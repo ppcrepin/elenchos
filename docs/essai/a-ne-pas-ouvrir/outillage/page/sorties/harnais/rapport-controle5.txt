@@ -1,0 +1,56 @@
+Contrôle 5, partie mécanique, sur frontend-final/construction-v1
+
+juste : déclaration d’encodage dans les 1 024 premiers octets
+juste : balises du §8.8 en tête, dans leur ordre
+juste : version du porteur : un seul bloc de script et un seul bloc de style — 1 script(s), 1 style(s)
+juste : politique de sécurité : empreintes des deux seuls blocs
+juste : version témoin : deux blocs de script, empreintes des deux
+juste : les deux versions ne diffèrent que par le bloc témoin et son empreinte
+juste : aucune fonction de trace dans la version du porteur
+juste : aucun attribut style ni gestionnaire écrit dans le HTML
+juste : scripts : rien de « hasard du navigateur » (Math\.random)
+juste : scripts : rien de « hasard du navigateur » (crypto\.)
+juste : scripts : rien de « évaluation de code » (\beval\s*\()
+juste : scripts : rien de « évaluation de code » (\bFunction\s*\()
+juste : scripts : rien de « évaluation de code » (setTimeout\s*\(\s*['"])
+juste : scripts : rien de « évaluation de code » (setInterval\s*\(\s*['"])
+juste : scripts : rien de « effacement global du stockage » (\.clear\s*\()
+juste : scripts : rien de « formatage selon la langue » (\bIntl\b)
+juste : scripts : rien de « formatage selon la langue » (toLocale)
+juste : scripts : rien de « Date pour lire une date » (new Date\b)
+juste : scripts : rien de « Date pour lire une date » (Date\.parse)
+juste : scripts : rien de « Date pour lire une date » (Date\.UTC)
+juste : scripts : rien de « heure de l’appareil » (getTimezoneOffset|getHours|getMinutes|getDate\(|getDay\(|getMonth|getFullYear)
+juste : scripts : rien de « HTML écrit par le script » (innerHTML|outerHTML|insertAdjacentHTML|document\.write)
+juste : scripts : rien de « requête » (\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource|\bimport\s*\(|importScripts)
+juste : scripts : rien de « mémoire interdite (§8.8) » (sessionStorage|indexedDB|\bcaches\b|serviceWorker|document\.cookie|\bcookie\b)
+juste : scripts : rien de « image hors data: » (new Image|createElement\(\s*['"]img)
+juste : scripts : rien de « navigation ou message » (window\.open|postMessage|location\.href\s*=|location\.assign|location\.replace)
+juste : scripts : rien de « attribut style écrit » (setAttribute\(\s*['"]style)
+juste : scripts : rien de « theme-color changé par le script » (theme-color)
+juste : scripts : rien de « manifeste » (manifest)
+juste : clés de mémoire : toutes sous « elenchos-essai: » — elenchos-essai:partie, elenchos-essai:verif, elenchos-essai:, elenchos-essai:lecture
+juste : la clé de la page-test n’est jamais nommée (seul « Tout effacer » l’efface, par le préfixe)
+juste : localStorage : seulement getItem, setItem, removeItem, key, length
+juste : adresse de la page : seulement location.origin (diagnostic affiché) et location.reload (« Reprendre ici »)
+juste : détection du contexte identique à celle de la page-test v2 (guillemets mis à part)
+juste : fichier scellé embarqué : repère présent une fois
+juste : fichier scellé embarqué : octets identiques au fichier scellé
+juste : six faces embarquées — 6 faces
+juste : police alegreya-700.woff2 : glyphe vide relié à U+202F, chasse 116 millièmes — U+202F : glyphe 425, vide, 116 millièmes
+juste : police alegreya-italique-500.woff2 : glyphe vide relié à U+202F, chasse 124 millièmes — U+202F : glyphe 423, vide, 124 millièmes
+juste : police alegreya-italique-700.woff2 : glyphe vide relié à U+202F, chasse 116 millièmes — U+202F : glyphe 425, vide, 116 millièmes
+juste : police alegreya-sans-400.woff2 : glyphe vide relié à U+202F, chasse 103 millièmes — U+202F : glyphe 431, vide, 103 millièmes
+juste : police alegreya-sans-700.woff2 : glyphe vide relié à U+202F, chasse 101 millièmes — U+202F : glyphe 431, vide, 101 millièmes
+juste : police alegreya-sans-italique-400.woff2 : glyphe vide relié à U+202F, chasse 105 millièmes — U+202F : glyphe 432, vide, 105 millièmes
+juste : commentaire : ligne de licence des polices
+juste : commentaire : texte complet de OFL-alegreya.txt (licence et mentions de copyright)
+juste : commentaire : texte complet de OFL-alegreyasans.txt (licence et mentions de copyright)
+juste : commentaire : pied de page (hébergeur, source)
+juste : HTML : seule la vue de secours porte du texte — La page n’a pas pu démarrer. Ce n’est pas une erreur de votre part, et cette pag
+
+Toutes les vérifications sont justes (48).
+
+Relecture du code (non décidé par ce programme) : le moteur ne lit ni l’écran, ni la mémoire, ni l’horloge, ni le hasard (moteur.js) ;
+aucun accès à la mémoire avant la détection du contexte et hors de l’icône (interface.js, demarrer) ; réponses des personnages lues dans les
+données scellées, indépendantes de celles du porteur, sélection sans les profils cachés (moteur.js, calculerManche) ; compte simulé (1.8, 1.9).

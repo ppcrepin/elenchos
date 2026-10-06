@@ -1,0 +1,38 @@
+Phrases attendues : fichier du programme de contrôle non fourni ; vérification provisoire des noms et des dates du vote avant la révélation seulement.
+juste : 10 : partie a : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 11 : partie a : aucun chiffre suivi d’une espace U+0020
+juste : 11 : partie a : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie a, 320 × 548 px : aucune coupure de ligne fautive
+juste : 10 : partie b : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 11 : partie b : aucun chiffre suivi d’une espace U+0020
+juste : 11 : partie b : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie b, 320 × 548 px : aucune coupure de ligne fautive
+juste : 10 : partie c : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 11 : partie c : aucun chiffre suivi d’une espace U+0020
+juste : 11 : partie c : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie c, 320 × 548 px : aucune coupure de ligne fautive
+juste : 10 : partie d : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 11 : partie d : aucun chiffre suivi d’une espace U+0020
+juste : 11 : partie d : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie d, 320 × 548 px : aucune coupure de ligne fautive
+juste : 10 : partie e : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 11 : partie e : aucun chiffre suivi d’une espace U+0020
+juste : 11 : partie e : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie e, 320 × 548 px : aucune coupure de ligne fautive
+juste : 10 : partie f : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 11 : partie f : aucun chiffre suivi d’une espace U+0020
+juste : 11 : partie f : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie f, 320 × 548 px : aucune coupure de ligne fautive
+juste : 10 : partie g : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 11 : partie g : aucun chiffre suivi d’une espace U+0020
+juste : 11 : partie g : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie g, 320 × 548 px : aucune coupure de ligne fautive
+juste : 10 : partie h : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 11 : partie h : aucun chiffre suivi d’une espace U+0020
+juste : 11 : partie h : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie h, 320 × 548 px : aucune coupure de ligne fautive
+juste : 10 : partie i : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 11 : partie i : aucun chiffre suivi d’une espace U+0020
+juste : 11 : partie i : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie i, 320 × 548 px : aucune coupure de ligne fautive
+Toutes les vérifications sont justes.

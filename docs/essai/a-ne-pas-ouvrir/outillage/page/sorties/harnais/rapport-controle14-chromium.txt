@@ -1,0 +1,107 @@
+Contrôle 14 sans tête : chromium (Playwright 1.56.1), version du porteur 0b051e9074a7d5d515e532ac578ac3482657611440949842ab69bb53dbccef00
+juste : (c) onglet d’iPhone (Safari) : vue « onglet »
+juste : (c) onglet d’iPhone (Safari) : mémoire inchangée après le chargement et un toucher sur chaque bouton
+juste : (a) onglet d’iPhone (Safari) : aucune requête hors de la page et de l’icône
+juste : (c) onglet d’iPad : vue « onglet »
+juste : (c) onglet d’iPad : mémoire inchangée après le chargement et un toucher sur chaque bouton
+juste : (a) onglet d’iPad : aucune requête hors de la page et de l’icône
+juste : (c) iPad qui se présente comme un Mac : vue « onglet »
+juste : (c) iPad qui se présente comme un Mac : mémoire inchangée après le chargement et un toucher sur chaque bouton
+juste : (a) iPad qui se présente comme un Mac : aucune requête hors de la page et de l’icône
+juste : (c) autre navigateur sur iPhone (Chrome) : vue « autre »
+juste : (c) autre navigateur sur iPhone (Chrome) : mémoire inchangée après le chargement et un toucher sur chaque bouton
+juste : (a) autre navigateur sur iPhone (Chrome) : aucune requête hors de la page et de l’icône
+juste : (c) ordinateur : vue « ailleurs »
+juste : (c) ordinateur : mémoire inchangée après le chargement et un toucher sur chaque bouton
+juste : (a) ordinateur : aucune requête hors de la page et de l’icône
+juste : (c) iPhone, icône, mais page dans un cadre d’une autre origine : vue « ailleurs »
+juste : (a) iPhone, icône, mais page dans un cadre d’une autre origine : aucune requête hors de la page et de l’icône
+juste : (c) une page d’une autre origine, dans le même navigateur, ne lit rien de la mémoire de la page
+juste : (f) requête « fetch » lancée depuis la page (à l’adresse de la page) : refusée
+juste : (f) requête « image » lancée depuis la page (image d’une autre adresse) : refusée
+juste : (f) requête « script » lancée depuis la page (à l’adresse de la page) : refusée
+juste : (f) requête « style » lancée depuis la page (à l’adresse de la page) : refusée
+juste : (f) requête « police » lancée depuis la page (à l’adresse de la page) : refusée
+(f) note : une image demandée à l’adresse de la page elle-même passe la politique (img-src 'self', voulu pour l’image de l’icône, §8.8) ; que la page n’en crée aucune relève du contrôle 5.
+juste : (f) formulaire : refusé, aucune requête n’atteint l’outil
+juste : (f) script modifié d’un octet : vue de secours, jamais une page blanche ni l’essai
+juste : (b) la page-test a laissé sa clé dans la mémoire de l’origine
+juste : (b) sur la mémoire de la page-test, la page de l’essai commence à l’entrée
+juste : (b) … et n’affiche rien de la page-test
+juste : (b) … et ne touche pas sa clé
+juste : (b) coup validé gardé (réponse au texte E1)
+juste : (b) navigateur fermé puis rouvert le lendemain : reprise à l’étape suivante (1.5, pari du texte 1)
+juste : (b) correctif servi à la même adresse : la partie reprend à la même étape, coups gardés
+juste : (b) partie gardée illisible (texte abîmé) : arrêt 1, repère M1, sans « Rien n’est effacé »
+juste : (b) … mémoire inchangée, l’entrée ne commence pas
+juste : (b) partie gardée illisible (numéro de format inconnu) : arrêt 1, repère M1, sans « Rien n’est effacé »
+juste : (b) … mémoire inchangée, l’entrée ne commence pas
+juste : (d) « Tout effacer » (pendant) : confirmation affichée
+juste : (d) après « Tout effacer » (pendant) : aucune clé « elenchos-essai: », clé de la page-test comprise
+juste : (d) … la clé hors du préfixe, posée par l’outil, est intacte
+juste : (d) … vue seule « La page a tout effacé. », sans bouton ni pied de page, titre sous le lecteur d’écran
+juste : (d) … rouverte, la page revient à l’entrée
+juste : (d) « Tout effacer » (apres) : confirmation affichée
+juste : (d) après « Tout effacer » (apres) : aucune clé « elenchos-essai: », clé de la page-test comprise
+juste : (d) … la clé hors du préfixe, posée par l’outil, est intacte
+juste : (d) … vue seule « La page a tout effacé. », sans bouton ni pied de page, titre sous le lecteur d’écran
+juste : (d) … rouverte, la page revient à l’entrée
+juste : (§8.11) vérification V2 ratée : arrêt 1, repère V2, rien d’écrit
+juste : (§8.11) vérification V4 ratée : arrêt 1, repère V4, rien d’écrit
+juste : (§8.11) vérification V5 ratée : arrêt 1, repère V5, rien d’écrit
+juste : (§8.11) stockage absent : arrêt 2
+juste : (§8.11) page ouverte deux fois : arrêt 3, « Reprendre ici », rien d’écrasé
+juste : (§8.11) « Reprendre ici » : la partie telle qu’elle a été gardée en dernier
+juste : (h) largeur rendue d’une U+202F, alegreya-700.woff2 : 116 millièmes attendus
+juste : (h) largeur rendue d’une U+202F, alegreya-italique-500.woff2 : 124 millièmes attendus
+juste : (h) largeur rendue d’une U+202F, alegreya-italique-700.woff2 : 116 millièmes attendus
+juste : (h) largeur rendue d’une U+202F, alegreya-sans-400.woff2 : 103 millièmes attendus
+juste : (h) largeur rendue d’une U+202F, alegreya-sans-700.woff2 : 101 millièmes attendus
+juste : (h) largeur rendue d’une U+202F, alegreya-sans-italique-400.woff2 : 105 millièmes attendus
+juste : (h) écran tourné puis redressé sur 1.8 : vue couchée, puis même écran et même saisie ; mémoire inchangée pendant l’écran couché
+juste : (h) téléphone défilé, « Qui est qui ? » ouvert et refermé : même écran, même défilement
+juste : (h) écran tourné et redressé sur Répondre : même choix, même défilement
+juste : (h) relance avec « Qui est qui ? » ouvert : la même page
+juste : (h) relance avec la confirmation de « Jour suivant » ouverte : pas de confirmation
+juste : (h) relance sur le carnet du jour d’une journée pas finie : téléphone à l’écran d’avant « Jour suivant », choix du carnet gardés
+juste : (h) note « Pas dans l’essai. » : l’élément touché garde sa place
+juste : (h) relance pendant la copie ouverte par « Copier mon carnet d’abord » : ni copie ni confirmation, Moi › Réglages
+juste : (h) retours : aucune erreur de la page
+juste : (h) 599 × 900 : 536 écrans de la partie (b), disposition compacte
+juste : (h) 600 × 900 : 535 écrans de la partie (b), disposition planche
+juste : (h) 600 × 899 : 536 écrans de la partie (b), disposition compacte
+juste : (h) 768 × 900 : 535 écrans de la partie (b), disposition planche
+juste : (h) 768 × 899 : 536 écrans de la partie (b), disposition compacte
+juste : (h) 500 × 499 : écran couché
+juste : (h) 800 × 500 : 536 écrans de la partie (b), disposition compacte
+juste : (h) 700 × 499 : écran couché
+juste : (h) 700 × 500 : 536 écrans de la partie (b), disposition compacte
+juste : (h) 600 × 600 : 536 écrans de la partie (b), disposition compacte
+juste : (h) 601 × 600 : 536 écrans de la partie (b), disposition compacte
+juste : (h) 320 × 548 : 536 écrans de la partie (b), disposition compacte
+juste : (h) 375 × 667 (iPhone SE (3rd gen)) : 536 écrans de la partie (b), disposition compacte
+juste : (h) 667 × 375 (iPhone SE (3rd gen) en largeur) : écran couché
+juste : (h) 375 × 812 (iPhone 13 Mini) : 536 écrans de la partie (b), disposition compacte
+juste : (h) 812 × 375 (iPhone 13 Mini en largeur) : écran couché
+juste : (h) 393 × 852 (iPhone 15) : 536 écrans de la partie (b), disposition compacte
+juste : (h) 852 × 393 (iPhone 15 en largeur) : écran couché
+juste : (h) 430 × 932 (iPhone 15 Pro Max) : 536 écrans de la partie (b), disposition compacte
+juste : (h) 932 × 430 (iPhone 15 Pro Max en largeur) : écran couché
+juste : (h) 768 × 1024 (iPad Mini) : 535 écrans de la partie (b), disposition planche
+juste : (h) 1024 × 768 (iPad Mini en largeur) : 536 écrans de la partie (b), disposition compacte
+juste : (h) 656 × 944 (iPad (gen 11)) : 535 écrans de la partie (b), disposition planche
+juste : (h) 944 × 656 (iPad (gen 11) en largeur) : 536 écrans de la partie (b), disposition compacte
+juste : (h) 834 × 1194 (iPad Pro 11) : 535 écrans de la partie (b), disposition planche
+juste : (h) 1194 × 834 (iPad Pro 11 en largeur) : 536 écrans de la partie (b), disposition compacte
+juste : (i) cas 1 (pause au premier plan comptée, dix heures en arrière-plan non comptées) : séance 0, 49 s
+juste : (i) séance 0 : de l’ouverture (5 s) à « Aller au jour suivant » (76 s) : 71 s
+juste : (i) cas 2 (nuit en arrière-plan sur « En attendant » non comptée) : séance 1, 18 s, dont 9 s pour répondre
+juste : (i) cas 3 et 7 (app fermée en arrière-plan puis rouverte ; heure du téléphone changée) : séance 2, 23 s, dont 16 s pour deviner et 5 s pour répondre
+juste : (i) cas 4 (arrêt brutal 12 s après la dernière écriture : ces 12 s manquent) : séance 3, 4 s
+juste : (i) cas 5 (arrêt brutal moins d’une seconde après « Valider ») : la page reprend à son étape
+juste : (i) cas 6 (toucher sur l’écran couché non compté) : séance 4, 0 s
+juste : (i) cas 6 (temps de l’écran couché compté) : séance 4, 23 s
+juste : (i) cas 8 (correctif chargé en cours de séance, la durée continue) : séance 4, 26 s
+juste : (i) cas 8 : versions de la séance 4 : 1, puis 2
+juste : (i) carnet : « Durée : 1 min 11 s. » à l’entrée, « Version de la page : 1, puis 2. » au jour 4
+Toutes les vérifications sont justes.
