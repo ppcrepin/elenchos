@@ -217,6 +217,7 @@
  ],
  "hinting": false,
  "jeu_demande": "U+0020-007E,U+00A0-017F,U+2009,U+2010-2011,U+2013-2014,U+2018-201A,U+201C-201E,U+2022,U+2026,U+202F,U+2039-203A,U+20AC,U+2190,U+25BE,U+25CB,U+25CE-25CF,U+2713",
+ "ligne_licence": "Polices réduites ; glyphe vide U+202F (espace fine insécable) ajouté à chaque face.",
  "sources": {
   "Alegreya-Italic[wght].ttf": "fa915eec76227935dc5fb678953c94b71287c360928013cfdb441dfe52f5a391",
   "AlegreyaSans-Bold.ttf": "a3055a1893759bdbd7504bb22abc583769e7974c49353176eac0b03792c9fb8e",
