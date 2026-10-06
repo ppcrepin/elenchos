@@ -18,12 +18,15 @@ function coupsVides() {
 }
 
 /** Instant de Paris k jours après le lundi 19 octobre 2026, à hh:mm. */
-function instant(jour, hhmm, decalage) {
-  const d = N.civilDepuisJours(N.joursDepuisCivil(2026, 10, 19) + jour);
-  const dec = decalage || (N.joursDepuisCivil(d.annee, d.mois, d.jour) >= N.joursDepuisCivil(2026, 10, 25) ? '+01:00' : '+02:00');
-  const s = d.annee + '-' + N.deux(d.mois) + '-' + N.deux(d.jour) + 'T' + hhmm + dec;
-  N.lireInstant(s);
-  return s;
+function instant(jour, hhmm) {
+  const z = N.joursDepuisCivil(2026, 10, 19) + jour;
+  const local = (z * 1440 + N.lireHeure(hhmm)) * 60000;
+  // premier passage de cette heure locale à Paris (heure d'été d'abord)
+  for (const dec of [120, 60]) {
+    const p = N.paris(local - dec * 60000);
+    if (p.decalage === dec && p.numeroJour === z && p.minutesDuJour === N.lireHeure(hhmm)) { return p.instant; }
+  }
+  throw new Error('heure locale inexistante : ' + jour + ' ' + hhmm);
 }
 
 /**

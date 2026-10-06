@@ -50,7 +50,7 @@ def minutes(heure):
 
 
 def r_journee(m):
-    """r(m) = (m − 1080 + 1440) mod 1440 (schéma, partie 3.8)."""
+    """r(m) = (m \u2212 1080 + 1440) mod 1440 (schéma, partie 3.8)."""
     return (m - 1080 + 1440) % 1440
 
 

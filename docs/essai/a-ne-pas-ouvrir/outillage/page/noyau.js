@@ -3,15 +3,17 @@
  * Fonctions pures, sans écran, sans stockage, sans horloge, sans hasard :
  * SHA-256 (FIPS 180-4), base64 et UTF-8 stricts, JSON canonique,
  * tirage t(clé) (simulation.md, §0), fractions exactes en BigInt (§0),
- * heure de Paris sans Intl (§0, §7.5, §8.4), typographie d'affichage (§7.8),
+ * heure de Paris sans l'API d'internationalisation (§0, §7.5, §8.4),
+ * typographie d'affichage (§7.8),
  * élisions et accords (§7.6), dates par tables (§7.9, §8.12).
  *
- * Se charge tel quel dans Node 22 (require) et, concaténé avec les autres
+ * Se charge tel quel dans Node 22 et, concaténé avec les autres
  * fichiers dans le bloc de script unique de la page, dans le navigateur.
  * Les lignes entre « node-debut » et « node-fin » sont retirées à la
- * construction. Pas d'Intl, de toLocale…, de Date, de Math.random, de
- * crypto, d'eval, de Function, ni de lookbehind dans les expressions
- * régulières (Safari 14 au moins).
+ * construction. Aucun des mots interdits par le contrôle 5 (simulation.md,
+ * §9), même en commentaire : la vérification de la construction lit le
+ * texte brut. Pas d'assertion arrière dans les expressions régulières
+ * (Safari 14 au moins).
  */
 'use strict';
 
@@ -450,7 +452,7 @@ var ElenchosNoyau = (function () {
   }
 
   /* ------------------------------------------------------------------ */
-  /* Calendrier et heure de Paris, sans Intl ni fuseau de l'appareil     */
+  /* Calendrier et heure de Paris, sans le fuseau de l'appareil         */
   /* ------------------------------------------------------------------ */
 
   var MS_JOUR = 86400000;
@@ -540,7 +542,7 @@ var ElenchosNoyau = (function () {
     return ms;
   }
 
-  /** Lit une date « AAAA-MM-JJ » (schema.md, partie 1.2), sans Date. */
+  /** Lit une date « AAAA-MM-JJ » (schema.md, partie 1.2), par découpage. */
   function lireDate(s) {
     var m = /^([0-9]{4})-([0-9]{2})-([0-9]{2})$/.exec(s);
     if (!m) { throw ErreurNoyau('date mal écrite : ' + s); }
