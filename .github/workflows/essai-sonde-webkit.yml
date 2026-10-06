@@ -1,0 +1,38 @@
+# Outillage de l'essai (simulation.md, §9, contrôle 14, « WebKit ») : sonde.
+# Vérifie seulement que l'équipe peut lancer une tâche macOS avec Playwright 1.56.1 et WebKit.
+# Lancement manuel, droits en lecture seule, aucun secret, rien de téléversé ; le journal ne dit que « réussi » ou « échoué ».
+name: Essai - sonde WebKit
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sonde:
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Playwright 1.56.1 et WebKit
+        run: |
+          mkdir sonde
+          cd sonde
+          npm init -y > /dev/null
+          npm install --silent --no-audit --no-fund playwright@1.56.1 > /dev/null
+          npx playwright install webkit > /dev/null
+      - name: Sonde
+        working-directory: sonde
+        run: |
+          cat > sonde.mjs <<'FIN'
+          import { webkit } from 'playwright';
+          const b = await webkit.launch();
+          const p = await b.newPage();
+          await p.setContent('<p id="x">ok</p>');
+          const t = await p.textContent('#x');
+          const v = b.version();
+          await b.close();
+          if (t !== 'ok') { console.log('échoué'); process.exit(1); }
+          console.log('réussi : WebKit ' + v);
+          FIN
+          node sonde.mjs
