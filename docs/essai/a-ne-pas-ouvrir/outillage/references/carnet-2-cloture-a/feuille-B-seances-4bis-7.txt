@@ -194,9 +194,9 @@ total maximal | {A, O} sur 2 et 3 (4), N ou porteur sur 1 (1) | 5, atteint par (
 designe | plus petite : (2, 1, 4) | [porteur, Agathe, Odile]
 raison_devinee | carte 2, « pour » r2, r4 ; Agathe +1 → pôle 0 → r2 | 2
 auteur_compte | | = auteur
-révélation (séance 7) | justes [true, false, true] ; raison_trouvee false (Agathe ≠ Nassim) ; points 2 ; points_semaine 3 + 2 = 5 (Valentin n'a pas joué à la séance 5 : rien sur le texte 4) |
+révélation (séance 7) | justes [true, false, true] ; raison_trouvee false (Agathe ≠ Nassim) ; points 2 ; points_semaine 4 + 2 = 6 (Valentin n'a pas joué à la séance 5 : rien sur le texte 4) |
 
-Bilan des points de la semaine 1 (textes 1 à 5), avant les titres de la séance 7 : Agathe 8, Nassim 6, Odile 6, Valentin 5, porteur 0 (voir feuille D).
+Bilan des points de la semaine 1 (textes 1 à 5), avant les titres de la séance 7 : Agathe 8, Nassim 6, Odile 6, Valentin 6, porteur 0 (voir feuille D).
 
 ######################################################################
 SÉANCE 7 · texte 6 (T, s = 1)

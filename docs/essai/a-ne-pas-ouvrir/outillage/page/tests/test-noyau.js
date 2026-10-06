@@ -289,6 +289,6 @@ test('Typographie : règles 4 et 5 par la forme, suites qui se chevauchent (§7.
   assert.equal(v('dès le 1er janvier 2027'), 'dès le 1er⍽janvier⍽2027');
   assert.equal(v('le 9 Octobre 2024'), 'le 9⍽Octobre 2024', 'mois écrit exactement');
   assert.equal(v('le 9 octobre 2024 2 h 05'), 'le 9⍽octobre⍽2024⍽2⍽h⍽05');
-  assert.equal(N.typographier13('Il a 12 000 euros ? Oui : « x »').replace(/ /g, '⍽').replace(/ /g, 'ʼ'), 'Il a 12 000 euros ʼ? Oui⍽: «⍽x⍽»');
+  assert.equal(N.typographier13('Il a 12 000 euros ? Oui : « x »').replace(/ /g, '⍽').replace(/ /g, 'ʼ'), 'Il a 12 000 eurosʼ? Oui⍽: «⍽x⍽»');
   assert.deepEqual(['1 h 05', '2 h 05'].map(s => T(s)), ['1 h 05', '2 h 05']);
 });

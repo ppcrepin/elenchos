@@ -1,0 +1,150 @@
+CARNET 2 (PARTIE a) — FEUILLE D : RÉVÉLATIONS DU PORTEUR, TITRES, AGRÉGATS, PORTRAIT, « EN ATTENDANT », MESURES, CARNET
+Spécification appliquée : simulation.md au commit 1df9aa5 (Mystère : au moins 1 erreur ; surprise de la semaine : au moins 1 attribution fausse ; « Révélation : {verdicts} » un verdict par carte ; partie (a) décrite au §9 bis du fichier caché).
+Journal : journal.json ; durées : durees.json ; carnet attendu : carnet-attendu.txt. Feuilles A, B, C, C2 : manches des personnages. manches-porteur.txt : manches du porteur.
+
+======================================================================
+1. ENTRÉE (schéma 3.5)
+======================================================================
+Réponses du porteur | §9 bis (a) | E1, E2, E3 : (3, aucune) ; paris : 3 (Neutre)
+entree.textes.E1 | Agathe (2,1), défavorable ; pari neutre | inviteuse {2, 1}, juste false
+entree.textes.E2 | Agathe (4,3), favorable | inviteuse {4, 3}, juste false
+entree.textes.E3 | Agathe (4,4), favorable | inviteuse {4, 4}, juste false
+entree.justes | | 0
+Écran 1.7 | §7.2, à 0 ou 1 sur 3 | « Agathe a réussi à te surprendre trois fois. »
+q1 de l'entrée | trois paris faux (≥ 2) : « Les deux » permis | les_deux
+
+======================================================================
+2. PORTRAIT ET PHRASES DU PORTEUR
+======================================================================
+Toute réponse | (3, aucune) → neutre, w 0 (§5.1) | portrait.tensions : S, P, T, L = {somme_w "0", c "1/2", l "19/20", net false} à toutes les séances
+ordre_moi | §5.3 : tous flous, même largeur → S, P, T, L | [S, P, T, L]
+phrase_jour (séances 1 à 9, 11 à 14) | §5.6, cas neutre | {classe "neutre", w "0", pole null, phrase "Aujourd’hui, tu n’as penché ni vers {pôle 0} ni vers {pôle 1}."}
+ texte 1, 4, 7 (S) | | « Aujourd’hui, tu n’as penché ni vers la sécurité ni vers la liberté. »
+ texte 2, 6, 11 (T) | | « Aujourd’hui, tu n’as penché ni vers la tradition ni vers le changement. »
+ texte 3, 8, 12 (P) | | « Aujourd’hui, tu n’as penché ni vers la précaution ni vers l’innovation. »
+ texte 5, 9, 13 (L) | | « Aujourd’hui, tu n’as penché ni vers la décision locale ni vers la décision nationale. »
+ séance 10 | pas de réponse | phrase_jour null
+phrase_semaine (séances 7 et 14) | §5.7 : aucune réponse qui compte (w > 0) | poids : chaque tension {pole0 "0", pole1 "0", comptent 0} ; tension null ; cas "floue" ; phrase « Cette semaine, ton portrait est encore flou. Chaque réponse le précise. »
+curseurs_vus | commun-tables.txt, D : entrée + textes ≤ k − 2 | voir cette table
+surprises_proches | §7.7 : les cartes passées sont exclues ; le porteur passe tout | [] pour chacun, à toutes les séances
+curseur_porteur (manches des personnages) | | {somme_w "0", c "1/2"} ; cotes_attendus.porteur "inconnu"
+
+======================================================================
+3. MANCHES ET RÉVÉLATIONS DU PORTEUR (schéma 3.6, 3.7)
+======================================================================
+Cartes : manches-porteur.txt. Le porteur passe chaque carte : designe "passe", raison_devinee null, sur toutes les cartes.
+auteur_compte, séance 4 (texte 3, trois cartes identiques, toutes passées) | §4.3 étape 4 : aucun auteur désigné → Agathe, Odile, Valentin dans l'ordre des visages vers les cartes 1, 2, 3 | [Agathe, Odile, Valentin] (ordre d'affichage [Odile, Valentin, Agathe] : l'auteur compté diffère de l'auteur d'origine sur les trois cartes)
+auteur_compte, séance 9 (texte 8, cartes 2 et 3 identiques, passées) | aucun auteur désigné → Agathe puis Valentin vers les cartes 2 puis 3 | [Odile, Agathe, Valentin] (= auteurs d'origine)
+revelation.devineurs.porteur, séances 3 à 11 et 13 à 15 | justes [false, false, false] ; raison_trouvee false ; points 0 ; verdicts ["passe", "passe", "passe"] | points_semaine 0 (séances 3 à 7 et 8 à 14) ; null à la séance 15
+revelation.devineurs.porteur, séance 12 (texte 10, deux cartes) | | justes [false, false] ; verdicts ["passe", "passe"] ; points 0 ; points_semaine 0
+revelation.devineurs.<personnage> | feuilles A à C2, ligne « révélation » de chaque manche |
+
+======================================================================
+4. POINTS ET RAISONS CACHÉES PAR SEMAINE (§6, point 1 ; schéma 3.9 `devin.points`, `devin.raisons`)
+======================================================================
+Semaine 1 (textes 1 à 5), points par texte (— = pas de manche) :
+Agathe | 2, 3, 0, 3, 0 | 8
+Nassim | 3, —, 0, 2, 1 | 6
+Odile | 3, 1, 2, 0, 0 | 6
+Valentin | 2, 1, 1, —, 2 | 6
+porteur | 0, 0, 0, 0, 0 | 0
+Raisons cachées trouvées, semaine 1 | Agathe t1, t4 → 2 ; Nassim 0 ; Odile t2 → 1 ; Valentin t3 → 1 ; porteur 0 |
+Semaine 2 (textes 6 à 12) :
+Agathe | 0, 1, 1, 1, 1, 2, 0 | 6
+Nassim | 2, 3, 1, —, 1, 2, 1 | 10
+Odile | 1, 1, 2, —, 1, 1, 1 | 7
+Valentin | 2, 1, 2, 0, 0, 1, 1 | 7
+porteur | 0 ×7 | 0
+Raisons cachées trouvées, semaine 2 | Agathe t7, t10, t11 → 3 ; Nassim t7, t10, t11 → 3 ; Odile t7, t10 → 2 ; Valentin t6, t8 → 2 ; porteur 0 |
+Texte 13 (hors semaine) | Agathe 3, Nassim 0, Odile 1, Valentin 1, porteur 0 ; raisons : aucune trouvée |
+
+======================================================================
+5. LE DEVIN (§6, point 2)
+======================================================================
+Semaine 1 | le plus de points, au moins 1 : Agathe 8, seule en tête | titulaire Agathe, departage "aucun"
+Semaine 2 | Nassim 10, seul en tête | titulaire Nassim, departage "aucun"
+
+======================================================================
+6. LE MYSTÈRE (§6, point 3 ; QUESTIONS.md, Q10)
+======================================================================
+tentatives de X = attributions non passées des autres membres sur les cartes dont auteur_compte = X, révélées dans la semaine ; erreurs = celles qui ne désignent pas X. Le porteur passe tout : ses attributions ne comptent jamais. Lecture manche par manche (auteur_compte → désigné) dans les feuilles A à C2.
+Semaine 1, texte par texte (tentatives/erreurs) :
+Agathe | t1 2/0 ; t2 1/1 ; t3 2/0 ; t4 2/1 ; t5 2/2 | 9 tentatives, 4 erreurs → 4/9
+Nassim | t1 3/1 ; t2 3/2 ; t3 0 ; t4 2/1 ; t5 3/3 | 11, 7 → 7/11
+Odile | t1 3/0 ; t2 2/0 ; t3 3/3 ; t4 2/0 ; t5 3/2 | 13, 5 → 5/13
+Valentin | t1 2/0 ; t2 2/0 ; t3 3/3 ; t4 1/0 ; t5 0 | 8, 3 → 3/8
+porteur | t1 2/1 ; t2 1/1 ; t3 4/3 ; t4 2/2 ; t5 4/2 | 13, 9 → 9/13
+Semaine 1 | tous ont ≥ 6 tentatives et ≥ 1 erreur ; plus forte proportion : 9/13 > 7/11 > 4/9 > 5/13 > 3/8 | titulaire porteur (« vous »), departage "aucun"
+Semaine 2 :
+Agathe | t6 3/1 ; t7 3/1 ; t8 1/0 ; t9 1/1 ; t10 3/3 ; t11 2/2 ; t12 1/0 | 14, 8 → 4/7
+Nassim | t6 3/2 ; t7 3/3 ; t8 1/0 ; t9 0 ; t10 0 (absent) ; t11 1/1 ; t12 3/3 | 11, 9 → 9/11
+Odile | t6 3/3 ; t7 3/2 ; t8 3/1 ; t9 2/2 ; t10 0 (absente) ; t11 3/0 ; t12 3/2 | 17, 10 → 10/17
+Valentin | t6 2/0 ; t7 3/0 ; t8 3/3 ; t9 1/0 ; t10 3/0 ; t11 3/0 ; t12 3/3 | 18, 6 → 1/3
+porteur | t6 1/1 ; t7 0 ; t8 4/2 ; t9 2/2 ; t10 0 (pas de réponse) ; t11 3/3 ; t12 2/1 | 12, 9 → 3/4
+Semaine 2 | 9/11 > 3/4 > 10/17 > 4/7 > 1/3 | titulaire Nassim, departage "aucun"
+Vérification des comptes | total des tentatives sur les 13 textes = total des cartes des manches des personnages | 54 (semaine 1) + 72 (semaine 2) + 12 (texte 13) = 138 = 110 + 28 (partie 8) ; erreurs 28 + 42 + 7 = 77 = 138 − 61
+
+======================================================================
+7. LE FIDÈLE, LA SURPRISE DE LA SEMAINE, LE SANS-FAUTE
+======================================================================
+Le Fidèle, semaine 1 (textes 1 à 6) | ont répondu à tous : Agathe, Odile, porteur (Nassim absent au 3, Valentin au 5) | [Agathe, Odile, porteur]
+Le Fidèle, semaine 2 (textes 7 à 13) | Agathe, Valentin (Nassim et Odile absents au 10 ; le porteur sans réponse au 10) | [Agathe, Valentin]
+Surprise de la semaine 1 (attributions non passées, toutes manches ; fausses = designe ≠ auteur_compte) | t1 : 12 attributions, 2 fausses (1/6) ; t2 : 9, 4 (4/9) ; t3 : 12, 9 (3/4) ; t4 : 9, 4 (4/9) ; t5 : 12, 9 (3/4) | égalité t3/t5 à 3/4, même nombre d'erreurs (9) → t("surprise-semaine|1|3") 334035363 < t("surprise-semaine|1|5") 3192045326 → texte 3, departage "tirage"
+Surprise de la semaine 2 | t6 : 12, 7 (7/12) ; t7 : 12, 6 (1/2) ; t8 : 12, 6 (1/2) ; t9 : 6, 5 (5/6) ; t10 : 6, 3 (1/2) ; t11 : 12, 6 (1/2) ; t12 : 12, 9 (3/4) | texte 9 (5/6, ≥ 4 attributions, ≥ 1 fausse), departage "aucun"
+Le Sans-Faute (semaine 2) | §6, point 6 : Agathe 0/3 au texte 6 ; Nassim et Odile sans manche à la séance 10 ; Valentin 1/3 au texte 8 ; porteur passe tout | [] → carnet « pas attribué »
+Le Pas de Côté | impossible dans l'essai (§5.4) | []
+titres_tires_au_sort | surprise de la semaine 1 seule | 1
+
+======================================================================
+8. AGRÉGATS (§8.4 ; schéma 3.10)
+======================================================================
+Seuil | le porteur a répondu à 12 des 13 textes révélés (tous sauf le 10) ≥ 5 | chiffres donnés
+justesse_personnages_entre_eux | cartes des manches des personnages dont auteur_compte est un personnage, justes/total, par séance : S2 9/10 ; S3 5/8 ; S4 2/8 ; S5 5/7 ; S6 1/8 ; S7 5/11 ; S8 6/12 ; S9 4/8 ; S10 1/4 ; S11 3/6 ; S12 6/9 ; S13 2/10 ; S14 4/9 | {justes 53, total 110}
+justesse_personnages_sur_porteur | cartes dont auteur_compte est le porteur : S2 1/2 ; S3 0/1 ; S4 1/4 ; S5 0/2 ; S6 2/4 ; S7 0/1 ; S8 0/0 ; S9 2/4 ; S10 0/2 ; S11 0/0 ; S12 0/3 ; S13 1/2 ; S14 1/3 | {justes 8, total 28}
+titres_tires_au_sort | | 1
+
+======================================================================
+9. « EN ATTENDANT » (schéma 3.8 ; §7.5 ; r : commun-tables.txt, G)
+======================================================================
+séance 1, 19:12 | r(1152) = 72 : personne | []
+séance 2, 08:00 | r(480) = 840 ≥ Agathe 820, Valentin 320 ; tous ont répondu au texte 2 | [Agathe, Valentin]
+séance 3, 13:00 | r(780) = 1140 ≥ tous ; Nassim absent au texte 3 | [Agathe, Odile, Valentin]
+séance 4, 09:30 | r(570) = 930 ≥ Agathe, Odile 910, Valentin ; Nassim 1125 non | [Agathe, Odile, Valentin]
+séance 5, 23:59 | r(1439) = 359 ≥ Valentin 320 seulement, mais Valentin est absent au texte 5 | []
+séance 6, 12:45 | r(765) = 1125 ≥ tous (Nassim à l'égalité) ; tous ont répondu au texte 6 | [Agathe, Nassim, Odile, Valentin]
+séance 7, 07:40 | r(460) = 820 ≥ Agathe (égalité), Valentin | [Agathe, Valentin]
+séance 8, 00:15 | r(15) = 375 ≥ Valentin | [Valentin]
+séance 9, 09:10 | r(550) = 910 ≥ Agathe, Odile (égalité), Valentin | [Agathe, Odile, Valentin]
+séance 10 | journée pas finie : 2.5 jamais affiché | attente null
+séance 11, 17:59 | r(1079) = 1439 ≥ tous ; tous ont répondu au texte 11 | [Agathe, Nassim, Odile, Valentin]
+séance 12, 18:00 | r(1080) = 0 | []
+séance 13, 14:00 | r(840) = 1200 ≥ tous | [Agathe, Nassim, Odile, Valentin]
+séance 14, 06:00 | r(360) = 720 ≥ Valentin | [Valentin]
+
+======================================================================
+10. MESURES (schéma 3.10) ET JOURNAL
+======================================================================
+Ouvertures | une séance par jour, du dimanche 18 octobre 2026 (séance 0) au lundi 2 novembre 2026 (séance 15), à 19h ; +02:00 jusqu'au 24 octobre, +01:00 dès le 25 (changement d'heure le 25 octobre à 03:00) | jours_ecoules null à la séance 0, 1 ensuite
+etapes | séance 1 {false, true} ; séances 2 à 14 {true, true} (séance 10 : Répondre affiché, sans réponse) ; null aux séances 0 et 15 |
+duree_* | présence selon etapes ; valeurs libres (durees.json) ; séance 0 et 15 : séance seule |
+relire | 0 partout |
+passer | cartes « passe » de coups.deviner : 3 aux séances 2 à 10 et 13, 14 ; 2 à la séance 11 (texte 10) ; 3 à la séance 12 |
+revelation_verdicts | séances 3 à 11, 13, 14, 15 : ["passe", "passe", "passe"] ; séance 12 : ["passe", "passe"] ; null aux séances 0 à 2 |
+revelation_raison_tentee | false aux séances 3 à 15 (une carte cachée à chaque manche, jamais tentée) ; null avant |
+versions | [1] partout |
+copies | aucune |
+fin | f2 "de_moins_en_moins" ; f1 : "milieu" aux 16 cases |
+
+======================================================================
+11. LE CARNET, LIGNE PAR LIGNE (§8.12)
+======================================================================
+En-tête | « Essai mené jusqu’à la clôture. » ; pas de « Raison de l’arrêt » |
+Entrée | Ouverture : dimanche 18 octobre 2026, entre 19h00 et 19h59. / Version 1 / Durée ‹durée› / « Vos erreurs à la révélation : Les deux. » / « Les trois textes et leurs raisons : Compris du premier coup. » / « Votre moment préféré : Donner mon avis. » |
+Jour 1 | lundi 19 octobre 2026 ; jours écoulés 1 ; Durée « , dont ‹durée› pour répondre » ; pas de « Boutons touchés » ni de « Révélation » ; q2, q3 |
+Jours 2 à 14 | Durée avec deviner et répondre ; « Boutons touchés : Relire 0 fois, Passer 3 fois. » (« Passer 2 fois » au jour 11) ; « Révélation : passé, passé, passé. Raison cachée : pas tentée. » dès le jour 3 (« passé, passé. » au jour 12) ; pas de q1 (aucun « Ça alors ! ») ; q2 et q3 selon le journal (q2 absente au jour 6 : question sautée ; au jour 10, q2 présente : écran Répondre affiché, journée pas finie) |
+Titres de la semaine 1 (après le jour 7) | « Le Devin : Agathe. » / « Le Mystère : vous. » / « Le Fidèle : Agathe, Odile et vous. » ; pas de Sans-Faute en semaine 1 |
+Titres de la semaine 2 (après le jour 14) | « Le Sans-Faute : pas attribué. » / « Le Devin : Nassim. » / « Le Mystère : Nassim. » / « Le Fidèle : Agathe et Valentin. » |
+Clôture | lundi 2 novembre 2026, entre 19h00 et 19h59 ; jours écoulés 1 ; version 1 ; Durée ‹durée› (sans « dont ») ; « Révélation : passé, passé, passé. Raison cachée : pas tentée. » ; aucune question |
+Sur tout l'essai | « … il a trouvé son auteur : 53 fois sur 110. » / « … il a trouvé que c’était vous : 8 fois sur 28. » / « Titres attribués par tirage au sort, faute de départage : 1. » |
+Questions de fin | « Au fil des deux semaines, deviner était : De moins en moins amusant. » / « Où vous placez chacun : » / quatre lignes « au milieu entre … » |
+Jours de la semaine des dates | 18 octobre 2026 est un dimanche ; 25 octobre un dimanche ; 1er novembre un dimanche ; 2 novembre un lundi | calendrier grégorien

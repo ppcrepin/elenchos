@@ -108,6 +108,37 @@ SIGNES_INTERFACE = [0x2190, 0x25BE, 0x25CF, 0x25CB, 0x25CE, 0x2713]  # ← ▾ �
 
 FONCTIONS = sorted(set(subset.Options().layout_features) | {"tnum"})
 
+# Chasse attendue de U+202F, en millièmes de cadratin (simulation.md, §8.8,
+# « Espace fine insécable », valeurs confirmées par la Direction artistique).
+CHASSES_202F = {
+    "alegreya-700.woff2": 116,
+    "alegreya-italique-500.woff2": 124,
+    "alegreya-italique-700.woff2": 116,
+    "alegreya-sans-400.woff2": 103,
+    "alegreya-sans-700.woff2": 101,
+    "alegreya-sans-italique-400.woff2": 105,
+}
+LIGNE_LICENCE = "Polices réduites ; glyphe vide U+202F (espace fine insécable) ajouté à chaque face."
+
+
+def verifier_espace_fine(nom, octets):
+    """§8.8 : la réduction s'arrête si la face n'a pas U+202F, si ce glyphe a
+    un contour, ou si sa chasse diffère de la valeur attendue."""
+    police = TTFont(io.BytesIO(octets))
+    cmap = police.getBestCmap()
+    if 0x202F not in cmap:
+        sys.exit("%s : U+202F absent" % nom)
+    glyphe = cmap[0x202F]
+    g = police["glyf"][glyphe]
+    if g.numberOfContours != 0 or (hasattr(g, "components") and g.components):
+        sys.exit("%s : le glyphe de U+202F a un contour" % nom)
+    upm = police["head"].unitsPerEm
+    chasse = police["hmtx"][glyphe][0]
+    mill = (chasse * 1000 * 2 + upm) // (2 * upm)  # arrondi à l'entier le plus proche
+    if mill != CHASSES_202F[nom]:
+        sys.exit("%s : chasse de U+202F %d millièmes, %d attendus" % (nom, mill, CHASSES_202F[nom]))
+    return chasse
+
 
 def sha256(octets):
     return hashlib.sha256(octets).hexdigest()
@@ -251,6 +282,7 @@ def main():
 
     manifeste = {
         "commit_google_fonts": COMMIT,
+        "ligne_licence": LIGNE_LICENCE,
         "versions": VERSIONS,
         "fonctions_opentype": FONCTIONS,
         "hinting": False,
@@ -265,6 +297,7 @@ def main():
 
     for sortie, source, graisse, usage in FACES:
         octets, largeur_202f = reduire(lus[source], graisse, unicodes)
+        verifier_espace_fine(sortie, octets)
         with open(os.path.join(args.sortie, sortie), "wb") as f:
             f.write(octets)
         relue = TTFont(io.BytesIO(octets))
