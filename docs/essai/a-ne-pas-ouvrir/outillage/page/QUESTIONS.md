@@ -39,6 +39,21 @@
 - **Citation.** « Accords : « 1 juste », « 2 justes » ; « fois » invariable. »
 - **Constat.** Aucune ligne du gabarit n'écrit un nombre suivi de « juste » : les comptes s'écrivent « x fois sur y ». La règle semble rester d'une version antérieure. Rien à faire pour la page ; à retirer ou à expliquer par UX à la prochaine passe.
 
+## Q-F7 — Ce que la page garde du pseudo (schema.md, partie 3.12, règle 6 ; §7.2)
+
+Demande de l'orchestrateur (6 octobre 2026) : confirmer la lecture du programme de contrôle, qui refuse un pseudo (1) pas en NFC, ou avec un caractère Cc ou Cf ; (2) avec un blanc autre que U+0020, une espace double ou une espace au bord ; (3) égal à un prénom de personnage, capitales non comptées.
+
+**Réponse : confirmée, avec quatre précisions, dont une correction de l'ordre du §7.2 (à faire passer par UX).**
+
+1. **NFC, en dernier aussi (correction).** Le §7.2 met la forme NFC en premier, puis retire Cc et Cf. Or retirer un Cf peut rapprocher une lettre et un accent combinant : « e », U+200B, U+0301 est en NFC ; sans U+200B, « e » + U+0301 ne l'est plus (vérifié dans Node). La page applique donc NFC au début **et à la fin** de la mise en forme ; ce qu'elle garde est toujours en NFC. La lecture (1) du programme de contrôle est juste pour ce que la page garde. Proposition pour UX : écrire « forme NFC, en dernier » au §7.2.
+2. **« Blanc » = propriété Unicode White_Space.** Après le retrait de Cc et Cf, l'ensemble est le même en JavaScript (`\s`) et en Python (`str.isspace()`) : U+0020, U+00A0, U+1680, U+2000 à U+200A, U+2028, U+2029, U+202F, U+205F, U+3000 (19 points de code, vérifié des deux côtés). Ce que la page garde ne contient aucun d'eux sauf U+0020, ni espace double, ni espace au bord. Lecture (2) confirmée : en Python, aucun `c` avec `c.isspace() and c != " "`.
+3. **« Capitales non comptées » = minuscules par la correspondance Unicode par défaut.** La page compare `pseudo.toLowerCase()` à « agathe », « nassim », « odile », « valentin ». Le programme de contrôle doit employer `str.lower()`, **pas `str.casefold()`** : « Naſſim » (s long) reste « naſſim » avec les deux premiers et devient « nassim » avec `casefold`, que la page accepterait et que le contrôle refuserait. Lecture (3) confirmée avec cette méthode.
+4. **Longueur et vide.** La règle 6 dit aussi « non vide » et « sa longueur suit la règle d'UX » : le contrôle refuse un pseudo vide ou de plus de 20 points de code (`len()` en Python compte des points de code). La page compte elle-même les points de code : l'attribut `maxlength` d'un champ compte des unités UTF-16 (un emoji en vaut deux) et n'est pas employé.
+
+En plus, à soumettre à UX : la page retire aussi les **substituts isolés** (catégorie Cs), qu'un collage peut apporter en théorie ; sans cela, l'état ne se coderait pas en UTF-8. Le contrôle peut refuser un Cs.
+
+« Témoin-b-4821-k » passe : NFC, ni Cc ni Cf, aucun blanc, 15 points de code, pas un prénom. Limite connue : la page suit les tables Unicode de Safari (Unicode 15 ou plus), le programme de contrôle celles de Python 3.11 (Unicode 14) ; un caractère classé Cf seulement depuis Unicode 15 serait retiré par la page et inconnu du contrôle, sans écart sur ce que la page garde.
+
 ## Notes de mise en œuvre (pas des questions, pour transparence)
 
 - **Trois exemples de FIPS 180-4 (§0, V1).** FIPS 180-4 ne contient pas d'exemples chiffrés ; les trois exemples classiques de SHA-256 sont ceux de FIPS 180-2, annexe B (« abc », le message de 448 bits, un million de « a »), repris dans les exemples du NIST. Ce sont eux que la page vérifie.

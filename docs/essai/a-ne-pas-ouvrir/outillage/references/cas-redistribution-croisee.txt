@@ -1,0 +1,53 @@
+CAS CHIFFRÉ : REDISTRIBUTION CROISÉE DE CARTES IDENTIQUES (regles-de-calcul.md §4.3, étape 4 ; C-010)
+Manche du porteur, séance 9, texte 8 (P, s = 0), fichier candidat. Détail du choix des cartes : manches-porteur.txt, séance 9.
+
+----------------------------------------------------------------------
+1. La manche telle que servie (ne dépend pas des réponses du porteur)
+----------------------------------------------------------------------
+places | §4.3 étapes 1 à 3 | [Odile (5,1), Valentin (2,3), Agathe (2,3)]
+remplacements | Valentin et Agathe sont identiques (même niveau 2, même raison 3) ; la réponse non placée, Nassim (2,3), est elle aussi identique à une carte placée → aucun remplacement possible | aucun
+raison_cachee | place 3 | Agathe
+ordre | t("ordre|porteur|9|·") : Odile 2214664884 < Agathe 2912903077 < Valentin 4275729737 | [Odile, Agathe, Valentin]
+cartes affichées | §4.5 | carte 1 : Odile « Très favorable » (raison 1 affichée) ; carte 2 : Agathe « Défavorable · raison cachée » ; carte 3 : Valentin « Défavorable » (raison 3 affichée)
+groupe de cartes identiques | §4.3 étape 4 | cartes 2 et 3, auteurs d'origine {Agathe, Valentin}
+
+----------------------------------------------------------------------
+2. Attribution croisée (le cas demandé)
+----------------------------------------------------------------------
+coups.deviner | le porteur désigne | carte 1 : Odile ; carte 2 : Valentin, raison devinée 3 ; carte 3 : Agathe
+auteur_compte carte 1 | hors du groupe | Odile
+auteur_compte carte 2 | « Chaque auteur du groupe désigné sur l'une de ces cartes devient l'auteur de cette carte » : Valentin ∈ {Agathe, Valentin}, désigné sur la carte 2 | Valentin
+auteur_compte carte 3 | Agathe ∈ groupe, désignée sur la carte 3 | Agathe
+auteurs restants du groupe | aucun | —
+justes | designe = auteur_compte | [true, true, true]
+raison_trouvee | carte cachée (carte 2) : personne juste (Valentin) et raison devinée 3 = raison de la carte | true
+points | §6, point 1 | 3
+verdicts | schéma 3.7 | ["juste", "juste_et_raison", "juste"]
+Révélation affichée (§4.6) | carte 2 : « Ton pari : Valentin, parce que « … » » / visage V / « Tu connais ton monde, et ses raisons. » ; carte 3 : « Ton pari : Agathe. » / visage A / « Tu connais ton monde. » | sous chaque carte, son auteur redistribué (C-010)
+Le Mystère (§6, point 3), effet | tentatives sur les cartes de Valentin : 1 (carte 2), erreur 0 ; sur celles d'Agathe : 1 (carte 3), erreur 0 | aucune erreur comptée « à l'envers »
+Surprise de la semaine (§6, point 5) | sur le texte 8, cette manche : 3 attributions, 0 fausse | —
+« Ses surprises » (§7.7) | aucune carte attribuée à quelqu'un d'autre | rien
+
+----------------------------------------------------------------------
+3. Variantes, pour fixer la règle
+----------------------------------------------------------------------
+a) carte 2 : Nassim ; carte 3 : Agathe ; carte 1 : Odile
+   auteur_compte carte 3 | Agathe désignée ∈ groupe | Agathe
+   auteur restant | Valentin → « les autres auteurs du groupe vont aux cartes restantes » : la seule carte restante du groupe est la 2 | carte 2 : Valentin
+   justes | Odile ✓ ; Nassim ≠ Valentin ✗ ; Agathe ✓ | [true, false, true] ; points 2 ; verdicts ["juste", "faux", "juste"] ; raison_trouvee false (mauvaise personne sur la carte cachée)
+   Révélation carte 2 | « C'était Valentin. » / « Ça alors ! » / « Sa raison : « … » » (raison 3) | surprise de Valentin : texte 8, « Tu pensais à Nassim »
+b) carte 2 : passe ; carte 3 : Valentin ; carte 1 : Odile
+   auteur_compte carte 3 | Valentin désigné ∈ groupe | Valentin
+   auteur restant | Agathe → carte 2 | carte 2 : Agathe
+   justes | [true, false, true] (passe ≠ Agathe) ; verdicts ["juste", "passe", "juste"] ; points 2 ; raison_trouvee false (carte cachée passée) | tentatives du Mystère : Agathe 0 (passe exclue), Valentin 1
+c) carte 2 : Agathe ; carte 3 : Valentin (attribution « droite ») | chaque auteur désigné sur sa propre carte | auteur_compte = auteur ; [true, true, true] si carte 1 Odile
+d) carte 2 : Nassim ; carte 3 : passe | personne du groupe désigné | les deux auteurs vont aux cartes restantes « dans l'ordre des visages (porteur en dernier) et l'ordre d'affichage » : Agathe (1re des visages) → carte 2 (1re des cartes restantes), Valentin → carte 3 ; égal à l'auteur d'origine ici | [·, false, false]
+
+----------------------------------------------------------------------
+4. Second cas de cartes identiques servies ensemble : séance 4, texte 3, trois cartes (manches-porteur.txt)
+----------------------------------------------------------------------
+cartes | ordre t("ordre|porteur|4|·") | carte 1 : Odile (4,2) ; carte 2 : Valentin (4,2) ; carte 3 : Agathe* (4,2) ; groupe {Odile, Valentin, Agathe}
+attribution [Agathe, Valentin, Odile r2] (celle du carnet 1) | chaque auteur désigné ∈ groupe prend sa carte | auteur_compte [Agathe, Valentin, Odile] ; justes [true, true, true] ; raison_trouvee true (raison 2) ; points 3
+attribution [Nassim, Agathe, passe] | Agathe → carte 2 ; restants {Odile, Valentin} dans l'ordre des visages vers les cartes restantes 1 puis 3 | auteur_compte [Odile, Agathe, Valentin] ; justes [false, true, false] ; verdicts ["faux", "juste", "passe"]
+attribution [passe, passe, passe] (celle de la partie (a)) | aucun désigné du groupe ; restants dans l'ordre des visages (Agathe, Odile, Valentin) vers les cartes 1, 2, 3 | auteur_compte [Agathe, Odile, Valentin] ; justes [false, false, false] ; verdicts ["passe", "passe", "passe"]
+Remarque | la redistribution se fait « avant tout compte » : les `auteur_compte` figurent dans la manche de la séance 4 (schéma 3.6), même si sa révélation (séance 5) n'est pas atteinte |

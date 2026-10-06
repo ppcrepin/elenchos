@@ -1,0 +1,255 @@
+CARNET DE RÉFÉRENCE 2 : CLÔTURE DE LA PARTIE TÉMOIN (a) — FEUILLE A : MANCHES DES PERSONNAGES, SÉANCES 2 À 4
+Partie (a) : porteur toujours « Neutre » avec raison « aucune » (QUESTIONS.md, Q1), passe toutes les cartes, ne répond pas au texte 10 ; paris d'entrée « Neutre » (Q2).
+Conséquences fixes : la carte du porteur est (3,aucune), x = 1/2, σ = 0 ; son curseur reste (Σ w 0, c 1/2, ℓ 19/20, q 0) sur les quatre tensions, donc sa surprise = rareté = |1/2 − médiane| ; vu par tout personnage, son côté attendu est « inconnu » (§3, point 2 : Σ w = 0 sur les cartes du porteur déjà révélées, toutes neutres), `curseur_porteur` = {somme_w "0", c "1/2"} ; une carte quelconque vaut 1 point de score pour le candidat porteur (§3, point 3).
+Candidats d'un devineur g : les quatre autres membres, absents compris (§3, point 1). Côtés attendus des personnages : commun-tables.txt, E. Curseurs : commun-tables.txt, D. Tirages : tirages.txt.
+Format : grandeur | règle | valeur. Les manches du porteur sont dans manches-porteur.txt.
+
+######################################################################
+SÉANCE 2 · texte 1 (S, s = 0)
+######################################################################
+Réponses au texte 1 | fichier candidat ; porteur (a) | Agathe (2,2) x 3/4 σ −1 ; Nassim (1,1) x 1 σ −1 ; Odile (5,3) x 0 σ +1 ; Valentin (3,aucune) x 1/2 σ 0 ; porteur (3,aucune) x 1/2 σ 0
+Curseurs avant le texte 1 (Σw, c, q) | commun D | Agathe 1, 3/5, 1/10 ; Nassim 1, 3/5, 1/10 ; Odile 1, 2/5, 1/10 ; Valentin 0, 1/2, 0 ; porteur 0, 1/2, 0
+Côtés attendus (S, s = 0) | commun E | Agathe −1 ; Nassim −1 ; Odile +1 ; Valentin 0 ; porteur inconnu
+Considérations du texte 1 (rang : côté, pôle) | commun A | r1 contre 1 ; r2 contre 1 ; r3 pour 0 ; r4 pour 0
+
+--- g = Agathe ---
+possibles | §4.1 | Nassim, Odile, Valentin, porteur
+mediane | x {1, 0, 1/2, 1/2} → {0, 1/2, 1/2, 1} | 1/2
+distance | | Nassim 2/5 ; Odile 2/5 ; Valentin 0 ; porteur 0
+rarete | | Nassim 1/2 ; Odile 1/2 ; Valentin 0 ; porteur 0
+surprise | | Nassim 1/25 + 9/20 = 49/100 ; Odile 49/100 ; Valentin 0 ; porteur 0
+classement | égalité Nassim/Odile : t("surprise|Agathe|2|·") Odile 1254810088 < Nassim 2676292636 ; égalité Valentin/porteur : porteur 1104397575 < Valentin 3141364844 | [Odile, Nassim, porteur, Valentin]
+departages | deux groupes | 2
+places 1, 2 | | Odile, Nassim
+place 3 | t("hasard|Agathe|2|·") : porteur 4185140603 < Valentin 4266786322 | porteur
+remplacements | cartes placées (5,3), (1,1), (3,aucune) toutes différentes | aucun
+places | | [Odile, Nassim, porteur]
+raison_cachee | place 3 = porteur, « aucune » → moins bien classée des servies à raison ≠ aucune : Odile (1re), Nassim (2e) | Nassim
+ordre | t("ordre|Agathe|2|·") : porteur 1556817034 < Odile 3900225097 < Nassim 4160056839 | [porteur, Odile, Nassim]
+cartes | | 1. porteur (3,aucune) σ 0 ; 2. Odile (5,3) σ +1 ; 3. Nassim* (1,1) σ −1
+rangs | t("devine|Agathe|2|·") : porteur 1123988706 < Nassim 1488690704 < Valentin 2400134161 < Odile 3851424764 | porteur 1, Nassim 2, Valentin 3, Odile 4
+cotes_attendus | | Nassim −1, Odile +1, Valentin 0, porteur inconnu
+scores (carte × candidat N, O, V, p) | §3, point 3 | carte 1 (σ 0) : 1, 1, 2, 1 ; carte 2 (σ +1) : 0, 2, 1, 1 ; carte 3 (σ −1) : 2, 0, 1, 1
+total maximal | V→1, O→2, N→3 = 6 ; toute autre affectation ≤ 5 | 6, unique
+designe | §3, point 4 | [Valentin, Odile, Nassim] (rangs 3, 4, 2)
+raison_devinee | carte 3, σ −1 → considérations « contre » : r1, r2 (pôle 1) ; Nassim attendu −1 → pôle 1 − s = 1 → la première : r1 | 1
+auteur_compte | pas de cartes identiques servies | = auteur
+révélation (séance 3) | justes [false, true, true] ; raison_trouvee true (Nassim, raison 1 = la sienne) ; points 2 ; points_semaine 2 |
+
+--- g = Nassim ---
+possibles | | Agathe, Odile, Valentin, porteur
+mediane | {0, 1/2, 1/2, 3/4} | 1/2
+distance | | Agathe 3/20 ; Odile 2/5 ; Valentin 0 ; porteur 0
+rarete | | Agathe 1/4 ; Odile 1/2 ; Valentin 0 ; porteur 0
+surprise | | Agathe 3/200 + 9/40 = 6/25 ; Odile 49/100 ; Valentin 0 ; porteur 0
+classement | égalité Valentin/porteur : t("surprise|Nassim|2|·") porteur 823285223 < Valentin 1921691671 | [Odile, Agathe, porteur, Valentin]
+departages | | 1
+places 1, 2 | | Odile, Agathe
+place 3 | t("hasard|Nassim|2|·") : Valentin 2941137237 < porteur 3761930562 | Valentin
+remplacements | (5,3), (2,2), (3,aucune) différentes | aucun
+places | | [Odile, Agathe, Valentin]
+raison_cachee | Valentin « aucune » → Odile (1re), Agathe (2e) : Agathe | Agathe
+ordre | t("ordre|Nassim|2|·") : Odile 948284750 < Valentin 1296094484 < Agathe 3246987733 | [Odile, Valentin, Agathe]
+cartes | | 1. Odile (5,3) σ +1 ; 2. Valentin (3,aucune) σ 0 ; 3. Agathe* (2,2) σ −1
+rangs | t("devine|Nassim|2|·") : Valentin 1514370015 < porteur 1699410409 < Odile 2450465094 < Agathe 3432072585 | Valentin 1, porteur 2, Odile 3, Agathe 4
+cotes_attendus | | Agathe −1, Odile +1, Valentin 0, porteur inconnu
+scores (A, O, V, p) | | carte 1 (σ +1) : 0, 2, 1, 1 ; carte 2 (σ 0) : 1, 1, 2, 1 ; carte 3 (σ −1) : 2, 0, 1, 1
+total maximal | O→1, V→2, A→3 | 6, unique
+designe | | [Odile, Valentin, Agathe] (rangs 3, 1, 4)
+raison_devinee | carte 3, « contre » : r1, r2 ; Agathe attendue −1 → pôle 1 → r1 | 1
+auteur_compte | | = auteur
+révélation (séance 3) | justes [true, true, true] ; raison_trouvee false (raison d'Agathe : 2) ; points 3 ; points_semaine 3 |
+
+--- g = Odile ---
+possibles | | Agathe, Nassim, Valentin, porteur
+mediane | {1/2, 1/2, 3/4, 1} | 5/8
+distance | | Agathe 3/20 ; Nassim 2/5 ; Valentin 0 ; porteur 0
+rarete | | Agathe 1/8 ; Nassim 3/8 ; Valentin 1/8 ; porteur 1/8
+surprise | | Agathe 51/400 ; Nassim 151/400 ; Valentin 1/8 ; porteur 1/8
+classement | égalité Valentin/porteur : t("surprise|Odile|2|·") Valentin 2376510616 < porteur 3729642014 | [Nassim, Agathe, Valentin, porteur]
+departages | | 1
+places 1, 2 | | Nassim, Agathe
+place 3 | t("hasard|Odile|2|·") : Valentin 2404906451 < porteur 3750569772 | Valentin
+remplacements | | aucun
+places | | [Nassim, Agathe, Valentin]
+raison_cachee | Valentin « aucune » → Nassim (1er), Agathe (2e) : Agathe | Agathe
+ordre | t("ordre|Odile|2|·") : Valentin 2634475732 < Nassim 3457512357 < Agathe 4147800439 | [Valentin, Nassim, Agathe]
+cartes | | 1. Valentin (3,aucune) σ 0 ; 2. Nassim (1,1) σ −1 ; 3. Agathe* (2,2) σ −1
+rangs | t("devine|Odile|2|·") : Nassim 1042300029 < porteur 1098468470 < Valentin 1696017770 < Agathe 3586021832 | Nassim 1, porteur 2, Valentin 3, Agathe 4
+cotes_attendus | | Agathe −1, Nassim −1, Valentin 0, porteur inconnu
+scores (A, N, V, p) | | carte 1 (σ 0) : 1, 1, 2, 1 ; carte 2 (σ −1) : 2, 2, 1, 1 ; carte 3 (σ −1) : 2, 2, 1, 1
+total maximal | V→1 puis {A, N} sur les cartes 2 et 3 dans l'un ou l'autre ordre | 6, atteint par (3, 1, 4) = [V, N, A] et (3, 4, 1) = [V, A, N]
+designe | plus petite dans l'ordre lexicographique : (3, 1, 4) | [Valentin, Nassim, Agathe]
+raison_devinee | carte 3, « contre » r1, r2 ; Agathe −1 → r1 | 1
+auteur_compte | | = auteur
+révélation (séance 3) | justes [true, true, true] ; raison_trouvee false ; points 3 ; points_semaine 3 |
+
+--- g = Valentin ---
+possibles | | Agathe, Nassim, Odile, porteur
+mediane | {0, 1/2, 3/4, 1} | 5/8
+distance | | Agathe 3/20 ; Nassim 2/5 ; Odile 2/5 ; porteur 0
+rarete | | Agathe 1/8 ; Nassim 3/8 ; Odile 5/8 ; porteur 1/8
+surprise | | Agathe 51/400 ; Nassim 151/400 ; Odile 241/400 ; porteur 1/8 = 50/400
+classement | | [Odile, Nassim, Agathe, porteur]
+departages | | 0
+places 1, 2 | | Odile, Nassim
+place 3 | t("hasard|Valentin|2|·") : porteur 1113939816 < Agathe 1230413312 | porteur
+remplacements | (5,3), (1,1), (3,aucune) différentes | aucun
+places | | [Odile, Nassim, porteur]
+raison_cachee | porteur « aucune » → Odile (1re), Nassim (2e) : Nassim | Nassim
+ordre | t("ordre|Valentin|2|·") : Odile 2363519264 < Nassim 3742257553 < porteur 4251939896 | [Odile, Nassim, porteur]
+cartes | | 1. Odile (5,3) σ +1 ; 2. Nassim* (1,1) σ −1 ; 3. porteur (3,aucune) σ 0
+rangs | t("devine|Valentin|2|·") : porteur 1373860397 < Agathe 2425374147 < Nassim 3140736259 < Odile 4192138825 | porteur 1, Agathe 2, Nassim 3, Odile 4
+cotes_attendus | | Agathe −1, Nassim −1, Odile +1, porteur inconnu
+scores (A, N, O, p) | | carte 1 (σ +1) : 0, 0, 2, 1 ; carte 2 (σ −1) : 2, 2, 0, 1 ; carte 3 (σ 0) : 1, 1, 1, 1
+total maximal | O→1 (2), A ou N→2 (2), le reste→3 (1) | 5, atteint par (4, 3, 2), (4, 3, 1), (4, 2, 3), (4, 2, 1)
+designe | plus petite : (4, 2, 1) | [Odile, Agathe, porteur]
+raison_devinee | carte 2, « contre » r1, r2 ; Agathe −1 → r1 | 1
+auteur_compte | | = auteur
+révélation (séance 3) | justes [true, false, true] ; raison_trouvee false (mauvaise personne) ; points 2 ; points_semaine 2 |
+
+######################################################################
+SÉANCE 3 · texte 2 (T, s = 0) · Nassim absent au texte 3 : pas de manche pour lui
+######################################################################
+Réponses au texte 2 | | Agathe (4,3) x 1/4 σ +1 ; Nassim (3,2) x 1/2 σ 0 ; Odile (1,1) x 1 σ −1 ; Valentin (4,4) x 1/4 σ +1 ; porteur (3,aucune) x 1/2 σ 0
+Curseurs avant le texte 2 | aucune réponse T avant | tous Σw 0, c 1/2, q 0 → surprise = rareté
+Côtés attendus (T, s = 0) | | Agathe 0 ; Nassim 0 ; Odile −1 ; Valentin +1 ; porteur inconnu
+Considérations du texte 2 | | r1 contre 1 ; r2 contre 1 ; r3 pour aucun ; r4 pour 0
+
+--- g = Agathe ---
+possibles | | Nassim, Odile, Valentin, porteur
+mediane | {1/4, 1/2, 1/2, 1} | 1/2
+surprise = rareté | | Nassim 0 ; Odile 1/2 ; Valentin 1/4 ; porteur 0
+classement | égalité Nassim/porteur : t("surprise|Agathe|3|·") porteur 933862236 < Nassim 2763125719 | [Odile, Valentin, porteur, Nassim]
+departages | | 1
+places 1, 2 | | Odile, Valentin
+place 3 | t("hasard|Agathe|3|·") : Nassim 2065210665 < porteur 2215140337 | Nassim
+remplacements | (1,1), (4,4), (3,2) différentes | aucun
+places | | [Odile, Valentin, Nassim]
+raison_cachee | place 3, raison 2 | Nassim
+ordre | t("ordre|Agathe|3|·") : Odile 132114249 < Nassim 2475527600 < Valentin 2590099545 | [Odile, Nassim, Valentin]
+cartes | | 1. Odile (1,1) σ −1 ; 2. Nassim* (3,2) σ 0 ; 3. Valentin (4,4) σ +1
+rangs | t("devine|Agathe|3|·") : Nassim 1184489337 < Valentin 1427202667 < Odile 2347306871 < porteur 2930638012 | Nassim 1, Valentin 2, Odile 3, porteur 4
+cotes_attendus | | Nassim 0, Odile −1, Valentin +1, porteur inconnu
+scores (N, O, V, p) | | carte 1 (σ −1) : 1, 2, 0, 1 ; carte 2 (σ 0) : 2, 1, 1, 1 ; carte 3 (σ +1) : 1, 0, 2, 1
+total maximal | O→1, N→2, V→3 | 6, unique
+designe | | [Odile, Nassim, Valentin] (rangs 3, 1, 2)
+raison_devinee | carte 2, σ 0 → les quatre ; Nassim attendu 0 → la première hors tension : r3 | 3
+auteur_compte | | = auteur
+révélation (séance 4) | justes [true, true, true] ; raison_trouvee false (raison de Nassim : 2) ; points 3 ; points_semaine 2 + 3 = 5 |
+
+--- g = Odile ---
+possibles | | Agathe, Nassim, Valentin, porteur
+mediane | {1/4, 1/4, 1/2, 1/2} | 3/8
+surprise = rareté | | tous 1/8
+classement | égalité à quatre : t("surprise|Odile|3|·") Nassim 2165566183 < Valentin 3053674562 < porteur 3649047694 < Agathe 4136589692 | [Nassim, Valentin, porteur, Agathe]
+departages | | 1
+places 1, 2 | | Nassim, Valentin
+place 3 | t("hasard|Odile|3|·") : porteur 3922714128 < Agathe 4012871757 | porteur
+remplacements | (3,2), (4,4), (3,aucune) différentes | aucun
+places | | [Nassim, Valentin, porteur]
+raison_cachee | porteur « aucune » → Nassim (1er), Valentin (2e) : Valentin | Valentin
+ordre | t("ordre|Odile|3|·") : Nassim 1201293633 < porteur 3597487617 < Valentin 3966777473 | [Nassim, porteur, Valentin]
+cartes | | 1. Nassim (3,2) σ 0 ; 2. porteur (3,aucune) σ 0 ; 3. Valentin* (4,4) σ +1
+rangs | t("devine|Odile|3|·") : porteur 234198977 < Valentin 355867151 < Agathe 1453211060 < Nassim 2686222289 | porteur 1, Valentin 2, Agathe 3, Nassim 4
+cotes_attendus | | Agathe 0, Nassim 0, Valentin +1, porteur inconnu
+scores (A, N, V, p) | | carte 1 (σ 0) : 2, 2, 1, 1 ; carte 2 (σ 0) : 2, 2, 1, 1 ; carte 3 (σ +1) : 1, 1, 2, 1
+total maximal | V→3, {A, N} sur 1 et 2 | 6, atteint par (3, 4, 2) = [A, N, V] et (4, 3, 2) = [N, A, V]
+designe | plus petite : (3, 4, 2) | [Agathe, Nassim, Valentin]
+raison_devinee | carte 3, σ +1 → « pour » : r3 (aucun), r4 (pôle 0) ; Valentin attendu +1 → pôle s = 0 → la première de pôle 0 : r4 | 4
+auteur_compte | | = auteur
+révélation (séance 4) | justes [false, false, true] ; raison_trouvee true (Valentin, raison 4) ; points 1 ; points_semaine 3 + 1 = 4 |
+
+--- g = Valentin ---
+possibles | | Agathe, Nassim, Odile, porteur
+mediane | {1/4, 1/2, 1/2, 1} | 1/2
+surprise = rareté | | Agathe 1/4 ; Nassim 0 ; Odile 1/2 ; porteur 0
+classement | égalité Nassim/porteur : t("surprise|Valentin|3|·") porteur 3121693801 < Nassim 3126361703 | [Odile, Agathe, porteur, Nassim]
+departages | | 1
+places 1, 2 | | Odile, Agathe
+place 3 | t("hasard|Valentin|3|·") : Nassim 681804775 < porteur 3523251996 | Nassim
+remplacements | | aucun
+places | | [Odile, Agathe, Nassim]
+raison_cachee | place 3, raison 2 | Nassim
+ordre | t("ordre|Valentin|3|·") : Nassim 508270829 < Odile 1281963479 < Agathe 1433550432 | [Nassim, Odile, Agathe]
+cartes | | 1. Nassim* (3,2) σ 0 ; 2. Odile (1,1) σ −1 ; 3. Agathe (4,3) σ +1
+rangs | t("devine|Valentin|3|·") : Agathe 4790568 < Nassim 426637363 < porteur 2329476106 < Odile 4226320357 | Agathe 1, Nassim 2, porteur 3, Odile 4
+cotes_attendus | | Agathe 0, Nassim 0, Odile −1, porteur inconnu
+scores (A, N, O, p) | | carte 1 (σ 0) : 2, 2, 1, 1 ; carte 2 (σ −1) : 1, 1, 2, 1 ; carte 3 (σ +1) : 1, 1, 0, 1
+total maximal | O→2 (2), A ou N→1 (2), reste→3 (1) | 5, atteint par (1, 4, 2), (1, 4, 3), (2, 4, 1), (2, 4, 3)
+designe | plus petite : (1, 4, 2) | [Agathe, Odile, Nassim]
+raison_devinee | carte 1, σ 0 → les quatre ; Agathe attendue 0 → première hors tension : r3 | 3
+auteur_compte | | = auteur
+révélation (séance 4) | justes [false, true, false] ; raison_trouvee false ; points 1 ; points_semaine 2 + 1 = 3 |
+
+######################################################################
+SÉANCE 4 · texte 3 (P, s = 1) · Nassim absent au texte 3 (aucune réponse, aucune manche ; reste candidat)
+######################################################################
+Réponses au texte 3 | | Agathe (4,2) x 3/4 σ +1 ; Odile (4,2) x 3/4 σ +1 ; Valentin (4,2) x 3/4 σ +1 ; porteur (3,aucune) x 1/2 σ 0
+Curseurs avant le texte 3 (= après E2) | | Agathe 1, 3/5, 1/10 ; Odile 1, 2/5, 1/10 ; Valentin 1, 2/5, 1/10 ; porteur 0, 1/2, 0
+Côtés attendus (P, s = 1) | | Agathe +1 ; Nassim +1 ; Odile −1 ; Valentin −1 ; porteur inconnu
+Considérations du texte 3 | | r1 contre 0 ; r2 pour 1 ; r3 pour aucun ; r4 contre 0
+
+--- g = Agathe ---
+possibles | | Odile, Valentin, porteur
+mediane | {1/2, 3/4, 3/4} | 3/4
+distance | | Odile 7/20 ; Valentin 7/20 ; porteur 0
+rarete | | Odile 0 ; Valentin 0 ; porteur 1/4
+surprise | | Odile 7/200 ; Valentin 7/200 ; porteur 1/4
+classement | égalité Odile/Valentin : t("surprise|Agathe|4|·") Valentin 70258973 < Odile 1482360198 | [porteur, Valentin, Odile]
+departages | | 1
+places | trois possibles | [porteur, Valentin, Odile]
+remplacements | Valentin et Odile identiques (4,2) ; aucune réponse non placée | aucun
+raison_cachee | place 3, raison 2 | Odile
+ordre | t("ordre|Agathe|4|·") : porteur 917321787 < Odile 1098033817 < Valentin 3462932660 | [porteur, Odile, Valentin]
+cartes | | 1. porteur (3,aucune) σ 0 ; 2. Odile* (4,2) σ +1 ; 3. Valentin (4,2) σ +1 ; groupe identique {Odile, Valentin} sur les cartes 2 et 3
+rangs | t("devine|Agathe|4|·") : Odile 805148 < Nassim 1124770274 < Valentin 3409405796 < porteur 3856861125 | Odile 1, Nassim 2, Valentin 3, porteur 4
+cotes_attendus | | Nassim +1, Odile −1, Valentin −1, porteur inconnu
+scores (N, O, V, p) | | carte 1 (σ 0) : 1, 1, 1, 1 ; carte 2 (σ +1) : 2, 0, 0, 1 ; carte 3 (σ +1) : 2, 0, 0, 1
+total maximal | N sur 2 ou 3 (2), porteur sur l'autre (1), reste sur 1 (1) | 4, atteint par (1, 2, 4), (3, 2, 4), (1, 4, 2), (3, 4, 2)
+designe | plus petite : (1, 2, 4) | [Odile, Nassim, porteur]
+raison_devinee | carte 2, σ +1 → « pour » : r2 (pôle 1), r3 (aucun) ; Nassim attendu +1 → pôle s = 1 → r2 | 2
+auteur_compte | §4.3 étape 4 : aucun auteur du groupe désigné sur les cartes 2 et 3 (Nassim, porteur) → Odile puis Valentin, ordre des visages, vers les cartes 2 puis 3 | [porteur, Odile, Valentin]
+révélation (séance 5) | justes [false, false, false] ; raison_trouvee false ; points 0 ; points_semaine 5 |
+
+--- g = Odile ---
+possibles | | Agathe, Valentin, porteur
+mediane | | 3/4
+distance | | Agathe 3/20 ; Valentin 7/20 ; porteur 0
+rarete | | Agathe 0 ; Valentin 0 ; porteur 1/4
+surprise | | Agathe 3/200 ; Valentin 7/200 ; porteur 1/4
+classement | | [porteur, Valentin, Agathe]
+departages | | 0
+places | | [porteur, Valentin, Agathe]
+remplacements | Valentin et Agathe identiques, aucune réponse non placée | aucun
+raison_cachee | place 3, raison 2 | Agathe
+ordre | t("ordre|Odile|4|·") : Agathe 931451198 < porteur 1017837912 < Valentin 1019143397 | [Agathe, porteur, Valentin]
+cartes | | 1. Agathe* (4,2) σ +1 ; 2. porteur (3,aucune) σ 0 ; 3. Valentin (4,2) σ +1 ; groupe {Agathe, Valentin} sur les cartes 1 et 3
+rangs | t("devine|Odile|4|·") : porteur 74913349 < Nassim 1131076860 < Valentin 1369143605 < Agathe 1918305946 | porteur 1, Nassim 2, Valentin 3, Agathe 4
+cotes_attendus | | Agathe +1, Nassim +1, Valentin −1, porteur inconnu
+scores (A, N, V, p) | | carte 1 (σ +1) : 2, 2, 0, 1 ; carte 2 (σ 0) : 1, 1, 1, 1 ; carte 3 (σ +1) : 2, 2, 0, 1
+total maximal | {A, N} sur 1 et 3 (4), V ou porteur sur 2 (1) | 5, atteint par (4, 3, 2), (4, 1, 2), (2, 3, 4), (2, 1, 4)
+designe | plus petite : (2, 1, 4) | [Nassim, porteur, Agathe]
+raison_devinee | carte 1, « pour » r2, r3 ; Nassim +1 → r2 | 2
+auteur_compte | groupe {Agathe, Valentin} : Agathe désignée sur la carte 3 → carte 3 Agathe ; Valentin, restant, → carte 1 | [Valentin, porteur, Agathe]
+révélation (séance 5) | justes [false, true, true] ; raison_trouvee false (carte 1 : Nassim ≠ Valentin) ; points 2 ; points_semaine 4 + 2 = 6 |
+
+--- g = Valentin ---
+possibles | | Agathe, Odile, porteur
+mediane | | 3/4
+surprise | | Agathe 3/200 ; Odile 7/200 ; porteur 1/4
+classement | | [porteur, Odile, Agathe]
+departages | | 0
+places | | [porteur, Odile, Agathe]
+remplacements | Odile et Agathe identiques, aucune réponse non placée | aucun
+raison_cachee | place 3, raison 2 | Agathe
+ordre | t("ordre|Valentin|4|·") : Agathe 1564718975 < Odile 2823653922 < porteur 3989747512 | [Agathe, Odile, porteur]
+cartes | | 1. Agathe* (4,2) σ +1 ; 2. Odile (4,2) σ +1 ; 3. porteur (3,aucune) σ 0 ; groupe {Agathe, Odile} sur les cartes 1 et 2
+rangs | t("devine|Valentin|4|·") : Agathe 337161940 < Odile 417765347 < Nassim 988935842 < porteur 3611539823 | Agathe 1, Odile 2, Nassim 3, porteur 4
+cotes_attendus | | Agathe +1, Nassim +1, Odile −1, porteur inconnu
+scores (A, N, O, p) | | carte 1 (σ +1) : 2, 2, 0, 1 ; carte 2 (σ +1) : 2, 2, 0, 1 ; carte 3 (σ 0) : 1, 1, 1, 1
+total maximal | {A, N} sur 1 et 2 (4), O ou porteur sur 3 (1) | 5, atteint par (1, 3, 2), (1, 3, 4), (3, 1, 2), (3, 1, 4)
+designe | plus petite : (1, 3, 2) | [Agathe, Nassim, Odile]
+raison_devinee | carte 1, « pour » r2, r3 ; Agathe +1 → r2 | 2
+auteur_compte | groupe {Agathe, Odile} : Agathe désignée sur la carte 1 → carte 1 Agathe ; Odile, restante, → carte 2 | [Agathe, Odile, porteur]
+révélation (séance 5) | justes [true, false, false] ; raison_trouvee true (Agathe, raison 2) ; points 1 ; points_semaine 3 + 1 = 4 |
