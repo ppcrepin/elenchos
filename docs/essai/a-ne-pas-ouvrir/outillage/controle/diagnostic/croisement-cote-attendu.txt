@@ -65,6 +65,37 @@ Pour mémoire : mêmes cartes quand le côté attendu vaut 0 ou « inconnu » (c
   personnage s=0 semaine 2  attendu 0       :  1252 cartes,   634 justes (50.64 %)
   personnage s=1 semaine 2  attendu 0       :  1485 cartes,   986 justes (66.40 %)
 
+2. Désaccords « attendu ≠ réel » (attendu ±1), par cause
+  cartes du joueur, s = 0 :
+       464  réponse atypique à ce texte
+       312  réponse typique ; une réponse atypique du joueur est dans ce qu'il a vu
+       100  réponse neutre
+  cartes du joueur, s = 1 :
+       212  réponse atypique à ce texte
+       183  réponse typique ; une réponse atypique du joueur est dans ce qu'il a vu
+        30  réponse neutre
+  cartes des personnages, s = 0 :
+      2898  réponse atypique à ce texte
+  cartes des personnages, s = 1 :
+      2752  réponse atypique à ce texte
+
+Réconciliation avec le réglage : cartes dont l'auteur après redistribution est le joueur,
+attribuées juste (désigné = joueur), par semaine et par côté attendu du joueur
+  semaine 1  attendu 1       :   112/153   73.20 %
+  semaine 1  attendu -1      :    16/86    18.60 %
+  semaine 1  attendu inconnu :   811/2695  30.09 %
+  semaine 1  total          :   939/2934  32.00 %
+  semaine 2  attendu 1       :   461/1346  34.25 %
+  semaine 2  attendu -1      :   280/1185  23.63 %
+  semaine 2  attendu 0       :   127/677   18.76 %
+  semaine 2  attendu inconnu :   228/894   25.50 %
+  semaine 2  total          :  1096/4102  26.72 %
+  semaine 13 attendu 1       :   109/248   43.95 %
+  semaine 13 attendu -1      :    64/197   32.49 %
+  semaine 13 attendu 0       :    32/68    47.06 %
+  semaine 13 attendu inconnu :    43/123   34.96 %
+  semaine 13 total          :   248/636   38.99 %
+
 3. Justesse du joueur simulé (toutes ses cartes servies ; auteur après redistribution)
   semaine 1  : toutes les cartes 1496/3000 = 187/375 (49.87 %) ; sans les réponses atypiques 1165/2400 = 233/480 (48.54 %)
   semaine 2  : toutes les cartes 1529/4000 = 1529/4000 (38.23 %) ; sans les réponses atypiques 1429/2800 = 1429/2800 (51.04 %)

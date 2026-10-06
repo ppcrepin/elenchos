@@ -25,6 +25,14 @@ from ec.reglage import jouer_partie, pct  # noqa: E402
 from ec.tirage import graine_reglage, sha256_hex  # noqa: E402
 
 
+def vus(partie, g, k):
+    """Textes du joueur que g a eus dans ses cartes révélées, sur la tension du texte k − 1."""
+    T = partie.textes[str(k - 1)]["tension"]
+    return [str(m) for m in range(1, k - 1)
+            if partie.manches.get(m + 1, {}).get(g) and "porteur" in partie.manches[m + 1][g]["places"]
+            and partie.textes[str(m)]["tension"] == T]
+
+
 def semaine(n):
     return 1 if n <= 5 else (2 if n <= 12 else 13)
 
@@ -40,6 +48,11 @@ def main(chemin=controle.CANDIDAT, nb=200):
     # mêmes cartes, côté attendu 0 ou inconnu, pour mémoire
     autres = defaultdict(lambda: [0, 0])
     joueur = {1: [0, 0, 0, 0], 2: [0, 0, 0, 0], 13: [0, 0, 0, 0]}  # justes, cartes, justes hors atyp, cartes hors atyp
+    # causes des désaccords « attendu ≠ réel » (attendu ±1)
+    causes = defaultdict(lambda: defaultdict(int))
+    # réconciliation avec le réglage : manches où la carte du joueur est servie,
+    # attribution juste comptée après redistribution (auteur_compte = porteur)
+    apres = defaultdict(lambda: [0, 0])
     zero_surprise = {1: 0, 2: 0}
     zero_mystere = {1: 0, 2: 0}
     for i in range(1, nb + 1):
@@ -68,10 +81,30 @@ def main(chemin=controle.CANDIDAT, nb=200):
                         t[0] += 1
                         t[1] += att == reel
                         t[2] += c["designe"] == X
+                        if att != reel:
+                            if reel == 0:
+                                cause = "réponse neutre"
+                            elif (X == "porteur" and n in at) or (X != "porteur" and (X, str(n)) in atyp):
+                                cause = "réponse atypique à ce texte"
+                            elif X == "porteur" and any(int(m) in at for m in vus(partie, g, k)):
+                                cause = "réponse typique ; une réponse atypique du joueur est dans ce qu'il a vu"
+                            else:
+                                cause = "autre (réponse typique, rien d'atypique vu)"
+                            causes[(qui, s)][cause] += 1
                     else:
                         t = autres[(qui, s, sem, str(att))]
                         t[0] += 1
                         t[1] += c["designe"] == X
+        for k in range(2, 15):
+            for g, man in partie.manches[k].items():
+                if g == "porteur" or "porteur" not in man["places"]:
+                    continue
+                sem = semaine(k - 1)
+                a = apres[(sem, str(man["cotes_attendus"]["porteur"]))]
+                for c in man["cartes"]:
+                    if c["auteur_compte"] == "porteur":
+                        a[0] += 1
+                        a[1] += c["designe"] == "porteur"
         for k in (7, 14):
             dim = partie.dimanches[k]
             sem = dim["semaine"]
@@ -118,6 +151,24 @@ def main(chemin=controle.CANDIDAT, nb=200):
     L.append("Pour mémoire : mêmes cartes quand le côté attendu vaut 0 ou « inconnu » (cartes, attribuées juste)")
     for (qui, s, sem, att), t in sorted(autres.items(), key=lambda kv: (kv[0][0], kv[0][1], kv[0][2], kv[0][3])):
         L.append(f"  {qui:<10} s={s} semaine {sem:<2} attendu {att:<7} : {t[0]:>5} cartes, {t[1]:>5} justes ({pct(F(t[1], t[0]))})")
+    L.append("")
+    L.append("2. Désaccords « attendu ≠ réel » (attendu ±1), par cause")
+    for (qui, s_), cs in sorted(causes.items()):
+        L.append(f"  cartes {'du joueur' if qui == 'joueur' else 'des personnages'}, s = {s_} :")
+        for cause, nbc in sorted(cs.items(), key=lambda kv: -kv[1]):
+            L.append(f"    {nbc:>6}  {cause}")
+    L.append("")
+    L.append("Réconciliation avec le réglage : cartes dont l'auteur après redistribution est le joueur,")
+    L.append("attribuées juste (désigné = joueur), par semaine et par côté attendu du joueur")
+    for sem in (1, 2, 13):
+        tot = [0, 0]
+        for att in ("1", "-1", "0", "inconnu"):
+            a = apres.get((sem, att))
+            if a and a[0]:
+                tot[0] += a[0]
+                tot[1] += a[1]
+                L.append(f"  semaine {sem:<2} attendu {att:<7} : {a[1]:>5}/{a[0]:<5} {pct(F(a[1], a[0]))}")
+        L.append(f"  semaine {sem:<2} total          : {tot[1]:>5}/{tot[0]:<5} {pct(F(tot[1], tot[0]))}")
     L.append("")
     L.append("3. Justesse du joueur simulé (toutes ses cartes servies ; auteur après redistribution)")
     for sem in (1, 2, 13):
