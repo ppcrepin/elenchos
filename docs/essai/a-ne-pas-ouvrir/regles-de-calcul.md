@@ -82,12 +82,12 @@ Pour le devineur g à la séance k : les réponses au texte k−1 des membres au
 | Curseur de l'auteur | centre c et largeur ℓ (§5.2 de `simulation.md`), sur ses réponses d'entrée et ses réponses aux textes ≤ k−2 |
 | q | (0,95 − ℓ) / 0,70 : 0 au départ, 1 quand le curseur est net |
 | Distance | \|x − c\| |
-| Rareté | \|x − médiane des x des réponses possibles (§4.1)\|, c'est-à-dire des réponses au texte k−1 de tous les membres sauf le devineur (porteur compris quand un personnage devine). Nombre pair de réponses : moyenne des deux valeurs centrales. |
+| Rareté | \|x − médiane des x des réponses possibles (§4.1)\|, c'est-à-dire des réponses au texte k−1 de tous les membres sauf le devineur (porteur compris quand un personnage devine et que le porteur a répondu ; un membre sans réponse au texte k − 1 n'a pas de x ; une seule réponse possible : la médiane est son x, la rareté vaut 0). Nombre pair de réponses : moyenne des deux valeurs centrales. |
 | Surprise | q × distance + (1 − q) × rareté |
 
 - Au départ, q ≈ 0 : on sert, parmi les réponses à deviner, celles qui se distinguent le plus des autres. La réponse du devineur n'entre jamais dans le calcul : elle tirerait la médiane vers elle et ferait servir d'abord les réponses opposées à la sienne (mise en avant silencieuse du désaccord, contraire à l'esprit de `projet.md` §9).
 - À mesure que les curseurs se resserrent, on sert les réponses inattendues de la part de leur auteur.
-- Dans l'essai, le curseur qui sert à la surprise compte au plus 4 réponses sur une tension (S : l'entrée et les trois textes S qui précèdent le quatrième ; le cinquième est le texte 14, jamais deviné) : Σ w ≤ 4, donc ℓ ≥ 0,67 et q ≤ 0,4. La rareté pèse donc au moins 60 % pendant tout l'essai. C'est une lecture de la règle 8 pour la période où les curseurs sont flous (C-009). Le portrait de Moi, qui compte aussi le texte 14, va jusqu'à 6 réponses sur S (Σ w ≤ 6, ℓ ≥ 0,53) : aucun curseur ne devient net.
+- Dans l'essai, le curseur qui sert à la surprise compte au plus 4 réponses sur une tension (S : l'entrée et les trois textes S qui précèdent le quatrième ; le cinquième est le texte 14, jamais deviné) : Σ w ≤ 4, donc ℓ ≥ 0,67 et q ≤ 0,4. La rareté pèse donc au moins 60 % pendant tout l'essai. C'est une lecture de la règle 8 pour la période où les curseurs sont flous (C-009). Le portrait de Moi, qui compte aussi le texte 14, va jusqu'à 6 réponses sur S (Σ w ≤ 6, ℓ ≥ 0,53) : aucun curseur ne devient net. Plus largement, sur toute la durée de l'essai, un membre a au plus 6 réponses sur S (E1 et les textes 1, 4, 7, 10, 14), 4 sur P, 3 sur T et 4 sur L ; w ≤ 1 (`simulation.md`, §5.1), donc Σ w ≤ 6 < 10 pour tout membre, toute tension et toute séance.
 
 ### 4.3 Choix
 
@@ -128,11 +128,11 @@ La carte de la dernière place (3, sinon 2, sinon 1). Si sa raison est « aucune
 - Ce qu'on relève :
   - justesse des personnages entre eux ;
   - justesse des personnages sur les cartes du joueur simulé, semaines 1 et 2 ;
-  - justesse du joueur simulé, semaines 1 et 2 ;
+  - justesse du joueur simulé, semaines 1 et 2, avec et sans les réponses atypiques (repère pour le bilan, `simulation.md`, §9, point 15) ;
   - fréquences des cartes identiques, des raisons « aucune » et des manches à deux cartes, pour sa manche et pour celles des personnages ;
   - titulaires des titres.
 - Les cases vues sont des chiffres constants : on les reprend du rapport de scellement.
-- La justesse de F1 est donnée deux fois au bilan : sur les 16 cases, et sans les cases signalées.
+- La justesse de F1 est donnée deux fois au bilan : sur les 16 cases, et sans les cases signalées. Est aussi signalée, au bilan, une case dont toutes les cartes vues sont des réponses atypiques (dans ce lot : Valentin sur P).
 
 Deux réglages possibles, et seulement ceux-là. Ils se lisent sur les mêmes 200 parties et ne sont jamais rejoués :
 - joueur simulé en semaine 2 strictement au-dessus de 7/10 → quatre réponses atypiques par personnage ; strictement sous 7/20 → deux. Le candidat est alors refait, avec la même graine, et `profils.md` est mis à jour ;
@@ -156,7 +156,7 @@ Résultats et réglages sont inscrits au rapport de scellement, datés, avant le
 Ces chiffres sont calculés deux fois, sans que l'un voie le code de l'autre : par le programme de contrôle et par le programme de scellement. Ils doivent être égaux ; une différence est un défaut, réglé avant le scellement.
 
 **Après le scellement, avant de donner la page.** Trois parties témoins jouées sur la page, réponses et devinettes consignées :
-- (a) toujours Neutre, passe tout, ne répond pas au texte 10 (manches d'une carte) ;
+- (a) toujours Neutre avec la raison « aucune », à l'entrée comme aux textes quotidiens ; à l'entrée, pari « Neutre » sur Agathe aux trois textes ; passe chaque carte (« Passer ») et valide chaque manche ; au texte 10, l'écran Répondre est affiché puis laissé sans réponse (« Jour suivant », puis « Oui, continuer ») : les personnages ont des manches d'une carte à la séance 11 ;
 - (b) réponses écrites pour couvrir la liste ci-dessous, tente toutes les raisons cachées ;
 - (c) lit le fichier scellé et attribue tout juste, pour Le Sans-Faute.
 
@@ -189,7 +189,10 @@ Ce que les données scellées rendent impossible (un titre sans titulaire, par e
 - Risque à long terme (règles 8 et 19 ensemble) : des joueurs pourraient apprendre à « lire à l'envers » la sélection ; à surveiller en bêta.
 - Tradition/Changement n'a que trois textes, tous devinés. Odile et Valentin y sont presque toujours servis ; Agathe et Nassim, neutres tous deux, se disputent la troisième place au tirage : l'un des deux n'y sera vu qu'une fois au plus, sauf réponse atypique (estimation de Game design, mesurée au §9 bis). Sa case est alors signalée, et F1 est aussi donnée sans elle.
 - Les sens sont déséquilibrés : 10 textes quotidiens de sens 0 contre 4 de sens 1 (S : 4 contre 1). Si le porteur tend à approuver les textes proposés, son portrait penchera vers sécurité, précaution, tradition et local sans qu'il l'ait voulu ; les vrais textes trouvés ne permettent pas de le corriger. À regarder au bilan.
-- Titres biaisés : les personnages gagneront probablement Le Devin ; le porteur sera probablement Le Mystère en semaine 1.
+- Titres biaisés (mesuré au réglage, 200 parties, joueur simulé à la place du porteur) : Le Mystère va au joueur simulé 134 fois sur 200 en semaine 1 et 102 en semaine 2 ; Le Devin, 61 et 40 fois. Le porteur, qui lit aussi l'intensité et les raisons, gagnera probablement Le Devin plus souvent ; Le Mystère lui reviendra probablement au moins une semaine sur deux.
+- Être deviné : les personnages trouvent les réponses du porteur à peu près au niveau du hasard (32,0 % puis 26,7 % au réglage ; hasard 25 %), parce qu'ils ne connaissent de lui que le côté de ses quelques cartes vues, sur la même tension. L'essai ne peut pas faire vivre « mon cercle me connaît ». La ligne du carnet « Quand un personnage devinait l'une de vos réponses… » ne mesure pas la constance du porteur : le joueur simulé, cohérent, n'y fait pas mieux. À dire au bilan, jamais avant.
+- Semaine 2 plus dure, par le lot : en semaine 1, deux des quatre réponses atypiques (texte 3) reproduisent la carte d'Agathe et restent servies avec elle ; en semaine 2, trois réponses atypiques reproduisent la réponse type d'un autre personnage et en sont séparées par le remplacement (§4.3, étape 3). Les deux dernières manches du porteur (textes 12 et 13) comptent trois réponses atypiques sur six cartes. Au bilan, lire F2 et sa justesse avec ce repère.
+- Valentin sur P : ses trois réponses aux textes P (3, 8, 12) sont des réponses atypiques ; tout ce que le porteur voit de lui sur P, hors l'entrée, va vers l'innovation, alors que le corrigé de F1 dit « Précaution ». Non corrigé : changer la procédure après le tirage reviendrait à choisir le lot.
 - Les personnages devinent mécaniquement (le côté, pas l'intensité).
 - Agathe et Nassim sur les textes P : tant qu'aucun des deux n'a fait d'écart sur P, une carte de l'un ou de l'autre ne peut pas être départagée ; c'est pile ou face, le prix du profil « deux proches ». La réponse « Je ne pouvais pas trouver » du carnet le mesurera.
 - Le joueur simulé du §9 bis n'est pas le porteur : il est cohérent et ne se fatigue jamais. Les seuils de réglage (35 %, 60 %, 70 %) et la loi uniforme de son profil sont des hypothèses de Game design. Le réglage se joue une seule fois : si le nombre de réponses atypiques change, le critère des 60 % n'est pas remesuré sur le fichier refait.
