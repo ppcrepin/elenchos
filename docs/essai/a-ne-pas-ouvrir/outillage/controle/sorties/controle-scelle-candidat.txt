@@ -3,7 +3,7 @@ Programme de contrôle (C) — contrôle du fichier scellé (schéma, partie 4.1
 Fichier contrôlé : docs/essai/a-ne-pas-ouvrir/outillage/scellement/candidat/fichier-scelle-candidat.json
 SHA-256 du fichier : 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64  (30978 octets)
 Jour du scellement (paramètre, recopié du rapport de scellement) : 2026-10-06
-Commit du dépôt au moment du contrôle : 12cf4ef8e169456ba36c60a822f4bdd109c539ef (sources modifiées depuis ce commit : M docs/essai/a-ne-pas-ouvrir/schema.md ;  M docs/essai/simulation.md)
+Commit du dépôt au moment du contrôle : 6932d93c8d613a5271c1c6c76fd85c4ef08cae33 (sources identiques à ce commit)
 
 Sources lues (SHA-256) :
   633bedeccc271c6dae5f030db81f3750d9261f8eb66fb83b551d03d8e5b802f8  docs/essai/a-ne-pas-ouvrir/textes/S-securite-liberte.md

@@ -1,0 +1,161 @@
+CARNET DE RÉFÉRENCE 1 : PARTIE « r », ARRÊTÉE AU JOUR 4 — FEUILLE DE CALCUL
+Journal : journal.json (schéma, partie 3.12 ; version 3). Durées : durees.json (valeurs libres, posées par moi ; seule leur présence compte). Carnet attendu : carnet-attendu.txt ; copie en cours d'essai : copie-1-attendue.txt.
+Spécification appliquée : simulation.md au commit 3553b2e (carnet du jour ouvert aussi sur une journée pas finie ; « Oui, continuer » ; moments vécus selon les écrans affichés).
+Format : grandeur (nom du schéma) | règle | valeur. Fractions irréductibles.
+Les manches du porteur (séances 2 à 4) sont dans manches-porteur.txt ; les tables communes dans commun-tables.txt.
+
+======================================================================
+0. CE QUE CE JOURNAL EXERCE, ET POURQUOI
+======================================================================
+- Un pari faux à l'entrée (E1), deux justes : bilan 1.7 « 2 sur 3 » ; q1 posée à l'entrée.
+- Les quatre classes de réponse du §5.1 aux textes 1 à 4 : arbitrage net (texte 1), tiraillé (texte 2), penchant avec raison « aucune » (texte 3), neutre (texte 4) → les quatre phrases du jour (§5.6).
+- Révélations : séance 3 → juste, juste avec la raison, faux (raison cachée tentée) ; séance 4 → faux, passé, faux (raison cachée pas tentée) : les quatre verdicts, « tentée » et « pas tentée », q1 « J'aurais pu trouver » puis « Les deux ».
+- §8.12 : « Jours écoulés » absent à l'entrée, puis 0, 1, 2, 0 ; « Version de la page : 1, puis 2 » (séance 2) puis « 2 » (séance ouverte sous la version suivante) ; durée sans « dont » (entrée), « dont … pour répondre » (séance 1), les deux (séances 2 à 4) ; « Boutons touchés » avec Relire 2, 1, 1 et Passer 0, 1, 0 ; une question sautée (q2 à la séance 3) ; « Sur tout l'essai » à « pas de chiffre » ; arrêt au jour 4 avec raison, F2 « Jusqu'ici » et F1 remplie, une case vide (Nassim, T) → « sans choix entre … ».
+- Partie 3.12 : une copie en cours d'essai à la séance 4, pendant Deviner, avant « Valider » (règle 14 : tous les `designe` à null, relire 1 ≤ 1, versions [2] début de [2], etapes.repondre faux dans la copie et vrai dans la séance) ; ouverture pendant l'heure jouée deux fois le 25 octobre 2026 (séance 3 à 02:30+02:00, séance 4 à 02:45+01:00 ; règle 4) ; une ouverture deux jours après la précédente (séance 3) ; lectures d'« En attendant » à 17:59 et 18:00 (séance 4), et deux lectures à 02:30 (séance 3, les deux passages).
+- Pseudo « Référence-r-6082-k » : 18 caractères, sans espace, ne finit pas par un chiffre, n'est pas un prénom (§7.2 ; schéma 3.1).
+- Identifiant de partie « r » : lettre minuscule, graine null (schéma 3.12, règle 2).
+
+======================================================================
+1. ENTRÉE (séance 0) — schéma 3.5
+======================================================================
+Réponses d'Agathe (fichier candidat) | §7.2 : le porteur ne voit que les réponses d'Agathe | E1 (2,1) ; E2 (4,3) ; E3 (4,4)
+entree.textes.E1.inviteuse | fichier candidat | {niveau 2, raison 1}
+entree.textes.E1.juste | D-011 : même côté que la réponse d'Agathe ; pari 4 = favorable, Agathe défavorable | false
+entree.textes.E2.inviteuse | | {niveau 4, raison 3}
+entree.textes.E2.juste | pari 5 = favorable, Agathe favorable | true
+entree.textes.E3.inviteuse | | {niveau 4, raison 4}
+entree.textes.E3.juste | pari 4 = favorable, Agathe favorable | true
+entree.justes | nombre de paris justes | 2
+Écran 1.7 | §7.2 : à 2 ou 3 sur 3 | « 2 sur 3 », « Tu as trouvé 2 réponses d'Agathe sur 3. »
+Curseurs de 1.7 (S, P, L, ordre fixe) | §7.2 ; §5.2 | S : c 3/5, ℓ 22/25 ; P : c 4/9, ℓ 183/200 ; L : c 2/5, ℓ 22/25 (voir partie 2)
+
+======================================================================
+2. RÉPONSES DU PORTEUR, CLASSEMENT (§5.1), PORTRAIT (§5.2, §5.3), PHRASES DU JOUR (§5.6)
+======================================================================
+E1 (S, s=0) : (1,3) | défavorable → π = 1 − s = 1 ; ρ(E1, r3) = 1 → arbitrage net | w 1, vers 1 (liberté)
+E2 (P, s=1) : (2,1) | défavorable → π = 1 − s = 0 ; ρ(E2, r1) = aucun → penchant | w 1/2, vers 0 (précaution)
+E3 (L, s=0) : (4,1) | favorable → π = s = 0 ; ρ(E3, r1) = 0 → arbitrage net | w 1, vers 0 (local)
+texte 1 (S, s=0) : (2,1) | défavorable → π = 1 ; ρ(1, r1) = 1 → arbitrage net | w 1, vers 1
+texte 2 (T, s=0) : (4,1) | favorable → π = 0 ; ρ(2, r1) = 1, opposé → tiraillé | w 0
+texte 3 (P, s=1) : (5,aucune) | favorable → π = 1 ; ρ aucun → penchant | w 1/2, vers 1
+texte 4 (S, s=0) : (3,2) | neutre | w 0
+
+Portrait en fin de séance (schéma 3.8, `portrait.tensions`, `net` = Σ w ≥ 10, toujours false) :
+séance 0 | S (Σw 1, Σwπ 1) → c 3/5, ℓ 22/25 ; P (1/2, 0) → c 4/9, ℓ 183/200 ; T (0, 0) → c 1/2, ℓ 19/20 ; L (1, 0) → c 2/5, ℓ 22/25
+séance 0 ordre_moi | §5.3 : flous du plus étroit au plus large, à égalité S, P, T, L ; ℓ : S 22/25 = L 22/25 < P 183/200 < T 19/20 | [S, L, P, T]
+séance 1 | S (2, 2) → c 2/3, ℓ 81/100 ; P, T, L inchangés | ordre_moi [S, L, P, T]
+séance 2 | texte 2 : w 0 → rien ne change | ordre_moi [S, L, P, T]
+séance 3 | P (1/2 + 1/2 = 1, 0 + 1/2 = 1/2) → c (2 + 1/2)/(4 + 1) = 1/2, ℓ 22/25 ; S, T, L inchangés | ordre_moi : S 81/100 < P 22/25 = L 22/25 (égalité → P avant L) < T 19/20 → [S, P, L, T]
+séance 4 | texte 4 : w 0 → rien ne change | ordre_moi [S, P, L, T]
+
+phrase_jour séance 1 | §5.6, arbitrage net : « Aujourd'hui, tu as fait passer {pôle gagnant} avant {pôle perdant}. » ; pôles §5.5 ; affichage §7.8 règle 1 | {texte "1", classe "arbitrage", w "1", pole 1, phrase "Aujourd’hui, tu as fait passer la liberté avant la sécurité."}
+phrase_jour séance 2 | tiraillé : « Aujourd'hui, tu as donné du poids à {pôle 0} comme à {pôle 1}. », « à le » → « au » | {texte "2", classe "tiraille", w "0", pole null, phrase "Aujourd’hui, tu as donné du poids à la tradition comme au changement."}
+phrase_jour séance 3 | penchant : « Aujourd'hui, tu as penché vers {pôle}. » | {texte "3", classe "penchant", w "1/2", pole 1, phrase "Aujourd’hui, tu as penché vers l’innovation."}
+phrase_jour séance 4 | neutre : « Aujourd'hui, tu n'as penché ni vers {pôle 0} ni vers {pôle 1}. » | {texte "4", classe "neutre", w "0", pole null, phrase "Aujourd’hui, tu n’as penché ni vers la sécurité ni vers la liberté."}
+
+======================================================================
+3. MANCHES DU PORTEUR (schéma 3.6) ET RÉVÉLATIONS (schéma 3.7)
+======================================================================
+Cartes servies : manches-porteur.txt, séances 2, 3, 4.
+Séance 2 (texte 1) cartes | | Odile (5,3) · Agathe* (2,2) · Nassim (1,1)
+Séance 2 cartes[].designe, raison_devinee | coups.deviner | Odile, null ; Agathe, 2 ; Valentin, null
+Séance 2 auteur_compte | pas de cartes identiques | Odile, Agathe, Nassim
+Séance 3 (texte 2) cartes | | Odile (1,1) · Valentin (4,4) · Nassim* (3,2)
+Séance 3 designe, raison_devinee | | Nassim, null ; passe, null ; Agathe, null
+Séance 3 auteur_compte | | Odile, Valentin, Nassim
+Séance 4 (texte 3) cartes | | Odile (4,2) · Valentin (4,2) · Agathe* (4,2), trois cartes identiques
+Séance 4 designe, raison_devinee | | Agathe, null ; Valentin, null ; Odile, 2
+Séance 4 auteur_compte | §4.3, étape 4 : chaque auteur du groupe {Odile, Valentin, Agathe} désigné sur l'une des cartes en devient l'auteur ; aucun auteur restant | carte 1 Agathe, carte 2 Valentin, carte 3 Odile (sa révélation, séance 5, n'est pas atteinte)
+
+revelation séance 3 (texte 1), devineurs.porteur.justes | designe = auteur_compte | [true, true, false]
+raison_trouvee | personne et raison justes sur la carte cachée (Agathe, raison 2 = la sienne) | true
+points | §6, point 1 : une carte juste = un point | 2
+points_semaine | semaine 1 (textes 1 à 5), cumul | 2
+verdicts | schéma 3.7 | ["juste", "juste_et_raison", "faux"]
+revelation séance 4 (texte 2), justes | Nassim ≠ Odile ; passe ; Agathe ≠ Nassim | [false, false, false]
+raison_trouvee | mauvaise personne | false
+points | | 0
+points_semaine | 2 + 0 | 2
+verdicts | | ["faux", "passe", "faux"]
+Les révélations des personnages (clés `devineurs.<personnage>`) demandent leurs manches : partie 7, à compléter.
+
+======================================================================
+4. CURSEURS VUS (schéma 3.8, `curseurs_vus` : entrée + textes ≤ k − 2) — commun-tables.txt, D
+======================================================================
+séances 0, 1, 2 (entrée seule) | Agathe S (1, 3/5, 22/25) P (1, 3/5, 22/25) T (0, 1/2, 19/20) L (1, 2/5, 22/25) ; Nassim S (1, 3/5, 22/25) P (1, 3/5, 22/25) T (0, 1/2, 19/20) L (1, 3/5, 22/25) ; Odile S (1, 2/5, 22/25) P (1, 2/5, 22/25) T (0, 1/2, 19/20) L (1, 2/5, 22/25) ; Valentin S (0, 1/2, 19/20) P (1, 2/5, 22/25) T (0, 1/2, 19/20) L (1, 3/5, 22/25)
+séance 3 (texte 1 en plus) | S : Agathe (2, 2/3, 81/100), Nassim (2, 2/3, 81/100), Odile (2, 1/3, 81/100), Valentin (0, 1/2, 19/20) ; P, T, L comme ci-dessus
+séance 4 (texte 2 en plus) | T : Agathe (1/2, 4/9, 183/200), Nassim (0, 1/2, 19/20), Odile (1, 3/5, 22/25), Valentin (1, 2/5, 22/25) ; S comme à la séance 3 ; P, L comme à l'entrée
+(format : (somme_w, c, l))
+
+======================================================================
+5. « SES SURPRISES » (schéma 3.8, `surprises_proches` ; §7.7)
+======================================================================
+séances 0 à 2 | aucune révélation | Agathe [], Nassim [], Odile [], Valentin []
+séance 3 | texte 1 : carte de Nassim attribuée à Valentin → surprise de Nassim ; carte d'Odile juste, carte d'Agathe juste | Agathe [], Nassim ["1"], Odile [], Valentin []
+séance 4 | texte 2 : carte d'Odile attribuée à Nassim → surprise d'Odile ; carte de Valentin passée (exclue) ; carte de Nassim attribuée à Agathe → surprise de Nassim ; la plus récente d'abord | Agathe [], Nassim ["2", "1"], Odile ["2"], Valentin []
+
+======================================================================
+6. « EN ATTENDANT » (schéma 3.8, `attente.lectures[].visages` ; §7.5 ; r : commun-tables.txt, G)
+======================================================================
+séance 1, 21:45 | r(1305) = 225 ; Agathe 820, Nassim 1125, Odile 910, Valentin 320 : aucun ≤ 225 | []
+séance 1, 23:30 | r(1410) = 330 ; Valentin 320 ≤ 330, a répondu au texte 1 | ["Valentin"]
+séance 2, 08:05 | r(485) = 845 ; Agathe 820 ✓, Valentin 320 ✓, Odile 910 ✗, Nassim 1125 ✗ ; tous ont répondu au texte 2 | ["Agathe", "Valentin"]
+séance 3, 02:30 (deux fois) | r(150) = 510 ; Valentin 320 ✓ (a répondu au texte 3) ; Agathe ✗, Odile ✗ ; Nassim absent | ["Valentin"], ["Valentin"]
+séance 4, 17:59 | r(1079) = 1439 ; tous ≤ 1439, tous ont répondu au texte 4 | ["Agathe", "Nassim", "Odile", "Valentin"]
+séance 4, 18:00 | r(1080) = 0 ; aucun | []
+
+======================================================================
+7. MANCHES DES PERSONNAGES (séances 2, 3, 4) — À COMPLÉTER
+======================================================================
+Elles n'entrent pas dans le carnet (« Sur tout l'essai » reste à « pas de chiffre »). Elles seront ajoutées ici pour la comparaison des traces si le temps le permet ; sinon le programme de contrôle fait foi sur ces clés, et la comparaison porte sur le carnet.
+
+======================================================================
+8. MESURES (schéma 3.10) ET AGRÉGATS
+======================================================================
+séance 0 | jours_ecoules null ; duree_seance entier, deviner et repondre null (etapes null) ; relire 0 ; passer 0 ; revelation_verdicts null ; revelation_raison_tentee null
+séance 1 | jours_ecoules : 22 → 22 octobre | 0 ; durées : séance et répondre (etapes.repondre) ; relire 0 ; passer 0 ; révélation null
+séance 2 | 22 → 23 octobre | 1 ; les trois durées ; relire 2 ; passer 0 (aucun designe « passe ») ; révélation null (rien à révéler à la séance 2)
+séance 3 | 23 → 25 octobre | 2 ; trois durées ; relire 1 ; passer 1 ; revelation_verdicts ["juste", "juste_et_raison", "faux"] ; revelation_raison_tentee true
+séance 4 | 25 → 25 octobre (02:45+01:00 est le même jour local) | 0 ; trois durées ; relire 1 ; passer 0 ; revelation_verdicts ["faux", "passe", "faux"] ; revelation_raison_tentee false
+copies[0].mesures (séance 4, au toucher de la copie) | duree_seance entier, duree_deviner entier, duree_repondre null (etapes.repondre faux à cet instant) ; jours_ecoules 0 ; relire 1 ; passer 0 (tous les designe à null) ; revelation_verdicts ["faux", "passe", "faux"] ; revelation_raison_tentee false
+agregats | §8.4 : textes révélés à l'arrêt = 1 et 2 ; le porteur a répondu à 2 < 5 | justesse_personnages_entre_eux null ; justesse_personnages_sur_porteur null ; titres_tires_au_sort null
+
+======================================================================
+9. LE CARNET, LIGNE PAR LIGNE (§8.12)
+======================================================================
+En-tête | trois lignes fixes, puis « Essai arrêté au jour 4. » (arret.k = 4), puis « Raison de l'arrêt : J'ai vu ce que je voulais voir. » (code vu_assez) | voir carnet-attendu.txt
+Entrée · Ouverture | 2026-10-22T20:15+02:00 → « jeudi 22 octobre 2026, entre 20h00 et 20h59 » |
+Entrée · pas de « Jours écoulés » | §8.12 : absente à l'entrée |
+Entrée · Version | versions [1] | « 1 »
+Entrée · Durée | pas de « dont » à l'entrée | « ‹durée› »
+Entrée · q1 | ne_pouvais_pas, posée (un pari faux) | « Vos erreurs à la révélation : Je ne pouvais pas trouver. »
+Entrée · q2 | libellé d'entrée | « Les trois textes et leurs raisons : Compris du premier coup. »
+Entrée · q3 | revelation | « Votre moment préféré : La révélation. »
+Jour 1 · Ouverture | 21:40 → « entre 21h00 et 21h59 » ; jours écoulés 0 ; version 1 |
+Jour 1 · Durée | etapes {deviner false, repondre true} | « ‹durée›, dont ‹durée› pour répondre »
+Jour 1 · pas de « Boutons touchés » | séances 2 à 14 seulement |
+Jour 1 · q2, q3 | en_relisant, phrase_jour (« Ma phrase du jour » proposé : écran Répondre affiché) |
+Jour 2 · Ouverture | 07:50 → « entre 7h00 et 7h59 », sans zéro initial ; jours écoulés 1 |
+Jour 2 · Version | versions [1, 2] | « 1, puis 2 »
+Jour 2 · Durée | trois durées |
+Jour 2 · Boutons touchés | relire 2 ; passer 0 | « Relire 2 fois, Passer 0 fois »
+Jour 2 · pas de « Révélation » | la ligne existe aux séances 3 à 15 |
+Jour 2 · q2, q3 | pas_tout, deviner (2.1 affiché avec des cartes) |
+Jour 3 · Ouverture | 02:30+02:00 → « dimanche 25 octobre 2026, entre 2h00 et 2h59 » ; jours écoulés 2 ; version 2 |
+Jour 3 · Boutons touchés | relire 1 ; passer 1 |
+Jour 3 · Révélation | verdicts de la séance 3 ; raison cachée tentée (raison 2 donnée) | « Révélation : juste, juste avec la raison, faux. Raison cachée : tentée. »
+Jour 3 · q1 | aurais_pu | « Vos erreurs à la révélation : J'aurais pu trouver. »
+Jour 3 · q2 | null → pas de ligne |
+Jour 3 · q3 | revelation |
+Jour 4 · Ouverture | 02:45+01:00 → même libellé « dimanche 25 octobre 2026, entre 2h00 et 2h59 » ; jours écoulés 0 ; version 2 |
+Jour 4 · Boutons touchés | relire 1 ; passer 0 |
+Jour 4 · Révélation | « Révélation : faux, passé, faux. Raison cachée : pas tentée. » |
+Jour 4 · q1 | les_deux (deux « Ça alors ! ») | « Les deux »
+Jour 4 · q2, q3 | premier_coup, donner_avis |
+Pas de « Titres de la semaine » | séance 7 non atteinte |
+Sur tout l'essai | trois « pas de chiffre » (agrégats null) |
+Questions de fin | arrêt au jour 4 ≥ 3 : bloc présent ; F2 en forme d'arrêt « Jusqu'ici, deviner était : Toujours aussi amusant. » ; F1 remplie : « Où vous placez chacun : » puis quatre lignes ; pole0/pole1 → libellés des pôles du §0 ; milieu → « au milieu entre {pôle 0} et {pôle 1} » ; null → « sans choix entre … » (Nassim, T) |
+Fin | ligne vide puis « Fin du carnet », sans retour final |
+Apostrophes | §7.8 règle 1 seule : ’ partout (« l’essai », « J’aurais », « c’était », « Jusqu’ici », « l’arrêt », « J’ai ») |
+
+Copie (copies[0], séance 4, pendant Deviner avant « Valider ») | §8.12 « Copie en cours d'essai » : « Essai en cours : carnet copié au jour 4. » ; ni « Raison de l'arrêt » ni « Questions de fin » ; blocs Entrée à Jour 4 ; le bloc Jour 4 vient des coups, versions, etapes et mesures de la copie : Durée « ‹durée›, dont ‹durée› pour deviner » (repondre faux), « Relire 1 fois, Passer 0 fois », ligne Révélation (le texte 2 est révélé dès que la séance 4 est atteinte), aucune ligne de question (q1 à q3 null) ; puis « Sur tout l'essai » à « pas de chiffre » | copie-1-attendue.txt
