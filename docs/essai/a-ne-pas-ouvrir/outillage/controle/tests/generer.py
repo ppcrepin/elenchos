@@ -112,7 +112,7 @@ def journal(scelle, graine_rng, mode="interface", K=15, arret_k=None, reponses=N
         s = {"k": k, "ouverture": instant(utc), "versions": versions if mode == "interface" else None,
              "etapes": etapes if mode == "interface" else None, "coups": c, "attente": attente}
         seances.append(s)
-        if mode == "interface" and copies and rng.random() < 0.1:
+        if mode == "interface" and copies and k <= 14 and rng.random() < 0.1:
             cc = copy.deepcopy(c)
             if cc["deviner"]:
                 cc["deviner"] = [{"designe": None, "raison": None} for _ in cc["deviner"]]

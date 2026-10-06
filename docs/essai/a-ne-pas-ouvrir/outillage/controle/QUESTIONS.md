@@ -1,6 +1,19 @@
 # Programme de contrôle (C) : points de spécification lus d'une certaine façon
 
-Auteur : Back-end, rôle « auteur du programme de contrôle ». Chaque point donne la section, la citation, la lecture retenue et ce que fait C en attendant. Aucun ne bloque le scellement. Les points marqués **[à trancher]** demandent un arbitrage ; les autres sont des lectures sans effet sur le lot, données pour que le circuit puisse les relire.
+Auteur : Back-end, rôle « auteur du programme de contrôle ». Chaque point donne la section, la citation, la lecture retenue et ce que fait C en attendant. Aucun ne bloque le scellement.
+
+**État au 6 octobre 2026** (réponses des commits 2c66a93, 1df9aa5 et 1e631f2, en attente de la relecture Cohérence et Vérificateur).
+
+| Point | État | Effet dans C |
+|---|---|---|
+| Q6 | répondu : il faut au moins 1 erreur (Le Mystère) et au moins 1 attribution fausse (surprise) ; sinon pas de titulaire (§6, points 3, 5 et 9) | appliqué |
+| Q7 et Q8 | répondus : curseur net impossible ; tout programme qui en rencontre un s'arrête (§5.4) | C s'arrête dès qu'un curseur atteint Σ w ≥ 10 (`portrait.curseur`) |
+| Q10 | répondu : arrêt plutôt que repli | un auteur désigné sur deux cartes d'un même groupe arrête le rejeu (journal invalide) |
+| Q11 et Q18 | lectures confirmées (§8.3, §8.12) | inchangé |
+| Q13 | confirmation demandée à Front-end | lecture gardée |
+| Q16 | répondu : pas de copie en cours d'essai à la clôture (schéma, partie 3.12, règle 14 : `k` ≤ 14) | règle 14, schéma de la trace et gabarit du carnet |
+| Q17 | répondu : la règle est retirée | sans effet |
+| Q1 à Q5, Q9, Q12, Q14, Q15, Q19 | lectures sans effet sur le lot | inchangé |
 
 ## Jalon 1 (scellement)
 

@@ -130,3 +130,29 @@ class TestAffectation(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestTypoForme(unittest.TestCase):
+    """§7.8, règles 4 et 5 (commit 2c66a93) : reconnues par la forme, espaces jugées
+    sur la chaîne de départ, chiffres ASCII seulement."""
+    I = "\u00a0"
+
+    def test_regle4(self):
+        I = self.I
+        self.assertEqual(typo.regle4("Révélation dans 2 h 05"), f"Révélation dans 2{I}h{I}05")
+        self.assertEqual(typo.regle4("ouvert 24 h 24"), f"ouvert 24{I}h{I}24")
+        self.assertEqual(typo.regle4("1 h 22 h 33"), f"1{I}h{I}22{I}h{I}33")  # suites qui se chevauchent
+        self.assertEqual(typo.regle4("2 h 055"), "2 h 055")
+        self.assertEqual(typo.regle4("a h 05"), "a h 05")
+        self.assertEqual(typo.regle4("2 H 05"), "2 H 05")
+        self.assertEqual(typo.regle4("٢ h 05"), "٢ h 05")  # chiffre non ASCII
+
+    def test_regle5(self):
+        I = self.I
+        self.assertEqual(typo.regle5("Le 9 octobre 2024."), f"Le 9{I}octobre{I}2024.")
+        self.assertEqual(typo.regle5("dès le 1er janvier 2027"), f"dès le 1er{I}janvier{I}2027")
+        self.assertEqual(typo.regle5("31 février 2026"), f"31{I}février{I}2026")  # la date n'est pas vérifiée
+        for s in ("09 octobre 2024", "32 mars 2024", "0 mars 2024", "1 Mars 2024", "9 octobre 20245",
+                  "9 octobre 202", "19er mai 2024", "9  octobre 2024"):
+            self.assertEqual(typo.regle5(s), s, s)
+        self.assertEqual(typo.regle5("x1er mai 2024"), f"x1er{I}mai{I}2024")

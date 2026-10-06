@@ -205,3 +205,10 @@ class TestLectureFiches(unittest.TestCase):
         self.assertFalse(v["controle2"])
         texte, v = self.lancer_avec("profils", "| Odile | 10 |", "| Odile | 9 |")
         self.assertFalse(v["controle4"])
+
+
+class TestZs(unittest.TestCase):
+    def test_etape7_zs(self):
+        for ch in (" ", "\u00a0", "\u202f", " "):
+            texte, v = lancer(muter(lambda d: d["textes"]["5"].__setitem__("titre", "Avant" + ch + "après")))
+            self.assertEqual(etape_en_echec(texte), 7, repr(ch))

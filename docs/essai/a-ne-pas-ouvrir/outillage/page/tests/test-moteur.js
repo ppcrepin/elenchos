@@ -162,8 +162,9 @@ function verifierRegles(tr) {
       const d = s.dimanche;
       const maxP = Math.max(...MEMBRES.map(x => d.devin.points[x]));
       if (d.devin.titulaire) { assert.equal(d.devin.points[d.devin.titulaire], maxP); } else { assert.equal(maxP, 0); }
-      if (d.mystere.titulaire) { assert.ok(d.mystere.tentatives[d.mystere.titulaire] >= 6); }
-      if (d.surprise.texte) { assert.ok(d.surprise.attributions[d.surprise.texte] >= 4); }
+      if (d.mystere.titulaire) { assert.ok(d.mystere.tentatives[d.mystere.titulaire] >= 6 && d.mystere.erreurs[d.mystere.titulaire] >= 1); }
+      for (const m of MEMBRES) { if (d.mystere.erreurs[m] === 0) { assert.notEqual(d.mystere.titulaire, m, 'Le Mystère exige au moins 1 erreur'); } }
+      if (d.surprise.texte) { assert.ok(d.surprise.attributions[d.surprise.texte] >= 4 && d.surprise.erreurs[d.surprise.texte] >= 1); }
       if (d.semaine === 1) { assert.deepEqual(d.sans_faute, []); }
     }
   });

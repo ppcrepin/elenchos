@@ -219,7 +219,7 @@ def verifier_gabarit(texte, pseudo=None):
         e.append("en-tête : trois premières lignes inattendues")
     etat = b0[3] if len(b0) > 3 else ""
     if not re.fullmatch(rf"Essai mené jusqu{A}à la clôture\.|Essai arrêté (?:à l{A}entrée|au jour (?:[1-9]|1[0-4]))\.|"
-                        rf"Essai en cours : carnet copié (?:à l{A}entrée|au jour (?:[1-9]|1[0-5]))\.", etat):
+                        rf"Essai en cours : carnet copié (?:à l{A}entrée|au jour (?:[1-9]|1[0-4]))\.", etat):
         e.append(f"en-tête : ligne d'état inattendue : {etat!r}")
     arret = etat.startswith("Essai arrêté")
     attendu_entete = 5 if arret else 4

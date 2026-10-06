@@ -53,7 +53,7 @@ var ElenchosInterface = (function (N, M, X) {
   /** Typographie d'affichage (§7.8, règles 1 à 6). */
   function t(s) { return N.typographier(s); }
   /** Gabarit avec « {pseudo} » : règles appliquées avant d'insérer le pseudo. */
-  var MARQUE = '';
+  var MARQUE = '\ue000';
   function tp(gabarit) { return N.typographier(gabarit.split('{pseudo}').join(MARQUE)).split(MARQUE).join(pseudo()); }
 
   /* ================================================================== */
@@ -1278,7 +1278,7 @@ var ElenchosInterface = (function (N, M, X) {
 
   /* ---- Écrans hors de l'icône (§8.13) : règles 1 à 3 du §7.8 ---- */
 
-  function t3(s) { return N.typographier(s, 3); }
+  function t3(s) { return N.typographier13(s); }
   function blocAdresse() { return h('p', { class: 'adresse' }, X.adresse); }
 
   function diagnostic() {

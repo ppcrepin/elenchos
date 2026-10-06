@@ -203,9 +203,10 @@ RE_TRANCHES = re.compile(r"[0-9]{1,3}(?: [0-9]{3})+")
 def typo_simple(s):
     """Erreurs de typographie simple d'une chaîne (étape 7)."""
     e = []
-    for ch, nom in (("\u2019", "U+2019"), ("\u00a0", "U+00A0"), ("\u202f", "U+202F")):
-        if ch in s:
-            e.append(f"contient {nom}")
+    if "\u2019" in s:
+        e.append("contient U+2019")
+    for ch in sorted({c for c in s if unicodedata.category(c) == "Zs" and c != " "}):
+        e.append(f"contient U+{ord(ch):04X} (espace de catégorie Zs autre que U+0020)")
     for i, ch in enumerate(s):
         if ch in "?!;:»%" and (i == 0 or s[i - 1] != " "):
             e.append(f"« {ch} » non précédé d'une espace U+0020 (position {i})")

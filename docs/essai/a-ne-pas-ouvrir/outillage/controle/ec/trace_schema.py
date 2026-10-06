@@ -92,6 +92,8 @@ def valider_trace(t):
             for r, ch, m in D.liste:
                 v.err(ch, m)
             _mesures(v, cp["mesures"], c + "/mesures")
+            if not isinstance(cp["k"], int) or not 0 <= cp["k"] <= 14:
+                v.err(c + "/k", "copie en cours d'essai hors des séances 0 à 14 (défaut de trace)")
             if not isinstance(cp["texte"], str):
                 v.err(c + "/texte", "chaîne attendue")
     return v.e

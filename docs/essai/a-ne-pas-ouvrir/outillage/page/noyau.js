@@ -594,8 +594,8 @@ var ElenchosNoyau = (function () {
   /* Typographie à l'affichage (§7.8)                                    */
   /* ------------------------------------------------------------------ */
 
-  var NBSP = ' ';
-  var FINE = ' ';
+  var NBSP = '\u00a0';
+  var FINE = '\u202f';
 
   function estChiffre(c) { return c >= '0' && c <= '9'; }
 
@@ -645,9 +645,11 @@ var ElenchosNoyau = (function () {
    *  entière (valeurs insérées, pseudo exclu). Chaque règle ne change que
    *  des espaces U+0020 encore ordinaires ; les règles 4 et 5 jugent chaque
    *  espace sur la chaîne telle qu'elle était au début de la règle.
-   *  jusqua (facultatif) : dernière règle appliquée (3 pour le §8.13). */
-  function typographier(s, jusqua) {
-    if (jusqua === undefined) { jusqua = 6; }
+   *  Toujours un seul argument : voir typographier13 pour le §8.13. */
+  function typographier(s) { return typo(s, 6); }
+  /** Règles 1 à 3 seulement (écrans hors de l'icône, §8.13). */
+  function typographier13(s) { return typo(s, 3); }
+  function typo(s, jusqua) {
     // 1. apostrophe
     s = s.split("'").join('’');
     var c = Array.from(s);
@@ -731,7 +733,7 @@ var ElenchosNoyau = (function () {
     decalageParis: decalageParis, paris: paris, lireInstant: lireInstant, lireDate: lireDate, lireHeure: lireHeure,
     MOIS: MOIS, JOURS: JOURS, dateLongue: dateLongue, dateCarnet: dateCarnet, heureEcrite: heureEcrite,
     joursEcoules: joursEcoules, deux: deux,
-    typographier: typographier, apostrophes: apostrophes, NBSP: NBSP, FINE: FINE,
+    typographier: typographier, typographier13: typographier13, apostrophes: apostrophes, NBSP: NBSP, FINE: FINE,
     dePrenom: dePrenom, quePrenom: quePrenom, deDepute: deDepute, elisionPrenom: elisionPrenom,
     accordNombre: accordNombre, accordVerbe: accordVerbe, mandatDepute: mandatDepute, mandatSenateur: mandatSenateur,
     listeEt: listeEt

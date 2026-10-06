@@ -415,8 +415,8 @@ def valider(j, scelle, empreinte):
     for n, cp in enumerate(j["copies"]):
         ch = f"/copies/{n}"
         k = cp["k"]
-        if not 0 <= k <= K:
-            D(14, ch + "/k", f"séance {k} hors de 0 à {K}")
+        if not 0 <= k <= min(K, 14):
+            D(14, ch + "/k", f"séance {k} hors de 0 à {min(K, 14)} (pas de copie en cours d'essai à la clôture)")
             continue
         if k < kprec:
             D(14, ch + "/k", "copies pas dans l'ordre du jeu")

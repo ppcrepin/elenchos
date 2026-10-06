@@ -262,7 +262,10 @@ class Partie:
             pris = set()
             restantes = []
             for c in gr:  # gr est dans l'ordre d'affichage
-                if c["designe"] in auteurs and c["designe"] not in pris:
+                if c["designe"] in auteurs:
+                    if c["designe"] in pris:
+                        raise ValueError("défaut : un auteur désigné sur deux cartes identiques "
+                                         "(fichier caché, §4.3, étape 4) ; journal invalide")
                     c["auteur_compte"] = c["designe"]
                     pris.add(c["designe"])
                 else:
@@ -406,7 +409,7 @@ class Partie:
             if c["designe"] != X:
                 err[X] += 1
         mystere = {"titulaire": None, "tentatives": tent, "erreurs": err, "departage": "aucun"}
-        elig = [m for m in MEMBRES if tent[m] >= 6]
+        elig = [m for m in MEMBRES if tent[m] >= 6 and err[m] >= 1]
         if elig:
             mx = max(F(err[m], tent[m]) for m in elig)
             tete = [m for m in elig if F(err[m], tent[m]) == mx]
@@ -435,7 +438,7 @@ class Partie:
             if c["designe"] != c["auteur_compte"]:
                 errs[n] += 1
         surprise = {"texte": None, "attributions": attr, "erreurs": errs, "departage": "aucun"}
-        elig = [n for n in attr if attr[n] >= 4]
+        elig = [n for n in attr if attr[n] >= 4 and errs[n] >= 1]
         if elig:
             mx = max(F(errs[n], attr[n]) for n in elig)
             tete = [n for n in elig if F(errs[n], attr[n]) == mx]

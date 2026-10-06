@@ -6,6 +6,10 @@ from .jeu import POLES_PHRASE, TENSIONS
 from .typo import afficher
 
 
+class CurseurNet(Exception):
+    pass
+
+
 def pole_raison(raison, considerations):
     """ρ : pôle de la raison ; « aucun » si hors tension ou « aucune »."""
     if raison == "aucune":
@@ -34,6 +38,8 @@ def classer(rep, txt):
 def curseur(classes):
     """§5.2. classes : [(classe, w, π)]. Rend {"somme_w", "c", "l", "net"}."""
     sw = sum((w for _, w, _ in classes), F(0))
+    if sw >= 10:
+        raise CurseurNet("curseur net (Σ w ≥ 10) : impossible dans l'essai (simulation, §5.4) ; arrêt")
     swp = sum((w * pi for _, w, pi in classes if pi is not None), F(0))
     c = (2 + swp) / (4 + sw)
     l = max(F(95, 100) - F(7, 100) * sw, F(1, 4))

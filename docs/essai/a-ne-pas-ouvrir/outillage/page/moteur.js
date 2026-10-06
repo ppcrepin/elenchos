@@ -431,39 +431,29 @@ var ElenchosMoteur = (function (N) {
       if (cl.pole === 0) { pt.pole0 = pt.pole0.plus(cl.w); } else { pt.pole1 = pt.pole1.plus(cl.w); }
       pt.comptent += 1;
     }
-    // Portrait au moment des titres : réponses jusqu'au texte k-1 (le texte k se répond après).
-    var portrait = portraitDe(ctx, k - 1);
-    var nettes = TENSIONS.filter(function (t) { return portrait.tensions[t].net; });
+    // Curseur net impossible dans l'essai (§5.4, §5.7) : s'il se présentait, on s'arrête sans choisir de lecture.
+    TENSIONS.forEach(function (t) { exiger(!curseur(ctx.reponsesSur('porteur', t, Math.min(k, 14))).net, 'phrase de la semaine : curseur net, impossible dans l\'essai (§5.4)'); });
     var tension = null, cas, phrase;
-    if (nettes.length) {
-      tension = nettes.reduce(function (best, t) {
-        return portrait.tensions[t].c.moins(DEMI).abs().sup(portrait.tensions[best].c.moins(DEMI).abs()) ? t : best;
-      });
-      cas = 'nette';
-      var pc = portrait.tensions[tension].c.sup(DEMI) ? 1 : 0;
-      phrase = 'Entre ' + ENTRE[tension] + ', tu choisis le plus souvent ' + POLES[tension][pc] + '.';
+    var retenues = TENSIONS.filter(function (t) { return poids[t].comptent >= 2; });
+    if (retenues.length === 0) {
+      cas = 'floue';
+      phrase = 'Cette semaine, ton portrait est encore flou. Chaque réponse le précise.';
     } else {
-      var retenues = TENSIONS.filter(function (t) { return poids[t].comptent >= 2; });
-      if (retenues.length === 0) {
-        cas = 'floue';
-        phrase = 'Cette semaine, ton portrait est encore flou. Chaque réponse le précise.';
+      tension = retenues.reduce(function (best, t) {
+        var ecartT = poids[t].pole0.moins(poids[t].pole1).abs(), ecartB = poids[best].pole0.moins(poids[best].pole1).abs();
+        var c = ecartT.cmp(ecartB);
+        if (c !== 0) { return c > 0 ? t : best; }
+        var totT = poids[t].pole0.plus(poids[t].pole1), totB = poids[best].pole0.plus(poids[best].pole1);
+        return totT.sup(totB) ? t : best;
+      });
+      var pw = poids[tension];
+      var diff = pw.pole0.cmp(pw.pole1);
+      if (diff === 0) {
+        cas = 'egalite';
+        phrase = 'Cette semaine, entre ' + ENTRE[tension] + ", tu as penché autant d'un côté que de l'autre.";
       } else {
-        tension = retenues.reduce(function (best, t) {
-          var ecartT = poids[t].pole0.moins(poids[t].pole1).abs(), ecartB = poids[best].pole0.moins(poids[best].pole1).abs();
-          var c = ecartT.cmp(ecartB);
-          if (c !== 0) { return c > 0 ? t : best; }
-          var totT = poids[t].pole0.plus(poids[t].pole1), totB = poids[best].pole0.plus(poids[best].pole1);
-          return totT.sup(totB) ? t : best;
-        });
-        var pw = poids[tension];
-        var diff = pw.pole0.cmp(pw.pole1);
-        if (diff === 0) {
-          cas = 'egalite';
-          phrase = 'Cette semaine, entre ' + ENTRE[tension] + ", tu as penché autant d'un côté que de l'autre.";
-        } else {
-          cas = 'difference';
-          phrase = 'Cette semaine, entre ' + ENTRE[tension] + ', tu as le plus souvent choisi ' + POLES[tension][diff > 0 ? 0 : 1] + '.';
-        }
+        cas = 'difference';
+        phrase = 'Cette semaine, entre ' + ENTRE[tension] + ', tu as le plus souvent choisi ' + POLES[tension][diff > 0 ? 0 : 1] + '.';
       }
     }
     return { poids: poids, tension: tension, cas: cas, phrase: N.typographier(phrase) };
@@ -495,7 +485,7 @@ var ElenchosMoteur = (function (N) {
     // Le Pas de Côté : ne peut pas se déclencher (Σw ≤ 6 < 10 pour tout curseur de l'essai, règles §4.2).
     MEMBRES.forEach(function (m) {
       TENSIONS.forEach(function (t) {
-        exiger(!curseur(ctx.reponsesSur(m, t, Math.min(k, 14))).net, 'Pas de Côté : curseur net, cas non prévu par la spécification');
+        exiger(!curseur(ctx.reponsesSur(m, t, Math.min(k, 14))).net, 'Pas de Côté : curseur net, impossible dans l\'essai (§5.4)');
       });
     });
 
@@ -533,7 +523,7 @@ var ElenchosMoteur = (function (N) {
       });
     });
     var mystere = { titulaire: null, tentatives: tentatives, erreurs: erreurs, departage: 'aucun' };
-    var eligibles = MEMBRES.filter(function (m) { return tentatives[m] >= 6; });
+    var eligibles = MEMBRES.filter(function (m) { return tentatives[m] >= 6 && erreurs[m] >= 1; }); // §6, points 3 et 9
     if (eligibles.length) {
       var prop = function (m) { return F(erreurs[m], tentatives[m]); };
       var maxProp = eligibles.reduce(function (b, m) { return prop(m).sup(b) ? prop(m) : b; }, prop(eligibles[0]));
@@ -569,7 +559,7 @@ var ElenchosMoteur = (function (N) {
       });
     });
     var surprise = { texte: null, attributions: attributions, erreurs: errs, departage: 'aucun' };
-    var textesElig = Object.keys(attributions).filter(function (n) { return attributions[n] >= 4; })
+    var textesElig = Object.keys(attributions).filter(function (n) { return attributions[n] >= 4 && errs[n] >= 1; }) // §6, points 5 et 9
       .sort(function (a, b) { return +a - +b; });
     if (textesElig.length) {
       var pr = function (n) { return F(errs[n], attributions[n]); };
@@ -1114,7 +1104,7 @@ var ElenchosMoteur = (function (N) {
     var prevK = 0;
     (journal.copies || []).forEach(function (cp, i) {
       var ch = '/copies/' + i;
-      if (!(cp.k >= 0 && cp.k <= K) || cp.k < prevK) { err(14, ch + '/k', 'hors bornes ou hors ordre'); return; }
+      if (!(cp.k >= 0 && cp.k <= Math.min(K, 14)) || cp.k < prevK) { err(14, ch + '/k', 'hors bornes (0 à min(K, 14)) ou hors ordre'); return; }
       prevK = cp.k;
       var s = S[cp.k];
       if (cp.coups.relire > s.coups.relire) { err(14, ch + '/coups/relire', 'supérieur à la séance'); }

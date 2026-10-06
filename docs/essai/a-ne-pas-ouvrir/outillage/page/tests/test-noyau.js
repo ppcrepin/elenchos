@@ -273,3 +273,22 @@ test('Élisions, accords, listes (§7.6)', () => {
   assert.equal(N.listeEt(['A', 'B', 'C']), 'A, B et C');
   assert.equal(N.listeEt(['A', 'B', 'C', 'D']), 'A, B, C et D');
 });
+
+test('Typographie : règles 4 et 5 par la forme, suites qui se chevauchent (§7.8, réponse à Q-F2)', () => {
+  const T = N.typographier, v = s => T(s).replace(/ /g, '⍽').replace(/ /g, 'ʼ');
+  assert.equal(v('1 h 22 h 33'), '1⍽h⍽22⍽h⍽33', 'deux suites qui se partagent « 22 »');
+  assert.equal(v('ouvert 24 h 24'), 'ouvert 24⍽h⍽24');
+  assert.equal(v('Révélation dans 2 h 05'), 'Révélation dans 2⍽h⍽05');
+  assert.equal(v('2 h 5 et 2 h 055'), '2⍽h 5⍽et 2⍽h 055', 'deux chiffres exactement après « h » (règle 6 après « 5 »)');
+  assert.equal(v('le 31 février 2026'), 'le 31⍽février⍽2026', 'la date n’est pas vérifiée');
+  assert.equal(v('le 01 mars 2026'), 'le 01⍽mars 2026', 'zéro initial : seule la règle 6 joue');
+  assert.equal(v('le 32 mars 2026'), 'le 32⍽mars 2026');
+  assert.equal(v('le 21er mars 2026'), 'le 21er mars 2026', '« 1er » précédé d’un chiffre');
+  assert.equal(v('x9 mars 2026'), 'x9⍽mars⍽2026');
+  assert.equal(v('9 mars 20261'), '9⍽mars 20261', 'quatre chiffres exactement');
+  assert.equal(v('dès le 1er janvier 2027'), 'dès le 1er⍽janvier⍽2027');
+  assert.equal(v('le 9 Octobre 2024'), 'le 9⍽Octobre 2024', 'mois écrit exactement');
+  assert.equal(v('le 9 octobre 2024 2 h 05'), 'le 9⍽octobre⍽2024⍽2⍽h⍽05');
+  assert.equal(N.typographier13('Il a 12 000 euros ? Oui : « x »').replace(/ /g, '⍽').replace(/ /g, 'ʼ'), 'Il a 12 000 euros ʼ? Oui⍽: «⍽x⍽»');
+  assert.deepEqual(['1 h 05', '2 h 05'].map(s => T(s)), ['1 h 05', '2 h 05']);
+});

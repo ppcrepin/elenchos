@@ -29,16 +29,34 @@ def regle3(s):
     return s
 
 
+def _espaces(s, motif, groupes):
+    """Positions des espaces des suites de `motif` (recherche avec chevauchement :
+    chaque espace est jugée sur la chaîne de départ de la règle)."""
+    pos = set()
+    for m in re.finditer("(?=" + motif + ")", s):
+        for g in groupes:
+            pos.add(m.start(g))
+    return pos
+
+
+def _remplacer(s, positions):
+    return "".join(INSEC if i in positions else ch for i, ch in enumerate(s))
+
+
 def regle4(s):
-    # compte à rebours « {h} h {mm} »
-    return re.sub(r"(?<![0-9])([0-9]+) h ([0-9]{2})(?![0-9])", r"\1" + INSEC + "h" + INSEC + r"\2", s)
+    """Heure ou durée « {h} h {mm} » : un chiffre, espace, « h », espace, deux chiffres
+    non suivis d'un chiffre ; seul compte le chiffre qui touche la première espace."""
+    return _remplacer(s, _espaces(s, r"[0-9]( )h( )[0-9]{2}(?![0-9])", (1, 2)))
 
 
-_RE_DATE = re.compile(r"(?<![0-9])(1er|[0-9]{1,2}) (" + "|".join(MOIS) + r") ([0-9]{4})(?![0-9])")
+_JOUR = r"(?<![0-9])(?:1er|[1-9]|[12][0-9]|3[01])"
+_MOIS = "(?:" + "|".join(MOIS) + ")"
 
 
 def regle5(s):
-    return _RE_DATE.sub(lambda m: m.group(1) + INSEC + m.group(2) + INSEC + m.group(3), s)
+    """Date « {j} {mois} {aaaa} » : jour 1er ou 1 à 31 sans zéro initial, non précédé
+    d'un chiffre ; mois de la table, exactement ; quatre chiffres non suivis d'un chiffre."""
+    return _remplacer(s, _espaces(s, _JOUR + "( )" + _MOIS + "( )[0-9]{4}(?![0-9])", (1, 2)))
 
 
 def regle6(s):

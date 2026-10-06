@@ -279,3 +279,50 @@ class TestHeure(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestMaj1e631f2(unittest.TestCase):
+    def partie_sans_erreur(self):
+        from ec.moteur import Partie
+        from ec.tirage import Tirage
+        P = Partie(D, Tirage(D["graine"]))
+        for n in range(1, 6):
+            mans = {}
+            for g in ("Agathe", "Odile", "Valentin"):
+                cartes = [{"auteur": X, "auteur_compte": X, "cachee": False, "designe": X, "raison_devinee": None,
+                           "_niveau": 3, "_raison": 1} for X in ("Nassim", "porteur") ]
+                mans[g] = {"cartes": cartes, "places": ["Nassim", "porteur"]}
+            P.manches[n + 1] = mans
+            P.revelations[n + 2] = {"texte": str(n), "devineurs": {g: {"points": 2, "raison_trouvee": False}
+                                                                     for g in mans}}
+        return P
+
+    def test_mystere_et_surprise_sans_erreur(self):
+        # 15 tentatives sur Nassim et sur le porteur, 0 erreur ; 6 attributions par texte, 0 fausse
+        dim = self.partie_sans_erreur().titres(7)
+        self.assertEqual(dim["mystere"]["tentatives"]["Nassim"], 15)
+        self.assertIsNone(dim["mystere"]["titulaire"])
+        self.assertEqual(dim["mystere"]["departage"], "aucun")
+        self.assertEqual(dim["surprise"]["attributions"]["1"], 6)
+        self.assertIsNone(dim["surprise"]["texte"])
+
+    def test_double_designation_arrete(self):
+        from ec.moteur import Partie
+        man = {"cartes": [{"auteur": a, "auteur_compte": a, "designe": "Agathe", "_niveau": 4, "_raison": 2}
+                          for a in ("Agathe", "Nassim")]}
+        with self.assertRaises(ValueError):
+            Partie.redistribuer(man)
+
+    def test_curseur_net_arrete(self):
+        from fractions import Fraction
+        from ec.portrait import curseur, CurseurNet
+        curseur([("arbitrage", Fraction(1), 1)] * 9)
+        with self.assertRaises(CurseurNet):
+            curseur([("arbitrage", Fraction(1), 1)] * 10)
+
+    def test_copie_a_la_cloture(self):
+        j = generer.journal(D, 3)
+        s = j["seances"][15]
+        j["copies"].append({"k": 15, "coups": copy.deepcopy(s["coups"]), "versions": s["versions"],
+                            "etapes": None})
+        self.assertIn(14, {r for r, _, _ in valider(j, D, H)})

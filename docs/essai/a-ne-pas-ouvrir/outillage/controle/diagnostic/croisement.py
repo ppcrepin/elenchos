@@ -2,7 +2,7 @@
 """Diagnostic demandé par l'orchestrateur avant le scellement (ne change rien à C).
 
 Sur les 200 parties du réglage (même g_R, même moteur que `controle.py reglage`) :
-1. côté attendu (+1 ou −1) contre côté réel de la réponse de l'auteur, et
+1. côté attendu (+1 ou \u22121) contre côté réel de la réponse de l'auteur, et
    attribution juste, pour les cartes du joueur simulé et pour celles des
    personnages, dans les manches des personnages ; par sens du texte et par semaine ;
 3. justesse du joueur simulé par semaine, avec et sans les réponses atypiques ;
@@ -26,7 +26,7 @@ from ec.tirage import graine_reglage, sha256_hex  # noqa: E402
 
 
 def vus(partie, g, k):
-    """Textes du joueur que g a eus dans ses cartes révélées, sur la tension du texte k − 1."""
+    """Textes du joueur que g a eus dans ses cartes révélées, sur la tension du texte k \u2212 1."""
     T = partie.textes[str(k - 1)]["tension"]
     return [str(m) for m in range(1, k - 1)
             if partie.manches.get(m + 1, {}).get(g) and "porteur" in partie.manches[m + 1][g]["places"]
@@ -121,7 +121,7 @@ def main(chemin=controle.CANDIDAT, nb=200):
     L.append(f"Fichier : SHA-256 {sha256_hex(octets)} ; g_R = {g_r} ; {nb} parties (celles du réglage)")
     L.append("Portée : manches des personnages, séances 2 à 14 ; « auteur » = auteur d'origine de la carte ;")
     L.append("« attribuée juste » = le personnage désigne cet auteur sur cette carte. Semaine : 1 = textes 1 à 5,")
-    L.append("2 = textes 6 à 12, 13 = texte 13. Côtés dans les termes du texte (+1 favorable, −1 défavorable).")
+    L.append("2 = textes 6 à 12, 13 = texte 13. Côtés dans les termes du texte (+1 favorable, \u22121 défavorable).")
     L.append("")
     for qui, titre in (("joueur", "1. Cartes du joueur simulé, côté attendu ±1 (fichier caché, §3, point 2)"),
                        ("personnage", "1 bis. Cartes d'un personnage, côté attendu ±1 (a = p aligné)")):
@@ -139,7 +139,7 @@ def main(chemin=controle.CANDIDAT, nb=200):
                             tot[cle][x] += t[x]
                     L.append(f"  {s:>2} {sem:>4} {att:>+7d} | {t[0]:>6} | {t[1]:>6}/{t[0]:<5} {pct(F(t[1], t[0])):>8} | "
                              f"{t[2]:>6}/{t[0]:<5} {pct(F(t[2], t[0])):>8}")
-        L.append("  Sous-totaux (attendu +1 et −1 ensemble) :")
+        L.append("  Sous-totaux (attendu +1 et \u22121 ensemble) :")
         for cle in [(0, 1), (0, 2), (0, 13), (1, 1), (1, 2), (1, 13), (0, "tout"), (1, "tout"),
                     ("tout", 1), ("tout", 2), ("tout", 13), ("tout", "tout")]:
             t = tot.get(cle)
