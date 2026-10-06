@@ -15,6 +15,7 @@
 | Graine | `23e3ee6ccdc3fb38` |
 | Réglage | 3 réponses atypiques par personnage ; seuils non stricts (`seuils_stricts` faux) |
 | Jour du scellement | 6 octobre 2026 |
+| Publication de l'empreinte | commit `7b4f922` (`docs/essai/empreinte.md`), poussé sur `main` le 6 octobre 2026 à 15h13 (heure de Paris), heure de la poussée ; la même date et la même heure sont écrites dans le message de publication de la conversation (§8.11) et dans le fichier d'entrées de la construction (§8.8) |
 | Sources consultées le | 5 octobre 2026 : date de la dernière vérification des textes par Contenu (en-têtes des quatre fiches de `textes/`) ; elle alimente la mention « consultés le » du pied de page (§8.2) |
 
 **Comment il a été produit.** Le programme de scellement (`outillage/scellement/sceller.py`) a été relancé le 6 octobre 2026 sur le commit `75c29d0`, après la dernière relecture de la spécification (Cohérence, puis Vérificateur : « OK avec corrections mineures », corrections appliquées au commit `b791f9a`). Il a redonné, octet pour octet, le fichier candidat produit le 5 octobre et contrôlé depuis : même empreinte. Le programme écrit toujours « candidat » dans le nom de ses sorties et en tête de son rapport ; ses sorties de ce dernier passage sont rangées dans `outillage/scellement/final/` (`rapport-programme-scellement.txt`, `detail-manches-porteur.txt`, `empreintes-sources.json`). Le fichier scellé est le même que `outillage/scellement/candidat/fichier-scelle-candidat.json`.
