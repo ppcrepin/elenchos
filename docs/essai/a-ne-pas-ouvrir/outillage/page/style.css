@@ -104,6 +104,7 @@ details.panneau > summary { min-height: 44px; display: flex; align-items: center
 }
 .vue-seule { display: grid; }
 .vue-seule h1, .vue-couchee h1 { font-size: 21.6px; font-weight: 600; line-height: 1.25; margin: 0; }
+.vue-seule h1:focus { outline: none; }
 .vue-seule details > summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 600; }
 .vue-seule details > * + * { margin-top: 10px; }
 .vue-seule ol { padding-left: 1.3em; display: grid; gap: 8px; }

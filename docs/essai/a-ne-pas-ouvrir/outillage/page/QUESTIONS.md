@@ -14,7 +14,13 @@
 | Q-F6 « 1 juste » | §8.12 : retirée | rien à faire |
 | Q-F7 pseudo | réponse de Front-end ci-dessous, transmise | appliquée dans la page (lot 4) |
 | Q-F8 pseudo, questions d'UX | réponse de Front-end ci-dessous (§7.2, commit `841b8bc`) | vérifié dans Chromium |
-| Q-F9 à Q-F14 | ouvertes (ci-dessous ; Q-F14 est l'ancienne Q-F8, renumérotée) | lecture provisoire appliquée |
+| Q-F9 titre de l'export | §8.7 (`b04eb73`) : « Votre carnet à copier », titre non copié | appliqué |
+| Q-F10 état illisible | §8.11 (`b04eb73`) : arrêt 1, repère M1, sans « Rien n'est effacé », rien réécrit, pas d'entrée | appliqué (forme de l'état vérifiée au chargement) |
+| Q-F11 retour de la copie | §8.9 (`b04eb73`) : « Fermer » rend la confirmation ; relance : l'écran d'où elle a été ouverte | déjà ainsi |
+| Q-F12 après « Tout effacer » | §8.9 (`b04eb73`) : vue seule, le titre seul, aucun bouton ni pied, lecteur d'écran sur le titre | appliqué (titre focalisé) |
+| Q-F13 « Pour le contrôle » | §8.6 (`b04eb73`) : l'empreinte d'abord, « Empreinte du fichier scellé : », puis « Graine : », « Fichier scellé : » | appliqué |
+| Q-F14 bouton de 1.6 au texte 3 | §7.1 (`b04eb73`) : « Suivant » | déjà ainsi |
+| Dévoilement, titre de la page | `devoilement.md` (`b04eb73`) : « Le dévoilement » | déjà ainsi |
 
 Ajouts appliqués en même temps : une copie en cours d'essai n'a lieu que de l'entrée au jour 14 (règle 14 de la partie 3.12) ; « Sur tout l'essai » d'une copie est calculé comme un arrêt à sa séance (déjà ainsi) ; à la séance 0, questions 2 et 3 toujours proposées (déjà ainsi).
 
@@ -80,30 +86,42 @@ Seule exception, la limite : une frappe (ou un collage) qui porterait la mise en
 
 ## Q-F9 — Titre de la page de l'export (§8.7, §8.1 « Page du cadre »)
 
+- **Tranchée par UX (`b04eb73`, §8.7).** Titre « Votre carnet à copier », dans les trois cas ; le titre n'est pas copié. Appliqué.
+
 - **Citation.** §8.1 : « Titre en tête, en 17 px, 600 ; sans titre propre (message de la séance 0, §8.2), la première phrase, en gras, en tient lieu ». §8.7 ne donne pas de titre à la page où s'affiche le carnet à copier.
 - **Lecture provisoire.** Pas de titre ajouté : la page commence par le bloc du carnet, dont la première ligne est « Carnet de l’essai Elenchos » ; le lecteur d'écran se place sur ce bloc. À confirmer par UX (ou un titre à écrire).
 
 ## Q-F10 — État gardé illisible (§8.8, §8.11)
+
+- **Tranchée par UX (`b04eb73`, §8.11).** Arrêt 1 avec le repère M1, sans « Rien n'est effacé » ; la page ne réécrit ni n'efface la partie et ne commence pas l'entrée. Appliqué ; la page vérifie aussi la forme de l'état (séances numérotées, coups, vue) avant de le prendre.
 
 - **Constat.** Le §8.11 prévoit trois arrêts : vérification ratée (repère V1 à V5), stockage absent, page ouverte deux fois. Rien ne dit quoi montrer si la clé de la partie existe mais ne se lit pas (JSON abîmé, format inconnu).
 - **Lecture provisoire.** Arrêt 1 avec le repère « V4 » (lecture des données au chargement), sans rien effacer. À confirmer par UX : un repère propre (par exemple « M1 ») serait plus juste pour l'équipe.
 
 ## Q-F11 — Retour depuis l'export ouvert par « Copier mon carnet d'abord » (§8.7, §8.9)
 
+- **Tranchée par UX (`b04eb73`, §8.9).** « Fermer » rend la confirmation intacte ; relancée, la page revient là d'où la confirmation a été ouverte. Déjà ainsi.
+
 - **Citation.** §8.7 : « Dans tous les cas, le texte copié s'affiche en entier avant la copie ». §8.9 : la confirmation de « Tout effacer » propose « Copier mon carnet d'abord » (« le même export »). Le chemin de retour vers la confirmation, une fois le carnet copié, n'est pas écrit.
 - **Lecture provisoire.** « Copier mon carnet d'abord » ouvre la page de l'export (carnet affiché, figé à ce toucher, ce qui fait l'instant de la copie au sens de la partie 3.2) ; dans la bande, « Copier mon carnet » puis « Fermer » (libellé déjà validé pour le cadre), qui ramène à la confirmation. À confirmer par UX.
 
 ## Q-F12 — Après « Tout effacer » (§8.9)
+
+- **Tranchée par UX (`b04eb73`, §8.9).** Vue seule, titre « La page a tout effacé. », rien d'autre ; lecteur d'écran sur le titre ; à la prochaine ouverture, l'entrée. Appliqué (titre focalisé).
 
 - **Citation.** « Après : « La page a tout effacé. » » et « La page revient à l'entrée, comme à une première visite. »
 - **Lecture provisoire.** La page affiche « La page a tout effacé. » seule (sans barre, bande ni bouton) et n'écrit plus rien ; à la prochaine ouverture, elle repart de l'entrée. À confirmer par UX (une action pour recommencer tout de suite n'est pas prévue, et serait contraire à l'esprit du §8.9).
 
 ## Q-F13 — Intitulés de la graine et du fichier scellé au dévoilement (§8.6)
 
+- **Tranchée par UX (`b04eb73`, §8.6).** L'empreinte d'abord (« Empreinte du fichier scellé : », puis « Comparez-la… »), ensuite « Graine : » et « Fichier scellé : ». Appliqué.
+
 - **Citation.** « une partie repliée « Pour le contrôle » : graine, fichier scellé, et : « Empreinte de ce fichier : » … »
 - **Lecture provisoire.** « Graine : » et « Fichier scellé : », sur le modèle d'« Empreinte de ce fichier : ». À confirmer par UX.
 
 ## Q-F14 (ancienne Q-F8) — Bouton de 1.6 après le troisième texte d'entrée (§7.2 ; maquette 1.6)
+
+- **Tranchée par UX (`b04eb73`, §7.1).** « Suivant » après le texte 3. Déjà ainsi.
 
 - **Citation.** Maquette 1.6 (texte 1) : bouton « Texte suivant », vers le texte 2. Note : « Textes 2 et 3 : même chemin … La maquette passe directement au bilan (1.7). » Le bouton de la révélation immédiate du texte 3, qui mène au bilan, n'est dessiné nulle part.
 - **Lecture provisoire.** « Texte suivant » aux textes 1 et 2 ; « Suivant » au texte 3 (libellé validé ailleurs, qui ne promet pas un autre texte). À confirmer par UX.

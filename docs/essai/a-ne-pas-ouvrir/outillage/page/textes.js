@@ -296,6 +296,7 @@ var ElenchosTextes = (function (N) {
     sauterQuestion: 'Sauter cette question',
     clotureTete: "L'essai est fini. Deux questions, votre carnet à copier, puis le dévoilement.",
 
+    exportTitre: 'Votre carnet à copier',
     copierCarnet: 'Copier mon carnet',
     copierCarnetDabord: "Copier mon carnet d'abord",
     carnetCopie: 'Carnet copié : collez-le dans la conversation.',
@@ -337,7 +338,7 @@ var ElenchosTextes = (function (N) {
     pourLeControle: 'Pour le contrôle',
     graine: 'Graine :',
     fichierScelle: 'Fichier scellé :',
-    empreinteDe: 'Empreinte de ce fichier :',
+    empreinteDe: 'Empreinte du fichier scellé :',
     comparez: function (date, heure) { return 'Comparez-la, ligne par ligne, avec celle publiée dans la conversation le ' + date + ' à ' + heure + ' : elles doivent être identiques. Si un seul caractère diffère, dites-le dans la conversation.'; },
     devoilementFin: "Les règles complètes, les profils et les textes sont dans le dossier « a-ne-pas-ouvrir » du dépôt : vous pouvez maintenant l'ouvrir.",
 

@@ -78,12 +78,11 @@ const CONTEXTES_HORS = [
 
 async function controleHors(o, rapport) {
   for (const c of CONTEXTES_HORS) {
-    const env = await NAV.ouvrir({ navigateur: o.navigateur, page: o.porteur, icone: o.icone, appareil: c.appareil, app: c.app });
+    const env = await NAV.ouvrir({ navigateur: o.navigateur, page: o.porteur, icone: o.icone, appareil: c.appareil, app: c.app, ua: c.ua, tactile: c.tactile });
     try {
-      if (c.ua || c.tactile) {
-        const cdp = o.navigateur === 'chromium' ? await env.contexte.newCDPSession(env.page) : null;
-        if (cdp && c.ua) { await cdp.send('Emulation.setUserAgentOverride', { userAgent: c.ua }); }
-        if (cdp && c.tactile) { await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 }); }
+      if (c.tactile && o.navigateur === 'chromium') {
+        const cdp = await env.contexte.newCDPSession(env.page);
+        await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });
       }
       await poserCles(env, { 'autre-cle-outil': 'x' });
       const avant = await memoire(env.page);
@@ -218,6 +217,20 @@ async function controleMemoire(o, rapport) {
     rapport.ok('(b) correctif servi à la même adresse : la partie reprend à la même étape, coups gardés', e.vue.tel.ecran === '1.5' && e.seances[0].coups.entree.E1.reponse.niveau === 4 && (await env.page.evaluate(() => window.ElenchosEssai.version)) === versionDe(path.dirname(path.dirname(o.porteur2))));
   } finally { await NAV.fermer(env); }
   fs.rmSync(profil, { recursive: true, force: true });
+  // 6. une clé de partie qui ne se lit pas : arrêt 1, repère M1, mémoire inchangée (§8.11)
+  for (const [nom, brut] of [['texte abîmé', '{"format":1,"ecritures":3,"seances":[{"k":0'], ['numéro de format inconnu', '{"format":99,"ecritures":1,"seances":[]}']]) {
+    const e2 = await NAV.ouvrir({ navigateur: o.navigateur, page: o.porteur, icone: o.icone });
+    try {
+      await poserCles(e2, { 'elenchos-essai:partie': brut });
+      const avant = await memoire(e2.page);
+      await NAV.charger(e2);
+      const t = await texteVisible(e2.page);
+      const repere = await e2.page.locator('.repere').textContent().catch(() => null);
+      const apres = await memoire(e2.page);
+      rapport.ok('(b) partie gardée illisible (' + nom + ') : arrêt 1, repère M1, sans « Rien n’est effacé »', repere === 'M1' && /La page s’est arrêtée par précaution/.test(t) && !/Rien n’est effacé/.test(t), String(repere));
+      rapport.ok('(b) … mémoire inchangée, l’entrée ne commence pas', O.canonique(avant) === O.canonique(apres) && !/Continuer/.test(t));
+    } finally { await NAV.fermer(e2); }
+  }
 }
 
 async function controleEffacer(o, rapport) {
@@ -253,7 +266,13 @@ async function controleEffacer(o, rapport) {
       const t2 = await texteVisible(env.page);
       rapport.ok('(d) après « Tout effacer » (' + moment + ') : aucune clé « elenchos-essai: », clé de la page-test comprise', !Object.keys(m).some(k => k.indexOf('elenchos-essai:') === 0), JSON.stringify(m));
       rapport.ok('(d) … la clé hors du préfixe, posée par l’outil, est intacte', m['autre-cle-outil'] === (moment === 'pendant' ? 'à garder' : 'à garder'));
-      rapport.ok('(d) … « La page a tout effacé. »', /La page a tout effacé\./.test(t2));
+      const vue = await env.page.evaluate(() => {
+        const v = document.getElementById('vue-seule');
+        return { titre: v && v.querySelector('h1') ? v.querySelector('h1').textContent : null, boutons: v ? v.querySelectorAll('button, a').length : -1,
+          pied: v ? v.querySelectorAll('.pied').length : -1, app: !!(document.getElementById('app') && !document.getElementById('app').hidden), focus: document.activeElement && document.activeElement.tagName };
+      });
+      rapport.ok('(d) … vue seule « La page a tout effacé. », sans bouton ni pied de page, titre sous le lecteur d’écran',
+        vue.titre === N.typographier(X.efface) && vue.boutons === 0 && vue.pied === 0 && !vue.app && vue.focus === 'H1', JSON.stringify(vue));
       // la page revient à l'entrée, comme à une première visite
       await NAV.charger(env);
       const v = await etatVue(env.page);
@@ -353,6 +372,156 @@ async function controleMiseEnPage(o, rapport) {
   }
 }
 
+/* ------------------------------------------------------------------ */
+/* Arrêts techniques (§8.11) : vérifications V2, V4, V5 ; stockage absent ; page ouverte deux fois */
+/* ------------------------------------------------------------------ */
+
+/** Copie de la page dont le fichier scellé embarqué est remplacé (politique de sécurité recalculée) : outil du contrôle seulement. */
+function pageAvecScelle(porteur, b64) {
+  const crypto = require('node:crypto');
+  const html = O.lireTexte(porteur);
+  const ancien = html.match(/\/\*elenchos-scelle\*\/"([A-Za-z0-9+/=]*)"/)[1];
+  const vieuxScript = html.match(/<script>([\s\S]*?)<\/script>/)[1];
+  const script = vieuxScript.replace(ancien, b64);
+  const h = s => "'sha256-" + crypto.createHash('sha256').update(Buffer.from(s, 'utf8')).digest('base64') + "'";
+  const chemin = path.join(os.tmpdir(), 'elenchos-essai-scelle-' + crypto.createHash('sha256').update(b64).digest('hex').slice(0, 8) + '.html');
+  O.ecrireTexte(chemin, html.replace(vieuxScript, script).replace(h(vieuxScript), h(script)));
+  return chemin;
+}
+
+async function controleArrets(o, rapport) {
+  const octets = Buffer.from(fs.readFileSync(o.cheminScelle));
+  const sc = JSON.parse(octets.toString('utf8'));
+  const canon = v => Buffer.from(N.jsonCanonique(v), 'utf8').toString('base64');
+  const cas = [
+    ['V2', octets.toString('base64').replace(/^(.{10})/, '$1*')],
+    ['V4', canon(Object.assign({}, sc, { version: 3 }))],
+    ['V5', canon(Object.assign({}, sc, { vecteurs_test: sc.vecteurs_test.map((v, i) => i === 1 ? Object.assign({}, v, { n: v.n + 1 }) : v) }))]
+  ];
+  for (const [repere, b64] of cas) {
+    const env = await NAV.ouvrir({ navigateur: o.navigateur, page: pageAvecScelle(o.porteur, b64), icone: o.icone });
+    try {
+      await NAV.charger(env);
+      const r = await env.page.locator('.repere').textContent().catch(() => null);
+      const t = await texteVisible(env.page);
+      const m = await memoire(env.page);
+      rapport.ok('(§8.11) vérification ' + repere + ' ratée : arrêt 1, repère ' + repere + ', rien d’écrit', r === repere && /La page s’est arrêtée par précaution/.test(t) && Object.keys(m).length === 0, String(r));
+    } finally { await NAV.fermer(env); }
+  }
+  // stockage absent (le navigateur refuse d'écrire : l'outil le règle avant tout script, comme le mode app)
+  const env2 = await NAV.ouvrir({ navigateur: o.navigateur, page: o.porteur, icone: o.icone });
+  try {
+    await env2.contexte.addInitScript('Storage.prototype.setItem = function () { throw new Error("QuotaExceededError"); };');
+    await NAV.charger(env2);
+    const t = await texteVisible(env2.page);
+    rapport.ok('(§8.11) stockage absent : arrêt 2', /La page ne peut pas garder vos réponses/.test(t) && !/Continuer/.test(t));
+  } finally { await NAV.fermer(env2); }
+  // page ouverte deux fois : la seconde écrit, la première s'arrête à son geste suivant, sans rien écraser
+  const env3 = await NAV.ouvrir({ navigateur: o.navigateur, page: o.porteur, icone: o.icone });
+  try {
+    await NAV.charger(env3);
+    const p1 = env3.page;
+    const p2 = await env3.contexte.newPage();
+    await p2.goto(ADRESSE);
+    await p2.waitForFunction(() => window.ElenchosEssai !== undefined);
+    await p2.locator('.bande').getByRole('button', { name: motif(X.continuer) }).click();
+    const garde = (await memoire(p2))['elenchos-essai:partie'];
+    await p1.locator('.bande').getByRole('button', { name: motif(X.continuer) }).click();
+    const t = await texteVisible(p1);
+    const apres = (await memoire(p1))['elenchos-essai:partie'];
+    rapport.ok('(§8.11) page ouverte deux fois : arrêt 3, « Reprendre ici », rien d’écrasé', /La page s’est ouverte deux fois en même temps/.test(t) && apres === garde);
+    await p1.getByRole('button', { name: motif(X.reprendreIci) }).click();
+    await p1.waitForFunction(() => window.ElenchosEssai !== undefined && window.ElenchosEssai.etat() !== null);
+    const v = await etatVue(p1);
+    rapport.ok('(§8.11) « Reprendre ici » : la partie telle qu’elle a été gardée en dernier', v && v.cadre && v.cadre.page === 'quiestqui', JSON.stringify(v));
+  } finally { await NAV.fermer(env3); }
+}
+
+/** Retours (14 h) : défilement, page du cadre, écran tourné, relances. */
+async function controleRetours(o, rapport) {
+  const journal = O.lireJson(path.join(o.journaux, 'b.journal.json'));
+  const env = await NAV.ouvrir({ navigateur: o.navigateur, page: o.porteur, icone: o.icone, heure: N.lireInstant(journal.seances[0].ouverture) - 60000 });
+  const page = env.page;
+  const tel = page.locator('.telephone'), bande = page.locator('.bande'), barre = page.locator('header.barre');
+  const b = (zone, nom) => zone.getByRole('button', { name: motif(nom) }).click();
+  const corps = () => page.evaluate(() => { const c = document.querySelector('.telephone .corps'); return c ? c.scrollTop : null; });
+  const tourner = async (l, h) => { await page.setViewportSize({ width: l, height: h }); await page.waitForTimeout(50); };
+  try {
+    await NAV.charger(env);
+    const vp = page.viewportSize();
+    // séance 0 jusqu'à 1.8, avec une saisie
+    await b(bande, X.continuer); await b(bande, X.fermer);
+    await tel.getByRole('button', { name: /^\s*Elenchos/ }).click();
+    const jo = new Joueur(env, journal, { 1: o.porteur }, { relever: false });
+    jo.scelle = o.scelle; jo.version = 1;
+    for (const E of ['E1', 'E2', 'E3']) {
+      const e = journal.seances[0].coups.entree[E];
+      await b(tel, X.POSITIONS[e.reponse.niveau - 1]);
+      if (E === 'E1') { await b(tel, X.jAccepte); }
+      await b(tel, X.suivant);
+      const tx = o.scelle.textes[E];
+      await b(tel, e.reponse.raison === 'aucune' ? X.aucuneRaison : X.raisonFinLigne(tx.considerations[e.reponse.raison - 1].texte));
+      await b(tel, X.valider);
+      await b(tel, X.POSITIONS[e.pari - 1]); await b(tel, X.voirSaReponse); await b(tel, E === 'E3' ? X.suivant : X.texteSuivant);
+    }
+    await b(tel, X.creerCompte);
+    await tel.getByRole('textbox').pressSequentially('Retours-q');
+    const m0 = await memoire(page);
+    await tourner(vp.height, Math.min(vp.width, 420));
+    const couche = await page.evaluate(() => getComputedStyle(document.querySelector('.vue-couchee')).display !== 'none');
+    await page.locator('.vue-couchee').click();
+    const m1 = await memoire(page);
+    await tourner(vp.width, vp.height);
+    const saisie = await tel.getByRole('textbox').inputValue();
+    rapport.ok('(h) écran tourné puis redressé sur 1.8 : vue couchée, puis même écran et même saisie ; mémoire inchangée pendant l’écran couché',
+      couche && saisie === 'Retours-q' && O.canonique(m0) === O.canonique(m1) && (await etatVue(page)).tel.ecran === '1.8', JSON.stringify({ couche, saisie }));
+    await b(tel, X.recevoirCode); await b(tel, X.valider);
+    await b(bande, X.allerJourSuivant);
+    // séance 1 : téléphone défilé, page du cadre ouverte et refermée
+    await page.evaluate(() => { const c = document.querySelector('.telephone .corps'); c.scrollTop = 120; });
+    const d0 = await corps();
+    await b(barre, X.quiEstQuiBouton); await b(bande, X.fermer);
+    const d1 = await corps();
+    rapport.ok('(h) téléphone défilé, « Qui est qui ? » ouvert et refermé : même écran, même défilement', d0 > 0 && d0 === d1 && (await etatVue(page)).tel.ecran === 'repondre', d0 + ' / ' + d1);
+    // position choisie, écran tourné et redressé : même choix, même défilement
+    await b(tel, X.POSITIONS[1]);
+    const d2 = await corps();
+    await tourner(vp.height, Math.min(vp.width, 420)); await tourner(vp.width, vp.height);
+    const choix = await tel.getByRole('button', { name: motif(X.POSITIONS[1]) }).getAttribute('aria-pressed');
+    rapport.ok('(h) écran tourné et redressé sur Répondre : même choix, même défilement', choix === 'true' && (await corps()) === d2, choix + ' ; ' + d2 + ' / ' + (await corps()));
+    // relance avec une page du cadre ouverte : la même page
+    await b(barre, X.quiEstQuiBouton);
+    await page.reload(); await page.waitForFunction(() => window.ElenchosEssai !== undefined);
+    rapport.ok('(h) relance avec « Qui est qui ? » ouvert : la même page', (await etatVue(page)).cadre && (await etatVue(page)).cadre.page === 'quiestqui');
+    await b(bande, X.fermer);
+    // relance avec une confirmation ouverte : pas de confirmation
+    await b(bande, X.jourSuivant);
+    const conf = await bande.getByRole('alertdialog').count();
+    await page.reload(); await page.waitForFunction(() => window.ElenchosEssai !== undefined);
+    rapport.ok('(h) relance avec la confirmation de « Jour suivant » ouverte : pas de confirmation', conf === 1 && (await bande.getByRole('alertdialog').count()) === 0 && (await bande.getByRole('button', { name: motif(X.jourSuivant) }).count()) === 1);
+    // carnet du jour d'une journée pas finie : relance → téléphone à l'écran d'avant « Jour suivant », choix gardés
+    await b(bande, X.jourSuivant); await b(bande, X.ouiContinuer);
+    await b(page.locator('.cadre-milieu'), X.choixQ2.pas_tout);
+    await page.reload(); await page.waitForFunction(() => window.ElenchosEssai !== undefined);
+    const e1 = await page.evaluate(() => window.ElenchosEssai.etat());
+    rapport.ok('(h) relance sur le carnet du jour d’une journée pas finie : téléphone à l’écran d’avant « Jour suivant », choix du carnet gardés',
+      !e1.vue.cadre && e1.vue.tel.ecran === 'repondre' && e1.seances[1].coups.carnet.q2 === 'pas_tout', JSON.stringify({ cadre: e1.vue.cadre, ecran: e1.vue.tel.ecran, q2: e1.seances[1].coups.carnet.q2 }));
+    // relance pendant la copie ouverte par « Copier mon carnet d'abord » : ni copie ni confirmation, l'écran d'où la confirmation a été ouverte
+    await b(tel, X.ongletMoi);
+    await tel.getByRole('button', { name: motif(X.reglagesNom) }).click();
+    await b(tel, X.toutEffacer);
+    await b(bande, X.copierCarnetDabord);
+    const avantRelance = (await etatVue(page)).cadre;
+    await page.reload(); await page.waitForFunction(() => window.ElenchosEssai !== undefined);
+    const v2 = await etatVue(page);
+    rapport.ok('(h) relance pendant la copie ouverte par « Copier mon carnet d’abord » : ni copie ni confirmation, Moi › Réglages',
+      avantRelance && avantRelance.page === 'export' && !v2.cadre && v2.tel.ecran === 'reglages', JSON.stringify(v2));
+    rapport.ok('(h) retours : aucune erreur de la page', env.journalErreurs.length === 0, env.journalErreurs.join(' ; '));
+  } catch (e) {
+    rapport.ok('(h) retours joués jusqu’au bout', false, e.message);
+  } finally { await NAV.fermer(env); }
+}
+
 /** Largeur rendue d'une U+202F dans chaque face (§8.8 ; 14 h) : mesurée par le moteur de rendu. */
 async function controleEspaceFine(o, rapport) {
   const env = await NAV.ouvrir({ navigateur: o.navigateur, page: o.porteur, icone: o.icone });
@@ -378,11 +547,16 @@ async function controleEspaceFine(o, rapport) {
 /* Rapport et commande                                                  */
 /* ------------------------------------------------------------------ */
 
-function creerRapport() {
+/** Rapport ; discret : sans aucun détail ni valeur (passe WebKit : « réussi » ou « échoué » et le chemin de chaque différence). */
+function creerRapport(discret) {
   const lignes = [];
   let faux = 0;
   return {
-    ok(quoi, juste, detail) { if (!juste) { faux++; } const l = (juste ? 'juste : ' : 'FAUX : ') + quoi + (detail && !juste ? ' — ' + detail : ''); lignes.push(l); process.stdout.write(l + '\n'); },
+    ok(quoi, juste, detail) {
+      if (!juste) { faux++; }
+      const l = (juste ? 'juste : ' : 'FAUX : ') + quoi + (detail && !juste && !discret ? ' — ' + detail : '');
+      lignes.push(l); if (!discret || !juste) { process.stdout.write(l + '\n'); }
+    },
     note(s) { lignes.push(s); process.stdout.write(s + '\n'); },
     get faux() { return faux; }, lignes
   };
@@ -392,18 +566,19 @@ async function main() {
   const a = O.argumentsCli(process.argv.slice(2));
   const { scelle } = lireScelle(a.scelle);
   const o = {
-    navigateur: a.navigateur || 'chromium', icone: a.icone || ICONE_DEFAUT, pageTest: a['page-test'] || PAGE_TEST_DEFAUT, scelle,
+    navigateur: a.navigateur || 'chromium', icone: a.icone || ICONE_DEFAUT, pageTest: a['page-test'] || PAGE_TEST_DEFAUT, scelle, cheminScelle: a.scelle,
     construction: a.construction, construction2: a['construction-2'], construction3: a['construction-3'],
     porteur: porteurDe(a.construction), porteur2: a['construction-2'] ? porteurDe(a['construction-2']) : null, journaux: a.journaux
   };
-  const points = (a.points || 'a,b,c,d,f,h,i').split(',');
+  const points = (a.points || 'a,b,c,d,f,t,h,i').split(',');
   const r = creerRapport();
   r.note('Contrôle 14 sans tête : ' + o.navigateur + ' (Playwright ' + NAV.VERSION_PLAYWRIGHT + '), version du porteur ' + O.sha256Fichier(o.porteur));
   if (points.indexOf('a') >= 0 || points.indexOf('c') >= 0) { await controleHors(o, r); }
   if (points.indexOf('f') >= 0) { await controleCsp(o, r); }
   if (points.indexOf('b') >= 0) { await controleMemoire(o, r); }
   if (points.indexOf('d') >= 0) { await controleEffacer(o, r); }
-  if (points.indexOf('h') >= 0) { await controleEspaceFine(o, r); await controleMiseEnPage(o, r); }
+  if (points.indexOf('t') >= 0) { await controleArrets(o, r); }
+  if (points.indexOf('h') >= 0) { await controleEspaceFine(o, r); await controleRetours(o, r); if (!a['sans-tailles']) { await controleMiseEnPage(o, r); } }
   if (points.indexOf('i') >= 0) { await require('./durees.js').controleDurees(o, r); }
   r.note(r.faux ? r.faux + ' vérification(s) fausse(s)' : 'Toutes les vérifications sont justes.');
   if (a.sortie) { O.ecrireTexte(path.join(a.sortie, 'rapport-controle14-' + o.navigateur + '.txt'), r.lignes.join('\n') + '\n'); }
@@ -412,4 +587,5 @@ async function main() {
 
 if (require.main === module) { main().catch(e => { process.stderr.write((e && e.stack) || String(e)); process.stderr.write('\n'); process.exitCode = 2; }); }
 
-module.exports = { verifierDisposition, visibilite, memoire, poserCles, taillesH };
+module.exports = { verifierDisposition, visibilite, memoire, poserCles, taillesH, creerRapport, controleHors, controleCsp, controleMemoire, controleEffacer,
+  controleMiseEnPage, controleEspaceFine, controleRetours, controleArrets, lireScelle, porteurDe };

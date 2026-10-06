@@ -100,6 +100,8 @@ async function ouvrir(options) {
     locale: o.langue, timezoneId: o.fuseau, colorScheme: o.sombre ? 'dark' : 'light',
     reducedMotion: o.reduire ? 'reduce' : 'no-preference', serviceWorkers: 'block', acceptDownloads: false
   });
+  if (o.ua) { ctxOptions.userAgent = o.ua; }
+  if (o.tactile) { ctxOptions.hasTouch = true; }
   if (o.largeur && o.hauteur) { ctxOptions.viewport = { width: o.largeur, height: o.hauteur }; ctxOptions.screen = { width: o.largeur, height: o.hauteur }; }
   const env = Object.assign({}, process.env, { TZ: o.fuseau });
   // Chromium sous Linux arrondit les chasses au pixel quand il applique le

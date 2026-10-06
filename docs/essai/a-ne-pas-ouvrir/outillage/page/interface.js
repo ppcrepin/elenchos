@@ -115,7 +115,11 @@ var ElenchosInterface = (function (N, M, X) {
     var brut = lireBrut();
     if (brut === null) { return null; }
     var o = JSON.parse(brut);
-    if (!o || o.format !== FORMAT_ETAT || !Array.isArray(o.seances)) { throw new Error('état illisible'); }
+    if (!o || typeof o !== 'object' || o.format !== FORMAT_ETAT || !Number.isSafeInteger(o.ecritures) || !Array.isArray(o.seances) || !o.seances.length ||
+      o.seances.length > 16 || !o.vue || !o.vue.tel || typeof o.vue.tel.ecran !== 'string' || !Array.isArray(o.vue.tel.pile)) { throw new Error('état illisible'); }
+    o.seances.forEach(function (s, k) {
+      if (!s || s.k !== k || !s.coups || typeof s.coups !== 'object' || !s.pp || !s.rev || !Array.isArray(s.versions)) { throw new Error('état illisible'); }
+    });
     return o;
   }
 
@@ -1128,7 +1132,7 @@ var ElenchosInterface = (function (N, M, X) {
   }
   function pageExport(cadre) {
     var texte = texteCarnetExport(cadre);
-    return [h('pre', { class: 'carnet', id: 'zone-carnet', tabindex: '-1', 'aria-label': 'Carnet de l’essai Elenchos' }, texte), pied(true)];
+    return [titrePage(t(X.exportTitre)), h('pre', { class: 'carnet', id: 'zone-carnet', tabindex: '-1', 'aria-label': 'Carnet de l’essai Elenchos' }, texte), pied(true)];
   }
   function pageEffacer(cadre) {
     var apres = cadre.apres;
@@ -1234,10 +1238,10 @@ var ElenchosInterface = (function (N, M, X) {
     var groupes = empreinte.match(/.{4}/g);
     var lignesEmp = [0, 1, 2, 3].map(function (i) { return groupes.slice(4 * i, 4 * i + 4).join(' '); }).join('\n');
     contenu.push(h('details', { class: 'panneau controle' }, h('summary', null, t(X.pourLeControle)),
-      h('p', null, t(X.graine)), h('pre', { class: 'code-brut' }, scelle.graine),
-      h('p', null, t(X.fichierScelle)), h('pre', { class: 'code-brut scelle' }, texteScelle),
       h('p', null, t(X.empreinteDe)), h('pre', { class: 'code-brut empreinte' }, lignesEmp),
-      h('p', null, t(X.comparez(N.dateLongue(ENTREES.empreinte_publiee_le), N.heureEcrite(ENTREES.empreinte_publiee_a))))));
+      h('p', null, t(X.comparez(N.dateLongue(ENTREES.empreinte_publiee_le), N.heureEcrite(ENTREES.empreinte_publiee_a)))),
+      h('p', null, t(X.graine)), h('pre', { class: 'code-brut' }, scelle.graine),
+      h('p', null, t(X.fichierScelle)), h('pre', { class: 'code-brut scelle' }, texteScelle)));
     contenu.push(panneau(h('p', null, t(X.devoilementFin)), h('p', null, t(X.effacerInvite))));
     contenu.push(pied(true));
     return contenu;
@@ -1725,7 +1729,9 @@ var ElenchosInterface = (function (N, M, X) {
   A['export-fermer'] = function () { bande.messageCopie = null; etat.vue.cadre = etat.vue.cadre.retour; ecrire(); rendre(); };
   A['effacer-confirmer'] = function () {
     toutEffacer();
-    montrerVueSeule([h('h1', null, t(X.efface))]);
+    var titre = h('h1', { tabindex: '-1' }, t(X.efface));
+    montrerVueSeule([titre]);
+    try { titre.focus({ preventScroll: true }); } catch (e) { titre.focus(); }
   };
 
   /* Écrans hors de l'icône : copies */
@@ -1830,7 +1836,8 @@ var ElenchosInterface = (function (N, M, X) {
     if (v !== 0) { brancherHors(); arreter1('V' + v); return; }
     if (!memoireMarche()) { arreter2(); return; }
     var garde;
-    try { garde = lireEtat(); } catch (e) { brancherHors(); arreter1('V4'); return; }
+    // Partie gardée illisible : arrêt 1, repère M1 ; rien n'est réécrit ni effacé, l'entrée ne commence pas (§8.11)
+    try { garde = lireEtat(); } catch (e) { brancherHors(); arreter1('M1'); return; }
     try { if (navigator.storage && navigator.storage.persist) { navigator.storage.persist().then(function () {}, function () {}); } } catch (e) { /* rien */ }
     etat = garde || nouvelEtat();
     construireRacine();
