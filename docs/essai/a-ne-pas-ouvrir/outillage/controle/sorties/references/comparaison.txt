@@ -1,0 +1,109 @@
+COMPARAISON DE C AUX CARNETS DE RÉFÉRENCE — TEMPS 2
+Auteur : Back-end, auteur du programme de contrôle (C). 6 octobre 2026.
+Entrées de C : le fichier candidat (SHA-256 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64, le même que celui que cite references/LISEZ-MOI.md), les deux journaux et leurs fichiers de durées.
+Lu sous outillage/ pour ce temps 2 : tout references/ (rien modifié), mes propres sorties sous controle/. Ni scellement/ (hors le fichier candidat), ni page/.
+Empreintes : les 20 fichiers listés dans references/EMPREINTES.txt ont l'empreinte annoncée (sha256sum -c : tout OK).
+
+
+1. RÉSULTAT
+===========
+
+5 571 valeurs de la référence comparées une à une à C. Un seul écart, dans une annotation de commun-tables.txt : la référence a tort, C a raison, sans effet sur aucun calcul ni sur le carnet.
+C n'est pas corrigé : rien ne le demande. Les 77 tests passent ; le rejeu des deux journaux redonne, octet pour octet, les traces et les carnets du temps 1 (commit b328346).
+
+  Source                                                   valeurs   écarts
+  tirages.txt (graine, 3 vecteurs de test, 1 020 clés)       1 024        0
+  commun-tables.txt, tables A à G, et récapitulatif
+    de manches-porteur.txt (chiffres constants)              1 090        1
+  feuilles A, B, C, C2 (48 manches de personnages et
+    lignes communes de chaque texte) + manches-porteur.txt
+    (13 manches du porteur)                                  2 692        0
+  feuille D (partie a : révélations, points, titres,
+    agrégats, portrait, phrases, En attendant, mesures)        533        0
+  feuille de calcul de « r »                                   209        0
+  cas-affectation-lexicographique.txt et
+    cas-redistribution-croisee.txt                              23        0
+  Total                                                      5 571        1
+
+Carnets (comparés au temps 1, refaits aujourd'hui) : carnet-1-jour-4/carnet-attendu.txt, carnet-2-cloture-a/carnet-attendu.txt et carnet-1-jour-4/copie-1-attendue.txt sont identiques, octet pour octet, aux textes de C une fois les durées masquées en « ‹durée› » (contrôle 13). Les lignes « LE CARNET, LIGNE PAR LIGNE » des feuilles D (partie 11) et r (partie 9) sont donc couvertes par cette identité.
+
+
+2. L'ÉCART
+==========
+
+commun-tables.txt, ligne 52 (table C, texte 2) :
+  feuille : « 2 (T,0) | (4,3) fav, π0, ρ aucun, w1/2 | … » — la réponse d'Agathe au texte 2 n'est pas marquée [aty].
+  C : la réponse d'Agathe au texte 2 est atypique, côté tiré +1 (recalculée au contrôle 1 ; le fichier candidat l'inscrit).
+
+Calcul refait depuis la spécification :
+  - profils.md, « Réponses atypiques », procédure : textes 1 à 13 d'Agathe classés par t("ecart|Agathe|n") croissant :
+    10 (4b34b6dc), 11 (51c5955b), 13 (67e960db), 2 (68778b4c), 5 (773eae81), 6 (7afe666e), …
+    Étape 1 (textes 1 à 6) : premier valable = 2 (Agathe n'est jamais absente ; aucun texte encore retenu ; aucun autre personnage traité avant elle).
+    Étape 2 (textes 7 à 13) : 10. Étape 3 : 11 refusé par (b) (voisin de 10), 13 retenu. Agathe : [2, 10, 13].
+  - Texte 2 : tension T, sens s = 0 ; position d'Agathe sur T p = 58/100, d'où a = 1 − p = 42/100 : réponse type « Neutre » (2/5 < a < 3/5).
+  - regles-de-calcul.md, 2.5, « Forme » : « si la réponse type est neutre, Favorable si t("cote-ecart|prénom|texte") < 0,5, sinon Défavorable ».
+    t("cote-ecart|Agathe|2") = 0x4292f1ed / 16^8 = 1 116 926 445 / 4 294 967 296 ≈ 0,2601 < 0,5 → Favorable (niveau 4), côté tiré +1.
+  - Le fichier candidat l'inscrit : reponses_atypiques.Agathe[0] = {"texte": "2", "cote_tire": 1}, et la réponse vaut (4,3), ce que la ligne 52 écrit elle-même.
+
+Qui a raison : C. La référence a oublié le marqueur ; elle se contredit d'ailleurs : manches-porteur.txt, ligne 290, écrit « Nassim au texte 7 et Agathe au texte 2 sont atypiques mais non servis ». Ce sont 12 réponses atypiques (3 par personnage), la table n'en marque que 11.
+Conséquence : aucune. La légende (ligne 45) le dit : « [aty] … ne change rien au calcul » ; la carte n'est servie dans aucune manche du porteur, et le compte des réponses atypiques servies (10 sur 38) est le même des deux côtés, avec la même liste.
+
+
+3. CE QUI A ÉTÉ COMPARÉ, SOURCE PAR SOURCE
+==========================================
+
+tirages.txt — la graine, les trois vecteurs de test de la ligne 3, et les 1 020 clés (surprise 260, hasard 260, ordre 260, devine 208, devin 10, mystere 10, surprise-semaine 12) : hex8 et N recalculés par ec/tirage.py. Tout égal.
+
+commun-tables.txt
+  A  tension, sens, et (côté, pôle) des quatre considérations des 17 textes, contre le fichier candidat.
+  B  v(niveau) et x pour s = 1 et s = 0, contre la table de C et la formule x de Partie.cartes_servies.
+  C  pour chaque réponse scellée d'un personnage : (niveau, raison), [aty], côté, π, ρ, w, contre le fichier et ec/portrait.classer.
+  D  les états de curseur (Σ w, Σ w·π, c, ℓ, q) après chaque texte de la tension, les « inchangé (w 0) », « absent » et « à tout moment », et les curseurs « avant le texte n », contre Partie.curseur_membre ; puis les curseurs_vus des deux traces de C, séance par séance (entrée + textes ≤ k − 2), contre ces états (336 valeurs).
+  E  côté attendu de chaque personnage par tension et sens, contre le profil du fichier.
+  F  σ par niveau et le score σ × côté attendu (12 cas), contre ec/jeu.cote et ec/moteur.score.
+  G  r(heure de jeu) des quatre personnages.
+  H  jours de la semaine des séances : texte de la page (« {jour} » de 5.3 et 5.4), que C ne produit pas ; conforme au tableau du §7.1 de simulation.md (séance 1 lundi) et à la ligne « séance 15, lundi ; séance 16, mardi ».
+
+manches-porteur.txt — les 13 manches du porteur, champ par champ (possibles, x, médiane, distance, rareté, surprise, Σ w, c, ℓ, q, classement, départages, places 1 et 2 avant remplacement, place 3, remplacements, raison cachée, ordre, cartes) ; le récapitulatif S2 à S14 (auteur, carte cachée, niveau, raison) ; les chiffres constants (38 cartes, 2 remplacements, cartes identiques S4 : 3 et S9 : 2, raisons « aucune » affichées S5 Valentin et S7 Agathe, 0 cachée, cartes cachées déplacées S5 et S7, 2 départages, 10 réponses atypiques servies avec leur liste, Agathe 2 et Nassim 7 non servies, une manche à deux cartes en S11) contre ec/constantes.py.
+
+Feuilles A, B, C, C2 — les 48 manches de personnages de la partie (a) (autant que dans la trace C), champ par champ, comme ci-dessus, plus : rangs, côtés attendus, matrices de scores carte × candidat avec le σ de chaque carte, total maximal, désignations, raison devinée, auteur compté, et la ligne « révélation » de chaque manche (justes, raison_trouvee, points, points_semaine). Et les lignes communes à toutes les manches d'un texte (« Réponses au texte n » avec x et σ, « Curseurs avant le texte n », « Côtés attendus », « Considérations du texte n ») : 370 valeurs.
+
+Feuille D — entrée (inviteuse, juste, justes ; réponses et paris du porteur ; q1), portrait et ordre_moi à toutes les séances, phrases du jour et de la semaine, surprises_proches, curseur du porteur dans les manches des personnages, auteurs comptés des séances 4 et 9, révélations du porteur, points par texte et par semaine, Le Devin, Le Mystère (tentatives et erreurs par membre et par texte), Le Fidèle, la surprise de la semaine (attributions, fausses, départage par t("surprise-semaine|1|3") < t("surprise-semaine|1|5")), Le Sans-Faute, Le Pas de Côté, titres_tires_au_sort, agrégats (53 sur 110, 8 sur 28, séance par séance), la vérification des comptes (138 tentatives = 110 + 28 ; 77 erreurs), En attendant (14 séances), mesures, étapes, versions, présence des durées, copies, fin.
+
+Feuille de calcul de « r » — entrée (réponses d'Agathe, inviteuse, juste, justes, curseurs de 1.7), classement des sept réponses du porteur (classe, w, π, ρ), portrait et ordre_moi des séances 0 à 4, phrases du jour (quatre classes), cartes, désignations et auteurs comptés des séances 2 à 4, révélations du porteur des séances 3 et 4, curseurs vus, surprises_proches, les sept lectures d'« En attendant » (une comparaison par lecture), mesures des séances 0 à 4 et de la copie, agrégats.
+
+Cas chiffrés — affectation lexicographique : les quatre affectations à égalité de Valentin (séance 2) et les deux d'Odile, total maximal, désignations, révélations ; les 36 manches à plusieurs affectations de total maximal, une à une. Redistribution croisée : places, remplacements, raison cachée et ordre de la séance 9 ; les cinq variantes de la séance 9 et les trois de la séance 4, passées dans Partie.redistribuer et ec/journal.verdicts_joueur (auteurs comptés, justes, verdicts).
+
+
+4. CE QUI N'EST PAS COMPARÉ, ET POURQUOI
+=========================================
+
+- Les 11 manches des personnages de la partie « r » (séances 2 à 4) : la référence ne les a pas calculées (feuille r, partie 7, « à compléter » ; LISEZ-MOI, « État »). Sur ces clés de la trace (manches des personnages, revelation.devineurs.<personnage> de r), C n'a pas de contre-calcul ; la feuille le dit : « le programme de contrôle fait foi sur ces clés ». Les mêmes règles sont vérifiées sur les 48 manches de (a).
+- Les textes d'écran que C ne produit pas : bilan de 1.7 (feuille D, ligne 13 ; feuille r, ligne 29) et jours de la table H. Relus à la main contre le §7.2 et le §7.1 : conformes (0 juste → « Agathe a réussi à te surprendre trois fois. » ; 2 justes → « 2 sur 3 », « Tu as trouvé 2 réponses d'Agathe sur 3. »).
+- Les valeurs des durées : libres (schéma, partie 4.2) ; seule leur présence est comparée.
+
+
+5. LES LECTURES DE LA RÉFÉRENCE (references/QUESTIONS.md)
+==========================================================
+
+Les lectures de l'auteur des carnets (Q1 à Q14) sont celles de C : Q1 à Q3 et Q12 (partie (a) ; journal « a » rejoué tel quel), Q4 (identifiants « r » et « a »), Q5 (carte du porteur après redistribution : même c), Q6 (médiane sans le porteur quand il n'a pas répondu ; séance 11), Q7 (manche d'une carte), Q8 (rien à trancher), Q9 (seuil de 5 de « Sur tout l'essai »), Q10 (tentatives et erreurs du Mystère et de la surprise de la semaine), Q11 (points du texte 5 en semaine 1, du texte 12 en semaine 2), Q13 (un absent est candidat ; le désigner est faux), Q14 (chiffres constants : égaux à ceux de C, voir partie 3). Aucune comparaison ne les met en défaut.
+
+
+6. FIABILITÉ DU RELEVÉ
+======================
+
+- Les valeurs sont lues dans les feuilles par programme, ligne par ligne, avec leur numéro. Un audit de couverture liste toute ligne « grandeur | règle | valeur » qu'aucune comparaison ne lit : il ne reste que les en-têtes de colonnes, les lignes de carnet (couvertes par l'identité des carnets) et les textes d'écran de la partie 4.
+- Chaque famille de comparaison a été éprouvée par mutation : une valeur changée dans une copie de la feuille (x, curseur, côté attendu, considération, score, σ, r(heure), état « à tout moment », tirage) fait apparaître l'écart attendu.
+- Faux écarts rencontrés en écrivant les lecteurs, tous dus à la mise en forme des feuilles et corrigés dans les lecteurs, jamais dans la référence : colonne « règle » vide (« | | »), « | » final, parenthèses explicatives dans une valeur (« (2 affectations) »), noms écrits dans la colonne du milieu (feuille B, séance 4, « possibles »), fraction écrite comme un calcul (« c (2 + 1/2)/(4 + 1) = 1/2 »), et, pour les mesures de r, une première version qui lisait les lignes « séance k | » du portrait au lieu de celles de la partie 8 (valeurs justes, numéros de ligne faux ; corrigé).
+
+
+7. RELANCER
+===========
+
+Depuis outillage/controle :
+  python3 sorties/references/comparer_tirages.py
+  python3 sorties/references/comparer_tables.py
+  python3 sorties/references/comparer_feuilles.py
+  python3 sorties/references/comparer_feuille_d_r.py
+  python3 sorties/references/comparer_cas.py
+Chaque programme écrit son nombre de valeurs comparées et la liste de ses écarts, avec fichier et ligne. Ils lisent references/, le fichier candidat et les traces de C de sorties/references/ ; ils n'écrivent rien.

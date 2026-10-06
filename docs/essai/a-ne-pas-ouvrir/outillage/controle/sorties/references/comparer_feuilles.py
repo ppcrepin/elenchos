@@ -141,6 +141,29 @@ def _champ(R, ou, nom, v, n, c, poss, g, rev):
                     p = c["possibles"][m.group(1)]
                     for i, cle in enumerate(("somme_w", "c", "l", "q")):
                         R.egal(ou, n, f"{cle} de {m.group(1)}", F(m.group(i + 2).strip()), F(p[cle]))
+        elif nom == "x":
+            d = par_nom(v)
+            for a in poss:
+                if a in d:
+                    R.egal(ou, n, f"x de {a}", d[a], F(c["possibles"][a]["x"]))
+        elif nom in ("places 1, 2", "places 1 et 2"):
+            # places 1 et 2 avant les remplacements de cartes identiques (§4.3)
+            avant = list(c["places"])
+            for rp in c["remplacements"]:
+                avant[rp["place"] - 1] = rp["ecartee"]
+            R.egal(ou, n, "places 1 et 2 (avant remplacement)", noms(v), avant[:2])
+        elif nom.startswith("scores ("):
+            from ec.jeu import cote as sigma
+            from ec.moteur import score
+            ini = {"A": "Agathe", "N": "Nassim", "O": "Odile", "V": "Valentin", "p": "porteur"}
+            cand = [ini[x] for x in re.findall(r"\b([ANOVp])\b", nom.split("(")[1])]
+            for num, sg, vals in re.findall(r"carte ([1-3]) \(σ ([+" + MOINS + r"]?[01])\) : ([0-9, ]+)", v):
+                x = c["cartes"][int(num) - 1]
+                sg_c = sigma(c["possibles"][x["auteur"]]["niveau"])
+                R.egal(ou, n, f"σ de la carte {num}", int(sg.replace(MOINS, "-")), sg_c)
+                R.egal(ou, n, f"scores de la carte {num} ({', '.join(cand)})",
+                       [int(s) for s in vals.replace(" ", "").split(",") if s],
+                       [score(sg_c, c["cotes_attendus"][X]) for X in cand])
         elif nom == "classement":
             R.egal(ou, n, "classement", liste_crochets(v), c["classement"])
         elif nom == "departages":
@@ -213,6 +236,81 @@ def _champ(R, ou, nom, v, n, c, poss, g, rev):
                                x["cachee"])
 
 
+def preambule(R, ta):
+    """Lignes communes à toutes les manches d'un texte (« Réponses au texte n », « Curseurs avant
+    le texte n », « Côtés attendus », « Considérations du texte n »), feuilles A à C2."""
+    from ec import canon
+    from ec.jeu import VALEUR, cote as sigma
+    from ec.moteur import Partie
+    from ec.tirage import Tirage
+    d = canon.lire_strict((CONTROLE.parent / "scellement" / "candidat" / "fichier-scelle-candidat.json").read_bytes())
+    P = Partie(d, Tirage(d["graine"]))
+    S = ta["seances"]
+    for fichier in ("feuille-A-seances-2-4.txt", "feuille-B-seances-4bis-7.txt", "feuille-C-seances-8-10.txt",
+                    "feuille-C2-seances-11-14.txt"):
+        for n, l in enumerate((REF / "carnet-2-cloture-a" / fichier).read_text(encoding="utf-8").split("\n"), 1):
+            m = re.match(r"^(Réponses au texte|Curseurs avant le texte|Considérations du texte) ([0-9]+)\b", l)
+            mc = re.match(r"^Côtés attendus \(([SPTL]), s = ([01])\)", l)
+            if not (m or mc):
+                continue
+            ou = f"{fichier}"
+            val = l.split(" | ")[-1]
+            if mc:
+                # texte : celui de la manche qui suit (séance k = n + 1) ; on prend la séance suivante dans le fichier
+                k = next(kk for kk in range(2, 15) if P.textes[str(kk - 1)]["tension"] == mc.group(1)
+                         and P.textes[str(kk - 1)]["sens"] == int(mc.group(2)) and _proche(fichier, kk))
+                vus = {}
+                for g, man in S[k]["manches"].items():
+                    if g != "porteur":
+                        vus.update({X: e for X, e in man["cotes_attendus"].items() if X != g})
+                for a, x in re.findall(NOMS + r" ([+\-" + MOINS + r"]?[01]|inconnu)", val):
+                    R.egal(ou, n, f"côté attendu de {a} ({mc.group(1)}, s = {mc.group(2)}, séance {k})", cote(x), vus[a])
+                continue
+            tid = m.group(2)
+            txt = P.textes[tid]
+            if m.group(1) == "Réponses au texte":
+                for a, niv, rai, x, sg in re.findall(NOMS + r" \(([1-5]),([0-9]|aucune)\) x ([0-9/]+) σ ([+" + MOINS + r"]?[01])", val):
+                    rep = (S[int(tid)]["coups"]["reponse"] if a == "porteur" else d["reponses"][tid].get(a))
+                    R.egal(ou, n, f"réponse de {a} au texte {tid}", {"niveau": int(niv), "raison": rai if rai == "aucune" else int(rai)}, rep)
+                    v = VALEUR[rep["niveau"]]
+                    R.egal(ou, n, f"x de {a} au texte {tid}", F(x), v if txt["sens"] == 1 else 1 - v)
+                    R.egal(ou, n, f"σ de {a} au texte {tid}", int(sg.replace(MOINS, "-")), sigma(rep["niveau"]))
+                presents = sorted(noms(val))
+                attendus = sorted([a for a in ("Agathe", "Nassim", "Odile", "Valentin") if a in d["reponses"][tid]]
+                                  + (["porteur"] if S[int(tid)]["coups"]["reponse"] else []))
+                if "porteur : aucune" in val:
+                    presents.remove("porteur")
+                    R.egal(ou, n, f"porteur sans réponse au texte {tid}", None, S[int(tid)]["coups"]["reponse"])
+                R.egal(ou, n, f"auteurs des réponses au texte {tid}", attendus, presents)
+            elif m.group(1) == "Curseurs avant le texte":
+                T = txt["tension"]
+                if "tous Σw 0, c 1/2, q 0" in val:
+                    for a in ("Agathe", "Nassim", "Odile", "Valentin"):
+                        cur = P.curseur_membre(a, T, int(tid) - 1)
+                        R.egal(ou, n, f"curseur de {a} avant le texte {tid}", (F(0), F(1, 2)), (cur["somme_w"], cur["c"]))
+                    continue
+                for a, sw, c, q in re.findall(NOMS + r" ([0-9/]+), ([0-9/]+), ([0-9/]+)", val):
+                    if a == "porteur":
+                        cp = [man["curseur_porteur"] for g, man in S[int(tid) + 1]["manches"].items() if g != "porteur"]
+                        R.egal(ou, n, f"curseur du porteur avant le texte {tid}", (F(sw), F(c)),
+                               (F(cp[0]["somme_w"]), F(cp[0]["c"])))
+                        continue
+                    cur = P.curseur_membre(a, T, int(tid) - 1)
+                    R.egal(ou, n, f"curseur de {a} avant le texte {tid}", (F(sw), F(c), F(q)),
+                           (cur["somme_w"], cur["c"], (F(95, 100) - cur["l"]) / F(70, 100)))
+            else:
+                for r, cc, pole in re.findall(r"r([1-4]) (contre|pour) ([01]|aucun)", val):
+                    c = txt["considerations"][int(r) - 1]
+                    R.egal(ou, n, f"considération r{r} du texte {tid}", (cc, pole if pole == "aucun" else int(pole)),
+                           (c["cote"], c["pole"]))
+
+
+def _proche(fichier, k):
+    """Séances couvertes par chaque feuille."""
+    return k in {"feuille-A-seances-2-4.txt": (2, 3, 4), "feuille-B-seances-4bis-7.txt": (5, 6, 7),
+                 "feuille-C-seances-8-10.txt": (8, 9, 10), "feuille-C2-seances-11-14.txt": (11, 12, 13, 14)}[fichier]
+
+
 def main():
     R = Releve()
     sortie = []
@@ -231,6 +329,9 @@ def main():
     sortie.append(f"Partie (a) : manches de personnages dans les feuilles A, B, C, C2 : {len(vus)} ; dans la trace C : {len(attendues)}")
     if vus != attendues:
         sortie.append(f"  manquantes dans les feuilles : {sorted(attendues - vus)} ; en trop : {sorted(vus - attendues)}")
+    n0 = R.compares
+    preambule(R, ta)
+    sortie.append(f"Lignes communes aux manches d'un texte (réponses, x, σ, curseurs, côtés attendus, considérations) : {R.compares - n0} valeurs")
     n1 = R.compares
     d = lire(REF / "manches-porteur.txt", g_defaut="porteur")
     for (k, g), champs in sorted(d.items()):

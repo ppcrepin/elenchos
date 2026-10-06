@@ -86,8 +86,10 @@ function scriptModeApp(app) {
  * Rend { navigateur, contexte, page, service, journalErreurs }.
  */
 async function ouvrir(options) {
+  const definies = {};
+  Object.keys(options || {}).forEach(k => { if (options[k] !== undefined) { definies[k] = options[k]; } });
   const o = Object.assign({ navigateur: 'chromium', fuseau: 'Europe/Paris', langue: 'fr-FR', appareil: APPAREIL, app: true, sombre: false,
-    profil: null, heure: null, reduire: false }, options);
+    profil: null, heure: null, reduire: false }, definies);
   const type = PW[o.navigateur];
   if (!type) { throw new Error('navigateur inconnu : ' + o.navigateur); }
   const d = o.appareil ? Object.assign({}, PW.devices[o.appareil]) : {};

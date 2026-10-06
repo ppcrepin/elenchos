@@ -13,6 +13,7 @@ from pathlib import Path
 
 ICI = Path(__file__).resolve().parent
 REF = ICI.parents[1].parent / "references"
+sys.path.insert(0, str(ICI.parents[1]))
 NOMS = ("Agathe", "Nassim", "Odile", "Valentin", "porteur")
 PERS = NOMS[:4]
 
@@ -356,15 +357,20 @@ def feuille_r(t):
             for v in vis:
                 lect.setdefault(k, []).append((n, {"heure": m.group(2), "visages": v}))
     for k, lst in lect.items():
-        r.eq(lst[0][0], f"En attendant séance {k}", [x for _, x in lst], S[k]["attente"]["lectures"])
+        r.eq(lst[0][0], f"En attendant séance {k} : nombre de lectures", len(lst), len(S[k]["attente"]["lectures"]))
+        for j, (n, x) in enumerate(lst):
+            r.eq(n, f"En attendant séance {k}, lecture {j + 1}", x, S[k]["attente"]["lectures"][j])
     # mesures
     meas = {0: (None, 0, 0, None, None), 1: (0, 0, 0, None, None), 2: (1, 2, 0, None, None),
             3: (2, 1, 1, ["juste", "juste_et_raison", "faux"], True), 4: (0, 1, 0, ["faux", "passe", "faux"], False)}
+    d8 = num(ls, r"^8\. MESURES")[0]
     for k, att in meas.items():
-        i, _ = num(ls, rf"^séance {k} \| ")
+        i = next(j for j, l in enumerate(ls, 1) if j > d8 and l.startswith(f"séance {k} | "))
         me = S[k]["mesures"]
         r.eq(i, f"mesures séance {k}", att, (me["jours_ecoules"], me["relire"], me["passer"],
                                            me["revelation_verdicts"], me["revelation_raison_tentee"]))
+        pres = tuple(me[x] is not None for x in ("duree_seance", "duree_deviner", "duree_repondre"))
+        r.eq(i, f"présence des durées séance {k}", {0: (True, False, False), 1: (True, False, True)}.get(k, (True, True, True)), pres)
     i, _ = num(ls, r"^copies\[0\]\.mesures")
     me = t["copies"][0]["mesures"]
     r.eq(i, "copies[0].mesures", (0, 1, 0, ["faux", "passe", "faux"], False, True, True, False),
@@ -376,11 +382,120 @@ def feuille_r(t):
     return r
 
 
+def candidat():
+    from ec import canon
+    return canon.lire_strict((ICI.parents[1].parent / "scellement" / "candidat" / "fichier-scelle-candidat.json").read_bytes())
+
+
+def complements_d(t, r):
+    """Lignes à valeurs de la feuille D que feuille_d ne lit pas (entrée, réponses, comptes, fin)."""
+    import datetime
+    ls = lignes(REF / "carnet-2-cloture-a" / "feuille-D-titres-agregats-carnet.txt")
+    S = t["seances"]
+    neutre = {"niveau": 3, "raison": "aucune"}
+    i, _ = num(ls, r"^Réponses du porteur \| §9 bis")
+    for e in ("E1", "E2", "E3"):
+        r.eq(i, f"réponse et pari du porteur à {e}", {"pari": 3, "reponse": neutre}, S[0]["coups"]["entree"][e])
+    i, _ = num(ls, r"^Toute réponse \|")
+    for k in range(1, 15):
+        r.eq(i, f"réponse du porteur séance {k}", None if k == 10 else neutre, S[k]["coups"]["reponse"])
+    i, _ = num(ls, r"^q1 de l'entrée")
+    r.eq(i, "q1 de l'entrée", "les_deux", S[0]["coups"]["carnet"]["q1"])
+    i, _ = num(ls, r"^phrase_jour \(séances 1 à 9, 11 à 14\)")
+    r.eq(i, "séances à phrase_jour", [k for k in range(1, 15) if k != 10],
+         [s["k"] for s in S if s["phrase_jour"] is not None])
+    r.eq(i, "classes des phrases du jour", {("neutre", "0", None)},
+         {(s["phrase_jour"]["classe"], s["phrase_jour"]["w"], s["phrase_jour"]["pole"]) for s in S if s["phrase_jour"]})
+    # Vérification des comptes : attributions non passées des manches des personnages, par semaine de textes
+    i, _ = num(ls, r"^Vérification des comptes")
+    tent, err = {}, {}
+    for s in S:
+        for g, m in (s["manches"] or {}).items():
+            if g == "porteur":
+                continue
+            n = s["k"] - 1
+            sem = 1 if n <= 5 else (2 if n <= 12 else 3)
+            for c in m["cartes"]:
+                if c["designe"] != "passe":
+                    tent[sem] = tent.get(sem, 0) + 1
+                    err[sem] = err.get(sem, 0) + (c["designe"] != c["auteur_compte"])
+    ag = t["agregats"]
+    r.eq(i, "tentatives par semaine (1, 2, texte 13)", (54, 72, 12), (tent[1], tent[2], tent[3]))
+    r.eq(i, "total des tentatives = 110 + 28", (138, 138), (sum(tent.values()),
+         ag["justesse_personnages_entre_eux"]["total"] + ag["justesse_personnages_sur_porteur"]["total"]))
+    r.eq(i, "erreurs par semaine (1, 2, texte 13)", (28, 42, 7), (err[1], err[2], err[3]))
+    r.eq(i, "erreurs = 138 − (53 + 8)", (77, 61), (sum(err.values()), ag["justesse_personnages_entre_eux"]["justes"]
+                                                   + ag["justesse_personnages_sur_porteur"]["justes"]))
+    i, _ = num(ls, r"^titres_tires_au_sort \| surprise de la semaine 1 seule")
+    r.eq(i, "titres_tires_au_sort (partie 7)", 1, ag["titres_tires_au_sort"])
+    i, _ = num(ls, r"^Seuil \|")
+    r.eq(i, "textes révélés avec une réponse du porteur", 12, sum(1 for k in range(1, 14) if S[k]["coups"]["reponse"]))
+    i, _ = num(ls, r"^fin \|")
+    r.eq(i, "fin", {"f2": "de_moins_en_moins", "f1": {p: {T: "milieu" for T in "SPTL"} for p in PERS}}, t["fin"])
+    i, _ = num(ls, r"^Jours de la semaine des dates")
+    j = ("lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche")
+    r.eq(i, "jours de la semaine", ["dimanche", "dimanche", "dimanche", "lundi"],
+         [j[datetime.date(2026, mo, jo).weekday()] for mo, jo in ((10, 18), (10, 25), (11, 1), (11, 2))])
+    return r
+
+
+def complements_r(t, r):
+    """Lignes à valeurs de la feuille r que feuille_r ne lit pas (réponses d'Agathe, classement, cartes)."""
+    from ec.jeu import TEXTES
+    from ec.portrait import classer, pole_raison
+    d = candidat()
+    ls = lignes(REF / "carnet-1-jour-4" / "feuille-de-calcul.txt")
+    S = t["seances"]
+    i, l = num(ls, r"^Réponses d'Agathe \(fichier candidat\)")
+    for e, niv, rai in re.findall(r"(E[1-3]) \(([1-5]),([0-9])\)", l.split("|")[-1]):
+        r.eq(i, f"réponse d'Agathe à {e}", {"niveau": int(niv), "raison": int(rai)}, d["reponses"][e]["Agathe"])
+    i, l = num(ls, r"^Curseurs de 1\.7")
+    for T, c, ll in re.findall(r"([SPL]) : c ([0-9/]+), ℓ ([0-9/]+)", l):
+        x = S[0]["portrait"]["tensions"][T]
+        r.eq(i, f"curseur de 1.7 {T}", (c, ll), (x["c"], x["l"]))
+    textes = {tid: d["textes"][tid] for tid in TEXTES}
+    for n, l in enumerate(ls, 1):
+        m = re.match(r"^(E[1-3]|texte [0-9]+) \(([SPTL]), s=([01])\) : \(([1-5]),([0-9]|aucune)\) \| (.+) \| (.+)$", l)
+        if not m:
+            continue
+        tid = m.group(1).split()[-1]
+        rep = {"niveau": int(m.group(4)), "raison": m.group(5) if m.group(5) == "aucune" else int(m.group(5))}
+        joue = S[0]["coups"]["entree"][tid]["reponse"] if tid.startswith("E") else S[int(tid)]["coups"]["reponse"]
+        r.eq(n, f"réponse du porteur au texte {tid}", rep, joue)
+        r.eq(n, f"tension, sens du texte {tid}", (m.group(2), int(m.group(3))),
+             (textes[tid]["tension"], textes[tid]["sens"]))
+        cl, w, pi = classer(joue, textes[tid])
+        regle, val = m.group(6), m.group(7)
+        classe = ("neutre" if "neutre" in regle else "tiraille" if "tiraillé" in regle else
+                  "penchant" if "penchant" in regle else "arbitrage")
+        r.eq(n, f"classe au texte {tid}", classe, cl)
+        r.eq(n, f"w au texte {tid}", F(re.search(r"w ([0-9/]+)", val).group(1)), w)
+        mp = re.search(r"vers ([01])", val)
+        r.eq(n, f"pôle servi au texte {tid}", int(mp.group(1)) if mp else None, pi)
+        mr = re.search(r"ρ\([^)]*\) = ([01]|aucun)|ρ (aucun)", regle)
+        if mr:
+            ref = mr.group(1) or mr.group(2)
+            r.eq(n, f"ρ au texte {tid}", ref if ref == "aucun" else int(ref),
+                 pole_raison(joue["raison"], textes[tid]["considerations"]))
+    for n, l in enumerate(ls, 1):
+        m = re.match(r"^Séance ([2-4]) \(texte [0-9]+\) cartes \| \| (.+)$", l)
+        if not m:
+            continue
+        k = int(m.group(1))
+        man = S[k]["manches"]["porteur"]
+        ref = [(a, bool(st), int(niv), int(rai)) for a, st, niv, rai in
+               re.findall(r"(Agathe|Nassim|Odile|Valentin)(\*?) \(([1-5]),([0-9])\)", m.group(2))]
+        r.eq(n, f"cartes du porteur séance {k}", ref,
+             [(c["auteur"], c["cachee"], man["possibles"][c["auteur"]]["niveau"], man["possibles"][c["auteur"]]["raison"])
+              for c in man["cartes"]])
+    return r
+
+
 def main():
     ta = json.loads((ICI / "carnet-2-cloture-a" / "trace-c.json").read_text(encoding="utf-8"))
     tr = json.loads((ICI / "carnet-1-jour-4" / "trace-c.json").read_text(encoding="utf-8"))
     out = []
-    for r in (feuille_d(ta), feuille_r(tr)):
+    for r in (complements_d(ta, feuille_d(ta)), complements_r(tr, feuille_r(tr))):
         out.append(f"{r.nom} : {r.n} valeurs comparées, {len(r.ecarts)} écart(s)")
         out += ["  " + e for e in r.ecarts]
     texte = "\n".join(out) + "\n"

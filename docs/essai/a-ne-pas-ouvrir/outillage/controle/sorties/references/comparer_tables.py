@@ -37,6 +37,7 @@ def main():
             ecarts.append(f"{f}, ligne {ligne} : {quoi} : feuille {ref!r} ; C {c!r}")
 
     section = None
+    etats = {}
     for i, l in enumerate(ls, 1):
         m = re.match(r"^([A-H])\. ", l)
         if m:
@@ -91,6 +92,7 @@ def main():
                         eq(i, f"w de {p} au texte {nn}", F(0), classer(d["reponses"][str(nn)][p], P.textes[str(nn)])[1])
                     eq(i, f"curseur {p} {T} inchangé au texte {nn}", P.curseur_membre(p, T, nn - 1),
                        P.curseur_membre(p, T, nn))
+                    etats.setdefault((p, T), {})[nn] = None  # = état précédent
                     continue
                 m = re.match(r"(?:E[1-3] :|rien à l'entrée :|après ([0-9]+) :)? ?\(([0-9/]+),([0-9/]+)\) → ([0-9/]+) ; ([0-9/]+) ; ([0-9/]+)( à tout moment)?", morceau)
                 if not m:
@@ -101,6 +103,7 @@ def main():
                         eq(i, f"curseur {p} {T} après {hz} (à tout moment)", P.curseur_membre(p, T, 0),
                            P.curseur_membre(p, T, hz))
                 horizon = int(m.group(1)) if m.group(1) else 0
+                etats.setdefault((p, T), {})[horizon] = (F(m.group(2)), F(m.group(4)), F(m.group(5)), i)
                 cur = P.curseur_membre(p, T, horizon)
                 swp = F(0)
                 for tid in TEXTES[:3 + horizon]:
@@ -153,6 +156,19 @@ def main():
             if m:
                 h = d["personnages"][m.group(1)]["heure_de_jeu"]
                 eq(i, f"r({m.group(1)})", (m.group(2), int(m.group(3)), int(m.group(4))), (h, minutes(h), r_journee(minutes(h))))
+    # curseurs_vus des deux traces de C (partie 3.8 : entrée + textes ≤ k − 2) contre les états de la table D
+    import json
+    for rep in ("carnet-1-jour-4", "carnet-2-cloture-a"):
+        tr = json.loads((ICI / rep / "trace-c.json").read_text(encoding="utf-8"))
+        for s in tr["seances"]:
+            for (p, T), et in etats.items():
+                h = max(0, s["k"] - 2)
+                hh = max(x for x in et if x <= h)
+                while et[hh] is None:
+                    hh = max(x for x in et if x < hh)
+                sw, c, ll, ligne = et[hh]
+                x = s["curseurs_vus"][p][T]
+                eq(ligne, f"curseurs_vus {rep} séance {s['k']} {p} {T}", (sw, c, ll), (F(x["somme_w"]), F(x["c"]), F(x["l"])))
     # récapitulatif de manches-porteur.txt contre les chiffres constants de C
     c, mans = calculer(d)
     lp = (REF / "manches-porteur.txt").read_text(encoding="utf-8").split("\n")
