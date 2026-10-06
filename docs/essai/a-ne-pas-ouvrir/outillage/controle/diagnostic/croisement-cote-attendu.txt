@@ -1,0 +1,75 @@
+Diagnostic du côté attendu (avant scellement) — programme de contrôle C
+==============================================================================
+Fichier : SHA-256 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64 ; g_R = 7a6af27c6d301be3 ; 200 parties (celles du réglage)
+Portée : manches des personnages, séances 2 à 14 ; « auteur » = auteur d'origine de la carte ;
+« attribuée juste » = le personnage désigne cet auteur sur cette carte. Semaine : 1 = textes 1 à 5,
+2 = textes 6 à 12, 13 = texte 13. Côtés dans les termes du texte (+1 favorable, −1 défavorable).
+
+1. Cartes du joueur simulé, côté attendu ±1 (fichier caché, §3, point 2)
+   s sem. attendu | cartes |     attendu = réel |    attribuée juste
+   0    1      +1 |    153 |    112/153    73.20 % |    112/153    73.20 %
+   0    1      -1 |     86 |     59/86     68.60 % |     16/86     18.60 %
+   0    2      +1 |   1116 |    678/1116   60.75 % |    348/1116   31.18 %
+   0    2      -1 |    920 |    550/920    59.78 % |    190/920    20.65 %
+   1    2      +1 |    230 |    150/230    65.22 % |     64/230    27.83 %
+   1    2      -1 |    265 |    127/265    47.92 % |     48/265    18.11 %
+   1   13      +1 |    248 |    125/248    50.40 % |    109/248    43.95 %
+   1   13      -1 |    197 |    113/197    57.36 % |     57/197    28.93 %
+  Sous-totaux (attendu +1 et −1 ensemble) :
+  s=0    semaine 1    |    239 |    171/239    71.55 % |    128/239    53.56 %
+  s=0    semaine 2    |   2036 |   1228/2036   60.31 % |    538/2036   26.42 %
+  s=1    semaine 2    |    495 |    277/495    55.96 % |    112/495    22.63 %
+  s=1    semaine 13   |    445 |    238/445    53.48 % |    166/445    37.30 %
+  s=0    semaine tout |   2275 |   1399/2275   61.49 % |    666/2275   29.27 %
+  s=1    semaine tout |    940 |    515/940    54.79 % |    278/940    29.57 %
+  s=tout semaine 1    |    239 |    171/239    71.55 % |    128/239    53.56 %
+  s=tout semaine 2    |   2531 |   1505/2531   59.46 % |    650/2531   25.68 %
+  s=tout semaine 13   |    445 |    238/445    53.48 % |    166/445    37.30 %
+  s=tout semaine tout |   3215 |   1914/3215   59.53 % |    944/3215   29.36 %
+
+1 bis. Cartes d'un personnage, côté attendu ±1 (a = p aligné)
+   s sem. attendu | cartes |     attendu = réel |    attribuée juste
+   0    1      +1 |   2294 |   2294/2294  100.00 % |   1322/2294   57.63 %
+   0    1      -1 |   2465 |   1865/2465   75.66 % |   1497/2465   60.73 %
+   0    2      +1 |   3044 |   1858/3044   61.04 % |    955/3044   31.37 %
+   0    2      -1 |   3025 |   1913/3025   63.24 % |   1147/3025   37.92 %
+   1    1      +1 |    400 |    400/400   100.00 % |    200/400    50.00 %
+   1    1      -1 |   1200 |      0/1200    0.00 % |     87/1200    7.25 %
+   1    2      +1 |   1430 |    478/1430   33.43 % |    292/1430   20.42 %
+   1    2      -1 |    862 |    862/862   100.00 % |    475/862    55.10 %
+   1   13      +1 |    571 |    571/571   100.00 % |    318/571    55.69 %
+   1   13      -1 |   1193 |    593/1193   49.71 % |    340/1193   28.50 %
+  Sous-totaux (attendu +1 et −1 ensemble) :
+  s=0    semaine 1    |   4759 |   4159/4759   87.39 % |   2819/4759   59.24 %
+  s=0    semaine 2    |   6069 |   3771/6069   62.14 % |   2102/6069   34.64 %
+  s=1    semaine 1    |   1600 |    400/1600   25.00 % |    287/1600   17.94 %
+  s=1    semaine 2    |   2292 |   1340/2292   58.46 % |    767/2292   33.46 %
+  s=1    semaine 13   |   1764 |   1164/1764   65.99 % |    658/1764   37.30 %
+  s=0    semaine tout |  10828 |   7930/10828  73.24 % |   4921/10828  45.45 %
+  s=1    semaine tout |   5656 |   2904/5656   51.34 % |   1712/5656   30.27 %
+  s=tout semaine 1    |   6359 |   4559/6359   71.69 % |   3106/6359   48.84 %
+  s=tout semaine 2    |   8361 |   5111/8361   61.13 % |   2869/8361   34.31 %
+  s=tout semaine 13   |   1764 |   1164/1764   65.99 % |    658/1764   37.30 %
+  s=tout semaine tout |  16484 |  10834/16484  65.72 % |   6633/16484  40.24 %
+
+Pour mémoire : mêmes cartes quand le côté attendu vaut 0 ou « inconnu » (cartes, attribuées juste)
+  joueur     s=0 semaine 1  attendu inconnu :  1895 cartes,   580 justes (30.61 %)
+  joueur     s=0 semaine 2  attendu 0       :   574 cartes,   115 justes (20.03 %)
+  joueur     s=0 semaine 2  attendu inconnu :   469 cartes,   124 justes (26.44 %)
+  joueur     s=1 semaine 1  attendu inconnu :   800 cartes,   111 justes (13.88 %)
+  joueur     s=1 semaine 2  attendu 0       :   103 cartes,     4 justes (3.88 %)
+  joueur     s=1 semaine 2  attendu inconnu :   425 cartes,    90 justes (21.18 %)
+  joueur     s=1 semaine 13 attendu 0       :    68 cartes,    32 justes (47.06 %)
+  joueur     s=1 semaine 13 attendu inconnu :   123 cartes,    43 justes (34.96 %)
+  personnage s=0 semaine 1  attendu 0       :  1507 cartes,   932 justes (61.84 %)
+  personnage s=0 semaine 2  attendu 0       :  1252 cartes,   634 justes (50.64 %)
+  personnage s=1 semaine 2  attendu 0       :  1485 cartes,   986 justes (66.40 %)
+
+3. Justesse du joueur simulé (toutes ses cartes servies ; auteur après redistribution)
+  semaine 1  : toutes les cartes 1496/3000 = 187/375 (49.87 %) ; sans les réponses atypiques 1165/2400 = 233/480 (48.54 %)
+  semaine 2  : toutes les cartes 1529/4000 = 1529/4000 (38.23 %) ; sans les réponses atypiques 1429/2800 = 1429/2800 (51.04 %)
+  semaine 13 : toutes les cartes 61/600 = 61/600 (10.17 %) ; sans les réponses atypiques 61/400 = 61/400 (15.25 %)
+
+4. Titres à zéro erreur (sur 200 dimanches par semaine)
+  surprise de la semaine attribuée à un texte sans attribution fausse : semaine 1 : 0 ; semaine 2 : 0
+  Le Mystère attribué avec 0 erreur : semaine 1 : 0 ; semaine 2 : 0

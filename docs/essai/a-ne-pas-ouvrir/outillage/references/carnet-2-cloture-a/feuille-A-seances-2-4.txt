@@ -183,7 +183,7 @@ auteur_compte | | = auteur
 révélation (séance 4) | justes [false, true, false] ; raison_trouvee false ; points 1 ; points_semaine 2 + 1 = 3 |
 
 ######################################################################
-SÉANCE 4 · texte 3 (P, s = 1) · Nassim absent au texte 3 (aucune réponse, aucune manche ; reste candidat)
+SÉANCE 4 · texte 3 (P, s = 1) · Nassim absent au texte 3 : aucune réponse de lui (il n'est pas une réponse possible), mais il joue cette séance, présent au texte 4 : sa manche est dans la feuille B
 ######################################################################
 Réponses au texte 3 | | Agathe (4,2) x 3/4 σ +1 ; Odile (4,2) x 3/4 σ +1 ; Valentin (4,2) x 3/4 σ +1 ; porteur (3,aucune) x 1/2 σ 0
 Curseurs avant le texte 3 (= après E2) | | Agathe 1, 3/5, 1/10 ; Odile 1, 2/5, 1/10 ; Valentin 1, 2/5, 1/10 ; porteur 0, 1/2, 0

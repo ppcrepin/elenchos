@@ -603,8 +603,10 @@ var ElenchosNoyau = (function () {
 
   /** Applique les règles 1 à 6 du §7.8, dans cet ordre, à une phrase
    *  entière (valeurs insérées, pseudo exclu). Chaque règle ne change que
-   *  des espaces U+0020 encore ordinaires. */
-  function typographier(s) {
+   *  des espaces U+0020 encore ordinaires. jusqua (facultatif) : dernière
+   *  règle appliquée (3 pour les écrans du §8.13). */
+  function typographier(s, jusqua) {
+    if (jusqua === undefined) { jusqua = 6; }
     // 1. apostrophe
     s = s.split("'").join('’');
     var c = s.split('');
@@ -621,6 +623,7 @@ var ElenchosNoyau = (function () {
       if (apres === ':' || apres === '»' || apres === '·' || avant === '«' || avant === '←') { c[i] = NBSP; }
     }
     s = c.join('');
+    if (jusqua <= 3) { return s; }
     // 4. compte à rebours « {h} h {mm} »
     s = s.replace(RE_REBOURS, function (tout, h, mm) { return h + NBSP + 'h' + NBSP + mm; });
     // 5. date « {j} {mois} {aaaa} »
