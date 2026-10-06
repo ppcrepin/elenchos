@@ -1,0 +1,103 @@
+Programme de contrôle (C) — contrôle du fichier scellé (schéma, partie 4.1)
+==============================================================================
+Fichier contrôlé : docs/essai/a-ne-pas-ouvrir/outillage/scellement/candidat/fichier-scelle-candidat.json
+SHA-256 du fichier : 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64  (30978 octets)
+Jour du scellement (paramètre, recopié du rapport de scellement) : 2026-10-06
+Commit du dépôt au moment du contrôle : 75c29d01e34813c74d293bbd0089c15893ca722c (sources identiques à ce commit)
+
+Sources lues (SHA-256) :
+  633bedeccc271c6dae5f030db81f3750d9261f8eb66fb83b551d03d8e5b802f8  docs/essai/a-ne-pas-ouvrir/textes/S-securite-liberte.md
+  c3f0e32ffbbdc7062f6ff236490e66df4f0b52c03f828fb0886885a5d8ea56bf  docs/essai/a-ne-pas-ouvrir/textes/P-precaution-innovation.md
+  c11066f0e8b43fbad33a45f94c545dc9c8d2b1d9a58d3f214dba270dcc8b1204  docs/essai/a-ne-pas-ouvrir/textes/T-tradition-changement.md
+  887b28c5c43dc64fd9bf2816197cf3f1ab7da7cf39d95a5c942dee1a2022f99c  docs/essai/a-ne-pas-ouvrir/textes/L-local-national.md
+  2b998247a6c8a3ee0aeb4f2e7ef85fc475af6c94d64985ff0d20a5dcfe1b67c5  docs/essai/a-ne-pas-ouvrir/textes/votes.md
+  87867c2968b945a97323ec7a3a2e0a203e9945893ca8165b18a7ae971f2b6f3b  docs/essai/a-ne-pas-ouvrir/profils.md
+  977a3a6552113a454d5041d89545f8ce31c6790ec36f3478a7fb26eb146eb548  docs/essai/simulation.md
+  4e7315319a1f3b79d648ebb1666e4d636cba3b08bd1023d9ab27099c5c52019b  docs/essai/a-ne-pas-ouvrir/schema.md
+  7169f8815cfd8e45b2bf717a3f2237b4b3d249b3bfb7c9ef059bdd3894bba6fc  docs/essai/a-ne-pas-ouvrir/regles-de-calcul.md  (spécification appliquée par le code, pas lue par le programme)
+  e93fb987c88a4f66e39dd78915b7ec0df9806381412e6ae04e68456f21c0d72b  docs/essai/a-ne-pas-ouvrir/devoilement.md  (spécification appliquée par le code, pas lue par le programme)
+Mêmes sources que l'agent qui scelle : oui
+
+Contrôle 1 (fichier scellé)
+------------------------------------------------------------------------------
+  Étape 1 (empreinte) : non faite — empreinte publiée non fournie
+  Étape 2 (données embarquées) : non faite — page construite non fournie
+  Étape 3 (forme) : passée — UTF-8 strict ; relu puis remis en forme canonique, mêmes octets
+  Étape 4 (schéma) : passée — schéma fermé, version 4, types, adresses, dates (toutes ≤ 2026-10-06)
+  Étape 5 (cohérence interne) : passée — rangs, groupes distincts, ponctuation et guillemets, votes, absences, réponses atypiques, fiches du §1, cercle, vecteurs ; partie 2.7 (22 lignes, règles tenues, chaque couple sert) ; partie 2.8 (17 noms)
+  Étape 6 (vecteurs de test) : passée — les trois vecteurs recalculés sont identiques
+  Étape 7 (typographie simple) : passée — 316 chaînes affichées
+  Étape 8 (fidélité aux fiches) : passée — 17 fiches et votes.md relus ; titre, lignes, vote, auteur, lien, sources, tension, sens et raisons identiques, raisons dans l'ordre tiré
+    Ordre d'affichage tiré (clé « ordre-raisons|texte|i ») : numéro de fiche → rang
+      E1 : 1→4, 2→2, 3→3, 4→1
+      E2 : 1→3, 2→1, 3→2, 4→4
+      E3 : 1→4, 2→1, 3→2, 4→3
+       1 : 1→4, 2→3, 3→1, 4→2
+       2 : 1→4, 2→3, 3→2, 4→1
+       3 : 1→2, 2→3, 3→1, 4→4
+       4 : 1→2, 2→3, 3→4, 4→1
+       5 : 1→4, 2→2, 3→3, 4→1
+       6 : 1→3, 2→1, 3→4, 4→2
+       7 : 1→3, 2→4, 3→1, 4→2
+       8 : 1→1, 2→4, 3→3, 4→2
+       9 : 1→1, 2→4, 3→3, 4→2
+      10 : 1→1, 2→4, 3→3, 4→2
+      11 : 1→2, 2→4, 3→3, 4→1
+      12 : 1→1, 2→4, 3→3, 4→2
+      13 : 1→2, 2→4, 3→1, 4→3
+      14 : 1→4, 2→2, 3→1, 4→3
+  Contrôle 1 : étapes 3 à 8 passées ; étapes 1 et 2 non faites (leur entrée manque) : le contrôle 1 n'est pas complet
+  Hors étapes (ajout de C) : graine recalculée par la dérivation du §0 = 23e3ee6ccdc3fb38 ; identique à celle du fichier
+
+Nombre de réponses atypiques lu dans profils.md : 3 ; rapport de scellement : 3 — égaux
+Longueur des tableaux reponses_atypiques : {'Agathe': 3, 'Nassim': 3, 'Odile': 3, 'Valentin': 3}
+
+Contrôle 2 (profils)
+------------------------------------------------------------------------------
+  passé
+  Tableau recalculé des réponses types (s = 1), en pôles :
+    Agathe   S simple, vers Liberté | P simple, vers Innovation | T neutre | L simple, vers Local
+    Nassim   S très, vers Liberté | P simple, vers Innovation | T neutre | L simple, vers National
+    Odile    S très, vers Sécurité | P très, vers Précaution | T très, vers Changement | L très, vers Local
+    Valentin S neutre | P simple, vers Précaution | T simple, vers Tradition | L simple, vers National
+  Laissé au Vérificateur : « aucune étiquette politique » (ne se vérifie pas par programme).
+
+Contrôle 3 (réponses)
+------------------------------------------------------------------------------
+  Condition d'application de la règle 2.2 (« pour » sert s ou aucun ; « contre » sert 1 − s ou aucun) : tenue sur les 17 textes
+  passé : les réponses des quatre personnages aux 17 textes, réponses atypiques et cote_tire compris, sont égales au recalcul
+  Procédure des réponses atypiques (ordre des textes par t("ecart|prénom|n"), étapes) :
+    Agathe : retenus [2, 10, 13]
+      étape 1 (textes 1 à 6) : retenu 2 (aucun refus)
+      étape 2 (textes 7 à 13) : retenu 10 (aucun refus)
+      étape 3 (textes 1 à 13) : retenu 13 (11 (b) texte voisin d'un écart retenu)
+    Nassim : retenus [5, 7, 12]
+      étape 1 (textes 1 à 6) : retenu 5 (3 (a) absence)
+      étape 2 (textes 7 à 13) : retenu 12 (aucun refus)
+      étape 3 (textes 1 à 13) : retenu 7 (aucun refus)
+    Odile : retenus [3, 6, 9]
+      étape 1 (textes 1 à 6) : retenu 3 (aucun refus)
+      étape 2 (textes 7 à 13) : retenu 9 (aucun refus)
+      étape 3 (textes 1 à 13) : retenu 6 (aucun refus)
+    Valentin : retenus [3, 8, 12]
+      étape 1 (textes 1 à 6) : retenu 3 (aucun refus)
+      étape 2 (textes 7 à 13) : retenu 12 (aucun refus)
+      étape 3 (textes 1 à 13) : retenu 8 (4 (b) texte voisin d'un écart retenu; 2 (b) texte voisin d'un écart retenu)
+
+Contrôle 4 (absences)
+------------------------------------------------------------------------------
+  passé : absences égales à profils.md
+  Un absent ne répond pas (étape 5) ; qu'il ne devine pas, le moteur le garantit (manche seulement si le texte du jour n'est pas dans ses absences).
+
+Annexe A du fichier caché
+------------------------------------------------------------------------------
+  passée : ordre des tensions, tensions d'entrée, sens, raisons par texte, répartition des raisons « aucun » sur S et T
+  Mesure (sans échec) : réponses « aucune » des personnages dans le fichier :
+    entrée : 0 []
+    textes devinés (1 à 13) : 3 ['Valentin au texte 1', 'Valentin au texte 4', 'Agathe au texte 6']
+    texte 14 : 1 ['Valentin au texte 14']
+    total : 4 (au plus 4 attendus)
+
+Hors de portée d'un programme (schéma, partie 4.1) : la vérité des trois champs de `vote`, l'exactitude du mandat et du groupe et leur moment, la justesse de chaque Forme d'élision, « aucune étiquette politique ».
+
+Verdict : aucun défaut trouvé (contrôle 1 partiel : étapes 1 et 2 non faites)

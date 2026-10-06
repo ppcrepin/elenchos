@@ -1,0 +1,75 @@
+Détail des manches du porteur sur le fichier candidat (à ne pas montrer aux auteurs du programme de contrôle ni des carnets de référence avant qu'ils aient rendu leur travail).
+Séance 2, texte 1 (S, s = 0) : médiane 5/8
+  Odile     niveau 5 raison 3      x 0     Σw 1    c 2/5    ℓ 22/25  q 1/10   dist 2/5     rareté 5/8   surprise 241/400
+  Nassim    niveau 1 raison 1      x 1     Σw 1    c 3/5    ℓ 22/25  q 1/10   dist 2/5     rareté 3/8   surprise 151/400
+  Agathe    niveau 2 raison 2      x 3/4   Σw 1    c 3/5    ℓ 22/25  q 1/10   dist 3/20    rareté 1/8   surprise 51/400
+  Valentin  niveau 3 raison aucune x 1/2   Σw 0    c 1/2    ℓ 19/20  q 0      dist 0       rareté 1/8   surprise 1/8
+  classement ['Odile', 'Nassim', 'Agathe', 'Valentin'] ; départages 0 ; remplacements [] ; places ['Odile', 'Nassim', 'Agathe'] ; raison cachée Agathe
+Séance 3, texte 2 (T, s = 0) : médiane 3/8
+  Odile     niveau 1 raison 1      x 1     Σw 0    c 1/2    ℓ 19/20  q 0      dist 1/2     rareté 5/8   surprise 5/8
+  Valentin  niveau 4 raison 4      x 1/4   Σw 0    c 1/2    ℓ 19/20  q 0      dist 1/4     rareté 1/8   surprise 1/8
+  Nassim    niveau 3 raison 2      x 1/2   Σw 0    c 1/2    ℓ 19/20  q 0      dist 0       rareté 1/8   surprise 1/8
+  Agathe    niveau 4 raison 3      x 1/4   Σw 0    c 1/2    ℓ 19/20  q 0      dist 1/4     rareté 1/8   surprise 1/8  [atypique]
+  classement ['Odile', 'Valentin', 'Nassim', 'Agathe'] ; départages 1 ; remplacements [] ; places ['Odile', 'Valentin', 'Nassim'] ; raison cachée Nassim
+Séance 4, texte 3 (P, s = 1) : médiane 3/4
+  Odile     niveau 4 raison 2      x 3/4   Σw 1    c 2/5    ℓ 22/25  q 1/10   dist 7/20    rareté 0     surprise 7/200  [atypique]
+  Valentin  niveau 4 raison 2      x 3/4   Σw 1    c 2/5    ℓ 22/25  q 1/10   dist 7/20    rareté 0     surprise 7/200  [atypique]
+  Agathe    niveau 4 raison 2      x 3/4   Σw 1    c 3/5    ℓ 22/25  q 1/10   dist 3/20    rareté 0     surprise 3/200
+  classement ['Odile', 'Valentin', 'Agathe'] ; départages 1 ; remplacements [] ; places ['Odile', 'Valentin', 'Agathe'] ; raison cachée Agathe ; cartes identiques servies ensemble
+Séance 5, texte 4 (S, s = 0) : médiane 5/8
+  Odile     niveau 5 raison 2      x 0     Σw 2    c 1/3    ℓ 81/100 q 1/5    dist 1/3     rareté 5/8   surprise 17/30
+  Nassim    niveau 1 raison 1      x 1     Σw 2    c 2/3    ℓ 81/100 q 1/5    dist 1/3     rareté 3/8   surprise 11/30
+  Valentin  niveau 3 raison aucune x 1/2   Σw 0    c 1/2    ℓ 19/20  q 0      dist 0       rareté 1/8   surprise 1/8
+  Agathe    niveau 2 raison 4      x 3/4   Σw 2    c 2/3    ℓ 81/100 q 1/5    dist 1/12    rareté 1/8   surprise 7/60
+  classement ['Odile', 'Nassim', 'Valentin', 'Agathe'] ; départages 0 ; remplacements [] ; places ['Odile', 'Nassim', 'Valentin'] ; raison cachée Nassim
+Séance 6, texte 5 (L, s = 0) : médiane 1/4
+  Odile     niveau 5 raison 2      x 0     Σw 1    c 2/5    ℓ 22/25  q 1/10   dist 2/5     rareté 1/4   surprise 53/200
+  Nassim    niveau 4 raison 4      x 1/4   Σw 1    c 3/5    ℓ 22/25  q 1/10   dist 7/20    rareté 0     surprise 7/200  [atypique]
+  Agathe    niveau 4 raison 2      x 1/4   Σw 1    c 2/5    ℓ 22/25  q 1/10   dist 3/20    rareté 0     surprise 3/200
+  classement ['Odile', 'Nassim', 'Agathe'] ; départages 0 ; remplacements [] ; places ['Odile', 'Nassim', 'Agathe'] ; raison cachée Agathe
+Séance 7, texte 6 (T, s = 1) : médiane 3/8
+  Odile     niveau 2 raison 4      x 1/4   Σw 1    c 3/5    ℓ 22/25  q 1/10   dist 7/20    rareté 1/8   surprise 59/400  [atypique]
+  Valentin  niveau 2 raison 4      x 1/4   Σw 1    c 2/5    ℓ 22/25  q 1/10   dist 3/20    rareté 1/8   surprise 51/400
+  Nassim    niveau 3 raison 1      x 1/2   Σw 0    c 1/2    ℓ 19/20  q 0      dist 0       rareté 1/8   surprise 1/8
+  Agathe    niveau 3 raison aucune x 1/2   Σw 1/2  c 4/9    ℓ 183/200 q 1/20   dist 1/18    rareté 1/8   surprise 35/288
+  classement ['Odile', 'Valentin', 'Nassim', 'Agathe'] ; départages 0 ; remplacements [{'place': 2, 'ecartee': 'Valentin', 'remplacante': 'Nassim'}] ; places ['Odile', 'Nassim', 'Agathe'] ; raison cachée Nassim
+Séance 8, texte 7 (S, s = 1) : médiane 3/8
+  Odile     niveau 1 raison 2      x 0     Σw 3    c 2/7    ℓ 37/50  q 3/10   dist 2/7     rareté 3/8   surprise 39/112
+  Agathe    niveau 4 raison 3      x 3/4   Σw 3    c 5/7    ℓ 37/50  q 3/10   dist 1/28    rareté 3/8   surprise 153/560
+  Nassim    niveau 2 raison 2      x 1/4   Σw 3    c 5/7    ℓ 37/50  q 3/10   dist 13/28   rareté 1/8   surprise 127/560  [atypique]
+  Valentin  niveau 3 raison 4      x 1/2   Σw 0    c 1/2    ℓ 19/20  q 0      dist 0       rareté 1/8   surprise 1/8
+  classement ['Odile', 'Agathe', 'Nassim', 'Valentin'] ; départages 0 ; remplacements [] ; places ['Odile', 'Agathe', 'Valentin'] ; raison cachée Valentin
+Séance 9, texte 8 (P, s = 0) : médiane 3/4
+  Odile     niveau 5 raison 1      x 0     Σw 2    c 1/2    ℓ 81/100 q 1/5    dist 1/2     rareté 3/4   surprise 7/10
+  Valentin  niveau 2 raison 3      x 3/4   Σw 2    c 1/2    ℓ 81/100 q 1/5    dist 1/4     rareté 0     surprise 1/20  [atypique]
+  Agathe    niveau 2 raison 3      x 3/4   Σw 2    c 2/3    ℓ 81/100 q 1/5    dist 1/12    rareté 0     surprise 1/60
+  Nassim    niveau 2 raison 3      x 3/4   Σw 1    c 3/5    ℓ 22/25  q 1/10   dist 3/20    rareté 0     surprise 3/200
+  classement ['Odile', 'Valentin', 'Agathe', 'Nassim'] ; départages 0 ; remplacements [] ; places ['Odile', 'Valentin', 'Agathe'] ; raison cachée Agathe ; cartes identiques servies ensemble
+Séance 10, texte 9 (L, s = 0) : médiane 3/4
+  Agathe    niveau 4 raison 1      x 1/4   Σw 2    c 1/3    ℓ 81/100 q 1/5    dist 1/12    rareté 1/2   surprise 5/12
+  Odile     niveau 2 raison 3      x 3/4   Σw 2    c 1/3    ℓ 81/100 q 1/5    dist 5/12    rareté 0     surprise 1/12  [atypique]
+  Nassim    niveau 2 raison 3      x 3/4   Σw 2    c 1/2    ℓ 81/100 q 1/5    dist 1/4     rareté 0     surprise 1/20
+  Valentin  niveau 2 raison 2      x 3/4   Σw 1    c 3/5    ℓ 22/25  q 1/10   dist 3/20    rareté 0     surprise 3/200
+  classement ['Agathe', 'Odile', 'Nassim', 'Valentin'] ; départages 0 ; remplacements [] ; places ['Agathe', 'Odile', 'Valentin'] ; raison cachée Valentin
+Séance 11, texte 10 (S, s = 0) : médiane 3/8
+  Agathe    niveau 4 raison 4      x 1/4   Σw 4    c 3/4    ℓ 67/100 q 2/5    dist 1/2     rareté 1/8   surprise 11/40  [atypique]
+  Valentin  niveau 3 raison 2      x 1/2   Σw 0    c 1/2    ℓ 19/20  q 0      dist 0       rareté 1/8   surprise 1/8
+  classement ['Agathe', 'Valentin'] ; départages 0 ; remplacements [] ; places ['Agathe', 'Valentin'] ; raison cachée Valentin
+Séance 12, texte 11 (T, s = 0) : médiane 1/2
+  Odile     niveau 1 raison 1      x 1     Σw 2    c 1/2    ℓ 81/100 q 1/5    dist 1/2     rareté 1/2   surprise 1/2
+  Valentin  niveau 4 raison 2      x 1/4   Σw 2    c 1/3    ℓ 81/100 q 1/5    dist 1/12    rareté 1/4   surprise 13/60
+  Agathe    niveau 3 raison 4      x 1/2   Σw 1/2  c 4/9    ℓ 183/200 q 1/20   dist 1/18    rareté 0     surprise 1/360
+  Nassim    niveau 3 raison 1      x 1/2   Σw 0    c 1/2    ℓ 19/20  q 0      dist 0       rareté 0     surprise 0
+  classement ['Odile', 'Valentin', 'Agathe', 'Nassim'] ; départages 0 ; remplacements [] ; places ['Odile', 'Valentin', 'Nassim'] ; raison cachée Nassim
+Séance 13, texte 12 (P, s = 0) : médiane 1/2
+  Odile     niveau 5 raison 4      x 0     Σw 3    c 3/7    ℓ 37/50  q 3/10   dist 3/7     rareté 1/2   surprise 67/140
+  Nassim    niveau 4 raison 4      x 1/4   Σw 2    c 2/3    ℓ 81/100 q 1/5    dist 5/12    rareté 1/4   surprise 17/60  [atypique]
+  Valentin  niveau 2 raison 2      x 3/4   Σw 3    c 4/7    ℓ 37/50  q 3/10   dist 5/28    rareté 1/4   surprise 8/35  [atypique]
+  Agathe    niveau 2 raison 2      x 3/4   Σw 3    c 5/7    ℓ 37/50  q 3/10   dist 1/28    rareté 1/4   surprise 13/70
+  classement ['Odile', 'Nassim', 'Valentin', 'Agathe'] ; départages 0 ; remplacements [] ; places ['Odile', 'Nassim', 'Valentin'] ; raison cachée Valentin
+Séance 14, texte 13 (L, s = 1) : médiane 3/4
+  Odile     niveau 1 raison 1      x 0     Σw 3    c 3/7    ℓ 37/50  q 3/10   dist 3/7     rareté 3/4   surprise 183/280
+  Agathe    niveau 4 raison 2      x 3/4   Σw 3    c 2/7    ℓ 37/50  q 3/10   dist 13/28   rareté 0     surprise 39/280  [atypique]
+  Nassim    niveau 4 raison 2      x 3/4   Σw 3    c 4/7    ℓ 37/50  q 3/10   dist 5/28    rareté 0     surprise 3/56
+  Valentin  niveau 4 raison 4      x 3/4   Σw 3/2  c 7/11   ℓ 169/200 q 3/20   dist 5/44    rareté 0     surprise 3/176
+  classement ['Odile', 'Agathe', 'Nassim', 'Valentin'] ; départages 0 ; remplacements [{'place': 3, 'ecartee': 'Nassim', 'remplacante': 'Valentin'}] ; places ['Odile', 'Agathe', 'Valentin'] ; raison cachée Valentin

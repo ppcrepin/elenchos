@@ -1,0 +1,75 @@
+FICHIER SCELLÉ CANDIDAT — NE PAS PUBLIER CETTE EMPREINTE (candidat, pas le fichier scellé final)
+Programme : docs/essai/a-ne-pas-ouvrir/outillage/scellement/sceller.py
+Fichier : /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/scellement-final/fichier-scelle-candidat.json
+Taille : 30978 octets
+SHA-256 (candidat) : 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64
+Graine : 23e3ee6ccdc3fb38 = 16 premiers chiffres hex de SHA-256("elenchos-essai|graine|7f4d367278ecf07b01ebad883b7ec75cf7840820"), comme l'écrit le §0 de simulation.md (dérivation et valeur vérifiées)
+Réglage : 3 réponses atypiques par personnage ; seuils_stricts = false
+Jour du scellement utilisé pour l'étape 4 : 2026-10-06
+Sources lues (SHA-256 des octets ; schéma 4.1, étape 8, « Mêmes sources ») :
+  977a3a6552113a454d5041d89545f8ce31c6790ec36f3478a7fb26eb146eb548  docs/essai/simulation.md
+  87867c2968b945a97323ec7a3a2e0a203e9945893ca8165b18a7ae971f2b6f3b  docs/essai/a-ne-pas-ouvrir/profils.md
+  7169f8815cfd8e45b2bf717a3f2237b4b3d249b3bfb7c9ef059bdd3894bba6fc  docs/essai/a-ne-pas-ouvrir/regles-de-calcul.md
+  4e7315319a1f3b79d648ebb1666e4d636cba3b08bd1023d9ab27099c5c52019b  docs/essai/a-ne-pas-ouvrir/schema.md
+  2b998247a6c8a3ee0aeb4f2e7ef85fc475af6c94d64985ff0d20a5dcfe1b67c5  docs/essai/a-ne-pas-ouvrir/textes/votes.md
+  633bedeccc271c6dae5f030db81f3750d9261f8eb66fb83b551d03d8e5b802f8  docs/essai/a-ne-pas-ouvrir/textes/S-securite-liberte.md
+  c3f0e32ffbbdc7062f6ff236490e66df4f0b52c03f828fb0886885a5d8ea56bf  docs/essai/a-ne-pas-ouvrir/textes/P-precaution-innovation.md
+  c11066f0e8b43fbad33a45f94c545dc9c8d2b1d9a58d3f214dba270dcc8b1204  docs/essai/a-ne-pas-ouvrir/textes/T-tradition-changement.md
+  887b28c5c43dc64fd9bf2816197cf3f1ab7da7cf39d95a5c942dee1a2022f99c  docs/essai/a-ne-pas-ouvrir/textes/L-local-national.md
+
+Vérifications (schema.md partie 4.1) : étapes 1 et 2 non faites (pas d'empreinte publiée, pas de page construite) ; étapes 3 à 8 passées ; contrôles en plus passés.
+  - Sources croisées : tensions = ordre retenu ; fiches = votes.md (scrutin, issue, date, lien) ; profils = table de réponse type et table des d de profils.md.
+  - Étape 3 (forme) : UTF-8 strict, sans doublon de clé, sans nombre à virgule ; remis en forme canonique, mêmes octets.
+  - Étape 4 (schéma) : fermé, types et valeurs permis ; 404 chaînes en NFC, sans caractère de contrôle ; adresses conformes à l'expression de l'étape 4 (https, hôte de l'Assemblée, sans requête ni fragment) ; dates de vote existantes et au plus tard le 2026-10-06.
+  - Étape 5 (cohérence) : 17 textes, 4 personnages ; rangs, groupes distincts, ponctuation, issue/étape ; réponses ⇔ absences ; atypiques sur des réponses quotidiennes ; fiches = §1 ; cercle Amis/Agathe ; vecteurs ; partie 2.7 (22 lignes, règles tenues, 17 couples (chambre, sigle) employés = tableau) ; partie 2.8 (17 noms = noms à initiale demandant un choix ; formes et élisions accordées).
+  - Étape 6 (vecteurs) : les trois vecteurs recalculés à partir de la graine sont identiques.
+  - Étape 7 (typographie simple) : 316 chaînes affichées contrôlées.
+  - Étape 8 (fidélité aux fiches) : second lecteur, à la lettre de l'étape 8 ; les 17 textes (titre, lignes, auteur, lien, sources, tension, sens, vote, quatre raisons au rang donné par « ordre-raisons ») sont ceux des fiches et de votes.md. « Mêmes sources » : SHA-256 plus bas.
+  - Contrôles en plus (profils.md) : 3 réponses atypiques par personnage, contraintes (a) à (d) tenues ; côté opposé au niveau simple.
+  - Contrôles en plus (contraintes calculables de profils.md) : Agathe et Nassim du même côté sur S et P, neutres sur T, opposés sur L ; Odile forte partout, |d| ≥ 0,56 ; aucun bloc ; chaque tension a un personnage de chaque côté (S 1/1/2, P 2/0/2, T 1/2/1, L 2/0/2 : pôle 0 / neutre / pôle 1) ; corrigé de F1 (« Au milieu » si |p − 0,5| < 0,1) égal au tableau.
+  - Contrôles en plus (annexe A) : côtés et pôles présents, au plus une raison hors tension par texte, S devinés 2 avec / 2 sans, T 2 avec / 1 sans, tensions jamais deux jours de suite, sens couverts ; chaque raison « pour » sert le pôle s et chaque raison « contre » le pôle 1 − s (lecture de « du pôle visé » sans effet).
+
+Vecteurs de test :
+  t("raison|Odile|E2|3") : chaîne 23e3ee6ccdc3fb38|raison|Odile|E2|3 ; hex8 c1e16f5b ; N 3252776795
+  t("hasard|Nassim|12|porteur") : chaîne 23e3ee6ccdc3fb38|hasard|Nassim|12|porteur ; hex8 ae595feb ; N 2925092843
+  t("surprise-semaine|2|11") : chaîne 23e3ee6ccdc3fb38|surprise-semaine|2|11 ; hex8 f00c6340 ; N 4027343680
+
+Ordre d'affichage des raisons (numéro dans la fiche → rang ; tiré par t("ordre-raisons|texte|numéro")) :
+  E1  : R4→1 (contre), R2→2 (pour), R3→3 (contre), R1→4 (pour)
+  E2  : R2→1 (pour), R3→2 (contre), R1→3 (pour), R4→4 (contre)
+  E3  : R2→1 (pour), R3→2 (contre), R4→3 (contre), R1→4 (pour)
+  1   : R3→1 (contre), R4→2 (contre), R2→3 (pour), R1→4 (pour)
+  2   : R4→1 (contre), R3→2 (contre), R2→3 (pour), R1→4 (pour)
+  3   : R3→1 (contre), R1→2 (pour), R2→3 (pour), R4→4 (contre)
+  4   : R4→1 (contre), R1→2 (pour), R2→3 (pour), R3→4 (contre)
+  5   : R4→1 (contre), R2→2 (pour), R3→3 (contre), R1→4 (pour)
+  6   : R2→1 (pour), R4→2 (contre), R1→3 (pour), R3→4 (contre)
+  7   : R3→1 (contre), R4→2 (contre), R1→3 (pour), R2→4 (pour)
+  8   : R1→1 (pour), R4→2 (contre), R3→3 (contre), R2→4 (pour)
+  9   : R1→1 (pour), R4→2 (contre), R3→3 (contre), R2→4 (pour)
+  10  : R1→1 (pour), R4→2 (contre), R3→3 (contre), R2→4 (pour)
+  11  : R4→1 (contre), R1→2 (pour), R3→3 (contre), R2→4 (pour)
+  12  : R1→1 (pour), R4→2 (contre), R3→3 (contre), R2→4 (pour)
+  13  : R3→1 (contre), R1→2 (pour), R4→3 (contre), R2→4 (pour)
+  14  : R3→1 (contre), R2→2 (pour), R4→3 (contre), R1→4 (pour)
+
+Chiffres constants du fichier (regles-de-calcul.md §9 bis ; ne dépendent pas des parties jouées) :
+  Réponses scellées : 64 (entrée 12, textes quotidiens 52, dont devinables, textes 1 à 13 : 48).
+  Réponses atypiques : 12 sur 48 réponses devinables ; par personnage : Agathe 3 (textes 2 [côté tiré +1], 10, 13) ; Nassim 3 (textes 5, 7, 12) ; Odile 3 (textes 3, 6, 9) ; Valentin 3 (textes 3, 8, 12).
+  Raisons « aucune » parmi les réponses scellées : 4 — Valentin au texte 1, Valentin au texte 4, Agathe au texte 6, Valentin au texte 14 ; entrée 0, textes devinés 3, texte 14 1. Annexe A attend au plus 3 sur les textes devinés (Valentin 1 et 4, Agathe 6), 1 au texte 14 (Valentin), 0 à l'entrée.
+  Écran 5.12 : impossible. Chaque texte deviné (1 à 13) a au moins 2 réponses de personnages : la manche du porteur n'est jamais vide, ni celle d'un personnage présent.
+  Réponses neutres scellées : 11. Issues des votes : adopte 16, rejete 0, sans_vote_ensemble 1 (« Texte rejeté. » n'apparaît donc jamais).
+  Manches du porteur (séances 2 à 14, textes 1 à 13) : 38 cartes servies (par manche : [3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3]).
+  Part de réponses atypiques parmi les cartes servies au porteur : 10 sur 38 (le même compte avant et après redistribution des cartes identiques).
+  Remplacements de cartes identiques dans sa manche : 2. Manches où des cartes identiques restent servies ensemble : 2 (textes 3, 8), soit 5 cartes.
+  Raisons « aucune » parmi ses cartes : 2 affichées, 0 cachées. Carte à raison cachée déplacée (§4.4) : 2 (textes 4, 6).
+  Égalités de classement dans sa manche (groupes de surprise exactement égale) : 2 — texte 2 : 1, texte 3 : 1.
+  Cases personnage × tension vues par le porteur (cartes des manches révélées jusqu'à la séance 15, plus les trois réponses d'Agathe à l'entrée) :
+              S   P   T   L
+    Agathe      4   3   1   4
+    Nassim      2   1   3   1
+    Odile       3   3   3   3
+    Valentin    3   3   2   2
+  Cases vues moins de 2 fois (signalées au §9 bis) : Agathe × T (1), Nassim × P (1), Nassim × L (1).
+
+SHA-256 (candidat) : 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64
