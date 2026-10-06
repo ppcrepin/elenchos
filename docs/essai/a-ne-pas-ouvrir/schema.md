@@ -774,6 +774,7 @@ D'où vient ce fichier :
     - q1 suppose au moins un « Ça alors ! » à la révélation de la séance (à la séance 0 : un pari faux), et `"les_deux"` en suppose au moins deux.
     - q2 n'existe pas à la séance 15.
     - q3 est l'un des choix proposés à cette séance (§8.3 ; règle d'UX sur les « moments vécus »).
+    - En mode `moteur`, où `etapes` vaut `null`, q2 est accepté aux séances 1 à 14 et q3 parmi tous les choix du tableau du §8.3, sans le filtre des écrans : le carnet n'existe pas dans ce mode.
 11. **Attente.** `attente` n'est non nulle qu'aux séances 1 à 14 dont la journée est finie, puisque 2.5 ne s'affiche qu'alors (§7.1). Elle a alors au moins une lecture.
 12. **Étapes** (mode `interface`).
     - `etapes` vaut `null` aux séances 0 et 15.
@@ -787,6 +788,7 @@ D'où vient ce fichier :
 14. **Copies.**
     - `k` va de 0 à K, sans dépasser 14 : une copie en cours d'essai ne peut pas avoir lieu à la clôture (§8.12) ; les copies sont dans l'ordre du jeu.
     - Le harnais ne défait jamais un geste (partie 3.4). Donc chaque `designe`, `raison` ou `reponse` non nulle d'une copie se retrouve, identique, dans les coups de sa séance (une copie faite avant « Valider » n'a que des `null` dans `deviner` : règle 7, fragment 6).
+    - Les règles 7 et 10 s'appliquent aussi aux `coups` d'une copie. À la séance 0, chaque `reponse`, `pari` et `pseudo` non nul d'une copie est identique à celui de la séance.
     - `relire` y est au plus égal à celui de la séance.
     - `versions` de la copie est un début de `versions` de la séance.
     - Un `etapes` vrai dans la copie l'est aussi dans la séance.
@@ -914,7 +916,7 @@ La page garde ses vérifications V1 à V5 (§0, §8.11). À l'étape V4, elle v�
 ### 4.2 Les traces
 
 1. P écrit sa trace. Le harnais écrit son journal.
-2. C écrit sa trace à partir du fichier scellé, du journal et du fichier des durées, qu'il extrait de la trace de P (partie 3.12). C'est la seule chose qu'il en lit, pour pouvoir écrire les mêmes textes de carnet. Il place chaque durée là où sa présence est attendue (partie 3.10, d'après `etapes`). Une durée présente là où elle n'est pas attendue, ou absente là où elle l'est, est un défaut, listé avec son chemin.
+2. C écrit sa trace à partir du fichier scellé, du journal et du fichier des durées, qu'il extrait de la trace de P (partie 3.12). C'est la seule chose qu'il en lit, pour pouvoir écrire les mêmes textes de carnet. Il place chaque durée là où sa présence est attendue (partie 3.10, d'après `etapes`). Une durée présente là où elle n'est pas attendue, ou absente là où elle l'est, est un défaut, listé avec son chemin. Dans sa trace, C écrit alors 0 pour une durée attendue mais absente, et `null` pour une durée présente mais non attendue : la comparaison montre aussi l'écart.
 3. Dans les deux traces, toute valeur entière dont la clé commence par `duree_` devient `0`, et `null` reste `null`. La présence d'une durée est ainsi comparée, sa valeur jamais.
 4. Les deux traces sont mises en forme canonique (partie 1.1), puis comparées octet pour octet.
 5. Si elles sont identiques, le contrôle est passé. Sinon, c'est un défaut. L'outil liste alors chaque différence avec son chemin et les deux valeurs. Le chemin s'écrit en JSON Pointer (RFC 6901), par exemple `/seances/9/manches/porteur/ordre/1`. Le Vérificateur lit cette liste (§9).
@@ -1020,7 +1022,7 @@ Exemple inventé, un texte quotidien en première lecture : 2.7d vaut `["Et l’
 11. **Groupes** : §7.10 (UX) et partie 2.7. La colonne `groupe` admet une espace entre deux lettres (groupe écrit en toutes lettres par l'institution) ; une ligne peut porter plusieurs identifiants quand le groupe a changé d'organe sans changer de sigle. Le groupe ne se coupe jamais à son trait d'union ; à son espace, il peut passer à la ligne comme deux mots ordinaires (UX, §7.10). Les champs du fichier scellé gardent leur type et leur sens : pas de nouvelle version (partie 5).
 12. **Élision nom par nom** : §7.6 (UX). Le `depute` d'une considération porte `elision` (partie 2.3), fixé par le tableau de la partie 2.8 et contrôlé en partie 4.1, étapes 4 et 5 ; la page ne regarde plus l'initiale. Le fichier scellé passe en version 4 ; la trace reste en version 1 (partie 5).
 13. **Version de la page et copies du carnet** : §8.12. Chaque séance de la trace porte l'entrée `versions` (partie 3.3) ; chaque copie du carnet porte les coups, les versions et les mesures de l'instant de la copie (partie 3.2). Le harnais les consigne dans son journal ; C écrit à partir d'eux la ligne « Version de la page » et le bloc copié. Mis à l'épreuve en partie 4.4.
-14. **Durées au premier plan** : §8.4 (Game design). `duree_*` ne compte que le temps où l'app est au premier plan, jusqu'à « Aller au jour suivant » compris (partie 3.10) ; la valeur des durées n'est jamais comparée (leur présence l'est, point 18). Avec le point 13, la trace et le journal passent en version 2 ; le fichier scellé reste en version 4 (partie 5).
+14. **Durées au premier plan** : §8.4 (Game design). `duree_*` ne compte que le temps où l'app est au premier plan ; `duree_seance` court jusqu'à « Aller au jour suivant » compris, `duree_deviner` et `duree_repondre` s'arrêtent comme le disent les §8.4 et §8.12 (partie 3.10) ; la valeur des durées n'est jamais comparée (leur présence l'est, point 18). Avec le point 13, la trace et le journal passent en version 2 ; le fichier scellé reste en version 4 (partie 5).
 15. **Fidélité aux fiches** (relecture de C, A2) : partie 4.1, étape 8 ; formes des lignes lues ; SHA-256 des sources comparés à ceux du rapport de scellement.
 16. **Ordre du contrôle 1** (relecture de C, A5) : une étape sans son entrée est « non faite » ; cas du fichier candidat ; écriture de l'empreinte publiée.
 17. **Lecture des sources et contrôles 2 à 4** (relecture de C, A6) : partie 4.1 ; adresses de l'Assemblée seulement ; guillemets aux bords.

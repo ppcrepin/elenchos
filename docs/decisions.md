@@ -187,6 +187,10 @@ Relevés par Game design, Cohérence et UX en écrivant la simulation de l'essai
 - **C-024 — Où vit Le Sans-Faute après son annonce.** Le badge rare n'a pas de place dans les écrans 4.2, 4.3 ni 5.2 ; l'essai ne le montre qu'en 3.2 et dans le carnet. Relevé par UX.
 - **C-025 — Deux membres avec le même pseudo.** Rien n'empêche qu'un pseudo soit celui d'un autre membre du cercle ; l'essai refuse seulement les prénoms des quatre personnages. Relevé par UX.
 
+### C-026 — Le Pas de Côté : règle incomplète · Constaté, non tranché (6 octobre 2026)
+
+À soumettre au porteur au bilan de l'étape 4, avec C-007 à C-025. La règle 14 de `produit.md` (« une réponse contre son propre curseur, alors que ce curseur est déjà net ») ne dit ni quel curseur (avant ou après la réponse), ni quelles réponses, ni quels membres sont regardés. Sans effet sur l'essai : aucun curseur ne peut y devenir net (`docs/essai/simulation.md`, §5.4). Relevé par Front-end et Game design en préparant la fabrication.
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
