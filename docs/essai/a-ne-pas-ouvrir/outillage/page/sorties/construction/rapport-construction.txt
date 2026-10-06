@@ -1,0 +1,21 @@
+Rapport de construction de la page de l'essai
+Version de la page : 1
+Fichier scellé : SHA-256 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64
+
+porteur/index.html : 450038 octets, SHA-256 0b556e305d766f185ef25c57639bc1e74ed6db3e1284d7ccfda6c82d3d7306f1
+temoin/index.html : 457194 octets, SHA-256 a73c4b3bef2aee5a15ab39e52aabbf5c6ac4ed008a9da001e833d49a5b5b4236
+version.txt : 2 octets, SHA-256 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+
+Politique de sécurité, version du porteur :
+default-src 'none'; script-src 'sha256-luj+h8d2ITRWiuJZNGVksi15PKyK/a/peNlF1+r3sCo='; style-src 'sha256-zP2WteVqvxX74enWgAOuI8fQRitL+ULNDLvJA9hmpBA='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'
+
+Politique de sécurité, version témoin :
+default-src 'none'; script-src 'sha256-ne1drDfMpXeLY6Mo5fCiW0+sfBVftissbLQeYOFKXuI=' 'sha256-luj+h8d2ITRWiuJZNGVksi15PKyK/a/peNlF1+r3sCo='; style-src 'sha256-zP2WteVqvxX74enWgAOuI8fQRitL+ULNDLvJA9hmpBA='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'
+
+Polices :
+alegreya-700.woff2 : SHA-256 adfe23802afbc25a0122b1298b0d0c59ba1d14e991044286550d66b3910a475d
+alegreya-italique-500.woff2 : SHA-256 3f8e4edeb2cb39853c8dde550b18ea09b68577f822147d820e0e5c687a58d330
+alegreya-italique-700.woff2 : SHA-256 282886b01571de621b9c16a73cf1fdf994f110258abd3a0b1a8363c51cf35299
+alegreya-sans-400.woff2 : SHA-256 6dea87b3f48b1f27810eea454e1f19969668c8844d3c3d9101708ebcf00db93e
+alegreya-sans-700.woff2 : SHA-256 bf00f3ff909c8f38b0e97d74070c543c69c4d0768586cd3f2f6fd206a67c9b2d
+alegreya-sans-italique-400.woff2 : SHA-256 4e92ae206eabfadb744f502c9eb91965474e7bc88f31d20a81c19c33b61ff768
