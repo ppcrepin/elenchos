@@ -1,0 +1,42 @@
+Journal « j » rejoué par C (mode moteur) — manche d'Odile aux séances 2, 5 et 8
+Journal : SHA-256 1b5d16ac3fb7340f76be366c18d430af615b10dcdd49aba7e4a905611d03a4fb ; défauts au rejeu : aucun
+
+Séance 2, texte 1 (S, s = 0)
+  possibles (auteur : niveau, raison) : Agathe : 2, 2, Nassim : 1, 1, Valentin : 3, aucune, porteur : 5, 4
+  classement ['porteur', 'Nassim', 'Agathe', 'Valentin'] ; places ['porteur', 'Nassim', 'Agathe'] ; raison cachée : Agathe
+  cartes dans l'ordre d'affichage :
+    porteur   Très favorable    raison 4                 → Odile désigne porteur
+    Nassim    Très défavorable  raison 1                 → Odile désigne Nassim
+    Agathe    Défavorable       raison 2       (cachée)  → Odile désigne Agathe, raison devinée 1
+  rangs {'Nassim': 1, 'porteur': 2, 'Valentin': 3, 'Agathe': 4}
+  cotes_attendus {'Agathe': -1, 'Nassim': -1, 'Valentin': 0, 'porteur': 'inconnu'}
+  curseur_porteur : somme_w 0, c 1/2
+  total 5 ; affectation (rangs dans l'ordre des cartes) : (2, 1, 4)
+  révélation à la séance 3 : justes [True, True, True], raison trouvée False
+
+Séance 5, texte 4 (S, s = 0)
+  possibles (auteur : niveau, raison) : Agathe : 2, 4, Nassim : 1, 1, Valentin : 3, aucune, porteur : 5, 2
+  classement ['porteur', 'Nassim', 'Valentin', 'Agathe'] ; places ['porteur', 'Nassim', 'Valentin'] ; raison cachée : Nassim
+  cartes dans l'ordre d'affichage :
+    porteur   Très favorable    raison 2                 → Odile désigne porteur
+    Valentin  Neutre            raison aucune            → Odile désigne Valentin
+    Nassim    Très défavorable  raison 1       (cachée)  → Odile désigne Agathe, raison devinée 1
+  rangs {'Valentin': 1, 'Agathe': 2, 'porteur': 3, 'Nassim': 4}
+  cotes_attendus {'Agathe': -1, 'Nassim': -1, 'Valentin': 0, 'porteur': 1}
+  curseur_porteur : somme_w 1, c 2/5
+  total 6 ; affectation (rangs dans l'ordre des cartes) : (3, 1, 2)
+  révélation à la séance 6 : justes [True, True, False], raison trouvée False
+
+Séance 8, texte 7 (S, s = 1)
+  possibles (auteur : niveau, raison) : Agathe : 4, 3, Nassim : 2, 2, Valentin : 3, 4, porteur : 1, 1
+  classement ['porteur', 'Agathe', 'Nassim', 'Valentin'] ; places ['porteur', 'Agathe', 'Valentin'] ; raison cachée : Valentin
+  cartes dans l'ordre d'affichage :
+    Agathe    Favorable         raison 3                 → Odile désigne Nassim
+    Valentin  Neutre            raison 4       (cachée)  → Odile désigne Valentin, raison devinée 4
+    porteur   Très défavorable  raison 1                 → Odile désigne porteur
+  rangs {'Valentin': 1, 'porteur': 2, 'Nassim': 3, 'Agathe': 4}
+  cotes_attendus {'Agathe': 1, 'Nassim': 1, 'Valentin': 0, 'porteur': -1}
+  curseur_porteur : somme_w 2, c 1/3
+  total 6 ; affectation (rangs dans l'ordre des cartes) : (3, 1, 2)
+  révélation à la séance 9 : justes [False, True, True], raison trouvée True
+
