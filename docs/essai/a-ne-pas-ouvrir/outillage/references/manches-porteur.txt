@@ -1,0 +1,290 @@
+LES 13 MANCHES DU PORTEUR (séances 2 à 14, textes 1 à 13), CALCULÉES À LA MAIN
+Elles ne dépendent que du fichier candidat (§8.4 : la réponse du devineur n'entre jamais dans le calcul). Elles valent donc pour toute partie : carnet 1 (séances 2 à 4) et carnet 2, partie (a) (séances 2 à 14).
+Règles : regles-de-calcul.md §4.1 à §4.4 ; simulation.md §4.5. Tirages : tirages.txt (on compare par N). Curseurs « avant le texte » : commun-tables.txt, D. x : commun-tables.txt, B.
+Format : grandeur (nom du schéma, partie 3.6) | règle | valeur.
+Les cartes s'écrivent (niveau, raison). « Classement » = ordre de l'étape 1 (surprise décroissante, départage par t("surprise|porteur|k|auteur") croissant).
+
+----------------------------------------------------------------------
+Séance 2 · texte 1 (S, s = 0) · devineur porteur
+----------------------------------------------------------------------
+possibles | §4.1 : membres ≠ porteur ayant répondu au texte 1 | Agathe (2,2), Nassim (1,1), Odile (5,3), Valentin (3,aucune)
+x | §4.2, x = 1 − v | Agathe 3/4 ; Nassim 1 ; Odile 0 ; Valentin 1/2
+mediane | §4.2, médiane des x {0, 1/2, 3/4, 1}, nombre pair → moyenne des deux centrales | (1/2 + 3/4)/2 = 5/8
+somme_w, c, l, q (auteurs) | §5.2 ; §4.2 (curseur avant le texte 1) | Agathe 1, 3/5, 22/25, 1/10 ; Nassim 1, 3/5, 22/25, 1/10 ; Odile 1, 2/5, 22/25, 1/10 ; Valentin 0, 1/2, 19/20, 0
+distance | §4.2, |x − c| | Agathe 3/20 ; Nassim 2/5 ; Odile 2/5 ; Valentin 0
+rarete | §4.2, |x − médiane| | Agathe 1/8 ; Nassim 3/8 ; Odile 5/8 ; Valentin 1/8
+surprise | §4.2, q·distance + (1 − q)·rareté | Agathe 3/200 + 9/80 = 51/400 ; Nassim 2/50 + 27/80 = 151/400 ; Odile 2/50 + 45/80 = 241/400 ; Valentin 1/8
+classement | §4.3, étape 1 | Odile, Nassim, Agathe, Valentin
+departages | schéma 3.6 : groupes de surprises exactement égales | 0
+places 1 et 2 | §4.3, étape 2 | Odile, Nassim
+place 3 | §4.3, étape 2 : plus petit t("hasard|porteur|2|·") parmi Agathe (499727797) et Valentin (4268570603) | Agathe
+remplacements | §4.3, étape 3 : (5,3), (1,1), (2,2) deux à deux différentes | aucun
+places | après l'étape 3 | [Odile, Nassim, Agathe]
+raison_cachee | §4.4 : carte de la place 3, raison 2 ≠ « aucune » | Agathe
+ordre | §4.5, t("ordre|porteur|2|·") croissant : Odile 3351370247, Agathe 3756946602, Nassim 4149946734 | [Odile, Agathe, Nassim]
+cartes | §4.5 | 1. Odile (5,3) « Très favorable », cachee false ; 2. Agathe (2,2) « Défavorable · raison cachée », cachee true ; 3. Nassim (1,1) « Très défavorable », cachee false
+auteur_compte | §4.3, étape 4 : pas de cartes identiques | = auteur
+
+----------------------------------------------------------------------
+Séance 3 · texte 2 (T, s = 0) · devineur porteur
+----------------------------------------------------------------------
+possibles | §4.1 | Agathe (4,3), Nassim (3,2), Odile (1,1), Valentin (4,4)
+x | x = 1 − v | Agathe 1/4 ; Nassim 1/2 ; Odile 1 ; Valentin 1/4
+mediane | {1/4, 1/4, 1/2, 1} | (1/4 + 1/2)/2 = 3/8
+somme_w, c, l, q | curseur avant le texte 2 (aucune réponse T avant) | tous : 0, 1/2, 19/20, 0
+distance | |x − c| | Agathe 1/4 ; Nassim 0 ; Odile 1/2 ; Valentin 1/4
+rarete | |x − 3/8| | Agathe 1/8 ; Nassim 1/8 ; Odile 5/8 ; Valentin 1/8
+surprise | q = 0 → surprise = rareté | Agathe 1/8 ; Nassim 1/8 ; Odile 5/8 ; Valentin 1/8
+classement | étape 1 ; égalité à 1/8 départagée par t("surprise|porteur|3|·") : Valentin 873837585 < Nassim 1912801558 < Agathe 2980479129 | Odile, Valentin, Nassim, Agathe
+departages | un groupe (Agathe, Nassim, Valentin à 1/8) | 1
+places 1 et 2 | étape 2 | Odile, Valentin
+place 3 | plus petit t("hasard|porteur|3|·") parmi Nassim (723776424) et Agathe (2422749594) | Nassim
+remplacements | (1,1), (4,4), (3,2) différentes | aucun
+places | | [Odile, Valentin, Nassim]
+raison_cachee | place 3, raison 2 | Nassim
+ordre | t("ordre|porteur|3|·") : Odile 409237603, Valentin 1099712531, Nassim 1310366732 (Agathe 4198174184 non servie) | [Odile, Valentin, Nassim]
+cartes | | 1. Odile (1,1) « Très défavorable » ; 2. Valentin (4,4) « Favorable » ; 3. Nassim (3,2) « Neutre · raison cachée », cachee true
+auteur_compte | pas de cartes identiques | = auteur
+
+----------------------------------------------------------------------
+Séance 4 · texte 3 (P, s = 1) · devineur porteur   [cartes identiques servies ensemble : trois cartes]
+----------------------------------------------------------------------
+possibles | §4.1 ; Nassim absent au texte 3 | Agathe (4,2), Odile (4,2), Valentin (4,2)
+x | x = v | tous 3/4
+mediane | {3/4, 3/4, 3/4} | 3/4
+somme_w, c, l, q | curseur avant le texte 3 (= après E2) | Agathe 1, 3/5, 22/25, 1/10 ; Odile 1, 2/5, 22/25, 1/10 ; Valentin 1, 2/5, 22/25, 1/10
+distance | |x − c| | Agathe 3/20 ; Odile 7/20 ; Valentin 7/20
+rarete | |x − 3/4| | tous 0
+surprise | q·distance | Agathe 3/200 ; Odile 7/200 ; Valentin 7/200
+classement | égalité Odile/Valentin à 7/200 : t("surprise|porteur|4|·") Odile 2936888796 < Valentin 3775180225 | Odile, Valentin, Agathe
+departages | | 1
+places | trois réponses possibles : place 3 = la troisième | [Odile, Valentin, Agathe]
+remplacements | étape 3 : les trois cartes sont identiques, aucune réponse non placée | aucun
+raison_cachee | place 3, raison 2 | Agathe
+ordre | t("ordre|porteur|4|·") : Odile 727960558, Valentin 1075075883, Agathe 2798812114 (Nassim 320550171 absent) | [Odile, Valentin, Agathe]
+cartes | | 1. Odile (4,2) « Favorable » ; 2. Valentin (4,2) « Favorable » ; 3. Agathe (4,2) « Favorable · raison cachée », cachee true
+auteur_compte | §4.3, étape 4 : dépend des désignations du joueur ; voir cas-redistribution-croisee.txt et chaque carnet | —
+
+----------------------------------------------------------------------
+Séance 5 · texte 4 (S, s = 0) · devineur porteur
+----------------------------------------------------------------------
+possibles | | Agathe (2,4), Nassim (1,1), Odile (5,2), Valentin (3,aucune)
+x | x = 1 − v | Agathe 3/4 ; Nassim 1 ; Odile 0 ; Valentin 1/2
+mediane | {0, 1/2, 3/4, 1} | 5/8
+somme_w, c, l, q | curseur avant le texte 4 (après E1 et 1) | Agathe 2, 2/3, 81/100, 1/5 ; Nassim 2, 2/3, 81/100, 1/5 ; Odile 2, 1/3, 81/100, 1/5 ; Valentin 0, 1/2, 19/20, 0
+distance | | Agathe 1/12 ; Nassim 1/3 ; Odile 1/3 ; Valentin 0
+rarete | | Agathe 1/8 ; Nassim 3/8 ; Odile 5/8 ; Valentin 1/8
+surprise | | Agathe 1/60 + 1/10 = 7/60 ; Nassim 1/15 + 3/10 = 11/30 ; Odile 1/15 + 1/2 = 17/30 ; Valentin 1/8
+classement | 17/30 > 11/30 > 1/8 (= 15/120) > 7/60 (= 14/120) | Odile, Nassim, Valentin, Agathe
+departages | | 0
+places 1 et 2 | | Odile, Nassim
+place 3 | t("hasard|porteur|5|·") : Valentin 841851830 < Agathe 3614897365 | Valentin
+remplacements | (5,2), (1,1), (3,aucune) différentes | aucun
+places | | [Odile, Nassim, Valentin]
+raison_cachee | §4.4 : place 3 = Valentin, raison « aucune » → la moins bien classée (étape 1) des cartes servies de raison ≠ aucune : Odile (1re), Nassim (2e) | Nassim
+ordre | t("ordre|porteur|5|·") : Valentin 520983970, Odile 1293591730, Nassim 1767992039 (Agathe 650268568 non servie) | [Valentin, Odile, Nassim]
+cartes | | 1. Valentin (3,aucune) « Neutre · aucune des quatre raisons » ; 2. Odile (5,2) « Très favorable » ; 3. Nassim (1,1) « Très défavorable · raison cachée », cachee true
+auteur_compte | | = auteur
+
+----------------------------------------------------------------------
+Séance 6 · texte 5 (L, s = 0) · devineur porteur
+----------------------------------------------------------------------
+possibles | Valentin absent au texte 5 | Agathe (4,2), Nassim (4,4), Odile (5,2)
+x | x = 1 − v | Agathe 1/4 ; Nassim 1/4 ; Odile 0
+mediane | {0, 1/4, 1/4} | 1/4
+somme_w, c, l, q | curseur avant le texte 5 (= après E3) | Agathe 1, 2/5, 22/25, 1/10 ; Nassim 1, 3/5, 22/25, 1/10 ; Odile 1, 2/5, 22/25, 1/10
+distance | | Agathe 3/20 ; Nassim 7/20 ; Odile 2/5
+rarete | | Agathe 0 ; Nassim 0 ; Odile 1/4
+surprise | | Agathe 3/200 ; Nassim 7/200 ; Odile 2/50 + 9/40 = 53/200
+classement | | Odile, Nassim, Agathe
+departages | | 0
+places | trois possibles | [Odile, Nassim, Agathe]
+remplacements | (5,2), (4,4), (4,2) différentes (raisons différentes) | aucun
+raison_cachee | place 3, raison 2 | Agathe
+ordre | t("ordre|porteur|6|·") : Nassim 1095894425, Odile 1211922915, Agathe 1826134869 | [Nassim, Odile, Agathe]
+cartes | | 1. Nassim (4,4) « Favorable » ; 2. Odile (5,2) « Très favorable » ; 3. Agathe (4,2) « Favorable · raison cachée », cachee true
+auteur_compte | | = auteur
+
+----------------------------------------------------------------------
+Séance 7 · texte 6 (T, s = 1) · devineur porteur   [remplacement de cartes identiques]
+----------------------------------------------------------------------
+possibles | | Agathe (3,aucune), Nassim (3,1), Odile (2,4), Valentin (2,4)
+x | x = v | Agathe 1/2 ; Nassim 1/2 ; Odile 1/4 ; Valentin 1/4
+mediane | {1/4, 1/4, 1/2, 1/2} | 3/8
+somme_w, c, l, q | curseur avant le texte 6 (= après 2) | Agathe 1/2, 4/9, 183/200, 1/20 ; Nassim 0, 1/2, 19/20, 0 ; Odile 1, 3/5, 22/25, 1/10 ; Valentin 1, 2/5, 22/25, 1/10
+distance | | Agathe 1/18 ; Nassim 0 ; Odile 7/20 ; Valentin 3/20
+rarete | | tous 1/8
+surprise | | Agathe 1/360 + 19/160 = 35/288 ; Nassim 1/8 ; Odile 7/200 + 9/80 = 59/400 ; Valentin 3/200 + 9/80 = 51/400
+classement | 59/400 > 51/400 > 1/8 = 36/288 > 35/288 | Odile, Valentin, Nassim, Agathe
+departages | | 0
+places 1 et 2 | | Odile, Valentin
+place 3 | t("hasard|porteur|7|·") : Agathe 2256336821 < Nassim 4265990303 | Agathe
+remplacements | étape 3 : Odile (2,4) et Valentin (2,4) identiques ; Nassim (3,1), non placée, n'est identique à aucune carte placée ((2,4), (3,aucune)) → on écarte la moins bien classée des jumelles, Valentin (2e), et Nassim prend la place 2 ; ensuite plus aucune paire identique | [{place 2, écartée Valentin, remplaçante Nassim}]
+places | | [Odile, Nassim, Agathe]
+raison_cachee | place 3 = Agathe, raison « aucune » → la moins bien classée des servies de raison ≠ aucune : Odile (1re), Nassim (3e) | Nassim
+ordre | t("ordre|porteur|7|·") : Odile 457069845, Nassim 711672611, Agathe 2412383170 (Valentin 289497941 non servi) | [Odile, Nassim, Agathe]
+cartes | | 1. Odile (2,4) « Défavorable » ; 2. Nassim (3,1) « Neutre · raison cachée », cachee true ; 3. Agathe (3,aucune) « Neutre · aucune des quatre raisons »
+auteur_compte | | = auteur
+
+----------------------------------------------------------------------
+Séance 8 · texte 7 (S, s = 1) · devineur porteur
+----------------------------------------------------------------------
+possibles | | Agathe (4,3), Nassim (2,2), Odile (1,2), Valentin (3,4)
+x | x = v | Agathe 3/4 ; Nassim 1/4 ; Odile 0 ; Valentin 1/2
+mediane | {0, 1/4, 1/2, 3/4} | 3/8
+somme_w, c, l, q | curseur avant le texte 7 (après E1, 1, 4) | Agathe 3, 5/7, 37/50, 3/10 ; Nassim 3, 5/7, 37/50, 3/10 ; Odile 3, 2/7, 37/50, 3/10 ; Valentin 0, 1/2, 19/20, 0
+distance | | Agathe 1/28 ; Nassim 13/28 ; Odile 2/7 ; Valentin 0
+rarete | | Agathe 3/8 ; Nassim 1/8 ; Odile 3/8 ; Valentin 1/8
+surprise | | Agathe 3/280 + 21/80 = 153/560 ; Nassim 39/280 + 7/80 = 127/560 ; Odile 6/70 + 21/80 = 39/112 (= 195/560) ; Valentin 1/8 (= 70/560)
+classement | | Odile, Agathe, Nassim, Valentin
+departages | | 0
+places 1 et 2 | | Odile, Agathe
+place 3 | t("hasard|porteur|8|·") : Valentin 1247723850 < Nassim 3200664155 | Valentin
+remplacements | (1,2), (4,3), (3,4) différentes | aucun
+places | | [Odile, Agathe, Valentin]
+raison_cachee | place 3, raison 4 | Valentin
+ordre | t("ordre|porteur|8|·") : Agathe 1331834717, Odile 2641421388, Valentin 2663539763 (Nassim 2136220108 non servi) | [Agathe, Odile, Valentin]
+cartes | | 1. Agathe (4,3) « Favorable » ; 2. Odile (1,2) « Très défavorable » ; 3. Valentin (3,4) « Neutre · raison cachée », cachee true
+auteur_compte | | = auteur
+
+----------------------------------------------------------------------
+Séance 9 · texte 8 (P, s = 0) · devineur porteur   [cartes identiques servies ensemble : deux cartes]
+----------------------------------------------------------------------
+possibles | | Agathe (2,3), Nassim (2,3), Odile (5,1), Valentin (2,3)
+x | x = 1 − v | Agathe 3/4 ; Nassim 3/4 ; Odile 0 ; Valentin 3/4
+mediane | {0, 3/4, 3/4, 3/4} | (3/4 + 3/4)/2 = 3/4
+somme_w, c, l, q | curseur avant le texte 8 (après E2, 3 ; Nassim absent au 3) | Agathe 2, 2/3, 81/100, 1/5 ; Nassim 1, 3/5, 22/25, 1/10 ; Odile 2, 1/2, 81/100, 1/5 ; Valentin 2, 1/2, 81/100, 1/5
+distance | | Agathe 1/12 ; Nassim 3/20 ; Odile 1/2 ; Valentin 1/4
+rarete | | Agathe 0 ; Nassim 0 ; Odile 3/4 ; Valentin 0
+surprise | | Agathe 1/60 ; Nassim 3/200 ; Odile 1/10 + 3/5 = 7/10 ; Valentin 1/20
+classement | 7/10 > 1/20 > 1/60 > 3/200 | Odile, Valentin, Agathe, Nassim
+departages | | 0
+places 1 et 2 | | Odile, Valentin
+place 3 | t("hasard|porteur|9|·") : Agathe 647914258 < Nassim 2956407639 | Agathe
+remplacements | étape 3 : Valentin (2,3) et Agathe (2,3) identiques, mais la seule réponse non placée, Nassim (2,3), est identique à une carte placée → rien à faire | aucun
+places | | [Odile, Valentin, Agathe]
+raison_cachee | place 3, raison 3 | Agathe
+ordre | t("ordre|porteur|9|·") : Odile 2214664884, Agathe 2912903077, Valentin 4275729737 (Nassim 2812098436 non servi) | [Odile, Agathe, Valentin]
+cartes | | 1. Odile (5,1) « Très favorable » ; 2. Agathe (2,3) « Défavorable · raison cachée », cachee true ; 3. Valentin (2,3) « Défavorable »
+auteur_compte | §4.3, étape 4 : groupe {Agathe, Valentin} sur les cartes 2 et 3 ; dépend des désignations ; voir cas-redistribution-croisee.txt et chaque carnet | —
+
+----------------------------------------------------------------------
+Séance 10 · texte 9 (L, s = 0) · devineur porteur
+----------------------------------------------------------------------
+possibles | | Agathe (4,1), Nassim (2,3), Odile (2,3), Valentin (2,2)
+x | x = 1 − v | Agathe 1/4 ; Nassim 3/4 ; Odile 3/4 ; Valentin 3/4
+mediane | {1/4, 3/4, 3/4, 3/4} | 3/4
+somme_w, c, l, q | curseur avant le texte 9 (après E3, 5 ; Valentin absent au 5) | Agathe 2, 1/3, 81/100, 1/5 ; Nassim 2, 1/2, 81/100, 1/5 ; Odile 2, 1/3, 81/100, 1/5 ; Valentin 1, 3/5, 22/25, 1/10
+distance | | Agathe 1/12 ; Nassim 1/4 ; Odile 5/12 ; Valentin 3/20
+rarete | | Agathe 1/2 ; Nassim 0 ; Odile 0 ; Valentin 0
+surprise | | Agathe 1/60 + 2/5 = 5/12 ; Nassim 1/20 ; Odile 1/12 ; Valentin 3/200
+classement | | Agathe, Odile, Nassim, Valentin
+departages | | 0
+places 1 et 2 | | Agathe, Odile
+place 3 | t("hasard|porteur|10|·") : Valentin 73913797 < Nassim 2182181971 | Valentin
+remplacements | (4,1), (2,3), (2,2) différentes | aucun
+places | | [Agathe, Odile, Valentin]
+raison_cachee | place 3, raison 2 | Valentin
+ordre | t("ordre|porteur|10|·") : Agathe 2903509096, Valentin 3949771742, Odile 4010762473 (Nassim 480058290 non servi) | [Agathe, Valentin, Odile]
+cartes | | 1. Agathe (4,1) « Favorable » ; 2. Valentin (2,2) « Défavorable · raison cachée », cachee true ; 3. Odile (2,3) « Défavorable »
+auteur_compte | | = auteur
+
+----------------------------------------------------------------------
+Séance 11 · texte 10 (S, s = 0) · devineur porteur   [manche de deux cartes]
+----------------------------------------------------------------------
+possibles | Nassim et Odile absents au texte 10 | Agathe (4,4), Valentin (3,2)
+x | x = 1 − v | Agathe 1/4 ; Valentin 1/2
+mediane | {1/4, 1/2} | 3/8
+somme_w, c, l, q | curseur avant le texte 10 (après E1, 1, 4, 7) | Agathe 4, 3/4, 67/100, 2/5 ; Valentin 0, 1/2, 19/20, 0
+distance | | Agathe 1/2 ; Valentin 0
+rarete | | Agathe 1/8 ; Valentin 1/8
+surprise | | Agathe 1/5 + 3/40 = 11/40 ; Valentin 1/8
+classement | | Agathe, Valentin
+departages | | 0
+places | deux possibles : pas de place 3 | [Agathe, Valentin]
+remplacements | | aucun
+raison_cachee | §4.4 : dernière place = 2, Valentin, raison 2 | Valentin
+ordre | t("ordre|porteur|11|·") : Agathe 2749890846, Valentin 4271484614 | [Agathe, Valentin]
+cartes | | 1. Agathe (4,4) « Favorable » ; 2. Valentin (3,2) « Neutre · raison cachée », cachee true
+auteur_compte | | = auteur
+
+----------------------------------------------------------------------
+Séance 12 · texte 11 (T, s = 0) · devineur porteur
+----------------------------------------------------------------------
+possibles | | Agathe (3,4), Nassim (3,1), Odile (1,1), Valentin (4,2)
+x | x = 1 − v | Agathe 1/2 ; Nassim 1/2 ; Odile 1 ; Valentin 1/4
+mediane | {1/4, 1/2, 1/2, 1} | 1/2
+somme_w, c, l, q | curseur avant le texte 11 (après 2, 6) | Agathe 1/2, 4/9, 183/200, 1/20 ; Nassim 0, 1/2, 19/20, 0 ; Odile 2, 1/2, 81/100, 1/5 ; Valentin 2, 1/3, 81/100, 1/5
+distance | | Agathe 1/18 ; Nassim 0 ; Odile 1/2 ; Valentin 1/12
+rarete | | Agathe 0 ; Nassim 0 ; Odile 1/2 ; Valentin 1/4
+surprise | | Agathe 1/360 ; Nassim 0 ; Odile 1/10 + 2/5 = 1/2 ; Valentin 1/60 + 1/5 = 13/60
+classement | | Odile, Valentin, Agathe, Nassim
+departages | | 0
+places 1 et 2 | | Odile, Valentin
+place 3 | t("hasard|porteur|12|·") : Nassim 2058340759 < Agathe 2385422889 | Nassim
+remplacements | (1,1), (4,2), (3,1) différentes | aucun
+places | | [Odile, Valentin, Nassim]
+raison_cachee | place 3, raison 1 | Nassim
+ordre | t("ordre|porteur|12|·") : Nassim 658896735, Odile 2887517117, Valentin 3405025098 (Agathe 652471632 non servie) | [Nassim, Odile, Valentin]
+cartes | | 1. Nassim (3,1) « Neutre · raison cachée », cachee true ; 2. Odile (1,1) « Très défavorable » ; 3. Valentin (4,2) « Favorable »
+auteur_compte | | = auteur
+
+----------------------------------------------------------------------
+Séance 13 · texte 12 (P, s = 0) · devineur porteur
+----------------------------------------------------------------------
+possibles | | Agathe (2,2), Nassim (4,4), Odile (5,4), Valentin (2,2)
+x | x = 1 − v | Agathe 3/4 ; Nassim 1/4 ; Odile 0 ; Valentin 3/4
+mediane | {0, 1/4, 3/4, 3/4} | (1/4 + 3/4)/2 = 1/2
+somme_w, c, l, q | curseur avant le texte 12 (après E2, 3, 8) | Agathe 3, 5/7, 37/50, 3/10 ; Nassim 2, 2/3, 81/100, 1/5 ; Odile 3, 3/7, 37/50, 3/10 ; Valentin 3, 4/7, 37/50, 3/10
+distance | | Agathe 1/28 ; Nassim 5/12 ; Odile 3/7 ; Valentin 5/28
+rarete | | Agathe 1/4 ; Nassim 1/4 ; Odile 1/2 ; Valentin 1/4
+surprise | | Agathe 3/280 + 7/40 = 13/70 ; Nassim 1/12 + 1/5 = 17/60 ; Odile 9/70 + 7/20 = 67/140 ; Valentin 15/280 + 7/40 = 8/35
+classement | 67/140 > 17/60 > 8/35 > 13/70 | Odile, Nassim, Valentin, Agathe
+departages | | 0
+places 1 et 2 | | Odile, Nassim
+place 3 | t("hasard|porteur|13|·") : Valentin 3883797296 < Agathe 4212418265 | Valentin
+remplacements | (5,4), (4,4), (2,2) différentes | aucun
+places | | [Odile, Nassim, Valentin]
+raison_cachee | place 3, raison 2 | Valentin
+ordre | t("ordre|porteur|13|·") : Nassim 769988011, Odile 3230199448, Valentin 4107258729 (Agathe 824278742 non servie) | [Nassim, Odile, Valentin]
+cartes | | 1. Nassim (4,4) « Favorable » ; 2. Odile (5,4) « Très favorable » ; 3. Valentin (2,2) « Défavorable · raison cachée », cachee true
+auteur_compte | | = auteur
+
+----------------------------------------------------------------------
+Séance 14 · texte 13 (L, s = 1) · devineur porteur   [remplacement de cartes identiques]
+----------------------------------------------------------------------
+possibles | | Agathe (4,2), Nassim (4,2), Odile (1,1), Valentin (4,4)
+x | x = v | Agathe 3/4 ; Nassim 3/4 ; Odile 0 ; Valentin 3/4
+mediane | {0, 3/4, 3/4, 3/4} | 3/4
+somme_w, c, l, q | curseur avant le texte 13 (après E3, 5, 9) | Agathe 3, 2/7, 37/50, 3/10 ; Nassim 3, 4/7, 37/50, 3/10 ; Odile 3, 3/7, 37/50, 3/10 ; Valentin 3/2, 7/11, 169/200, 3/20
+distance | | Agathe 13/28 ; Nassim 5/28 ; Odile 3/7 ; Valentin 5/44
+rarete | | Agathe 0 ; Nassim 0 ; Odile 3/4 ; Valentin 0
+surprise | | Agathe 39/280 ; Nassim 15/280 = 3/56 ; Odile 9/70 + 21/40 = 183/280 ; Valentin 15/880 = 3/176
+classement | 183/280 > 39/280 > 3/56 > 3/176 | Odile, Agathe, Nassim, Valentin
+departages | | 0
+places 1 et 2 | | Odile, Agathe
+place 3 | t("hasard|porteur|14|·") : Nassim 403047234 < Valentin 1190730563 | Nassim
+remplacements | étape 3 : Agathe (4,2) et Nassim (4,2) identiques ; Valentin (4,4), non placé, n'est identique à aucune carte placée → on écarte la moins bien classée des jumelles, Nassim (3e), et Valentin prend la place 3 | [{place 3, écartée Nassim, remplaçante Valentin}]
+places | | [Odile, Agathe, Valentin]
+raison_cachee | place 3, raison 4 | Valentin
+ordre | t("ordre|porteur|14|·") : Valentin 2639200971, Odile 2843797529, Agathe 3597683238 (Nassim 189844147 non servi) | [Valentin, Odile, Agathe]
+cartes | | 1. Valentin (4,4) « Favorable · raison cachée », cachee true ; 2. Odile (1,1) « Très défavorable » ; 3. Agathe (4,2) « Favorable »
+auteur_compte | | = auteur
+
+----------------------------------------------------------------------
+Récapitulatif (ordre d'affichage ; * = carte à raison cachée)
+----------------------------------------------------------------------
+S2 texte 1 | Odile (5,3) · Agathe* (2,2) · Nassim (1,1)
+S3 texte 2 | Odile (1,1) · Valentin (4,4) · Nassim* (3,2)
+S4 texte 3 | Odile (4,2) · Valentin (4,2) · Agathe* (4,2)   — trois cartes identiques
+S5 texte 4 | Valentin (3,aucune) · Odile (5,2) · Nassim* (1,1)   — carte à raison cachée déplacée (§4.4)
+S6 texte 5 | Nassim (4,4) · Odile (5,2) · Agathe* (4,2)
+S7 texte 6 | Odile (2,4) · Nassim* (3,1) · Agathe (3,aucune)   — remplacement (Valentin écarté) ; carte cachée déplacée
+S8 texte 7 | Agathe (4,3) · Odile (1,2) · Valentin* (3,4)
+S9 texte 8 | Odile (5,1) · Agathe* (2,3) · Valentin (2,3)   — deux cartes identiques servies ensemble
+S10 texte 9 | Agathe (4,1) · Valentin* (2,2) · Odile (2,3)
+S11 texte 10 | Agathe (4,4) · Valentin* (3,2)   — deux cartes
+S12 texte 11 | Nassim* (3,1) · Odile (1,1) · Valentin (4,2)
+S13 texte 12 | Nassim (4,4) · Odile (5,4) · Valentin* (2,2)
+S14 texte 13 | Valentin* (4,4) · Odile (1,1) · Agathe (4,2)   — remplacement (Nassim écarté)
+Chiffres constants qui en découlent (§9 bis, pour recoupement avec le rapport de scellement, que je n'ai pas lu) : 38 cartes servies ; remplacements 2 ; manches à cartes identiques servies ensemble 2 (S4 : 3 cartes ; S9 : 2 cartes), soit 5 cartes ; raisons « aucune » affichées 2 (S5 Valentin, S7 Agathe), cachées 0, cartes à raison cachée déplacées 2 (S5, S7) ; égalités de classement (Σ departages) 2 ; réponses atypiques parmi les cartes : S4 Odile et Valentin (texte 3), S7 Odile (texte 6), S8 Nassim (texte 7), S9 Valentin (texte 8), S10 Odile (texte 9), S11 Agathe (texte 10), S13 Nassim et Valentin (texte 12), S14 Agathe (texte 13) → 10 sur 38 ; manches à deux cartes 1 (S11).

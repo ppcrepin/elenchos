@@ -84,7 +84,7 @@ def _ecrire(v, sortie):
         sortie.append("false")
     elif isinstance(v, int):
         if not -ENTIER_MAX <= v <= ENTIER_MAX:
-            raise ErreurForme(f"entier hors de ±(2^53−1) : {v}")
+            raise ErreurForme(f"entier hors de ±(2^53\u22121) : {v}")
         sortie.append(str(v))
     elif isinstance(v, str):
         sortie.append(_chaine(v))

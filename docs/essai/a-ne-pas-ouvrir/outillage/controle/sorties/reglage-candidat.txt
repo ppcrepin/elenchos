@@ -1,0 +1,70 @@
+Programme de contrôle (C) — réglage avant scellement (fichier caché, §9 bis)
+==============================================================================
+Fichier candidat : SHA-256 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64
+Réponses atypiques par personnage dans le fichier : {'Agathe': 3, 'Nassim': 3, 'Odile': 3, 'Valentin': 3} ; seuils stricts dans le fichier : False (le réglage joue toujours seuils non stricts)
+Graine du fichier : 23e3ee6ccdc3fb38 ; graine de réglage g_R = SHA-256("elenchos-essai|reglage|" + graine)[:16] = 7a6af27c6d301be3
+Parties jouées : 200 (i = 1 à 200) ; t_i(clé) = N(SHA-256(g_R|i|clé)) / 16^8
+
+Justesse cumulée (Σ justes / Σ cartes servies des manches révélées), auteur après redistribution
+  joueur simulé, semaine 1 (textes 1 à 5)   : 1496/3000 = 49.87 %
+  joueur simulé, semaine 2 (textes 6 à 12)  : 1529/4000 = 38.23 %
+  joueur simulé, texte 13 (hors semaine)    : 61/600 = 10.17 %
+  personnages sur ses cartes, semaine 1     : 939/2934 = 32.00 %
+  personnages sur ses cartes, semaine 2     : 1096/4102 = 26.72 %
+  personnages sur ses cartes, texte 13      : 248/636 = 38.99 %
+  personnages entre eux, semaine 1          : 4328/7866 = 55.02 %
+  personnages entre eux, semaine 2          : 4812/11098 = 43.36 %
+  personnages entre eux, texte 13           : 683/1764 = 38.72 %
+  personnages entre eux, textes 1 à 13      : 9823/20728 = 47.39 %
+  joueur simulé, semaine 2, partie par partie : min 0.150, 1er quartile 0.350, médiane 0.400, 3e quartile 0.450, max 0.600
+
+Côté attendu du joueur par les personnages (toutes leurs manches, 200 parties) : -1 : 1986, 0 : 898, 1 : 2116, inconnu : 4600
+
+Fréquences, sa manche (constante d'une partie à l'autre) :
+  cartes : 7600
+  cartes identiques servies ensemble : 1000
+  cartes à raison cachée déplacées (§4.4) : 400
+  manches : 2600
+  manches avec cartes identiques servies ensemble : 400
+  manches à 2 carte(s) : 200
+  manches à 3 carte(s) : 2400
+  raisons « aucune » affichées : 400
+  raisons « aucune » cachées : 0
+  remplacements : 400
+  égalités de classement (departages) : 400
+Fréquences, les manches des personnages (cumul sur les 200 parties) :
+  cartes : 28400
+  cartes identiques servies ensemble : 3812
+  cartes à raison cachée déplacées (§4.4) : 972
+  manches : 9600
+  manches avec cartes identiques servies ensemble : 1830
+  manches à 2 carte(s) : 400
+  manches à 3 carte(s) : 9200
+  raisons « aucune » affichées : 1397
+  raisons « aucune » cachées : 0
+  remplacements : 1171
+  égalités de classement (departages) : 3595
+
+Titulaires des titres, semaine 1 (sur 200 parties) :
+  Le Devin : Agathe 86, porteur 61, Odile 52, Valentin 1
+  Le Mystère : porteur 134, Nassim 63, Odile 2, Valentin 1
+  Le Fidèle : Agathe 200, Odile 200, porteur 200
+  Surprise de la semaine : 5 143, 3 55, 2 2
+  départages : devin aucun 134, devin raisons 41, devin tirage 25, mystere aucun 197, mystere tirage 3, surprise aucun 167, surprise erreurs 3, surprise tirage 30
+Titulaires des titres, semaine 2 (sur 200 parties) :
+  Le Devin : Nassim 125, porteur 40, Valentin 22, Agathe 10, Odile 3
+  Le Mystère : porteur 102, Nassim 80, Odile 14, Valentin 3, Agathe 1
+  Le Fidèle : Agathe 200, Valentin 200, porteur 200
+  Surprise de la semaine : 9 88, 10 51, 12 34, 6 20, 8 7
+  départages : devin aucun 157, devin raisons 28, devin tirage 15, mystere aucun 195, mystere erreurs 3, mystere tirage 2, surprise aucun 191, surprise erreurs 1, surprise tirage 8
+
+Décision proposée (règles du §9 bis, comparaisons en fractions exactes)
+  1. Joueur simulé, semaine 2 : 1529/4000 (38.23 %) → trois réponses atypiques, inchangé (7/20 ≤ justesse ≤ 7/10)
+  2. Personnages sur ses cartes, semaine 2 : 548/2051 (26.72 %) → seuils non stricts, inchangé (≤ 3/5)
+
+Profils tirés (cinq premières parties, pour contrôle à la main) :
+  partie 1 : S 7 faible, P 45 forte, T 23 forte, L 58 moyenne ; réponses atypiques aux textes [3, 9, 12]
+  partie 2 : S 35 forte, P 50 forte, T 84 forte, L 55 faible ; réponses atypiques aux textes [1, 6, 11]
+  partie 3 : S 52 moyenne, P 29 forte, T 70 moyenne, L 5 faible ; réponses atypiques aux textes [3, 6, 11]
+  partie 4 : S 86 faible, P 67 faible, T 35 faible, L 20 forte ; réponses atypiques aux textes [4, 7, 10]
+  partie 5 : S 78 faible, P 24 moyenne, T 20 moyenne, L 69 faible ; réponses atypiques aux textes [3, 8, 12]

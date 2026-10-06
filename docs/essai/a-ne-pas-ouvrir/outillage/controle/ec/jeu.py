@@ -46,7 +46,7 @@ SEMAINE_REPONSES = {1: range(1, 7), 2: range(7, 14)}
 
 
 def cote(niveau):
-    """σ : +1 favorable, 0 neutre, −1 défavorable."""
+    """σ : +1 favorable, 0 neutre, \u22121 défavorable."""
     if niveau >= 4:
         return 1
     if niveau == 3:

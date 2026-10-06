@@ -7,9 +7,9 @@ le pseudo (inséré après, par l'appelant). Le carnet n'applique que la règle 
 import re
 
 ESP = " "
-FINE = " "  # espace fine insécable
-INSEC = " "  # espace insécable
-APOS = "’"
+FINE = "\u202f"  # espace fine insécable
+INSEC = "\u00a0"  # espace insécable
+APOS = "\u2019"
 
 MOIS = ("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août",
         "septembre", "octobre", "novembre", "décembre")

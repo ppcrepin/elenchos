@@ -1,0 +1,141 @@
+TABLES COMMUNES AUX CARNETS DE RÉFÉRENCE ET AUX CAS CHIFFRÉS
+Auteur : Game design (instance « carnets de référence », §9 de simulation.md, « Carnets de référence et cas chiffrés »).
+Sources : fichier candidat scellement/candidat/fichier-scelle-candidat.json (graine 23e3ee6ccdc3fb38, seuils_stricts false) ; simulation.md §0, §5 ; regles-de-calcul.md §2 à §4.
+Tout est calculé à la main ; l'outil n'a servi qu'aux SHA-256 (tirages.txt) et à vérifier des opérations sur fractions.
+Format des lignes : grandeur | règle (section) | valeur.
+
+======================================================================
+A. LES 17 TEXTES : tension, sens, pôle de chaque considération (par rang d'affichage)
+======================================================================
+Lecture du fichier candidat (textes.<n>.tension, .sens, .considerations[].cote/.pole). « c » = contre, « p » = pour, « a » = pôle aucun (hors tension).
+
+texte | tension | sens s | r1 | r2 | r3 | r4
+E1 | S | 0 | c, pôle 1 | p, a | c, pôle 1 | p, pôle 0
+E2 | P | 1 | p, a | c, pôle 0 | p, pôle 1 | c, pôle 0
+E3 | L | 0 | p, pôle 0 | c, pôle 1 | c, pôle 1 | p, pôle 0
+1 | S | 0 | c, pôle 1 | c, pôle 1 | p, pôle 0 | p, pôle 0
+2 | T | 0 | c, pôle 1 | c, pôle 1 | p, a | p, pôle 0
+3 | P | 1 | c, pôle 0 | p, pôle 1 | p, a | c, pôle 0
+4 | S | 0 | c, pôle 1 | p, pôle 0 | p, pôle 0 | c, pôle 1
+5 | L | 0 | c, pôle 1 | p, pôle 0 | c, pôle 1 | p, pôle 0
+6 | T | 1 | p, pôle 1 | c, pôle 0 | p, pôle 1 | c, pôle 0
+7 | S | 1 | c, pôle 0 | c, pôle 0 | p, pôle 1 | p, a
+8 | P | 0 | p, pôle 0 | c, a | c, pôle 1 | p, pôle 0
+9 | L | 0 | p, pôle 0 | c, a | c, pôle 1 | p, pôle 0
+10 | S | 0 | p, pôle 0 | c, a | c, pôle 1 | p, pôle 0
+11 | T | 0 | c, pôle 1 | p, pôle 0 | c, pôle 1 | p, a
+12 | P | 0 | p, pôle 0 | c, pôle 1 | c, a | p, pôle 0
+13 | L | 1 | c, pôle 0 | p, pôle 1 | c, pôle 0 | p, a
+14 | S | 0 | c, pôle 1 | p, pôle 0 | c, pôle 1 | p, pôle 0
+
+Vérification de la condition d'application de la règle 2.2 (schéma 4.1, contrôle 3) : dans chaque texte, toute « pour » sert le pôle s ou aucun, toute « contre » sert 1 − s ou aucun. Vérifié texte par texte ci-dessus : vrai partout.
+
+======================================================================
+B. VALEUR x D'UNE RÉPONSE (§4.2 de regles-de-calcul.md)
+======================================================================
+v(niveau) | §0 Positions | 1 → 0 ; 2 → 1/4 ; 3 → 1/2 ; 4 → 3/4 ; 5 → 1
+x si s = 1 | §4.2, x = v | niveau 1 → 0 ; 2 → 1/4 ; 3 → 1/2 ; 4 → 3/4 ; 5 → 1
+x si s = 0 | §4.2, x = 1 − v | niveau 1 → 1 ; 2 → 3/4 ; 3 → 1/2 ; 4 → 1/4 ; 5 → 0
+
+======================================================================
+C. CLASSEMENT DES RÉPONSES SCELLÉES DES PERSONNAGES (§5.1 de simulation.md)
+======================================================================
+π = pôle que sert la position (s si favorable, 1 − s si défavorable) ; ρ = pôle de la raison (table A ; « aucun » si pôle a ou raison « aucune »).
+w = 1 si non neutre et ρ = π (arbitrage net) ; 1/2 si non neutre et ρ aucun (penchant) ; 0 si non neutre et ρ opposé (tiraillé) ; 0 si neutre.
+Colonnes : (niveau, raison) → côté, π, ρ, w. « abs » = absent (pas de réponse). [aty] = réponse atypique du fichier (ne change rien au calcul).
+
+texte | Agathe | Nassim | Odile | Valentin
+E1 (S,0) | (2,1) défav, π1, ρ1, w1 | (1,3) défav, π1, ρ1, w1 | (5,4) fav, π0, ρ0, w1 | (3,2) neutre, w0
+E2 (P,1) | (4,3) fav, π1, ρ1, w1 | (4,3) fav, π1, ρ1, w1 | (1,4) défav, π0, ρ0, w1 | (2,2) défav, π0, ρ0, w1
+E3 (L,0) | (4,4) fav, π0, ρ0, w1 | (2,2) défav, π1, ρ1, w1 | (5,1) fav, π0, ρ0, w1 | (2,2) défav, π1, ρ1, w1
+1 (S,0) | (2,2) défav, π1, ρ1, w1 | (1,1) défav, π1, ρ1, w1 | (5,3) fav, π0, ρ0, w1 | (3,aucune) neutre, w0
+2 (T,0) | (4,3) fav, π0, ρ aucun, w1/2 | (3,2) neutre, w0 | (1,1) défav, π1, ρ1, w1 | (4,4) fav, π0, ρ0, w1
+3 (P,1) | (4,2) fav, π1, ρ1, w1 | abs | (4,2) [aty] fav, π1, ρ1, w1 | (4,2) [aty] fav, π1, ρ1, w1
+4 (S,0) | (2,4) défav, π1, ρ1, w1 | (1,1) défav, π1, ρ1, w1 | (5,2) fav, π0, ρ0, w1 | (3,aucune) neutre, w0
+5 (L,0) | (4,2) fav, π0, ρ0, w1 | (4,4) [aty] fav, π0, ρ0, w1 | (5,2) fav, π0, ρ0, w1 | abs
+6 (T,1) | (3,aucune) neutre, w0 | (3,1) neutre, w0 | (2,4) [aty] défav, π0, ρ0, w1 | (2,4) défav, π0, ρ0, w1
+7 (S,1) | (4,3) fav, π1, ρ1, w1 | (2,2) [aty] défav, π0, ρ0, w1 | (1,2) défav, π0, ρ0, w1 | (3,4) neutre, w0
+8 (P,0) | (2,3) défav, π1, ρ1, w1 | (2,3) défav, π1, ρ1, w1 | (5,1) fav, π0, ρ0, w1 | (2,3) [aty] défav, π1, ρ1, w1
+9 (L,0) | (4,1) fav, π0, ρ0, w1 | (2,3) défav, π1, ρ1, w1 | (2,3) [aty] défav, π1, ρ1, w1 | (2,2) défav, π1, ρ aucun, w1/2
+10 (S,0) | (4,4) [aty] fav, π0, ρ0, w1 | abs | abs | (3,2) neutre, w0
+11 (T,0) | (3,4) neutre, w0 | (3,1) neutre, w0 | (1,1) défav, π1, ρ1, w1 | (4,2) fav, π0, ρ0, w1
+12 (P,0) | (2,2) défav, π1, ρ1, w1 | (4,4) [aty] fav, π0, ρ0, w1 | (5,4) fav, π0, ρ0, w1 | (2,2) [aty] défav, π1, ρ1, w1
+13 (L,1) | (4,2) [aty] fav, π1, ρ1, w1 | (4,2) fav, π1, ρ1, w1 | (1,1) défav, π0, ρ0, w1 | (4,4) fav, π1, ρ aucun, w1/2
+14 (S,0) | (2,1) défav, π1, ρ1, w1 | (1,3) défav, π1, ρ1, w1 | (5,4) fav, π0, ρ0, w1 | (3,aucune) neutre, w0
+
+======================================================================
+D. CURSEURS DES PERSONNAGES PAR TENSION (§5.2), ÉTAT APRÈS CHAQUE TEXTE DE LA TENSION
+======================================================================
+c = (2 + Σ w·π) / (4 + Σ w) ; ℓ = max(0,95 − 0,07 Σ w ; 0,25) ; q = (0,95 − ℓ) / 0,70 = Σ w / 10 tant que ℓ > 0,25 (toujours le cas ici, Σ w ≤ 6).
+Le curseur « avant le texte n » (entrée + textes de la tension strictement avant n) est celui qui sert à la surprise d'une carte sur le texte n (§4.2 : textes ≤ k − 2 = n − 1) ; il est aussi « curseur vu » par le porteur à la séance k = n + 1.
+Format des états : (Σ w, Σ w·π) → c ; ℓ ; q.
+
+Agathe S | E1 : (1,1) → 3/5 ; 22/25 ; 1/10 | après 1 : (2,2) → 2/3 ; 81/100 ; 1/5 | après 4 : (3,3) → 5/7 ; 37/50 ; 3/10 | après 7 : (4,4) → 3/4 ; 67/100 ; 2/5 | après 10 : (5,4) → 2/3 ; 3/5 ; 1/2 | après 14 : (6,5) → 7/10 ; 53/100 ; 3/5
+Agathe P | E2 : (1,1) → 3/5 ; 22/25 ; 1/10 | après 3 : (2,2) → 2/3 ; 81/100 ; 1/5 | après 8 : (3,3) → 5/7 ; 37/50 ; 3/10 | après 12 : (4,4) → 3/4 ; 67/100 ; 2/5
+Agathe T | rien à l'entrée : (0,0) → 1/2 ; 19/20 ; 0 | après 2 : (1/2,0) → 4/9 ; 183/200 ; 1/20 | après 6 : inchangé (w 0) | après 11 : inchangé (w 0)
+Agathe L | E3 : (1,0) → 2/5 ; 22/25 ; 1/10 | après 5 : (2,0) → 1/3 ; 81/100 ; 1/5 | après 9 : (3,0) → 2/7 ; 37/50 ; 3/10 | après 13 : (4,1) → 3/8 ; 67/100 ; 2/5
+Nassim S | E1 : (1,1) → 3/5 ; 22/25 ; 1/10 | après 1 : (2,2) → 2/3 ; 81/100 ; 1/5 | après 4 : (3,3) → 5/7 ; 37/50 ; 3/10 | après 7 : (4,3) → 5/8 ; 67/100 ; 2/5 | 10 : absent | après 14 : (5,4) → 2/3 ; 3/5 ; 1/2
+Nassim P | E2 : (1,1) → 3/5 ; 22/25 ; 1/10 | 3 : absent | après 8 : (2,2) → 2/3 ; 81/100 ; 1/5 | après 12 : (3,2) → 4/7 ; 37/50 ; 3/10
+Nassim T | (0,0) → 1/2 ; 19/20 ; 0 à tout moment (neutre aux textes 2, 6, 11)
+Nassim L | E3 : (1,1) → 3/5 ; 22/25 ; 1/10 | après 5 : (2,1) → 1/2 ; 81/100 ; 1/5 | après 9 : (3,2) → 4/7 ; 37/50 ; 3/10 | après 13 : (4,3) → 5/8 ; 67/100 ; 2/5
+Odile S | E1 : (1,0) → 2/5 ; 22/25 ; 1/10 | après 1 : (2,0) → 1/3 ; 81/100 ; 1/5 | après 4 : (3,0) → 2/7 ; 37/50 ; 3/10 | après 7 : (4,0) → 1/4 ; 67/100 ; 2/5 | 10 : absent | après 14 : (5,0) → 2/9 ; 3/5 ; 1/2
+Odile P | E2 : (1,0) → 2/5 ; 22/25 ; 1/10 | après 3 : (2,1) → 1/2 ; 81/100 ; 1/5 | après 8 : (3,1) → 3/7 ; 37/50 ; 3/10 | après 12 : (4,1) → 3/8 ; 67/100 ; 2/5
+Odile T | (0,0) → 1/2 ; 19/20 ; 0 | après 2 : (1,1) → 3/5 ; 22/25 ; 1/10 | après 6 : (2,1) → 1/2 ; 81/100 ; 1/5 | après 11 : (3,2) → 4/7 ; 37/50 ; 3/10
+Odile L | E3 : (1,0) → 2/5 ; 22/25 ; 1/10 | après 5 : (2,0) → 1/3 ; 81/100 ; 1/5 | après 9 : (3,1) → 3/7 ; 37/50 ; 3/10 | après 13 : (4,1) → 3/8 ; 67/100 ; 2/5
+Valentin S | (0,0) → 1/2 ; 19/20 ; 0 à tout moment (neutre à E1, 1, 4, 7, 10, 14)
+Valentin P | E2 : (1,0) → 2/5 ; 22/25 ; 1/10 | après 3 : (2,1) → 1/2 ; 81/100 ; 1/5 | après 8 : (3,2) → 4/7 ; 37/50 ; 3/10 | après 12 : (4,3) → 5/8 ; 67/100 ; 2/5
+Valentin T | (0,0) → 1/2 ; 19/20 ; 0 | après 2 : (1,0) → 2/5 ; 22/25 ; 1/10 | après 6 : (2,0) → 1/3 ; 81/100 ; 1/5 | après 11 : (3,0) → 2/7 ; 37/50 ; 3/10
+Valentin L | E3 : (1,1) → 3/5 ; 22/25 ; 1/10 | 5 : absent | après 9 : (3/2,3/2) → 7/11 ; 169/200 ; 3/20 | après 13 : (2,2) → 2/3 ; 81/100 ; 1/5
+
+Curseur « avant le texte n » de l'auteur (celui qui entre dans la surprise de sa carte sur n) :
+texte 1 (S) | Agathe (1) 3/5, q 1/10 | Nassim (1) 3/5, q 1/10 | Odile (1) 2/5, q 1/10 | Valentin (0) 1/2, q 0
+texte 2 (T) | tous (0) 1/2, q 0
+texte 3 (P) | Agathe (1) 3/5, q 1/10 | Odile (1) 2/5, q 1/10 | Valentin (1) 2/5, q 1/10
+texte 4 (S) | Agathe (2) 2/3, q 1/5 | Nassim (2) 2/3, q 1/5 | Odile (2) 1/3, q 1/5 | Valentin (0) 1/2, q 0
+texte 5 (L) | Agathe (1) 2/5, q 1/10 | Nassim (1) 3/5, q 1/10 | Odile (1) 2/5, q 1/10
+texte 6 (T) | Agathe (1/2) 4/9, q 1/20 | Nassim (0) 1/2, q 0 | Odile (1) 3/5, q 1/10 | Valentin (1) 2/5, q 1/10
+texte 7 (S) | Agathe (3) 5/7, q 3/10 | Nassim (3) 5/7, q 3/10 | Odile (3) 2/7, q 3/10 | Valentin (0) 1/2, q 0
+texte 8 (P) | Agathe (2) 2/3, q 1/5 | Nassim (1) 3/5, q 1/10 | Odile (2) 1/2, q 1/5 | Valentin (2) 1/2, q 1/5
+texte 9 (L) | Agathe (2) 1/3, q 1/5 | Nassim (2) 1/2, q 1/5 | Odile (2) 1/3, q 1/5 | Valentin (1) 3/5, q 1/10
+texte 10 (S) | Agathe (4) 3/4, q 2/5 | Valentin (0) 1/2, q 0
+texte 11 (T) | Agathe (1/2) 4/9, q 1/20 | Nassim (0) 1/2, q 0 | Odile (2) 1/2, q 1/5 | Valentin (2) 1/3, q 1/5
+texte 12 (P) | Agathe (3) 5/7, q 3/10 | Nassim (2) 2/3, q 1/5 | Odile (3) 3/7, q 3/10 | Valentin (3) 4/7, q 3/10
+texte 13 (L) | Agathe (3) 2/7, q 3/10 | Nassim (3) 4/7, q 3/10 | Odile (3) 3/7, q 3/10 | Valentin (3/2) 7/11, q 3/20
+
+======================================================================
+E. CÔTÉ ATTENDU D'UN PERSONNAGE VU PAR UN DEVINEUR PERSONNAGE (§3, point 2 du fichier caché)
+======================================================================
+a = p si s = 1, sinon 1 − p ; +1 si a ≥ 3/5 ; −1 si a ≤ 2/5 ; 0 sinon. Ne dépend que du profil : constant d'une partie à l'autre.
+p (fichier candidat, position/100) : Agathe S 65/100, P 68/100, T 58/100, L 25/100 ; Nassim S 82/100, P 66/100, T 55/100, L 75/100 ; Odile S 10/100, P 12/100, T 85/100, L 15/100 ; Valentin S 45/100, P 25/100, T 30/100, L 70/100.
+
+tension, sens | Agathe | Nassim | Odile | Valentin
+S, s=0 (E1, 1, 4, 10, 14) | a 35/100 → −1 | a 18/100 → −1 | a 90/100 → +1 | a 55/100 → 0
+S, s=1 (7) | a 65/100 → +1 | a 82/100 → +1 | a 10/100 → −1 | a 45/100 → 0
+P, s=1 (E2, 3) | a 68/100 → +1 | a 66/100 → +1 | a 12/100 → −1 | a 25/100 → −1
+P, s=0 (8, 12) | a 32/100 → −1 | a 34/100 → −1 | a 88/100 → +1 | a 75/100 → +1
+T, s=0 (2, 11) | a 42/100 → 0 | a 45/100 → 0 | a 15/100 → −1 | a 70/100 → +1
+T, s=1 (6) | a 58/100 → 0 | a 55/100 → 0 | a 85/100 → +1 | a 30/100 → −1
+L, s=0 (E3, 5, 9) | a 75/100 → +1 | a 25/100 → −1 | a 85/100 → +1 | a 30/100 → −1
+L, s=1 (13) | a 25/100 → −1 | a 75/100 → +1 | a 15/100 → −1 | a 70/100 → +1
+
+======================================================================
+F. CÔTÉ σ D'UNE CARTE (§3 du fichier caché, notations)
+======================================================================
+σ | niveau 4 ou 5 → +1 ; niveau 3 → 0 ; niveau 1 ou 2 → −1 (dans les termes du texte, sans alignement)
+Score d'une carte σ pour un candidat X de côté attendu e | §3, point 3 | 2 si σ = e (0 = 0 compris) ; sinon 1 si σ = 0, ou e = 0, ou X « inconnu » ; sinon 0
+
+======================================================================
+G. HEURES DE JEU ET « DÉJÀ JOUÉ AUJOURD'HUI » (§7.5)
+======================================================================
+r(m) = (m − 1080 + 1440) mod 1440, m en minutes depuis minuit.
+r(Agathe 07:40 = 460) | §7.5 | 820
+r(Nassim 12:45 = 765) | §7.5 | 1125
+r(Odile 09:10 = 550) | §7.5 | 910
+r(Valentin 23:20 = 1400) | §7.5 | 320
+Un personnage s'affiche à la séance k si r(heure de jeu) ≤ r(heure lue) et s'il a répondu au texte k. Ordre des visages : Agathe, Nassim, Odile, Valentin.
+Compte à rebours de 2.5 : 1440 − r(m) minutes (non consigné dans la trace ; donné à titre de repère).
+
+======================================================================
+H. JOURS DE LA SEMAINE DES SÉANCES (§7.1, « 5.3 et 5.4, jours »)
+======================================================================
+Séance 1 lundi, 2 mardi, 3 mercredi, 4 jeudi, 5 vendredi, 6 samedi, 7 dimanche, 8 lundi, 9 mardi, 10 mercredi, 11 jeudi, 12 vendredi, 13 samedi, 14 dimanche, 15 lundi. Barre : « Entrée », « Jour k sur 14 · {jour} », « Clôture » (le carnet n'écrit que « Entrée », « Jour k sur 14 », « Clôture »).

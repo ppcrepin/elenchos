@@ -475,7 +475,7 @@ def lire_profils(texte_profils):
     for p, (num, cs) in rs.items():
         ds[p] = {}
         for t, c in zip(TENSIONS, cs):
-            m = re.fullmatch(r"([+−])([0-9]+),([0-9]+)", c)
+            m = re.fullmatch(r"([+\u2212])([0-9]+),([0-9]+)", c)
             if not m:
                 raise ErreurSource(f"{ou}, ligne {num} : cellule de d mal écrite : {c!r}")
             v = Fraction(int(m.group(2) + m.group(3)), 10 ** len(m.group(3)))

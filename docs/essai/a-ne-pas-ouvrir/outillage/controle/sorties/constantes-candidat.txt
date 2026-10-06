@@ -1,0 +1,82 @@
+Programme de contrôle (C) — chiffres constants du fichier (fichier caché, §9 bis)
+==============================================================================
+Fichier : SHA-256 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64
+Portée : manches du joueur aux séances 2 à 14 (textes 1 à 13), partie menée à la clôture.
+
+Part de réponses atypiques parmi ses cartes : 10 sur 38 (5/19) ; même compte avant et après redistribution.
+Remplacements de cartes identiques (§4.3, étape 3) : 2
+  séance 7 (texte 6) : place 2, Valentin écartée, Nassim à sa place
+  séance 14 (texte 13) : place 3, Nassim écartée, Valentin à sa place
+Cartes identiques servies ensemble : 2 manche(s), 5 carte(s)
+  séance 4 (texte 3) : [['Odile', 'Valentin', 'Agathe']]
+  séance 9 (texte 8) : [['Agathe', 'Valentin']]
+Raisons « aucune » parmi ses cartes :
+  affichées (cartes non cachées) : 2
+  cachées (vraie raison « aucune » de la carte à raison cachée) : 0
+  cartes à raison cachée déplacées par le §4.4 : 2 (séances [5, 7])
+Raisons « aucune » parmi les réponses scellées : entrée 0, textes devinés (1 à 13) 3, texte 14 1 ; total 4
+Égalités de classement (somme des `departages` de ses treize manches) : 2 ; par séance : {3: 1, 4: 1}
+Cases vues (ses cartes par personnage et par tension, plus E1 S, E2 P, E3 L pour Agathe) :
+             S   P   T   L
+  Agathe     4   3   1   4
+  Nassim     2   1   3   1
+  Odile      3   3   3   3
+  Valentin   3   3   2   2
+  Cases vues moins de 2 fois (signalées) : Agathe T, Nassim P, Nassim L
+Impossibilités :
+  plus petit nombre de réponses de personnages à un texte 1 à 13 : 2 ; écran 5.12 : impossible
+  « Texte rejeté. » (2.7d, textes 1 à 13) : impossible ; issues autres qu'« adopte » sur les 17 textes : {'11': 'sans_vote_ensemble'}
+Tailles de ses manches (séance : cartes) : {2: 3, 3: 3, 4: 3, 5: 3, 6: 3, 7: 3, 8: 3, 9: 3, 10: 3, 11: 2, 12: 3, 13: 3, 14: 3}
+
+Détail de ses manches (ordre d'affichage ; * = carte à raison cachée ; ‡ = réponse atypique)
+  séance 2, texte 1 : classement ['Odile', 'Nassim', 'Agathe', 'Valentin'] ; places ['Odile', 'Nassim', 'Agathe'] ; raison cachée : Agathe
+       Odile     Très favorable · raison 3
+    *  Agathe    Défavorable · raison 2
+       Nassim    Très défavorable · raison 1
+  séance 3, texte 2 : classement ['Odile', 'Valentin', 'Nassim', 'Agathe'] ; places ['Odile', 'Valentin', 'Nassim'] ; raison cachée : Nassim
+       Odile     Très défavorable · raison 1
+       Valentin  Favorable · raison 4
+    *  Nassim    Neutre · raison 2
+  séance 4, texte 3 : classement ['Odile', 'Valentin', 'Agathe'] ; places ['Odile', 'Valentin', 'Agathe'] ; raison cachée : Agathe
+     ‡ Odile     Favorable · raison 2
+     ‡ Valentin  Favorable · raison 2
+    *  Agathe    Favorable · raison 2
+  séance 5, texte 4 : classement ['Odile', 'Nassim', 'Valentin', 'Agathe'] ; places ['Odile', 'Nassim', 'Valentin'] ; raison cachée : Nassim
+       Valentin  Neutre · raison aucune
+       Odile     Très favorable · raison 2
+    *  Nassim    Très défavorable · raison 1
+  séance 6, texte 5 : classement ['Odile', 'Nassim', 'Agathe'] ; places ['Odile', 'Nassim', 'Agathe'] ; raison cachée : Agathe
+     ‡ Nassim    Favorable · raison 4
+       Odile     Très favorable · raison 2
+    *  Agathe    Favorable · raison 2
+  séance 7, texte 6 : classement ['Odile', 'Valentin', 'Nassim', 'Agathe'] ; places ['Odile', 'Nassim', 'Agathe'] ; raison cachée : Nassim
+     ‡ Odile     Défavorable · raison 4
+    *  Nassim    Neutre · raison 1
+       Agathe    Neutre · raison aucune
+  séance 8, texte 7 : classement ['Odile', 'Agathe', 'Nassim', 'Valentin'] ; places ['Odile', 'Agathe', 'Valentin'] ; raison cachée : Valentin
+       Agathe    Favorable · raison 3
+       Odile     Très défavorable · raison 2
+    *  Valentin  Neutre · raison 4
+  séance 9, texte 8 : classement ['Odile', 'Valentin', 'Agathe', 'Nassim'] ; places ['Odile', 'Valentin', 'Agathe'] ; raison cachée : Agathe
+       Odile     Très favorable · raison 1
+    *  Agathe    Défavorable · raison 3
+     ‡ Valentin  Défavorable · raison 3
+  séance 10, texte 9 : classement ['Agathe', 'Odile', 'Nassim', 'Valentin'] ; places ['Agathe', 'Odile', 'Valentin'] ; raison cachée : Valentin
+       Agathe    Favorable · raison 1
+    *  Valentin  Défavorable · raison 2
+     ‡ Odile     Défavorable · raison 3
+  séance 11, texte 10 : classement ['Agathe', 'Valentin'] ; places ['Agathe', 'Valentin'] ; raison cachée : Valentin
+     ‡ Agathe    Favorable · raison 4
+    *  Valentin  Neutre · raison 2
+  séance 12, texte 11 : classement ['Odile', 'Valentin', 'Agathe', 'Nassim'] ; places ['Odile', 'Valentin', 'Nassim'] ; raison cachée : Nassim
+    *  Nassim    Neutre · raison 1
+       Odile     Très défavorable · raison 1
+       Valentin  Favorable · raison 2
+  séance 13, texte 12 : classement ['Odile', 'Nassim', 'Valentin', 'Agathe'] ; places ['Odile', 'Nassim', 'Valentin'] ; raison cachée : Valentin
+     ‡ Nassim    Favorable · raison 4
+       Odile     Très favorable · raison 4
+    *‡ Valentin  Défavorable · raison 2
+  séance 14, texte 13 : classement ['Odile', 'Agathe', 'Nassim', 'Valentin'] ; places ['Odile', 'Agathe', 'Valentin'] ; raison cachée : Valentin
+    *  Valentin  Favorable · raison 4
+       Odile     Très défavorable · raison 1
+     ‡ Agathe    Favorable · raison 2
