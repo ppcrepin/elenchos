@@ -1,6 +1,21 @@
 # Questions de Front-end sur la spécification (page de l'essai, lots 1 à 3)
 
-Écrites le 6 octobre 2026, sur la spécification au commit `3553b2e`. Pour chaque point : section, citation, ma lecture, ce que j'ai fait en attendant. Rien n'est tranché en silence : chaque point repasse par le circuit. Classés du plus important au moins important.
+Écrites le 6 octobre 2026. Pour chaque point : section, citation, ma lecture, ce que j'ai fait en attendant. Rien n'est tranché en silence : chaque point repasse par le circuit.
+
+## État des réponses
+
+| Question | Réponse (spécification) | Dans la page |
+|---|---|---|
+| Q-F1 espace fine insécable | §8.8 (commit `2c66a93`) : choix confirmé par la Direction artistique, chasses face par face, vérification, ligne de licence | `reduire.py` vérifie U+202F (présence, sans contour, chasse attendue) et s'arrête sinon ; ligne de licence à poser au lot 7 |
+| Q-F2 règles 4 et 5 du §7.8 | §7.8 (`2c66a93`) : par la forme ; suites qui se chevauchent jugées sur la chaîne de départ | `noyau.typographier` réécrit position par position ; tests ajoutés |
+| Q-F3 Mystère et surprise sans erreur | §6, points 3, 5 et 9 (`1df9aa5`) : au moins 1 erreur | appliqué au moteur |
+| Q-F4 curseur net | §5.4, §5.7, §6 point 7 (`1df9aa5`) : impossible ; un programme qui en voit un s'arrête | le moteur s'arrête aussi pour la phrase « nette » (lecture « portrait d'avant » retirée) |
+| Q-F5 verdicts du carnet | §8.12 (`2c66a93`) : un verdict par carte | déjà ainsi |
+| Q-F6 « 1 juste » | §8.12 : retirée | rien à faire |
+| Q-F7 pseudo | réponse de Front-end ci-dessous, transmise | appliquée dans la page (lot 4) |
+| Q-F8 à Q-F13 | ouvertes (ci-dessous) | lecture provisoire appliquée |
+
+Ajouts appliqués en même temps : une copie en cours d'essai n'a lieu que de l'entrée au jour 14 (règle 14 de la partie 3.12) ; « Sur tout l'essai » d'une copie est calculé comme un arrêt à sa séance (déjà ainsi) ; à la séance 0, questions 2 et 3 toujours proposées (déjà ainsi).
 
 ## Q-F1 — L'espace fine insécable manque dans les polices (§8.8, « Caractères » ; §7.8, règles 2 et 6)
 
@@ -53,6 +68,36 @@ Demande de l'orchestrateur (6 octobre 2026) : confirmer la lecture du programme 
 En plus, à soumettre à UX : la page retire aussi les **substituts isolés** (catégorie Cs), qu'un collage peut apporter en théorie ; sans cela, l'état ne se coderait pas en UTF-8. Le contrôle peut refuser un Cs.
 
 « Témoin-b-4821-k » passe : NFC, ni Cc ni Cf, aucun blanc, 15 points de code, pas un prénom. Limite connue : la page suit les tables Unicode de Safari (Unicode 15 ou plus), le programme de contrôle celles de Python 3.11 (Unicode 14) ; un caractère classé Cf seulement depuis Unicode 15 serait retiré par la page et inconnu du contrôle, sans écart sur ce que la page garde.
+
+## Q-F8 — Bouton de 1.6 après le troisième texte d'entrée (§7.2 ; maquette 1.6)
+
+- **Citation.** Maquette 1.6 (texte 1) : bouton « Texte suivant », vers le texte 2. Note : « Textes 2 et 3 : même chemin … La maquette passe directement au bilan (1.7). » Le bouton de la révélation immédiate du texte 3, qui mène au bilan, n'est dessiné nulle part.
+- **Lecture provisoire.** « Texte suivant » aux textes 1 et 2 ; « Suivant » au texte 3 (libellé validé ailleurs, qui ne promet pas un autre texte). À confirmer par UX.
+
+## Q-F9 — Titre de la page de l'export (§8.7, §8.1 « Page du cadre »)
+
+- **Citation.** §8.1 : « Titre en tête, en 17 px, 600 ; sans titre propre (message de la séance 0, §8.2), la première phrase, en gras, en tient lieu ». §8.7 ne donne pas de titre à la page où s'affiche le carnet à copier.
+- **Lecture provisoire.** Pas de titre ajouté : la page commence par le bloc du carnet, dont la première ligne est « Carnet de l’essai Elenchos » ; le lecteur d'écran se place sur ce bloc. À confirmer par UX (ou un titre à écrire).
+
+## Q-F10 — État gardé illisible (§8.8, §8.11)
+
+- **Constat.** Le §8.11 prévoit trois arrêts : vérification ratée (repère V1 à V5), stockage absent, page ouverte deux fois. Rien ne dit quoi montrer si la clé de la partie existe mais ne se lit pas (JSON abîmé, format inconnu).
+- **Lecture provisoire.** Arrêt 1 avec le repère « V4 » (lecture des données au chargement), sans rien effacer. À confirmer par UX : un repère propre (par exemple « M1 ») serait plus juste pour l'équipe.
+
+## Q-F11 — Retour depuis l'export ouvert par « Copier mon carnet d'abord » (§8.7, §8.9)
+
+- **Citation.** §8.7 : « Dans tous les cas, le texte copié s'affiche en entier avant la copie ». §8.9 : la confirmation de « Tout effacer » propose « Copier mon carnet d'abord » (« le même export »). Le chemin de retour vers la confirmation, une fois le carnet copié, n'est pas écrit.
+- **Lecture provisoire.** « Copier mon carnet d'abord » ouvre la page de l'export (carnet affiché, figé à ce toucher, ce qui fait l'instant de la copie au sens de la partie 3.2) ; dans la bande, « Copier mon carnet » puis « Fermer » (libellé déjà validé pour le cadre), qui ramène à la confirmation. À confirmer par UX.
+
+## Q-F12 — Après « Tout effacer » (§8.9)
+
+- **Citation.** « Après : « La page a tout effacé. » » et « La page revient à l'entrée, comme à une première visite. »
+- **Lecture provisoire.** La page affiche « La page a tout effacé. » seule (sans barre, bande ni bouton) et n'écrit plus rien ; à la prochaine ouverture, elle repart de l'entrée. À confirmer par UX (une action pour recommencer tout de suite n'est pas prévue, et serait contraire à l'esprit du §8.9).
+
+## Q-F13 — Intitulés de la graine et du fichier scellé au dévoilement (§8.6)
+
+- **Citation.** « une partie repliée « Pour le contrôle » : graine, fichier scellé, et : « Empreinte de ce fichier : » … »
+- **Lecture provisoire.** « Graine : » et « Fichier scellé : », sur le modèle d'« Empreinte de ce fichier : ». À confirmer par UX.
 
 ## Notes de mise en œuvre (pas des questions, pour transparence)
 
