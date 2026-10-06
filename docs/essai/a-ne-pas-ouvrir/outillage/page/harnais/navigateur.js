@@ -100,11 +100,17 @@ async function ouvrir(options) {
   });
   if (o.largeur && o.hauteur) { ctxOptions.viewport = { width: o.largeur, height: o.hauteur }; ctxOptions.screen = { width: o.largeur, height: o.hauteur }; }
   const env = Object.assign({}, process.env, { TZ: o.fuseau });
+  // Chromium sous Linux arrondit les chasses au pixel quand il applique le
+  // hinting : les mots se serrent et les coupures de ligne diffèrent de
+  // celles d'iOS, qui n'en applique pas. Sans hinting, le rendu des polices
+  // embarquées est géométrique, comme sur l'iPhone (réglage du navigateur,
+  // rien n'est ajouté à la page).
+  const args = o.navigateur === 'chromium' ? ['--font-render-hinting=none'] : [];
   let navigateur = null, contexte;
   if (o.profil) {
-    contexte = await type.launchPersistentContext(o.profil, Object.assign({ env }, ctxOptions));
+    contexte = await type.launchPersistentContext(o.profil, Object.assign({ env, args }, ctxOptions));
   } else {
-    navigateur = await type.launch({ env });
+    navigateur = await type.launch({ env, args });
     contexte = await navigateur.newContext(ctxOptions);
   }
   const service = creerService(o.page, o.icone);

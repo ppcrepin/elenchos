@@ -10,8 +10,10 @@ rapport-construction.txt. Mêmes entrées, mêmes octets.
 
 Refuse de s'exécuter si un champ du fichier d'entrées manque, si le SHA-256
 du fichier scellé diffère de `empreinte`, si une police diffère de son
-empreinte, si un caractère affiché du fichier scellé manque aux polices, ou
-si une vérification mécanique du contrôle 5 échoue.
+empreinte, si une face n'a pas de glyphe vide relié à U+202F à la chasse
+attendue (§8.8 ; vérifié par polices/verifier-202f.js, sous Node 22), si un
+caractère affiché du fichier scellé manque aux polices, ou si une
+vérification mécanique du contrôle 5 échoue.
 """
 
 import argparse
@@ -20,6 +22,8 @@ import hashlib
 import json
 import os
 import re
+import shutil
+import subprocess
 import sys
 import unicodedata
 
@@ -35,6 +39,9 @@ FACES = [  # fichier, famille CSS, graisse, style
     ("alegreya-sans-700.woff2", "Alegreya Sans", 700, "normal"),
     ("alegreya-sans-italique-400.woff2", "Alegreya Sans", 400, "italic"),
 ]
+# Chasses attendues de U+202F, en millièmes de cadratin (§8.8, « Valeurs attendues »).
+CHASSES_202F = {"alegreya-700.woff2": 116, "alegreya-italique-500.woff2": 124, "alegreya-italique-700.woff2": 116,
+                "alegreya-sans-400.woff2": 103, "alegreya-sans-700.woff2": 101, "alegreya-sans-italique-400.woff2": 105}
 LIGNE_LICENCE = "Polices réduites ; glyphe vide U+202F (espace fine insécable) ajouté à chaque face."
 MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
 
@@ -150,6 +157,23 @@ def plages(texte):
     return ens
 
 
+def verifier_espace_fine(dossier_polices, manifeste):
+    """§8.8 : chaque face a un glyphe vide relié à U+202F, à la chasse attendue ; sinon, refus."""
+    node = shutil.which("node")
+    if node is None:
+        echec("Node introuvable : la vérification de U+202F dans les polices (§8.8) ne peut pas se faire")
+    args = []
+    for fichier, _, _, _ in FACES:
+        face = [x for x in manifeste["faces"] if x["fichier"] == fichier][0]
+        if face["chasse_U+202F"] != CHASSES_202F[fichier]:
+            echec("polices.json : chasse de U+202F de %s différente de la valeur du §8.8" % fichier)
+        args.append("%s:%d" % (os.path.join(dossier_polices, fichier), CHASSES_202F[fichier]))
+    r = subprocess.run([node, os.path.join(dossier_polices, "verifier-202f.js")] + args, capture_output=True, text=True)
+    if r.returncode != 0:
+        echec("polices, U+202F (§8.8) :\n" + r.stdout + r.stderr)
+    return r.stdout
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--scelle", required=True)
@@ -190,6 +214,7 @@ def main():
         couverts = ens if couverts is None else couverts & ens
         css_polices.append('@font-face{font-family:"%s";font-style:%s;font-weight:%d;font-display:block;src:url(data:font/woff2;base64,%s) format("woff2")}'
                            % (famille, style, graisse, base64.b64encode(o).decode("ascii")))
+    verifier_espace_fine(dossier_polices, manifeste)
     manquants = sorted({ord(c) for s in chaines_affichees(scelle) for c in s} - couverts)
     if manquants:
         echec("caractères affichés absents des polices : " + ", ".join("U+%04X %s" % (c, unicodedata.name(chr(c), "?")) for c in manquants))

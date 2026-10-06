@@ -257,6 +257,7 @@ button.listrow { cursor: pointer; min-height: 44px; }
 .rond.retourne .rond-interieur { transition: none; }
 .rond-face { position: absolute; inset: 0; border-radius: 50%; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: grid; place-items: center;
   background: #F2EEE8; color: #2A211C; border: 4px double #2A211C; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45); padding: 0; }
+.tel-ecran .rond-face { color: #2A211C; } /* plus fort que « .tel-ecran button » (palette du soir) */
 .rond-recto { font: 700 1.7rem/1 var(--ft); cursor: pointer; min-width: 64px; min-height: 64px; }
 .rond-verso { transform: rotateX(180deg); font: italic 500 1.7rem/1 var(--ft); }
 @media (prefers-reduced-motion: reduce) { .rond-interieur { transition: none; } }

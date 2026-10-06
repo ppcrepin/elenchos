@@ -206,7 +206,8 @@ class Joueur {
     }
     if (c.pseudo === null) { return 'entree'; }
     await this.bouton(this.tel, X.creerCompte);
-    await this.tel.getByRole('textbox', { name: motif(X.champPseudo) }).fill(c.pseudo);
+    // frappe caractère par caractère (§7.2 : mise en forme à la saisie, champ jamais réécrit)
+    await this.tel.getByRole('textbox', { name: motif(X.champPseudo) }).pressSequentially(this.o.saisiePseudo || c.pseudo);
     await this.releverSiVoulu('saisie du pseudo');
     await this.bouton(this.tel, X.recevoirCode);
     await this.bouton(this.tel, X.valider);

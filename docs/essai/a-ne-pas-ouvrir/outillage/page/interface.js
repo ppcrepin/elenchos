@@ -1310,6 +1310,8 @@ var ElenchosInterface = (function (N, M, X) {
   /* ================================================================== */
 
   var milieuTel = null, milieuCadre = null, barreEl = null, bandeEl = null;
+  var pageAffichee = null; // page du cadre à l'écran (pour garder ou remettre son défilement)
+  function cleDePage(c) { return c.page + (c.copie ? ':copie' : '') + (c.apres ? ':apres' : ''); }
 
   function rendre(options) {
     options = options || {};
@@ -1317,12 +1319,17 @@ var ElenchosInterface = (function (N, M, X) {
     var nouvelleBarre = rendreBarre();
     racine.replaceChild(nouvelleBarre, barreEl); barreEl = nouvelleBarre;
     if (etat.vue.cadre) {
+      var memePage = pageAffichee === cleDePage(etat.vue.cadre);
+      var defileCadre = memePage ? milieuCadre.scrollTop : 0;
       vider(milieuCadre);
       milieuCadre.appendChild(rendrePageCadre());
       milieuCadre.hidden = false;
       milieuTel.hidden = true;
+      milieuCadre.scrollTop = defileCadre; // une autre page commence en haut ; la même garde sa place
+      pageAffichee = cleDePage(etat.vue.cadre);
       if (options.focus !== false) { var ti = milieuCadre.querySelector('.titre-page, #zone-carnet'); if (ti) { try { ti.focus({ preventScroll: true }); } catch (e) { ti.focus(); } } }
     } else {
+      pageAffichee = null;
       milieuCadre.hidden = true;
       milieuTel.hidden = false;
       if (options.telephone !== false) {

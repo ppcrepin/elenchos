@@ -1,4 +1,4 @@
-# Questions de Front-end sur la spécification (page de l'essai, lots 1 à 3)
+# Questions de Front-end sur la spécification (page de l'essai)
 
 Écrites le 6 octobre 2026. Pour chaque point : section, citation, ma lecture, ce que j'ai fait en attendant. Rien n'est tranché en silence : chaque point repasse par le circuit.
 
@@ -13,7 +13,8 @@
 | Q-F5 verdicts du carnet | §8.12 (`2c66a93`) : un verdict par carte | déjà ainsi |
 | Q-F6 « 1 juste » | §8.12 : retirée | rien à faire |
 | Q-F7 pseudo | réponse de Front-end ci-dessous, transmise | appliquée dans la page (lot 4) |
-| Q-F8 à Q-F13 | ouvertes (ci-dessous) | lecture provisoire appliquée |
+| Q-F8 pseudo, questions d'UX | réponse de Front-end ci-dessous (§7.2, commit `841b8bc`) | vérifié dans Chromium |
+| Q-F9 à Q-F14 | ouvertes (ci-dessous ; Q-F14 est l'ancienne Q-F8, renumérotée) | lecture provisoire appliquée |
 
 Ajouts appliqués en même temps : une copie en cours d'essai n'a lieu que de l'entrée au jour 14 (règle 14 de la partie 3.12) ; « Sur tout l'essai » d'une copie est calculé comme un arrêt à sa séance (déjà ainsi) ; à la séance 0, questions 2 et 3 toujours proposées (déjà ainsi).
 
@@ -69,10 +70,13 @@ En plus, à soumettre à UX : la page retire aussi les **substituts isolés** (c
 
 « Témoin-b-4821-k » passe : NFC, ni Cc ni Cf, aucun blanc, 15 points de code, pas un prénom. Limite connue : la page suit les tables Unicode de Safari (Unicode 15 ou plus), le programme de contrôle celles de Python 3.11 (Unicode 14) ; un caractère classé Cf seulement depuis Unicode 15 serait retiré par la page et inconnu du contrôle, sans écart sur ce que la page garde.
 
-## Q-F8 — Bouton de 1.6 après le troisième texte d'entrée (§7.2 ; maquette 1.6)
+## Q-F8 — Saisie du pseudo : deux questions d'UX (§7.2, commit `841b8bc`)
 
-- **Citation.** Maquette 1.6 (texte 1) : bouton « Texte suivant », vers le texte 2. Note : « Textes 2 et 3 : même chemin … La maquette passe directement au bilan (1.7). » Le bouton de la révélation immédiate du texte 3, qui mène au bilan, n'est dessiné nulle part.
-- **Lecture provisoire.** « Texte suivant » aux textes 1 et 2 ; « Suivant » au texte 3 (libellé validé ailleurs, qui ne promet pas un autre texte). À confirmer par UX.
+**1. La page réécrit-elle le champ à chaque frappe ?** Non. Le champ garde exactement ce qui est tapé ; « Jean Paul » se tape normalement. La mise en forme du §7.2 sert à deux moments, sans toucher au champ : à chaque frappe, pour juger si « Recevoir mon code » est actif et quelle note la bande affiche ; au toucher de « Recevoir mon code », pour écrire le pseudo gardé. Vérifié dans Chromium, frappe caractère par caractère : « Jean Paul » → « Jean Paul » ; « ␣␣Jean␣␣␣Paul␣␣ » → « Jean Paul » ; « e », U+200B, U+0301, « té » → « été » (en NFC) ; 26 lettres tapées → les 20 premières.
+
+Seule exception, la limite : une frappe (ou un collage) qui porterait la mise en forme au-delà de 20 points de code est refusée, et le champ revient à sa valeur d'avant ce geste. Un collage trop long est donc refusé en entier, pas tronqué.
+
+**2. Les 20 points de code sont-ils comptés après la forme NFC finale ?** Oui : la page compte les points de code du résultat complet de la mise en forme (retraits, blancs, espaces, puis NFC en dernier), le même texte que celui qu'elle garde. L'attribut `maxlength`, qui compte des unités UTF-16, n'est pas employé.
 
 ## Q-F9 — Titre de la page de l'export (§8.7, §8.1 « Page du cadre »)
 
@@ -98,6 +102,11 @@ En plus, à soumettre à UX : la page retire aussi les **substituts isolés** (c
 
 - **Citation.** « une partie repliée « Pour le contrôle » : graine, fichier scellé, et : « Empreinte de ce fichier : » … »
 - **Lecture provisoire.** « Graine : » et « Fichier scellé : », sur le modèle d'« Empreinte de ce fichier : ». À confirmer par UX.
+
+## Q-F14 (ancienne Q-F8) — Bouton de 1.6 après le troisième texte d'entrée (§7.2 ; maquette 1.6)
+
+- **Citation.** Maquette 1.6 (texte 1) : bouton « Texte suivant », vers le texte 2. Note : « Textes 2 et 3 : même chemin … La maquette passe directement au bilan (1.7). » Le bouton de la révélation immédiate du texte 3, qui mène au bilan, n'est dessiné nulle part.
+- **Lecture provisoire.** « Texte suivant » aux textes 1 et 2 ; « Suivant » au texte 3 (libellé validé ailleurs, qui ne promet pas un autre texte). À confirmer par UX.
 
 ## Notes de mise en œuvre (pas des questions, pour transparence)
 
