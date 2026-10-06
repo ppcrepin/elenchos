@@ -136,6 +136,13 @@ var ElenchosInterface = (function (N, M, X) {
     try { garde = lireEtat(); } catch (e) { garde = undefined; }
     var compteur = garde ? garde.ecritures : (garde === null ? 0 : -1);
     if (compteur !== etat.ecritures) { arreter3(); return; }
+    // Le temps de premier plan écoulé jusqu'ici entre dans l'état écrit : après un arrêt
+    // brutal, seul manque le temps écoulé depuis la dernière écriture (§8.8).
+    if (visibleDepuis !== null) {
+      var maintenant = performance.now();
+      seanceCourante().pp.total += Math.max(0, maintenant - visibleDepuis);
+      visibleDepuis = maintenant;
+    }
     etat.ecritures += 1;
     try { window.localStorage.setItem(CLE, JSON.stringify(etat)); }
     catch (e) { etat.ecritures -= 1; arreter2(); }
