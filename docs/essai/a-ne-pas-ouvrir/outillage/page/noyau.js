@@ -596,20 +596,61 @@ var ElenchosNoyau = (function () {
 
   var NBSP = ' ';
   var FINE = ' ';
-  var RE_REBOURS = /([0-9]+) h ([0-9]{2})(?![0-9])/g;
-  var RE_DATE = new RegExp('(^|[^0-9])(1er|[1-9]|[12][0-9]|3[01]) (' + MOIS.join('|') + ') ([0-9]{4})(?![0-9])', 'g');
 
   function estChiffre(c) { return c >= '0' && c <= '9'; }
 
+  /** Règle 4 (§7.8) : espaces de « {chiffre} h {deux chiffres} », jugées sur la chaîne de départ. */
+  function espacesHeure(c) {
+    var marques = [];
+    for (var i = 0; i + 5 < c.length; i++) {
+      if (estChiffre(c[i]) && c[i + 1] === ' ' && c[i + 2] === 'h' && c[i + 3] === ' ' && estChiffre(c[i + 4]) && estChiffre(c[i + 5]) &&
+        (i + 6 === c.length || !estChiffre(c[i + 6]))) { marques.push(i + 1, i + 3); }
+    }
+    return marques;
+  }
+
+  /** Longueurs possibles d'un jour qui commence en i (« 1er », ou 1 à 31 sans zéro initial). */
+  function joursEn(c, i) {
+    if (i > 0 && estChiffre(c[i - 1])) { return []; }
+    var l = [];
+    if (c[i] === '1' && c[i + 1] === 'e' && c[i + 2] === 'r') { l.push(3); }
+    if (c[i] >= '1' && c[i] <= '9') {
+      l.push(1);
+      if (estChiffre(c[i + 1]) && (c[i] === '1' || c[i] === '2' || (c[i] === '3' && (c[i + 1] === '0' || c[i + 1] === '1')))) { l.push(2); }
+    }
+    return l;
+  }
+
+  /** Règle 5 (§7.8) : espaces de « {j} {mois} {aaaa} », jugées sur la chaîne de départ. */
+  function espacesDate(c) {
+    var marques = [];
+    for (var i = 0; i < c.length; i++) {
+      joursEn(c, i).forEach(function (lj) {
+        var a = i + lj;
+        if (c[a] !== ' ') { return; }
+        MOIS.forEach(function (mois) {
+          if (c.slice(a + 1, a + 1 + mois.length).join('') !== mois) { return; }
+          var b = a + 1 + mois.length;
+          if (c[b] !== ' ') { return; }
+          for (var d = b + 1; d < b + 5; d++) { if (!(d < c.length && estChiffre(c[d]))) { return; } }
+          if (b + 5 < c.length && estChiffre(c[b + 5])) { return; }
+          marques.push(a, b);
+        });
+      });
+    }
+    return marques;
+  }
+
   /** Applique les règles 1 à 6 du §7.8, dans cet ordre, à une phrase
    *  entière (valeurs insérées, pseudo exclu). Chaque règle ne change que
-   *  des espaces U+0020 encore ordinaires. jusqua (facultatif) : dernière
-   *  règle appliquée (3 pour les écrans du §8.13). */
+   *  des espaces U+0020 encore ordinaires ; les règles 4 et 5 jugent chaque
+   *  espace sur la chaîne telle qu'elle était au début de la règle.
+   *  jusqua (facultatif) : dernière règle appliquée (3 pour le §8.13). */
   function typographier(s, jusqua) {
     if (jusqua === undefined) { jusqua = 6; }
     // 1. apostrophe
     s = s.split("'").join('’');
-    var c = s.split('');
+    var c = Array.from(s);
     var i;
     // 2. espace fine insécable avant ? ! ;
     for (i = 0; i < c.length; i++) {
@@ -622,14 +663,12 @@ var ElenchosNoyau = (function () {
       var avant = i > 0 ? c[i - 1] : '';
       if (apres === ':' || apres === '»' || apres === '·' || avant === '«' || avant === '←') { c[i] = NBSP; }
     }
-    s = c.join('');
-    if (jusqua <= 3) { return s; }
-    // 4. compte à rebours « {h} h {mm} »
-    s = s.replace(RE_REBOURS, function (tout, h, mm) { return h + NBSP + 'h' + NBSP + mm; });
+    if (jusqua <= 3) { return c.join(''); }
+    // 4. heure ou durée « {h} h {mm} »
+    espacesHeure(c).forEach(function (j) { if (c[j] === ' ') { c[j] = NBSP; } });
     // 5. date « {j} {mois} {aaaa} »
-    s = s.replace(RE_DATE, function (tout, avant, j, mois, a) { return avant + j + NBSP + mois + NBSP + a; });
+    espacesDate(c).forEach(function (j) { if (c[j] === ' ') { c[j] = NBSP; } });
     // 6. espace après un chiffre
-    c = s.split('');
     for (i = 1; i < c.length; i++) {
       if (c[i] !== ' ' || !estChiffre(c[i - 1])) { continue; }
       var tranche = i + 3 < c.length && estChiffre(c[i + 1]) && estChiffre(c[i + 2]) && estChiffre(c[i + 3]) &&
