@@ -6,6 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const N = require('../noyau.js');
 const M = require('../moteur.js');
+const TR = require('../trace.js');
 const J = require('./joueurs.js');
 const T = require('./temoins.js');
 
@@ -203,7 +204,7 @@ function partie(joueur) {
   const ecarts = M.validerJournal(scelle, journal);
   assert.deepEqual(ecarts, [], 'journal valide');
   const durees = joueur.mode === 'interface' ? J.dureesPour(journal) : null;
-  const tr = M.trace(scelle, journal, durees, EMPREINTE);
+  const tr = TR.tracer(N, M, scelle, journal, durees, EMPREINTE);
   return { journal, tr, durees };
 }
 
@@ -221,7 +222,7 @@ for (const [nom, fab] of temoins) {
     verifierFormeCarnet(tr.carnet.texte, journal.seances[0].coups.pseudo);
     tr.copies.forEach(c => verifierFormeCarnet(c.texte, journal.seances[0].coups.pseudo));
     // déterminisme
-    assert.equal(N.jsonCanonique(M.trace(scelle, journal, J.dureesPour(journal), EMPREINTE)), N.jsonCanonique(tr));
+    assert.equal(N.jsonCanonique(TR.tracer(N, M, scelle, journal, J.dureesPour(journal), EMPREINTE)), N.jsonCanonique(tr));
   });
 }
 
@@ -342,7 +343,7 @@ test('Validité du journal : des journaux fautifs sont refusés', () => {
   assert.notDeepEqual(muter(x => { x.seances[5].etapes.repondre = false; }), []);
   assert.notDeepEqual(muter(x => { x.seances[5].coups.deviner.forEach(d => { d.raison = null; }); x.seances[5].coups.deviner[0].raison = 9; }), []);
   assert.notDeepEqual(muter(x => { x.arret = { k: 15, raison: null, f2: null, f1: null }; }), []);
-  assert.throws(() => M.trace(scelle, Object.assign({}, j, { seances: j.seances.slice(0, 4) }), null, EMPREINTE));
+  assert.throws(() => TR.tracer(N, M, scelle, Object.assign({}, j, { seances: j.seances.slice(0, 4) }), null, EMPREINTE));
 });
 
 test('Q3 : choix selon les écrans affichés, jamais selon la réponse (§8.3, commit 3553b2e)', () => {
@@ -386,7 +387,7 @@ test('200 parties au hasard (mode moteur) : schéma, règles, déterminisme ; co
     verifierSchemaTrace(tr, 'moteur');
     verifierRegles(tr);
     assert.equal(tr.carnet, null);
-    assert.equal(N.jsonCanonique(M.trace(scelle, journal, null, EMPREINTE)), N.jsonCanonique(tr));
+    assert.equal(N.jsonCanonique(TR.tracer(N, M, scelle, journal, null, EMPREINTE)), N.jsonCanonique(tr));
     // couverture
     tr.seances.forEach(s => {
       if (s.phrase_jour) { noter('phrase du jour ' + s.phrase_jour.classe); }

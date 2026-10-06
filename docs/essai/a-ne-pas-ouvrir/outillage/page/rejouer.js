@@ -15,6 +15,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const N = require('./noyau.js');
 const M = require('./moteur.js');
+const TR = require('./trace.js');
 
 function arguments_() {
   const a = {};
@@ -39,7 +40,7 @@ function main() {
   if (journal.format !== 'elenchos-essai-journal' || journal.version !== 3) { throw new Error('journal : format ou version inattendus'); }
   if (journal.empreinte_scelle !== empreinte) { throw new Error('journal : empreinte du fichier scellé différente (' + journal.empreinte_scelle + ')'); }
   const durees = a.durees ? lireJson(a.durees) : null;
-  const tr = M.trace(scelle, journal, durees, empreinte);
+  const tr = TR.tracer(N, M, scelle, journal, durees, empreinte);
   fs.mkdirSync(a.sortie, { recursive: true });
   fs.writeFileSync(path.join(a.sortie, 'trace.json'), Buffer.from(N.utf8Encoder(N.jsonCanonique(tr))));
   if (tr.carnet) { fs.writeFileSync(path.join(a.sortie, 'carnet.txt'), Buffer.from(N.utf8Encoder(tr.carnet.texte))); }

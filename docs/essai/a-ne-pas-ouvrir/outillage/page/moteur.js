@@ -8,8 +8,7 @@
  *
  *   calculer(scelle, journal)          -> toutes les grandeurs de la partie 3
  *                                         du schéma, séance par séance
- *   trace(scelle, journal, durees, e)  -> la trace complète (partie 3.2),
- *                                         carnet et copies compris
+ *   copie(scelle, journal, c, D, dc)   -> copie du carnet en cours d'essai
  *   carnet(scelle, journal, resultats, durees, statut) -> texte du §8.12
  *   validerJournal(scelle, journal)    -> liste des écarts aux règles de
  *                                         validité (partie 3.12)
@@ -691,7 +690,8 @@ var ElenchosMoteur = (function (N) {
   function mesuresSansDurees(s, k, revelation, precedente, mancheRevelee) {
     var dev = s.coups.deviner;
     var mesure = {
-      jours_ecoules: precedente ? N.joursEcoules(precedente.ouverture, s.ouverture) : null,
+      // une séance affichée mais pas encore touchée n'a pas d'ouverture (page en cours de jeu)
+      jours_ecoules: precedente && precedente.ouverture && s.ouverture ? N.joursEcoules(precedente.ouverture, s.ouverture) : null,
       duree_seance: null, duree_deviner: null, duree_repondre: null,
       relire: s.coups.relire,
       passer: Array.isArray(dev) ? dev.filter(function (d) { return d.designe === 'passe'; }).length : 0,
@@ -870,25 +870,12 @@ var ElenchosMoteur = (function (N) {
   }
 
   /* ------------------------------------------------------------------ */
-  /* Trace (partie 3.2)                                                  */
+  /* Durées et copie du carnet en cours d'essai (§8.12, partie 3.2)      */
   /* ------------------------------------------------------------------ */
 
-  function copierCoups(c) { return JSON.parse(JSON.stringify(c)); }
-
-  /** Écrit les fractions « p/q » et garde la forme de la trace. */
-  function enTrace(v) {
-    if (v instanceof F) { return v.toString(); }
-    if (Array.isArray(v)) { return v.map(enTrace); }
-    if (v && typeof v === 'object') {
-      var o = {};
-      Object.keys(v).forEach(function (k) { o[k] = enTrace(v[k]); });
-      return o;
-    }
-    return v;
-  }
-
-  function dureesPour(durees, k, etapes, mode, ou) {
-    if (mode === 'moteur') { return { k: k, duree_seance: null, duree_deviner: null, duree_repondre: null }; }
+  /** Vérifie qu'une ligne de durées suit la présence fixée par etapes
+   *  (partie 3.10) ; rend la ligne. */
+  function dureesConformes(durees, k, etapes, ou) {
     exiger(durees && durees.k === k, ou + ' : durées absentes');
     exiger(Number.isSafeInteger(durees.duree_seance), ou + ' : duree_seance absente');
     var dev = !!(etapes && etapes.deviner), rep = !!(etapes && etapes.repondre);
@@ -897,66 +884,27 @@ var ElenchosMoteur = (function (N) {
     return durees;
   }
 
-  function seanceTrace(s, r, d) {
-    var m = {};
-    Object.keys(r.mesures).forEach(function (k) { m[k] = r.mesures[k]; });
-    m.duree_seance = d.duree_seance; m.duree_deviner = d.duree_deviner; m.duree_repondre = d.duree_repondre;
-    var manches = null;
-    if (r.manches) {
-      manches = {};
-      Object.keys(r.manches).forEach(function (g) {
-        var x = r.manches[g];
-        manches[g] = { texte: x.texte, possibles: x.possibles, mediane: x.mediane, classement: x.classement,
-          departages: x.departages, remplacements: x.remplacements, places: x.places, raison_cachee: x.raison_cachee,
-          ordre: x.ordre, cartes: x.cartes, rangs: x.rangs, cotes_attendus: x.cotes_attendus,
-          curseur_porteur: x.curseur_porteur, total: x.total };
-      });
-    }
-    return enTrace({
-      k: s.k, ouverture: s.ouverture, versions: s.versions, etapes: s.etapes, coups: copierCoups(s.coups),
-      entree: r.entree, revelation: r.revelation, manches: manches, phrase_jour: r.phrase_jour, attente: r.attente,
-      dimanche: r.dimanche, portrait: r.portrait, curseurs_vus: r.curseurs_vus, surprises_proches: r.surprises_proches, mesures: m
-    });
-  }
+  function copierCoups(c) { return JSON.parse(JSON.stringify(c)); }
 
   /**
-   * Trace complète d'une partie (partie 3.2). durees : le fichier des
-   * durées (partie 3.12) en mode interface, null en mode moteur.
+   * Copie du carnet faite en cours d'essai, au toucher « Copier mon carnet
+   * d'abord » (§8.12) : séances 0 à c.k, la séance c.k prise dans l'état
+   * de la copie (coups, versions, etapes). D : durées des séances 0 à
+   * c.k - 1 ; dc : durées de la séance c.k à l'instant de la copie.
+   * Rend {k, coups, versions, etapes, mesures, texte} (partie 3.2).
    */
-  function trace(scelle, journal, durees, empreinte) {
-    var ecarts = validerJournal(scelle, journal);
-    exiger(ecarts.length === 0, 'journal invalide : ' + ecarts.slice(0, 5).join(' ; '));
-    var mode = journal.partie.mode;
-    var R = calculer(scelle, journal);
-    var S = journal.seances, K = S.length - 1;
-    var D = S.map(function (s, k) {
-      return dureesPour(mode === 'interface' ? durees.seances[k] : null, k, s.etapes, mode, 'séance ' + k);
-    });
-    var seances = S.map(function (s, k) { return seanceTrace(s, R.seances[k], D[k]); });
-    var texteCarnet = null;
-    if (mode === 'interface') {
-      texteCarnet = carnet(scelle, journal, R, D, journal.fin ? { type: 'fin' } : { type: 'arret' });
-    }
-    var copies = [];
-    if (mode === 'interface') {
-      journal.copies.forEach(function (c, i) {
-        var j2 = { partie: journal.partie, seances: S.slice(0, c.k).concat([{ k: c.k, ouverture: S[c.k].ouverture, versions: c.versions,
-          etapes: c.etapes, coups: c.coups, attente: null }]), copies: [], arret: null, fin: null };
-        var R2 = calculer(scelle, j2);
-        var dc = dureesPour(durees.copies[i], c.k, c.etapes, mode, 'copie ' + i);
-        var D2 = D.slice(0, c.k).concat([dc]);
-        var mc = {};
-        Object.keys(R2.seances[c.k].mesures).forEach(function (x) { mc[x] = R2.seances[c.k].mesures[x]; });
-        mc.duree_seance = dc.duree_seance; mc.duree_deviner = dc.duree_deviner; mc.duree_repondre = dc.duree_repondre;
-        copies.push(enTrace({ k: c.k, coups: copierCoups(c.coups), versions: c.versions, etapes: c.etapes, mesures: mc,
-          texte: carnet(scelle, j2, R2, D2, { type: 'copie', k: c.k }) }));
-      });
-    }
-    return {
-      format: 'elenchos-essai-trace', version: 3, empreinte_scelle: empreinte, partie: journal.partie,
-      seances: seances, arret: journal.arret, fin: journal.fin, agregats: enTrace(R.agregats),
-      carnet: texteCarnet === null ? null : { texte: texteCarnet }, copies: copies
-    };
+  function copie(scelle, journal, c, D, dc) {
+    var S = journal.seances;
+    exiger(c.k >= 0 && c.k < S.length, 'copie : séance inconnue');
+    var j2 = { partie: journal.partie, seances: S.slice(0, c.k).concat([{ k: c.k, ouverture: S[c.k].ouverture, versions: c.versions,
+      etapes: c.etapes, coups: c.coups, attente: null }]), copies: [], arret: null, fin: null };
+    var R2 = calculer(scelle, j2);
+    dureesConformes(dc, c.k, c.etapes, 'copie');
+    var mc = {};
+    Object.keys(R2.seances[c.k].mesures).forEach(function (x) { mc[x] = R2.seances[c.k].mesures[x]; });
+    mc.duree_seance = dc.duree_seance; mc.duree_deviner = dc.duree_deviner; mc.duree_repondre = dc.duree_repondre;
+    return { k: c.k, coups: copierCoups(c.coups), versions: c.versions.slice(), etapes: c.etapes ? { deviner: c.etapes.deviner, repondre: c.etapes.repondre } : null,
+      mesures: mc, texte: carnet(scelle, j2, R2, D.slice(0, c.k).concat([dc]), { type: 'copie', k: c.k }) };
   }
 
   /* ------------------------------------------------------------------ */
@@ -1209,7 +1157,7 @@ var ElenchosMoteur = (function (N) {
   return {
     PERSONNAGES: PERSONNAGES, MEMBRES: MEMBRES, TENSIONS: TENSIONS, ENTREE: ENTREE, TEXTES: TEXTES,
     cote: cote, valeur: valeur, classer: classer, curseur: curseur,
-    calculer: calculer, trace: trace, carnet: carnet, validerJournal: validerJournal, enTrace: enTrace,
+    calculer: calculer, carnet: carnet, copie: copie, dureesConformes: dureesConformes, validerJournal: validerJournal,
     visagesDejaJoue: visagesDejaJoue, minutesAvantDixHuit: minutesAvantDixHuit, choixQ3: choixQ3,
     phraseDuJour: phraseDuJour, corrigeF1: corrigeF1, casesJustes: casesJustes, duree: duree, LIBELLES: LIBELLES
   };
