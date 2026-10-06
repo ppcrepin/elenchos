@@ -785,7 +785,7 @@ D'où vient ce fichier :
     - `fin.f1` est toujours un objet : la clôture n'a pas « Sauter cette question » (§7.4).
     - Les codes sont ceux de la partie 3.4.
 14. **Copies.**
-    - `k` va de 0 à K ; les copies sont dans l'ordre du jeu.
+    - `k` va de 0 à K, sans dépasser 14 : une copie en cours d'essai ne peut pas avoir lieu à la clôture (§8.12) ; les copies sont dans l'ordre du jeu.
     - Le harnais ne défait jamais un geste (partie 3.4). Donc chaque `designe`, `raison` ou `reponse` non nulle d'une copie se retrouve, identique, dans les coups de sa séance (une copie faite avant « Valider » n'a que des `null` dans `deviner` : règle 7, fragment 6).
     - `relire` y est au plus égal à celui de la séance.
     - `versions` de la copie est un début de `versions` de la séance.
@@ -845,7 +845,7 @@ L'empreinte publiée est donnée au programme telle qu'elle est présentée : 16
 6. **Vecteurs de test.** On les recalcule à partir de `graine` ; ils doivent être identiques.
 7. **Typographie simple** (§9, contrôle 1).
    - Chaînes concernées, les seules qui s'affichent telles quelles : `cercle.nom` et `cercle.inviteuse` ; dans chaque fiche, `metier`, `ville` et `ligne_de_vie` ; dans chaque texte, `titre`, chaque élément de `lignes`, le `nom` et le `groupe` de l'auteur et de chaque député, et le `texte` de chaque considération.
-   - Ces chaînes ne contiennent ni U+2019, ni U+00A0, ni U+202F. « ? », « ! », « ; », « : », « » » et « % » y sont toujours précédés d'une espace U+0020, et « « » est toujours suivi d'une espace U+0020.
+   - Ces chaînes ne contiennent ni U+2019, ni aucun caractère de la catégorie Unicode Zs autre que U+0020 (U+00A0, U+202F et U+2000 à U+200A compris : certaines polices de l'essai les dessinent trop larges, §8.8). « ? », « ! », « ; », « : », « » » et « % » y sont toujours précédés d'une espace U+0020, et « « » est toujours suivi d'une espace U+0020.
    - Toute espace placée entre deux chiffres appartient à un nombre écrit par tranches : un à trois chiffres, puis une ou plusieurs tranches faites d'une espace et de trois chiffres, sans chiffre juste avant ni juste après. « 30 000 » et « 1 500 000 » passent ; « en 2027 300 communes » et « 12 34 » sont refusés. Raison : la règle 6 du §7.8 reconnaît une tranche à ses trois chiffres ; ce contrôle garantit qu'elle ne colle jamais deux nombres. Un chiffre est un caractère de 0 à 9 : en Python, `[0-9]`, jamais `\d` (partie 1.2).
    - Toutes les autres chaînes ne sont pas concernées : codes, `vote.date`, `heure_de_jeu`, adresses, graine, vecteurs de test. Par exemple, « 07:40 » contient un « : » sans espace, et c'est normal.
 8. **Fidélité aux fiches des textes** (§9, contrôle 1). Le programme de contrôle relit lui-même les fiches de `textes/` (S, P, T, L) et `textes/votes.md`, sans rien prendre au programme de scellement, puis compare. Raison : tension, sens et pôles sont annotés deux fois sur les fiches (annexe A de la simulation), mais recopiés une seule fois dans le fichier scellé ; tous les autres contrôles partent de cette copie et ne verraient pas une erreur de recopie.
