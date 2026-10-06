@@ -137,7 +137,7 @@ async function rejeu(a) {
     // parties témoins : même partie sous America/New_York (§9)
     if (/^[a-z]$/.test(p.id) && !a['sans-fuseau']) {
       const ny = await RJ.rejouerFuseau({ scelle, journal: p.journal, gestes: p.gestes, constructions, navigateur, icone, fuseau: 'America/New_York', langue: 'en-US' });
-      const c1 = O.comparerTraces(ny.trace, r.trace);
+      const c1 = O.comparerTraces(O.masquerTraceEtCarnets(ny.trace), O.masquerTraceEtCarnets(r.trace));
       if (!c1.egales) { r.defauts.push({ controle: 'fuseau', quoi: 'trace sous America/New_York différente', ecarts: c1.ecarts.slice(0, 10) }); }
       if (O.masquerCarnet(ny.carnet || '') !== O.masquerCarnet(r.carnet || '')) { r.defauts.push({ controle: 'fuseau', quoi: 'carnet sous America/New_York différent' }); }
       if (O.canonique(ny.copies.map(O.masquerCarnet)) !== O.canonique(r.copies.map(O.masquerCarnet))) { r.defauts.push({ controle: 'fuseau', quoi: 'copies sous America/New_York différentes' }); }

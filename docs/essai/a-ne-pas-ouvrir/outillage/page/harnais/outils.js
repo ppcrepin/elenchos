@@ -39,6 +39,15 @@ function masquerTrace(v) {
   return v;
 }
 
+/** Trace aux durées masquées partout : clés « duree_… » (partie 4.2) et durées des textes du carnet et des copies (partie 4.3).
+ *  Sert à comparer deux rejeux de la page entre eux (fuseaux, versions), dont les durées réelles diffèrent. */
+function masquerTraceEtCarnets(t) {
+  const m = masquerTrace(t);
+  if (m.carnet && typeof m.carnet.texte === 'string') { m.carnet = Object.assign({}, m.carnet, { texte: masquerCarnet(m.carnet.texte) }); }
+  if (Array.isArray(m.copies)) { m.copies = m.copies.map(c => Object.assign({}, c, { texte: typeof c.texte === 'string' ? masquerCarnet(c.texte) : c.texte })); }
+  return m;
+}
+
 function pointeur(chemin) { return chemin.map(x => '/' + String(x).replace(/~/g, '~0').replace(/\//g, '~1')).join(''); }
 
 /** Différences entre deux valeurs JSON, chacune avec son chemin et les deux valeurs (partie 4.2, point 5). */
@@ -94,4 +103,4 @@ function argumentsCli(argv) {
 }
 
 module.exports = { lireTexte, lireJson, ecrireTexte, ecrireJson, canonique, sha256Octets, sha256Texte, sha256Fichier,
-  masquerCarnet, masquerTrace, differences, comparerTraces, ecartsLignes, pointeur, argumentsCli };
+  masquerCarnet, masquerTrace, masquerTraceEtCarnets, differences, comparerTraces, ecartsLignes, pointeur, argumentsCli };

@@ -481,51 +481,7 @@ test('Durées et corrigé de F1', () => {
 /* Gabarit du §8.12, lu dans simulation.md                             */
 /* ------------------------------------------------------------------ */
 
-/** Convertit une ligne du gabarit en expression régulière : {…} est une
- *  valeur (ou des choix « A | B », eux-mêmes convertis), […] est facultatif,
- *  « … » vaut n'importe quel texte. Dans un choix, x, y, n et « bouton »
- *  sont des valeurs. */
-function versRe(s) {
-  const echapper = c => c.replace(/[.*+?^$()|\\[\]{}]/g, '\\$&');
-  let r = '';
-  for (let i = 0; i < s.length; i++) {
-    const c = s[i];
-    if (c === '{' || c === '[') {
-      const ferme = c === '{' ? '}' : ']';
-      let prof = 0, j = i;
-      for (; j < s.length; j++) { if (s[j] === c) { prof++; } else if (s[j] === ferme && --prof === 0) { break; } }
-      const dedans = s.slice(i + 1, j);
-      if (c === '[') { r += '(?:' + versRe(dedans) + ')?'; }
-      else {
-        const choix = []; let p = 0, d = 0;
-        for (let x = 0; x < dedans.length; x++) {
-          if (dedans[x] === '{' || dedans[x] === '[') { p++; } else if (dedans[x] === '}' || dedans[x] === ']') { p--; }
-          else if (p === 0 && dedans.slice(x, x + 3) === ' | ') { choix.push(dedans.slice(d, x)); d = x + 3; x += 2; }
-        }
-        choix.push(dedans.slice(d));
-        r += choix.length === 1 ? '.+?' : '(?:' + choix.map(a => /^(x fois sur y|n|bouton)$/.test(a) ? (a === 'x fois sur y' ? '[0-9]+ fois sur [0-9]+' : '.+?') : versRe(a)).join('|') + ')';
-      }
-      i = j;
-    } else if (c === '…') { r += '.+?'; }
-    else { r += echapper(c); }
-  }
-  return r;
-}
-
-function gabaritCarnet() {
-  const sim = fs.readFileSync(path.join(__dirname, '../../../../simulation.md'), 'utf8');
-  const debut = sim.indexOf('**Gabarit**');
-  const ouvre = sim.indexOf('```\n', debut) + 4;
-  const bloc = sim.slice(ouvre, sim.indexOf('\n```', ouvre));
-  const lignes = bloc.split('\n').filter(l => l !== '');
-  // §8.12 : sans F1 sautée, « Où vous placez chacun : » (deux-points final, sans point)
-  lignes.push('Où vous placez chacun :');
-  // §8.12 : un verdict par carte de la manche (manches de 1 ou 2 cartes), ou « aucune carte » (5.12)
-  lignes.push('[Révélation : {verdict}.[ Raison cachée : {tentée | pas tentée}.]]');
-  lignes.push('[Révélation : {verdict}, {verdict}.[ Raison cachée : {tentée | pas tentée}.]]');
-  lignes.push('Révélation : aucune carte.');
-  return lignes.map(l => ({ ligne: l, re: new RegExp('^' + versRe(l) + '$') }));
-}
+const { gabaritCarnet } = require('../harnais/gabarit.js');
 
 test('Carnet : chaque ligne suit une ligne du gabarit du §8.12 (lu dans simulation.md)', () => {
   const g = gabaritCarnet();

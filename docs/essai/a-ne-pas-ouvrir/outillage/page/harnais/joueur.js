@@ -117,7 +117,13 @@ class Joueur {
     }
     if (!this.o.relever) { return; }
     const r = await this.page.evaluate(RELEVE.releverEcran);
-    const vue = await this.page.evaluate(() => { const e = window.ElenchosEssai && window.ElenchosEssai.etat(); return e ? { tel: e.vue.tel.ecran, cadre: e.vue.cadre ? e.vue.cadre.page : null } : null; });
+    const vue = await this.page.evaluate(() => {
+      const e = window.ElenchosEssai && window.ElenchosEssai.etat();
+      if (!e) { return null; }
+      const s = e.seances[e.seances.length - 1], t = e.vue.tel;
+      return { k: s.k, tel: t.ecran, E: t.E || null, texte: t.texte || null, texte14: !!t.texte14, membre: t.membre || null, rev: t.ecran === 'revelation' ? s.rev.i : null,
+        cadre: e.vue.cadre ? e.vue.cadre.page : null };
+    });
     this.releves.push({ seance: this.k, geste, vue, blocs: r.blocs, coupures: r.coupures });
   }
 
