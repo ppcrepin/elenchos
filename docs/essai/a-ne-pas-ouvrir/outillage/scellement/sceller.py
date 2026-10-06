@@ -18,23 +18,25 @@ Ce qu'il fait, dans l'ordre :
      « ordre des raisons tiré au scellement » ; la règle retenue est écrite plus bas) ;
   3. calcule toutes les réponses (regles-de-calcul.md §2.1, §2.2, §2.3, §2.5 ; profils.md) ;
   4. écrit le JSON canonique (RFC 8785 ; schema.md partie 1.1) ;
-  5. relit les octets écrits et fait les vérifications de schema.md partie 4.1, étapes 3 à 7
-     (les étapes 1 et 2 demandent l'empreinte publiée et la page : hors de portée ici) ;
+  5. relit les octets écrits et fait les vérifications de schema.md partie 4.1, étapes 3 à 8
+     (l'étape 8 par un second lecteur des fiches, écrit à la lettre du schéma ; les étapes 1 et 2
+     demandent l'empreinte publiée et la page : « non faites ») ;
   6. fait quelques contrôles de cohérence en plus (contraintes de profils.md et de l'annexe A),
      calcule les chiffres constants du fichier pour le rapport de scellement
      (regles-de-calcul.md §9 bis), et affiche l'empreinte SHA-256.
 
-Graine (simulation §0 : « 16 caractères hexadécimaux minuscules, tirés au scellement ») :
+Graine (simulation §0, qui écrit la dérivation et la valeur ; le programme vérifie les deux) :
   graine = 16 premiers chiffres hexadécimaux de
            SHA-256("elenchos-essai|graine|" + empreinte complète du commit de la spécification relue)
   avec le commit 7f4d367278ecf07b01ebad883b7ec75cf7840820 (« Appliquer la passe finale du
   Vérificateur avant scellement »), poussé avant l'écriture de ce programme. Personne n'a donc
-  choisi la graine, et ni la spécification ni les fiches n'ont pu être ajustées à elle.
+  choisi la graine, et ni les fiches ni les règles en vigueur à ce commit n'ont pu être ajustées
+  à elle (ce qui a été écrit après est listé au paragraphe « Graine » du rapport de scellement,
+  regles-de-calcul.md §9 bis).
 
-Ordre d'affichage des raisons (convention de l'agent qui scelle, à faire valider) :
-  pour le texte X, les quatre raisons de la fiche, numérotées 1 à 4 dans la fiche, sont mélangées
-  au sens du §0 : triées par t("ordre-raisons|X|i") croissant, i étant le numéro dans la fiche ;
-  la i-ème du tri reçoit le rang i.
+Ordre d'affichage des raisons (regles-de-calcul.md §2) : pour le texte X, les quatre raisons de la
+  fiche, numérotées 1 à 4 dans la fiche, sont triées par t("ordre-raisons|X|i") croissant ; la première
+  du tri reçoit le rang 1.
 
 Usage :
   python3 sceller.py [--atypiques N] [--seuils-stricts] [--jour AAAA-MM-JJ] [--sortie DOSSIER]
@@ -184,6 +186,20 @@ def lignes_tableau(bloc: str, entete: str) -> list[list[str]]:
     return rangs
 
 
+def tableaux(bloc: str, entete: str) -> list[list[list[str]]]:
+    """Tous les tableaux d'un bloc dont l'en-tête est exactement `entete`, dans l'ordre."""
+    morceaux = bloc.split("\n" + entete + "\n")
+    return [lignes_tableau(entete + "\n" + m, entete) for m in morceaux[1:]]
+
+
+def lire_graine_spec() -> tuple[str, str]:
+    """§0 de la simulation : commit de dérivation et graine annoncée."""
+    texte = lire(F_SIMULATION)
+    m = re.findall(r'SHA-256\("elenchos-essai\|graine\|" \+ E\).*?: ([0-9a-f]{40}), ce qui donne ([0-9a-f]{16})\.', texte)
+    exiger(len(m) == 1, "§0 : dérivation de la graine introuvable")
+    return m[0]
+
+
 def lire_simulation() -> tuple[dict, dict]:
     texte = lire(F_SIMULATION)
     s1 = section(texte, r"## 1\. Les quatre personnages", "##")
@@ -196,8 +212,8 @@ def lire_simulation() -> tuple[dict, dict]:
     rangs = lignes_tableau(s1, "| Prénom | Âge | Métier | Ville | Ligne de vie | Heure de jeu |")
     fiches = {}
     for prenom, age, metier, ville, vie, heure in rangs:
-        exiger(re.fullmatch(r"[0-9]{1,3}", age) is not None, f"âge illisible : {age}")
-        m = re.fullmatch(r"([0-9]{1,2})h([0-9]{2})", heure)
+        exiger(re.fullmatch(r"[1-9][0-9]*", age) is not None, f"âge illisible : {age}")
+        m = re.fullmatch(r"(0|[1-9][0-9]?)h([0-9]{2})", heure)
         exiger(m is not None, f"heure de jeu illisible : {heure}")
         h, mn = int(m.group(1)), int(m.group(2))
         exiger(0 <= h <= 23 and 0 <= mn <= 59, f"heure de jeu hors bornes : {heure}")
@@ -225,25 +241,28 @@ def lire_profils() -> dict:
         prenom, vals = cell[0], cell[1:]
         prof = {}
         for tension, v in zip(TENSIONS, vals):
-            m = re.fullmatch(r"(0,[0-9]+) (faible|moyenne|forte)", v)
+            m = re.fullmatch(r"([0-9]),([0-9]{2}) (faible|moyenne|forte)", v)
             exiger(m is not None, f"profil illisible : {prenom} {tension} {v}")
-            p = decimal_fr(m.group(1))
-            exiger((p * 100).denominator == 1 and 0 <= p <= 1, f"position non entière en centièmes : {v}")
-            prof[tension] = {"position": int(p * 100), "fermete": m.group(2)}
+            position = 100 * int(m.group(1)) + int(m.group(2))
+            exiger(position <= 100, f"position au-delà de 100 : {v}")
+            prof[tension] = {"position": position, "fermete": m.group(3)}
         profils[prenom] = prof
     exiger(list(profils) == PERSONNAGES, "personnages de profils.md")
     res["profils"] = profils
 
     s = section(texte, r"## Réponse type qui en découle .*", "##")
-    morceaux = s.split("\nValeurs de d = ")
-    exiger(len(morceaux) == 2, "profils.md : table des valeurs de d introuvable")
-    rt = lignes_tableau(morceaux[0], "| | S | P | T | L |")
-    res["reponse_type_table"] = {r[0]: dict(zip(TENSIONS, r[1:])) for r in rt}
-    dt = lignes_tableau(morceaux[1], "| | S | P | T | L |")
-    res["d_table"] = {r[0]: {t: decimal_fr(v) for t, v in zip(TENSIONS, r[1:])} for r in dt}
+    tables = tableaux(s, "| | S | P | T | L |")
+    exiger(len(tables) == 2, "profils.md : « Réponse type » doit avoir deux tableaux")
+    res["reponse_type_table"] = {r[0]: dict(zip(TENSIONS, r[1:])) for r in tables[0]}
+    for r in tables[1]:
+        exiger(all(re.fullmatch(r"[+−][0-9]+,[0-9]+", v) for v in r[1:]), f"profils.md : d illisible : {r}")
+    res["d_table"] = {r[0]: {t: decimal_fr(v) for t, v in zip(TENSIONS, r[1:])} for r in tables[1]}
+
+    s = section(texte, r"## Corrigé de la question F1 .*", "##")
+    res["f1_table"] = {r[0]: dict(zip(TENSIONS, r[1:])) for r in lignes_tableau(s, "| | S | P | T | L |")}
 
     s = section(texte, r"## Réponses atypiques .*", "##")
-    m = re.findall(r"Exactement ([0-9]+) par personnage", s)
+    m = re.findall(r"^- Exactement ([0-9]+) par personnage", s, re.M)
     exiger(len(m) == 1, "nombre de réponses atypiques introuvable dans profils.md")
     res["n_atypiques"] = int(m[0])
 
@@ -295,7 +314,7 @@ def lire_votes() -> dict:
 
 RE_TITRE_FICHE = re.compile(r"### (E[1-3]|[1-9][0-9]?) · scrutin ([0-9]+) \((1[5-7])e législature\)")
 RE_RAISON = re.compile(
-    r"  ([1-4])\. « (.+?) » — (pour|contre) · pôle (0|1|aucun) — ([^,]+), (député|députée), "
+    r"  ([1-4])\. « (.+?) » — (pour|contre) · pôle (0|1|aucun) — ([^,\[\]]+), (député|députée), "
     r"(.+?) \[vote : ([^\]]+)\] — extrait : .+")
 RE_AUTEUR = re.compile(
     r"- Auteur : ([^,]+), (député|députée|sénateur|sénatrice), (.+?)(?: au dépôt \(| ; |\. ).*")
@@ -336,7 +355,7 @@ def analyser_fiche(cle: str, bloc: list[str], fichier: str) -> dict:
         elif l.strip() == "":
             courant = None
         else:
-            raise Defaut(f"{cle} ({fichier}) : ligne inattendue dans la fiche : {l[:80]}")
+            courant = None  # autre ligne : ignorée (schéma, partie 4.1, étape 8)
     for requis in ("Titre", "Lignes", "Vote", "Auteur", "Lien du scrutin", "Sources", "Tension", "Raisons"):
         exiger(requis in champs, f"{cle} ({fichier}) : champ « {requis} » absent")
 
@@ -368,7 +387,7 @@ def analyser_fiche(cle: str, bloc: list[str], fichier: str) -> dict:
 
     aut_l = champs["Auteur"][0]
     exiger(len(champs["Auteur"]) == 1, f"{cle} : auteur sur plusieurs lignes")
-    if re.match(r"- Auteur : Gouvernement\b", aut_l):
+    if re.fullmatch(r"- Auteur : Gouvernement(?: \(projet de loi\)\.| ;).*", aut_l):
         auteur = {"type": "gouvernement"}
     else:
         m = RE_AUTEUR.fullmatch(aut_l)
@@ -652,7 +671,8 @@ def assembler(graine: str, n_atyp: int, seuils_stricts: bool, journal: list[str]
         }
     annexes = {"fiches": fiches, "textes_internes": textes, "atypiques_textes": atypiques_textes,
                "detail_reponses": detail_reponses, "profils": profils, "fiches_vis": fiches_vis,
-               "cercle": cercle, "n_atyp_profils": prof_src["n_atypiques"], "absences": absences}
+               "cercle": cercle, "n_atyp_profils": prof_src["n_atypiques"], "absences": absences,
+               "f1_table": prof_src["f1_table"]}
     return fichier, annexes
 
 
@@ -701,7 +721,8 @@ def verifier_fichier(octets: bytes, jour: datetime.date, fiches_vis: dict, journ
 
     def adresse(x, ou):
         chaine(x, ou)
-        exiger(x.startswith("https://") and x.isascii() and " " not in x, f"étape 4 : adresse invalide {ou} : {x}")
+        exiger(re.fullmatch(r"https://www\.assemblee-nationale\.fr(?:/(?:[A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2})*)+", x)
+               is not None, f"étape 4 : adresse invalide {ou} : {x}")
 
     def entier(x, lo, hi, ou):
         exiger(est_entier(x) and lo <= x <= hi, f"étape 4 : {ou} : entier attendu entre {lo} et {hi} : {x!r}")
@@ -816,7 +837,8 @@ def verifier_fichier(octets: bytes, jour: datetime.date, fiches_vis: dict, journ
     objet(obj["reglage"], ["seuils_stricts"], "reglage")
     exiger(isinstance(obj["reglage"]["seuils_stricts"], bool), "étape 4 : seuils_stricts")
     journal.append(f"Étape 4 (schéma) : fermé, types et valeurs permis ; {len(chaines_toutes)} chaînes en NFC, "
-                   f"sans caractère de contrôle ; adresses https ASCII ; dates de vote existantes et au plus tard le {jour}.")
+                   f"sans caractère de contrôle ; adresses conformes à l'expression de l'étape 4 (https, hôte de l'Assemblée, "
+                   f"sans requête ni fragment) ; dates de vote existantes et au plus tard le {jour}.")
 
     # Étape 5 : cohérence interne.
     for cle, tx in obj["textes"].items():
@@ -825,7 +847,9 @@ def verifier_fichier(octets: bytes, jour: datetime.date, fiches_vis: dict, journ
         exiger(len({c["depute"]["groupe"] for c in cs}) == 4, f"étape 5 : {cle} : groupes non distincts")
         for c in cs:
             exiger(c["texte"][-1] in ".?!", f"étape 5 : {cle} : ponctuation finale de « {c['texte']} »")
-            exiger(c["texte"][0] not in "«»\"" and c["texte"][-1] not in "«»\"", f"étape 5 : {cle} : guillemets aux bords")
+            guillemets = "\u00ab\u00bb\u0022\u201c\u201d\u2039\u203a"
+            exiger(c["texte"][0] not in guillemets and (len(c["texte"]) < 2 or c["texte"][-2] not in guillemets),
+                   f"étape 5 : {cle} : guillemets aux bords de « {c['texte']} »")
         v = tx["vote"]
         permis = {"adopte": {"navette", "definitif"}, "rejete": {"navette", "aucune"}, "sans_vote_ensemble": {"aucune"}}
         exiger(v["etape"] in permis[v["issue"]], f"étape 5 : {cle} : combinaison issue/étape {v}")
@@ -944,6 +968,114 @@ def verifier_fichier(octets: bytes, jour: datetime.date, fiches_vis: dict, journ
     return obj
 
 
+def verifier_fidelite_fiches(obj: dict, graine: str, journal: list[str]) -> None:
+    """Schéma, partie 4.1, étape 8, lue à la lettre : un second lecteur des fiches et de votes.md,
+    écrit à part de `analyser_fiche` (qui sert à construire le fichier), puis comparaison champ par champ."""
+    lues: dict[str, dict] = {}
+    for chemin in F_FICHES:
+        lignes = lire(chemin).split("\n")
+        i = 0
+        cle = None
+        while i < len(lignes):
+            l = lignes[i]
+            if l.startswith("### "):
+                m = re.fullmatch(r"### (E[1-3]|[1-9]|1[0-4]) · scrutin ([0-9]+) \((15|16|17)e législature\)", l)
+                cle = None
+                if m:
+                    cle = m.group(1)
+                    exiger(cle not in lues, f"étape 8 : fiche {cle} en double")
+                    lues[cle] = {"_l": m.group(3), "_n": m.group(2)}
+                i += 1
+                continue
+            if cle is None:
+                i += 1
+                continue
+            f = lues[cle]
+
+            def une_fois(champ, valeur):
+                exiger(champ not in f, f"étape 8 : {cle} : « {champ} » répété")
+                f[champ] = valeur
+
+            if l.startswith("- Titre : "):
+                une_fois("titre", l[len("- Titre : "):])
+            elif l == "- Lignes :":
+                trois = lignes[i + 1:i + 4]
+                vals = []
+                for j, x in enumerate(trois, 1):
+                    exiger(x.startswith(f"  {j}. "), f"étape 8 : {cle} : ligne {j} absente")
+                    vals.append(x[len(f"  {j}. "):])
+                exiger(i + 4 >= len(lignes) or re.match(r"  [0-9]+\. ", lignes[i + 4]) is None,
+                       f"étape 8 : {cle} : plus de trois lignes")
+                une_fois("lignes", vals)
+                i += 3
+            elif l.startswith("- Auteur : "):
+                m = re.fullmatch(r"- Auteur : Gouvernement(?: \(projet de loi\)\.| ;).*", l)
+                if m:
+                    une_fois("auteur", {"type": "gouvernement"})
+                else:
+                    m = re.fullmatch(r"- Auteur : ([^,]+), (député|députée|sénateur|sénatrice), (.+?)(?: au dépôt \(| ; |\. ).*", l)
+                    exiger(m is not None, f"étape 8 : {cle} : ligne « Auteur » hors forme")
+                    une_fois("auteur", {"type": "senateur" if m.group(2).startswith("sénat") else "depute",
+                                        "nom": m.group(1), "feminin": m.group(2) in ("députée", "sénatrice"),
+                                        "groupe": m.group(3)})
+            elif l.startswith("- Lien du scrutin : "):
+                une_fois("lien_scrutin", l[len("- Lien du scrutin : "):])
+            elif l == "- Sources :":
+                vals = []
+                while i + 1 < len(lignes) and lignes[i + 1].startswith("  - "):
+                    i += 1
+                    vals.append(lignes[i][len("  - "):])
+                une_fois("sources", vals)
+            elif l.startswith("- Tension : "):
+                m = re.fullmatch(r"- Tension : ([SPTL]) ; sens s = ([01])", l)
+                exiger(m is not None, f"étape 8 : {cle} : ligne « Tension » hors forme")
+                une_fois("tension", m.group(1))
+                une_fois("sens", int(m.group(2)))
+            elif l == "- Raisons :":
+                vals = []
+                for j, x in enumerate(lignes[i + 1:i + 5], 1):
+                    m = re.fullmatch(rf"  {j}\. « (.+?) » — (pour|contre) · pôle (0|1|aucun) — ([^,\[\]]+), "
+                                     r"(député|députée), (.+?) \[vote : .*", x)
+                    exiger(m is not None, f"étape 8 : {cle} : raison {j} hors forme")
+                    vals.append({"texte": m.group(1), "cote": m.group(2),
+                                 "pole": "aucun" if m.group(3) == "aucun" else int(m.group(3)),
+                                 "nom": m.group(4), "feminin": m.group(5) == "députée", "groupe": m.group(6)})
+                exiger(i + 5 >= len(lignes) or re.match(r"  [0-9]+\. ", lignes[i + 5]) is None,
+                       f"étape 8 : {cle} : plus de quatre raisons")
+                une_fois("raisons", vals)
+                i += 4
+            i += 1
+    exiger(set(lues) == set(TEXTES), f"étape 8 : fiches lues {sorted(lues)}")
+    for cle, f in lues.items():
+        for champ in ("titre", "lignes", "auteur", "lien_scrutin", "sources", "tension", "sens", "raisons"):
+            exiger(champ in f, f"étape 8 : {cle} : « {champ} » absent")
+    rangs = lignes_tableau(lire(F_VOTES), "| Rang | Scrutin | `issue` | `date` | `etape` | Preuve principale |")
+    votes = {}
+    for r in rangs:
+        if r[0] in TEXTES:
+            exiger(r[0] not in votes, f"étape 8 : votes.md : {r[0]} en double")
+            votes[r[0]] = r
+    exiger(set(votes) == set(TEXTES), "étape 8 : votes.md : textes manquants")
+    for cle in TEXTES:
+        f, tx = lues[cle], obj["textes"][cle]
+        for champ in ("titre", "lignes", "tension", "sens", "sources", "lien_scrutin", "auteur"):
+            exiger(tx[champ] == f[champ], f"étape 8 : {cle} : {champ} ≠ fiche")
+        exiger(tx["lien_scrutin"] == f"https://www.assemblee-nationale.fr/dyn/{f['_l']}/scrutins/{f['_n']}",
+               f"étape 8 : {cle} : lien ≠ titre de la fiche")
+        r = votes[cle]
+        exiger(r[1] == f"{f['_l']}e, {f['_n']}", f"étape 8 : {cle} : scrutin de votes.md ≠ fiche")
+        exiger(tx["vote"] == {"issue": r[2], "date": r[3], "etape": r[4]}, f"étape 8 : {cle} : vote ≠ votes.md")
+        ordre = sorted(range(1, 5), key=lambda i: tirage(graine, f"ordre-raisons|{cle}|{i}"))
+        for rang, i in enumerate(ordre, 1):
+            c, rf = tx["considerations"][rang - 1], f["raisons"][i - 1]
+            exiger(c["rang"] == rang and c["texte"] == rf["texte"] and c["cote"] == rf["cote"] and c["pole"] == rf["pole"]
+                   and c["depute"]["nom"] == rf["nom"] and c["depute"]["feminin"] == rf["feminin"]
+                   and c["depute"]["groupe"] == rf["groupe"], f"étape 8 : {cle} : raison {i} de la fiche ≠ rang {rang}")
+    journal.append("Étape 8 (fidélité aux fiches) : second lecteur, à la lettre de l'étape 8 ; les 17 textes "
+                   "(titre, lignes, auteur, lien, sources, tension, sens, vote, quatre raisons au rang donné par "
+                   "« ordre-raisons ») sont ceux des fiches et de votes.md. « Mêmes sources » : SHA-256 plus bas.")
+
+
 # ---------------------------------------------------------------------------
 # Contrôles en plus (profils.md, annexe A de regles-de-calcul.md)
 # ---------------------------------------------------------------------------
@@ -970,6 +1102,30 @@ def controles_en_plus(obj: dict, ann: dict, n_atyp: int, journal: list[str]) -> 
             exiger(r["niveau"] == d["type"], "réponse non atypique différente de la réponse type")
     journal.append(f"Contrôles en plus (profils.md) : {n_atyp} réponses atypiques par personnage, contraintes (a) à (d) "
                    f"tenues ; côté opposé au niveau simple.")
+    prof = ann["profils"]
+    types = {p: {t: position_type(prof[p][t], 1) for t in TENSIONS} for p in PERSONNAGES}
+    cote = {p: {t: niveau_cote(types[p][t][0]) for t in TENSIONS} for p in PERSONNAGES}
+    for t in ("S", "P"):
+        exiger(cote["Agathe"][t] == cote["Nassim"][t] != 0, f"profils : Agathe et Nassim pas du même côté sur {t}")
+    exiger(cote["Agathe"]["T"] == cote["Nassim"]["T"] == 0, "profils : Agathe et Nassim pas neutres sur T")
+    exiger(cote["Agathe"]["L"] == -cote["Nassim"]["L"] != 0, "profils : Agathe et Nassim pas opposés sur L")
+    exiger(all(prof["Odile"][t]["fermete"] == "forte" and abs(types["Odile"][t][1]) >= Fraction(56, 100) for t in TENSIONS),
+           "profils : Odile pas tranchée partout")
+    for p in PERSONNAGES:
+        exiger(not (types[p]["S"][0] == 1 and types[p]["T"][0] == 1), f"profils : bloc sécurité-tradition ({p})")
+        exiger(not (types[p]["S"][0] == 5 and types[p]["T"][0] == 5), f"profils : bloc liberté-changement ({p})")
+    partage = {t: sorted(cote[p][t] for p in PERSONNAGES) for t in TENSIONS}
+    exiger(all(-1 in v and 1 in v for v in partage.values()), f"profils : une tension ne partage pas le cercle : {partage}")
+    for p in PERSONNAGES:
+        for t in TENSIONS:
+            pos = prof[p][t]["position"]
+            attendu = "Au milieu" if abs(pos - 50) < 10 else POLES[t][1 if pos > 50 else 0]
+            exiger(ann["f1_table"][p][t] == attendu, f"profils : corrigé de F1 de {p} sur {t} : {ann['f1_table'][p][t]} ≠ {attendu}")
+    journal.append("Contrôles en plus (contraintes calculables de profils.md) : Agathe et Nassim du même côté sur S et P, "
+                   "neutres sur T, opposés sur L ; Odile forte partout, |d| ≥ 0,56 ; aucun bloc ; chaque tension a un "
+                   "personnage de chaque côté (" + ", ".join(f"{t} {partage[t].count(-1)}/{partage[t].count(0)}/{partage[t].count(1)}"
+                                                             for t in TENSIONS) + " : pôle 0 / neutre / pôle 1) ; corrigé de F1 "
+                   "(« Au milieu » si |p − 0,5| < 0,1) égal au tableau.")
     # Annexe A.
     for cle, tx in obj["textes"].items():
         cs = tx["considerations"]
@@ -1117,6 +1273,9 @@ def chiffres_constants(obj: dict) -> tuple[list[str], list[str]]:
                   + f" ; entrée {sum(lieu(t) == 'entrée' for t, _ in aucunes)}, textes devinés "
                   f"{sum(lieu(t) == 'devinés' for t, _ in aucunes)}, texte 14 {sum(lieu(t) == 'texte 14' for t, _ in aucunes)}. "
                   "Annexe A attend au plus 3 sur les textes devinés (Valentin 1 et 4, Agathe 6), 1 au texte 14 (Valentin), 0 à l'entrée.")
+    mini = min(len(obj["reponses"][str(n)]) for n in range(1, 14))
+    lignes.append(f"Écran 5.12 : impossible. Chaque texte deviné (1 à 13) a au moins {mini} réponses de personnages : "
+                  "la manche du porteur n'est jamais vide, ni celle d'un personnage présent.")
     neutres = sum(1 for t in TEXTES for r in obj["reponses"][t].values() if r["niveau"] == 3)
     lignes.append(f"Réponses neutres scellées : {neutres}. Issues des votes : "
                   + ", ".join(f"{i} {sum(obj['textes'][t]['vote']['issue'] == i for t in TEXTES)}"
@@ -1175,8 +1334,7 @@ def chiffres_constants(obj: dict) -> tuple[list[str], list[str]]:
     lignes.append(f"Manches du porteur (séances 2 à 14, textes 1 à 13) : {cartes} cartes servies "
                   f"(par manche : {nb_cartes}).")
     lignes.append(f"Part de réponses atypiques parmi les cartes servies au porteur : {cartes_atyp} sur {cartes} "
-                  f"(le même compte avant et après redistribution des cartes identiques, qui ne fait qu'échanger des auteurs "
-                  f"dans un groupe de cartes identiques).")
+                  f"(le même compte avant et après redistribution des cartes identiques).")
     lignes.append(f"Remplacements de cartes identiques dans sa manche : {rempl}. Manches où des cartes identiques "
                   f"restent servies ensemble : {len(ens)}" + (f" (textes {', '.join(ens)})" if ens else "")
                   + f", soit {cartes_ens} cartes.")
@@ -1202,7 +1360,12 @@ def chiffres_constants(obj: dict) -> tuple[list[str], list[str]]:
 # ---------------------------------------------------------------------------
 
 def graine_par_defaut() -> str:
-    return hashlib.sha256(("elenchos-essai|graine|" + COMMIT_SPEC).encode("utf-8")).hexdigest()[:16]
+    """§0 de la simulation : graine dérivée du commit qui y est écrit ; la valeur annoncée y est vérifiée."""
+    commit, annoncee = lire_graine_spec()
+    exiger(commit == COMMIT_SPEC, f"§0 : commit de dérivation {commit} ≠ {COMMIT_SPEC}")
+    graine = hashlib.sha256(("elenchos-essai|graine|" + commit).encode("utf-8")).hexdigest()[:16]
+    exiger(graine == annoncee, f"§0 : graine dérivée {graine} ≠ graine annoncée {annoncee}")
+    return graine
 
 
 def jour_paris() -> datetime.date:
@@ -1246,6 +1409,7 @@ def principal(argv: list[str]) -> int:
     exiger(relu == octets, "relecture du fichier écrit")
 
     obj = verifier_fichier(relu, jour, ann["fiches_vis"], journal)
+    verifier_fidelite_fiches(obj, graine, journal)
     controles_en_plus(obj, ann, n_atyp, journal)
     constants, detail = chiffres_constants(obj)
     empreinte = hashlib.sha256(relu).hexdigest()
@@ -1257,15 +1421,17 @@ def principal(argv: list[str]) -> int:
     rapport.append(f"Taille : {len(relu)} octets")
     rapport.append(f"SHA-256 (candidat) : {empreinte}")
     rapport.append(f"Graine : {graine}" + ("" if args.graine else
-                   f" = 16 premiers chiffres hex de SHA-256(\"elenchos-essai|graine|{COMMIT_SPEC}\")"))
+                   f" = 16 premiers chiffres hex de SHA-256(\"elenchos-essai|graine|{COMMIT_SPEC}\"), "
+                   "comme l'écrit le §0 de simulation.md (dérivation et valeur vérifiées)"))
     rapport.append(f"Réglage : {n_atyp} réponses atypiques par personnage ; seuils_stricts = "
                    f"{'true' if args.seuils_stricts else 'false'}")
     rapport.append(f"Jour du scellement utilisé pour l'étape 4 : {jour.isoformat()}")
-    rapport.append("Sources lues (SHA-256 des octets) :")
+    rapport.append("Sources lues (SHA-256 des octets ; schéma 4.1, étape 8, « Mêmes sources ») :")
     for f in [F_SIMULATION, F_PROFILS, F_REGLES, F_SCHEMA, F_VOTES] + F_FICHES:
         rapport.append(f"  {hashlib.sha256(f.read_bytes()).hexdigest()}  {f.relative_to(RACINE)}")
     rapport.append("")
-    rapport.append("Vérifications (schema.md partie 4.1, étapes 3 à 7, puis contrôles en plus) : toutes passées.")
+    rapport.append("Vérifications (schema.md partie 4.1) : étapes 1 et 2 non faites (pas d'empreinte publiée, pas de "
+                   "page construite) ; étapes 3 à 8 passées ; contrôles en plus passés.")
     rapport += ["  - " + j for j in journal]
     rapport.append("")
     rapport.append("Vecteurs de test :")

@@ -827,7 +827,7 @@ L'empreinte publiée est donnée au programme telle qu'elle est présentée : 16
 5. **Cohérence interne.**
    - `textes` et `reponses` ont exactement les 17 clés ; `personnages`, `absences` et `reponses_atypiques` ont exactement les quatre prénoms.
    - Dans chaque texte, `rang` est égal à la place dans le tableau, et les quatre `groupe` sont différents (`projet.md` §8). Les sigles se comparent comme des chaînes : la partie 2.7 ne donne qu'une écriture à chaque groupe.
-   - Le `texte` de chaque considération finit par « . », « ? » ou « ! », et n'a pas de guillemets à ses bords : ni son premier caractère, ni celui qui précède sa ponctuation finale n'est l'un des caractères « (U+00AB), » (U+00BB), " (U+0022), “ (U+201C), ” (U+201D), ‹ (U+2039) ou › (U+203A).
+   - Le `texte` de chaque considération finit par « . », « ? » ou « ! », et n'a pas de guillemets à ses bords : ni son premier caractère, ni celui qui précède sa ponctuation finale (sans compter l'espace U+0020 qui précède « ? » ou « ! ») n'est l'un des caractères « (U+00AB), » (U+00BB), " (U+0022), “ (U+201C), ” (U+201D), ‹ (U+2039) ou › (U+203A).
    - Dans chaque `vote`, `issue` et `etape` forment une combinaison permise (partie 2.3) : `"adopte"` avec `"navette"` ou `"definitif"`, jamais sans étape ; `"rejete"` avec `"navette"` ou `"aucune"` ; `"sans_vote_ensemble"` avec `"aucune"`.
    - Un personnage a une réponse à un texte si et seulement si ce texte n'est pas dans ses absences. Les absences ne portent que sur des textes quotidiens.
    - Chaque réponse atypique désigne un texte quotidien où le personnage a une réponse.
