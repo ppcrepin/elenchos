@@ -1,0 +1,36 @@
+Programme de contrôle (C) — contrôle du fichier scellé (schéma, partie 4.1)
+==============================================================================
+Fichier contrôlé : docs/essai/a-ne-pas-ouvrir/fichier-scelle.json
+SHA-256 du fichier : 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64  (30978 octets)
+Jour du scellement (paramètre, recopié du rapport de scellement) : 2026-10-06
+Commit du dépôt au moment du contrôle : 741af69b90132a97a8fa91ca11e72a2175539654 (sources identiques à ce commit)
+
+Sources lues (SHA-256) :
+  633bedeccc271c6dae5f030db81f3750d9261f8eb66fb83b551d03d8e5b802f8  docs/essai/a-ne-pas-ouvrir/textes/S-securite-liberte.md
+  c3f0e32ffbbdc7062f6ff236490e66df4f0b52c03f828fb0886885a5d8ea56bf  docs/essai/a-ne-pas-ouvrir/textes/P-precaution-innovation.md
+  c11066f0e8b43fbad33a45f94c545dc9c8d2b1d9a58d3f214dba270dcc8b1204  docs/essai/a-ne-pas-ouvrir/textes/T-tradition-changement.md
+  887b28c5c43dc64fd9bf2816197cf3f1ab7da7cf39d95a5c942dee1a2022f99c  docs/essai/a-ne-pas-ouvrir/textes/L-local-national.md
+  2b998247a6c8a3ee0aeb4f2e7ef85fc475af6c94d64985ff0d20a5dcfe1b67c5  docs/essai/a-ne-pas-ouvrir/textes/votes.md
+  87867c2968b945a97323ec7a3a2e0a203e9945893ca8165b18a7ae971f2b6f3b  docs/essai/a-ne-pas-ouvrir/profils.md
+  5144c81c79a7c78fc5084715fe2b7658a4ea4b45207af60ac4dcb8821312d650  docs/essai/simulation.md
+  4e7315319a1f3b79d648ebb1666e4d636cba3b08bd1023d9ab27099c5c52019b  docs/essai/a-ne-pas-ouvrir/schema.md
+  7552d57f65e1badd3a93015138329b3689e953cdd9ea02d37c5a2e4c5e08d71f  docs/essai/a-ne-pas-ouvrir/regles-de-calcul.md  (spécification appliquée par le code, pas lue par le programme)
+  c1a0d36b7f94d86fa263a99b9b5d374b629ea7fea54f08e71a17d0484042342e  docs/essai/a-ne-pas-ouvrir/devoilement.md  (spécification appliquée par le code, pas lue par le programme)
+Mêmes sources que l'agent qui scelle : NON (échec)
+  simulation.md : agent qui scelle 3e731605112d01b8d4515f9a7d475000209f668ea28b66f793cda3fde1fce72f ≠ C 5144c81c79a7c78fc5084715fe2b7658a4ea4b45207af60ac4dcb8821312d650
+
+Contrôle 1 (fichier scellé)
+------------------------------------------------------------------------------
+  Étape 1 (empreinte) : passée — SHA-256 du fichier = empreinte publiée = 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64
+  Étape 2 (données embarquées) : passée — repère présent une fois, suivi du base64 exact (41304 caractères)
+  Étape 3 (forme) : passée — UTF-8 strict ; relu puis remis en forme canonique, mêmes octets
+  Étape 4 (schéma) : passée — schéma fermé, version 4, types, adresses, dates (toutes ≤ 2026-10-06)
+  Étape 5 (cohérence interne) : passée — rangs, groupes distincts, ponctuation et guillemets, votes, absences, réponses atypiques, fiches du §1, cercle, vecteurs ; partie 2.7 (22 lignes, règles tenues, chaque couple sert) ; partie 2.8 (17 noms)
+  Étape 6 (vecteurs de test) : passée — les trois vecteurs recalculés sont identiques
+  Étape 7 (typographie simple) : passée — 316 chaînes affichées
+  Étape 8 : ÉCHEC
+    - comparaison aux 17 fiches et à votes.md : passée
+    - Mêmes sources : le programme de contrôle et l'agent qui scelle n'ont pas lu les mêmes sources
+    - simulation.md : agent qui scelle 3e731605112d01b8d4515f9a7d475000209f668ea28b66f793cda3fde1fce72f ≠ C 5144c81c79a7c78fc5084715fe2b7658a4ea4b45207af60ac4dcb8821312d650
+
+Le contrôle 1 s'arrête au premier échec (schéma, partie 4.1) : contrôles 2 à 4 non faits.

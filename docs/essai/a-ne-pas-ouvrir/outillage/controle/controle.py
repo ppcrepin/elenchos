@@ -94,7 +94,7 @@ def cmd_controle_scelle(a):
         appliquees=[(str(p.relative_to(RACINE)), p.read_bytes()) for p in APPLIQUEES.values()],
         entrees_construction=ec_)
     ecrire(texte, a.sortie)
-    return 0 if "DÉFAUT" not in texte.splitlines()[-1] else 1
+    return 0 if verdict["controle1"] is not False and "DÉFAUT" not in texte.splitlines()[-1] else 1
 
 
 def cmd_constantes(a):

@@ -581,7 +581,8 @@ def controle_scelle(octets, srcs, date_scellement, nb_atypiques_rapport=None,
     # « Mêmes sources » fait partie de l'étape 8 (schéma, partie 4.1) : deux empreintes
     # différentes d'un même fichier sont un échec ; sans le relevé, le contrôle 1 n'est pas complet.
     if verdict["sources"] is False:
-        return stop(8, ["Mêmes sources : le programme de contrôle et l'agent qui scelle n'ont pas lu "
+        return stop(8, ["comparaison aux 17 fiches et à votes.md : passée",
+                        "Mêmes sources : le programme de contrôle et l'agent qui scelle n'ont pas lu "
                         "les mêmes sources"] + [x.strip() for x in diff])
     R("  Étape 8 (fidélité aux fiches) : passée — 17 fiches et votes.md relus ; titre, lignes, vote, "
       "auteur, lien, sources, tension, sens et raisons identiques, raisons dans l'ordre tiré ; "

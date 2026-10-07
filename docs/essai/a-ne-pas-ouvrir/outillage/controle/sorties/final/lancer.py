@@ -6,7 +6,7 @@ et rejoue les parties en mode « moteur » (sans durées). Étape « interface �
 chaque partie en mode « interface » dont la trace de la page existe, extrait le
 fichier des durées (partie 3.12), rejoue, et compare les deux traces (partie 4.2).
 
-Usage, depuis outillage/controle :
+Usage, depuis outillage/controle (--sortie DOSSIER en tête, facultatif : sorties/final par défaut) :
   python3 sorties/final/lancer.py journaux
   python3 sorties/final/lancer.py interface DOSSIER_DES_TRACES_DE_LA_PAGE
   python3 sorties/final/lancer.py comparer DOSSIER_DES_TRACES_DE_LA_PAGE
@@ -33,6 +33,7 @@ from ec.trace_schema import valider_trace  # noqa: E402
 CACHE = CONTROLE.parents[1]
 SCELLE = CACHE / "fichier-scelle.json"
 JOURNAUX = CACHE / "outillage" / "page" / "sorties" / "final" / "journaux"
+SORTIE = ICI  # remplacé par --sortie DOSSIER
 
 
 def lire(chemin):
@@ -57,7 +58,7 @@ def journaux():
 def ecrire_textes(t, ident):
     if t["carnet"] is None:
         return
-    d = ICI / "textes" / ident
+    d = SORTIE / "textes" / ident
     d.mkdir(parents=True, exist_ok=True)
     for nom, x in [("carnet", t["carnet"]["texte"])] + [(f"copie-{i}", c["texte"]) for i, c in enumerate(t["copies"])]:
         (d / f"{nom}.txt").write_text(x, encoding="utf-8")
@@ -74,7 +75,7 @@ def rejouer(d, o, j, du):
 def etape_journaux():
     d, o = scelle()
     emp = sha256_hex(o)
-    (ICI / "traces").mkdir(exist_ok=True)
+    (SORTIE / "traces").mkdir(exist_ok=True)
     lignes, n_valides, n_moteur, n_rejoues = [], 0, 0, 0
     for p in journaux():
         ident = p.name[:-len(".journal.json")]
@@ -98,7 +99,7 @@ def etape_journaux():
             continue
         n_moteur += 1
         t, defauts = rejouer(d, o, j, None)
-        (ICI / "traces" / f"{ident}.trace-c.json").write_bytes(canon.octets_canoniques(t))
+        (SORTIE / "traces" / f"{ident}.trace-c.json").write_bytes(canon.octets_canoniques(t))
         if defauts:
             lignes.append(f"{ident} (moteur) : journal valide ; rejeu avec {len(defauts)} défaut(s)")
             lignes += [f"    {x}" for x in defauts]
@@ -109,7 +110,7 @@ def etape_journaux():
             f"Journaux lus : {len(journaux())} ; valides (règles 1 à 14) : {n_valides} ; "
             f"en mode moteur : {n_moteur}, rejoués sans défaut : {n_rejoues}", ""]
     texte = "\n".join(tete + lignes) + "\n"
-    (ICI / "journaux.txt").write_text(texte, encoding="utf-8")
+    (SORTIE / "journaux.txt").write_text(texte, encoding="utf-8")
     sys.stdout.write("\n".join(tete))
     return 0
 
@@ -134,8 +135,8 @@ def durees_de(tp):
 def etape_interface(dossier):
     """Rejoue les parties en mode interface avec les durées extraites de la trace de la page."""
     d, o = scelle()
-    (ICI / "durees").mkdir(exist_ok=True)
-    (ICI / "traces").mkdir(exist_ok=True)
+    (SORTIE / "durees").mkdir(exist_ok=True)
+    (SORTIE / "traces").mkdir(exist_ok=True)
     out = []
     for p in journaux():
         ident = p.name[:-len(".journal.json")]
@@ -148,12 +149,12 @@ def etape_interface(dossier):
             continue
         tp = lire(tpp)
         du = durees_de(tp)
-        (ICI / "durees" / f"{ident}.durees.json").write_bytes(canon.octets_canoniques(du))
+        (SORTIE / "durees" / f"{ident}.durees.json").write_bytes(canon.octets_canoniques(du))
         if valider(j, d, sha256_hex(o)):
             out.append(f"{ident} : journal invalide, pas de rejeu")
             continue
         t, defauts = rejouer(d, o, j, du)
-        (ICI / "traces" / f"{ident}.trace-c.json").write_bytes(canon.octets_canoniques(t))
+        (SORTIE / "traces" / f"{ident}.trace-c.json").write_bytes(canon.octets_canoniques(t))
         ecrire_textes(t, ident)
         out.append(f"{ident} : rejoué" + (f", {len(defauts)} défaut(s)" if defauts else ""))
         out += [f"    {x}" for x in defauts]
@@ -165,7 +166,7 @@ def etape_comparer(dossier):
     out, n, ident_ok, diffs_tot = [], 0, 0, []
     for p in journaux():
         ident = p.name[:-len(".journal.json")]
-        tc_p = ICI / "traces" / f"{ident}.trace-c.json"
+        tc_p = SORTIE / "traces" / f"{ident}.trace-c.json"
         tpp = trace_page(dossier, ident)
         if tpp is None or not tc_p.exists():
             out.append(f"{ident} : non comparée (trace {'de la page' if tpp is None else 'de C'} absente)")
@@ -186,12 +187,18 @@ def etape_comparer(dossier):
     tete = [f"Comparaison trace contre trace (partie 4.2) : {n} parties comparées ; identiques : {ident_ok} ; "
             f"avec différences : {n - ident_ok}", ""]
     texte = "\n".join(tete + out) + "\n"
-    (ICI / "comparaison.txt").write_text(texte, encoding="utf-8")
+    (SORTIE / "comparaison.txt").write_text(texte, encoding="utf-8")
     sys.stdout.write("\n".join(tete))
     return 0
 
 
 if __name__ == "__main__":
+    args = sys.argv[1:]
+    if args and args[0] == "--sortie":
+        SORTIE = Path(args[1]).resolve()
+        SORTIE.mkdir(parents=True, exist_ok=True)
+        args = args[2:]
+    sys.argv = [sys.argv[0]] + args
     quoi = sys.argv[1]
     if quoi == "journaux":
         sys.exit(etape_journaux())
