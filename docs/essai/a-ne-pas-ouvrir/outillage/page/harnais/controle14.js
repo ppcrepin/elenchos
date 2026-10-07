@@ -476,7 +476,7 @@ function verifierDisposition(m, attendu) {
       if (Math.max(dx, dy) < 16 - 0.5 && t.y < F.h && t.y + t.h > 0) { e.push('moins de 16 px entre « ' + c.texte + ' » et une cible du téléphone'); break; }
     }
   }
-  e.push(...verifierRevelation(m, attendu), ...verifierSousOnglets(m), ...verifierActions(m));
+  e.push(...verifierRevelation(m, attendu), ...verifierSousOnglets(m), ...verifierActions(m), ...verifierTextes(m), ...verifierLignesListe(m));
   return Array.from(new Set(e));
 }
 
@@ -500,6 +500,21 @@ function verifierRevelation(m, attendu) {
   if (r.filet && r.dessin && r.filet.y < r.dessin.b) { e.push('révélation : le double filet passe au-dessus du bas de la croix'); }
   if (r.suivant && Math.abs(r.suivant.y - r.points.b - 10) > 0.5) { e.push('révélation : ' + (r.suivant.y - r.points.b).toFixed(1) + ' px sous les points (10 attendus)'); }
   if (r.sous.length) { e.push('révélation : texte sous le dessin de la croix (« ' + r.sous[0] + ' »)'); }
+  return e;
+}
+
+/** Aucun texte ne déborde de sa boîte, ni de la marge de 14 px de l'écran du jeu. */
+function verifierTextes(m) {
+  return (m.debords || []).map(x => 'texte qui déborde (' + x.ou + ') : « ' + x.texte + ' »');
+}
+
+/** Aucune ligne de liste n'est plus basse que son contenu : 7 px au-dessus et au-dessous du texte, 44 px au moins si elle se touche. */
+function verifierLignesListe(m) {
+  const e = [];
+  for (const l of m.lignesListe || []) {
+    if (l.deborde || l.dessus < 7 - 0.5 || l.dessous < 7 - 0.5) { e.push('ligne de liste plus basse que son contenu (' + l.dessus.toFixed(1) + ' px au-dessus, ' + l.dessous.toFixed(1) + ' px au-dessous) : « ' + l.texte + ' »'); }
+    if (l.touchable && l.h < 44 - 0.5) { e.push('ligne de liste touchable de ' + Math.round(l.h) + ' px : « ' + l.texte + ' »'); }
+  }
   return e;
 }
 
@@ -804,5 +819,5 @@ async function main() {
 
 if (require.main === module) { main().catch(e => { process.stderr.write((e && e.stack) || String(e)); process.stderr.write('\n'); process.exitCode = 2; }); }
 
-module.exports = { resumeErreur, sondePersistance, noterMemoire, verifierDisposition, verifierRevelation, verifierSousOnglets, verifierActions, pageAvecScelle, visibilite, memoire, poserCles, taillesH, creerRapport, controleHors, controleCsp, controleMemoire, controleEffacer,
+module.exports = { verifierTextes, verifierLignesListe, resumeErreur, sondePersistance, noterMemoire, verifierDisposition, verifierRevelation, verifierSousOnglets, verifierActions, pageAvecScelle, visibilite, memoire, poserCles, taillesH, creerRapport, controleHors, controleCsp, controleMemoire, controleEffacer,
   controleMiseEnPage, controleEspaceFine, controleRetours, controleArrets, lireScelle, porteurDe };

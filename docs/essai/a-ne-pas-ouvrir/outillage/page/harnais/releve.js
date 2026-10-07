@@ -212,11 +212,60 @@ function mesurerDisposition() {
     });
     actions.push({ x: a.getBoundingClientRect().left, largeur: a.clientWidth, ecart: parseFloat(cs.columnGap) || 0, boutons: boutons });
   });
+  // textes qui débordent de leur boîte (contrôle 14 h) : chaque ligne de texte doit tenir dans chaque boîte qui la contient,
+  // jusqu'à la zone qui défile ; dans le téléphone, aussi dans la boîte de contenu de .corps, .bas ou .feuille (marges de 14 px).
+  // En hauteur, la tolérance est la demi-différence entre la hauteur des caractères de la police et la hauteur de ligne
+  // (une hauteur de ligne serrée, voulue, laisse dépasser les jambages de la police sans que rien ne déborde).
+  var debords = [];
+  function noter(texte, ou) { if (debords.length < 12) { debords.push({ texte: texte.slice(0, 40), ou: ou }); } }
+  [document.getElementById('app'), document.getElementById('vue-seule'), document.querySelector('.vue-couchee')].forEach(function (racine) {
+    if (!racine || !racine.getClientRects().length || getComputedStyle(racine).display === 'none') { return; }
+    var parcours = document.createTreeWalker(racine, NodeFilter.SHOW_TEXT);
+    for (var nt = parcours.nextNode(); nt; nt = parcours.nextNode()) {
+      var texte = nt.data.trim();
+      if (!texte) { continue; }
+      var pe = nt.parentElement;
+      var cs0 = getComputedStyle(pe);
+      if (cs0.visibility === 'hidden' || !pe.getClientRects().length) { continue; }
+      var rg = document.createRange(); rg.selectNodeContents(nt);
+      var lignesTexte = Array.prototype.filter.call(rg.getClientRects(), function (x) { return x.width > 0 && x.height > 0; });
+      if (!lignesTexte.length) { continue; }
+      var hl = parseFloat(cs0.lineHeight);
+      var tolH = function (x) { return 0.5 + (isNaN(hl) ? 0 : Math.max(0, (x.height - hl) / 2)); };
+      var zone = pe.closest('.tel-ecran .corps, .tel-ecran .bas, .tel-ecran .feuille');
+      if (zone) {
+        var rz = zone.getBoundingClientRect(), cz = getComputedStyle(zone);
+        var g = rz.left + zone.clientLeft + parseFloat(cz.paddingLeft), d = rz.left + zone.clientLeft + zone.clientWidth - parseFloat(cz.paddingRight);
+        if (lignesTexte.some(function (x) { return x.left < g - 0.5 || x.right > d + 0.5; })) { noter(texte, 'marge de 14 px de l’écran du jeu'); continue; }
+      }
+      for (var an = pe; an && an !== racine.parentElement; an = an.parentElement) {
+        var cs = getComputedStyle(an);
+        if (cs.display === 'inline' || cs.display === 'contents') { continue; }
+        if (cs.overflowX !== 'visible' || cs.overflowY !== 'visible') { break; } // zone qui défile ou qui rogne : son contenu peut la dépasser
+        var b = an.getBoundingClientRect();
+        var hors = lignesTexte.some(function (x) { return x.left < b.left - 0.5 || x.right > b.right + 0.5 || x.top < b.top - tolH(x) || x.bottom > b.bottom + tolH(x); });
+        if (hors) { noter(texte, (an.className && typeof an.className === 'string' ? '.' + an.className.trim().split(/\s+/).join('.') : an.tagName.toLowerCase())); break; }
+      }
+    }
+  });
+  // lignes de liste (contrôle 14 h) : hauteur de leur contenu, 7 px au-dessus et au-dessous, 44 px au moins si elles se touchent
+  var lignesListe = [];
+  document.querySelectorAll('.listrow').forEach(function (l) {
+    if (!l.getClientRects().length || !l.children.length) { return; }
+    var r = l.getBoundingClientRect(), cs = getComputedStyle(l);
+    var u = null;
+    Array.prototype.forEach.call(l.children, function (c) {
+      var rc = c.getBoundingClientRect();
+      u = u ? { y: Math.min(u.y, rc.top), b: Math.max(u.b, rc.bottom) } : { y: rc.top, b: rc.bottom };
+    });
+    lignesListe.push({ texte: l.textContent.slice(0, 40), touchable: l.tagName === 'BUTTON', h: r.height,
+      dessus: u.y - r.top - parseFloat(cs.borderTopWidth), dessous: r.bottom - parseFloat(cs.borderBottomWidth) - u.b, deborde: l.scrollHeight > l.clientHeight + 1 });
+  });
   // ce que porte la bande : note, confirmation de « Jour suivant », nombre de boutons (couverture du contrôle 14 h)
   var bandeContenu = { note: !!document.querySelector('.bande .note:not(.confirmation)'), confirmation: !!document.querySelector('.bande .note.confirmation'),
     boutons: document.querySelectorAll('.bande button').length };
   return {
-    revelation: revelation, sousOnglets: sousOnglets, actions: actions, bandeContenu: bandeContenu,
+    revelation: revelation, sousOnglets: sousOnglets, actions: actions, bandeContenu: bandeContenu, debords: debords, lignesListe: lignesListe,
     fenetre: { l: window.innerWidth, h: window.innerHeight },
     defilement: { hauteur: doc.scrollHeight, visible: doc.clientHeight, largeur: doc.scrollWidth, visibleL: doc.clientWidth, haut: doc.scrollTop },
     barre: boite('.barre'), bande: boite('.bande'), milieu: boite('.milieu'), telephone: boite('.telephone'),
