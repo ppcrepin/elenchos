@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-ne1drDfMpXeLY6Mo5fCiW0+sfBVftissbLQeYOFKXuI=' 'sha256-ckmfJZGdwxrWWGIMBzRy9UdSVgvRwK162fKVInXkxNw='; style-src 'sha256-Np+fadAPkQFEBTRpjbdoNWBDG0peJN4G4m7icuD+0oQ='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-ne1drDfMpXeLY6Mo5fCiW0+sfBVftissbLQeYOFKXuI=' 'sha256-ckmfJZGdwxrWWGIMBzRy9UdSVgvRwK162fKVInXkxNw='; style-src 'sha256-Pp3QQ1tw/V6+YZur4BAfelmi6LZeY9MADhbkpiI+9Fk='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
@@ -367,6 +367,8 @@ details.panneau > :not(summary) { margin: 10px 0 0; }
     radial-gradient(farthest-side at 50% 0, var(--shadow), transparent) center top,
     radial-gradient(farthest-side at 50% 100%, var(--shadow), transparent) center bottom;
   background-repeat: no-repeat; background-size: 100% 36px, 100% 36px, 100% 12px, 100% 12px; background-attachment: local, local, scroll, scroll; }
+/* dans l'écran qui défile, rien ne se comprime pour faire tenir le contenu : c'est l'écran qui défile (§8.1) */
+.corps > * { flex-shrink: 0; }
 .tel-ecran.soir .corps { background: radial-gradient(circle at 50% 42%, rgba(233, 180, 90, 0.38), transparent 60%); }
 .bas { padding: 8px 14px 4px; display: grid; gap: 8px; flex: none; }
 .btn1 { font: 700 16px/1.3 var(--fb); width: 100%; background: var(--btn-bg); color: var(--btn-fg) !important; border: 0; border-radius: 12px; padding: 12px; cursor: pointer;
@@ -448,11 +450,17 @@ button.face { cursor: pointer; min-width: 44px; min-height: 44px; }
 .code { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
 .code div { aspect-ratio: 3 / 4; border: 1.5px solid var(--line); border-radius: 6px; display: grid; place-items: center; }
 .code .rempli::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ink); }
-.listrow { display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px solid var(--line); padding: 7px 0; font: inherit; font-size: 0.88rem; width: 100%;
+.listrow { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; align-content: center; gap: 2px 10px;
+  border-bottom: 1px solid var(--line); padding: 7px 0; font: inherit; font-size: 0.88rem; width: 100%;
   background: none; border-top: 0; border-left: 0; border-right: 0; text-align: left; }
+/* une ligne de liste prend la hauteur de son texte, 7 px au-dessus et au-dessous ; 44 px au moins quand elle se touche
+   (texte d'une ligne alors centré : align-content) */
 button.listrow { cursor: pointer; min-height: 44px; }
-.listrow span { min-width: 0; }
-.listrow span:last-child { color: var(--muted); text-align: right; }
+/* deux colonnes : chacune part de la moitié de la ligne, sans dépasser sa largeur naturelle ni passer sous son plus long mot ;
+   la plus courte garde ainsi sa largeur naturelle si elle tient dans la moitié, l'autre prend le reste et passe à la ligne
+   entre deux mots ; si les deux plus longs mots ne tiennent pas côte à côte, la seconde colonne passe dessous */
+.listrow > * { flex: 1 0 0; min-width: auto; max-width: max-content; text-wrap: balance; } /* lignes équilibrées (§8.1) ; sans équilibrage, passage à la ligne ordinaire */
+.listrow > span:last-child { color: var(--muted); text-align: right; }
 .subtabs { display: flex; align-items: baseline; gap: 14px; font-size: 0.86rem; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 6px; }
 .subtabs .on { color: var(--ink); font-weight: 700; }
 .subtabs .plain { color: var(--muted) !important; font-size: inherit; min-height: 32px; }
