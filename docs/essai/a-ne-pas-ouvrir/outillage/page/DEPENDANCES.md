@@ -31,6 +31,10 @@ Licences : SIL Open Font License 1.1 pour les deux familles. Aucun des deux `OFL
 
 `harnais/essai-passe-webkit.yml` (à ranger dans `.github/workflows/`) installe, à chaque lancement manuel, sur une machine `macos-15` de GitHub Actions (macOS fixé : Playwright 1.56.1 ne construit WebKit que jusqu'à macOS 15 ; le journal dit d'abord la version de macOS, l'image, et le WebKit installé avec sa cible) : `playwright` 1.56.1 (npm, version exacte) et son navigateur WebKit (`npx playwright install webkit`). Actions employées : `actions/checkout@v5`, `actions/setup-node@v5` (Node 22). Rien n'est installé dans l'environnement de l'équipe ; aucun secret ; rien de téléversé. Case « diagnostic » au lancement (option `--diagnostic` de `passe-webkit.js passe`) : seulement la construction, une sonde du profil gardé sur disque, puis (b) et (i) étape par étape, sans aucune valeur du jeu dans le journal.
 
+## Preuve de publication (contrôle 14 g), sur une machine Linux de GitHub Actions
+
+`harnais/essai-preuve-publication.yml` (à ranger dans `.github/workflows/`) lance `harnais/preuve-publication.sh` sur une machine `ubuntu-24.04`, sans rien installer : bash, curl, git, sha256sum et python3 de la machine ; action `actions/checkout@v5`. Lancement manuel, au moins dix minutes après la fin du déploiement Pages ; entrées : le commit de `gh-pages` attendu et le SHA-256 attendu de `essai/index.html`. Droits en lecture seule (`contents`, `pages`) ; aucun secret (seul le jeton éphémère de la tâche, pour l'API Pages) ; rien de téléversé ni de poussé.
+
 ## Commandes
 
 Depuis ce dossier (`docs/essai/a-ne-pas-ouvrir/outillage/page/`) :
