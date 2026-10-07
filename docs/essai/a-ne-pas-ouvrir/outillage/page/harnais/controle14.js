@@ -51,12 +51,19 @@ fs.writeFileSync(PAGE_OUTIL, '<!doctype html><meta charset="utf-8"><title>outil<
 /* s'arrête et pourquoi, sans aucune valeur du jeu                      */
 /* ------------------------------------------------------------------ */
 
-/** Message d'erreur de l'outil, réduit à sa première ligne et au sélecteur attendu (« waiting for … ») :
- *  jamais le contenu de la page (lignes « resolved to <…> » du journal d'appel). */
+/** Message d'erreur de l'outil, réduit à sa première ligne et au sélecteur attendu (« waiting for … »), sans aucun libellé
+ *  de la page : les valeurs de nom ou de texte d'un sélecteur (un libellé de bouton peut être un texte de l'essai, une raison
+ *  par exemple) et toute chaîne entre guillemets doubles sont remplacées par « … » ; seuls restent la sorte de sélecteur, son
+ *  rôle et les sélecteurs CSS de l'outil. Jamais le contenu de la page (lignes « resolved to <…> » du journal d'appel). */
+function sansLibelle(s) {
+  return s.replace(/\b(name|hasText|hasNotText|text)\s*:\s*(\/(?:\\.|[^/])*\/[a-z]*|'(?:\\.|[^'])*'|"(?:\\.|[^"])*")/g, '$1: …')
+    .replace(/getBy(Text|Label|Placeholder|Title|AltText)\((?:'(?:\\.|[^'])*'|"(?:\\.|[^"])*"|\/(?:\\.|[^/])*\/[a-z]*)/g, 'getBy$1(…')
+    .replace(/"(?:\\.|[^"])*"/g, '"…"');
+}
 function resumeErreur(e) {
   const lignes = String((e && e.message) || e).replace(/\x1b\[[0-9;]*m/g, '').split('\n');
   const attente = lignes.find(l => /^\s*- waiting for /.test(l));
-  return lignes[0].slice(0, 200) + (attente ? ' | ' + attente.trim().slice(0, 200) : '');
+  return sansLibelle(lignes[0].slice(0, 200) + (attente ? ' | ' + attente.trim().slice(0, 200) : ''));
 }
 
 /** Étape en cours d'un scénario, pour le mode de diagnostic. */
@@ -819,5 +826,5 @@ async function main() {
 
 if (require.main === module) { main().catch(e => { process.stderr.write((e && e.stack) || String(e)); process.stderr.write('\n'); process.exitCode = 2; }); }
 
-module.exports = { verifierTextes, verifierLignesListe, resumeErreur, sondePersistance, noterMemoire, verifierDisposition, verifierRevelation, verifierSousOnglets, verifierActions, pageAvecScelle, visibilite, memoire, poserCles, taillesH, creerRapport, controleHors, controleCsp, controleMemoire, controleEffacer,
+module.exports = { sansLibelle, verifierTextes, verifierLignesListe, resumeErreur, sondePersistance, noterMemoire, verifierDisposition, verifierRevelation, verifierSousOnglets, verifierActions, pageAvecScelle, visibilite, memoire, poserCles, taillesH, creerRapport, controleHors, controleCsp, controleMemoire, controleEffacer,
   controleMiseEnPage, controleEspaceFine, controleRetours, controleArrets, lireScelle, porteurDe };

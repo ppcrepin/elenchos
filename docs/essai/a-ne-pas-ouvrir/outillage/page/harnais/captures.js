@@ -11,7 +11,9 @@
  * Les niveaux de gris sont faits après coup par ImageMagick (convert), s'il
  * est présent ; rien n'est ajouté à la page.
  *
- * S'y ajoutent : Deviner après le choix d'une raison cachée (« Ta devinette :
+ * Fenêtre de l'icône : tout l'écran de l'appareil de l'outil (393 × 852 pour l'iPhone 15), comme au contrôle 14 h.
+ * S'y ajoutent : l'écran d'un proche défilé jusqu'à « Ses surprises » (4.3) ; une fiche révélée défilée jusqu'à « Les
+ * quatre raisons » (5.4) ; Deviner après le choix d'une raison cachée (« Ta devinette :
  * « … » », en italique, et son détail à pleine résolution) ; la confirmation
  * de « Tout effacer » d'après le dévoilement et la vue d'après « Tout
  * effacer » ; deux arrêts techniques (M1 : partie gardée illisible ; V4 :
@@ -43,11 +45,15 @@ async function main() {
   let gris = true;
   try { execFileSync('convert', ['-version'], { stdio: 'ignore' }); } catch (e) { gris = false; }
   const appareil = a.appareil || 'iPhone 15';
+  // fenêtre de l'icône : tout l'écran de l'appareil (mode app), pas la fenêtre d'un onglet (393 × 659 pour l'iPhone 15)
+  const dev = NAV.PW.devices[appareil];
+  if (!dev) { throw new Error('appareil inconnu : ' + appareil); }
+  const ecranIcone = dev.screen || dev.viewport;
   const verifications = [];
   for (const sombre of [false, true]) {
     const d = path.join(a.sortie, sombre ? 'sombre' : 'clair');
     fs.mkdirSync(d, { recursive: true });
-    let env = await NAV.ouvrir({ page: constructions[1], icone, sombre, appareil, heure: N.lireInstant(journal.seances[0].ouverture) - 60000 });
+    let env = await NAV.ouvrir({ page: constructions[1], icone, sombre, appareil, largeur: ecranIcone.width, hauteur: ecranIcone.height, heure: N.lireInstant(journal.seances[0].ouverture) - 60000 });
     const vues = new Set();
     let n = 0;
     const jo = new Joueur(env, journal, constructions, { relever: false, gestes });
@@ -80,6 +86,23 @@ async function main() {
       if (v.tel === '1.6' && !v.cadre) { await fine('.telephone .big', 'ca-alors-alegreya-gras'); }
       if (v.tel === '1.1') { await fine('.telephone .bubble', 'phrase-alegreya-sans'); }
       if (v.tel === '1.2' && !v.cadre) { await fine('.telephone .q', 'question-alegreya-sans-gras'); }
+      // écran défilé jusqu'à un intitulé (« Ses surprises » de l'écran d'un proche, 4.3 ; « Les quatre raisons » d'une fiche
+      // révélée, 5.4) : capture, puis défilement rendu tel qu'il était
+      for (const [ecran, intitule, nom] of [['proche', X.sesSurprises, 'ses-surprises'], ['fiche', X.quatreRaisons, 'quatre-raisons']]) {
+        if (v.cadre || v.tel !== ecran || vues.has(nom)) { continue; }
+        const avant = await env.page.evaluate((t) => {
+          const l = Array.from(document.querySelectorAll('.telephone .corps .label')).find(e => e.textContent.trim() === t);
+          const corps = document.querySelector('.telephone .corps');
+          if (!l || !corps) { return null; }
+          const haut = corps.scrollTop;
+          corps.scrollTop = haut + l.getBoundingClientRect().top - corps.getBoundingClientRect().top - 12;
+          return haut;
+        }, N.typographier(intitule));
+        if (avant === null) { continue; }
+        vues.add(nom);
+        await prendre('s' + v.k + '-' + ecran + '-' + nom);
+        await env.page.evaluate((h) => { document.querySelector('.telephone .corps').scrollTop = h; }, avant);
+      }
       // Deviner après le choix d'une raison cachée : « Ta devinette : « … » », en Alegreya Sans italique
       // (une raison entre guillemets, et « aucune des quatre »)
       const lw = env.page.locator('.telephone .guess .why');
@@ -105,7 +128,7 @@ async function main() {
     const cas = [['M1', porteur, { 'elenchos-essai:partie': '{"format":1,"ecritures":3,"seances":[{"k":0' }]];
     cas.push(['V4', C14.pageAvecScelle(porteur, Buffer.from(N.jsonCanonique(Object.assign({}, scelle, { version: 3 })), 'utf8').toString('base64')), null]);
     for (const [repere, page, cles] of cas) {
-      env = await NAV.ouvrir({ page, icone, sombre, appareil });
+      env = await NAV.ouvrir({ page, icone, sombre, appareil, largeur: ecranIcone.width, hauteur: ecranIcone.height });
       try {
         if (cles) { await C14.poserCles(env, cles); }
         await NAV.charger(env);

@@ -44,8 +44,8 @@ function couperNet(profil) {
 
 class Scenario {
   constructor(o, rapport) { this.o = o; this.r = rapport; this.profil = fs.mkdtempSync(path.join(os.tmpdir(), 'elenchos-profil-i-')); this.env = null; this.t = JOUR0; this.ouvertures = 0; }
-  /** Étape en cours et dernier geste demandé (libellé de la page, jamais une valeur du jeu) : mode de diagnostic. */
-  etape(nom) { this.o.etape = nom; this.geste = null; }
+  /** Étape en cours et numéro du dernier geste demandé dans l'étape, avec sa zone (jamais un libellé de la page) : mode de diagnostic. */
+  etape(nom) { this.o.etape = nom; this.geste = null; this.nGeste = 0; }
   async ouvrir(page, depuis) {
     const n = ++this.ouvertures;
     const avant = this.o.etape;
@@ -68,7 +68,8 @@ class Scenario {
   get page() { return this.env.page; }
   async avancer(ms) { await this.env.contexte.clock.runFor(ms); }
   async toucher(zone, nom) {
-    this.geste = zone + ' › ' + (nom instanceof RegExp ? String(nom) : '« ' + nom + ' »');
+    this.nGeste = (this.nGeste || 0) + 1;
+    this.geste = 'geste ' + this.nGeste + ' de l’étape (zone ' + zone + ')';
     const z = { tel: '.telephone', bande: '.bande', barre: 'header.barre', cadre: '.cadre-milieu' }[zone];
     const l = nom === 'heading' ? this.page.locator(z).getByRole('heading') : this.page.locator(z).getByRole('button', { name: nom instanceof RegExp ? nom : motif(nom) });
     await l.first().click();
@@ -310,7 +311,7 @@ async function controleDurees(o, rapport) {
     rapport.ok('(i) carnet : « Durée : ' + fmt(d[0].duree_seance) + '. » à l’entrée, « Version de la page : 1, puis 2. » au jour ' + k,
       carnet.indexOf('\nDurée : ' + fmt(d[0].duree_seance) + '.\n') > 0 && carnet.indexOf('Version de la page : 1, puis 2.') > 0);
   } catch (e) {
-    if (o.diagnostic) { rapport.note('diagnostic : (i) arrêté à l’étape « ' + o.etape + ' »' + (sc.geste ? ', geste demandé : ' + sc.geste : '') + ' : ' + C14().resumeErreur(e)); }
+    if (o.diagnostic) { rapport.note('diagnostic : (i) arrêté à l’étape « ' + o.etape + ' »' + (sc.geste ? ', ' + sc.geste : '') + ' : ' + C14().resumeErreur(e)); }
     rapport.ok('(i) scénario des durées joué jusqu’au bout', false, e.message);
   } finally {
     await sc.fermer();
