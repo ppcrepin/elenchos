@@ -6,9 +6,17 @@
 # sont tues, et le harnais n'écrit que ses lignes de résultat.
 # Même version de Playwright que le rejeu Chromium de l'équipe (1.56.1 au 6 octobre 2026) ; WebKit n'est installé
 # que sur cette machine.
+# Case « diagnostic » cochée au lancement : seulement la construction, une sonde du profil gardé sur disque, puis (b) et (i)
+# étape par étape ; le journal dit où un scénario s'arrête et pourquoi (étape, geste demandé, erreur de l'outil et
+# sélecteur attendu), sans aucune valeur du jeu.
 name: Essai - passe WebKit
 on:
   workflow_dispatch:
+    inputs:
+      diagnostic:
+        description: "Mode de diagnostic : (b) et (i) étape par étape, sonde du profil gardé sur disque"
+        type: boolean
+        default: false
 permissions:
   contents: read
 env:
@@ -47,7 +55,8 @@ jobs:
         env:
           ELENCHOS_PLAYWRIGHT: ${{ runner.temp }}/pw/node_modules/playwright
           TZ: Europe/Paris
+          DIAGNOSTIC: ${{ inputs.diagnostic && '--diagnostic' || '' }}
         run: |
           node "$PAGE/harnais/passe-webkit.js" passe --attendus "$ATTENDUS" --scelle "$SCELLE" --journaux "$JOURNAUX" \
             --construction "$RUNNER_TEMP/v1" --construction-2 "$RUNNER_TEMP/v2" --construction-3 "$RUNNER_TEMP/v3" \
-            --rapport-construction "$RAPPORT" 2> /dev/null
+            --rapport-construction "$RAPPORT" $DIAGNOSTIC 2> /dev/null

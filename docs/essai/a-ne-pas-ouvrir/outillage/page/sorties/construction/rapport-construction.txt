@@ -2,15 +2,15 @@ Rapport de construction de la page de l'essai
 Version de la page : 1
 Fichier scellé : SHA-256 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64
 
-porteur/index.html : 450669 octets, SHA-256 372207b37e03b5429eed5d29e1a2b093e079c22d6d802362426f70a4719b13ed
-temoin/index.html : 457825 octets, SHA-256 45b346a279effc99e37eac2ab289b3b8658b85bb58592a6b8d0731f71ad4c67b
+porteur/index.html : 452805 octets, SHA-256 0981241209c6a02d0286ba15017b0ef02e01016fdbd01822a6bf5ee9a008e298
+temoin/index.html : 459961 octets, SHA-256 495822e395f02180dc18bd848291e1af47c9e423bbd68cce81dbd8ade955f975
 version.txt : 2 octets, SHA-256 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
 
 Politique de sécurité, version du porteur :
-default-src 'none'; script-src 'sha256-amu4c5j3AbhuAG41F5Ik1uHNlqquYdxNmfPMsP7dQnI='; style-src 'sha256-zP2WteVqvxX74enWgAOuI8fQRitL+ULNDLvJA9hmpBA='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'
+default-src 'none'; script-src 'sha256-ckmfJZGdwxrWWGIMBzRy9UdSVgvRwK162fKVInXkxNw='; style-src 'sha256-Np+fadAPkQFEBTRpjbdoNWBDG0peJN4G4m7icuD+0oQ='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'
 
 Politique de sécurité, version témoin :
-default-src 'none'; script-src 'sha256-ne1drDfMpXeLY6Mo5fCiW0+sfBVftissbLQeYOFKXuI=' 'sha256-amu4c5j3AbhuAG41F5Ik1uHNlqquYdxNmfPMsP7dQnI='; style-src 'sha256-zP2WteVqvxX74enWgAOuI8fQRitL+ULNDLvJA9hmpBA='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'
+default-src 'none'; script-src 'sha256-ne1drDfMpXeLY6Mo5fCiW0+sfBVftissbLQeYOFKXuI=' 'sha256-ckmfJZGdwxrWWGIMBzRy9UdSVgvRwK162fKVInXkxNw='; style-src 'sha256-Np+fadAPkQFEBTRpjbdoNWBDG0peJN4G4m7icuD+0oQ='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'
 
 Polices :
 alegreya-700.woff2 : SHA-256 adfe23802afbc25a0122b1298b0d0c59ba1d14e991044286550d66b3910a475d
