@@ -21,8 +21,8 @@
 | Q-F13 « Pour le contrôle » | §8.6 (`b04eb73`) : l'empreinte d'abord, « Empreinte du fichier scellé : », puis « Graine : », « Fichier scellé : » | appliqué |
 | Q-F14 bouton de 1.6 au texte 3 | §7.1 (`b04eb73`) : « Suivant » | déjà ainsi |
 | Dévoilement, titre de la page | `devoilement.md` (`b04eb73`) : « Le dévoilement » | déjà ainsi |
-| Q-F15 croix en planche | lecture provisoire ci-dessous, à confirmer par la Direction artistique | appliquée (préparée, pas encore construite) |
-| Q-F16 boutons empilés | lecture provisoire ci-dessous, à confirmer par la Direction artistique | appliquée (préparée, pas encore construite) |
+| Q-F15 croix en planche | §8.1 « Planche » (`0843fc7`) : 18 px sous le contour, 16 px de son bord droit, comme la croix des maquettes | appliqué |
+| Q-F16 boutons empilés | §8.1 « Bande » (`0843fc7`) : côte à côte à la largeur du libellé, à droite ; sinon tous empilés, toute la largeur, libellé centré | appliqué |
 
 Ajouts appliqués en même temps : une copie en cours d'essai n'a lieu que de l'entrée au jour 14 (règle 14 de la partie 3.12) ; « Sur tout l'essai » d'une copie est calculé comme un arrêt à sa séance (déjà ainsi) ; à la séance 0, questions 2 et 3 toujours proposées (déjà ainsi).
 
@@ -130,11 +130,15 @@ Seule exception, la limite : une frappe (ou un collage) qui porterait la mise en
 
 ## Q-F15 — Place de la croix des révélations en planche (§8.1, « Planche », commit `67f8ba9`)
 
+- **Tranchée par la Direction artistique (`0843fc7`, §8.1).** Lecture provisoire confirmée. Appliqué.
+
 - **Citation.** « bord intérieur de 10 px en haut et en bas, 8 px sur les côtés […] L'écran commence au bord intérieur. […] La zone de toucher de la croix des révélations se place comme en disposition compacte : 44 × 44 px, coin à 8 px du haut et du bord droit de l'écran. […] centre des points à la même hauteur que le centre de la croix, 30 px sous le haut de l'écran. L'écran commençant au bord intérieur de 10 px, le décalage n'est pas celui de la disposition compacte. »
 - **Constat.** Jusqu'ici, en planche, la zone de la croix était à 8 px du contour (en haut et à droite), donc dans le bord intérieur, pas à 8 px de l'écran. Aucune capture de planche n'avait été jugée.
 - **Lecture provisoire.** L'écran commence après le bord intérieur ; la zone de la croix est donc à 18 px du contour en haut (10 + 8) et à 16 px à droite (8 + 8), comme le « 16 px » de la croix des maquettes finales ; le centre des points est à 40 px du contour (30 px sous le haut de l'écran). En disposition compacte, rien ne change : zone à 8 px du contour, centre des points à 30 px. Une seule variable par valeur dans la feuille de style (`--croix-haut`, `--croix-droite`) : l'autre lecture (8 px du contour, centre à 30 px) se règle en deux nombres, et la règle des points suit d'elle-même.
 
 ## Q-F16 — Boutons de la bande empilés : quelle largeur ? (§8.1, « Rangée d'action »)
+
+- **Tranchée par la Direction artistique (`0843fc7`, §8.1).** Lecture provisoire confirmée. Appliqué.
 
 - **Citation.** « côte à côte si elles tiennent, sinon l'une sous l'autre, 8 px entre elles, dans l'ordre du texte ; la bande grandit d'autant. » La largeur des boutons empilés n'est pas dite ; seul « Jour suivant », seul sur sa rangée, a « la largeur de son libellé », à droite.
 - **Lecture provisoire.** Empilés, les boutons prennent toute la largeur de la bande (libellé centré) : à la largeur de leur libellé, alignés à droite, trois boutons de longueurs différentes feraient un bord gauche en escalier. Côte à côte, rien ne change (largeur du libellé, à droite). La règle vaut pour toutes les rangées de plusieurs actions (confirmation de « Jour suivant » comprise).

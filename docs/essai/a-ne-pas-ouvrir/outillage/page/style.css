@@ -64,9 +64,11 @@ strong, b { font-weight: 600; }
 
 /* Planche : iPad tenu en hauteur, iPad 13 pouces (§8.1) */
 @media (min-width: 600px) and (min-height: 900px) {
-  .app { width: 380px; padding-top: max(24px, calc(var(--zh) + 12px)); padding-bottom: max(24px, var(--zb)); height: auto; min-height: 100vh; }
+  /* hauteur de la fenêtre, comme en compacte : la bande garde sa hauteur réelle, le milieu (téléphone ou page du cadre)
+     prend la place qui reste, de 480 à 740 px ; la place en trop reste vide, en bas */
+  .app { width: 380px; padding-top: max(24px, calc(var(--zh) + 12px)); padding-bottom: max(24px, var(--zb)); }
   .barre { margin-bottom: 24px; }
-  .milieu { flex: 0 1 740px; height: clamp(480px, calc(100vh - 260px), 740px); min-height: 480px; max-height: 740px; }
+  .milieu { flex: 1 1 0; min-height: 480px; max-height: 740px; }
   .bande { margin-top: 24px; position: static; }
 }
 

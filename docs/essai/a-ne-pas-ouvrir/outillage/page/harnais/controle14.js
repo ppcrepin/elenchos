@@ -54,9 +54,9 @@ fs.writeFileSync(PAGE_OUTIL, '<!doctype html><meta charset="utf-8"><title>outil<
 /** Message d'erreur de l'outil, réduit à sa première ligne et au sélecteur attendu (« waiting for … ») :
  *  jamais le contenu de la page (lignes « resolved to <…> » du journal d'appel). */
 function resumeErreur(e) {
-  const lignes = String((e && e.message) || e).split('\n');
+  const lignes = String((e && e.message) || e).replace(/\x1b\[[0-9;]*m/g, '').split('\n');
   const attente = lignes.find(l => /^\s*- waiting for /.test(l));
-  return (lignes[0].slice(0, 200) + (attente ? ' | ' + attente.trim().slice(0, 200) : '')).replace(/\x1b\[[0-9;]*m/g, '');
+  return lignes[0].slice(0, 200) + (attente ? ' | ' + attente.trim().slice(0, 200) : '');
 }
 
 /** Étape en cours d'un scénario, pour le mode de diagnostic. */
@@ -387,12 +387,17 @@ async function controleEffacer(o, rapport) {
 function taillesH() {
   const t = [
     [599, 900], [600, 900], [600, 899], [768, 900], [768, 899], [500, 499], [800, 500], [700, 499], [700, 500],
-    [600, 600], [601, 600], [320, 548]
+    [600, 600], [601, 600], [320, 548],
+    // iPad 13 pouces, hors de la liste de l'outil : la seule planche en largeur (§8.1, « iPad 13 pouces dans les deux sens »)
+    [1032, 1376, 'iPad 13 pouces, taille fixée par l’outil'], [1376, 1032, 'iPad 13 pouces, taille fixée par l’outil, en largeur']
   ];
-  for (const nom of ['iPhone SE (3rd gen)', 'iPhone 13 Mini', 'iPhone 15', 'iPhone 15 Pro Max', 'iPad Mini', 'iPad (gen 11)', 'iPad Pro 11']) {
+  const vues = new Set(t.map(x => x[0] + 'x' + x[1]));
+  for (const nom of ['iPhone SE (3rd gen)', 'iPhone 13 Mini', 'iPhone 15', 'iPhone 15 Pro Max', 'iPad Mini', 'iPad (gen 5)', 'iPad (gen 6)', 'iPad (gen 7)', 'iPad (gen 11)', 'iPad Pro 11']) {
     const d = NAV.PW.devices[nom];
     const s = d.screen || d.viewport;
-    t.push([s.width, s.height, nom], [s.height, s.width, nom + ' en largeur']);
+    for (const [l, h, n] of [[s.width, s.height, nom], [s.height, s.width, nom + ' en largeur']]) {
+      if (!vues.has(l + 'x' + h)) { vues.add(l + 'x' + h); t.push([l, h, n]); } // même taille qu'un autre appareil : une fois
+    }
   }
   return t;
 }
@@ -411,6 +416,15 @@ function verifierDisposition(m, attendu) {
   if (attendu.planche) {
     if (!m.planche) { e.push('planche attendue'); }
     if (m.milieu && (m.milieu.h < 480 - 0.5 || m.milieu.h > 740 + 0.5)) { e.push('planche : écran du jeu de ' + Math.round(m.milieu.h) + ' px (480 à 740)'); }
+    // la bande garde sa hauteur réelle et tient dans la fenêtre ; le milieu prend la place qui reste (§8.1, « Planche »)
+    if (m.defilement.hauteur > m.defilement.visible + 0.5) { e.push('planche : la page défile'); }
+    for (const [nom, b] of [['barre', m.barre], ['bande', m.bande]]) {
+      if (b && (b.y < -0.5 || b.b > F.h + 0.5)) { e.push('planche : ' + nom + ' hors de la fenêtre'); }
+    }
+    const basAttendu = 24; // max(24 px, zone sûre du bas) : l'outil n'a pas de zone sûre
+    if (m.milieu && m.bande && m.milieu.h < 740 - 0.5 && Math.abs(F.h - m.bande.b - basAttendu) > 1) {
+      e.push('planche : l’écran du jeu (' + Math.round(m.milieu.h) + ' px) ne prend pas la place qui reste (' + Math.round(F.h - m.bande.b) + ' px sous la bande, ' + basAttendu + ' attendus)');
+    }
   } else {
     if (m.planche) { e.push('compact attendu'); }
     if (m.milieu && m.milieu.h < 200 - 0.5) { e.push('écran du jeu de ' + Math.round(m.milieu.h) + ' px (< 200)'); }
@@ -513,16 +527,21 @@ async function controleMiseEnPage(o, rapport) {
       }
       const jo = new Joueur(env, journal, constructions, { relever: false, gestes });
       const original = jo.releverSiVoulu.bind(jo);
+      const vus = { note: 0, confirmation: 0, trois: 0 };
       jo.releverSiVoulu = async (geste) => {
         const m = await env.page.evaluate(RELEVE.mesurerDisposition);
         ecrans++;
+        if (m.bandeContenu.note) { vus.note++; }
+        if (m.bandeContenu.confirmation) { vus.confirmation++; }
+        if (m.bandeContenu.boutons >= 3) { vus.trois++; }
         for (const x of verifierDisposition(m, { planche })) { (ecarts[x] = ecarts[x] || []).push('séance ' + jo.k + ', ' + geste); }
         return original(geste);
       };
       await jo.jouer(o.scelle);
       const liste = Object.keys(ecarts);
-      rapport.ok('(h) ' + l + ' × ' + h + (nom ? ' (' + nom + ')' : '') + ' : ' + ecrans + ' écrans de la partie (b), disposition ' + (planche ? 'planche' : 'compacte'),
-        liste.length === 0, liste.map(x => x + ' (' + ecarts[x].length + ' fois, d’abord ' + ecarts[x][0] + ')').join(' ; '));
+      rapport.ok('(h) ' + l + ' × ' + h + (nom ? ' (' + nom + ')' : '') + ' : ' + ecrans + ' écrans de la partie (b), disposition ' + (planche ? 'planche' : 'compacte') +
+        ', dont ' + vus.note + ' avec une note, ' + vus.confirmation + ' avec la confirmation de « Jour suivant », ' + vus.trois + ' avec trois boutons (« Tout effacer ? »)',
+        liste.length === 0 && vus.note > 0 && vus.confirmation > 0 && vus.trois > 0, liste.map(x => x + ' (' + ecarts[x].length + ' fois, d’abord ' + ecarts[x][0] + ')').join(' ; '));
     } catch (e) {
       rapport.ok('(h) ' + l + ' × ' + h + (nom ? ' (' + nom + ')' : '') + ' : partie (b) jouée', false, e.message);
     } finally { await NAV.fermer(env); }

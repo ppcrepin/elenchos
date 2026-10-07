@@ -212,8 +212,11 @@ function mesurerDisposition() {
     });
     actions.push({ x: a.getBoundingClientRect().left, largeur: a.clientWidth, ecart: parseFloat(cs.columnGap) || 0, boutons: boutons });
   });
+  // ce que porte la bande : note, confirmation de « Jour suivant », nombre de boutons (couverture du contrôle 14 h)
+  var bandeContenu = { note: !!document.querySelector('.bande .note:not(.confirmation)'), confirmation: !!document.querySelector('.bande .note.confirmation'),
+    boutons: document.querySelectorAll('.bande button').length };
   return {
-    revelation: revelation, sousOnglets: sousOnglets, actions: actions,
+    revelation: revelation, sousOnglets: sousOnglets, actions: actions, bandeContenu: bandeContenu,
     fenetre: { l: window.innerWidth, h: window.innerHeight },
     defilement: { hauteur: doc.scrollHeight, visible: doc.clientHeight, largeur: doc.scrollWidth, visibleL: doc.clientWidth, haut: doc.scrollTop },
     barre: boite('.barre'), bande: boite('.bande'), milieu: boite('.milieu'), telephone: boite('.telephone'),
