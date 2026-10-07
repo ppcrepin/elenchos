@@ -1,38 +1,42 @@
-Phrases attendues : fichier du programme de contrôle non fourni ; vérification provisoire des noms et des dates du vote avant la révélation seulement.
+juste : 11 : fichier des phrases attendues : format « elenchos-essai-phrases » version 1, même fichier scellé
 juste : 10 : partie a : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
 juste : 11 : partie a : aucun chiffre suivi d’une espace U+0020
-juste : 11 : partie a : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie a : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 52, 2.7d × 13, 2.7e × 13, 5.4 × 1
 juste : 11 : partie a, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie b : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
 juste : 11 : partie b : aucun chiffre suivi d’une espace U+0020
-juste : 11 : partie b : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie b : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 122, 2.7d × 13, 2.7e × 13, 5.4 × 1, 5.4-avant × 2, Ta raison × 11
 juste : 11 : partie b, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie c : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
 juste : 11 : partie c : aucun chiffre suivi d’une espace U+0020
-juste : 11 : partie c : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie c : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 91, 2.7d × 13, 2.7e × 13, 5.4 × 1, Ta raison × 16
 juste : 11 : partie c, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie d : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
 juste : 11 : partie d : aucun chiffre suivi d’une espace U+0020
-juste : 11 : partie d : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie d : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 1, Ta raison × 1
 juste : 11 : partie d, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie e : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
 juste : 11 : partie e : aucun chiffre suivi d’une espace U+0020
-juste : 11 : partie e : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie e : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 2, Ta raison × 3
 juste : 11 : partie e, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie f : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
 juste : 11 : partie f : aucun chiffre suivi d’une espace U+0020
-juste : 11 : partie f : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie f : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 21, 2.7d × 4, 2.7e × 4, Ta raison × 3
 juste : 11 : partie f, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie g : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
 juste : 11 : partie g : aucun chiffre suivi d’une espace U+0020
-juste : 11 : partie g : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie g : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 17, 2.7d × 3, 2.7e × 3, Ta raison × 3
 juste : 11 : partie g, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie h : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
 juste : 11 : partie h : aucun chiffre suivi d’une espace U+0020
-juste : 11 : partie h : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie h : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 29, 2.7d × 6, 2.7e × 6, Ta raison × 3
 juste : 11 : partie h, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie i : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
 juste : 11 : partie i : aucun chiffre suivi d’une espace U+0020
-juste : 11 : partie i : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation (provisoire)
+juste : 11 : partie i : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 29, 2.7d × 6, 2.7e × 6, Ta raison × 3
 juste : 11 : partie i, 320 × 548 px : aucune coupure de ligne fautive
+juste : 10 : partie j : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 11 : partie j : aucun chiffre suivi d’une espace U+0020
+juste : 11 : partie j : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 22, 2.7d × 2, 2.7e × 2, 5.4 × 1, Ta raison × 4
+juste : 11 : partie j, 320 × 548 px : aucune coupure de ligne fautive
 Toutes les vérifications sont justes.

@@ -27,6 +27,7 @@ juste : 12 : hasard-209.copie-1.txt : lignes du gabarit du §8.12 seulement, san
 juste : 12 : hasard-210.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
 juste : 12 : hasard-210.copie-1.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
 juste : 12 : i.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
+juste : 12 : j.carnet.txt : lignes du gabarit du §8.12 seulement, sans le pseudo
 juste : 12 : arrêt au jour 8, partie h : « pas de chiffre » aux trois lignes
 juste : 12 : arrêt au jour 8, partie i : des chiffres
 juste : 12 : partie a, variante « positions opposées » : blocs de séance, questions de fin, mesures et copies identiques

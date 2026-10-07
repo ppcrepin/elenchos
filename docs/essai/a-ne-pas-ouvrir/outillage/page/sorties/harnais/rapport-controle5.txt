@@ -1,4 +1,4 @@
-Contrôle 5, partie mécanique, sur frontend-final/construction-v1
+Contrôle 5, partie mécanique, sur /home/user/elenchos/docs/essai/a-ne-pas-ouvrir/outillage/page/sorties/final/construction-v1
 
 juste : déclaration d’encodage dans les 1 024 premiers octets
 juste : balises du §8.8 en tête, dans leur ordre

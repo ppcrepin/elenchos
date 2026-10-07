@@ -1,0 +1,19 @@
+# Outillage de l'essai (simulation.md, §9, contrôle 14 c) : inventaire des sites Pages à l'adresse de l'essai.
+# Lancement manuel seulement ; droits en lecture seule ; aucun secret ; rien de téléversé. Le journal ne donne,
+# pour chaque chemin de https://ppcrepin.github.io, que le code de réponse HTTP (404 : aucun site à ce chemin).
+name: Essai - inventaire des sites Pages
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inventaire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Codes de réponse
+        run: |
+          for chemin in / /kartme/ /Agora/ /agora/ /kartme-maggie/ /Projects/ /projects/ /elenchos/ /elenchos/essai/; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "https://ppcrepin.github.io$chemin")
+            echo "$chemin : $code"
+          done

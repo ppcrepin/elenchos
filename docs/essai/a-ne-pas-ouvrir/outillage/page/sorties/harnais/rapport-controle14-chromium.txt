@@ -1,4 +1,4 @@
-Contrôle 14 sans tête : chromium (Playwright 1.56.1), version du porteur 0b051e9074a7d5d515e532ac578ac3482657611440949842ab69bb53dbccef00
+Contrôle 14 sans tête : chromium (Playwright 1.56.1), version du porteur 372207b37e03b5429eed5d29e1a2b093e079c22d6d802362426f70a4719b13ed
 juste : (c) onglet d’iPhone (Safari) : vue « onglet »
 juste : (c) onglet d’iPhone (Safari) : mémoire inchangée après le chargement et un toucher sur chaque bouton
 juste : (a) onglet d’iPhone (Safari) : aucune requête hors de la page et de l’icône
@@ -32,9 +32,9 @@ juste : (b) … et ne touche pas sa clé
 juste : (b) coup validé gardé (réponse au texte E1)
 juste : (b) navigateur fermé puis rouvert le lendemain : reprise à l’étape suivante (1.5, pari du texte 1)
 juste : (b) correctif servi à la même adresse : la partie reprend à la même étape, coups gardés
-juste : (b) partie gardée illisible (texte abîmé) : arrêt 1, repère M1, sans « Rien n’est effacé »
+juste : (b) partie gardée illisible (texte abîmé) : arrêt 1, repère M1, « Cette page n’a rien effacé. », consigne de garder l’icône, sans « Rien n’est effacé »
 juste : (b) … mémoire inchangée, l’entrée ne commence pas
-juste : (b) partie gardée illisible (numéro de format inconnu) : arrêt 1, repère M1, sans « Rien n’est effacé »
+juste : (b) partie gardée illisible (numéro de format inconnu) : arrêt 1, repère M1, « Cette page n’a rien effacé. », consigne de garder l’icône, sans « Rien n’est effacé »
 juste : (b) … mémoire inchangée, l’entrée ne commence pas
 juste : (d) « Tout effacer » (pendant) : confirmation affichée
 juste : (d) après « Tout effacer » (pendant) : aucune clé « elenchos-essai: », clé de la page-test comprise
@@ -46,9 +46,9 @@ juste : (d) après « Tout effacer » (apres) : aucune clé « elenchos-essai: �
 juste : (d) … la clé hors du préfixe, posée par l’outil, est intacte
 juste : (d) … vue seule « La page a tout effacé. », sans bouton ni pied de page, titre sous le lecteur d’écran
 juste : (d) … rouverte, la page revient à l’entrée
-juste : (§8.11) vérification V2 ratée : arrêt 1, repère V2, rien d’écrit
-juste : (§8.11) vérification V4 ratée : arrêt 1, repère V4, rien d’écrit
-juste : (§8.11) vérification V5 ratée : arrêt 1, repère V5, rien d’écrit
+juste : (§8.11) vérification V2 ratée : arrêt 1, repère V2, consigne ordinaire, rien d’écrit
+juste : (§8.11) vérification V4 ratée : arrêt 1, repère V4, consigne ordinaire, rien d’écrit
+juste : (§8.11) vérification V5 ratée : arrêt 1, repère V5, consigne ordinaire, rien d’écrit
 juste : (§8.11) stockage absent : arrêt 2
 juste : (§8.11) page ouverte deux fois : arrêt 3, « Reprendre ici », rien d’écrasé
 juste : (§8.11) « Reprendre ici » : la partie telle qu’elle a été gardée en dernier
@@ -99,9 +99,10 @@ juste : (i) cas 2 (nuit en arrière-plan sur « En attendant » non comptée) : 
 juste : (i) cas 3 et 7 (app fermée en arrière-plan puis rouverte ; heure du téléphone changée) : séance 2, 23 s, dont 16 s pour deviner et 5 s pour répondre
 juste : (i) cas 4 (arrêt brutal 12 s après la dernière écriture : ces 12 s manquent) : séance 3, 4 s
 juste : (i) cas 5 (arrêt brutal moins d’une seconde après « Valider ») : la page reprend à son étape
-juste : (i) cas 6 (toucher sur l’écran couché non compté) : séance 4, 0 s
-juste : (i) cas 6 (temps de l’écran couché compté) : séance 4, 23 s
-juste : (i) cas 8 (correctif chargé en cours de séance, la durée continue) : séance 4, 26 s
-juste : (i) cas 8 : versions de la séance 4 : 1, puis 2
-juste : (i) carnet : « Durée : 1 min 11 s. » à l’entrée, « Version de la page : 1, puis 2. » au jour 4
+juste : (i) cas 5 bis (arrêt brutal moins d’une seconde après trois coups validés en 0.4 s) : la page reprend après le coup 0 gardé sur 3, à l’étape du premier coup perdu, jamais entre deux coups
+juste : (i) cas 6 (toucher sur l’écran couché non compté) : séance 5, 0 s
+juste : (i) cas 6 (temps de l’écran couché compté) : séance 5, 23 s
+juste : (i) cas 8 (correctif chargé en cours de séance, la durée continue) : séance 5, 26 s
+juste : (i) cas 8 : versions de la séance 5 : 1, puis 2
+juste : (i) carnet : « Durée : 1 min 11 s. » à l’entrée, « Version de la page : 1, puis 2. » au jour 5
 Toutes les vérifications sont justes.
