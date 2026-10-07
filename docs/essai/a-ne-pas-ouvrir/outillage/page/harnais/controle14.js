@@ -342,7 +342,64 @@ function verifierDisposition(m, attendu) {
       if (Math.max(dx, dy) < 16 - 0.5 && t.y < F.h && t.y + t.h > 0) { e.push('moins de 16 px entre « ' + c.texte + ' » et une cible du téléphone'); break; }
     }
   }
+  e.push(...verifierRevelation(m, attendu), ...verifierSousOnglets(m), ...verifierActions(m));
   return Array.from(new Set(e));
+}
+
+/** Révélations (§8.1) : zone de la croix à sa place ; centre des points à la hauteur du centre de la croix ;
+ *  ni point ni filet ne touche la croix ; écart habituel sous les points ; aucun texte sous le dessin de la croix. */
+function verifierRevelation(m, attendu) {
+  const r = m.revelation;
+  if (!r || r.defile > 0.5) { return []; } // le contenu défilé passe sous la croix, comme dans les maquettes : seul compte l'écran tel qu'il s'ouvre
+  const e = [];
+  const [haut, droite] = attendu.planche ? [18, 16] : [8, 8]; // planche : l'écran commence au bord intérieur de 10 px en haut, 8 px sur les côtés
+  const c = r.croix;
+  if (Math.abs(c.y - r.ecran.y - haut) > 0.5 || Math.abs(r.ecran.d - c.d - droite) > 0.5 || Math.abs(c.l - 44) > 0.5 || Math.abs(c.h - 44) > 0.5) {
+    e.push('croix : zone de ' + Math.round(c.l) + ' × ' + Math.round(c.h) + ' px à ' + (c.y - r.ecran.y).toFixed(1) + ' px du haut et ' + (r.ecran.d - c.d).toFixed(1) + ' px du bord droit (attendu 44 × 44, ' + haut + ' et ' + droite + ')');
+  }
+  if (!r.points) { e.push('révélation sans rangée de points'); return e; }
+  const ecartCentres = (r.points.y + r.points.b) / 2 - (c.y + c.h / 2);
+  if (Math.abs(ecartCentres) > 0.5) { e.push('révélation : centre des points à ' + ecartCentres.toFixed(1) + ' px du centre de la croix'); }
+  const touche = (a, b) => a && b && a.d > b.x && a.x < b.d && a.b > b.y && a.y < b.b;
+  if (touche(r.points, { x: c.x, d: c.d, y: c.y, b: c.b })) { e.push('révélation : la rangée de points entre dans la zone de la croix'); }
+  if (touche(r.filet, r.dessin)) { e.push('révélation : le double filet touche la croix'); }
+  if (r.filet && r.dessin && r.filet.y < r.dessin.b) { e.push('révélation : le double filet passe au-dessus du bas de la croix'); }
+  if (r.suivant && Math.abs(r.suivant.y - r.points.b - 10) > 0.5) { e.push('révélation : ' + (r.suivant.y - r.points.b).toFixed(1) + ' px sous les points (10 attendus)'); }
+  if (r.sous.length) { e.push('révélation : texte sous le dessin de la croix (« ' + r.sous[0] + ' »)'); }
+  return e;
+}
+
+/** Sous-onglets de Moi : une ligne de base commune, onglet actif compris. */
+function verifierSousOnglets(m) {
+  const b = (m.sousOnglets || []).map(x => x.base);
+  if (b.length < 2) { return []; }
+  const ecart = Math.max(...b) - Math.min(...b);
+  return ecart > 0.5 ? ['sous-onglets de Moi : lignes de base décalées de ' + ecart.toFixed(1) + ' px'] : [];
+}
+
+/** Rangées d'action (§8.1) : côte à côte si elles tiennent, sinon toutes l'une sous l'autre, 8 px entre elles, dans l'ordre du texte. */
+function verifierActions(m) {
+  const e = [];
+  for (const a of m.actions || []) {
+    const B = a.boutons;
+    if (B.length < 2) { continue; }
+    const noms = B.map(b => '« ' + b.texte + ' »').join(', ');
+    const lignes = [];
+    for (const b of B) { if (!lignes.some(y => Math.abs(y - b.y) < 1)) { lignes.push(b.y); } }
+    const tiennent = B.every(b => b.lignes === 1) && B.reduce((s, b) => s + b.naturelle, 0) + a.ecart * (B.length - 1) <= a.largeur + 0.5;
+    if (lignes.length === 1) {
+      if (!B.every((b, i) => i === 0 || b.x > B[i - 1].x)) { e.push('actions côte à côte hors de l’ordre du texte : ' + noms); }
+      const deborde = B.some(b => b.x < a.x - 0.5 || b.x + b.l > a.x + a.largeur + 0.5);
+      if (!tiennent || deborde) { e.push('actions côte à côte qui ne tiennent pas : ' + noms); }
+    } else if (lignes.length === B.length) {
+      if (!B.every((b, i) => i === 0 || b.y > B[i - 1].y)) { e.push('actions l’une sous l’autre hors de l’ordre du texte : ' + noms); }
+      if (!B.every((b, i) => i === 0 || Math.abs(b.y - (B[i - 1].y + B[i - 1].h) - 8) < 0.5)) { e.push('actions l’une sous l’autre sans 8 px entre elles : ' + noms); }
+      if (tiennent) { e.push('actions l’une sous l’autre alors qu’elles tiennent côte à côte : ' + noms); }
+    } else {
+      e.push('actions sur ' + lignes.length + ' lignes pour ' + B.length + ' boutons (ni côte à côte ni l’une sous l’autre) : ' + noms);
+    }
+  }
+  return e;
 }
 
 async function controleMiseEnPage(o, rapport) {
@@ -608,5 +665,5 @@ async function main() {
 
 if (require.main === module) { main().catch(e => { process.stderr.write((e && e.stack) || String(e)); process.stderr.write('\n'); process.exitCode = 2; }); }
 
-module.exports = { verifierDisposition, visibilite, memoire, poserCles, taillesH, creerRapport, controleHors, controleCsp, controleMemoire, controleEffacer,
+module.exports = { verifierDisposition, verifierRevelation, verifierSousOnglets, verifierActions, pageAvecScelle, visibilite, memoire, poserCles, taillesH, creerRapport, controleHors, controleCsp, controleMemoire, controleEffacer,
   controleMiseEnPage, controleEspaceFine, controleRetours, controleArrets, lireScelle, porteurDe };

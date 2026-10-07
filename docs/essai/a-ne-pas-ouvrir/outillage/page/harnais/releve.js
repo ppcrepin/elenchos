@@ -137,7 +137,83 @@ function mesurerDisposition() {
     if (feuille && !feuille.contains(b)) { bb = Math.min(bb, feuille.getBoundingClientRect().top); }
     if (d - g > 0 && bb - hh > 0 && getComputedStyle(b).visibility !== 'hidden') { telCibles.push({ x: g, y: hh, l: d - g, h: bb - hh }); }
   });
+  // boîte d'encre d'un texte d'une seule ligne (dessin des lettres, pas la boîte de la ligne), d'après la police calculée
+  var toile = document.createElement('canvas').getContext('2d');
+  function encre(el) {
+    var n = el.firstChild;
+    while (n && n.nodeType !== 3) { n = n.nextSibling; }
+    if (!n) { return null; }
+    var cs = getComputedStyle(el);
+    toile.font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+    var t = toile.measureText(n.data.trim());
+    var r = document.createRange(); r.selectNodeContents(n);
+    var rr = r.getBoundingClientRect();
+    var base = rr.top + t.fontBoundingBoxAscent;
+    return { x: rr.left - t.actualBoundingBoxLeft, d: rr.left + t.actualBoundingBoxRight, y: base - t.actualBoundingBoxAscent, b: base + t.actualBoundingBoxDescent, base: base };
+  }
+  function rect(r) { return { x: r.left, y: r.top, l: r.width, h: r.height, b: r.bottom, d: r.right }; }
+  // révélations (§8.1) : croix, rangée de points, double filet
+  var revelation = null;
+  var croix = document.querySelector('.telephone .tel-ecran > .croix');
+  var ecr = croix && croix.parentElement;
+  var points = ecr && ecr.querySelector('.corps > .dots');
+  if (croix && points && croix.getClientRects().length) { // téléphone affiché (pas sous une page du cadre)
+    var re = ecr.getBoundingClientRect();
+    var corps = ecr.querySelector('.corps');
+    var ronds = points.querySelectorAll('i');
+    var u = null;
+    Array.prototype.forEach.call(ronds, function (i) {
+      var r = i.getBoundingClientRect();
+      u = u ? { x: Math.min(u.x, r.left), y: Math.min(u.y, r.top), d: Math.max(u.d, r.right), b: Math.max(u.b, r.bottom) } : { x: r.left, y: r.top, d: r.right, b: r.bottom };
+    });
+    var bandeau = corps.querySelector(':scope > .band');
+    var filet = null;
+    if (bandeau) { var rb = bandeau.getBoundingClientRect(); filet = { x: rb.left, d: rb.right, y: rb.top, b: rb.top + parseFloat(getComputedStyle(bandeau).borderTopWidth) }; }
+    var suivant = points.nextElementSibling;
+    // lignes de texte du contenu qui passeraient sous le dessin de la croix
+    var dessin = encre(croix);
+    var sous = [];
+    var parcours = document.createTreeWalker(corps, NodeFilter.SHOW_TEXT);
+    for (var nt = parcours.nextNode(); nt; nt = parcours.nextNode()) {
+      if (!nt.data.trim()) { continue; }
+      var pe = nt.parentElement;
+      if (getComputedStyle(pe).visibility === 'hidden') { continue; } // place réservée, invisible (carte fermée)
+      var rg = document.createRange(); rg.selectNodeContents(nt);
+      Array.prototype.forEach.call(rg.getClientRects(), function (l) {
+        if (dessin && l.right > dessin.x && l.left < dessin.d && l.bottom > dessin.y && l.top < dessin.b) { sous.push(nt.data.trim().slice(0, 40)); }
+      });
+    }
+    revelation = {
+      ecran: { x: re.left + ecr.clientLeft, y: re.top + ecr.clientTop, d: re.left + ecr.clientLeft + ecr.clientWidth },
+      croix: rect(croix.getBoundingClientRect()), dessin: dessin, points: u, filet: filet,
+      suivant: suivant ? rect(suivant.getBoundingClientRect()) : null, defile: corps.scrollTop, sous: sous
+    };
+  }
+  // sous-onglets de Moi : ligne de base de chacun
+  var sousOnglets = [];
+  document.querySelectorAll('.telephone .subtabs > *').forEach(function (o) {
+    var en = encre(o);
+    if (en) { sousOnglets.push({ texte: o.textContent, base: en.base }); }
+  });
+  // rangées d'action de la bande : place de chaque bouton, dans l'ordre du texte
+  var actions = [];
+  document.querySelectorAll('.bande .actions').forEach(function (a) {
+    var cs = getComputedStyle(a);
+    var boutons = [];
+    Array.prototype.forEach.call(a.children, function (b) {
+      var r = b.getBoundingClientRect();
+      var bs = getComputedStyle(b);
+      var rg = document.createRange(); rg.selectNodeContents(b);
+      var lignes = [];
+      Array.prototype.forEach.call(rg.getClientRects(), function (l) { if (l.width && !lignes.some(function (y) { return Math.abs(y - l.top) < 2; })) { lignes.push(l.top); } });
+      var texte = rg.getBoundingClientRect().width;
+      boutons.push({ texte: b.textContent, x: r.left, y: r.top, l: r.width, h: r.height, lignes: lignes.length,
+        naturelle: texte + parseFloat(bs.paddingLeft) + parseFloat(bs.paddingRight) + parseFloat(bs.borderLeftWidth) + parseFloat(bs.borderRightWidth) });
+    });
+    actions.push({ x: a.getBoundingClientRect().left, largeur: a.clientWidth, ecart: parseFloat(cs.columnGap) || 0, boutons: boutons });
+  });
   return {
+    revelation: revelation, sousOnglets: sousOnglets, actions: actions,
     fenetre: { l: window.innerWidth, h: window.innerHeight },
     defilement: { hauteur: doc.scrollHeight, visible: doc.clientHeight, largeur: doc.scrollWidth, visibleL: doc.clientWidth, haut: doc.scrollTop },
     barre: boite('.barre'), bande: boite('.bande'), milieu: boite('.milieu'), telephone: boite('.telephone'),

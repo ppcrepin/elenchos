@@ -448,7 +448,7 @@ var ElenchosInterface = (function (N, M, X) {
 
   function ecranTel(corps, bas, options) {
     options = options || {};
-    var e = h('section', { class: 'tel-ecran' + (options.soir ? ' soir' : ''), 'aria-label': options.aria || null });
+    var e = h('section', { class: 'tel-ecran' + (options.soir ? ' soir' : '') + (options.croix ? ' a-croix' : ''), 'aria-label': options.aria || null });
     var c = h('div', { class: 'corps' }, corps);
     e.appendChild(c);
     if (bas && bas.length) { e.appendChild(h('div', { class: 'bas' }, bas)); }
@@ -1358,6 +1358,20 @@ var ElenchosInterface = (function (N, M, X) {
     }
     var nouvelleBande = rendreBande();
     racine.replaceChild(nouvelleBande, bandeEl); bandeEl = nouvelleBande;
+    empilerActions();
+  }
+
+  /** Rangées d'action de la bande (§8.1) : côte à côte si elles tiennent, sinon toutes l'une sous l'autre, dans l'ordre du texte (jamais 2 + 1). */
+  function empilerActions() {
+    if (!bandeEl) { return; }
+    Array.prototype.forEach.call(bandeEl.querySelectorAll('.actions'), function (a) {
+      a.classList.remove('empile');
+      var boutons = a.children, largeur = 0;
+      if (boutons.length < 2) { return; }
+      for (var i = 0; i < boutons.length; i++) { largeur += boutons[i].getBoundingClientRect().width; }
+      largeur += (parseFloat(getComputedStyle(a).columnGap) || 0) * (boutons.length - 1);
+      if (largeur > a.clientWidth + 0.5) { a.classList.add('empile'); }
+    });
   }
 
   function construireRacine() {
@@ -1709,7 +1723,7 @@ var ElenchosInterface = (function (N, M, X) {
     copierTexte(texte, zone, function () { bande.messageCopie = X.carnetCopie; rendreBandeSeule(); },
       function () { bande.messageCopie = X.copieEchec; rendreBandeSeule(); });
   };
-  function rendreBandeSeule() { var nb = rendreBande(); racine.replaceChild(nb, bandeEl); bandeEl = nb; }
+  function rendreBandeSeule() { var nb = rendreBande(); racine.replaceChild(nb, bandeEl); bandeEl = nb; empilerActions(); }
 
   /* Tout effacer (§8.9) */
   A['effacer'] = function () {
@@ -1785,6 +1799,8 @@ var ElenchosInterface = (function (N, M, X) {
       revenir();
     });
     window.addEventListener('pageshow', function (ev) { if (ev.persisted && etat && !efface && !arretTechnique) { revenir(); } });
+    // fenêtre redimensionnée, écran tourné puis redressé : la rangée d'action se remesure (rien d'écrit, §8.1)
+    window.addEventListener('resize', empilerActions);
   }
 
   /** Retour au premier plan : relire l'état gardé avant tout toucher (§8.8). */

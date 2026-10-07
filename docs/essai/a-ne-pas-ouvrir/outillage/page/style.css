@@ -56,8 +56,11 @@ strong, b { font-weight: 600; }
 .note { background: var(--panneau); border: 1px solid var(--filet); border-left: 3px solid var(--accent); border-radius: 8px; padding: 10px 12px; font-size: 15px; }
 .note .fort, .fort { font-weight: 600; }
 .note.confirmation { display: grid; gap: 6px; }
-.actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
-.actions .bouton-cadre { flex: 0 1 auto; }
+.actions { display: flex; justify-content: flex-end; gap: 8px; min-width: 0; } /* min-width : la rangée ne force pas la largeur de la bande */
+.actions .bouton-cadre { flex: none; white-space: nowrap; }
+/* ne tiennent pas côte à côte (mesuré par le script) : toutes l'une sous l'autre, dans l'ordre du texte (§8.1) */
+.actions.empile { flex-direction: column; align-items: stretch; }
+.actions.empile .bouton-cadre { white-space: normal; }
 
 /* Planche : iPad tenu en hauteur, iPad 13 pouces (§8.1) */
 @media (min-width: 600px) and (min-height: 900px) {
@@ -121,7 +124,9 @@ details.panneau > :not(summary) { margin: 10px 0 0; }
   font-family: var(--fb); font-size: 16px; line-height: 1.45; color: var(--ink); font-synthesis: none; font-variant-numeric: normal;
   flex: 1 1 auto; min-height: 0; width: 100%; position: relative; overflow: hidden;
   display: flex; flex-direction: column; background: var(--screen);
-  border: 2px solid var(--ink); border-radius: 20px; padding: 8px 0;
+  border: 2px solid var(--ink); border-radius: 20px; padding: var(--bord-haut) 0;
+  /* bord du haut, marge du haut du contenu, coin de la zone de la croix (depuis le bord intérieur du contour) : §8.1 */
+  --bord-haut: 8px; --corps-haut: 4px; --croix-haut: 8px; --croix-droite: 8px;
 }
 @media (prefers-color-scheme: dark) {
   .tel-ecran { --screen: #1C1612; --ink: #F2ECE3; --muted: #B8ACA2; --line: rgba(242, 236, 227, 0.18); --fill: #29211B; --hatch: #B8ACA2;
@@ -131,10 +136,11 @@ details.panneau > :not(summary) { margin: 10px 0 0; }
   --caramel: #E9B45A; --honey: rgba(233, 180, 90, 0.25); --btn-bg: #E9B45A; --btn-fg: #1C1612; --shadow: rgba(0, 0, 0, 0.4); }
 @media (min-width: 600px) and (min-height: 900px) {
   .telephone { justify-content: center; }
-  .tel-ecran { border-radius: 34px; padding: 10px 8px; }
+  /* l'écran commence au bord intérieur (10 px en haut, 8 px sur les côtés) ; la croix à 8 px de son haut et de son bord droit */
+  .tel-ecran { border-radius: 34px; padding: var(--bord-haut) 8px; --bord-haut: 10px; --croix-haut: 18px; --croix-droite: 16px; }
 }
 .tel-ecran button { color: var(--ink); }
-.corps { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; padding: 4px 14px 12px; display: flex; flex-direction: column; gap: 10px;
+.corps { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; padding: var(--corps-haut) 14px 12px; display: flex; flex-direction: column; gap: 10px;
   background:
     linear-gradient(var(--screen) 30%, transparent) center top,
     linear-gradient(transparent, var(--screen) 70%) center bottom,
@@ -161,7 +167,7 @@ a.link { display: inline-flex; align-items: center; }
 .hd .right { font-size: 0.9rem; text-decoration: underline; text-underline-offset: 3px; min-height: 32px; }
 .texte-systeme { font-family: system-ui, -apple-system, sans-serif; text-decoration: none; display: inline-block; font-variant-emoji: text; }
 .back { font-size: 0.9rem; align-self: flex-start; min-height: 32px; }
-.croix { position: absolute; top: 8px; right: 8px; width: 44px; height: 44px; display: grid; place-items: center; font: 400 1.4rem/1 var(--fb); background: none; border: 0; cursor: pointer; z-index: 2; }
+.croix { position: absolute; top: var(--croix-haut); right: var(--croix-droite); width: 44px; height: 44px; display: grid; place-items: center; font: 400 1.4rem/1 var(--fb); background: none; border: 0; cursor: pointer; z-index: 2; }
 .band { background: transparent; border-top: 6px double var(--caramel); padding: 6px 0 0; color: var(--muted); font-size: 0.8rem; font-weight: 700; }
 .banner, .box, .guess { background: var(--fill); border: 0; border-top: 6px double var(--caramel); border-radius: 14px; box-shadow: 0 1px 2px var(--shadow), 0 6px 16px var(--shadow); }
 .banner { padding: 10px 12px; font-size: 0.9rem; }
@@ -212,7 +218,9 @@ button.face { cursor: pointer; min-width: 44px; min-height: 44px; }
 .steps { display: flex; gap: 14px; font-size: 0.82rem; color: var(--muted); }
 .steps .on { color: var(--ink); font-weight: 700; }
 .steps .strike { text-decoration: line-through; }
-.dots { display: flex; gap: 5px; justify-content: center; padding-top: 2px; min-height: 8px; }
+.dots { display: flex; gap: 5px; justify-content: center; padding-top: 2px; min-height: 8px; flex: none; }
+/* révélations (§8.1) : centre des points (6 px) à la hauteur du centre de la croix ; seul grandit l'espace au-dessus */
+.a-croix .dots { padding-top: calc(var(--croix-haut) + 22px - var(--bord-haut) - var(--corps-haut) - 3px); }
 .dots i { width: 6px; height: 6px; border-radius: 50%; border: 1px solid var(--ink); }
 .dots i.on { background: var(--ink); }
 .field { display: grid; gap: 4px; font-size: 0.8rem; color: var(--muted); }
@@ -225,7 +233,7 @@ button.face { cursor: pointer; min-width: 44px; min-height: 44px; }
 button.listrow { cursor: pointer; min-height: 44px; }
 .listrow span { min-width: 0; }
 .listrow span:last-child { color: var(--muted); text-align: right; }
-.subtabs { display: flex; gap: 14px; font-size: 0.86rem; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+.subtabs { display: flex; align-items: baseline; gap: 14px; font-size: 0.86rem; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 6px; }
 .subtabs .on { color: var(--ink); font-weight: 700; }
 .subtabs .plain { color: var(--muted) !important; font-size: inherit; min-height: 32px; }
 .toggle { display: flex; justify-content: space-between; align-items: center; font: inherit; font-size: 0.9rem; background: none; border: 0; padding: 0; width: 100%; min-height: 44px; cursor: pointer; text-align: left; }
