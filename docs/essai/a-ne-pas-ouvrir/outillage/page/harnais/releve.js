@@ -215,7 +215,8 @@ function mesurerDisposition() {
   // textes qui débordent de leur boîte (contrôle 14 h) : chaque ligne de texte doit tenir dans chaque boîte qui la contient,
   // jusqu'à la zone qui défile ; dans le téléphone, aussi dans la boîte de contenu de .corps, .bas ou .feuille (marges de 14 px).
   // En hauteur, la tolérance est la demi-différence entre la hauteur des caractères de la police et la hauteur de ligne
-  // (une hauteur de ligne serrée, voulue, laisse dépasser les jambages de la police sans que rien ne déborde).
+  // (une hauteur de ligne serrée, voulue, laisse dépasser les jambages de la police sans que rien ne déborde), plus 1,5 px
+  // (hauteurs de la police arrondies au pixel par le navigateur) ; en largeur, 0,5 px.
   var debords = [];
   function noter(texte, ou) { if (debords.length < 12) { debords.push({ texte: texte.slice(0, 40), ou: ou }); } }
   [document.getElementById('app'), document.getElementById('vue-seule'), document.querySelector('.vue-couchee')].forEach(function (racine) {
@@ -227,11 +228,13 @@ function mesurerDisposition() {
       var pe = nt.parentElement;
       var cs0 = getComputedStyle(pe);
       if (cs0.visibility === 'hidden' || !pe.getClientRects().length) { continue; }
+      var replie = pe.closest('details:not([open])'); // partie repliée : son contenu (hors du titre) n'est pas affiché
+      if (replie && !pe.closest('summary')) { continue; }
       var rg = document.createRange(); rg.selectNodeContents(nt);
       var lignesTexte = Array.prototype.filter.call(rg.getClientRects(), function (x) { return x.width > 0 && x.height > 0; });
       if (!lignesTexte.length) { continue; }
       var hl = parseFloat(cs0.lineHeight);
-      var tolH = function (x) { return 0.5 + (isNaN(hl) ? 0 : Math.max(0, (x.height - hl) / 2)); };
+      var tolH = function (x) { return 1.5 + (isNaN(hl) ? 0 : Math.max(0, (x.height - hl) / 2)); };
       var zone = pe.closest('.tel-ecran .corps, .tel-ecran .bas, .tel-ecran .feuille');
       if (zone) {
         var rz = zone.getBoundingClientRect(), cz = getComputedStyle(zone);
