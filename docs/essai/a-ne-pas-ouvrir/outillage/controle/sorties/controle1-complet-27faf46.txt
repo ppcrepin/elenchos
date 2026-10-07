@@ -1,0 +1,617 @@
+Programme de contrôle (C) — contrôle du fichier scellé (schéma, partie 4.1)
+==============================================================================
+Fichier contrôlé : docs/essai/a-ne-pas-ouvrir/fichier-scelle.json
+SHA-256 du fichier : 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64  (30978 octets)
+Jour du scellement (paramètre, recopié du rapport de scellement) : 2026-10-06
+Commit du dépôt au moment du contrôle : eabfc143dd264f069233574d8f01d970a80cbe4d (sources identiques à ce commit)
+
+Sources lues (SHA-256) :
+  633bedeccc271c6dae5f030db81f3750d9261f8eb66fb83b551d03d8e5b802f8  docs/essai/a-ne-pas-ouvrir/textes/S-securite-liberte.md
+  c3f0e32ffbbdc7062f6ff236490e66df4f0b52c03f828fb0886885a5d8ea56bf  docs/essai/a-ne-pas-ouvrir/textes/P-precaution-innovation.md
+  c11066f0e8b43fbad33a45f94c545dc9c8d2b1d9a58d3f214dba270dcc8b1204  docs/essai/a-ne-pas-ouvrir/textes/T-tradition-changement.md
+  887b28c5c43dc64fd9bf2816197cf3f1ab7da7cf39d95a5c942dee1a2022f99c  docs/essai/a-ne-pas-ouvrir/textes/L-local-national.md
+  2b998247a6c8a3ee0aeb4f2e7ef85fc475af6c94d64985ff0d20a5dcfe1b67c5  docs/essai/a-ne-pas-ouvrir/textes/votes.md
+  87867c2968b945a97323ec7a3a2e0a203e9945893ca8165b18a7ae971f2b6f3b  docs/essai/a-ne-pas-ouvrir/profils.md
+  a656e93a778e6e9f0992ef50cb1907c62ea190b153462ccce9c18a2a743bee16  docs/essai/simulation.md
+  4e7315319a1f3b79d648ebb1666e4d636cba3b08bd1023d9ab27099c5c52019b  docs/essai/a-ne-pas-ouvrir/schema.md
+  7552d57f65e1badd3a93015138329b3689e953cdd9ea02d37c5a2e4c5e08d71f  docs/essai/a-ne-pas-ouvrir/regles-de-calcul.md  (spécification appliquée par le code, pas lue par le programme)
+  c1a0d36b7f94d86fa263a99b9b5d374b629ea7fea54f08e71a17d0484042342e  docs/essai/a-ne-pas-ouvrir/devoilement.md  (spécification appliquée par le code, pas lue par le programme)
+Mêmes sources que l'agent qui scelle : oui
+
+Contrôle 1 (fichier scellé)
+------------------------------------------------------------------------------
+  Étape 1 (empreinte) : passée — SHA-256 du fichier = empreinte publiée = 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64
+  Étape 2 (données embarquées) : passée — repère présent une fois, suivi du base64 exact (41304 caractères)
+  Étape 3 (forme) : passée — UTF-8 strict ; relu puis remis en forme canonique, mêmes octets
+  Étape 4 (schéma) : passée — schéma fermé, version 4, types, adresses, dates (toutes ≤ 2026-10-06)
+  Étape 5 (cohérence interne) : passée — rangs, groupes distincts, ponctuation et guillemets, votes, absences, réponses atypiques, fiches du §1, cercle, vecteurs ; partie 2.7 (22 lignes, règles tenues, chaque couple sert) ; partie 2.8 (17 noms)
+  Étape 6 (vecteurs de test) : passée — les trois vecteurs recalculés sont identiques
+  Étape 7 (typographie simple) : passée — 316 chaînes affichées
+  Étape 8 (fidélité aux fiches) : passée — 17 fiches et votes.md relus ; titre, lignes, vote, auteur, lien, sources, tension, sens et raisons identiques, raisons dans l'ordre tiré ; mêmes sources que l'agent qui scelle
+    Ordre d'affichage tiré (clé « ordre-raisons|texte|i ») : numéro de fiche → rang
+      E1 : 1→4, 2→2, 3→3, 4→1
+      E2 : 1→3, 2→1, 3→2, 4→4
+      E3 : 1→4, 2→1, 3→2, 4→3
+       1 : 1→4, 2→3, 3→1, 4→2
+       2 : 1→4, 2→3, 3→2, 4→1
+       3 : 1→2, 2→3, 3→1, 4→4
+       4 : 1→2, 2→3, 3→4, 4→1
+       5 : 1→4, 2→2, 3→3, 4→1
+       6 : 1→3, 2→1, 3→4, 4→2
+       7 : 1→3, 2→4, 3→1, 4→2
+       8 : 1→1, 2→4, 3→3, 4→2
+       9 : 1→1, 2→4, 3→3, 4→2
+      10 : 1→1, 2→4, 3→3, 4→2
+      11 : 1→2, 2→4, 3→3, 4→1
+      12 : 1→1, 2→4, 3→3, 4→2
+      13 : 1→2, 2→4, 3→1, 4→3
+      14 : 1→4, 2→2, 3→1, 4→3
+  Contrôle 1 : complet, huit étapes passées
+  Hors étapes (ajout de C) : graine recalculée par la dérivation du §0 = 23e3ee6ccdc3fb38 ; identique à celle du fichier
+  Hors étapes (ajout de C) : entrees-construction.json (§8.8) : empreinte 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64 = SHA-256 du fichier = empreinte publiée ; version_page 1 ; consultes_le 2026-10-05 ; empreinte publiée le 2026-10-06 à 15:13 (ces quatre champs : recopiés, non vérifiables par C)
+
+Nombre de réponses atypiques lu dans profils.md : 3 ; rapport de scellement : 3 — égaux
+Longueur des tableaux reponses_atypiques : {'Agathe': 3, 'Nassim': 3, 'Odile': 3, 'Valentin': 3}
+
+Contrôle 2 (profils)
+------------------------------------------------------------------------------
+  passé
+  Tableau recalculé des réponses types (s = 1), en pôles :
+    Agathe   S simple, vers Liberté | P simple, vers Innovation | T neutre | L simple, vers Local
+    Nassim   S très, vers Liberté | P simple, vers Innovation | T neutre | L simple, vers National
+    Odile    S très, vers Sécurité | P très, vers Précaution | T très, vers Changement | L très, vers Local
+    Valentin S neutre | P simple, vers Précaution | T simple, vers Tradition | L simple, vers National
+  Laissé au Vérificateur : « aucune étiquette politique » (ne se vérifie pas par programme).
+
+Contrôle 3 (réponses)
+------------------------------------------------------------------------------
+  Condition d'application de la règle 2.2 (« pour » sert s ou aucun ; « contre » sert 1 − s ou aucun) : tenue sur les 17 textes
+  passé : les réponses des quatre personnages aux 17 textes, réponses atypiques et cote_tire compris, sont égales au recalcul
+  Procédure des réponses atypiques (ordre des textes par t("ecart|prénom|n"), étapes) :
+    Agathe : retenus [2, 10, 13]
+      étape 1 (textes 1 à 6) : retenu 2 (aucun refus)
+      étape 2 (textes 7 à 13) : retenu 10 (aucun refus)
+      étape 3 (textes 1 à 13) : retenu 13 (11 (b) texte voisin d'un écart retenu)
+    Nassim : retenus [5, 7, 12]
+      étape 1 (textes 1 à 6) : retenu 5 (3 (a) absence)
+      étape 2 (textes 7 à 13) : retenu 12 (aucun refus)
+      étape 3 (textes 1 à 13) : retenu 7 (aucun refus)
+    Odile : retenus [3, 6, 9]
+      étape 1 (textes 1 à 6) : retenu 3 (aucun refus)
+      étape 2 (textes 7 à 13) : retenu 9 (aucun refus)
+      étape 3 (textes 1 à 13) : retenu 6 (aucun refus)
+    Valentin : retenus [3, 8, 12]
+      étape 1 (textes 1 à 6) : retenu 3 (aucun refus)
+      étape 2 (textes 7 à 13) : retenu 12 (aucun refus)
+      étape 3 (textes 1 à 13) : retenu 8 (4 (b) texte voisin d'un écart retenu; 2 (b) texte voisin d'un écart retenu)
+  Détail du calcul de chaque réponse :
+   [E1] Agathe : Défavorable, raison 1
+    p = 13/20, fermeté moyenne, sens s = 0
+    a = 7/20, d = -3/20
+    niveau 2 (Défavorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, aucun ; 3 : contre, 1 ; 4 : pour, 0
+    E = [1, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [1, 3] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Agathe|E1|1 : N=757661723 (t≈0.176407)) ; 3 (raison|Agathe|E1|3 : N=3109304304 (t≈0.723941))
+   [E1] Nassim : Très défavorable, raison 3
+    p = 41/50, fermeté moyenne, sens s = 0
+    a = 9/50, d = -8/25
+    niveau 1 (Très défavorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, aucun ; 3 : contre, 1 ; 4 : pour, 0
+    E = [1, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [1, 3] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Nassim|E1|1 : N=4021179061 (t≈0.936254)) ; 3 (raison|Nassim|E1|3 : N=1065410866 (t≈0.248060))
+   [E1] Odile : Très favorable, raison 4
+    p = 1/10, fermeté forte, sens s = 0
+    a = 9/10, d = 16/25
+    niveau 5 (Très favorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, aucun ; 3 : contre, 1 ; 4 : pour, 0
+    E = [2, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [4] ; hors tension [2] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 4 (raison|Odile|E1|4 : N=1914027635 (t≈0.445644))
+   [E1] Valentin : Neutre, raison 2
+    p = 9/20, fermeté faible, sens s = 0
+    a = 11/20, d = 3/100
+    niveau 3 (Neutre)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, aucun ; 3 : contre, 1 ; 4 : pour, 0
+    E = [1, 2, 3, 4] ; pôle visé = 0
+    niveaux de choix : hors tension [2]
+    niveau retenu : hors tension ; candidates : 2 (raison|Valentin|E1|2 : N=3359748681 (t≈0.782252))
+   [E2] Agathe : Favorable, raison 3
+    p = 17/25, fermeté moyenne, sens s = 1
+    a = 17/25, d = 9/50
+    niveau 4 (Favorable)
+    considérations (rang : côté, pôle) : 1 : pour, aucun ; 2 : contre, 0 ; 3 : pour, 1 ; 4 : contre, 0
+    E = [1, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [3] ; hors tension [1] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 3 (raison|Agathe|E2|3 : N=528846683 (t≈0.123132))
+   [E2] Nassim : Favorable, raison 3
+    p = 33/50, fermeté moyenne, sens s = 1
+    a = 33/50, d = 4/25
+    niveau 4 (Favorable)
+    considérations (rang : côté, pôle) : 1 : pour, aucun ; 2 : contre, 0 ; 3 : pour, 1 ; 4 : contre, 0
+    E = [1, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [3] ; hors tension [1] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 3 (raison|Nassim|E2|3 : N=3101555244 (t≈0.722137))
+   [E2] Odile : Très défavorable, raison 4
+    p = 3/25, fermeté forte, sens s = 1
+    a = 3/25, d = -76/125
+    niveau 1 (Très défavorable)
+    considérations (rang : côté, pôle) : 1 : pour, aucun ; 2 : contre, 0 ; 3 : pour, 1 ; 4 : contre, 0
+    E = [2, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [2, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Odile|E2|2 : N=3982285549 (t≈0.927198)) ; 4 (raison|Odile|E2|4 : N=43670619 (t≈0.010168))
+   [E2] Valentin : Défavorable, raison 2
+    p = 1/4, fermeté moyenne, sens s = 1
+    a = 1/4, d = -1/4
+    niveau 2 (Défavorable)
+    considérations (rang : côté, pôle) : 1 : pour, aucun ; 2 : contre, 0 ; 3 : pour, 1 ; 4 : contre, 0
+    E = [2, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [2, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Valentin|E2|2 : N=622589281 (t≈0.144958)) ; 4 (raison|Valentin|E2|4 : N=2991305189 (t≈0.696468))
+   [E3] Agathe : Favorable, raison 4
+    p = 1/4, fermeté moyenne, sens s = 0
+    a = 3/4, d = 1/4
+    niveau 4 (Favorable)
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, 1 ; 3 : contre, 1 ; 4 : pour, 0
+    E = [1, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [1, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Agathe|E3|1 : N=581149630 (t≈0.135309)) ; 4 (raison|Agathe|E3|4 : N=506303267 (t≈0.117883))
+   [E3] Nassim : Défavorable, raison 2
+    p = 3/4, fermeté moyenne, sens s = 0
+    a = 1/4, d = -1/4
+    niveau 2 (Défavorable)
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, 1 ; 3 : contre, 1 ; 4 : pour, 0
+    E = [2, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [2, 3] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Nassim|E3|2 : N=3300860479 (t≈0.768541)) ; 3 (raison|Nassim|E3|3 : N=3939565372 (t≈0.917252))
+   [E3] Odile : Très favorable, raison 1
+    p = 3/20, fermeté forte, sens s = 0
+    a = 17/20, d = 14/25
+    niveau 5 (Très favorable)
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, 1 ; 3 : contre, 1 ; 4 : pour, 0
+    E = [1, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [1, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Odile|E3|1 : N=83688747 (t≈0.019485)) ; 4 (raison|Odile|E3|4 : N=2733313640 (t≈0.636399))
+   [E3] Valentin : Défavorable, raison 2
+    p = 7/10, fermeté faible, sens s = 0
+    a = 3/10, d = -3/25
+    niveau 2 (Défavorable)
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, 1 ; 3 : contre, 1 ; 4 : pour, 0
+    E = [2, 3] ; pôle visé = 1
+    niveaux de choix : hors tension [] ; du pôle visé [2, 3] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Valentin|E3|2 : N=1383437817 (t≈0.322107)) ; 3 (raison|Valentin|E3|3 : N=3138081240 (t≈0.730641))
+   [1] Agathe : Défavorable, raison 2
+    p = 13/20, fermeté moyenne, sens s = 0
+    a = 7/20, d = -3/20
+    niveau 2 (Défavorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : contre, 1 ; 3 : pour, 0 ; 4 : pour, 0
+    E = [1, 2] ; pôle visé = 1
+    niveaux de choix : du pôle visé [1, 2] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Agathe|1|1 : N=1998238028 (t≈0.465251)) ; 2 (raison|Agathe|1|2 : N=1407950562 (t≈0.327814))
+   [1] Nassim : Très défavorable, raison 1
+    p = 41/50, fermeté moyenne, sens s = 0
+    a = 9/50, d = -8/25
+    niveau 1 (Très défavorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : contre, 1 ; 3 : pour, 0 ; 4 : pour, 0
+    E = [1, 2] ; pôle visé = 1
+    niveaux de choix : du pôle visé [1, 2] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Nassim|1|1 : N=87788078 (t≈0.020440)) ; 2 (raison|Nassim|1|2 : N=296240896 (t≈0.068974))
+   [1] Odile : Très favorable, raison 3
+    p = 1/10, fermeté forte, sens s = 0
+    a = 9/10, d = 16/25
+    niveau 5 (Très favorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : contre, 1 ; 3 : pour, 0 ; 4 : pour, 0
+    E = [3, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [3, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 3 (raison|Odile|1|3 : N=542213776 (t≈0.126244)) ; 4 (raison|Odile|1|4 : N=2530521941 (t≈0.589183))
+   [1] Valentin : Neutre, raison aucune
+    p = 9/20, fermeté faible, sens s = 0
+    a = 11/20, d = 3/100
+    niveau 3 (Neutre)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : contre, 1 ; 3 : pour, 0 ; 4 : pour, 0
+    E = [1, 2, 3, 4] ; pôle visé = 0
+    niveaux de choix : hors tension []
+    aucune candidate : « aucune »
+   [2] Agathe : Favorable, raison 3 (atypique)
+    p = 29/50, fermeté faible, sens s = 0
+    a = 21/50, d = -6/125
+    réponse atypique : réponse type Neutre ; côté tiré par cote-ecart|Agathe|2 : N=1116926445 (t≈0.260055) → +1 ; niveau retenu Favorable
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : contre, 1 ; 3 : pour, aucun ; 4 : pour, 0
+    E = [3, 4] ; pôle visé = 0
+    niveaux de choix : hors tension [3] ; du pôle visé [4] ; reste de E []
+    niveau retenu : hors tension ; candidates : 3 (raison|Agathe|2|3 : N=2617158017 (t≈0.609355))
+   [2] Nassim : Neutre, raison 2
+    p = 11/20, fermeté moyenne, sens s = 0
+    a = 9/20, d = -1/20
+    niveau 3 (Neutre)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : contre, 1 ; 3 : pour, aucun ; 4 : pour, 0
+    E = [1, 2, 3, 4] ; pôle visé = 1
+    niveaux de choix : du pôle visé [1, 2] ; hors tension [3]
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Nassim|2|1 : N=4148325370 (t≈0.965857)) ; 2 (raison|Nassim|2|2 : N=1754607956 (t≈0.408526))
+   [2] Odile : Très défavorable, raison 1
+    p = 17/20, fermeté forte, sens s = 0
+    a = 3/20, d = -14/25
+    niveau 1 (Très défavorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : contre, 1 ; 3 : pour, aucun ; 4 : pour, 0
+    E = [1, 2] ; pôle visé = 1
+    niveaux de choix : du pôle visé [1, 2] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Odile|2|1 : N=2225387274 (t≈0.518138)) ; 2 (raison|Odile|2|2 : N=3450896530 (t≈0.803474))
+   [2] Valentin : Favorable, raison 4
+    p = 3/10, fermeté moyenne, sens s = 0
+    a = 7/10, d = 1/5
+    niveau 4 (Favorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : contre, 1 ; 3 : pour, aucun ; 4 : pour, 0
+    E = [3, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [4] ; hors tension [3] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 4 (raison|Valentin|2|4 : N=4171372549 (t≈0.971223))
+   [3] Agathe : Favorable, raison 2
+    p = 17/25, fermeté moyenne, sens s = 1
+    a = 17/25, d = 9/50
+    niveau 4 (Favorable)
+    considérations (rang : côté, pôle) : 1 : contre, 0 ; 2 : pour, 1 ; 3 : pour, aucun ; 4 : contre, 0
+    E = [2, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [2] ; hors tension [3] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Agathe|3|2 : N=3040553412 (t≈0.707934))
+   [3] Odile : Favorable, raison 2 (atypique)
+    p = 3/25, fermeté forte, sens s = 1
+    a = 3/25, d = -76/125
+    réponse atypique : réponse type Très défavorable ; niveau retenu Favorable
+    considérations (rang : côté, pôle) : 1 : contre, 0 ; 2 : pour, 1 ; 3 : pour, aucun ; 4 : contre, 0
+    E = [2, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [2] ; hors tension [3] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Odile|3|2 : N=3946286176 (t≈0.918816))
+   [3] Valentin : Favorable, raison 2 (atypique)
+    p = 1/4, fermeté moyenne, sens s = 1
+    a = 1/4, d = -1/4
+    réponse atypique : réponse type Défavorable ; niveau retenu Favorable
+    considérations (rang : côté, pôle) : 1 : contre, 0 ; 2 : pour, 1 ; 3 : pour, aucun ; 4 : contre, 0
+    E = [2, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [2] ; hors tension [3] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Valentin|3|2 : N=58134451 (t≈0.013535))
+   [4] Agathe : Défavorable, raison 4
+    p = 13/20, fermeté moyenne, sens s = 0
+    a = 7/20, d = -3/20
+    niveau 2 (Défavorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, 0 ; 3 : pour, 0 ; 4 : contre, 1
+    E = [1, 4] ; pôle visé = 1
+    niveaux de choix : du pôle visé [1, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Agathe|4|1 : N=2355275934 (t≈0.548380)) ; 4 (raison|Agathe|4|4 : N=30477771 (t≈0.007096))
+   [4] Nassim : Très défavorable, raison 1
+    p = 41/50, fermeté moyenne, sens s = 0
+    a = 9/50, d = -8/25
+    niveau 1 (Très défavorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, 0 ; 3 : pour, 0 ; 4 : contre, 1
+    E = [1, 4] ; pôle visé = 1
+    niveaux de choix : du pôle visé [1, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Nassim|4|1 : N=847644713 (t≈0.197358)) ; 4 (raison|Nassim|4|4 : N=1389326625 (t≈0.323478))
+   [4] Odile : Très favorable, raison 2
+    p = 1/10, fermeté forte, sens s = 0
+    a = 9/10, d = 16/25
+    niveau 5 (Très favorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, 0 ; 3 : pour, 0 ; 4 : contre, 1
+    E = [2, 3] ; pôle visé = 0
+    niveaux de choix : du pôle visé [2, 3] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Odile|4|2 : N=1868561156 (t≈0.435058)) ; 3 (raison|Odile|4|3 : N=2627098935 (t≈0.611669))
+   [4] Valentin : Neutre, raison aucune
+    p = 9/20, fermeté faible, sens s = 0
+    a = 11/20, d = 3/100
+    niveau 3 (Neutre)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, 0 ; 3 : pour, 0 ; 4 : contre, 1
+    E = [1, 2, 3, 4] ; pôle visé = 0
+    niveaux de choix : hors tension []
+    aucune candidate : « aucune »
+   [5] Agathe : Favorable, raison 2
+    p = 1/4, fermeté moyenne, sens s = 0
+    a = 3/4, d = 1/4
+    niveau 4 (Favorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, 0 ; 3 : contre, 1 ; 4 : pour, 0
+    E = [2, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [2, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Agathe|5|2 : N=886652071 (t≈0.206440)) ; 4 (raison|Agathe|5|4 : N=1564581224 (t≈0.364282))
+   [5] Nassim : Favorable, raison 4 (atypique)
+    p = 3/4, fermeté moyenne, sens s = 0
+    a = 1/4, d = -1/4
+    réponse atypique : réponse type Défavorable ; niveau retenu Favorable
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, 0 ; 3 : contre, 1 ; 4 : pour, 0
+    E = [2, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [2, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Nassim|5|2 : N=2412574901 (t≈0.561721)) ; 4 (raison|Nassim|5|4 : N=1447117769 (t≈0.336933))
+   [5] Odile : Très favorable, raison 2
+    p = 3/20, fermeté forte, sens s = 0
+    a = 17/20, d = 14/25
+    niveau 5 (Très favorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, 0 ; 3 : contre, 1 ; 4 : pour, 0
+    E = [2, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [2, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Odile|5|2 : N=3058293167 (t≈0.712064)) ; 4 (raison|Odile|5|4 : N=4163163971 (t≈0.969312))
+   [6] Agathe : Neutre, raison aucune
+    p = 29/50, fermeté faible, sens s = 1
+    a = 29/50, d = 6/125
+    niveau 3 (Neutre)
+    considérations (rang : côté, pôle) : 1 : pour, 1 ; 2 : contre, 0 ; 3 : pour, 1 ; 4 : contre, 0
+    E = [1, 2, 3, 4] ; pôle visé = 1
+    niveaux de choix : hors tension []
+    aucune candidate : « aucune »
+   [6] Nassim : Neutre, raison 1
+    p = 11/20, fermeté moyenne, sens s = 1
+    a = 11/20, d = 1/20
+    niveau 3 (Neutre)
+    considérations (rang : côté, pôle) : 1 : pour, 1 ; 2 : contre, 0 ; 3 : pour, 1 ; 4 : contre, 0
+    E = [1, 2, 3, 4] ; pôle visé = 1
+    niveaux de choix : du pôle visé [1, 3] ; hors tension []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Nassim|6|1 : N=119201007 (t≈0.027754)) ; 3 (raison|Nassim|6|3 : N=4079984743 (t≈0.949945))
+   [6] Odile : Défavorable, raison 4 (atypique)
+    p = 17/20, fermeté forte, sens s = 1
+    a = 17/20, d = 14/25
+    réponse atypique : réponse type Très favorable ; niveau retenu Défavorable
+    considérations (rang : côté, pôle) : 1 : pour, 1 ; 2 : contre, 0 ; 3 : pour, 1 ; 4 : contre, 0
+    E = [2, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [2, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Odile|6|2 : N=1078163818 (t≈0.251030)) ; 4 (raison|Odile|6|4 : N=190693476 (t≈0.044399))
+   [6] Valentin : Défavorable, raison 4
+    p = 3/10, fermeté moyenne, sens s = 1
+    a = 3/10, d = -1/5
+    niveau 2 (Défavorable)
+    considérations (rang : côté, pôle) : 1 : pour, 1 ; 2 : contre, 0 ; 3 : pour, 1 ; 4 : contre, 0
+    E = [2, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [2, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Valentin|6|2 : N=3189252672 (t≈0.742556)) ; 4 (raison|Valentin|6|4 : N=297640937 (t≈0.069300))
+   [7] Agathe : Favorable, raison 3
+    p = 13/20, fermeté moyenne, sens s = 1
+    a = 13/20, d = 3/20
+    niveau 4 (Favorable)
+    considérations (rang : côté, pôle) : 1 : contre, 0 ; 2 : contre, 0 ; 3 : pour, 1 ; 4 : pour, aucun
+    E = [3, 4] ; pôle visé = 1
+    niveaux de choix : du pôle visé [3] ; hors tension [4] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 3 (raison|Agathe|7|3 : N=2090080325 (t≈0.486635))
+   [7] Nassim : Défavorable, raison 2 (atypique)
+    p = 41/50, fermeté moyenne, sens s = 1
+    a = 41/50, d = 8/25
+    réponse atypique : réponse type Très favorable ; niveau retenu Défavorable
+    considérations (rang : côté, pôle) : 1 : contre, 0 ; 2 : contre, 0 ; 3 : pour, 1 ; 4 : pour, aucun
+    E = [1, 2] ; pôle visé = 0
+    niveaux de choix : du pôle visé [1, 2] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Nassim|7|1 : N=4156764397 (t≈0.967822)) ; 2 (raison|Nassim|7|2 : N=615749373 (t≈0.143365))
+   [7] Odile : Très défavorable, raison 2
+    p = 1/10, fermeté forte, sens s = 1
+    a = 1/10, d = -16/25
+    niveau 1 (Très défavorable)
+    considérations (rang : côté, pôle) : 1 : contre, 0 ; 2 : contre, 0 ; 3 : pour, 1 ; 4 : pour, aucun
+    E = [1, 2] ; pôle visé = 0
+    niveaux de choix : du pôle visé [1, 2] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Odile|7|1 : N=2958457592 (t≈0.688820)) ; 2 (raison|Odile|7|2 : N=191595424 (t≈0.044609))
+   [7] Valentin : Neutre, raison 4
+    p = 9/20, fermeté faible, sens s = 1
+    a = 9/20, d = -3/100
+    niveau 3 (Neutre)
+    considérations (rang : côté, pôle) : 1 : contre, 0 ; 2 : contre, 0 ; 3 : pour, 1 ; 4 : pour, aucun
+    E = [1, 2, 3, 4] ; pôle visé = 0
+    niveaux de choix : hors tension [4]
+    niveau retenu : hors tension ; candidates : 4 (raison|Valentin|7|4 : N=1022361426 (t≈0.238037))
+   [8] Agathe : Défavorable, raison 3
+    p = 17/25, fermeté moyenne, sens s = 0
+    a = 8/25, d = -9/50
+    niveau 2 (Défavorable)
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, aucun ; 3 : contre, 1 ; 4 : pour, 0
+    E = [2, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [3] ; hors tension [2] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 3 (raison|Agathe|8|3 : N=3468792616 (t≈0.807641))
+   [8] Nassim : Défavorable, raison 3
+    p = 33/50, fermeté moyenne, sens s = 0
+    a = 17/50, d = -4/25
+    niveau 2 (Défavorable)
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, aucun ; 3 : contre, 1 ; 4 : pour, 0
+    E = [2, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [3] ; hors tension [2] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 3 (raison|Nassim|8|3 : N=633283705 (t≈0.147448))
+   [8] Odile : Très favorable, raison 1
+    p = 3/25, fermeté forte, sens s = 0
+    a = 22/25, d = 76/125
+    niveau 5 (Très favorable)
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, aucun ; 3 : contre, 1 ; 4 : pour, 0
+    E = [1, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [1, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Odile|8|1 : N=864370550 (t≈0.201252)) ; 4 (raison|Odile|8|4 : N=1143289511 (t≈0.266193))
+   [8] Valentin : Défavorable, raison 3 (atypique)
+    p = 1/4, fermeté moyenne, sens s = 0
+    a = 3/4, d = 1/4
+    réponse atypique : réponse type Favorable ; niveau retenu Défavorable
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, aucun ; 3 : contre, 1 ; 4 : pour, 0
+    E = [2, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [3] ; hors tension [2] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 3 (raison|Valentin|8|3 : N=991180855 (t≈0.230777))
+   [9] Agathe : Favorable, raison 1
+    p = 1/4, fermeté moyenne, sens s = 0
+    a = 3/4, d = 1/4
+    niveau 4 (Favorable)
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, aucun ; 3 : contre, 1 ; 4 : pour, 0
+    E = [1, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [1, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Agathe|9|1 : N=1932939414 (t≈0.450048)) ; 4 (raison|Agathe|9|4 : N=3199276291 (t≈0.744890))
+   [9] Nassim : Défavorable, raison 3
+    p = 3/4, fermeté moyenne, sens s = 0
+    a = 1/4, d = -1/4
+    niveau 2 (Défavorable)
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, aucun ; 3 : contre, 1 ; 4 : pour, 0
+    E = [2, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [3] ; hors tension [2] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 3 (raison|Nassim|9|3 : N=2232532500 (t≈0.519802))
+   [9] Odile : Défavorable, raison 3 (atypique)
+    p = 3/20, fermeté forte, sens s = 0
+    a = 17/20, d = 14/25
+    réponse atypique : réponse type Très favorable ; niveau retenu Défavorable
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, aucun ; 3 : contre, 1 ; 4 : pour, 0
+    E = [2, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [3] ; hors tension [2] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 3 (raison|Odile|9|3 : N=688696679 (t≈0.160350))
+   [9] Valentin : Défavorable, raison 2
+    p = 7/10, fermeté faible, sens s = 0
+    a = 3/10, d = -3/25
+    niveau 2 (Défavorable)
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, aucun ; 3 : contre, 1 ; 4 : pour, 0
+    E = [2, 3] ; pôle visé = 1
+    niveaux de choix : hors tension [2] ; du pôle visé [3] ; reste de E []
+    niveau retenu : hors tension ; candidates : 2 (raison|Valentin|9|2 : N=3784446359 (t≈0.881135))
+   [10] Agathe : Favorable, raison 4 (atypique)
+    p = 13/20, fermeté moyenne, sens s = 0
+    a = 7/20, d = -3/20
+    réponse atypique : réponse type Défavorable ; niveau retenu Favorable
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, aucun ; 3 : contre, 1 ; 4 : pour, 0
+    E = [1, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [1, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Agathe|10|1 : N=651302829 (t≈0.151643)) ; 4 (raison|Agathe|10|4 : N=151463984 (t≈0.035265))
+   [10] Valentin : Neutre, raison 2
+    p = 9/20, fermeté faible, sens s = 0
+    a = 11/20, d = 3/100
+    niveau 3 (Neutre)
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, aucun ; 3 : contre, 1 ; 4 : pour, 0
+    E = [1, 2, 3, 4] ; pôle visé = 0
+    niveaux de choix : hors tension [2]
+    niveau retenu : hors tension ; candidates : 2 (raison|Valentin|10|2 : N=2448370332 (t≈0.570056))
+   [11] Agathe : Neutre, raison 4
+    p = 29/50, fermeté faible, sens s = 0
+    a = 21/50, d = -6/125
+    niveau 3 (Neutre)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, 0 ; 3 : contre, 1 ; 4 : pour, aucun
+    E = [1, 2, 3, 4] ; pôle visé = 1
+    niveaux de choix : hors tension [4]
+    niveau retenu : hors tension ; candidates : 4 (raison|Agathe|11|4 : N=3879168505 (t≈0.903189))
+   [11] Nassim : Neutre, raison 1
+    p = 11/20, fermeté moyenne, sens s = 0
+    a = 9/20, d = -1/20
+    niveau 3 (Neutre)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, 0 ; 3 : contre, 1 ; 4 : pour, aucun
+    E = [1, 2, 3, 4] ; pôle visé = 1
+    niveaux de choix : du pôle visé [1, 3] ; hors tension [4]
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Nassim|11|1 : N=1293824325 (t≈0.301242)) ; 3 (raison|Nassim|11|3 : N=3951100571 (t≈0.919937))
+   [11] Odile : Très défavorable, raison 1
+    p = 17/20, fermeté forte, sens s = 0
+    a = 3/20, d = -14/25
+    niveau 1 (Très défavorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, 0 ; 3 : contre, 1 ; 4 : pour, aucun
+    E = [1, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [1, 3] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Odile|11|1 : N=3138992743 (t≈0.730854)) ; 3 (raison|Odile|11|3 : N=3348849572 (t≈0.779715))
+   [11] Valentin : Favorable, raison 2
+    p = 3/10, fermeté moyenne, sens s = 0
+    a = 7/10, d = 1/5
+    niveau 4 (Favorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, 0 ; 3 : contre, 1 ; 4 : pour, aucun
+    E = [2, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [2] ; hors tension [4] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Valentin|11|2 : N=245549153 (t≈0.057171))
+   [12] Agathe : Défavorable, raison 2
+    p = 17/25, fermeté moyenne, sens s = 0
+    a = 8/25, d = -9/50
+    niveau 2 (Défavorable)
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, 1 ; 3 : contre, aucun ; 4 : pour, 0
+    E = [2, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [2] ; hors tension [3] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Agathe|12|2 : N=2788887008 (t≈0.649338))
+   [12] Nassim : Favorable, raison 4 (atypique)
+    p = 33/50, fermeté moyenne, sens s = 0
+    a = 17/50, d = -4/25
+    réponse atypique : réponse type Défavorable ; niveau retenu Favorable
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, 1 ; 3 : contre, aucun ; 4 : pour, 0
+    E = [1, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [1, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Nassim|12|1 : N=2491873832 (t≈0.580185)) ; 4 (raison|Nassim|12|4 : N=317260803 (t≈0.073868))
+   [12] Odile : Très favorable, raison 4
+    p = 3/25, fermeté forte, sens s = 0
+    a = 22/25, d = 76/125
+    niveau 5 (Très favorable)
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, 1 ; 3 : contre, aucun ; 4 : pour, 0
+    E = [1, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [1, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Odile|12|1 : N=1938151284 (t≈0.451261)) ; 4 (raison|Odile|12|4 : N=1234530112 (t≈0.287436))
+   [12] Valentin : Défavorable, raison 2 (atypique)
+    p = 1/4, fermeté moyenne, sens s = 0
+    a = 3/4, d = 1/4
+    réponse atypique : réponse type Favorable ; niveau retenu Défavorable
+    considérations (rang : côté, pôle) : 1 : pour, 0 ; 2 : contre, 1 ; 3 : contre, aucun ; 4 : pour, 0
+    E = [2, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [2] ; hors tension [3] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Valentin|12|2 : N=2699666708 (t≈0.628565))
+   [13] Agathe : Favorable, raison 2 (atypique)
+    p = 1/4, fermeté moyenne, sens s = 1
+    a = 1/4, d = -1/4
+    réponse atypique : réponse type Défavorable ; niveau retenu Favorable
+    considérations (rang : côté, pôle) : 1 : contre, 0 ; 2 : pour, 1 ; 3 : contre, 0 ; 4 : pour, aucun
+    E = [2, 4] ; pôle visé = 1
+    niveaux de choix : du pôle visé [2] ; hors tension [4] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Agathe|13|2 : N=1966529970 (t≈0.457868))
+   [13] Nassim : Favorable, raison 2
+    p = 3/4, fermeté moyenne, sens s = 1
+    a = 3/4, d = 1/4
+    niveau 4 (Favorable)
+    considérations (rang : côté, pôle) : 1 : contre, 0 ; 2 : pour, 1 ; 3 : contre, 0 ; 4 : pour, aucun
+    E = [2, 4] ; pôle visé = 1
+    niveaux de choix : du pôle visé [2] ; hors tension [4] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Nassim|13|2 : N=1659665263 (t≈0.386421))
+   [13] Odile : Très défavorable, raison 1
+    p = 3/20, fermeté forte, sens s = 1
+    a = 3/20, d = -14/25
+    niveau 1 (Très défavorable)
+    considérations (rang : côté, pôle) : 1 : contre, 0 ; 2 : pour, 1 ; 3 : contre, 0 ; 4 : pour, aucun
+    E = [1, 3] ; pôle visé = 0
+    niveaux de choix : du pôle visé [1, 3] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Odile|13|1 : N=2123422711 (t≈0.494398)) ; 3 (raison|Odile|13|3 : N=2838018784 (t≈0.660778))
+   [13] Valentin : Favorable, raison 4
+    p = 7/10, fermeté faible, sens s = 1
+    a = 7/10, d = 3/25
+    niveau 4 (Favorable)
+    considérations (rang : côté, pôle) : 1 : contre, 0 ; 2 : pour, 1 ; 3 : contre, 0 ; 4 : pour, aucun
+    E = [2, 4] ; pôle visé = 1
+    niveaux de choix : hors tension [4] ; du pôle visé [2] ; reste de E []
+    niveau retenu : hors tension ; candidates : 4 (raison|Valentin|13|4 : N=700283955 (t≈0.163048))
+   [14] Agathe : Défavorable, raison 1
+    p = 13/20, fermeté moyenne, sens s = 0
+    a = 7/20, d = -3/20
+    niveau 2 (Défavorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, 0 ; 3 : contre, 1 ; 4 : pour, 0
+    E = [1, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [1, 3] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Agathe|14|1 : N=914610118 (t≈0.212949)) ; 3 (raison|Agathe|14|3 : N=2412503264 (t≈0.561705))
+   [14] Nassim : Très défavorable, raison 3
+    p = 41/50, fermeté moyenne, sens s = 0
+    a = 9/50, d = -8/25
+    niveau 1 (Très défavorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, 0 ; 3 : contre, 1 ; 4 : pour, 0
+    E = [1, 3] ; pôle visé = 1
+    niveaux de choix : du pôle visé [1, 3] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 1 (raison|Nassim|14|1 : N=2819994282 (t≈0.656581)) ; 3 (raison|Nassim|14|3 : N=2198850129 (t≈0.511960))
+   [14] Odile : Très favorable, raison 4
+    p = 1/10, fermeté forte, sens s = 0
+    a = 9/10, d = 16/25
+    niveau 5 (Très favorable)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, 0 ; 3 : contre, 1 ; 4 : pour, 0
+    E = [2, 4] ; pôle visé = 0
+    niveaux de choix : du pôle visé [2, 4] ; hors tension [] ; reste de E []
+    niveau retenu : du pôle visé ; candidates : 2 (raison|Odile|14|2 : N=3907411241 (t≈0.909765)) ; 4 (raison|Odile|14|4 : N=2884598603 (t≈0.671623))
+   [14] Valentin : Neutre, raison aucune
+    p = 9/20, fermeté faible, sens s = 0
+    a = 11/20, d = 3/100
+    niveau 3 (Neutre)
+    considérations (rang : côté, pôle) : 1 : contre, 1 ; 2 : pour, 0 ; 3 : contre, 1 ; 4 : pour, 0
+    E = [1, 2, 3, 4] ; pôle visé = 0
+    niveaux de choix : hors tension []
+    aucune candidate : « aucune »
+
+Contrôle 4 (absences)
+------------------------------------------------------------------------------
+  passé : absences égales à profils.md
+  Un absent ne répond pas (étape 5) ; qu'il ne devine pas, le moteur le garantit (manche seulement si le texte du jour n'est pas dans ses absences).
+
+Annexe A du fichier caché
+------------------------------------------------------------------------------
+  passée : ordre des tensions, tensions d'entrée, sens, raisons par texte, répartition des raisons « aucun » sur S et T
+  Mesure (sans échec) : réponses « aucune » des personnages dans le fichier :
+    entrée : 0 []
+    textes devinés (1 à 13) : 3 ['Valentin au texte 1', 'Valentin au texte 4', 'Agathe au texte 6']
+    texte 14 : 1 ['Valentin au texte 14']
+    total : 4 (au plus 4 attendus)
+
+Hors de portée d'un programme (schéma, partie 4.1) : la vérité des trois champs de `vote`, l'exactitude du mandat et du groupe et leur moment, la justesse de chaque Forme d'élision, « aucune étiquette politique ».
+
+Verdict : aucun défaut trouvé
