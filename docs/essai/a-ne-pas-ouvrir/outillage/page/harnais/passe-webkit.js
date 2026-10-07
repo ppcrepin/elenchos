@@ -15,6 +15,15 @@
  *        --construction V1 --construction-2 V2 --construction-3 V3 --rapport-construction RAPPORT.txt
  *      Le journal ne dit que « réussi » ou « échoué » et le chemin de chaque
  *      différence, sans valeur ; aucun fichier n'est téléversé.
+ *
+ *   3. Mode de diagnostic (option --diagnostic) : seulement la construction,
+ *      une sonde du profil gardé sur disque (une clé de l'outil, posée sur une
+ *      page vide de l'outil, relue ou non après fermeture propre et
+ *      réouverture du même profil, en plusieurs variantes), puis (b) et (i),
+ *      étape par étape. Chaque arrêt dit son étape, le geste demandé (libellé
+ *      de la page) et la première ligne de l'erreur de l'outil avec le
+ *      sélecteur attendu ; après chaque réouverture d'un profil, le nombre de
+ *      clés retrouvées et si la clé de partie est là. Aucune valeur du jeu.
  */
 'use strict';
 const fs = require('node:fs');
@@ -75,6 +84,7 @@ async function passe(a) {
   }
   const constructions = {};
   for (const c of ['construction', 'construction-2', 'construction-3']) { if (a[c]) { constructions[+O.lireTexte(path.join(a[c], 'version.txt')).trim()] = a[c]; } }
+  if (a.diagnostic) { await diagnostic(a, nav, scelle, r, C14, NAV); return; }
   // 2. parties témoins sur la version du porteur, par l'interface
   for (const id of TEMOINS) {
     const journal = O.lireJson(path.join(a.journaux, id + '.journal.json'));
@@ -117,6 +127,25 @@ async function passe(a) {
     try { await f(o, r); } catch (e) { r.ok(nom + ' joué jusqu’au bout', false); }
   }
   process.stdout.write((r.faux ? 'échoué' : 'réussi') + ' (Playwright ' + NAV.VERSION_PLAYWRIGHT + ')\n');
+  process.exitCode = r.faux ? 1 : 0;
+}
+
+/** Mode de diagnostic : (b) et (i) étape par étape, après la sonde du profil gardé sur disque. */
+async function diagnostic(a, nav, scelle, r, C14, NAV) {
+  const o = { navigateur: nav, diagnostic: true, icone: a.icone || path.join(__dirname, '..', '..', '..', '..', 'page-test-icone', 'apple-touch-icon.png'),
+    pageTest: a['page-test'] || path.join(__dirname, '..', '..', '..', '..', 'page-test-icone', 'index.html'), scelle, cheminScelle: a.scelle,
+    construction: a.construction, construction2: a['construction-2'], construction3: a['construction-3'],
+    porteur: C14.porteurDe(a.construction), porteur2: C14.porteurDe(a['construction-2']), journaux: a.journaux };
+  r.note('diagnostic : ' + nav + ' (Playwright ' + NAV.VERSION_PLAYWRIGHT + '), ' + process.platform);
+  try { await C14.sondePersistance(o, r); } catch (e) { r.note('diagnostic : sonde du profil arrêtée : ' + C14.resumeErreur(e)); }
+  o.etape = '(b) avant le début';
+  try { await C14.controleMemoire(o, r); r.note('diagnostic : (b) joué jusqu’au bout'); } catch (e) {
+    r.note('diagnostic : (b) arrêté à l’étape « ' + o.etape + ' » : ' + C14.resumeErreur(e));
+    r.ok('(b) joué jusqu’au bout', false);
+  }
+  o.etape = '(i) avant le début';
+  await require('./durees.js').controleDurees(o, r);
+  process.stdout.write('diagnostic ' + (r.faux ? 'échoué' : 'réussi') + ' (Playwright ' + NAV.VERSION_PLAYWRIGHT + ')\n');
   process.exitCode = r.faux ? 1 : 0;
 }
 

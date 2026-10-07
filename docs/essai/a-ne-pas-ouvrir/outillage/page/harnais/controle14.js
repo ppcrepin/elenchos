@@ -46,6 +46,86 @@ async function texteVisible(page) { return page.evaluate(() => document.body.inn
 const PAGE_OUTIL = path.join(os.tmpdir(), 'elenchos-outil-vide.html');
 fs.writeFileSync(PAGE_OUTIL, '<!doctype html><meta charset="utf-8"><title>outil</title>');
 
+/* ------------------------------------------------------------------ */
+/* Mode de diagnostic (passe WebKit, --diagnostic) : où un scénario      */
+/* s'arrête et pourquoi, sans aucune valeur du jeu                      */
+/* ------------------------------------------------------------------ */
+
+/** Message d'erreur de l'outil, réduit à sa première ligne et au sélecteur attendu (« waiting for … ») :
+ *  jamais le contenu de la page (lignes « resolved to <…> » du journal d'appel). */
+function resumeErreur(e) {
+  const lignes = String((e && e.message) || e).split('\n');
+  const attente = lignes.find(l => /^\s*- waiting for /.test(l));
+  return (lignes[0].slice(0, 200) + (attente ? ' | ' + attente.trim().slice(0, 200) : '')).replace(/\x1b\[[0-9;]*m/g, '');
+}
+
+/** Étape en cours d'un scénario, pour le mode de diagnostic. */
+function etape(o, nom) { o.etape = nom; }
+
+/** Ce que l'outil retrouve dans la mémoire de l'origine après une réouverture : nombre de clés, clé de partie présente ou non. */
+async function noterMemoire(o, rapport, quoi, page) {
+  if (!o.diagnostic) { return; }
+  const m = await page.evaluate(() => ({ n: localStorage.length, partie: localStorage.getItem('elenchos-essai:partie') !== null })).catch(e => ({ erreur: resumeErreur(e) }));
+  rapport.note('diagnostic : ' + quoi + ' : ' + (m.erreur ? 'mémoire illisible par l’outil (' + m.erreur + ')' : m.n + ' clé(s) dans la mémoire de l’origine, clé de partie ' + (m.partie ? 'présente' : 'absente')));
+}
+
+/** Fichiers de stockage local d'un profil (noms seulement) : WebKit et Chromium les nomment différemment. */
+function fichiersStockage(profil) {
+  let n = 0, octets = 0;
+  const parcourir = (d) => {
+    let liste = [];
+    try { liste = fs.readdirSync(d, { withFileTypes: true }); } catch (e) { return; }
+    for (const f of liste) {
+      const c = path.join(d, f.name);
+      if (f.isDirectory()) { parcourir(c); } else if (/local ?storage/i.test(c)) { n++; try { octets += fs.statSync(c).size; } catch (e) { /* disparu */ } }
+    }
+  };
+  parcourir(profil);
+  return n + ' fichier(s) de stockage local, ' + octets + ' octets';
+}
+
+/** Sonde du profil gardé sur disque : une clé de l'outil (aucune valeur du jeu), posée sur la page vide de l'outil à l'adresse
+ *  de l'essai, est-elle relue après une fermeture propre du navigateur et une réouverture du même profil ? Plusieurs variantes,
+ *  pour isoler la cause : attente réelle avant la fermeture, horloge de l'outil, appareil émulé. */
+async function sondePersistance(o, rapport) {
+  const jour0 = Date.UTC(2026, 9, 19, 18, 0);
+  const variantes = [
+    { nom: 'iPhone 15, horloge de l’outil, fermeture aussitôt', appareil: 'iPhone 15', heure: jour0, attente: 0 },
+    { nom: 'iPhone 15, horloge de l’outil, fermeture après 2 s réelles', appareil: 'iPhone 15', heure: jour0, attente: 2000 },
+    { nom: 'iPhone 15, horloge de l’outil, fermeture après 12 s réelles', appareil: 'iPhone 15', heure: jour0, attente: 12000 },
+    { nom: 'iPhone 15, sans horloge de l’outil, fermeture aussitôt', appareil: 'iPhone 15', heure: null, attente: 0 },
+    { nom: 'ordinateur, sans horloge de l’outil, fermeture aussitôt', appareil: null, heure: null, attente: 0 }
+  ];
+  for (const v of variantes) {
+    const profil = profilNeuf('sonde');
+    let ou = 'ouverture du profil neuf';
+    let env = null;
+    try {
+      env = await NAV.ouvrir({ navigateur: o.navigateur, page: PAGE_OUTIL, icone: o.icone, profil, appareil: v.appareil, heure: v.heure });
+      ou = 'clé de l’outil posée';
+      await NAV.charger(env);
+      await env.page.evaluate(() => localStorage.setItem('outil-sonde', 'x'));
+      const relue = await env.page.evaluate(() => localStorage.getItem('outil-sonde') === 'x');
+      if (v.attente) { await env.page.waitForTimeout(v.attente); }
+      ou = 'fermeture propre';
+      await NAV.fermer(env); env = null;
+      const disque = fichiersStockage(profil);
+      ou = 'réouverture du même profil';
+      env = await NAV.ouvrir({ navigateur: o.navigateur, page: PAGE_OUTIL, icone: o.icone, profil, appareil: v.appareil, heure: v.heure });
+      ou = 'relecture';
+      await NAV.charger(env);
+      const lu = await env.page.evaluate(() => localStorage.getItem('outil-sonde') === 'x');
+      rapport.note('diagnostic : profil gardé (' + v.nom + ') : clé relue avant fermeture : ' + (relue ? 'oui' : 'non') + ' ; après fermeture : ' + disque +
+        ' ; clé relue après réouverture : ' + (lu ? 'oui' : 'non'));
+    } catch (e) {
+      rapport.note('diagnostic : profil gardé (' + v.nom + ') : arrêté à l’étape « ' + ou + ' » : ' + resumeErreur(e));
+    } finally {
+      if (env) { try { await NAV.fermer(env); } catch (e) { /* déjà fermé */ } }
+      fs.rmSync(profil, { recursive: true, force: true });
+    }
+  }
+}
+
 async function poserCles(env, cles) {
   const ancien = env.service.cheminPage;
   env.service.servir(PAGE_OUTIL);
@@ -179,6 +259,7 @@ async function controleMemoire(o, rapport) {
   const profil = profilNeuf('b');
   const jour0 = Date.UTC(2026, 9, 19, 18, 0);
   // 1. la page-test, ouverte depuis l'icône à la même adresse, laisse sa clé
+  etape(o, '(b) 1. profil neuf, page-test');
   let env = await NAV.ouvrir({ navigateur: o.navigateur, page: o.pageTest, icone: o.icone, profil, heure: jour0 });
   try {
     await NAV.charger(env);
@@ -186,6 +267,7 @@ async function controleMemoire(o, rapport) {
     const m = await memoire(env.page);
     rapport.ok('(b) la page-test a laissé sa clé dans la mémoire de l’origine', Object.keys(m).some(k => k.indexOf('elenchos-essai:sonde-icone') === 0), Object.keys(m).join(', '));
     // 2. la page de l'essai, sur cette mémoire : commence à l'entrée, n'en affiche rien
+    etape(o, '(b) 2. page de l’essai sur la mémoire de la page-test');
     env.service.servir(o.porteur);
     await NAV.charger(env);
     const t = await texteVisible(env.page);
@@ -195,6 +277,7 @@ async function controleMemoire(o, rapport) {
     const m2 = await memoire(env.page);
     rapport.ok('(b) … et ne touche pas sa clé', O.canonique(Object.keys(m2).filter(k => k.indexOf('sonde-icone') >= 0).map(k => [k, m2[k]])) === O.canonique(Object.keys(m).filter(k => k.indexOf('sonde-icone') >= 0).map(k => [k, m[k]])));
     // 3. un coup validé : la réponse au texte E1
+    etape(o, '(b) 3. un coup validé (réponse au texte E1)');
     await env.contexte.clock.setFixedTime(jour0 + 60000);
     for (const n of [X.continuer, X.fermer]) { await env.page.locator('.bande').getByRole('button', { name: motif(n) }).click(); }
     await env.page.locator('.telephone').getByRole('button', { name: /^\s*Elenchos/ }).click();
@@ -206,23 +289,30 @@ async function controleMemoire(o, rapport) {
     await tel.getByRole('button', { name: motif(X.valider) }).click();
     const avant = JSON.parse((await memoire(env.page))['elenchos-essai:partie']);
     rapport.ok('(b) coup validé gardé (réponse au texte E1)', avant.seances[0].coups.entree.E1.reponse && avant.seances[0].coups.entree.E1.reponse.niveau === 4);
-  } finally { await NAV.fermer(env); }
+  } finally { etape(o, '(b) 3 bis. fermeture propre du navigateur (profil gardé)'); await NAV.fermer(env); }
   // 4. fermeture du navigateur, lendemain : la partie reprend à l'étape suivante
+  etape(o, '(b) 4. réouverture du même profil le lendemain');
   env = await NAV.ouvrir({ navigateur: o.navigateur, page: o.porteur, icone: o.icone, profil, heure: jour0 + 86400000 });
   try {
+    etape(o, '(b) 4. chargement de la page sur le profil rouvert');
     await NAV.charger(env);
+    await noterMemoire(o, rapport, '(b) 4. profil rouvert le lendemain', env.page);
+    etape(o, '(b) 4. lecture de l’état par le point d’accès en lecture');
     const e = await env.page.evaluate(() => window.ElenchosEssai.etat());
     rapport.ok('(b) navigateur fermé puis rouvert le lendemain : reprise à l’étape suivante (1.5, pari du texte 1)', e.vue.tel.ecran === '1.5' && e.vue.tel.E === 'E1' && e.seances[0].coups.entree.E1.reponse.niveau === 4, JSON.stringify(e.vue.tel));
   } finally { await NAV.fermer(env); }
   // 5. nouvelle publication (correctif) à la même adresse : reprise sans rejouer un coup
+  etape(o, '(b) 5. réouverture du même profil, correctif servi');
   env = await NAV.ouvrir({ navigateur: o.navigateur, page: o.porteur2, icone: o.icone, profil, heure: jour0 + 2 * 86400000 });
   try {
     await NAV.charger(env);
+    await noterMemoire(o, rapport, '(b) 5. profil rouvert, correctif servi', env.page);
     const e = await env.page.evaluate(() => window.ElenchosEssai.etat());
     rapport.ok('(b) correctif servi à la même adresse : la partie reprend à la même étape, coups gardés', e.vue.tel.ecran === '1.5' && e.seances[0].coups.entree.E1.reponse.niveau === 4 && (await env.page.evaluate(() => window.ElenchosEssai.version)) === versionDe(path.dirname(path.dirname(o.porteur2))));
   } finally { await NAV.fermer(env); }
   fs.rmSync(profil, { recursive: true, force: true });
   // 6. une clé de partie qui ne se lit pas : arrêt 1, repère M1, mémoire inchangée (§8.11)
+  etape(o, '(b) 6. partie gardée illisible (M1)');
   for (const [nom, brut] of [['texte abîmé', '{"format":1,"ecritures":3,"seances":[{"k":0'], ['numéro de format inconnu', '{"format":99,"ecritures":1,"seances":[]}']]) {
     const e2 = await NAV.ouvrir({ navigateur: o.navigateur, page: o.porteur, icone: o.icone });
     try {
@@ -665,5 +755,5 @@ async function main() {
 
 if (require.main === module) { main().catch(e => { process.stderr.write((e && e.stack) || String(e)); process.stderr.write('\n'); process.exitCode = 2; }); }
 
-module.exports = { verifierDisposition, verifierRevelation, verifierSousOnglets, verifierActions, pageAvecScelle, visibilite, memoire, poserCles, taillesH, creerRapport, controleHors, controleCsp, controleMemoire, controleEffacer,
+module.exports = { resumeErreur, sondePersistance, noterMemoire, verifierDisposition, verifierRevelation, verifierSousOnglets, verifierActions, pageAvecScelle, visibilite, memoire, poserCles, taillesH, creerRapport, controleHors, controleCsp, controleMemoire, controleEffacer,
   controleMiseEnPage, controleEspaceFine, controleRetours, controleArrets, lireScelle, porteurDe };

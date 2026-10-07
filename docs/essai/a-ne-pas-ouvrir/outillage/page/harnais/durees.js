@@ -21,6 +21,7 @@ const X = require('../textes.js');
 const O = require('./outils.js');
 const NAV = require('./navigateur.js');
 const { motif } = require('./joueur.js');
+const C14 = () => require('./controle14.js'); // mode de diagnostic (chargé à l'usage : controle14.js charge ce fichier)
 
 const S = 1000, H = 3600 * S;
 const JOUR0 = Date.UTC(2026, 9, 19, 17, 0); // lundi 19 octobre 2026, 19:00 à Paris
@@ -42,17 +43,31 @@ function couperNet(profil) {
 }
 
 class Scenario {
-  constructor(o, rapport) { this.o = o; this.r = rapport; this.profil = fs.mkdtempSync(path.join(os.tmpdir(), 'elenchos-profil-i-')); this.env = null; this.t = JOUR0; }
+  constructor(o, rapport) { this.o = o; this.r = rapport; this.profil = fs.mkdtempSync(path.join(os.tmpdir(), 'elenchos-profil-i-')); this.env = null; this.t = JOUR0; this.ouvertures = 0; }
+  /** Étape en cours et dernier geste demandé (libellé de la page, jamais une valeur du jeu) : mode de diagnostic. */
+  etape(nom) { this.o.etape = nom; this.geste = null; }
   async ouvrir(page, depuis) {
+    const n = ++this.ouvertures;
+    const avant = this.o.etape;
+    this.o.etape = avant + ' — ' + (n === 1 ? 'ouverture du profil neuf' : 'réouverture du même profil');
     this.env = await NAV.ouvrir({ navigateur: this.o.navigateur, page, icone: this.o.icone, profil: this.profil, heure: depuis });
+    this.o.etape = avant + ' — horloge arrêtée (pauseAt)';
     await this.env.contexte.clock.pauseAt(depuis);
+    this.o.etape = avant + ' — chargement de la page';
     await NAV.charger(this.env);
+    this.o.etape = avant + ' — attente du point d’accès en lecture (waitForFunction)';
     await this.env.page.waitForFunction(() => window.ElenchosEssai !== undefined);
+    if (n > 1) { await C14().noterMemoire(this.o, this.r, '(i) profil rouvert (ouverture ' + n + ')', this.page); }
+    this.o.etape = avant;
   }
-  async fermer() { try { await NAV.fermer(this.env); } catch (e) { /* coupé */ } this.env = null; }
+  async fermer() {
+    try { await NAV.fermer(this.env); } catch (e) { if (this.o.diagnostic && this.o.navigateur !== 'chromium') { this.r.note('diagnostic : (i) fermeture du navigateur : ' + C14().resumeErreur(e)); } } // coupé net (Chromium) : attendu
+    this.env = null;
+  }
   get page() { return this.env.page; }
   async avancer(ms) { await this.env.contexte.clock.runFor(ms); }
   async toucher(zone, nom) {
+    this.geste = zone + ' › ' + (nom instanceof RegExp ? String(nom) : '« ' + nom + ' »');
     const z = { tel: '.telephone', bande: '.bande', barre: 'header.barre', cadre: '.cadre-milieu' }[zone];
     const l = nom === 'heading' ? this.page.locator(z).getByRole('heading') : this.page.locator(z).getByRole('button', { name: nom instanceof RegExp ? nom : motif(nom) });
     await l.first().click();
@@ -71,8 +86,10 @@ async function controleDurees(o, rapport) {
   if (o.navigateur !== 'chromium') { rapport.note('(i) durées : arrêt brutal non reproduit sous ' + o.navigateur + ' ; cas sans arrêt brutal seulement'); }
   const sc = new Scenario(o, rapport);
   try {
+    sc.etape('(i) ouverture');
     await sc.ouvrir(o.porteur, JOUR0);
     const T = X;
+    sc.etape('(i) cas 1, séance 0');
     /* Séance 0. Cas 1 : un toucher, une pause au premier plan, dix heures en arrière-plan, un retour, un dernier toucher.
      * Touchers (temps de premier plan depuis le chargement) : 5 s « Continuer » (ouverture) ; 8 s « Fermer » ;
      * 10 s message ; 14 s Neutre ; 15 s « J'accepte » ; 16 s « Suivant » ; 18 s raison ; 20 s « Valider ».
@@ -92,6 +109,7 @@ async function controleDurees(o, rapport) {
     await visibilite(sc.page, 'visible');
     await sc.apres(4 * S, 'tel', T.POSITIONS[2]);
     await sc.verifier('cas 1 (pause au premier plan comptée, dix heures en arrière-plan non comptées) : séance 0, 49 s', 0, { duree_seance: 49 });
+    sc.etape('(i) séance 0, fin de l’entrée et compte');
     // fin de l'entrée : 1 s par geste (55 s « Voir sa réponse » … ) ; textes 2 et 3 identiques ; compte
     const suite = [[T.voirSaReponse], [T.texteSuivant], [T.POSITIONS[2]], [T.suivant], [T.aucuneRaison], [T.valider], [T.POSITIONS[2]], [T.voirSaReponse], [T.texteSuivant],
       [T.POSITIONS[2]], [T.suivant], [T.aucuneRaison], [T.valider], [T.POSITIONS[2]], [T.voirSaReponse], [T.suivant], [T.creerCompte]];
@@ -109,6 +127,7 @@ async function controleDurees(o, rapport) {
      * 8 s raison, 9 s « Valider » (fin de duree_repondre = 9 s). 2.5 affiché ; 3 s plus tard, arrière-plan, 14 h ; retour ;
      * 5 s : « Jour suivant » (17 s) ; 3 s : « Aller au jour suivant » (20 s).
      * duree_seance = 20 − 2 = 18 s ; duree_repondre = 9 s. */
+    sc.etape('(i) cas 2, séance 1');
     await sc.apres(2 * S, 'tel', 'heading');
     await sc.apres(3 * S, 'tel', T.POSITIONS[3]);
     await sc.apres(1 * S, 'tel', T.suivant);
@@ -129,13 +148,17 @@ async function controleDurees(o, rapport) {
      * « Valider » 21 s (duree_repondre = 21 − 16 = 5 s).
      * Cas 7 : l'heure du téléphone avancée de trois heures (Date seule) avant « Aller au jour suivant », sans effet.
      * « Jour suivant » 25 s, « Aller au jour suivant » 27 s : duree_seance = 27 − 4 = 23 s. */
+    sc.etape('(i) cas 3, séance 2, avant la fermeture');
     await sc.apres(4 * S, 'tel', 'heading');
     await sc.apres(2 * S, 'tel', T.relire);
     await sc.apres(2 * S, 'tel', '← ' + T.retour);
     await sc.avancer(2 * S);
     await visibilite(sc.page, 'hidden');
+    sc.etape('(i) cas 3, fermeture propre du navigateur (profil gardé)');
     await sc.fermer();
+    sc.etape('(i) cas 3, lendemain');
     await sc.ouvrir(o.porteur, JOUR0 + 2 * 24 * H);
+    sc.etape('(i) cas 3, séance 2, après la réouverture');
     // n cartes : « Passer » à 13, 14, … 12 + n s ; « Valider » à 13 + n s (fin de duree_deviner)
     const groupes = sc.page.locator('.telephone').getByRole('group', { name: /^Réponse [0-9]$/ });
     const nCartes = await groupes.count();
@@ -254,6 +277,7 @@ async function controleDurees(o, rapport) {
      * Cas 8 : un correctif (version 2) chargé ensuite : « Version de la page : 1, puis 2. » ; la durée continue :
      * après rechargement, 3 s, toucher : 23 + 3 = 26 s (le temps du rechargement lui-même n'est pas compté :
      * horloge arrêtée). */
+    sc.etape('(i) cas 6, écran couché');
     const k = await sc.page.evaluate(() => window.ElenchosEssai.etat().seances.length - 1);
     await sc.apres(2 * S, 'tel', /^\s*Elenchos/);
     const vp = sc.page.viewportSize();
@@ -265,6 +289,7 @@ async function controleDurees(o, rapport) {
     await sc.page.setViewportSize(vp);
     await sc.apres(3 * S, 'tel', T.retournerCarte);
     await sc.verifier('cas 6 (temps de l’écran couché compté) : séance ' + k + ', 23 s', k, { duree_seance: 23 });
+    sc.etape('(i) cas 8, correctif chargé');
     sc.env.service.servir(o.porteur2);
     await sc.page.reload();
     await sc.page.waitForFunction(() => window.ElenchosEssai !== undefined);
@@ -273,6 +298,7 @@ async function controleDurees(o, rapport) {
     const vs = await sc.page.evaluate((kk) => window.ElenchosEssai.etat().seances[kk].versions, k);
     rapport.ok('(i) cas 8 : versions de la séance ' + k + ' : 1, puis 2', O.canonique(vs) === '[1,2]', JSON.stringify(vs));
     // le carnet exporté dit les mêmes durées : arrêt, export
+    sc.etape('(i) carnet exporté');
     await sc.toucher('barre', T.arreterLEssai);
     await sc.apres(1 * S, 'bande', T.arreterLEssai);
     await sc.apres(1 * S, 'bande', T.continuer);
@@ -283,6 +309,7 @@ async function controleDurees(o, rapport) {
     rapport.ok('(i) carnet : « Durée : ' + fmt(d[0].duree_seance) + '. » à l’entrée, « Version de la page : 1, puis 2. » au jour ' + k,
       carnet.indexOf('\nDurée : ' + fmt(d[0].duree_seance) + '.\n') > 0 && carnet.indexOf('Version de la page : 1, puis 2.') > 0);
   } catch (e) {
+    if (o.diagnostic) { rapport.note('diagnostic : (i) arrêté à l’étape « ' + o.etape + ' »' + (sc.geste ? ', geste demandé : ' + sc.geste : '') + ' : ' + C14().resumeErreur(e)); }
     rapport.ok('(i) scénario des durées joué jusqu’au bout', false, e.message);
   } finally {
     await sc.fermer();
