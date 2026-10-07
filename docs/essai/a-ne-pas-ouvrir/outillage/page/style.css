@@ -241,7 +241,7 @@ button.listrow { cursor: pointer; min-height: 44px; }
 /* deux colonnes : chacune part de la moitié de la ligne, sans dépasser sa largeur naturelle ni passer sous son plus long mot ;
    la plus courte garde ainsi sa largeur naturelle si elle tient dans la moitié, l'autre prend le reste et passe à la ligne
    entre deux mots ; si les deux plus longs mots ne tiennent pas côte à côte, la seconde colonne passe dessous */
-.listrow > * { flex: 1 0 0; min-width: auto; max-width: max-content; }
+.listrow > * { flex: 1 0 0; min-width: auto; max-width: max-content; text-wrap: balance; } /* lignes équilibrées (§8.1) ; sans équilibrage, passage à la ligne ordinaire */
 .listrow > span:last-child { color: var(--muted); text-align: right; }
 .subtabs { display: flex; align-items: baseline; gap: 14px; font-size: 0.86rem; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 6px; }
 .subtabs .on { color: var(--ink); font-weight: 700; }
