@@ -122,8 +122,8 @@ async function passe(a) {
     construction: a.construction, construction2: a['construction-2'], construction3: a['construction-3'],
     porteur: C14.porteurDe(a.construction), porteur2: C14.porteurDe(a['construction-2']), journaux: a.journaux };
   for (const [nom, f] of [['(a) (c)', C14.controleHors], ['(f)', C14.controleCsp], ['(b)', C14.controleMemoire], ['(d)', C14.controleEffacer], ['§8.11', C14.controleArrets],
-    ['U+202F', C14.controleEspaceFine], ['(h) retours', C14.controleRetours], ['(h) tailles', C14.controleMiseEnPage], ['(i)', require('./durees.js').controleDurees]]) {
-    if (a.rapide && nom === '(h) tailles') { continue; } // essai à blanc seulement
+    ['U+202F', C14.controleEspaceFine], ['(h) retours', C14.controleRetours], ['(h) tailles', C14.controleMiseEnPage], ['(h) autres écrans', C14.controleAutresEcrans], ['(i)', require('./durees.js').controleDurees]]) {
+    if (a.rapide && /^\(h\) (tailles|autres)/.test(nom)) { continue; } // essai à blanc seulement
     try { await f(o, r); } catch (e) { r.ok(nom + ' joué jusqu’au bout', false); }
   }
   process.stdout.write((r.faux ? 'échoué' : 'réussi') + ' (Playwright ' + NAV.VERSION_PLAYWRIGHT + ')\n');

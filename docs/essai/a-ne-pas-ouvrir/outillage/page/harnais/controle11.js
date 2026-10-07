@@ -78,6 +78,34 @@ function lignesRouges(releves) {
   return e;
 }
 
+/** Contrôle 10, « jamais la réponse du porteur à côté d'une autre » : aucun écran relevé ne montre ensemble une réponse
+ *  du porteur et la réponse d'un autre membre. Les réponses sont reconnues à leurs formes à l'écran (annexe C) :
+ *  du porteur, « … Ton avis : {position} » (1.4, Raison), « Ta réponse : {position} · … » (5.4) et la colonne de droite de
+ *  Moi › Historique (« {position} » ou « {position} · révélé {jour} à 18h ») ; d'un autre membre, la ligne d'une carte
+ *  (« {position} · raison cachée », « … · « raison » », « … · aucune des quatre raisons » : Deviner, révélation), une
+ *  ligne de « Ses surprises » (« {titre} : {position}, … », 4.3) et « {Prénom} : {position} » (1.6). « Ton pari » est une
+ *  devinette, pas une réponse (note validée de 1.6) ; les choix de position (Répondre, 1.2, 1.5) ne sont pas des réponses
+ *  affichées. Une réponse montrée sous une autre forme ne serait pas reconnue : la liste des chaînes affichées distinctes
+ *  (chaines-affichees.txt, relue par UX) le complète. */
+const POS = '(?:Très\\s+défavorable|Très\\s+favorable|Défavorable|Favorable|Neutre)';
+const R_PORTEUR = new RegExp('(?:^|\\s·\\s)(?:Ton avis|Ta réponse)\\s*:\\s*' + POS);
+const R_HISTORIQUE = new RegExp('^' + POS + '(?:\\s·\\srévélé\\s.+)?$');
+const R_AUTRES = [new RegExp('^' + POS + '\\s·\\s(?!révélé\\s)'), new RegExp('\\s:\\s' + POS + ',\\s'), new RegExp('^\\p{Lu}[\\p{L}’\'-]*\\s:\\s' + POS + '\\.?$', 'u')];
+function ecranDe(r) { const v = r.vue || {}; return v.cadre ? 'cadre:' + (v.cadre.page || '?') : (v.tel || 'chargement'); }
+function reponsesCoteACote(releves) {
+  const bilan = { porteur: 0, autre: 0, ensemble: [] };
+  for (const r of releves) {
+    const ecran = ecranDe(r);
+    const blocs = r.blocs.filter(b => b.zone !== 'exclue');
+    const p = blocs.filter(b => R_PORTEUR.test(b.texte) || (ecran === 'moi-historique' && R_HISTORIQUE.test(b.texte)));
+    const a = blocs.filter(b => p.indexOf(b) < 0 && R_AUTRES.some(x => x.test(b.texte)));
+    if (p.length) { bilan.porteur++; }
+    if (a.length) { bilan.autre++; }
+    if (p.length && a.length) { bilan.ensemble.push({ seance: r.seance, geste: r.geste, ecran, porteur: p[0].texte.slice(0, 60), autre: a[0].texte.slice(0, 60) }); }
+  }
+  return bilan;
+}
+
 /** Texte révélé à l'écran du relevé ? n : numéro du texte quotidien ; vue : celle du relevé. */
 function estRevele(n, k) { return +n <= 13 && +n + 2 <= k; }
 
@@ -154,14 +182,24 @@ async function main() {
   if (phrases.provisoire) { lignes.push('Phrases attendues : fichier du programme de contrôle non fourni ; vérification provisoire des noms et des dates du vote avant la révélation seulement.'); }
   const parties = (a.parties || 'a,b,c,d,e,f,g,h,i,j').split(',');
   const chaines = new Map();
+  const total = { porteur: 0, autre: 0 };
+  // contrôle 10 : lignes rouges sur tout ce qui a été affiché (parties témoins et parties au hasard jouées par l'interface)
+  const controle10 = (id, releves) => {
+    const lr = lignesRouges(releves);
+    ok('10 : partie ' + id + ' : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché', lr.length === 0, lr.slice(0, 3).map(x => x.quoi + ' : « ' + x.bloc + ' »').join(' ; '));
+    const cc = reponsesCoteACote(releves);
+    total.porteur += cc.porteur; total.autre += cc.autre;
+    ok('10 : partie ' + id + ' : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : ' + cc.porteur +
+      ' ; avec la réponse d’un autre : ' + cc.autre + ' ; les deux ensemble : ' + cc.ensemble.length + ')', cc.ensemble.length === 0,
+      cc.ensemble.slice(0, 3).map(x => x.ecran + ', séance ' + x.seance + ' : « ' + x.porteur + ' » avec « ' + x.autre + ' »').join(' ; '));
+  };
   for (const id of parties) {
     const journal = O.lireJson(path.join(a.journaux, id + '.journal.json'));
     const gestes = O.lireJson(path.join(a.journaux, id + '.gestes.json'));
     const releves = lireReleves(path.join(a.rejeu, 'releves'), id, 'porteur');
     if (!releves) { ok('11 : partie ' + id + ' : relevé du rejeu présent', false); continue; }
     for (const r of releves) { for (const b of r.blocs) { if (b.zone === 'exclue') { continue; } const cle = b.zone + '\t' + b.texte; if (!chaines.has(cle)) { chaines.set(cle, (r.vue ? (r.vue.cadre || r.vue.tel) : 'chargement') + ' (partie ' + id + ', séance ' + r.seance + ')'); } } }
-    const lr = lignesRouges(releves);
-    ok('10 : partie ' + id + ' : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché', lr.length === 0, lr.slice(0, 3).map(x => x.quoi + ' : « ' + x.bloc + ' »').join(' ; '));
+    controle10(id, releves);
     const ce = chiffresEspace(releves);
     ok('11 : partie ' + id + ' : aucun chiffre suivi d’une espace U+0020', ce.length === 0, ce.slice(0, 3).map(x => '« ' + x.bloc + ' »').join(' ; '));
     const compte = {};
@@ -180,6 +218,12 @@ async function main() {
         cf.slice(0, 4).map(x => x.raison + ' : « ' + x.bloc.slice(0, 70) + ' » (séance ' + x.seance + ')').join(' ; '));
     }
   }
+  // parties au hasard jouées par l'interface (relevés du rejeu) : contrôle 10 seulement
+  const autres = fs.readdirSync(path.join(a.rejeu, 'releves')).filter(f => /\.porteur\.json$/.test(f)).map(f => f.replace(/\.porteur\.json$/, ''))
+    .filter(id => parties.indexOf(id) < 0).sort();
+  for (const id of autres) { controle10(id, lireReleves(path.join(a.rejeu, 'releves'), id, 'porteur')); }
+  ok('10 : les formes de réponse sont bien reconnues sur les relevés (au moins un écran avec une réponse du porteur et un avec celle d’un autre, sur ' +
+    (parties.length + autres.length) + ' parties)', total.porteur > 0 && total.autre > 0, JSON.stringify(total));
   const liste = Array.from(chaines.entries()).map(([k, v]) => k.split('\t')[1] + '\t' + k.split('\t')[0] + '\t' + v).sort();
   O.ecrireTexte(path.join(a.sortie, 'chaines-affichees.txt'), 'Chaînes affichées distinctes (hors zone du carnet, empreinte, graine, fichier scellé) : texte, zone, premier écran.\n\n' + liste.join('\n') + '\n');
   lignes.push(faux ? faux + ' vérification(s) fausse(s)' : 'Toutes les vérifications sont justes.');
@@ -189,4 +233,4 @@ async function main() {
 
 if (require.main === module) { main().catch(e => { process.stderr.write((e && e.stack) || String(e)); process.stderr.write('\n'); process.exitCode = 2; }); }
 
-module.exports = { coupuresFautives, chiffresEspace, verifierPhrases, lignesRouges };
+module.exports = { coupuresFautives, chiffresEspace, verifierPhrases, lignesRouges, reponsesCoteACote };

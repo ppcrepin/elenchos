@@ -23,6 +23,7 @@
 | Dévoilement, titre de la page | `devoilement.md` (`b04eb73`) : « Le dévoilement » | déjà ainsi |
 | Q-F15 croix en planche | §8.1 « Planche » (`0843fc7`) : 18 px sous le contour, 16 px de son bord droit, comme la croix des maquettes | appliqué |
 | Q-F16 boutons empilés | §8.1 « Bande » (`0843fc7`) : côte à côte à la largeur du libellé, à droite ; sinon tous empilés, toute la largeur, libellé centré | appliqué |
+| Q-F17 listes à deux colonnes, cas hors règle | lecture provisoire ci-dessous, à confirmer par la Direction artistique | appliquée (B1) |
 
 Ajouts appliqués en même temps : une copie en cours d'essai n'a lieu que de l'entrée au jour 14 (règle 14 de la partie 3.12) ; « Sur tout l'essai » d'une copie est calculé comme un arrêt à sa séance (déjà ainsi) ; à la séance 0, questions 2 et 3 toujours proposées (déjà ainsi).
 
@@ -142,6 +143,12 @@ Seule exception, la limite : une frappe (ou un collage) qui porterait la mise en
 
 - **Citation.** « côte à côte si elles tiennent, sinon l'une sous l'autre, 8 px entre elles, dans l'ordre du texte ; la bande grandit d'autant. » La largeur des boutons empilés n'est pas dite ; seul « Jour suivant », seul sur sa rangée, a « la largeur de son libellé », à droite.
 - **Lecture provisoire.** Empilés, les boutons prennent toute la largeur de la bande (libellé centré) : à la largeur de leur libellé, alignés à droite, trois boutons de longueurs différentes feraient un bord gauche en escalier. Côte à côte, rien ne change (largeur du libellé, à droite). La règle vaut pour toutes les rangées de plusieurs actions (confirmation de « Jour suivant » comprise).
+
+## Q-F17 — Listes à deux colonnes : quand aucune ne tient dans la moitié de la ligne (§8.1, « Ce qui ne change pas » ; B1)
+
+- **Règle de la Direction artistique (B1).** « la colonne la plus courte garde sa largeur naturelle si elle tient dans la moitié de la ligne ; c'est l'autre colonne qui passe à la ligne. »
+- **Cas non dit.** Les deux colonnes sont plus longues que la moitié de la ligne. Exemple (Moi › Historique, iPhone 15) : « Samedi · Paris, Lyon, Marseille : un vote à l'échelle de la ville » et « Défavorable · révélé lundi à 18h ».
+- **Lecture provisoire.** Chaque colonne prend la moitié de la ligne et passe à la ligne entre deux mots. Dans l'exemple, la colonne de droite finit par « 18h » seul sur sa seconde ligne. Variante possible, à trancher par la Direction artistique : la plus courte garde sa largeur naturelle jusqu'à une part plus grande de la ligne (par exemple 60 %).
 
 ## Constats des lots 4 à 8 (pas des questions ; à faire passer par le circuit si besoin)
 

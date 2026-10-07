@@ -6,6 +6,11 @@
  *        --journaux D/journaux --sortie D [--navigateur chromium|webkit]
  *        [--points a,b,c,d,f,h,i] [--page-test INDEX_PAGE_TEST.html] [--icone PNG]
  *
+ * (h), à chaque taille : disposition, cibles, croix des révélations, sous-onglets, rangées d'action, textes qui débordent
+ * de leur boîte ou de la marge de 14 px de l'écran du jeu, lignes de liste plus basses que leur contenu ; sur tous les
+ * écrans de la partie (b), puis sur chaque sorte d'écran que (b) n'affiche pas, prise dans les autres parties témoins
+ * (liste dans SORTIE/controle14-ecrans-autres-parties.txt).
+ *
  * Rien n'est ajouté à la page : l'outil sert les octets, fixe le contexte
  * (appareil, mode app, fuseau, horloge, visibilité) et lit le DOM et la
  * mémoire. Pour (b) et (d), l'outil pose lui-même des clés dans la mémoire
@@ -600,6 +605,86 @@ async function controleMiseEnPage(o, rapport) {
   }
 }
 
+/** Sorte d'écran, pour le contrôle 14 h des écrans que (b) n'affiche pas : vue seule (titre, repère), ou écran du
+ *  téléphone ou page du cadre, avec la suite des éléments de son contenu, ce que porte la bande et une feuille ouverte. */
+function sorteEcran() {
+  var seule = document.getElementById('vue-seule');
+  if (seule && !seule.hidden && getComputedStyle(seule).display !== 'none') {
+    return 'seule|' + ((seule.querySelector('h1') || {}).textContent || '') + '|' + ((seule.querySelector('.repere') || {}).textContent || '');
+  }
+  var e = window.ElenchosEssai && window.ElenchosEssai.etat();
+  if (!e) { return 'chargement'; }
+  var corps = document.querySelector(e.vue.cadre ? '.cadre-milieu .page-cadre' : '.telephone .corps');
+  var suite = [];
+  if (corps) { Array.prototype.forEach.call(corps.children, function (c) { var k = c.tagName.toLowerCase() + '.' + (c.classList[0] || ''); if (suite[suite.length - 1] !== k) { suite.push(k); } }); }
+  var note = document.querySelector('.bande .note');
+  return [e.vue.cadre ? 'cadre:' + e.vue.cadre.page : e.vue.tel.ecran, suite.join(','), note ? note.textContent.slice(0, 24) : '',
+    document.querySelectorAll('.bande button').length, document.querySelector('.feuille') ? 'feuille' : ''].join('|');
+}
+
+/** Contrôle 14 h, écrans des autres parties témoins : chaque sorte d'écran que la partie (b) n'affiche pas est mesurée à
+ *  toutes les tailles, au moment où une autre partie témoin l'affiche. La partie est jouée une fois, à la taille de
+ *  l'iPhone 15 (contexte de l'icône) ; à chaque sorte nouvelle, la fenêtre prend chaque taille, l'écran est mesuré, puis la
+ *  fenêtre reprend sa taille et la partie continue (rien n'est touché pendant les mesures). */
+async function controleAutresEcrans(o, rapport) {
+  const RJ = require('./rejeu.js');
+  const constructions = { 1: o.construction, 2: o.construction2, 3: o.construction3 || o.construction2 };
+  const choisies = o.tailles ? o.tailles.split(',').map(x => x.split('x').map(Number)) : null;
+  const tailles = taillesH().filter(t => !choisies || choisies.some(c => c[0] === t[0] && c[1] === t[1]));
+  const vues = new Set();
+  const ecarts = new Map(tailles.map(t => [t, {}]));
+  const nouvelles = [];
+  const reference = [393, 852];
+  const ids = ['b', 'a', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'].filter(id => fs.existsSync(path.join(o.journaux, id + '.journal.json')));
+  for (const id of ids) {
+    const journal = O.lireJson(path.join(o.journaux, id + '.journal.json'));
+    const gestes = O.lireJson(path.join(o.journaux, id + '.gestes.json'));
+    const crochet = async (env, geste, j) => {
+      const sorte = await env.page.evaluate(sorteEcran);
+      if (vues.has(sorte)) { return; }
+      vues.add(sorte);
+      if (id === 'b') { return; } // (b) est mesurée à chaque taille par controleMiseEnPage
+      nouvelles.push(id + ', séance ' + j.k + ', ' + sorte.split('|')[0]);
+      for (const t of tailles) {
+        const [l, h] = t;
+        await tailleFenetre(env.page, l, h);
+        const m = await env.page.evaluate(RELEVE.mesurerDisposition);
+        const couche = h <= 499 && l > h;
+        const liste = m.app ? verifierDisposition(m, { couche, planche: l >= 600 && h >= 900 })
+          : (m.couchee ? (couche ? [] : ['vue couchée inattendue']) : verifierVueSeule(m));
+        for (const x of liste) { const e = ecarts.get(t); (e[x] = e[x] || []).push(id + ', séance ' + j.k + ', ' + geste); }
+      }
+      await tailleFenetre(env.page, reference[0], reference[1]);
+    };
+    try {
+      await RJ.jouerSur({ scelle: o.scelle, journal, gestes, constructions, sorte: 'porteur', navigateur: o.navigateur, icone: o.icone, relever: false,
+        largeur: reference[0], hauteur: reference[1], crochet });
+    } catch (e) { rapport.ok('(h) écrans des autres parties témoins : partie ' + id + ' jouée', false, e.message); }
+  }
+  for (const t of tailles) {
+    const [l, h, nom] = t;
+    const e = ecarts.get(t);
+    const liste = Object.keys(e);
+    rapport.ok('(h) ' + l + ' × ' + h + (nom ? ' (' + nom + ')' : '') + ' : ' + nouvelles.length + ' sortes d’écrans des autres parties témoins, absentes de la partie (b)',
+      liste.length === 0, liste.map(x => x + ' (' + e[x].length + ' fois, d’abord ' + e[x][0] + ')').join(' ; '));
+  }
+  if (o.listeEcrans) { O.ecrireTexte(o.listeEcrans, nouvelles.join('\n') + '\n'); }
+}
+
+/** Fenêtre à la taille donnée : attend que la page la voie, puis deux images (l'évènement « resize » est passé). */
+async function tailleFenetre(page, l, h) {
+  await page.setViewportSize({ width: l, height: h });
+  await page.waitForFunction(([ll, hh]) => window.innerWidth === ll && window.innerHeight === hh, [l, h]);
+  await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
+}
+
+/** Vue seule (arrêts, hors de l'icône, après « Tout effacer ») : pas de défilement de côté, aucun texte qui déborde. */
+function verifierVueSeule(m) {
+  const e = [];
+  if (m.defilement.largeur > m.defilement.visibleL + 0.5) { e.push('vue seule : défilement de côté'); }
+  return e.concat(verifierTextes(m));
+}
+
 /* ------------------------------------------------------------------ */
 /* Arrêts techniques (§8.11) : vérifications V2, V4, V5 ; stockage absent ; page ouverte deux fois */
 /* ------------------------------------------------------------------ */
@@ -806,7 +891,8 @@ async function main() {
   const o = {
     navigateur: a.navigateur || 'chromium', icone: a.icone || ICONE_DEFAUT, pageTest: a['page-test'] || PAGE_TEST_DEFAUT, scelle, cheminScelle: a.scelle,
     construction: a.construction, construction2: a['construction-2'], construction3: a['construction-3'],
-    porteur: porteurDe(a.construction), porteur2: a['construction-2'] ? porteurDe(a['construction-2']) : null, journaux: a.journaux, tailles: a.tailles || null
+    porteur: porteurDe(a.construction), porteur2: a['construction-2'] ? porteurDe(a['construction-2']) : null, journaux: a.journaux, tailles: a.tailles || null,
+    listeEcrans: a.sortie ? path.join(a.sortie, 'controle14-ecrans-autres-parties.txt') : null
   };
   const points = (a.points || 'a,b,c,d,f,t,h,i').split(',');
   const r = creerRapport();
@@ -817,7 +903,7 @@ async function main() {
   if (points.indexOf('d') >= 0) { await controleEffacer(o, r); }
   if (points.indexOf('t') >= 0) { await controleArrets(o, r); }
   if (points.indexOf('h') >= 0) { await controleEspaceFine(o, r); await controleRetours(o, r); }
-  if (points.indexOf('h') >= 0 || points.indexOf('tailles') >= 0) { if (!a['sans-tailles']) { await controleMiseEnPage(o, r); } }
+  if (points.indexOf('h') >= 0 || points.indexOf('tailles') >= 0) { if (!a['sans-tailles']) { await controleMiseEnPage(o, r); await controleAutresEcrans(o, r); } }
   if (points.indexOf('i') >= 0) { await require('./durees.js').controleDurees(o, r); }
   r.note(r.faux ? r.faux + ' vérification(s) fausse(s)' : 'Toutes les vérifications sont justes.');
   if (a.sortie) { O.ecrireTexte(path.join(a.sortie, 'rapport-controle14-' + o.navigateur + '.txt'), r.lignes.join('\n') + '\n'); }
@@ -826,5 +912,5 @@ async function main() {
 
 if (require.main === module) { main().catch(e => { process.stderr.write((e && e.stack) || String(e)); process.stderr.write('\n'); process.exitCode = 2; }); }
 
-module.exports = { sansLibelle, verifierTextes, verifierLignesListe, resumeErreur, sondePersistance, noterMemoire, verifierDisposition, verifierRevelation, verifierSousOnglets, verifierActions, pageAvecScelle, visibilite, memoire, poserCles, taillesH, creerRapport, controleHors, controleCsp, controleMemoire, controleEffacer,
+module.exports = { controleAutresEcrans, sansLibelle, verifierTextes, verifierLignesListe, resumeErreur, sondePersistance, noterMemoire, verifierDisposition, verifierRevelation, verifierSousOnglets, verifierActions, pageAvecScelle, visibilite, memoire, poserCles, taillesH, creerRapport, controleHors, controleCsp, controleMemoire, controleEffacer,
   controleMiseEnPage, controleEspaceFine, controleRetours, controleArrets, lireScelle, porteurDe };

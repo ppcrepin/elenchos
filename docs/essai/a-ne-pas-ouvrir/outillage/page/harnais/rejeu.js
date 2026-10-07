@@ -34,6 +34,8 @@ async function jouerSur(options) {
   const env = await NAV.ouvrir({ navigateur, fuseau: fuseau || 'Europe/Paris', langue: langue || 'fr-FR', page: chemins[journal.seances[0].versions ? journal.seances[0].versions[0] : 1],
     icone, heure: premier, appareil, largeur, hauteur, sombre, scriptsInit: gp.copieRefusee ? [NAV.SCRIPT_COPIE_REFUSEE] : [] });
   const j = new Joueur(env, journal, chemins, { temoin: sorte === 'temoin', relever: relever !== false, gestes: gestes || { seances: {} }, captures: captures || null });
+  // crochet de l'outil après chaque geste (contrôle 14 h : mesures sur les écrans), avant le relevé éventuel
+  if (options.crochet) { const releverSiVoulu = j.releverSiVoulu.bind(j); j.releverSiVoulu = async (geste) => { await options.crochet(env, geste, j); return releverSiVoulu(geste); }; }
   try {
     const r = await j.jouer(scelle);
     return r;
