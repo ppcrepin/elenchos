@@ -1,4 +1,4 @@
-Contrôle 14 sans tête : chromium (Playwright 1.56.1), version du porteur 372207b37e03b5429eed5d29e1a2b093e079c22d6d802362426f70a4719b13ed
+Contrôle 14 sans tête : chromium (Playwright 1.56.1), version du porteur 0981241209c6a02d0286ba15017b0ef02e01016fdbd01822a6bf5ee9a008e298
 juste : (c) onglet d’iPhone (Safari) : vue « onglet »
 juste : (c) onglet d’iPhone (Safari) : mémoire inchangée après le chargement et un toucher sur chaque bouton
 juste : (a) onglet d’iPhone (Safari) : aucune requête hors de la page et de l’icône
@@ -67,39 +67,43 @@ juste : (h) relance sur le carnet du jour d’une journée pas finie : télépho
 juste : (h) note « Pas dans l’essai. » : l’élément touché garde sa place
 juste : (h) relance pendant la copie ouverte par « Copier mon carnet d’abord » : ni copie ni confirmation, Moi › Réglages
 juste : (h) retours : aucune erreur de la page
-juste : (h) 599 × 900 : 536 écrans de la partie (b), disposition compacte
-juste : (h) 600 × 900 : 535 écrans de la partie (b), disposition planche
-juste : (h) 600 × 899 : 536 écrans de la partie (b), disposition compacte
-juste : (h) 768 × 900 : 535 écrans de la partie (b), disposition planche
-juste : (h) 768 × 899 : 536 écrans de la partie (b), disposition compacte
+juste : (h) 599 × 900 : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 600 × 900 : 536 écrans de la partie (b), disposition planche, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 600 × 899 : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 768 × 900 : 536 écrans de la partie (b), disposition planche, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 768 × 899 : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
 juste : (h) 500 × 499 : écran couché
-juste : (h) 800 × 500 : 536 écrans de la partie (b), disposition compacte
+juste : (h) 800 × 500 : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
 juste : (h) 700 × 499 : écran couché
-juste : (h) 700 × 500 : 536 écrans de la partie (b), disposition compacte
-juste : (h) 600 × 600 : 536 écrans de la partie (b), disposition compacte
-juste : (h) 601 × 600 : 536 écrans de la partie (b), disposition compacte
-juste : (h) 320 × 548 : 536 écrans de la partie (b), disposition compacte
-juste : (h) 375 × 667 (iPhone SE (3rd gen)) : 536 écrans de la partie (b), disposition compacte
+juste : (h) 700 × 500 : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 600 × 600 : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 601 × 600 : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 320 × 548 : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 1032 × 1376 (iPad 13 pouces, taille fixée par l’outil) : 535 écrans de la partie (b), disposition planche, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 1376 × 1032 (iPad 13 pouces, taille fixée par l’outil, en largeur) : 535 écrans de la partie (b), disposition planche, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 375 × 667 (iPhone SE (3rd gen)) : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
 juste : (h) 667 × 375 (iPhone SE (3rd gen) en largeur) : écran couché
-juste : (h) 375 × 812 (iPhone 13 Mini) : 536 écrans de la partie (b), disposition compacte
+juste : (h) 375 × 812 (iPhone 13 Mini) : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
 juste : (h) 812 × 375 (iPhone 13 Mini en largeur) : écran couché
-juste : (h) 393 × 852 (iPhone 15) : 536 écrans de la partie (b), disposition compacte
+juste : (h) 393 × 852 (iPhone 15) : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
 juste : (h) 852 × 393 (iPhone 15 en largeur) : écran couché
-juste : (h) 430 × 932 (iPhone 15 Pro Max) : 536 écrans de la partie (b), disposition compacte
+juste : (h) 430 × 932 (iPhone 15 Pro Max) : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
 juste : (h) 932 × 430 (iPhone 15 Pro Max en largeur) : écran couché
-juste : (h) 768 × 1024 (iPad Mini) : 535 écrans de la partie (b), disposition planche
-juste : (h) 1024 × 768 (iPad Mini en largeur) : 536 écrans de la partie (b), disposition compacte
-juste : (h) 656 × 944 (iPad (gen 11)) : 535 écrans de la partie (b), disposition planche
-juste : (h) 944 × 656 (iPad (gen 11) en largeur) : 536 écrans de la partie (b), disposition compacte
-juste : (h) 834 × 1194 (iPad Pro 11) : 535 écrans de la partie (b), disposition planche
-juste : (h) 1194 × 834 (iPad Pro 11 en largeur) : 536 écrans de la partie (b), disposition compacte
+juste : (h) 768 × 1024 (iPad Mini) : 535 écrans de la partie (b), disposition planche, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 1024 × 768 (iPad Mini en largeur) : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 810 × 1080 (iPad (gen 7)) : 535 écrans de la partie (b), disposition planche, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 1080 × 810 (iPad (gen 7) en largeur) : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 656 × 944 (iPad (gen 11)) : 536 écrans de la partie (b), disposition planche, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 944 × 656 (iPad (gen 11) en largeur) : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 834 × 1194 (iPad Pro 11) : 535 écrans de la partie (b), disposition planche, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 1194 × 834 (iPad Pro 11 en largeur) : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
 juste : (i) cas 1 (pause au premier plan comptée, dix heures en arrière-plan non comptées) : séance 0, 49 s
 juste : (i) séance 0 : de l’ouverture (5 s) à « Aller au jour suivant » (76 s) : 71 s
 juste : (i) cas 2 (nuit en arrière-plan sur « En attendant » non comptée) : séance 1, 18 s, dont 9 s pour répondre
 juste : (i) cas 3 et 7 (app fermée en arrière-plan puis rouverte ; heure du téléphone changée) : séance 2, 23 s, dont 16 s pour deviner et 5 s pour répondre
 juste : (i) cas 4 (arrêt brutal 12 s après la dernière écriture : ces 12 s manquent) : séance 3, 4 s
 juste : (i) cas 5 (arrêt brutal moins d’une seconde après « Valider ») : la page reprend à son étape
-juste : (i) cas 5 bis (arrêt brutal moins d’une seconde après trois coups validés en 0.4 s) : la page reprend après le coup 0 gardé sur 3, à l’étape du premier coup perdu, jamais entre deux coups
+juste : (i) cas 5 bis (arrêt brutal moins d’une seconde après trois coups validés en 0.5 s) : la page reprend après le coup 0 gardé sur 3, à l’étape du premier coup perdu, jamais entre deux coups
 juste : (i) cas 6 (toucher sur l’écran couché non compté) : séance 5, 0 s
 juste : (i) cas 6 (temps de l’écran couché compté) : séance 5, 23 s
 juste : (i) cas 8 (correctif chargé en cours de séance, la durée continue) : séance 5, 26 s
