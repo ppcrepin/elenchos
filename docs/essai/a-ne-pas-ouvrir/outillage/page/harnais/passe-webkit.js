@@ -136,7 +136,10 @@ async function diagnostic(a, nav, scelle, r, C14, NAV) {
     pageTest: a['page-test'] || path.join(__dirname, '..', '..', '..', '..', 'page-test-icone', 'index.html'), scelle, cheminScelle: a.scelle,
     construction: a.construction, construction2: a['construction-2'], construction3: a['construction-3'],
     porteur: C14.porteurDe(a.construction), porteur2: C14.porteurDe(a['construction-2']), journaux: a.journaux };
-  r.note('diagnostic : ' + nav + ' (Playwright ' + NAV.VERSION_PLAYWRIGHT + '), ' + process.platform);
+  const os = require('node:os');
+  let construit = 'inconnu';
+  try { construit = NAV.PW[nav].executablePath().match(/(webkit|chromium)-[0-9]+/)[0]; } catch (e) { /* inconnu */ }
+  r.note('diagnostic : ' + nav + ' (Playwright ' + NAV.VERSION_PLAYWRIGHT + ', ' + construit + '), ' + process.platform + ' ' + os.release() + ' ' + os.arch());
   try { await C14.sondePersistance(o, r); } catch (e) { r.note('diagnostic : sonde du profil arrêtée : ' + C14.resumeErreur(e)); }
   o.etape = '(b) avant le début';
   try { await C14.controleMemoire(o, r); r.note('diagnostic : (b) joué jusqu’au bout'); } catch (e) {

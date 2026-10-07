@@ -61,6 +61,7 @@ class Scenario {
     this.o.etape = avant;
   }
   async fermer() {
+    if (!this.env) { return; } // ouverture échouée : rien à fermer (pas de seconde erreur)
     try { await NAV.fermer(this.env); } catch (e) { if (this.o.diagnostic && this.o.navigateur !== 'chromium') { this.r.note('diagnostic : (i) fermeture du navigateur : ' + C14().resumeErreur(e)); } } // coupé net (Chromium) : attendu
     this.env = null;
   }

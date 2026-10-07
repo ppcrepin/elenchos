@@ -29,9 +29,15 @@ env:
   RAPPORT: docs/essai/a-ne-pas-ouvrir/outillage/page/sorties/construction/rapport-construction.txt
 jobs:
   webkit:
-    runs-on: macos-latest
+    # Version de macOS fixée : Playwright 1.56.1 fournit WebKit construit jusqu'à macOS 15 (webkit-mac-15-arm64) ; sur un
+    # macOS plus récent, il installe ce même WebKit de macOS 15, hors de sa cible (constaté sur macOS 26 : contexte
+    # persistant impossible). « macos-latest » suit les nouvelles versions de macOS et ne convient donc pas.
+    runs-on: macos-15
     timeout-minutes: 240
     steps:
+      - name: Machine
+        run: |
+          echo "machine : macOS $(sw_vers -productVersion) ($(sw_vers -buildVersion)), $(uname -m), Darwin $(uname -r), image ${ImageOS:-inconnue} ${ImageVersion:-inconnue}"
       - uses: actions/checkout@v5
         with:
           ref: main
@@ -46,6 +52,7 @@ jobs:
           npm init -y > /dev/null
           npm install --silent --no-audit --no-fund playwright@1.56.1 > /dev/null 2>&1 || { echo "échoué : installation"; exit 1; }
           npx playwright install webkit > /dev/null 2>&1 || { echo "échoué : installation de WebKit"; exit 1; }
+          node -e "const w = require('playwright-core/lib/server/registry/index').registry.findExecutable('webkit'); const u = (w.downloadURLs || [])[0] || ''; console.log('WebKit de Playwright : ' + ((w.executablePath() || '').match(/webkit-[0-9]+/) || ['inconnu'])[0] + ', construit pour : ' + (u.split('/').pop() || 'inconnu'))" 2> /dev/null || echo "WebKit de Playwright : inconnu"
       - name: Construction depuis main (version de la page, puis versions 2 et 3 du harnais)
         run: |
           python3 -I "$PAGE/construire.py" --scelle "$SCELLE" --entrees "$ENTREES" --sortie "$RUNNER_TEMP/v1" > /dev/null 2>&1 || { echo "échoué : construction"; exit 1; }

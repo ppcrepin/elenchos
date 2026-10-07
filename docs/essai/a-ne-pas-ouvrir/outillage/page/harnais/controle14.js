@@ -84,10 +84,40 @@ function fichiersStockage(profil) {
   return n + ' fichier(s) de stockage local, ' + octets + ' octets';
 }
 
+/** Sonde du lancement seul, sans aucune page chargée (rien ne sort : la page de départ est vide) : le navigateur crée-t-il son
+ *  contexte par défaut avec un profil gardé sur disque ? Variantes pour départager les causes : options de l'outil retirées,
+ *  forme du dossier de profil (créé par l'outil, créé par Playwright, chemin réel sans lien symbolique), avec ou sans fenêtre ;
+ *  et, pour comparaison, un contexte jetable (sans profil), qui marche dans la passe. */
+async function sondeLancement(o, rapport) {
+  const type = NAV.PW[o.navigateur];
+  const variantes = [
+    ['contexte jetable, sans profil (comparaison)', null, {}],
+    ['profil gardé, aucune option de l’outil, dossier créé par l’outil', 'outil', {}],
+    ['profil gardé, aucune option de l’outil, dossier temporaire créé par Playwright', 'playwright', {}],
+    ['profil gardé, aucune option de l’outil, chemin réel du dossier (liens symboliques résolus)', 'reel', {}],
+    ['profil gardé, aucune option de l’outil, avec fenêtre (headless: false)', 'outil', { headless: false }]
+  ];
+  for (const [nom, forme, options] of variantes) {
+    const dossier = forme ? profilNeuf('lancement') : null;
+    let navigateur = null, contexte = null;
+    try {
+      if (!forme) { navigateur = await type.launch(options); contexte = await navigateur.newContext(); await contexte.newPage(); }
+      else { contexte = await type.launchPersistentContext(forme === 'playwright' ? '' : (forme === 'reel' ? fs.realpathSync(dossier) : dossier), options); }
+      rapport.note('diagnostic : lancement (' + nom + ') : contexte créé, ' + contexte.pages().length + ' page(s)');
+    } catch (e) {
+      rapport.note('diagnostic : lancement (' + nom + ') : échoué : ' + resumeErreur(e));
+    } finally {
+      try { if (navigateur) { await navigateur.close(); } else if (contexte) { await contexte.close(); } } catch (e) { /* déjà fermé */ }
+      if (dossier) { fs.rmSync(dossier, { recursive: true, force: true }); }
+    }
+  }
+}
+
 /** Sonde du profil gardé sur disque : une clé de l'outil (aucune valeur du jeu), posée sur la page vide de l'outil à l'adresse
  *  de l'essai, est-elle relue après une fermeture propre du navigateur et une réouverture du même profil ? Plusieurs variantes,
  *  pour isoler la cause : attente réelle avant la fermeture, horloge de l'outil, appareil émulé. */
 async function sondePersistance(o, rapport) {
+  await sondeLancement(o, rapport);
   const jour0 = Date.UTC(2026, 9, 19, 18, 0);
   const variantes = [
     { nom: 'iPhone 15, horloge de l’outil, fermeture aussitôt', appareil: 'iPhone 15', heure: jour0, attente: 0 },

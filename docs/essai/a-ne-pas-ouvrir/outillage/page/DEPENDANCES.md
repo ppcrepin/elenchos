@@ -29,7 +29,7 @@ Licences : SIL Open Font License 1.1 pour les deux familles. Aucun des deux `OFL
 
 ## Téléchargé sur la machine macOS de la passe WebKit seulement
 
-`harnais/essai-passe-webkit.yml` (à ranger dans `.github/workflows/`) installe, à chaque lancement manuel, sur la machine de GitHub Actions : `playwright` 1.56.1 (npm, version exacte) et son navigateur WebKit (`npx playwright install webkit`). Actions employées : `actions/checkout@v5`, `actions/setup-node@v5` (Node 22). Rien n'est installé dans l'environnement de l'équipe ; aucun secret ; rien de téléversé. Case « diagnostic » au lancement (option `--diagnostic` de `passe-webkit.js passe`) : seulement la construction, une sonde du profil gardé sur disque, puis (b) et (i) étape par étape, sans aucune valeur du jeu dans le journal.
+`harnais/essai-passe-webkit.yml` (à ranger dans `.github/workflows/`) installe, à chaque lancement manuel, sur une machine `macos-15` de GitHub Actions (macOS fixé : Playwright 1.56.1 ne construit WebKit que jusqu'à macOS 15 ; le journal dit d'abord la version de macOS, l'image, et le WebKit installé avec sa cible) : `playwright` 1.56.1 (npm, version exacte) et son navigateur WebKit (`npx playwright install webkit`). Actions employées : `actions/checkout@v5`, `actions/setup-node@v5` (Node 22). Rien n'est installé dans l'environnement de l'équipe ; aucun secret ; rien de téléversé. Case « diagnostic » au lancement (option `--diagnostic` de `passe-webkit.js passe`) : seulement la construction, une sonde du profil gardé sur disque, puis (b) et (i) étape par étape, sans aucune valeur du jeu dans le journal.
 
 ## Commandes
 
