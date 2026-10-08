@@ -65,6 +65,7 @@ Vous avez joué seul, sur votre iPhone, depuis l'icône de l'écran d'accueil (D
 
 - Pour mettre un prénom sur une carte : « La fiche « Qui est qui » », seule. Ni « Les révélations d'avant », ni « Le Cercle ou l'écran d'un proche », ni « Rien de précis ».
 - Pourquoi jamais « Deviner » : « Des personnages inventés, ça touche peu » (« Deviner des inconnus n'a pas l'enjeu de deviner de vrais proches. »).
+- Après avoir reçu ce bilan, vous avez précisé : le plaisir de deviner n'est pas venu parce que les personnes étaient fictives ; « tout l'intérêt de cette application, c'est de découvrir des proches, des gens qu'on connaît », et avec eux, vous pensez que vous auriez eu du plaisir à deviner.
 - Devant une révélation sans point : « Pas grand-chose » (« Ce n'étaient pas de vrais proches : le résultat m'importait peu. »).
 - Le Mystère, reçu en semaine 2 : « Comme un rôle amusant » (« Être difficile à deviner, ça me plaisait. »).
 - Ce qui vous a fait jouer d'une traite : « Arriver vite au bilan » (« Je voulais faire avancer le projet. »).
@@ -81,7 +82,7 @@ Vous avez joué seul, sur votre iPhone, depuis l'icône de l'écran d'accueil (D
 - **Le Mystère, lu comme un rôle.** C'est ce que visait l'abandon du score punitif (`projet.md`, §10). Deux réserves : un seul lecteur, qui connaissait l'intention du titre ; et un titre venu surtout des devineurs automatiques (section 7). Reste ouvert ce qu'éprouverait quelqu'un que sa famille devine mal, semaine après semaine.
 - **« Toujours aussi amusant » et « Pas grand-chose » ne se contredisent pas.** Le premier dit que rien n'a bougé au fil des séances ; le second, que l'enjeu était faible dès le départ.
 
-**Ce que cela ne dit pas.** Si deviner plaît avec de vrais proches, et si ce plaisir grandit ou s'use sur des semaines réelles.
+**Ce que cela ne dit pas.** Si deviner plaît avec de vrais proches, et si ce plaisir grandit ou s'use sur des semaines réelles. C'est votre conviction ; l'essai ne la contredit pas, mais ne peut pas la vérifier : seuls de vrais proches le peuvent.
 
 ## 3. La difficulté
 
