@@ -1,0 +1,14 @@
+Commit de gh-pages préparé pour la publication : cabcaa6129c9bce1022bc540a1ff6e1137f1a1c4 (dépôt /home/user/elenchos)
+
+juste : le commit est dans le dépôt — cabcaa6129c9bce1022bc540a1ff6e1137f1a1c4
+juste : arbre : exactement .nojekyll, essai/index.html et essai/apple-touch-icon.png, fichiers ordinaires — 100644 blob .nojekyll ; 100644 blob essai/apple-touch-icon.png ; 100644 blob essai/index.html
+  SHA-256 de l’objet essai/index.html : 734d0079df6ab6ae6cd8a16811b4f2bfb5b7bcd56a58bb4c70ab29ccd9a2e72a ; porteur/index.html de la construction : 734d0079df6ab6ae6cd8a16811b4f2bfb5b7bcd56a58bb4c70ab29ccd9a2e72a
+juste : essai/index.html identique octet pour octet à porteur/index.html de la construction (/home/user/elenchos/docs/essai/a-ne-pas-ouvrir/outillage/page/sorties/final/construction-v1)
+juste : essai/index.html n’est pas la version témoin
+juste : essai/apple-touch-icon.png identique octet pour octet à celle de la page-test v2 (b5d7d00) — SHA-256 c92f86f31f68e61d7b88f96231dbd8f637c455c3b99667e7fd031ef6992cb727 ; page-test c92f86f31f68e61d7b88f96231dbd8f637c455c3b99667e7fd031ef6992cb727
+juste : le commit part de origin/gh-pages (un seul parent, son sommet) — parents b5d7d00767ccd682dc791ef139ff48f450b1a8d6 ; origin/gh-pages b5d7d00767ccd682dc791ef139ff48f450b1a8d6
+juste : le commit ne change que essai/index.html — M	essai/index.html
+
+porteur/index.html de la construction réécrit avec les octets de l’objet Git ade6b035d569faa282ecab6f61bcfd92777c1337 du commit cabcaa6129c9bce1022bc540a1ff6e1137f1a1c4 : le rejeu et les contrôles 12 à 14 rejouent la version du porteur lue depuis ce commit.
+
+Toutes les vérifications sont justes.

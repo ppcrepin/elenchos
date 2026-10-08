@@ -1,42 +1,73 @@
 juste : 11 : fichier des phrases attendues : format « elenchos-essai-phrases » version 1, même fichier scellé
 juste : 10 : partie a : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie a : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 33 ; avec la réponse d’un autre : 167 ; les deux ensemble : 0)
 juste : 11 : partie a : aucun chiffre suivi d’une espace U+0020
 juste : 11 : partie a : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 52, 2.7d × 13, 2.7e × 13, 5.4 × 1
 juste : 11 : partie a, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie b : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie b : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 41 ; avec la réponse d’un autre : 254 ; les deux ensemble : 0)
 juste : 11 : partie b : aucun chiffre suivi d’une espace U+0020
 juste : 11 : partie b : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 122, 2.7d × 13, 2.7e × 13, 5.4 × 1, 5.4-avant × 2, Ta raison × 11
 juste : 11 : partie b, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie c : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie c : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 35 ; avec la réponse d’un autre : 206 ; les deux ensemble : 0)
 juste : 11 : partie c : aucun chiffre suivi d’une espace U+0020
 juste : 11 : partie c : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 91, 2.7d × 13, 2.7e × 13, 5.4 × 1, Ta raison × 16
 juste : 11 : partie c, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie d : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie d : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 4 ; avec la réponse d’un autre : 1 ; les deux ensemble : 0)
 juste : 11 : partie d : aucun chiffre suivi d’une espace U+0020
 juste : 11 : partie d : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 1, Ta raison × 1
 juste : 11 : partie d, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie e : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie e : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 8 ; avec la réponse d’un autre : 3 ; les deux ensemble : 0)
 juste : 11 : partie e : aucun chiffre suivi d’une espace U+0020
 juste : 11 : partie e : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 2, Ta raison × 3
 juste : 11 : partie e, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie f : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie f : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 18 ; avec la réponse d’un autre : 58 ; les deux ensemble : 0)
 juste : 11 : partie f : aucun chiffre suivi d’une espace U+0020
 juste : 11 : partie f : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 21, 2.7d × 4, 2.7e × 4, Ta raison × 3
 juste : 11 : partie f, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie g : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie g : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 16 ; avec la réponse d’un autre : 45 ; les deux ensemble : 0)
 juste : 11 : partie g : aucun chiffre suivi d’une espace U+0020
 juste : 11 : partie g : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 17, 2.7d × 3, 2.7e × 3, Ta raison × 3
 juste : 11 : partie g, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie h : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie h : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 18 ; avec la réponse d’un autre : 84 ; les deux ensemble : 0)
 juste : 11 : partie h : aucun chiffre suivi d’une espace U+0020
 juste : 11 : partie h : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 29, 2.7d × 6, 2.7e × 6, Ta raison × 3
 juste : 11 : partie h, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie i : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie i : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 20 ; avec la réponse d’un autre : 84 ; les deux ensemble : 0)
 juste : 11 : partie i : aucun chiffre suivi d’une espace U+0020
 juste : 11 : partie i : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 29, 2.7d × 6, 2.7e × 6, Ta raison × 3
 juste : 11 : partie i, 320 × 548 px : aucune coupure de ligne fautive
 juste : 10 : partie j : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie j : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 15 ; avec la réponse d’un autre : 41 ; les deux ensemble : 0)
 juste : 11 : partie j : aucun chiffre suivi d’une espace U+0020
 juste : 11 : partie j : phrases du vote et de l’auteur, « Ta raison », rien avant la révélation — écrans vus : 1.6 × 3, 2.1 × 22, 2.7d × 2, 2.7e × 2, 5.4 × 1, Ta raison × 4
 juste : 11 : partie j, 320 × 548 px : aucune coupure de ligne fautive
+juste : 10 : partie hasard-201 : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie hasard-201 : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 29 ; avec la réponse d’un autre : 200 ; les deux ensemble : 0)
+juste : 10 : partie hasard-202 : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie hasard-202 : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 33 ; avec la réponse d’un autre : 213 ; les deux ensemble : 0)
+juste : 10 : partie hasard-203 : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie hasard-203 : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 33 ; avec la réponse d’un autre : 197 ; les deux ensemble : 0)
+juste : 10 : partie hasard-204 : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie hasard-204 : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 29 ; avec la réponse d’un autre : 200 ; les deux ensemble : 0)
+juste : 10 : partie hasard-205 : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie hasard-205 : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 33 ; avec la réponse d’un autre : 199 ; les deux ensemble : 0)
+juste : 10 : partie hasard-206 : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie hasard-206 : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 31 ; avec la réponse d’un autre : 194 ; les deux ensemble : 0)
+juste : 10 : partie hasard-207 : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie hasard-207 : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 26 ; avec la réponse d’un autre : 199 ; les deux ensemble : 0)
+juste : 10 : partie hasard-208 : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie hasard-208 : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 27 ; avec la réponse d’un autre : 185 ; les deux ensemble : 0)
+juste : 10 : partie hasard-209 : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie hasard-209 : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 31 ; avec la réponse d’un autre : 197 ; les deux ensemble : 0)
+juste : 10 : partie hasard-210 : ni « n’a pas joué », ni taux d’accord, ni classement, dans tout ce qui a été affiché
+juste : 10 : partie hasard-210 : jamais la réponse du porteur à côté de celle d’un autre membre (écrans avec une réponse du porteur : 29 ; avec la réponse d’un autre : 215 ; les deux ensemble : 0)
+juste : 10 : les formes de réponse sont bien reconnues sur les relevés (au moins un écran avec une réponse du porteur et un avec celle d’un autre, sur 20 parties)
 Toutes les vérifications sont justes.

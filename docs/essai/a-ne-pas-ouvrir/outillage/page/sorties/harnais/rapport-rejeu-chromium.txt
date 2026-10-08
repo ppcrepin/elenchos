@@ -1,23 +1,23 @@
-Rejeu : chromium (Playwright 1.56.1), constructions v1 0981241209c6/495822e395f0, v2 f0d41c5c1da4/0a29a9784286, v3 677916ac2018/037aa2dee650
-juste a : 351 gestes, 156 s
-juste b : 494 gestes, 184 s
-juste c : 394 gestes, 160 s
+Rejeu : chromium (Playwright 1.56.1), constructions v1 734d0079df6a/5b5b2d76a496, v2 2e39c280ee2e/eb620cc1e6bc, v3 de17bc44465a/17fe3348e105
+juste a : 351 gestes, 151 s
+juste b : 494 gestes, 175 s
+juste c : 394 gestes, 157 s
 juste d : 21 gestes, 6 s
-juste e : 47 gestes, 11 s
-juste f : 166 gestes, 59 s
-juste g : 128 gestes, 45 s
-juste h : 201 gestes, 81 s
-juste hasard-201 : 390 gestes, 112 s
-juste hasard-202 : 393 gestes, 113 s
-juste hasard-203 : 390 gestes, 114 s
-juste hasard-204 : 385 gestes, 112 s
-juste hasard-205 : 383 gestes, 115 s
-juste hasard-206 : 381 gestes, 110 s
-juste hasard-207 : 380 gestes, 111 s
-juste hasard-208 : 361 gestes, 107 s
-juste hasard-209 : 389 gestes, 111 s
-juste hasard-210 : 397 gestes, 115 s
-juste i : 204 gestes, 81 s
-juste j : 134 gestes, 40 s
+juste e : 47 gestes, 10 s
+juste f : 166 gestes, 57 s
+juste g : 128 gestes, 44 s
+juste h : 201 gestes, 77 s
+juste hasard-201 : 390 gestes, 105 s
+juste hasard-202 : 393 gestes, 107 s
+juste hasard-203 : 390 gestes, 105 s
+juste hasard-204 : 385 gestes, 104 s
+juste hasard-205 : 383 gestes, 105 s
+juste hasard-206 : 381 gestes, 104 s
+juste hasard-207 : 380 gestes, 105 s
+juste hasard-208 : 361 gestes, 103 s
+juste hasard-209 : 389 gestes, 105 s
+juste hasard-210 : 397 gestes, 105 s
+juste i : 204 gestes, 77 s
+juste j : 134 gestes, 38 s
 parties au hasard, mode moteur : 200 traces écrites
 Rejeu : aucun défaut

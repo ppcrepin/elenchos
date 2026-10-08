@@ -1,0 +1,32 @@
+Comparaison P / C : 30 fichier(s) comparé(s), 0 différent(s)
+
+identiques : a.carnet.txt
+identiques : b.carnet.txt
+identiques : b.copie-1.txt
+identiques : c.carnet.txt
+identiques : d.carnet.txt
+identiques : e.carnet.txt
+identiques : f.carnet.txt
+identiques : f.copie-1.txt
+identiques : g.carnet.txt
+identiques : h.carnet.txt
+identiques : hasard-201.carnet.txt
+identiques : hasard-201.copie-1.txt
+identiques : hasard-202.carnet.txt
+identiques : hasard-203.carnet.txt
+identiques : hasard-204.carnet.txt
+identiques : hasard-204.copie-1.txt
+identiques : hasard-205.carnet.txt
+identiques : hasard-205.copie-1.txt
+identiques : hasard-206.carnet.txt
+identiques : hasard-206.copie-1.txt
+identiques : hasard-207.carnet.txt
+identiques : hasard-207.copie-1.txt
+identiques : hasard-207.copie-2.txt
+identiques : hasard-208.carnet.txt
+identiques : hasard-209.carnet.txt
+identiques : hasard-209.copie-1.txt
+identiques : hasard-210.carnet.txt
+identiques : hasard-210.copie-1.txt
+identiques : i.carnet.txt
+identiques : j.carnet.txt

@@ -1,4 +1,4 @@
-Contrôle 14 sans tête : chromium (Playwright 1.56.1), version du porteur 0981241209c6a02d0286ba15017b0ef02e01016fdbd01822a6bf5ee9a008e298
+Contrôle 14 sans tête : chromium (Playwright 1.56.1), version du porteur 734d0079df6ab6ae6cd8a16811b4f2bfb5b7bcd56a58bb4c70ab29ccd9a2e72a
 juste : (c) onglet d’iPhone (Safari) : vue « onglet »
 juste : (c) onglet d’iPhone (Safari) : mémoire inchangée après le chargement et un toucher sur chaque bouton
 juste : (a) onglet d’iPhone (Safari) : aucune requête hors de la page et de l’icône
@@ -97,6 +97,36 @@ juste : (h) 656 × 944 (iPad (gen 11)) : 536 écrans de la partie (b), dispositi
 juste : (h) 944 × 656 (iPad (gen 11) en largeur) : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
 juste : (h) 834 × 1194 (iPad Pro 11) : 535 écrans de la partie (b), disposition planche, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
 juste : (h) 1194 × 834 (iPad Pro 11 en largeur) : 536 écrans de la partie (b), disposition compacte, dont 9 avec une note, 3 avec la confirmation de « Jour suivant », 2 avec trois boutons (« Tout effacer ? »)
+juste : (h) 599 × 900 : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 600 × 900 : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 600 × 899 : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 768 × 900 : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 768 × 899 : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 500 × 499 : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 800 × 500 : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 700 × 499 : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 700 × 500 : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 600 × 600 : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 601 × 600 : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 320 × 548 : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 1032 × 1376 (iPad 13 pouces, taille fixée par l’outil) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 1376 × 1032 (iPad 13 pouces, taille fixée par l’outil, en largeur) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 375 × 667 (iPhone SE (3rd gen)) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 667 × 375 (iPhone SE (3rd gen) en largeur) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 375 × 812 (iPhone 13 Mini) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 812 × 375 (iPhone 13 Mini en largeur) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 393 × 852 (iPhone 15) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 852 × 393 (iPhone 15 en largeur) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 430 × 932 (iPhone 15 Pro Max) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 932 × 430 (iPhone 15 Pro Max en largeur) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 768 × 1024 (iPad Mini) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 1024 × 768 (iPad Mini en largeur) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 810 × 1080 (iPad (gen 7)) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 1080 × 810 (iPad (gen 7) en largeur) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 656 × 944 (iPad (gen 11)) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 944 × 656 (iPad (gen 11) en largeur) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 834 × 1194 (iPad Pro 11) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
+juste : (h) 1194 × 834 (iPad Pro 11 en largeur) : 12 sortes d’écrans des autres parties témoins, absentes de la partie (b)
 juste : (i) cas 1 (pause au premier plan comptée, dix heures en arrière-plan non comptées) : séance 0, 49 s
 juste : (i) séance 0 : de l’ouverture (5 s) à « Aller au jour suivant » (76 s) : 71 s
 juste : (i) cas 2 (nuit en arrière-plan sur « En attendant » non comptée) : séance 1, 18 s, dont 9 s pour répondre

@@ -1,0 +1,6 @@
+Comparaison P / C : 4 fichier(s) comparé(s), 0 différent(s)
+
+identiques : a.carnet.txt
+identiques : b.carnet.txt
+identiques : b.copie-1.txt
+identiques : c.carnet.txt
