@@ -41,7 +41,7 @@ Chaque défaut a reçu une vérification automatique au contrôle 14 h (croix de
 | 13. Version du porteur | harnais (rejeu sur les octets du commit préparé ; `comparer.js`) | juste : carnets et copies de (a) à (c) identiques à ceux du programme de contrôle (4 fichiers) ; sur les 20 parties jouées par l'interface, 30 fichiers identiques | `outillage/page/sorties/harnais/rapport-controle13-carnets.txt` |
 | 14. Navigateur (Chromium) | harnais (`controle14.js`) | 139 vérifications justes | `outillage/page/sorties/harnais/rapport-controle14-chromium.txt` |
 | 14. Navigateur (WebKit) | tâche GitHub Actions | réussi (run 37711315962, `macos-15`, `webkit-2215`) | journal de la tâche (`scratchpad` de l'orchestrateur : `journaux-actions.md`) |
-| 14 c. Inventaire des sites Pages | tâche GitHub Actions | 7 octobre : kartme seul, accepté par Juridique ; refait juste avant la publication | journal de la tâche |
+| 14 c. Inventaire des sites Pages | tâche GitHub Actions ; liste des dépôts | 7 octobre : kartme seul, accepté par Juridique. Refait le 8 octobre à 8 h 03 (heure de Paris), juste avant la publication (run 37735513361) : même résultat (racine 404, `/kartme/` 200, page de l'essai 200, `/Agora/`, `/kartme-maggie/`, `/Projects/`, `/elenchos/` 404) ; dépôts accessibles inchangés (elenchos, kartme, Agora, kartme-maggie, Projects) | journal de la tâche |
 | 14 g. Preuve de publication | tâche GitHub Actions (`essai-preuve-publication.yml`) | à faire à la publication ; la tâche, essayée le 7 octobre sur la page-test en ligne (commit `b5d7d00`), passe ses quatre points : arbre, construction Pages, page et image servies identiques aux objets Git, lecture au moins dix minutes après | journal de la tâche |
 | 15. Chiffres | — | après l'essai | — |
 
