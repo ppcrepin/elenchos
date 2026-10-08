@@ -29,7 +29,7 @@ Chaque défaut a reçu une vérification automatique au contrôle 14 h (croix de
 
 | Contrôle | Fait par | Résultat | Sortie |
 |---|---|---|---|
-| 1. Fichier scellé, empreinte, données embarquées, typographie, fidélité aux fiches | programme de contrôle | aucun défaut ; les huit étapes passent ; « Mêmes sources : oui » (relance du programme de scellement au commit `9756a3b` : mêmes octets ; `9756a3b` suit les dernières corrections de la spécification, `f02fe1b`, et rien ne change ces sources jusqu'à `80d267a`) | `outillage/controle/sorties/controle1-complet-80d267a.txt` |
+| 1. Fichier scellé, empreinte, données embarquées, typographie, fidélité aux fiches | programme de contrôle | aucun défaut ; les huit étapes passent ; « Mêmes sources : oui ». Fait sur la construction `80d267a` (relance du programme de scellement au commit `9756a3b`, mêmes octets), puis refait sur la même page après les relectures finales, qui ont encore modifié la spécification (relance au commit `aaa00d4`, mêmes octets ; contrôle au commit `3b9f0c6`) | `outillage/controle/sorties/controle1-complet-80d267a.txt` ; `controle1-complet-final.txt` |
 | 2 à 4. Profils, réponses, absences | programme de contrôle | passés (avec l'annexe A) | même sortie |
 | 5. Code de la page | harnais (`controle5.js`) | 48 vérifications justes | `outillage/page/sorties/harnais/rapport-controle5.txt` |
 | 5. Arbre du commit de `gh-pages` (dernière phrase) | harnais (`commit-gh-pages.js`) | juste : trois fichiers ; `essai/index.html` égal à la version du porteur, différent de la version témoin ; icône égale à celle de la page-test v2 ; un seul parent, le sommet de `origin/gh-pages` ; seul `essai/index.html` change | `outillage/page/sorties/harnais/rapport-commit-gh-pages.txt` |
