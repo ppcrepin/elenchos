@@ -1,16 +1,16 @@
 # Bilan de l'essai
 
-*Étape 4 de la feuille de route. Ce bilan croise votre carnet, le fichier scellé (dévoilé à la fin de l'essai), le rapport de scellement et vos réponses aux douze questions de ressenti, posées sans option recommandée (D-021) et citées mot pour mot. Votre retour libre, donné après ces questions, est cité tel qu'il a été noté, remis au propre sans en changer le sens. Ni date ni heure de jeu (D-017). Vos réponses aux textes sont restées dans votre appareil : aucun calcul n'a cherché à les retrouver (`docs/essai/simulation.md`, §9, « Après l'essai »). Les personnages et les exemples sont fictifs ; les textes de l'Assemblée sont réels. Rédaction : Game design (sections 1 à 4, 7, 8.1, règles du jeu en 8.2, 9, annexe A) et UX (sections 5 et 6, écrans en 8.2, 8.3, annexe B, lecture critique des réponses). Assemblage : l'orchestrateur. Relecture : Cohérence (« compatible avec réserves ») puis le Vérificateur (« OK avec corrections mineures ») ; corrections appliquées.*
+*Étape 4 de la feuille de route. Ce bilan croise votre carnet, le fichier scellé (dévoilé à la fin de l'essai), le rapport de scellement et vos réponses aux douze questions de ressenti, posées sans option recommandée (D-021) et citées mot pour mot. Votre retour libre, donné après ces questions, et vos deux messages qui ont suivi la remise du bilan sont cités tels qu'ils ont été notés, remis au propre sans en changer le sens. Ni date ni heure de jeu (D-017). Vos réponses aux textes sont restées dans votre appareil : aucun calcul n'a cherché à les retrouver (`docs/essai/simulation.md`, §9, « Après l'essai »). Les personnages et les exemples sont fictifs ; les textes de l'Assemblée sont réels. Rédaction : Game design (sections 1 à 4, 7, 8.1, règles du jeu en 8.2, 9, annexe A) et UX (sections 5 et 6, écrans en 8.2, 8.3, annexe B, lecture critique des réponses). Assemblage : l'orchestrateur. Relecture : Cohérence (« compatible avec réserves ») puis le Vérificateur (« OK avec corrections mineures ») ; corrections appliquées. Retouches du 8 octobre 2026 (vos deux messages après la remise du bilan) relues par Cohérence (compatible avec réserves, levées) et par le Vérificateur (OK avec corrections mineures, appliquées).*
 
 ## En bref
 
 1. **L'essai s'est déroulé sans incident technique.** Seize séances jouées d'une traite, toutes sur la version 1 de la page ; carnet complet ; contrôles d'après l'essai justes. La page a tenu dans l'icône, et vous n'avez « rien vu de travers » sur l'iPhone.
-2. **La boucle se comprend et tient dans son temps.** Une journée complète a duré 66 secondes en médiane, pour environ 90 visées. Les textes ont été « compris du premier coup » 13 fois sur 13, mais par un lecteur qui n'est pas neuf.
-3. **Le plaisir de deviner n'est pas apparu.** Vous avez trouvé 6 cartes sur les 32 que vous avez tentées, à peu près ce que donne le hasard (8), en vous fiant à la seule fiche « Qui est qui ». « Deviner » n'a jamais été votre moment préféré ; « Donner mon avis » l'a été 9 fois sur 15. Votre explication : « Des personnages inventés, ça touche peu ».
-4. **Deux signaux sur les écrans.** Aux jours 4 et 5, « Jour suivant » vous a surpris, malgré sa confirmation : deux journées sont passées sans deviner ni répondre. Et la règle de Deviner (une carte, une personne ; chaque personne une seule fois) vous a paru « un petit peu étrange » : l'écran l'impose, mais ne la dit jamais.
+2. **La boucle tient dans son temps ; elle manque encore de clarté.** Une journée complète a duré 66 secondes en médiane, pour environ 90 visées. Les textes ont été « compris du premier coup » 13 fois sur 13, mais par un lecteur qui n'est pas neuf. La journée, elle, vous a paru peu claire : après le bilan, vous avez écrit que l'écran Deviner n'est « pas forcément très clair », que votre avis et ce que devinent les autres se séparent mal, et qu'il manque de la « fluidité » (section 5).
+3. **Le plaisir de deviner n'est pas apparu.** Vous avez trouvé 6 cartes sur les 32 que vous avez tentées, à peu près ce que donne le hasard (8), en vous fiant à la seule fiche « Qui est qui ». « Deviner » n'a jamais été votre moment préféré ; « Donner mon avis » l'a été 9 fois sur 15. Votre explication : « Des personnages inventés, ça touche peu ». Votre second message (point 2) laisse voir une autre cause possible, qui peut s'y ajouter : un écran Deviner peu clair. L'essai ne permet pas de les séparer.
+4. **Trois signaux sur les écrans.** Aux jours 4 et 5, « Jour suivant », propre au cadre de l'essai, vous a surpris malgré sa confirmation : deux journées sont passées sans deviner ni répondre. La règle de Deviner (une carte, une personne ; chaque personne une seule fois) vous a paru « un petit peu étrange » : l'écran l'impose, mais ne la dit jamais. Enfin, votre second message va plus loin : l'écran Deviner n'est « pas forcément très clair », et la journée manque de « fluidité ». C'est le signal le plus large : il porte sur le cœur du jeu, pas sur le cadre.
 5. **Ce que l'essai ne pouvait pas dire.** Joué d'une traite, par l'auteur du projet, face à des personnages inventés devinés par des automates, il ne dit rien de l'habitude quotidienne, du rendez-vous de 18h, de ce que vivraient de vrais proches, ni de la clarté pour un inconnu.
-6. **La question principale qu'il laisse au produit** : que fait le jeu pour celui qui n'a pas encore d'image de la façon dont pense un proche ? Votre impression d'ensemble, « une très bonne base », s'accompagne de trois pistes, examinées en section 8 : voir le résultat du cercle à la révélation, poser plusieurs visages sur une carte, suivre la progression de son portrait.
-7. **Ce document ne décide rien.** Viendront, en QCM, les règles restées ouvertes et vos pistes, puis votre décision de continuer, d'ajuster ou d'arrêter (D-008).
+6. **La question principale qu'il laisse au produit** : que fait le jeu pour celui qui n'a pas encore d'image de la façon dont pense un proche ? Votre impression d'ensemble, « une très bonne base », s'accompagne de trois pistes, examinées en section 8 : voir le résultat du cercle à la révélation, poser plusieurs visages sur une carte, suivre la progression de son portrait. Votre second message ajoute une question, elle aussi au cœur du jeu : rendre la journée claire et fluide (point 2 ; section 8.3 c).
+7. **Ce document ne décide rien.** Viendront, en QCM, les règles restées ouvertes, vos pistes et la clarté de la journée, puis votre décision de continuer, d'ajuster ou d'arrêter (D-008).
 
 **Cinq mots utilisés plus bas.**
 - *Justesse* : la part des cartes attribuées à leur vrai auteur, cartes passées comprises (sinon, passer ferait monter le chiffre).
@@ -38,7 +38,7 @@ Vous avez joué seul, sur votre iPhone, depuis l'icône de l'écran d'accueil (D
 
 **Comment lire vos réponses de ressenti** (UX ; vaut pour tout le bilan).
 - *Un seul répondant, qui est l'auteur du projet.* Vous voulez que le jeu marche, et aucun libellé ne corrige ce biais (simulation, « Limites et doutes »). Vos réponses ne sont pourtant pas toutes favorables : trois disent le manque d'enjeu, une dit la surprise devant « Jour suivant ». Ce mélange plaide pour leur sincérité ; il ne remplace pas d'autres répondants.
-- *Nos options, nos explications.* Chaque option portait sa raison, écrite par UX : en la choisissant, vous adoptiez aussi la nôtre. Deux fois, vous avez parlé avec vos propres mots : « Autre » à la question sur les seize cases, et votre retour libre. Ce sont les deux signaux les plus neufs du ressenti.
+- *Nos options, nos explications.* Chaque option portait sa raison, écrite par UX : en la choisissant, vous adoptiez aussi la nôtre. Vous avez parlé avec vos propres mots à « Autre » (question sur les seize cases), dans votre retour libre, puis dans deux messages après la remise du bilan. Ce sont les signaux les plus neufs du ressenti.
 - *Des réponses données après coup.* Les questions sont venues après le dévoilement, une fois les jours enchaînés : un ressenti « au fil des jours » se reconstruit alors d'un bloc.
 
 ### Ce que dit le carnet
@@ -66,6 +66,7 @@ Vous avez joué seul, sur votre iPhone, depuis l'icône de l'écran d'accueil (D
 - Pour mettre un prénom sur une carte : « La fiche « Qui est qui » », seule. Ni « Les révélations d'avant », ni « Le Cercle ou l'écran d'un proche », ni « Rien de précis ».
 - Pourquoi jamais « Deviner » : « Des personnages inventés, ça touche peu » (« Deviner des inconnus n'a pas l'enjeu de deviner de vrais proches. »).
 - Après avoir reçu ce bilan, vous avez précisé : le plaisir de deviner n'est pas venu parce que les personnes étaient fictives ; « tout l'intérêt de cette application, c'est de découvrir des proches, des gens qu'on connaît », et avec eux, vous pensez que vous auriez eu du plaisir à deviner.
+- Dans un second message, vous avez écrit que l'écran Deviner n'est « pas forcément très clair », et que votre avis et ce que devinent les autres se séparent mal : section 5.
 - Devant une révélation sans point : « Pas grand-chose » (« Ce n'étaient pas de vrais proches : le résultat m'importait peu. »).
 - Le Mystère, reçu en semaine 2 : « Comme un rôle amusant » (« Être difficile à deviner, ça me plaisait. »).
 - Ce qui vous a fait jouer d'une traite : « Arriver vite au bilan » (« Je voulais faire avancer le projet. »).
@@ -74,6 +75,7 @@ Vous avez joué seul, sur votre iPhone, depuis l'icône de l'écran d'accueil (D
 ### Lecture
 
 - **Tout concorde (Game design).** Vous avez deviné des inconnus, sans enjeu, à partir d'une fiche. Le carnet ne montre ni plaisir de deviner ni rejet : il montre une devinette sans attente. Vous avez joué comme on éprouve un jeu, pas comme on joue avec des proches.
+- **Une autre cause possible (UX).** Dans votre second message, l'écran Deviner n'est « pas forcément très clair » (section 5). Une devinette dont l'écran se lit mal plaît moins, même entre proches. Votre explication, des personnages inventés, reste la plus directe ; les deux peuvent s'ajouter, et l'essai ne les sépare pas. Seule une journée claire, jouée par de vrais proches, le dira.
 - **Une surprise suppose une attente (Game design).** « Ça alors ! » ne fait d'effet que si l'on pensait autre chose (« Pierre, sûrement » ; c'était Hugo, `docs/vision.md`). Sans image préalable des personnes, 26 surprises sur 32 laissent « Pas grand-chose ». Dans le produit, cette image vient de la vie commune ; l'essai ne pouvait pas la donner. Il montre en revanche ce que vit un joueur qui ne l'a pas : c'est la première question de la section 8.
 - **Franchement (Game design).** D-007, repris par D-015, attendait de l'essai qu'il teste « les règles, la boucle et le plaisir de deviner ». Avec des personnages inventés, il testait la déduction sur des inconnus. Le plaisir promis, deviner ses proches, était hors de sa portée.
 - **« Donner mon avis » tient seul.** C'est la seule partie du jeu où les personnages n'entrent pas : un vrai texte, quatre vrais arguments de députés. Qu'elle ait été votre moment préféré montre qu'elle vous a retenu pour elle-même. Cela ne dit pas que deviner de vrais proches plairait moins.
@@ -178,14 +180,26 @@ Après les questions, deux choses vous ont paru « un petit peu étrange » : ne
 - **« Nulle part » mesure qu'on sait quoi faire, pas qu'on comprend une règle ni qu'on l'accepte (Game design).** Vous saviez quoi faire, parce que le geste vous y obligeait ; vous ne voyiez pas pourquoi. Ce n'est pas une contradiction de votre part : la question proposait trois endroits où hésiter (le portrait et les phrases, Le Cercle et l'écran d'un proche, la raison cachée), mais ni Deviner ni le cadre de l'essai. Un QCM ne trouve que ce qu'on a pensé à proposer (UX).
 - **La règle figurait dans une maquette validée, et elle a quand même paru étrange en jouant.** C'est donc à l'écran de la porter. Pour quelqu'un qui découvre le jeu, elle risque de paraître plus étrange encore (hypothèse, à vérifier en bêta).
 
+### Votre second message : Deviner et la journée
+
+Après la remise du bilan, vous avez écrit : « Je trouve que l'écran qui essaie de faire deviner ce qu'ont dit les autres, ou les arguments, n'est pas forcément très clair, pour être honnête. Et pareil, la séparation entre ce que moi je pense, ce pourquoi je vote, et la partie sujet, ce que devinent les autres. Je ne sais pas, il y a tout un manque de fluidité, de choses assez intuitives. »
+
+**Ce que cela change à ce qui précède (UX).**
+- **« Nulle part » ne veut plus dire que chaque écran se comprenait.** Il dit que rien ne vous a arrêté : le geste vous menait. Votre message dit autre chose : faire le geste n'était ni clair ni naturel. Les deux sont vrais ensemble ; pour le produit, c'est le second qui compte. La question proposait pourtant la raison cachée parmi les endroits où hésiter : elle mesurait l'hésitation, pas la clarté.
+- **Le malentendu ne tient plus au seul cadre** (« Jour suivant », section 6). Il touche le cœur du jeu : l'écran Deviner, la raison cachée, et la frontière entre votre avis (Répondre) et ce que vous devinez des autres (Deviner).
+- **Un même geste, deux lectures.** « Relire » jamais touché se lisait plus haut comme un signe que les textes passaient bien. Il peut aussi vouloir dire que vous deviniez sans revenir au texte dont parlaient les cartes (environ 6 secondes par carte). Il ne tranche pas.
+- **Les textes ne sont pas en cause.** Ce que vous trouvez peu clair, c'est la journée, pas les textes (« compris du premier coup » 13 fois sur 13).
+
+**Limites.** Un seul lecteur, l'auteur du projet, qui connaît les règles : un joueur qui découvre le jeu trouvera probablement ces écrans moins clairs encore (hypothèse). Et chaque journée de l'essai était entourée de son cadre (carnet, « Jour suivant », notes) et enchaînée avec la suivante : on ne peut pas séparer ce qui vient des écrans de ce qui vient du cadre. Causes possibles et question : section 8.3 c.
+
 ### Ce que cela ne montre pas
 
 - **La clarté pour quelqu'un qui découvre** (section 7).
 - **Une réponse pesée chaque jour.** « Compris du premier coup » était le premier bouton, et la question revenait chaque jour : ce 13 sur 13 peut tenir en partie du réflexe, comme la question 1 (section 3). Ne jamais relire est un geste, donc un signal plus solide ; mais lire vite va aussi avec la hâte que vous décrivez.
-- **Tout le parcours.** Vous ne vous êtes pas servi du Cercle pour deviner (section 2) : sur ces écrans, « Nulle part » dit qu'ils ne vous ont pas arrêté, pas qu'ils se comprennent. Et le seul malentendu prouvé de l'essai est dans son cadre (« Jour suivant », section 6).
+- **Tout le parcours.** Vous ne vous êtes pas servi du Cercle pour deviner (section 2) : sur ces écrans, « Nulle part » dit qu'ils ne vous ont pas arrêté, pas qu'ils se comprennent. Et le seul malentendu visible dans vos gestes est dans le cadre de l'essai (« Jour suivant », section 6) ; votre second message, lui, porte sur le jeu (ci-dessus).
 - **Pourquoi la raison cachée n'a jamais été trouvée.** Le geste ne posait pas de problème (tenté 10 fois sur 11) : l'échec relève de la difficulté, pas de la clarté.
 
-Les deux signaux les plus nets sur l'écran sont venus de vos propres mots, pas de nos options. Cela pèse sur les questionnaires de la bêta, prévus en QCM et sans texte libre pour qu'aucune opinion ne s'y glisse (plan de construction, §5) : ces deux raisons seront à peser ensemble au moment de les écrire. Rien n'est décidé.
+Les signaux les plus nets sur l'écran sont venus de vos propres mots, pas de nos options : votre retour libre, puis votre second message. Cela pèse sur les questionnaires de la bêta, prévus en QCM et sans texte libre pour qu'aucune opinion ne s'y glisse (plan de construction, §5) : ces deux raisons seront à peser ensemble au moment de les écrire. Rien n'est décidé.
 
 ## 6. Le cadre de l'essai et l'iPhone
 
@@ -302,7 +316,7 @@ Ce sont des questions de fond, pas des décisions. Celles qui touchent des règl
 - **Pourquoi elle compte.** La surprise est le cœur de la révélation. Si elle tombe quatre fois sur cinq, elle ne marque plus rien ; si elle ne tombe jamais, le jeu devient trop facile. `produit.md` (§8) prévoit de surveiller la part de bonnes attributions, avec des seuils « fixés plus tard ».
 - **La question** : quelle part de bonnes attributions viser pour qu'une surprise reste un événement ? L'essai donne un point bas (16 %), mais avec des inconnus. Des repères chiffrés vous seront proposés avant la bêta (plan de construction, §5). Côté mots (UX) : avec de vrais proches, un verdict joyeux répété trois fois d'affilée reste-t-il un jeu, ou devient-il un compte d'erreurs ? Les mots sont validés (D-014) ; rien n'est à changer avant de l'avoir vu en bêta.
 
-**d. Le vote de 18h, toujours « adopté »** (Game design). La révélation a trois temps : qui avait dit quoi, le vote, les auteurs (D-011). Dans ce lot, aucun texte n'a été rejeté, et le temps du vote n'a jamais surpris. Le lot ne dit pas si ce sera fréquent dans le produit. La question : le choix des textes doit-il garder une part de textes rejetés ou votés de justesse ? Elle touche la production des textes (`projet.md`, §8 ; étape 5).
+**d. Le vote de 18h, toujours « adopté »** (Game design). La révélation a trois temps : qui avait dit quoi, le vote, les auteurs (D-011). Dans ce lot, aucun texte n'a été rejeté, et le temps du vote n'a jamais surpris. Le lot ne dit pas si ce sera fréquent dans le produit. La question : le choix des textes doit-il garder une part de textes rejetés ou votés de justesse ? Elle touche la production des textes (`projet.md`, §8 ; étape 5) ; elle vous est posée dès les questions du bilan, parce que votre piste 1 en dépend.
 
 **e. Une manche laissée en cours** (Game design). Aux jours 4 et 5, une manche ouverte sans être validée a compté comme passée : c'est une convention de l'essai, listée parmi ses « interprétations à confirmer ». Dans le produit, la journée se ferme à 18h, sans bouton. La question : ce qui est posé sans « Valider » compte-t-il à 18h, ou est-il oublié ? L'oublier en silence ressemblerait à une sanction, ce que le jeu écarte (`projet.md`, §10). Elle est voisine de C-020 et viendra avec les conventions de l'essai.
 
@@ -397,6 +411,16 @@ Pour chacune : les règles du jeu (Game design), puis l'écran (UX), puis la que
 
 **b. La clarté pour un inconnu.** Restent à vérifier auprès de quelqu'un qui découvre le jeu : la règle de Deviner (section 5) ; les textes en trois lignes et les raisons ; la ligne du vote ; les sigles des groupes (convention d'essai ; sigle ou nom : C-022, en QCM après ce bilan ; ce qu'un inconnu en comprend se vérifie en bêta) ; les deux-points en série (C-027, en QCM après ce bilan).
 
+**c. La journée, de Deviner à Répondre** (votre second message, section 5). Dans les écrans validés, plusieurs choses peuvent la rendre confuse (lecture d'UX, à vérifier) :
+- trois textes différents en une séance : la révélation porte sur l'un, la devinette sur un deuxième, la réponse sur un troisième ;
+- « Et maintenant, la question d'aujourd'hui. » mène à Deviner, qui porte sur le texte d'hier ;
+- le même mot pour soi et pour les autres : « Ta réponse sera définitive », « À qui sont ces réponses ? » ;
+- Deviner ne montre du texte que son titre, en petit ;
+- Répondre et Deviner se ressemblent : mêmes cartes, mêmes quatre raisons ;
+- l'entrée apprend l'ordre inverse : répondre, puis deviner, sur le même texte.
+
+La question : faut-il reprendre maintenant le parcours d'une journée, et jusqu'où ? Elle vous sera posée en QCM avec les règles restées ouvertes.
+
 Les remarques de forme relevées en fabriquant la page sont en annexe B ; elles se reprendront avec les écrans, à l'étape 6.
 
 ## 9. La suite
@@ -417,13 +441,13 @@ Ce bilan ne décide rien. Voici ce qui vient ensuite, dans l'ordre prévu (plan 
 | C-020 (heure de référence) | Les jours 4 et 5 posent un cas voisin (8.1 e). |
 | C-012, C-015, C-016, C-018, C-019, C-021 à C-027 | Rien de neuf : réglés par convention, impossibles dans l'essai (C-026, Le Pas de Côté) ou hors de sa portée (plusieurs cercles). C-021 est voisin de la piste 1 ; C-027 a été relevé par UX pendant les contrôles. |
 
-**2. Les questions de la section 8.** Elles ne sont pas toutes à trancher maintenant : 8.1 b et c se mesurent en bêta. Les autres, dont vos trois pistes, touchent des règles validées : elles vous seront posées en QCM, avec une option recommandée (D-001).
+**2. Les questions de la section 8.** Elles ne sont pas toutes à trancher maintenant : 8.1 b et c se mesurent en bêta. Les autres, dont vos trois pistes et la clarté de la journée (8.3 c), touchent des règles ou des écrans validés : elles vous seront posées en QCM, avec une option recommandée (D-001).
 
 **3. Une correction de cohérence, signalée sans être faite.** `docs/produit.md` écrit encore « Le Mesuré, souvent au centre (nom proposé) » (règle 13) et « « Le Mesuré » à la place de « L'Indécis » (à confirmer, §4) » (§9). Or D-010 a validé « Le Mesuré » en même temps que ce document.
 
 **4. Votre décision : continuer, ajuster ou arrêter** (D-008), sans règle fixée d'avance. Ce bilan ne la recommande pas ; il dit ce qui est établi et ce qui reste ouvert.
-- **Établi.** La boucle se comprend et tient en moins de 90 secondes. La page a tenu seize séances dans l'icône, sans perte, et vous n'avez « rien vu de travers ». Les titres ont été reçus comme des rôles. Donner son avis sur un vrai texte vous a retenu. Votre impression d'ensemble : « une très bonne base ».
-- **Ouvert.** Le plaisir de deviner, cœur de la promesse ; l'habitude et le rendez-vous de 18h ; ce que vivraient de vrais proches. Dans le plan actuel, la première fois que de vrais proches joueront ensemble, c'est la bêta (étape 7), après la construction.
+- **Établi.** La boucle tient en moins de 90 secondes, et ses textes se sont lus du premier coup, pour un lecteur qui connaît le projet. La page a tenu seize séances dans l'icône, sans perte, et vous n'avez « rien vu de travers ». Les titres ont été reçus comme des rôles. Donner son avis sur un vrai texte vous a retenu. Votre impression d'ensemble : « une très bonne base ».
+- **Ouvert.** Le plaisir de deviner, cœur de la promesse ; la clarté de la journée, qui manque selon vous de « fluidité » (l'écran Deviner, et sa frontière avec Répondre) ; l'habitude et le rendez-vous de 18h ; ce que vivraient de vrais proches. Dans le plan actuel, la première fois que de vrais proches joueront ensemble, c'est la bêta (étape 7), après la construction.
 
 **5. Ensuite, le produit est corrigé.** C'est la fin de l'étape 4.
 
