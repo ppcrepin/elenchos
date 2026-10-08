@@ -265,6 +265,8 @@ Troisième envoi de `docs/essai/questions-du-bilan.md`. **Décision : les règle
 
 **Renvoyé à plus tard :** un joueur déjà inscrit qui rejoint un autre cercle rejoue-t-il trois textes d'entrée (étape 6) ; les voix sous le vote (étape 6) ; un test de lecture de la journée par trois à cinq personnes extérieures au projet (à voir avec la décision de continuer, d'ajuster ou d'arrêter, D-008). Correction sans question, à faire avec la mise à jour du produit : `docs/produit.md` écrit encore « Le Mesuré … (nom proposé) » et « à confirmer », alors que D-010 l'a validé.
 
+**Précision (8 octobre 2026, pas une décision du porteur) :** R10 laissait à Game design le soin de confirmer la lecture d'UX sur la manche jamais ouverte. Game design la confirme : une manche dont l'écran Deviner ne s'est jamais affiché n'a pas de cartes, et sa révélation commence au vote. Reporté dans `docs/produit.md`, règle 10.
+
 ### D-031 — Après l'essai : ajuster, par un second essai joué seul avec des joueurs simulés · Décidé (8 octobre 2026)
 
 Décision que D-008 réservait au bilan (`docs/essai/decision-fin-essai.md`). Options soumises : ajuster par un essai de plus (recommandé) ; continuer tel quel vers l'étape 5 ; arrêter. Puis, pour la forme : une soirée sur papier avec quelques proches et un test de lecture par des personnes extérieures (recommandé), l'une ou l'autre seule. **Le porteur choisit d'ajuster**, et précise pour la forme : « Je veux uniquement un test sur moi et des utilisateurs virtuels pour l'instant. » (Il n'avait pas compris la seconde question.)
