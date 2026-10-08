@@ -219,6 +219,40 @@ Question 2 de `docs/essai/questions-du-bilan.md` (point 4, question principale d
 
 Question 3 de `docs/essai/questions-du-bilan.md` (piste 2 du porteur, avec C-010). Options soumises : le jumeau compte juste (recommandé par Game design) ; la règle actuelle, dite à l'écran (UX y était favorable) ; plusieurs visages par carte (idée du porteur). **Décision : le jumeau compte juste.** Le geste ne change pas : une carte, un visage, chaque visage une fois (règle 8, D-006). Désigner sur une carte un proche qui a donné exactement la même réponse (même position, même raison) compte juste, et la révélation le dit (« Paul avait répondu la même chose. »). L'écran Deviner dit la règle (mots : UX). Précise les règles 11 et 12 (D-010) : poser un jumeau n'est ni une erreur ni une surprise (Le Mystère, « Ses surprises »). Modifie, pour ce seul cas, le « jamais » de la maquette 2.7c (D-014 : « Les réponses que Marie n'avait pas à deviner ») : Marie apprend la réponse de Paul seulement si elle l'a désigné ; à dire au joueur dans « Qui, durée, droits » (Juridique). Clôt C-010, avec la règle R4 du dossier pour les cartes identiques servies ensemble (soumise au bloc de détail).
 
+### D-025 — L'avis du cercle à la révélation : la répartition, en graphique de jugement majoritaire · Décidé (8 octobre 2026)
+
+Question 4 de `docs/essai/questions-du-bilan.md` (piste 1 du porteur), puis sa précision. **Décision : à 18h, la révélation montre l'avis du cercle sur le texte révélé**, par la ligne « Ton cercle, lui, l'aurait adopté. » (ou « rejeté », ou « était partagé ») et par un graphique de jugement majoritaire : la part de chaque position dans le cercle, la mention du milieu marquée. Au premier envoi, le porteur a répondu « Le vote du cercle, avec un joli graphique de jugement majoritaire » ; à la précision, entre la mention seule mise en valeur sur l'échelle (recommandée), la répartition complète et la ligne seule, il a choisi la répartition complète, en sachant ce qu'elle touche.
+
+**Ce que cette décision modifie, explicitement :**
+- la ligne rouge « Aucune mise en scène du désaccord » (`projet.md` §9), assouplie pour ce graphique : dans un cercle de trois à cinq, une répartition se lit nom par nom (« tu es le seul défavorable ») ;
+- D-010, point 3 (« quand un proche décroche, rien de visible ») : le total des réponses peut dire qu'un membre n'a pas répondu ;
+- la règle 10 (ce qui tombe à 18h, D-010) ;
+- les « jamais » des maquettes 2.7d (« Le décompte des positions dans le cercle ») et, à cinq membres et plus, 2.7c (« Les réponses que Marie n'avait pas à deviner ») (D-014).
+
+**Positions de l'équipe, pour mémoire :** Game design recommandait la ligne seule ; UX préférait ne rien montrer ; Juridique et Back-end écartaient la répartition. Juridique, franchement : aucun texte ne l'interdit, mais l'analyse d'impact devra justifier de montrer plus que la mention (minimisation, RGPD art. 5.1.c et 25) ; c'est un risque à faire lever par l'avocat avant le lancement.
+
+**À faire avant la bêta :** la forme (UX et Direction artistique ; une seule teinte, D-012) ; un seuil minimal de réponses et ce qui s'affiche en dessous (Game design, Juridique ; trois réponses selon Game design et Juridique, six selon UX) ; l'information du joueur avant sa première réponse et l'analyse d'impact, dont le cas d'un adolescent dans un cercle familial (Juridique) ; l'avis de l'avocat. Rien ne sort du cercle : le graphique n'additionne jamais plusieurs cercles (§9, §10).
+
+### D-026 — Voir son portrait avancer : une barre comptée en réponses · Décidé (8 octobre 2026)
+
+Question 5 de `docs/essai/questions-du-bilan.md` (piste 3 du porteur, avec C-008). Options soumises : des étapes nommées sans chiffre (recommandé par Game design) ; une barre comptée en réponses ; rien de plus ; un compte à rebours en jours. **Décision : une barre qui avance à chaque réponse, sans date, qui ne recule jamais**, jusqu'aux premiers curseurs nets. Elle est propre au joueur, comme son portrait : visible par le cercle, elle deviendrait un classement (`projet.md` §9).
+
+**Ce que cette décision modifie :** les « jamais » des maquettes 1.7 (« Un chiffre sur le portrait »), 4.1 (« Un chiffre, un axe gradué ») et 5.11 (« Un chiffre, un pourcentage de remplissage ») (D-014) ; le rythme de dévoilement du portrait (`projet.md` §5) et l'écran du portrait pas encore formé (règle 18, D-010).
+
+**Reste à régler (Game design et UX, étape 6) :** ce que la barre annonce au bout. Game design objecte qu'une barre en réponses promet une découverte qui peut ne pas venir à qui répond souvent au centre (Le Mesuré, règle 13) ; UX et Game design avaient écarté la barre au nom des « jamais » ci-dessus. Le seuil des trois mois ne change pas (son réglage fin se fait à l'étape 6). La phrase du dimanche sans curseur net (C-008) est réglée par la règle R2 du bloc de détail.
+
+### D-027 — Chiffres internes sur les réponses : seulement la part de « aucune » · Décidé (8 octobre 2026)
+
+Question 6 de `docs/essai/questions-du-bilan.md` (C-021). Options soumises : seulement la part de « aucune » (arbitrage de l'orchestrateur : point commun de Juridique, Contenu et Back-end) ; aussi le poids des raisons (Juridique, Contenu ; Back-end contre) ; aucun chiffre (Back-end). **Décision : pour repérer un texte ou des arguments mal écrits, l'équipe compte seulement, texte par texte, la part de réponses « aucune des quatre raisons ».** Rien sur les positions ni sur les raisons choisies.
+
+**Garde-fous (Juridique, Back-end) :** comptée après la révélation du texte, sur tous les joueurs à la fois ; jamais par cercle ni par personne, jamais croisée avec une autre donnée ; rien sous un seuil minimal de réponses (par exemple 30, fixé dans l'analyse d'impact) ; seuls les comptes sont gardés ; lue par le porteur et Contenu seulement ; un seul usage, écrit dans les conditions d'utilisation ; **jamais publiée**, ni au registre de méthode ni ailleurs (§9). Une phrase dans « Qui, durée, droits » (D-006) ; l'avocat dira si un accord séparé est nécessaire.
+
+**Ce que cette décision modifie :** `produit.md` §8 (D-010, mesures « jamais sur ce qu'ils pensent ») reçoit une exception limitée à la qualité des textes ; `projet.md` §8 perd le « taux de choix par option ». Clôt C-021.
+
+### D-028 — Adoptés et rejetés : au moins un tiers de chaque · Décidé (8 octobre 2026)
+
+Question 7 de `docs/essai/questions-du-bilan.md` (bilan 8.1 d, avec les chiffres de Contenu sur deux ans de scrutins publics, recomptés). Options soumises : au moins un tiers de chaque (recommandé par Contenu) ; le rejet rare ; aucune règle (préféré par UX). **Décision : sur quatre semaines glissantes, les textes adoptés et les textes rejetés font chacun entre un tiers et deux tiers des textes servis, dans un ordre tiré au hasard.** La règle passe après l'équilibre entre groupes et les quotas par commission ; elle est publiée au registre de méthode, avec le mélange réellement servi (chiffres sur le contenu, jamais sur les joueurs). Règles d'application de Contenu : une motion de rejet adoptée par les partisans du texte pour un motif de procédure ne compte pas comme un rejet ; au moins un texte rejeté parmi les trois textes d'entrée (précise D-006). Complète `projet.md` §8 ; question posée avant l'étape 5 (choix 4), parce que l'avis du cercle (D-025) en dépend. Elle suppose que seuls des textes déjà votés soient servis (règle E11, soumise au bloc de détail).
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
