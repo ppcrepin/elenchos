@@ -1701,7 +1701,7 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
   - T1 à T14 : répondus par le porteur, les jours joués et pendant les sauts.
 - **2 fiches de réserve, non scellées :** une rejetée, une Tradition/Changement. Une réserve remplace d'abord un texte de même tension, puis de même résultat.
 - **1 fiche légère :** la surprise de la semaine d'avant l'arrivée (A.6).
-- **Fenêtre :** 17e législature, votes jusqu'au 2 octobre 2026. Tout est déjà voté (E11).
+- **Fenêtre :** 17e législature, votes jusqu'au 2 octobre 2026 ; et, pour les cases que la 17e ne remplit pas, la 16e législature (2022-2024), comme au premier essai. Tout est déjà voté (E11). (Arbitrage de l'orchestrateur, 9 octobre 2026, après le relevé ciblé : dans la 17e législature, Précaution/Innovation, Tradition/Changement et Local/National n'offrent pas assez de textes conformes ; positions : Contenu proposait d'ouvrir la 16e pour T, ou d'assouplir E9 et la répartition par tension. L'exclusion des dossiers et des mesures du premier essai, A.5, vaut dans les deux législatures. Un groupe s'écrit tel qu'il était au dépôt, §7.11.)
 - **Où :** toutes les fiches du lot, réserves comprises, vont dans `docs/essai/a-ne-pas-ouvrir-2/textes/`, jamais dans `a-ne-pas-ouvrir/`, que le porteur peut lire depuis le premier dévoilement. Seul `a-ne-pas-ouvrir/textes/conventions.md` est cité, parce qu'il ne dévoile rien du second lot.
 
 **A.2 Tensions et sens**
