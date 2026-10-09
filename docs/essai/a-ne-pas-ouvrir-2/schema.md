@@ -763,7 +763,7 @@ Aucune autre clé.
 - **E8** : titres de 60 points de code au plus, sans « : », titre de H86 compris.
 - **D-034** : les règles de la partie 2.5.
 - **Groupes et considérations** : les quatre `groupe` d'un texte sont deux à deux différents, et `null` compte comme une valeur, permise une fois au plus. C'est une hypothèse, à confirmer par Contenu (partie 8).
-- **Ordre des tensions** : T0 à T14 suivent l'ordre principal ou le repli du fichier caché, point 14. E1, E2 et E3 sont sur S, P et L.
+- **Ordre des tensions** : T0 à T14 suivent l'ordre retenu, ou l'ordre R2 ou R3, du fichier caché, point 14. E1, E2 et E3 sont sur S, P et T (sur S, P et L dans l'ordre R3).
 - **Réglage** : valeurs permises de la partie 2.8 ; `tirage` va de 1 à 200.
 - **Groupes et commissions** : les tables des parties 2.10 et 2.10 bis, avec leurs règles.
 

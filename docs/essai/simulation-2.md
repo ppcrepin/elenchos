@@ -269,7 +269,7 @@ Les nets passent par leur écart à 1/2 : c'est la « hiérarchie des valeurs »
   - L'essai n'a que quatre tensions : chacune reçoit deux fois plus de textes que dans le jeu. Avec le facteur 3, le portrait avance environ six fois plus vite. Le second dimanche, avec 16 réponses, ressemble à environ trois mois de jeu (une centaine de réponses).
   - C'est aussi le facteur qui imite le mieux la sévérité du jeu.
     - Dans le jeu, à trois mois, une tension compte environ onze réponses et devient nette s'il y a au moins dix arbitrages nets.
-    - Dans l'essai, chaque tension en compte quatre. Il faut les quatre (ou trois, plus un penchant).
+    - Dans l'essai, une tension en compte trois à cinq, quatre le plus souvent. Avec quatre, il faut les quatre (ou trois, plus un penchant).
     - Pour un joueur qui fait un arbitrage net quatre fois sur cinq, la chance qu'une tension soit nette vaut environ 0,32 dans le jeu, 0,41 avec le facteur 3, et 0,82 avec le facteur 4.
 - **Ce qui n'est pas accéléré** :
   - la phrase du jour ;
@@ -306,7 +306,7 @@ Le §6 du premier essai s'applique, avec ces changements :
    - Il vaut pour tout membre, sur les textes du jour, jamais l'entrée.
    - Il est annoncé à la révélation de ce texte, avec les badges rares, après les auteurs. Plusieurs le même soir sont possibles.
    - Il ne vit pas ensuite comme un titre : R11 ne le dit pas, contrairement à R7. Une révélation jamais lue l'emporte avec elle. Jamais dans le carnet.
-   - Pour le porteur, il est impossible dans l'ordre principal des textes, avec le facteur 3 ; le repli à trois textes T (annexe A) est traité au fichier caché. Sur chaque tension, sa quatrième réponse est la première qui peut rendre le curseur net. Le détail, qui dépend de l'ordre des textes, est rangé au fichier caché. (arbitrage de l'orchestrateur : rangé au fichier caché, à lire après l'essai.)
+   - Pour le porteur, il reste rare avec le facteur 3 : sur chaque tension, sa quatrième réponse est la première qui peut rendre le curseur net, et il faut ensuite une réponse nettement contraire sur un texte dont la révélation est lue. Le détail, qui dépend de l'ordre des textes, est rangé au fichier caché. (arbitrage de l'orchestrateur : rangé au fichier caché, à lire après l'essai.)
 8. **Tempéraments** (règle 13, R9 ; seuils et fenêtre : conventions d'essai)
    - **Calcul** : chaque dimanche, au moment des titres (jours 0, 7, 14).
      - Sur les réponses aux textes révélés pendant les 56 derniers jours, ce dimanche compris. Textes d'entrée exclus.
@@ -1555,7 +1555,7 @@ L'auteur du programme de contrôle relit ce schéma.
    - la barre ;
    - le facteur, appliqué au seul porteur ;
    - la phrase « nette » ;
-   - Le Pas de Côté, pour les personnages, et pour le porteur dans le repli ;
+   - Le Pas de Côté, pour les personnages et pour le porteur ;
    - les tempéraments sur deux mois glissants.
 10. Les lignes rouges :
     - l'avis du cercle est la seule exception admise (D-025) :
@@ -1607,7 +1607,7 @@ L'auteur du programme de contrôle relit ce schéma.
   - un joueur toujours neutre ;
 - la barre à 0, à mi-chemin, pleine exactement, puis au-delà ;
 - la phrase « nette » du second dimanche, et son absence ;
-- Le Pas de Côté chez un personnage ; chez le porteur, seulement dans le repli à trois textes T (fichier caché, points 12 et 14) ;
+- Le Pas de Côté chez un personnage, et chez le porteur dans le seul cas que permet l'ordre des textes (fichier caché, points 12 et 14) ;
 - l'entrée à 0 sur 3 et à 3 sur 3 face à Valentin ;
 - un pseudo refusé par une lettre d'un autre alphabet ;
 - le rond à deux lettres ;
@@ -1683,8 +1683,8 @@ L'auteur du programme de contrôle relit ce schéma.
   - T0 : répondu par les personnages, deviné le jour 1. Jamais répondu par le porteur ; texte entier ou article central.
   - T1 à T14.
 - **Plus** deux réserves non scellées (une rejetée, une T) et la fiche légère H86.
-- **Avant la phrase du second dimanche**, le porteur répond à 16 textes : quatre par tension, ou trois sur T dans le repli.
-- **Ordre des tensions** : fixé par GD (fichier caché). Dans chaque tension, les textes vont dans leurs cases par tirage au scellement (D-028 : « dans un ordre tiré au hasard »), avec une contrainte de sens (fichier caché).
+- **Avant la phrase du second dimanche**, le porteur répond à 16 textes : trois sur Tradition/Changement, faute de stock (le repli prévu devient l'ordre retenu), quatre ou cinq sur chacune des autres tensions. Le détail est au fichier caché.
+- **Ordre des tensions** : fixé par GD (fichier caché). E1 à E3, T0 et T14 sont choisis pour leur rôle ; dans chaque tension, les autres textes vont dans leurs cases par tirage au scellement (D-028 : « dans un ordre tiré au hasard »), avec une contrainte de sens. Un ordre de repli est prévu si un texte tombe à la vérification (fichier caché).
 - **D-028** et **D-034** : comme Contenu les écrit, A.3 et A.7 ci-dessous. [Assembleur : les deux puces de Game design sur ces points redisent Contenu sans écart ; une seule version est gardée.]
 - **E4, E5, E8, E9 et E11** : comme Contenu les applique.
 
@@ -1705,12 +1705,12 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
 - **Où :** toutes les fiches du lot, réserves comprises, vont dans `docs/essai/a-ne-pas-ouvrir-2/textes/`, jamais dans `a-ne-pas-ouvrir/`, que le porteur peut lire depuis le premier dévoilement. Seul `a-ne-pas-ouvrir/textes/conventions.md` est cité, parce qu'il ne dévoile rien du second lot.
 
 **A.2 Tensions et sens**
-- **Répartition.** S, P, T, L. Avant la phrase du second dimanche, le porteur répond à 16 textes (E1 à E3, T1 à T13), soit 4 par tension : c'est la condition de la convention 13 de Game design (annexe A, partie Game design [renvoi]). T0 et T14 complètent deux tensions, que Game design choisit avec l'ordre.
+- **Répartition.** S, P, T, L. Avant la phrase du second dimanche, le porteur répond à 16 textes (E1 à E3, T1 à T13), La convention 13 de Game design en voulait quatre par tension ; le stock ne donne que trois textes Tradition/Changement qui passent les conventions : c'est le repli prévu (annexe A, partie Game design), et les autres tensions en reçoivent quatre ou cinq. T0 et T14 complètent deux tensions, que Game design choisit avec l'ordre (fichier caché).
 - **E9.** Dans chaque tension, les deux sens, à un texte près.
 - **Tradition/Changement.** Aucun texte de mœurs ou de religion qui suive une ligne de parti (inchangé).
 
 **A.3 Mélange (D-028)**
-- Entre 6 et 12 rejetés sur les 18, cible 7 ; la répartition par tension est au fichier caché. Au moins un rejeté parmi E1 à E3.
+- Entre 6 et 12 rejetés sur les 18, cible 7 ; la répartition par tension, le nombre retenu et son écart à la cible sont au fichier caché ; les bornes de D-028 sont tenues. Au moins un rejeté parmi E1 à E3.
 - Une motion de rejet adoptée par les partisans du texte pour un motif de procédure ne compte pas, et n'est pas servie.
 - Dans chaque tension, au moins un adopté et un rejeté si le stock le permet. Sur le lot, le sens est croisé avec le résultat.
 - Si une case reste vide, l'orchestrateur relâche au point d'étape, dans cet ordre :
@@ -1727,6 +1727,7 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
 - **T0 :** texte entier ou article central, sens net, jamais un rejet de circonstance.
 - **Entrée :** trois tensions différentes, des mesures qui divisent et se comprennent seules. Un amendement est admis s'il se lit sans le texte autour.
 - **Même dossier :** au plus deux scrutins par dossier, sur des mesures sans rapport et des tensions différentes.
+- **Amendement de suppression :** la ligne du vote reste exacte sur le scrutin servi, sans en emprunter un autre. Selon le cas, la mesure servie est l'article visé ou l'amendement lui-même (règle au fichier caché). Le titre et les lignes n'enchaînent jamais deux négations.
 
 **A.5 Jamais joués**
 - Aucun des 19 textes préparés pour le premier essai (17 joués, la réserve T, la réserve P écartée), ni aucun scrutin de leurs dossiers.
@@ -1782,9 +1783,7 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
 
 **A.9 Délai**
 - 3,5 à 4 jours après validation, comme annoncé.
-- **Risque : Tradition/Changement.** Si le relevé ciblé ne trouve pas quatre textes T, le point d'étape le dira. Deux voies :
-  - une demi-journée à un jour de recherche en plus, sans garantie ;
-  - trois textes T, une répartition à faire trancher par Game design. [Assembleur : Game design l'a écrite : le repli à trois textes T (partie Game design ci-dessus ; détail au fichier caché).]
+- **Tradition/Changement.** Le relevé ciblé, 16e législature comprise, n'a trouvé que trois textes T qui passent les conventions, plus une réserve. Le lot prend le repli à trois textes T (partie Game design ci-dessus ; détail au fichier caché).
 
 ## Annexe B · Le fichier scellé (Front-end ; écart)
 
@@ -1919,7 +1918,7 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
 - **D-027** : écartée de l'essai.
 - **R2, R3, R7, R10, R11, E1 et E6** : appliquées, avec des conventions d'essai pour les points qu'elles ne chiffrent pas.
 - **`simulation.md`** n'est pas une décision. Ses conventions qui changent sont listées en D.
-- **La promesse publiée** dans `retours-du-8-octobre.md` (« quatre ou cinq réponses par tension ») tient dans l'ordre principal. Elle ne tient pas pour T dans le repli : à dire au porteur à la livraison, sans question.
+- **La promesse publiée** dans `retours-du-8-octobre.md` (« quatre ou cinq réponses par tension ») ne tient pas pour Tradition/Changement : le stock ne donne que trois textes T (annexe A, A.9). À dire au porteur à la livraison, sans question.
 
 #### UX
 
@@ -2085,7 +2084,7 @@ Son désaccord avec Front-end sur la forme du graphique (escalier contre rangée
 
 #### Autres rôles (renvois)
 
-- Game design : la promesse « quatre ou cinq réponses par tension » ne tient pas pour T dans le repli (« Décisions antérieures touchées », Game design, dernière puce) ; le facteur du portrait, s'il change au réglage (§5.9).
+- Game design : la promesse « quatre ou cinq réponses par tension » ne tient pas pour Tradition/Changement (« Décisions antérieures touchées », Game design, dernière puce) ; le facteur du portrait, s'il change au réglage (§5.9).
 - UX et Direction artistique : l'annexe C et les formes du §7.23, montrées à la livraison.
 
 ## Limites et doutes
@@ -2100,7 +2099,7 @@ Son désaccord avec Front-end sur la forme du graphique (escalier contre rangée
 - Une limite de Game design sur la forme des réponses atypiques est rangée au fichier caché (à lire après l'essai).
 - **Proportions des raisons de l'histoire** fixées à 1/2 : le premier relevé de Contenu (3 ou 4 paires sur 10, échantillon non représentatif) donne moins. Effet invisible pour le porteur, sauf sur la fréquence des Pas de Côté d'avant l'arrivée, qu'il ne voit pas.
 - **Les jumeaux** ne sont plus garantis (contrainte P retirée) : D-024 peut ne pas être éprouvé. Le rapport le dira.
-- **Le Pas de Côté du porteur** est impossible dans l'ordre principal : le badge ne se verra que chez un personnage, s'il en tombe un sur une révélation lue (chiffre constant).
+- **Le Pas de Côté du porteur** reste rare : il faut un curseur déjà net, puis une réponse nettement contraire sur un texte dont la révélation est lue. Le badge se verra plus sûrement chez un personnage, s'il en tombe un sur une révélation lue (chiffre constant).
 - **À vérifier avec de vraies personnes** :
   - si un nouveau venu se sert du Cercle pour deviner ;
   - si des tempéraments et des titres non expliqués se comprennent ;

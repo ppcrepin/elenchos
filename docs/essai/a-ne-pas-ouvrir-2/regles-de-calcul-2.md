@@ -75,7 +75,7 @@
   - q est retiré.
 - **4.3** : inchangé ; la justesse suit D-024 ; la redistribution est celle du premier essai.
 - **4.4** : inchangé. À quatre membres, toutes les réponses sont servies, dans l'ordre de l'étape 1.
-- **Constat** : avec cet ordre de textes, le curseur du porteur n'est jamais net dans une manche de personnage (sa quatrième réponse par tension arrive trop tard). Ses cartes se servent toujours à la rareté.
+- **Constat** : dans l'ordre retenu, le curseur du porteur ne peut être net dans une manche de personnage que pour sa carte de T12 (S), devinée le jour 13, après E1, T3, T6 et T9 ; dans l'ordre R2, seulement pour sa carte de T11 (L). Ailleurs, ses cartes se servent à la rareté.
 
 **6. Portrait du porteur** : W = 3w partout où son portrait est calculé (Moi, Le Cercle, écran d'un proche, phrase nette, Pas de Côté, R3 sur ses cartes), jamais en 3.2. Facteur lu dans le fichier scellé, valeurs permises 2, 3 ou 4.
 
@@ -136,23 +136,26 @@ Au-delà de r = 200 : défaut, renvoyé à GD. Les raisons de l'échec de chaque
 - un Pas de Côté d'un personnage sur une révélation lue, s'il existe dans le lot ;
 - la barre pleine par le premier curseur net.
 
-Est listé comme impossible : le Pas de Côté du porteur (facteur 3, ordre principal).
+Partie témoin ajoutée : un Pas de Côté du porteur sur T12 (S), révélé au vote le jour 14. Dans l'ordre R2, il est listé comme impossible.
 
 **13. Chiffres constants** : ceux du §9 public, plus la part de réponses atypiques parmi ses cartes, les remplacements et cartes identiques, les départages, et les impossibilités.
 
-**14. Annexe A cachée (ordre et sens)**
-- **Ordre principal**, T0 à T14 : S T L P S T P | L S T L S T P | L.
-  - Réponses du porteur avant le second dimanche : S (E1, T4, T8, T11), P (E2, T3, T6, T13), T (T1, T5, T9, T12), L (E3, T2, T7, T10) : quatre chacune.
-  - Au jour 7, au plus trois.
-  - Manches du porteur : S, T, L, P, P.
-  - Lot : S 5, P 4, T 4, L 5.
-- **Repli à trois textes T** : T12 passe à L, soit S T L P S T P | L S T L S L P | L.
-  - Le porteur a avant le second dimanche : S 4, P 4, T 3, L 5.
-  - Lot : S 5, P 4, T 3, L 6.
-  - T ne peut pas devenir net au jour 14.
-  - Le Pas de Côté du porteur devient possible sur L, si L est net après T10 et que T12 va contre lui (révélation lue au jour 14).
-  - À dire au porteur à la livraison : « quatre ou cinq réponses par tension » ne vaut plus pour T.
-- **Sens** : dans chaque tension, les réponses du porteur avant le second dimanche couvrent les deux sens, à un texte près. Pour cela, T0 reçoit un texte S, et T14 un texte L, du sens majoritaire de leur tension. C'est une cible : si le stock ne la permet pas, on la relâche avant les règles de D-028. Elle limite le biais d'approbation noté au premier essai.
+**14. Annexe A cachée (ordre, sens, lot)** *(mise à jour du 9 octobre 2026, composition du lot)*
+- **Ordre retenu.** Le stock, 16e législature comprise, ne donne que trois textes T : le repli à trois textes T devient l'ordre retenu. L'ordre à quatre textes T et l'ancien repli (cinquième réponse sur L) sont abandonnés : L n'a pas six textes qui passent les conventions.
+  - Entrée : E1 S, E2 P, E3 T, dans cet ordre.
+  - T0 à T14 : S L P S L T S | P L S P L S T | P.
+  - Réponses du porteur avant le second dimanche : S 5 (E1, T3, T6, T9, T12), P 4 (E2, T2, T7, T10), T 3 (E3, T5, T13), L 4 (T1, T4, T8, T11). Au jour 7, au plus trois par tension.
+  - Manches du porteur : S (T0), L (T1), P (T2), S (T6), T (T13).
+  - Lot : S 6 (T0 compris), P 5 (T14 compris), T 3, L 4. Jamais deux jours de suite sur la même tension ; T0 n'a pas la tension de H90.
+  - Au jour 14, T ne peut pas être net ; S, à cinq réponses, le devient plus facilement que P et L (à dire au dévoilement).
+  - Pas de Côté du porteur : possible sur S seulement, à la révélation de T12 (jour 14, au vote, lue), si son curseur S est net après T9 et que sa réponse à T12 va nettement contre lui.
+  - À dire au porteur à la livraison : « quatre ou cinq réponses par tension » ne vaut pas pour Tradition/Changement (trois).
+- **Ordre R2** (un texte S tombe sans remplaçant dans S) : S L P S L T S | L P L S L P T | P. Porteur : S 4 (E1, T3, T6, T10), P 4 (E2, T2, T8, T12), T 3, L 5 (T1, T4, T7, T9, T11). Lot : S 5, P 5, T 3, L 5. Manches inchangées. Pas de Côté du porteur impossible.
+- **Ordre R3** (aucun tirage de calibrage ne passe avec cette entrée) : entrée S, P, L (E3 = 3370) ; T0 à T14 : S T P S L T S | P L S P L S T | P.
+- **Sens (E9).** Dans chaque tension, les réponses du porteur avant le second dimanche couvrent les deux sens, à un texte près. T0 reçoit un texte S du sens majoritaire de S ; T14 un texte P, choisi (P est à égalité). C'est une cible : si le stock ne la permet pas, on la relâche avant les règles de D-028. Elle limite le biais d'approbation noté au premier essai.
+- **Rôles choisis, cases tirées.** E1 = 1161, E2 = 7386, E3 = 3708, T0 = 1262, T14 = 5359. Cases S : 795, 7922, 2190, 8279. Cases P : 840, 2139, 6770. Cases T : 2758, 3449. Cases L : 3370, 707, 2484, 989. Réserves : 5242 (T), 8167 (S, n'entre que si 8279 sort).
+- **Mélange.** 9 rejetés sur 18 (S 2, P 3, T 2, L 2), dont 2 à l'entrée. La cible 7 n'est pas atteignable (le stock manque d'adoptés) ; les bornes de D-028 sont tenues ; aucune relâche de A.3.
+- **Amendements de suppression.** On sert le scrutin de l'amendement, jamais un autre. Suppression adoptée : l'article visé est servi, rejeté (présentation A). Suppression rejetée : l'amendement est servi, rejeté (présentation B), avec un titre sans seconde négation. Ici : 2758 en A ; 7922, 6770, 5359 et 8167 en B.
 - **Tirage** des cases restantes dans chaque tension : t("ordre-texte|tension|i").
 
 **15. Limites propres.**
@@ -160,6 +163,7 @@ Est listé comme impossible : le Pas de Côté du porteur (facteur 3, ordre prin
 - Le porteur a lu, peut-être, les règles du premier essai ; la règle 2.2 bis est nouvelle.
 - Les profils sont connus depuis le premier dévoilement : sa justesse est une borne haute.
 - Quinze cartes : tout chiffre de justesse est fragile.
+- Trois textes sont servis en présentation B (double négation possible) ; la lecture du carnet le dira.
 
 ## 16. Passages déplacés de `simulation-2.md` (arbitrage de l'orchestrateur, 9 octobre 2026)
 
@@ -167,7 +171,7 @@ Est listé comme impossible : le Pas de Côté du porteur (facteur 3, ordre prin
 
 **« Limites et doutes », Game design, premier point**
 
-- **Une hiérarchie très sévère.** Avec le facteur 3, une seule réponse neutre ou tiraillée sur une tension l'empêche d'être nette au second dimanche (une réponse « aucune » ou hors tension, un penchant, le permet encore : trois arbitrages nets et un penchant font Σ = 10,5). C'est fidèle au jeu (environ 0,41 contre 0,32 de chance par tension), mais le porteur, qui a demandé de la nuance (D-034), peut n'avoir aucun curseur net. Ce serait l'objection de D-026 vécue, et un vrai renseignement pour recaler le seuil à l'étape 6. À ne pas lui dire avant de jouer, pour ne pas orienter ses choix de raisons. À dire au dévoilement.
+- **Une hiérarchie très sévère.** Avec le facteur 3, une seule réponse neutre ou tiraillée sur une tension à quatre réponses (P, L) l'empêche d'être nette au second dimanche (sur S, qui en a cinq, il en faut deux ; T, à trois, ne peut pas l'être) (une réponse « aucune » ou hors tension, un penchant, le permet encore : trois arbitrages nets et un penchant font Σ = 10,5). C'est fidèle au jeu (environ 0,41 contre 0,32 de chance par tension), mais le porteur, qui a demandé de la nuance (D-034), peut n'avoir aucun curseur net. Ce serait l'objection de D-026 vécue, et un vrai renseignement pour recaler le seuil à l'étape 6. À ne pas lui dire avant de jouer, pour ne pas orienter ses choix de raisons. À dire au dévoilement.
 
 **« Limites et doutes », Game design, point « Les seuils des tempéraments », après la première phrase**
 
@@ -175,7 +179,7 @@ Une marge étroite pour L'Original d'Odile (environ 0,37 contre 0,3) explique qu
 
 **§6, point 7 (Le Pas de Côté), fin du dernier sous-point**
 
-Sa seule cinquième réponse (T14, sur L) n'est jamais révélée. Avec le repli à trois textes T, il devient possible sur L, à la révélation de T12 (jour 14).
+Dans l'ordre retenu, il est possible sur S seulement : sa cinquième réponse S (T12) est révélée au vote le jour 14, et lue. Dans l'ordre R2, il est impossible.
 
 **Annexe A, A.6 (Contenu), sous « Le reste de la fiche va dans `a-ne-pas-ouvrir-2/textes/` : »**
 
@@ -186,7 +190,7 @@ Sa seule cinquième réponse (T14, sur L) n'est jamais révélée. Avec le repli
 ### Ajouts après la relecture de Cohérence (passages déplacés)
 
 - Un cercle unanimement neutre est impossible : aucune tension n'a trois profils neutres, Odile n'est jamais neutre, et une réponse atypique n'est jamais neutre (2.3).
-- Répartition des rejetés visée : environ 2 S, 2 P, 2 L et 1 T, selon le stock.
+- Rejetés du lot retenu : S 2, P 3, T 2, L 2 (9 sur 18).
 
 **§8.6, point 2, deuxième puce** (texte d'origine) :
 
@@ -207,4 +211,4 @@ Sa seule cinquième réponse (T14, sur L) n'est jamais révélée. Avec le repli
 **Annexe A, A.3, répartition des rejetés** (texte d'origine) :
 
 - Entre 6 et 12 rejetés sur les 18, cible 7 : environ 2 S, 2 P, 2 L et 1 T, selon le stock. Au moins un rejeté parmi E1 à E3.
-- Entrée : E1, E2, E3 sur S, P et L, dans cet ordre (déplacé du document public après le Vérificateur).
+- Entrée : E1, E2, E3 sur S, P et T, dans cet ordre (mise à jour du 9 octobre 2026 ; d'abord S, P et L).
