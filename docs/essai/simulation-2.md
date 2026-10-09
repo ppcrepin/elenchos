@@ -409,11 +409,11 @@ Le parcours de `simulation.md` §7.2, avec Valentin à la place d'Agathe et D-03
   ```
   - **Le texte.** La phrase validée perd sa fin « : un pseudo, ton e-mail. », devenue fausse. L'étiquette du champ reste « Pseudo » (mot validé), jamais pré-rempli. C'est le seul champ actif, sans saisie automatique du navigateur.
   - **Les trois boutons** (convention d'essai) : dans cet ordre (sur iPhone et iPad, Apple d'abord), de même taille et de même poids, aucun mis en avant.
-    - Pour l'essai, je recommande les mots seuls, sans logo ni couleur de marque. Raison : Juridique veut l'e-mail « aussi visible que les deux boutons », et une page d'essai n'a pas à reproduire les marques d'Apple ou de Google. Forme : Direction artistique. [Assembleur : forme pas encore donnée ; Front-end la demande avant le lot 1 (« Lots et délai ») et, à défaut, prévoit des boutons en texte seul (§8.8).] Dans le produit, ce sont les règles de marque qui s'appliqueront (étape 6).
+    - Pour l'essai, je recommande les mots seuls, sans logo ni couleur de marque. Raison : Juridique veut l'e-mail « aussi visible que les deux boutons », et une page d'essai n'a pas à reproduire les marques d'Apple ou de Google. Forme : Direction artistique. [Assembleur : forme pas encore donnée ; Front-end la demande avant le lot 1 (« Lots et délai ») et, à défaut, prévoit des boutons en texte seul (§8.8).] Dans le produit, ce sont les règles de marque qui s'appliqueront (étape 6), avec les six règles de Juridique de D-035, dont une mention « compte personnel » avant le toucher de Google.
   - **Inactivité.** Les trois boutons restent inactifs tant que le pseudo est vide ou refusé (§7.19).
   - **Note de la bande, tant que 1.8 ou 1.8b est affiché** : « Compte simulé : choisissez un pseudo, puis l'un des trois boutons. Rien ne se connecte et rien n'est envoyé, ni à Apple, ni à Google, ni par e-mail. Le pseudo reste dans votre {appareil}. »
-  - **« Continuer avec Apple »** mène tout droit au premier Aujourd'hui (fin de cette section). La bande montre alors, jusqu'au toucher suivant : « Dans le jeu, Apple vous demanderait ici de confirmer avec Face ID ou votre code. Dans l'essai, rien ne s'est connecté. »
-  - **« Continuer avec Google »** : de même, avec la note « Dans le jeu, Google vous demanderait ici de choisir votre compte. Dans l'essai, rien ne s'est connecté. »
+  - **« Continuer avec Apple »** mène tout droit au premier Aujourd'hui (fin de cette section). La bande montre alors, jusqu'au toucher suivant : « Dans le jeu, Apple vous demanderait ici de partager votre adresse e-mail ou de la masquer, puis de confirmer avec Face ID, Touch ID ou votre code. Dans l'essai, rien ne s'est connecté. »
+  - **« Continuer avec Google »** : de même, avec la note « Dans le jeu, Google vous demanderait ici de choisir votre compte ; seul un compte personnel serait accepté, pas celui d'un employeur ou d'une école. Dans l'essai, rien ne s'est connecté. »
   - **« Recevoir un code par e-mail »** ouvre 1.8b.
 - **1.8b, l'e-mail** (dessin d'essai ; dans le produit, l'étape 6 redessine 1.8) :
   - « ← Retour », qui ramène à 1.8 avec le pseudo gardé ;
@@ -957,7 +957,7 @@ L'escalier déplie cette barre. Chaque position a sa rangée et son libellé. Ch
   - Une seule fois, en 600 ms, courbe « ease-out », 150 ms après l'affichage de l'écran.
   - Pas d'appel, pas de pulsation, pas de son, pas de vibration. Jamais à rebours.
   - Avec « Réduire les animations » : la nouvelle longueur s'affiche directement.
-  - La page garde le dernier n affiché. C'est un compte de gestes, pas une opinion (avis de Juridique sur l'essai 2, §1.5).
+  - La page garde le dernier n affiché, dans l'appareil seulement. n compte des réponses : c'est un geste (avis de Juridique sur l'essai 2, §1.5). Mais la barre pleine avant 16 réponses dit qu'un curseur est net, ce qui dépend des avis : son état ne va jamais dans le carnet (contrôle 12).
 - **Contrastes.**
   - Caramel : 6,1 : 1 sur Assiette, 4,2 : 1 sur le chemin.
   - Miel : 8,4 : 1 sur Noyer, 5,0 : 1 sur le chemin.
@@ -1086,18 +1086,19 @@ Des pages du cadre, dans cet ordre. La barre affiche « Début ».
 
 1. **Si l'icône garde la partie du premier essai** (Front-end la détecte sans la lire) :
    - Titre : « La partie du premier essai est encore là »
-   - « Votre {appareil} garde encore vos réponses du premier essai. Elles ne servent plus, et l'icône ne garde qu'une partie à la fois : la page les efface avant de commencer. Votre carnet du premier essai, déjà dans la conversation, n'est pas touché. »
+   - « Votre {appareil} garde encore vos réponses du premier essai. Elles ne servent plus, et l'essai ne garde qu'une partie à la fois : la page les efface avant de commencer. Votre carnet du premier essai, déjà dans la conversation, n'est pas touché. »
    - Bouton : « Effacer et commencer ». Il ouvre la confirmation « Effacer la partie du premier essai ? » / « C'est définitif. » · « Annuler » · « Effacer ».
    - L'effacement retire aussi la trace de la page-test (Juridique). Sans effacement, l'essai ne commence pas.
 
-*[Assembleur : Front-end (§8.8) demande à UX si la phrase « la page les efface avant de commencer » doit changer dans le cas rare où les deux parties sont là ; pas de réponse à ce jour.]*
+*[Assembleur : Front-end (§8.8) demande à UX si la phrase « la page les efface avant de commencer » doit changer dans le cas rare où les deux parties sont là. Proposition de Juridique, mots à confirmer par UX : dans ce cas, « Elles ne servent plus, et l'essai ne garde qu'une partie à la fois : la page les efface avant de commencer. » devient « Elles ne servent plus : la page les efface. Votre partie en cours n'est pas touchée. », et le bouton devient « Effacer et reprendre ».]*
 
-**B. Le premier message** (texte de Juridique, à revalider par lui). C'est le texte du §8.2 de `simulation.md`, avec la dernière puce de ma version de travail :
+**B. Le premier message** (texte de Juridique, revalidé par lui le 9 octobre 2026). C'est le texte du §8.2 de `simulation.md`, dont la dernière puce est remplacée par les deux dernières ci-dessous :
 « **Vos réponses restent dans votre {appareil}.** La page n'envoie rien, pas même à l'équipe. Pour que personne d'autre ne les voie, et pour ne pas les perdre :
 - Jouez toujours depuis l'icône « Essai » : c'est elle qui garde votre avancement. Ne la supprimez pas avant la fin de l'essai : cela pourrait tout effacer.
 - Ne laissez personne d'autre ouvrir l'icône « Essai ».
 - Si un jour la page repart du début alors que vous aviez commencé, ne rejouez pas : dites-le dans la conversation.
-- Dans la conversation, parlez du jeu, pas de vos réponses ni de ce que le jeu en dit (vos phrases, votre portrait, l'avis du cercle). L'équipe connaît les réponses des personnages : une capture de l'avis du cercle suffirait à retrouver la vôtre. Une capture d'écran reste dans vos photos, même après « Tout effacer » : avant d'en envoyer une, vérifiez qu'on n'y voit rien de tout cela. »
+- Dans la conversation, parlez du jeu, pas de vos réponses ni de ce que le jeu en dit : vos phrases, votre portrait, votre place dans Le Cercle et sur l'écran d'un proche, l'avis du cercle.
+- Avant d'envoyer une capture d'écran, vérifiez qu'on n'y voit rien de tout cela, ni votre Historique. L'équipe connaît les réponses des personnages : une capture de l'avis du cercle suffirait à retrouver la vôtre. Et une capture reste dans vos photos, même après « Tout effacer ». »
 Bande : « Continuer ».
 
 **C. La page d'arrivée** (UX). Titre : « Le cercle Amis joue depuis trois mois ». Trois panneaux, puis une ligne.
@@ -1159,17 +1160,17 @@ La page « Votre carnet du jour » s'ouvre par « Jour suivant » ou par « Aban
 - **Après le carnet du jour 7** : « Aller au jour suivant » passe d'abord par « Votre carnet à copier » (§8.7 de `simulation.md`), avec « Copier mon carnet » · « Aller au jour suivant ». Le carnet porte alors « Essai en cours : carnet copié au jour 7. ».
 - **Après le jour 14**, « Aller au jour suivant » ouvre la clôture.
 
-### 8.4 Mesures automatiques (Game design ; règle de Juridique du premier essai ; lignes nouvelles à confirmer par Juridique avant le lot 5)
+### 8.4 Mesures automatiques (Game design ; règle de Juridique du premier essai ; lignes nouvelles confirmées par Juridique le 9 octobre 2026, sous la condition du contrôle 12)
 
 La règle de Juridique du premier essai s'applique telle quelle : rien qui changerait si le porteur avait répondu autrement n'est donné texte par texte.
 
 - **Chaque jour joué, comme au premier essai** : ouverture, jours écoulés, version, durées (séance, Deviner, Répondre), « Relire », « Passer », verdicts, raison cachée tentée.
 - **En plus, chaque jour** (des gestes, qui ne dépendent jamais des réponses) :
   - deux verdicts nouveaux : « juste par la même réponse » et « … avec la raison ». Ils ne dépendent que des personnages ;
-  - « Journée abandonnée : oui | non » ;
-  - « Révélation rouverte : {n} fois » (E3) ;
+  - « Journée abandonnée : oui | non ». Avec la durée de Répondre, un « oui » peut dire qu'un texte lu est resté sans réponse. C'est une abstention, pas un avis : risque assumé, comme la durée de Répondre (Juridique) ;
+  - « Révélation rouverte : {n} fois » (E3). Comme « Relire », un geste attaché à un jour : il peut dire un intérêt pour la révélation, avis du cercle compris, jamais une réponse. Risque assumé (Juridique) ;
   - « Ouvert : Le Cercle {n} fois, écran d'un proche {n} fois, Moi {n} fois, fiche « Qui est qui » {n} fois ».
-- **Jour 1 en plus** : les paris de l'entrée (juste ou faux, selon Valentin et la devinette ; Juridique doit confirmer), la voie de compte touchée (D-035), la durée de l'entrée.
+- **Jour 1 en plus** : les paris de l'entrée (juste ou faux, selon Valentin et la devinette ; confirmé par Juridique : le verdict dit ce que le porteur a deviné d'un personnage, jamais ce qu'il pense, à condition que le contrôle 12 prouve qu'il ne change pas avec ses propres réponses d'entrée), la voie de compte touchée (D-035 ; un geste), la durée de l'entrée.
 - **Aux jours 1 à 3**, les ouvertures du Cercle et de l'écran d'un proche faites pendant que Deviner est affiché (proposition d'UX). C'est la mesure de D-023 : le nouveau venu se sert-il du Cercle pour deviner ? Ligne « Pendant Deviner » du carnet (§8.12).
 - **Après chaque saut** (jours 7 et 14) : les mêmes ouvertures (proposition d'UX).
 - **Bloc de saut** : durée du saut, dont la page du saut ; durée de chaque réponse de rattrapage. C'est le même risque assumé que la durée de Répondre au premier essai : attachée à un texte, elle dit l'hésitation, pas la réponse.
@@ -1413,7 +1414,7 @@ Environ les deux tiers du code sont repris sans changement :
 ### 8.9, 8.11 et 8.13 (UX)
 
 - **§8.9, §8.11, §8.13** : inchangés.
-- La note « Qui, durée, droits » ne change pas : l'avis du cercle n'est vu que du porteur, et les boutons Apple et Google ne se connectent à rien. Juridique doit le confirmer.
+- La note « Qui, durée, droits » garde le texte du §8.9 de `simulation.md`, avec une phrase de plus à la fin de son paragraphe « Qui voit vos réponses » : « Les boutons Apple et Google de l'écran du compte sont dessinés : ils ne se connectent à rien, et la page n'envoie rien à Apple ni à Google. » Le reste ne change pas : l'avis du cercle n'est vu que du porteur (confirmé par Juridique).
 
 *[Assembleur : Front-end ajoute au chargement un arrêt V6 (§8.8), dont le repère d'UX au §8.11 n'est pas écrit.]*
 
@@ -1479,7 +1480,7 @@ Fin du carnet
 **Règles de présence** (toujours selon les écrans affichés, jamais selon une réponse) :
 - **Blocs, dans l'ordre vécu** : Jour 1, 2, 3, 4, Premier saut, Jour 7, Semaine 1, Jour 8, Second saut, Jour 14, Semaine 2, Clôture. Le bloc « Clôture » garde les lignes du premier essai.
 - **« Entrée » et « Compte »** : au jour 1 seulement, dès que la ligne est atteinte.
-  - {verdict} vaut « juste » ou « faux ». Il ne dépend que de Valentin et de la devinette : Juridique doit le confirmer.
+  - {verdict} vaut « juste » ou « faux ». Il ne dépend que de Valentin et de la devinette, jamais des réponses du porteur : confirmé par Juridique, sous la condition du contrôle 12.
   - {suite} au jour 1 : « , dont {D} pour l'entrée, {D} pour deviner et {D} pour répondre ». La durée de l'entrée va du premier affichage de 1.2 au bouton du compte (ou à « Valider » ou « Plus tard » de 1.9).
 - **Aux jours 4 et 8** : Ouverture, Version, Durée, Révélation, Raison cachée, Ouvert. Ni « Journée abandonnée », ni moment préféré. Le bloc du jour s'arrête au toucher « Avancer au dimanche » qui confirme le saut : ce qui précède (y compris une page du saut quittée par « Annuler ») compte dans le jour ; ce qui suit, dans le bloc de saut.
 - **« Révélation rouverte »** : chaque jour qui a une révélation qu'on peut fermer (jours 2, 3, 7, 14), même à 0.
@@ -1568,7 +1569,7 @@ L'auteur du programme de contrôle relit ce schéma.
     - aucun écran ne montre une révélation d'avant l'arrivée, ni l'identifiant d'un texte abstrait.
 11. Les chaînes sont relevées contre l'annexe C du second essai : page d'arrivée, page du saut et sa frise, repère du rattrapage, signalement du portrait accéléré, 1.8, repère V6, et ce que listait la version de travail de Front-end : « Les chaînes sont relevées contre l'annexe C du second essai. Un nom de groupe en toutes lettres peut se couper à ses espaces ; un sigle à trait d'union, jamais. » [Assembleur, sur arbitrage de l'orchestrateur : texte du contrôle 11 de la version de travail de Front-end, recopié mot pour mot ; aucun sigle n'est plus servi (arbitrage sur les sigles).] Un nom de groupe en toutes lettres ne se coupe qu'à ses espaces. Aucune ligne ne commence par « - ».
 12. Le carnet :
-    - les variantes du premier essai, réponses du rattrapage comprises (positions opposées, toutes neutres, autres raisons) : les blocs restent identiques octet pour octet, durées masquées ;
+    - les variantes du premier essai, réponses d'entrée et du rattrapage comprises (positions opposées, toutes neutres, autres raisons), paris de l'entrée et devinettes inchangés : les blocs restent identiques octet pour octet, durées masquées, lignes « Entrée » et « Compte » comprises ;
     - quatrième variante : le lien « Abandonner cette journée » ;
     - cinquième variante, nouvelle : un rattrapage interrompu (app fermée), puis repris ;
     - un jour couvert par un saut n'est jamais écrit comme un jour joué (format d'UX) ;
@@ -1855,14 +1856,14 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
 
 **Dans le cadre, nouveaux** :
 - la page de la partie du premier essai ;
-- la puce sur l'avis du cercle dans le premier message ;
+- les deux puces sur la conversation et les captures, dans le premier message ;
 - la page d'arrivée ;
 - « Abandonner cette journée », sa confirmation, ses phrases de perte et « Abandonner » ;
 - « Jour suivant » désactivé ;
 - « Avancer au dimanche », la page du saut, sa frise et ses deux textes ;
 - « Texte suivant », « Aller au dimanche » ;
 - les libellés de la barre (« Début », « Jour {k} · {jour} », « Premier saut · texte {k} sur 3 »…) ;
-- la note du compte simulé et les deux notes d'Apple et de Google ;
+- la note du compte simulé et les deux notes d'Apple et de Google ; la phrase sur ces boutons dans « Qui, durée, droits » ;
 - la note du portrait accéléré et la note de la barre pleine ;
 - la note qui suit le saut ;
 - « C'est lui qui vous invite. » ;
@@ -2167,7 +2168,7 @@ Son désaccord avec Front-end sur la forme du graphique (escalier contre rangée
 - la spécification relue (Cohérence, Vérificateur), avec les conventions de Game design écrites : calendrier, seuils des tempéraments, R11, R3 sur curseur net, facteur, phrase « nette », moment où le portrait est lu ;
 - le schéma, nouvelle version (Back-end) ;
 - l'annexe C (UX) ;
-- la confirmation de Juridique sur le premier message (§8.2 B), les lignes nouvelles du carnet (§8.12 : « Entrée », « Compte », « Pendant Deviner », bloc de saut) et la note « Qui, durée, droits » (§8.9) ;
+- la confirmation de Juridique sur le premier message (§8.2 B), les lignes nouvelles du carnet (§8.12 : « Entrée », « Compte », « Pendant Deviner », bloc de saut) et la note « Qui, durée, droits » (§8.9) : donnée le 9 octobre 2026, sous la condition du contrôle 12 ;
 - le schéma de Back-end, nouvelle version (annexe B, V6, trace étendue), avant le lot 1 ;
 - le texte complet du dévoilement (UX, sur les phrases de Game design du §8.6) et la ligne sous « {Prénom} décroche Le Pas de Côté. » (Game design), avant le lot 5 ;
 - les formes de la Direction artistique : graphique, barre, ligne de règle, frise, page du saut, boutons de 1.8. [Assembleur : la Direction artistique a donné les trois premières (§7.23) ; la frise est décrite par UX (§8.1 ter) ; la page du saut et les boutons de 1.8 n'ont pas encore de forme.]
@@ -2234,7 +2235,7 @@ Tout de suite, en plus, si le repli sur une histoire scellée devient nécessair
 ### Restent ouverts
 
 **Désaccords nommés par les rôles eux-mêmes**
-- Le lecteur d'écran sans chiffre (UX, §7.14 et ses désaccords) : la règle 2 de la Direction artistique contre une alternative textuelle équivalente ; à trancher avant la bêta, avec Juridique.
+- Le lecteur d'écran sans chiffre (UX, §7.14 et ses désaccords) : la règle 2 de la Direction artistique contre une alternative textuelle équivalente ; à trancher avant la bêta. Avis de Juridique (9 octobre 2026) : une alternative équivalente ne dit rien de plus que l'image, donc rien de plus sur les réponses ; aucune objection de protection des données. Le choix relève du design et de l'accessibilité (WCAG 2.1, critère 1.1.1).
 - Le Pont défini texte par texte (Game design, §6, point 8) contre « par tension » dans `projet.md` §4.
 - La forme du graphique (Direction artistique contre Front-end, §7.23 B) : Front-end ne la reprend pas ; probablement levé, à confirmer.
 
