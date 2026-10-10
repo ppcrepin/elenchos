@@ -255,6 +255,9 @@ var ElenchosSocle = (function (N, C, J, E, Me, MoteurDeLaPage) {
         resultats: function () { return etat ? resultats() : null; },
         arrivee: function () { return arrivee; },
         lectures: function () { return JSON.parse(JSON.stringify(lectures)); },
+        /** Le carnet et les copies du chargement : rendus par les écrans (lot 5), s'ils les fournissent. */
+        carnet: function () { return ecrans && ecrans.carnet ? ecrans.carnet() : null; },
+        copies: function () { return ecrans && ecrans.copies ? ecrans.copies() : []; },
         /** Le moteur sur un journal donné (rejeu en mode moteur, §9) : calcul pur, rien n'est écrit. */
         calculer: function (j) { return scelle && arrivee ? M.calculer(scelle, cal, arrivee, j) : null; },
         histoire: function (collecteur) { return scelle ? M.histoire(scelle, cal, collecteur) : null; }
