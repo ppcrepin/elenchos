@@ -1,0 +1,147 @@
+CANDIDAT 1 (PROVISOIRE) — NE PAS PUBLIER CETTE EMPREINTE — second essai Elenchos, rapport du programme de scellement (S)
+Programme : docs/essai/a-ne-pas-ouvrir-2/outillage/scellement/sceller.py  (SHA-256 60e303eaf7a070260b24da8179f61f14731edae564225d34b2a24a1695faf538)
+Fichier : fichier-scelle-candidat-1.json ; 72295 octets ; SHA-256 f3b8819e7f0f4d171e8774ab62e3b4f7d1a15b5bbc9502b79997ce9ba20987c3
+Statut : provisoire
+Graine PROVISOIRE : 6479a9e7d2792f2a = 16 premiers chiffres hex de SHA-256("elenchos-essai-2|graine|bd098271689e1cf2c4492ec5ebc1add1e1453d76")
+  E est le commit courant de docs/essai/simulation-2.md, pas le commit E de la spécification relue (§0) : la graine changera au candidat final, et avec elle tous les tirages de ce rapport.
+Réglage : alpha 1/4 ; facteur 3 ; barre 16 ; seuils_stricts false (réglage final au candidat final, point 11)
+Jour du scellement utilisé (dates de vote) : 2026-10-10
+
+Sources lues (SHA-256) :
+  fe2fd36a1f2ef89dc99ba6f49a267b74070dcf6ed7b80a9354225f3ff9c24d49  docs/essai/simulation-2.md
+  fb2b5f89d1cca8eeaddf8494a94af4112e9f6186425abe4cbc9d9660748b94f8  docs/essai/a-ne-pas-ouvrir-2/regles-de-calcul-2.md
+  ddaf02dcac25f9ed9137c0e4e57b971ab672c732241baee08f977de495fc10fa  docs/essai/a-ne-pas-ouvrir-2/schema.md
+  8dd05d7e6877ca654d684fab8bac2b254d15d9b0d165c1af642502a2b83f9aac  docs/essai/a-ne-pas-ouvrir-2/textes/votes.md
+  2b93ebf680b0683dee5b0de8ef25834a5f65677aa0d0d7cd036a9b72e77174f8  docs/essai/a-ne-pas-ouvrir-2/textes/S-securite-liberte.md
+  b492aab63ab98d061a3aa5477217c8d9130a7454bc7827f0884b8f6e48c43a0c  docs/essai/a-ne-pas-ouvrir-2/textes/P-precaution-innovation.md
+  b6a12058ea6dd5bb85c521793e0aefc9ef244e8a675f835754712ee829eb1dec  docs/essai/a-ne-pas-ouvrir-2/textes/T-tradition-changement.md
+  31fbfa977a1823345ea77d0bd04a4f3616e903ce91b2088a1152a095cb6ae742  docs/essai/a-ne-pas-ouvrir-2/textes/L-local-national.md
+  59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64  docs/essai/a-ne-pas-ouvrir/fichier-scelle.json
+  c781d23397820699c244c685195236d4e0ff8068035f3ce4ac3cf50141c8f429  docs/essai/empreinte.md
+  87867c2968b945a97323ec7a3a2e0a203e9945893ca8165b18a7ae971f2b6f3b  docs/essai/a-ne-pas-ouvrir/profils.md
+  4e7315319a1f3b79d648ebb1666e4d636cba3b08bd1023d9ab27099c5c52019b  docs/essai/a-ne-pas-ouvrir/schema.md
+  dernier commit de regles-de-calcul-2.md : bd098271689e1cf2c4492ec5ebc1add1e1453d76
+  dernier commit de schema.md : bd098271689e1cf2c4492ec5ebc1add1e1453d76
+  dernier commit de simulation-2.md : bd098271689e1cf2c4492ec5ebc1add1e1453d76
+
+Tirage des cases, t("ordre-texte|tension|i"), i = rang dans la liste « Cases » du point 14 :
+  S : cases T3, T6, T9, T12 ; liste 795, 7922, 2190, 8167 ; i=1 (795) N=3406865306 ; i=2 (7922) N=2208044342 ; i=3 (2190) N=1396159477 ; i=4 (8167) N=497476677 → T3 = 8167, T6 = 2190, T9 = 7922, T12 = 795
+  P : cases T2, T7, T10 ; liste 840, 2139, 6770 ; i=1 (840) N=528818864 ; i=2 (2139) N=2765699603 ; i=3 (6770) N=1849168871 → T2 = 840, T7 = 6770, T10 = 2139
+  T : cases T5, T13 ; liste 2758, 3449 ; i=1 (2758) N=4238998885 ; i=2 (3449) N=3304625855 → T5 = 3449, T13 = 2758
+  L : cases T1, T4, T8, T11 ; liste 3370, 707, 2484, 989 ; i=1 (3370) N=2819294186 ; i=2 (707) N=937913032 ; i=3 (2484) N=2909070568 ; i=4 (989) N=1572704238 → T1 = 707, T4 = 989, T8 = 3370, T11 = 2484
+  En-têtes à écrire dans les fiches : 707 → T1, 840 → T2, 8167 → T3, 989 → T4, 3449 → T5, 2190 → T6, 6770 → T7, 3370 → T8, 7922 → T9, 2139 → T10, 2484 → T11, 795 → T12, 2758 → T13.
+  Autre lecture (i = numéro de scrutin) : T1 = 3370, T2 = 840, T3 = 2190, T4 = 707, T5 = 3449, T6 = 795, T7 = 6770, T8 = 2484, T9 = 7922, T10 = 2139, T11 = 989, T12 = 8167, T13 = 2758 ; diffère sur 7 cases
+
+Calibrage (point 10) : r retenu = 16.
+  r = 1 : échec — c2 Odile ['tranche'] (attendu ['original', 'tranche']) ; c5 Agathe S c = 16/23
+  r = 2 : échec — c3 surprise de la semaine 13 = H88 (départage aucun)
+  r = 3 : échec — c3 surprise de la semaine 13 = H85 (départage aucun) ; c5 Odile T c = 2/3
+  r = 4 : échec — c3 surprise de la semaine 13 = H84 (départage aucun)
+  r = 5 : échec — c2 Odile ['tranche'] (attendu ['original', 'tranche']) ; c2 Valentin [] (attendu ['pont']) ; c5 Agathe S c = 16/23
+  r = 6 : échec — c2 Odile ['tranche'] (attendu ['original', 'tranche']) ; c3 surprise de la semaine 13 = H85 (départage aucun)
+  r = 7 : échec — c3 surprise de la semaine 13 = H83 (départage aucun)
+  r = 8 : échec — c5 Nassim S c = 26/41 ; c5 Odile L c = 13/43
+  r = 9 : échec — c3 surprise de la semaine 13 = H84 (départage aucun) ; c5 Valentin L c = 25/41
+  r = 10 : échec — c3 surprise de la semaine 13 = H88 (départage aucun) ; c5 Odile S c = 1/3
+  r = 11 : échec — c3 surprise de la semaine 13 = H88 (départage aucun)
+  r = 12 : échec — c3 surprise de la semaine 13 = H88 (départage aucun) ; c5 Agathe L c = 7/22
+  r = 13 : échec — c5 Odile T c = 16/23
+  r = 14 : échec — c2 Odile ['tranche'] (attendu ['original', 'tranche']) ; c5 Nassim P c = 2/3 ; c5 Odile P c = 7/22
+  r = 15 : échec — c2 Odile ['tranche'] (attendu ['original', 'tranche'])
+
+État à l'arrivée (curseurs vus au jour 1 : entrée et H1 à H90) :
+  Agathe    S c=12/13 Σw=22 net  P c=11/13 Σw=22 net  T c=4/7 Σw=3  L c=7/45 Σw=37/2 net
+  Nassim    S c=22/25 Σw=21 net  P c=10/13 Σw=22 net  T c=2/3 Σw=7/2  L c=44/51 Σw=43/2 net
+  Odile     S c=4/25 Σw=21 net  P c=6/23 Σw=19 net  T c=8/9 Σw=23 net  L c=1/5 Σw=16 net
+  Valentin  S c=1/2 Σw=6  P c=5/47 Σw=39/2 net  T c=3/22 Σw=18 net  L c=35/44 Σw=18 net
+Tempéraments du jour 0 (fenêtre H34 à H89) :
+  Agathe    [] ; réponses 53, seul de son côté 7, neutres 10, très 0, textes partagés 38, seul au milieu 0
+  Nassim    [] ; réponses 54, seul de son côté 6, neutres 13, très 12, textes partagés 40, seul au milieu 3
+  Odile     ['original', 'tranche'] ; réponses 51, seul de son côté 21, neutres 0, très 42, textes partagés 27, seul au milieu 0
+  Valentin  ['pont'] ; réponses 53, seul de son côté 11, neutres 8, très 0, textes partagés 36, seul au milieu 5
+Titres des semaines 1 à 13 :
+  semaine  1 : Devin Valentin (aucun) ; Mystère Nassim (tirage) ; Fidèles ['Agathe', 'Nassim', 'Odile', 'Valentin'] ; Sans-Faute [] ; surprise None
+  semaine  2 : Devin Nassim (aucun) ; Mystère Valentin (aucun) ; Fidèles ['Agathe', 'Nassim'] ; Sans-Faute [] ; surprise None
+  semaine  3 : Devin Agathe (aucun) ; Mystère Agathe (aucun) ; Fidèles ['Agathe', 'Nassim', 'Valentin'] ; Sans-Faute [] ; surprise None
+  semaine  4 : Devin Odile (aucun) ; Mystère Odile (aucun) ; Fidèles ['Agathe', 'Nassim', 'Odile'] ; Sans-Faute [] ; surprise None
+  semaine  5 : Devin Nassim (aucun) ; Mystère Nassim (aucun) ; Fidèles ['Nassim', 'Odile', 'Valentin'] ; Sans-Faute [] ; surprise None
+  semaine  6 : Devin Valentin (aucun) ; Mystère Agathe (aucun) ; Fidèles ['Agathe', 'Valentin'] ; Sans-Faute [] ; surprise None
+  semaine  7 : Devin Nassim (aucun) ; Mystère Agathe (erreurs) ; Fidèles ['Agathe', 'Odile', 'Valentin'] ; Sans-Faute [] ; surprise None
+  semaine  8 : Devin Agathe (aucun) ; Mystère Agathe (aucun) ; Fidèles ['Agathe', 'Nassim'] ; Sans-Faute [] ; surprise None
+  semaine  9 : Devin Nassim (aucun) ; Mystère Agathe (aucun) ; Fidèles ['Nassim'] ; Sans-Faute [] ; surprise None
+  semaine 10 : Devin Odile (aucun) ; Mystère Odile (aucun) ; Fidèles ['Nassim', 'Odile', 'Valentin'] ; Sans-Faute [] ; surprise None
+  semaine 11 : Devin Nassim (raisons) ; Mystère Agathe (tirage) ; Fidèles ['Agathe', 'Nassim', 'Valentin'] ; Sans-Faute [] ; surprise None
+  semaine 12 : Devin Nassim (aucun) ; Mystère Agathe (aucun) ; Fidèles ['Agathe', 'Nassim', 'Odile'] ; Sans-Faute [] ; surprise None
+  semaine 13 : Devin Agathe (aucun) ; Mystère Nassim (aucun) ; Fidèles ['Nassim', 'Valentin'] ; Sans-Faute [] ; surprise H86
+Critère c3 (tous les textes révélés en semaine 13 candidats) : H86, départage aucun ; attributions {'H83': 12, 'H84': 9, 'H85': 7, 'H86': 9, 'H87': 12, 'H88': 12, 'H89': 12} ; erreurs {'H83': 2, 'H84': 2, 'H85': 0, 'H86': 8, 'H87': 2, 'H88': 4, 'H89': 0}.
+
+Résumé de l'histoire : resume-histoire.json, 3574 octets, SHA-256 1dd912ed7ec4a9aee3eb608746c9b4b46ecfa62b8a1fed73db18a50765fa0fcc (= histoire.resume_sha256).
+Trace S de l'histoire : trace-histoire-S.json, 443832 octets, SHA-256 2efde8abba32eb73b2f85f8db96c1e12739f16c1dfaaab8cfe2839b1709f4c2c.
+
+Vérifications du fichier écrit :
+  - Tables du calendrier et des semaines recalculées du §0 et égales à celles du schéma 2.4.
+  - Étape 3 (forme) : UTF-8 strict, sans doublon, entiers seulement ; remis en forme canonique, mêmes octets.
+  - Étapes 4 et 5 (schéma, cohérence) : schéma fermé ; tables, cercle et personnages exigés ; 90 textes abstraits (jour, tension, rangs, D-034) ; 18 textes (E8, lignes ≤ 90, votes et combinaisons, auteurs, groupes distincts, D-034) ; D-028 (10 rejetés sur 18, entrée comprise ; A.4) ; ordre retenu ; réponses ⇔ absences ; au plus une absence et au moins trois réponses par texte ; 146 chaînes en NFC.
+  - Étape 7 (typographie simple) : 322 chaînes affichées contrôlées.
+  - Présentation B (7922, 8167, 6770, 5359) : ligne 3 égale à la phrase fixe de A.7, point 14.
+
+Vecteurs de test :
+  t("raison|Odile|E2|3") : hex8 f57c8d45 ; N 4118580549
+  t("hasard|Nassim|13|porteur") : hex8 4c046f50 ; N 1275359056
+  t("ecart-hstar|1|Valentin") : hex8 45daa66f ; N 1171957359
+
+Chiffres constants (partie calculable ici ; le reste au candidat final) :
+  Réponses de personnages par texte : 20 textes à 3, 88 textes à 4.
+  Raisons « aucune » chez les personnages : 22 sur 412 réponses (Valentin H5, Agathe H7, Valentin H9, Agathe H11, Agathe H15, Valentin H21, Agathe H27, Valentin H29, Agathe H39, Agathe H43, Agathe H51, Agathe H55, Agathe H59, Valentin H65, Valentin H73, Agathe H75, Valentin H77, Agathe H79, Agathe H83, Valentin H85, Agathe H87, Valentin 0).
+  Cercle unanimement neutre : 0 texte(s).
+  Réponses atypiques : histoire 60 sur 342 (10/57) ; essai T0–T13 12 sur 54 ; Agathe T: ['2', '4', '8', '13'] ; Nassim T: ['1', '3'] ; Odile T: ['4', '6', '9'] ; Valentin T: ['3', '8', '13'].
+  Absences (essai) : Agathe ['6'] ; Nassim [] ; Odile ['1'] ; Valentin [] ; histoire : 18.
+  « Texte rejeté. » parmi les révélations lues, entrée comprise : 5 sur 10 (['E2', 'E3', '1', '12', '13']).
+  Pas de Côté des personnages sur les révélations lues : aucun.
+  Pas de Côté des personnages dans l'histoire (jour : membres) : {-43: ['Odile'], -39: ['Agathe', 'Nassim'], -25: ['Valentin'], -21: ['Agathe', 'Nassim'], -20: ['Odile'], -19: ['Agathe'], -17: ['Valentin'], -11: ['Nassim'], -10: ['Odile']}.
+  Inattendus par texte (pour/contre) : 0 croisé/croisé, 1 croisé/pratique, 10 pratique/pratique, 11 croisé/pratique, 12 pratique/croisé, 13 pratique/croisé, 14 aucun/aucun, 2 croisé/pratique, 3 croisé/croisé, 4 pratique/pratique, 5 pratique/croisé, 6 pratique/pratique, 7 pratique/pratique, 8 pratique/pratique, 9 pratique/croisé, E1 croisé/pratique, E2 pratique/croisé, E3 pratique/pratique.
+  Manches du porteur (T0, T1, T2, T6, T13) : 15 cartes ; réponses atypiques parmi elles : 5 ; jumeaux non servis qu'il peut désigner : 0.
+
+Écarts de forme relevés dans les sources (QUESTIONS.md) :
+  - en-tête provisoire « Case S (rang tiré au scellement) » (795, S-securite-liberte.md)
+  - en-tête provisoire « Case S (rang tiré au scellement) » (7922, S-securite-liberte.md)
+  - en-tête provisoire « Case S (rang tiré au scellement) » (2190, S-securite-liberte.md)
+  - en-tête provisoire « Case S (rang tiré au scellement) » (8167, S-securite-liberte.md)
+  - 7386 : « - Objet du vote : article (article 1er, amendé, article central) » (le schéma 5.1, étape 8, attend le mot seul)
+  - 840 : « - Objet du vote : resolution (proposition de résolution, article 34-1 de la Constitution, article unique) » (le schéma 5.1, étape 8, attend le mot seul)
+  - 840 : raison 2 marquée « (nouvelle, à annoter) » (marque retirée à la lecture)
+  - 840 : raison 3 marquée « (nouvelle, à annoter) » (marque retirée à la lecture)
+  - en-tête provisoire « Case P » (840, P-precaution-innovation.md)
+  - 2139 : « - Objet du vote : article (article 15, examen prioritaire, du projet de loi de simplification de la vie économique) » (le schéma 5.1, étape 8, attend le mot seul)
+  - 2139 : raison 1 marquée « (nouvelle, à annoter) » (marque retirée à la lecture)
+  - en-tête provisoire « Case P » (2139, P-precaution-innovation.md)
+  - 6770 : « - Objet du vote : amendement (no 237 et identiques nos 523 et 1471, de suppression de l'article 5 du projet de loi d'urgence pour la protection et la souveraineté agricoles) » (le schéma 5.1, étape 8, attend le mot seul)
+  - 6770 : raison 3 marquée « (nouvelle, à annoter) » (marque retirée à la lecture)
+  - en-tête provisoire « Case P » (6770, P-precaution-innovation.md)
+  - 5359 : « - Objet du vote : amendement (no 1 et identiques nos 46, 47 et 70, de suppression de l'article 1er de la proposition de loi pour protéger l'eau potable, nos 2308, 2427) » (le schéma 5.1, étape 8, attend le mot seul)
+  - H86 : la ligne s'appelle « Titre affiché », le schéma (5.1, étape 8) lit « Titre »
+  - H86 : le titre est suivi de « (60 car.) », retiré à la lecture
+  - H86 : la ligne Tension porte un commentaire après le sens
+  - en-tête provisoire « T{case} » (2758, T-tradition-changement.md)
+  - en-tête provisoire « T{case} » (3449, T-tradition-changement.md)
+  - en-tête provisoire « T? » (3370, L-local-national.md)
+  - en-tête provisoire « T? » (707, L-local-national.md)
+  - en-tête provisoire « T? » (2484, L-local-national.md)
+  - en-tête provisoire « T? » (989, L-local-national.md)
+Élision (tableau 2.11 pas encore rempli : valeurs provisoires) :
+  - Alexandra Martin : d' (provisoire)
+  - Alma Dufour : d' (provisoire)
+  - Amélia Lakrafi : d' (provisoire)
+  - Anne Stambach-Terrenoir : d' (provisoire)
+  - Aude Luquet : d' (provisoire)
+  - Elsa Faucillon : d' (tableau du premier essai)
+  - Emmanuel Maquet : d' (provisoire)
+  - Hervé Saulignac : d' (tableau du premier essai)
+  - Hervé de Lépinau : d' (provisoire)
+  - Isabelle Périgault : d' (provisoire)
+  - Olga Givernet : d' (provisoire)
+  - Yannick Monnet : de (provisoire)
+  - Édouard Bénard : d' (tableau du premier essai)
+  - Élisa Martin : d' (tableau du premier essai)
+
+SHA-256 du candidat : f3b8819e7f0f4d171e8774ab62e3b4f7d1a15b5bbc9502b79997ce9ba20987c3

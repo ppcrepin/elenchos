@@ -1,0 +1,30 @@
+Manches du porteur sur ce candidat (à ne pas montrer aux auteurs du contrôle, de la page ni des carnets
+de référence avant qu'ils aient rendu leur travail). Règle 8 à cinq membres ; R3 (rareté ou distance).
+Jour 1, texte T0 (S, s = 0) : médiane 5/8
+  Agathe    niveau 2 raison 1      x 3/4  Σw 22    c 12/13   net True  dist 9/52    rareté 1/8   surprise 9/52
+  Odile     niveau 5 raison 4      x 0    Σw 21    c 4/25    net True  dist 4/25    rareté 5/8   surprise 4/25
+  Valentin  niveau 3 raison aucune x 1/2  Σw 6     c 1/2     net False dist 0       rareté 1/8   surprise 1/8
+  Nassim    niveau 1 raison 1      x 1    Σw 21    c 22/25   net True  dist 3/25    rareté 3/8   surprise 3/25
+  places ['Agathe', 'Odile', 'Valentin'] ; remplacements [] ; raison cachée Odile ; ordre ['Agathe', 'Odile', 'Valentin']
+Jour 2, texte T1 (L, s = 1) : médiane 1/4
+  Nassim    niveau 2 raison 1      x 1/4  Σw 43/2  c 44/51   net True  dist 125/204 rareté 0     surprise 125/204
+  Agathe    niveau 2 raison 4      x 1/4  Σw 37/2  c 7/45    net True  dist 17/180  rareté 0     surprise 17/180
+  Valentin  niveau 4 raison 3      x 3/4  Σw 18    c 35/44   net True  dist 1/22    rareté 1/2   surprise 1/22
+  places ['Nassim', 'Agathe', 'Valentin'] ; remplacements [] ; raison cachée Valentin ; ordre ['Valentin', 'Nassim', 'Agathe']
+Jour 3, texte T2 (P, s = 0) : médiane 1/4
+  Agathe    niveau 4 raison 1      x 1/4  Σw 22    c 11/13   net True  dist 31/52   rareté 0     surprise 31/52
+  Odile     niveau 5 raison 2      x 0    Σw 19    c 6/23    net True  dist 6/23    rareté 1/4   surprise 6/23
+  Valentin  niveau 4 raison 2      x 1/4  Σw 39/2  c 5/47    net True  dist 27/188  rareté 0     surprise 27/188
+  Nassim    niveau 2 raison 4      x 3/4  Σw 22    c 10/13   net True  dist 1/52    rareté 1/2   surprise 1/52
+  places ['Agathe', 'Odile', 'Valentin'] ; remplacements [] ; raison cachée Valentin ; ordre ['Agathe', 'Odile', 'Valentin']
+Jour 7, texte T6 (S, s = 1) : médiane 3/4
+  Odile     niveau 4 raison 1      x 3/4  Σw 23    c 4/27    net True  dist 65/108  rareté 0     surprise 65/108
+  Valentin  niveau 3 raison 1      x 1/2  Σw 7     c 5/11    net False dist 1/22    rareté 1/4   surprise 1/4
+  Nassim    niveau 5 raison 2      x 1    Σw 22    c 23/26   net True  dist 3/26    rareté 1/4   surprise 3/26
+  places ['Odile', 'Valentin', 'Nassim'] ; remplacements [] ; raison cachée Nassim ; ordre ['Odile', 'Valentin', 'Nassim']
+Jour 14, texte T13 (T, s = 0) : médiane 5/8
+  Valentin  niveau 2 raison 3      x 3/4  Σw 19    c 3/23    net True  dist 57/92   rareté 1/8   surprise 57/92
+  Agathe    niveau 4 raison 1      x 1/4  Σw 3     c 4/7     net False dist 9/28    rareté 3/8   surprise 3/8
+  Nassim    niveau 3 raison 4      x 1/2  Σw 7/2   c 2/3     net False dist 1/6     rareté 1/8   surprise 1/8
+  Odile     niveau 1 raison 4      x 1    Σw 24    c 25/28   net True  dist 3/28    rareté 3/8   surprise 3/28
+  places ['Valentin', 'Agathe', 'Nassim'] ; remplacements [] ; raison cachée Nassim ; ordre ['Valentin', 'Agathe', 'Nassim']
