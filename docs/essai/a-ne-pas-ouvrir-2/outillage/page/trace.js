@@ -27,7 +27,7 @@ var ElenchosTrace = (function () {
     return v;
   }
 
-  function copie(v) { return JSON.parse(JSON.stringify(v)); }
+  function copie(v) { return v === null || v === undefined ? null : JSON.parse(JSON.stringify(v)); }
 
   function seanceTrace(s, r, d) {
     var m = {};
@@ -113,6 +113,40 @@ var ElenchosTrace = (function () {
     };
   }
 
+  /**
+   * Trace de partie, version 4 (second essai ; schéma, partie 4.3). Entrées :
+   * le journal v4 ; R = M.calculer(scelle, cal, arrivee, journal) ; D = le
+   * fichier des durées v2 (null en mode moteur) ; le texte du carnet et les
+   * copies (écrans, instance B) ; l'empreinte du fichier et celle du résumé.
+   * Rien n'est recalculé ; seules les durées sont posées dans les mesures.
+   */
+  var CLES_R = ['entree', 'manches', 'revelation', 'message', 'phrase_jour', 'attente', 'dimanche', 'portrait', 'curseurs_vus',
+    'cercle', 'surprises_proches', 'mesures'];
+  function partie(journal, R, D, carnetTexte, copies, empreinte, resumeSha256) {
+    var jours = {};
+    Object.keys(journal.jours).forEach(function (k) {
+      var j = journal.jours[k], r = R.jours[k];
+      var x = { coups: copie(j.coups), etapes: copie(j.etapes), ouverture: j.ouverture, versions: copie(j.versions) };
+      CLES_R.forEach(function (c) { x[c] = enTrace(r[c]); });
+      if (x.mesures) {
+        var d = D && D.jours[k] ? D.jours[k] : null;
+        ['duree_deviner', 'duree_entree', 'duree_repondre', 'duree_seance'].forEach(function (c) { x.mesures[c] = d ? d[c] : null; });
+      }
+      jours[k] = x;
+    });
+    var sauts = R.sauts.map(function (s, i) {
+      var x = enTrace(s);
+      var d = D && D.sauts[i] ? D.sauts[i] : null;
+      ['duree_page', 'duree_saut', 'durees_textes'].forEach(function (c) { x.mesures[c] = d ? copie(d[c]) : null; });
+      return x;
+    });
+    return {
+      agregats: enTrace(R.agregats), arret: copie(journal.arret), carnet: carnetTexte === undefined ? null : carnetTexte,
+      copies: copies || [], empreinte_scelle: empreinte, fin: copie(journal.fin), format: 'elenchos-essai-trace',
+      jours: jours, partie: copie(journal.partie), resume_histoire: resumeSha256, sauts: sauts, version: 4
+    };
+  }
+
   /** Node et harnais : la trace de l'histoire d'un fichier scellé, de bout en bout. */
   function tracerHistoire(N, C, M, octets) {
     var scelle = JSON.parse(N.utf8Decoder(octets));
@@ -122,7 +156,7 @@ var ElenchosTrace = (function () {
     return histoire(collecte, resume, N.sha256(N.utf8Encoder(N.jsonCanonique(resume))), N.sha256(octets));
   }
 
-  return { enTrace: enTrace, assembler: assembler, tracer: tracer, histoire: histoire, tracerHistoire: tracerHistoire };
+  return { enTrace: enTrace, assembler: assembler, tracer: tracer, histoire: histoire, tracerHistoire: tracerHistoire, partie: partie };
 })();
 
 /*node-debut*/
