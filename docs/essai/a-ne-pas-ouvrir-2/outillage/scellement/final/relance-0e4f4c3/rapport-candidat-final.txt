@@ -1,0 +1,100 @@
+CANDIDAT FINAL — second essai Elenchos, rapport du programme de scellement (S)
+Programme : docs/essai/a-ne-pas-ouvrir-2/outillage/scellement/sceller.py  (SHA-256 589aef71642d3e7b0d2f008fef95b031ca53f0c169175b9318ded2b2a29b77dc)
+Fichier : fichier-scelle-candidat-final.json ; 72408 octets ; SHA-256 587dbac7ecbde1c9b9e6d555a1ff162a6c4e42ece2a9fe82cef27f3baed36db0
+Statut : final
+Graine : 50d5971698eeaf54 = 16 premiers chiffres hex de SHA-256("elenchos-essai-2|graine|83d05a44d3a254c39478071b3b86f52481f7a508")
+Réglage : alpha 1/4 ; facteur 3 ; barre 16 ; seuils_stricts false (réglage final au candidat final, point 11)
+Jour du scellement utilisé (dates de vote) : 2026-10-10
+
+Sources lues (SHA-256) :
+  5fde1822fda633ab3dce30cbdae87fff2a4ca141e4f0674c6a94f222b3cceb7e  docs/essai/simulation-2.md
+  fda0b770affa9827e9e4589198c10cd177f7fd3c7ae23f12d6e2f8164eaeeef2  docs/essai/a-ne-pas-ouvrir-2/regles-de-calcul-2.md
+  c41ae72882261e5e5368c16efa9c4af738052c63f5959d2bdb8345d770d66b2b  docs/essai/a-ne-pas-ouvrir-2/schema.md
+  af34c5c545c793bb5cb45153b0d8d1055a2e8ad1c3b459faaa874cd3dbec9fb1  docs/essai/a-ne-pas-ouvrir-2/textes/votes.md
+  05088aeb95380e6d3d4916e4bdee44bbd3b2c7999fbe3c6d0174a650341de36f  docs/essai/a-ne-pas-ouvrir-2/textes/S-securite-liberte.md
+  d8e138e3801b5dbe27bec4f06574d3ab242dca2dc2e1d692d301376936e306d6  docs/essai/a-ne-pas-ouvrir-2/textes/P-precaution-innovation.md
+  2bc9882cdc127c107e0399c128625a7802d4bb9f371f4f2e9c421eef7de5c53e  docs/essai/a-ne-pas-ouvrir-2/textes/T-tradition-changement.md
+  fb38c3bb212a9ff0ba48816309802e0f371da13cf504a8c3cad2a4b4f182643d  docs/essai/a-ne-pas-ouvrir-2/textes/L-local-national.md
+  59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64  docs/essai/a-ne-pas-ouvrir/fichier-scelle.json
+  c781d23397820699c244c685195236d4e0ff8068035f3ce4ac3cf50141c8f429  docs/essai/empreinte.md
+  87867c2968b945a97323ec7a3a2e0a203e9945893ca8165b18a7ae971f2b6f3b  docs/essai/a-ne-pas-ouvrir/profils.md
+  4e7315319a1f3b79d648ebb1666e4d636cba3b08bd1023d9ab27099c5c52019b  docs/essai/a-ne-pas-ouvrir/schema.md
+  dernier commit de regles-de-calcul-2.md : 8314c1abdca0254372c64254de000149d983acec
+  dernier commit de schema.md : 8314c1abdca0254372c64254de000149d983acec
+  dernier commit de simulation-2.md : 83d05a44d3a254c39478071b3b86f52481f7a508
+
+Tirage des cases, t("ordre-texte|tension|i"), i = rang dans la liste « Cases » du point 14 :
+  S : cases T3, T6, T9, T12 ; liste 795, 7922, 2190, 8167 ; i=1 (795) N=1107967067 ; i=2 (7922) N=1526916273 ; i=3 (2190) N=726537559 ; i=4 (8167) N=2821274764 → T3 = 2190, T6 = 795, T9 = 7922, T12 = 8167
+  P : cases T2, T7, T10 ; liste 840, 2139, 6770 ; i=1 (840) N=106498051 ; i=2 (2139) N=2505543360 ; i=3 (6770) N=2605010484 → T2 = 840, T7 = 2139, T10 = 6770
+  T : cases T5, T13 ; liste 2758, 3449 ; i=1 (2758) N=387651108 ; i=2 (3449) N=836399307 → T5 = 2758, T13 = 3449
+  L : cases T1, T4, T8, T11 ; liste 3370, 707, 2484, 989 ; i=1 (3370) N=3237957594 ; i=2 (707) N=2700751247 ; i=3 (2484) N=2054695811 ; i=4 (989) N=3172800599 → T1 = 2484, T4 = 707, T8 = 989, T11 = 3370
+  En-têtes à écrire dans les fiches : 2484 → T1, 840 → T2, 2190 → T3, 707 → T4, 2758 → T5, 795 → T6, 2139 → T7, 989 → T8, 7922 → T9, 6770 → T10, 3370 → T11, 8167 → T12, 3449 → T13.
+  Autre lecture (i = numéro de scrutin) : T1 = 989, T2 = 840, T3 = 795, T4 = 3370, T5 = 3449, T6 = 2190, T7 = 2139, T8 = 2484, T9 = 7922, T10 = 6770, T11 = 707, T12 = 8167, T13 = 2758 ; diffère sur 8 cases
+
+Calibrage (point 10) : r retenu = 1.
+
+État à l'arrivée (curseurs vus au jour 1 : entrée et H1 à H90) :
+  Agathe    S c=4/5 Σw=47/2 net  P c=4/5 Σw=21 net  T c=1/2 Σw=2  L c=13/45 Σw=37/2 net
+  Nassim    S c=8/9 Σw=23 net  P c=12/13 Σw=22 net  T c=1/2 Σw=4  L c=16/21 Σw=17 net
+  Odile     S c=11/53 Σw=45/2 net  P c=4/25 Σw=21 net  T c=21/26 Σw=22 net  L c=5/49 Σw=41/2 net
+  Valentin  S c=4/7 Σw=3  P c=3/11 Σw=18 net  T c=1/7 Σw=41/2 net  L c=31/39 Σw=31/2 net
+Tempéraments du jour 0 (fenêtre H34 à H89) :
+  Agathe    [] ; réponses 54, seul de son côté 1, neutres 12, très 0, textes partagés 44, seul au milieu 3
+  Nassim    [] ; réponses 53, seul de son côté 5, neutres 9, très 13, textes partagés 40, seul au milieu 0
+  Odile     ['original', 'tranche'] ; réponses 55, seul de son côté 25, neutres 0, très 48, textes partagés 22, seul au milieu 0
+  Valentin  ['pont'] ; réponses 52, seul de son côté 12, neutres 10, très 0, textes partagés 32, seul au milieu 7
+Titres des semaines 1 à 13 :
+  semaine  1 : Devin Agathe (aucun) ; Mystère Odile (aucun) ; Fidèles ['Agathe', 'Nassim', 'Odile'] ; Sans-Faute [] ; surprise None
+  semaine  2 : Devin Agathe (aucun) ; Mystère Nassim (aucun) ; Fidèles ['Agathe', 'Odile'] ; Sans-Faute [] ; surprise None
+  semaine  3 : Devin Valentin (raisons) ; Mystère Valentin (tirage) ; Fidèles ['Agathe', 'Nassim', 'Odile', 'Valentin'] ; Sans-Faute [] ; surprise None
+  semaine  4 : Devin Agathe (aucun) ; Mystère Agathe (aucun) ; Fidèles ['Agathe', 'Odile', 'Valentin'] ; Sans-Faute [] ; surprise None
+  semaine  5 : Devin Agathe (aucun) ; Mystère Agathe (aucun) ; Fidèles ['Agathe', 'Odile'] ; Sans-Faute [] ; surprise None
+  semaine  6 : Devin Nassim (aucun) ; Mystère Nassim (aucun) ; Fidèles ['Nassim', 'Odile', 'Valentin'] ; Sans-Faute [] ; surprise None
+  semaine  7 : Devin Agathe (aucun) ; Mystère Agathe (aucun) ; Fidèles ['Agathe'] ; Sans-Faute [] ; surprise None
+  semaine  8 : Devin Odile (raisons) ; Mystère Valentin (aucun) ; Fidèles ['Agathe', 'Nassim', 'Odile'] ; Sans-Faute [] ; surprise None
+  semaine  9 : Devin Nassim (aucun) ; Mystère Nassim (aucun) ; Fidèles ['Agathe', 'Odile'] ; Sans-Faute [] ; surprise None
+  semaine 10 : Devin Nassim (aucun) ; Mystère Odile (tirage) ; Fidèles ['Agathe', 'Nassim', 'Odile', 'Valentin'] ; Sans-Faute [] ; surprise None
+  semaine 11 : Devin Nassim (aucun) ; Mystère Nassim (aucun) ; Fidèles ['Nassim', 'Odile'] ; Sans-Faute [] ; surprise None
+  semaine 12 : Devin Odile (aucun) ; Mystère Odile (aucun) ; Fidèles ['Agathe', 'Nassim', 'Odile', 'Valentin'] ; Sans-Faute [] ; surprise None
+  semaine 13 : Devin Agathe (aucun) ; Mystère Agathe (aucun) ; Fidèles ['Agathe', 'Odile', 'Valentin'] ; Sans-Faute [] ; surprise H86
+Critère c3 (tous les textes révélés en semaine 13 candidats) : H86, départage aucun ; attributions {'H83': 9, 'H84': 9, 'H85': 12, 'H86': 12, 'H87': 12, 'H88': 12, 'H89': 12} ; erreurs {'H83': 4, 'H84': 5, 'H85': 4, 'H86': 10, 'H87': 0, 'H88': 9, 'H89': 0}.
+
+Résumé de l'histoire : resume-histoire.json, 3582 octets, SHA-256 d6e090f40d7a9ab4d46736f12959b6131815ddf603b22a71eac94ca2d5c58644 (= histoire.resume_sha256).
+Trace S de l'histoire : trace-histoire-S.json, 448519 octets, SHA-256 ae274a1159f98354772438e64af2dc22e1e89761689fd3fe4743d019e5514900.
+
+Vérifications du fichier écrit :
+  - Tables du calendrier et des semaines recalculées du §0 et égales à celles du schéma 2.4.
+  - Tableaux du lot : 2.10 (22 lignes = couples (chambre, groupe) employés), 2.10 bis (1 ligne(s) = auteurs commission), 2.11 (14 noms = noms de considérations à initiale qui demande un choix ; élisions lues au tableau). La comparaison à amo n'est pas faite ici (contrôle 1).
+  - Étape 3 (forme) : UTF-8 strict, sans doublon, entiers seulement ; remis en forme canonique, mêmes octets.
+  - Étapes 4 et 5 (schéma, cohérence) : schéma fermé ; tables, cercle et personnages exigés ; 90 textes abstraits (jour, tension, rangs, D-034) ; 18 textes (E8, lignes ≤ 90, votes et combinaisons, auteurs, groupes distincts, D-034) ; D-028 (10 rejetés sur 18, entrée comprise ; A.4) ; ordre retenu ; réponses ⇔ absences ; au plus une absence et au moins trois réponses par texte ; 146 chaînes en NFC.
+  - Étape 7 (typographie simple) : 322 chaînes affichées contrôlées.
+  - Présentation B (7922, 8167, 6770, 5359) : ligne 3 égale à la phrase fixe de A.7, point 14.
+
+Vecteurs de test :
+  t("raison|Odile|E2|3") : hex8 0b75319f ; N 192229791
+  t("hasard|Nassim|13|porteur") : hex8 7bf77637 ; N 2079815223
+  t("ecart-hstar|1|Valentin") : hex8 3591c2b8 ; N 898745016
+
+Chiffres constants (fichier caché, point 13, définitions du 10 octobre 2026) :
+  1. Cartes servies : jour 1 (T0) 3, jour 2 (T1) 3, jour 3 (T2) 3, jour 7 (T6) 3, jour 14 (T13) 3 ; total 15.
+  2. Réponses atypiques parmi ses cartes (auteur d'origine) : 3 sur 15 (1/5) ; T0 Nassim, T2 Nassim, T6 Nassim.
+  3. Remplacements de cartes identiques : 1 ; jour 7, place 2, écartée (Agathe, 4, 3), mise à sa place (Odile, 5, 1).
+  4. Cartes identiques servies ensemble : 1 manche(s), 2 carte(s).
+  5. Égalités de classement (somme des departages) : 1 (jour 1 : 0, jour 2 : 0, jour 3 : 0, jour 7 : 0, jour 14 : 1).
+  6. Jumeaux non servis : 1 couple(s) (carte, personnage), sur 1 carte(s).
+  7. Justesse au hasard (D-024) : h par carte = T0 Odile 1/4, T0 Nassim 1/4, T0 Valentin 1/4, T1 Agathe 1/4, T1 Nassim 1/2, T1 Valentin 1/2, T2 Nassim 1/4, T2 Odile 1/4, T2 Valentin 1/4, T6 Valentin 1/4, T6 Nassim 1/2, T6 Odile 1/4, T13 Odile 1/4, T13 Valentin 1/4, T13 Agathe 1/4.
+     Espérance : 9/2 carte(s) juste(s) sur 15, soit 3/10 par carte ; hors réponses atypiques : 7/2 sur 12 (7/24 par carte) ; par personnage (auteur d'origine) : Agathe 1/2 sur 2, Nassim 3/2 sur 4, Odile 1 sur 4, Valentin 3/2 sur 5.
+     Loi exacte du nombre de cartes justes : 0 : P = 1331/248832, P(≤ 0) = 1331/248832 ; 1 : P = 35695/995328, P(≤ 1) = 13673/331776 ; 2 : P = 6325/62208, P(≤ 2) = 142219/995328 ; 3 : P = 38345/221184, P(≤ 3) = 629543/1990656 ; 4 : P = 207083/995328, P(≤ 4) = 347903/663552 ; 5 : P = 47387/248832, P(≤ 5) = 1422805/1990656 ; 6 : P = 138007/995328, P(≤ 6) = 566273/663552 ; 7 : P = 54613/663552, P(≤ 7) = 103481/110592 ; 8 : P = 6697/165888, P(≤ 8) = 323837/331776 ; 9 : P = 16363/995328, P(≤ 9) = 493937/497664 ; 10 : P = 2761/497664, P(≤ 10) = 82783/82944 ; 11 : P = 3055/1990656, P(≤ 11) = 1989847/1990656 ; 12 : P = 113/331776, P(≤ 12) = 1990525/1990656 ; 13 : P = 29/497664, P(≤ 13) = 663547/663552 ; 14 : P = 7/995328, P(≤ 14) = 1990655/1990656 ; 15 : P = 1/1990656, P(≤ 15) = 1.
+  8. Réponses de personnages, T0 à T13 : T0 4, T1 3, T2 4, T3 3, T4 4, T5 3, T6 4, T7 4, T8 4, T9 3, T10 4, T11 4, T12 4, T13 4 ; plus petit 3. Avec le porteur, T1 à T13 : T1 4, T2 5, T3 4, T4 5, T5 4, T6 5, T7 5, T8 5, T9 4, T10 5, T11 5, T12 5, T13 5 ; plus petit 4 (seuil de l'avis du cercle : 3).
+  9. « Texte rejeté. » parmi E1 à E3 et T0 à T13 : 9 (E2, E3, T4, T5, T6, T8, T9, T10, T12) ; T14 à part : rejete.
+  10. Raisons « aucune » chez les personnages : entrée 0 sur 12, histoire 23 sur 344, essai 2 sur 56 ; parmi les cartes du porteur : affichées 1, cachées 0, cartes à raison cachée déplacées (§4.4) 1.
+  11. Cercle unanimement neutre, T0 à T14 : 0.
+  12. État à l'arrivée : curseurs nets Agathe SPL, Nassim SPL, Odile SPTL, Valentin PTL ; tempéraments Agathe [], Nassim [], Odile ['original', 'tranche'], Valentin ['pont'] ; titres : s1 Devin Agathe, Mystère Odile, Fidèles ['Agathe', 'Nassim', 'Odile'], Sans-Faute [] | s2 Devin Agathe, Mystère Nassim, Fidèles ['Agathe', 'Odile'], Sans-Faute [] | s3 Devin Valentin, Mystère Valentin, Fidèles ['Agathe', 'Nassim', 'Odile', 'Valentin'], Sans-Faute [] | s4 Devin Agathe, Mystère Agathe, Fidèles ['Agathe', 'Odile', 'Valentin'], Sans-Faute [] | s5 Devin Agathe, Mystère Agathe, Fidèles ['Agathe', 'Odile'], Sans-Faute [] | s6 Devin Nassim, Mystère Nassim, Fidèles ['Nassim', 'Odile', 'Valentin'], Sans-Faute [] | s7 Devin Agathe, Mystère Agathe, Fidèles ['Agathe'], Sans-Faute [] | s8 Devin Odile, Mystère Valentin, Fidèles ['Agathe', 'Nassim', 'Odile'], Sans-Faute [] | s9 Devin Nassim, Mystère Nassim, Fidèles ['Agathe', 'Odile'], Sans-Faute [] | s10 Devin Nassim, Mystère Odile, Fidèles ['Agathe', 'Nassim', 'Odile', 'Valentin'], Sans-Faute [] | s11 Devin Nassim, Mystère Nassim, Fidèles ['Nassim', 'Odile'], Sans-Faute [] | s12 Devin Odile, Mystère Odile, Fidèles ['Agathe', 'Nassim', 'Odile', 'Valentin'], Sans-Faute [] | s13 Devin Agathe, Mystère Agathe, Fidèles ['Agathe', 'Odile', 'Valentin'], Sans-Faute [] ; surprise de la semaine 13 : H86.
+  13. Pas de Côté des personnages (H90, T0 à T13) : aucun.
+  14. Inattendus du lot (pour/contre) : E1 croisé/pratique, E2 pratique/croisé, E3 pratique/pratique, T0 croisé/croisé, T1 croisé/pratique, T2 croisé/pratique, T3 pratique/pratique, T4 croisé/pratique, T5 pratique/croisé, T6 pratique/croisé, T7 pratique/pratique, T8 pratique/pratique, T9 pratique/croisé, T10 pratique/pratique, T11 pratique/pratique, T12 croisé/croisé, T13 pratique/croisé, T14 sans/sans ; par combinaison : croisé/croisé 2, croisé/pratique 4, pratique/croisé 5, pratique/pratique 6, sans/sans 1.
+  15. Impossibilités : (a) écran 5.12, plus petit nombre de réponses de personnages sur T0, T1, T2, T6, T13 : 3 ; (b) Le Sans-Faute du porteur : jours où ses cartes sont révélées, semaine 14 : 3, semaine 15 : 1 (5 exigés) ; (c) Le Pas de Côté du porteur (révélations lues de ses textes : T1, T2, T5, T6, T12, T13 ; au moins ⌈10/3⌉ = 4 réponses avant, entrée comprise) : T12 (4 réponses S avant).
+
+Écarts de forme relevés dans les sources (QUESTIONS.md) :
+Élision : lue au tableau 2.11 du schéma (mêmes valeurs que la règle provisoire du candidat 1 d'origine).
+
+SHA-256 du candidat : 587dbac7ecbde1c9b9e6d555a1ff162a6c4e42ece2a9fe82cef27f3baed36db0

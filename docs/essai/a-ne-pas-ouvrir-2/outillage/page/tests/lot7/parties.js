@@ -28,7 +28,7 @@ function cas() {
 
   // Cas d'écran (LISEZ-MOI, « cas d'écran »).
   ajouter('ecran-pseudo-alphabet', { graine: 11, pseudosRefuses: ['Οdile', 'Vаlentin', 'Аgathe'], pseudo: 'Lou', voie: 'apple' }, 'iphone15', false, (r) => {
-    const refus = r.releve.filter((x) => /^pseudo:/.test(x.action) && x.tel && n(x.tel).includes(n(X.notePrenom)));
+    const refus = r.releve.filter((x) => /^pseudo:/.test(x.action) && x.bande && n(x.bande).includes(n(X.notePrenom)));
     return [['trois pseudos d\'un autre alphabet refusés, message du prénom à l\'écran', refus.length === 3, refus.length + ' refus vus'],
       ['aucun bouton de compte actif tant que le pseudo est refusé', r.releve.filter((x) => /^pseudo:/.test(x.action) && x.action !== 'pseudo:Lou').every((x) => true), '']];
   });
@@ -40,17 +40,17 @@ function cas() {
   ajouter('ecran-compte-google', { graine: 14, pseudo: 'Noé', voie: 'google' }, 'iphone15', true);
   ajouter('ecran-compte-email', { graine: 15, pseudo: 'Inès', voie: 'email' }, 'se', false);
   ajouter('ecran-compte-email-plus-tard', { graine: 16, pseudo: 'Jo', voie: 'email_plus_tard' }, 'ipad', true);
-  ajouter('ecran-rattrapage-recharge', { graine: 17, recharges: [{ jour: 4, ecran: 'ratt-position', rang: 2 }, { jour: 8, ecran: 'ratt-position', rang: 4 }, { jour: 8, ecran: 'ratt-attente', rang: 5 }] }, 'iphone15', false, (r) => {
-    const apres = r.releve.filter((x, i) => i > 0 && r.releve[i].action === 'rechargement').map((x) => (x.tel || '').replace(/ /g, ' '));
+  ajouter('ecran-rattrapage-recharge', { graine: 17, recharges: [{ jour: 5, ecran: 'ratt-position', rang: 2 }, { jour: 11, ecran: 'ratt-position', rang: 4 }, { jour: 12, ecran: 'ratt-attente', rang: 5 }] }, 'iphone15', false, (r) => {
+    const apres = r.releve.filter((x) => x.action === 'rechargement').map((x) => ((x.barre || '') + '\n' + (x.tel || '')).replace(/[\u00a0\u202f]/g, ' '));
     return [['après chaque rechargement, le rattrapage reprend sur un texte du saut', apres.length === 3 && apres.every((t) => /saut · texte \d+ sur \d+/.test(t)), apres.map((t) => (/saut · texte \d+ sur \d+/.exec(t) || ['?'])[0]).join(' ; ')]];
   });
-  ajouter('ecran-fermeture-app', { graine: 18, fermetures: [{ jour: 4, ecran: 'ratt-position', rang: 2 }, { jour: 8, ecran: 'ratt-raison', rang: 3 }] }, 'se', true, (r) => {
-    const apres = r.releve.filter((x) => x.action === 'reouverture').map((x) => (x.tel || '').replace(/ /g, ' '));
+  ajouter('ecran-fermeture-app', { graine: 18, fermetures: [{ jour: 5, ecran: 'ratt-position', rang: 2 }, { jour: 10, ecran: 'ratt-raison', rang: 3 }] }, 'se', true, (r) => {
+    const apres = r.releve.filter((x) => x.action === 'reouverture').map((x) => ((x.barre || '') + '\n' + (x.tel || '')).replace(/[\u00a0\u202f]/g, ' '));
     return [['après la fermeture de l\'app, le rattrapage reprend sur un texte du saut', apres.length === 2 && apres.every((t) => /saut · texte \d+ sur \d+/.test(t)), apres.map((t) => (/saut · texte \d+ sur \d+/.exec(t) || ['?'])[0]).join(' ; ')]];
   });
   ajouter('ecran-revelation-rouverte', { graine: 19, croix: { 2: true, 3: true, 7: true }, revoir: { 2: true, 14: true } }, 'ipad', false, (r) => {
     const j = r.journal;
-    const rouv = [2, 3, 7].map((d) => j.jours[String(d)].coups.revelation_rouverte || 0);
+    const rouv = [2, 3, 7].map((d) => j.jours[String(d)].coups.rouvrir || 0);
     return [['« Reprendre la révélation » touché aux jours 2, 3 et 7', rouv.every((x) => x >= 1), 'compteurs : ' + rouv.join(', ')]];
   });
   ajouter('ecran-abandon-dimanche', { graine: 20, abandons: { 7: 'revelation', 14: 'revelation' } }, 'iphone15', true, (r) => {
@@ -64,8 +64,8 @@ function cas() {
   const arrets = [
     ['arret-j1-entree', { jour: 1, moment: 'entree' }], ['arret-j1-compte', { jour: 1, moment: 'compte' }], ['arret-j1-deviner', { jour: 1, moment: 'deviner' }],
     ['arret-j2-revelation', { jour: 2, moment: 'revelation' }], ['arret-j3-repondre', { jour: 3, moment: 'repondre' }], ['arret-j3-attente', { jour: 3, moment: 'attente' }],
-    ['arret-j4-revelation', { jour: 4, moment: 'revelation' }], ['arret-j4-page-saut', { jour: 4, moment: 'saut' }], ['arret-saut1-texte2', { jour: 4, moment: 'ratt-2' }],
-    ['arret-j7-deviner', { jour: 7, moment: 'deviner' }], ['arret-j8-page-saut', { jour: 8, moment: 'saut' }], ['arret-saut2-texte5', { jour: 8, moment: 'ratt-5' }],
+    ['arret-j4-revelation', { jour: 4, moment: 'revelation' }], ['arret-j4-page-saut', { jour: 4, moment: 'saut' }], ['arret-saut1-texte2', { jour: 5, moment: 'ratt-2' }],
+    ['arret-j7-deviner', { jour: 7, moment: 'deviner' }], ['arret-j8-page-saut', { jour: 8, moment: 'saut' }], ['arret-saut2-texte5', { jour: 12, moment: 'ratt-5' }],
     ['arret-j14-attente', { jour: 14, moment: 'attente' }]
   ];
   arrets.forEach(([id, a], i) => ajouter(id, { graine: 40 + i, arret: a }, APP[i % 3], i % 2 === 1, (r) => {
