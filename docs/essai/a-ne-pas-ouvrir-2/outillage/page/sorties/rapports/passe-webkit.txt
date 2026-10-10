@@ -1,0 +1,6 @@
+Passe WebKit du second essai (contrôle 14), workflow .github/workflows/essai2-passe-webkit.yml, macOS 15, Playwright 1.56.1.
+Run 38087577286, commit 65632a6, 10 octobre 2026 : réussi.
+- Construction depuis main identique au rapport de construction (porteur et témoin).
+- Passe du moteur : V1 à V6, histoire identique, 221 parties rejouées à l'identique, gestes sous budget, vue de secours sans script (cachée à 1,9 s, visible à 2,2 s).
+- Écrans : (b) mémoire (ancienne partie, deux clés, page du premier essai sur la même mémoire, profil gardé sur disque, « Annuler » du saut, rechargement au milieu du rattrapage), (d) « Tout effacer » pendant l'essai et après le dévoilement, (i) durées (deux fermetures de 10 min et deux rechargements) : tous justes.
+Runs précédents : 38084424539 et 38084656306 (échec de la sonde « sans script », cause : horloge simulée de l'outil sous WebKit, corrigée au commit 88f3f09) ; 38086531300 (moteur seul, réussi).
