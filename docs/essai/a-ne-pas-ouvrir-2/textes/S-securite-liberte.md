@@ -9,7 +9,7 @@ Remarques du rédacteur sur le lot :
   - Rassemblement National 5, Écologiste et Social 4 ;
   - Droite Républicaine 3, La France insoumise - Nouveau Front Populaire 3, Socialistes et apparentés 3 ;
   - Gauche Démocrate et Républicaine 2, Horizons & Indépendants 2 ;
-  - Les Démocrates 1, Ensemble pour la République 1.
+  - Ensemble pour la République 2.
 
   Le Rassemblement National est surreprésenté parce que les débats l'imposent : sur E1 et 8167, seuls RN, EPR et HOR plaident « pour » le texte (« contre » le retrait pour 8167).
 - D-034, après l'annotation : chaque fiche a un inattendu de chaque côté.
@@ -164,24 +164,31 @@ Remarques du rédacteur sur le lot :
   1. « Un cousin pourrait être impliqué dans une enquête sans avoir jamais consenti. » — pour · pôle 1 — Elsa Faucillon, députée, Gauche Démocrate et Républicaine [vote : pour] — extrait : « Elles risquent d'impliquer dans le cadre d'une enquête des personnes n'ayant jamais consenti à l'utilisation de leurs données génétiques, uniquement en raison de leurs liens familiaux – un cousin, un oncle, une tante pourraient être concernés » (CRSANR5L17S2026E1N002.txt:86)
   2. « Au vu du nombre d'affaires qu'on pourrait résoudre, cela paraît disproportionné. » — pour · pôle aucun — Élisa Martin, députée, La France insoumise - Nouveau Front Populaire [vote : pour] — extrait : « Le dispositif cible les cold cases – les affaires anciennes non résolues –, mais paraît manifestement disproportionné par rapport au nombre d'affaires susceptibles d'être résolues ainsi » (CRSANR5L17S2026E1N002.txt:90)
   3. « Ces outils permettent de neutraliser des tueurs en série et des pédocriminels. » — contre · pôle 0 — Laurent Marcangeli, député, Horizons & Indépendants [vote : contre] — extrait : « nous pouvons compter au rang de nos alliés et amis tous les systèmes qui nous permettront de mettre définitivement hors d'état de nuire un pédocriminel, un tueur en série ou une personne qui commet des crimes répétés » ; « il permet de lutter efficacement contre des criminels en série » (CRSANR5L17S2026E1N002.txt:119)
-  4. « Comparer l'ADN serait encadré et réservé aux enquêtes sans aucun suspect. » — contre · pôle 1 — Anne Bergantz, députée, Les Démocrates [vote : contre] — extrait : « L'utilisation de cette technique sera encadrée, subsidiaire et de dernier recours. Elle permettra d'orienter des enquêtes pour lesquelles nous n'avons aucun auteur présumé » (CRSANR5L17S2026E1N002.txt:94) (nouvelle, à annoter)
+  4. « Les bases utilisées recueillent le consentement éclairé de leurs utilisateurs. » — contre · pôle 1 — Natalia Pouzyreff, députée, Ensemble pour la République [vote : contre] — extrait : « Les bases de données ADN qui peuvent collaborer avec le FBI sont très bien identifiées et recueillent le consentement éclairé des personnes. Sachez que certaines personnes choisissent de s'inscrire sur ces bases de données, plutôt que sur d'autres, précisément parce qu'elles souhaitent participer à la recherche de criminels » (CRSANR5L17S2026E1N002.txt:156) (nouvelle, à annoter)
 - Vérifications de l'auteur :
-  - Groupes : 4. Côtés : 2 pour, 2 contre.
+  - Groupes : 4 (Gauche Démocrate et Républicaine, La France insoumise - Nouveau Front Populaire, Horizons & Indépendants, Ensemble pour la République). Côtés : 2 pour, 2 contre.
   - Types D-034 : 1 attendue, 2 pratique, 3 attendue, 4 croisée. Un inattendu de chaque côté ; « aucun » une fois, en inattendue.
-  - Votes vérifiés dans VTANR5L17V7922.json : 1 pour (PA721896), 2 pour (PA342384), 3 contre (PA605782), 4 contre (PA805166).
-  - Titre 56 car. ; lignes 89/90/67 car. ; raisons de 12/11/12/11 mots.
+  - Votes vérifiés dans VTANR5L17V7922.json : 1 pour (PA721896), 2 pour (PA342384), 3 contre (PA605782), 4 contre (PA721916, bloc `contres` du groupe Ensemble pour la République).
+  - Règle 8 pour la raison 4 :
+    - l'extrait est pris dans la discussion des amendements nos 65 et 185, qui portent sur le même article (la comparaison avec des bases étrangères) ;
+    - il vient après le scrutin 7922, mais ces amendements sont rejetés (N002:171) : l'article n'a pas changé entre l'extrait et le vote ;
+    - Pouzyreff parle en son nom, pas au nom du Gouvernement.
+  - Titre 56 car. ; lignes 89/90/67 car. ; raisons de 12/11/12/10 mots.
   - Sources des lignes : E1N002:86 et :88 (bases privées à l'étranger, surtout américaines ; Fnaeg élargi) ; :90 et :94 (habilitation générale à consulter des fichiers ; crimes anciens et sériels) ; :98 et :104 (ministre : inscription au Fnaeg ; crimes en série ou non élucidés).
 - Doutes :
   - Présentation B : être favorable, c'est soutenir le retrait.
-  - **Raison 4 réécrite.** Bergantz parle de « cette technique » (la généalogie génétique) ; l'ancienne formulation, « Ce serait encadré… », se lisait sur tout l'article, Fnaeg compris. À annoter de nouveau (convention 7).
-  - Ligne 2 : « fichage » (mot du camp critique, N002:117) devient « fichier ».
-  - Côté « pour », l'inattendu croisé possible est Duplessy, vote « pour » vérifié (PA841351) : « Plus l'accès au fichier ADN s'élargit, plus le risque de fuite grandit. » (N002:92). Son pôle est ambigu ; le pratique d'Élisa Martin est gardé. L'annotation a confirmé « aucun » pour la raison 2.
-  - Raison 4 : j'ai écarté l'extrait de Bergantz sur le consentement (N002:133). Il vient après le vote et relaie le ministre.
-  - Les lignes taisent la condition de consentement des utilisateurs des bases, annoncée par le Gouvernement (N002:121, :137) et contestée par Duplessy (N002:129). Elle est invérifiable sans le texte.
+  - **Raison 4 remplacée.** La version réécrite de Bergantz (« Comparer l'ADN serait encadré et réservé aux enquêtes sans aucun suspect. », Les Démocrates, N002:94) a été lue pôle 0 à la seconde annotation, après « aucun » et 1 à la première. Elle est remplacée par Pouzyreff, à annoter.
+  - Raison 4 : la phrase ne garde que le consentement. La suite de l'extrait (« participer à la recherche de criminels ») est laissée de côté, parce qu'elle tirerait la lecture vers le pôle 0. Le recueil du consentement est contesté en séance par Capdevielle (N002:140) et Taurinya (N002:143). C'est une affirmation de l'oratrice, invérifiable sans le texte de la commission.
+  - **Si la raison 4 est lue pôle 0**, on applique A.7, point 6 : aucun inattendu des deux côtés, deux attendues nettes de chaque côté, quatre groupes, votes vérifiés.
+    - Côté « pour » : Faucillon (Gauche Démocrate et Républicaine) et Élisa Martin (La France insoumise - Nouveau Front Populaire), qui remplace sa raison 2 par sa phrase sur la vie privée (N002:179, « nous souhaitons protéger absolument la vie privée des personnes », pôle 1).
+    - Côté « contre » : Marcangeli (Horizons & Indépendants) et Pouzyreff (Ensemble pour la République), avec une phrase de pôle 0 tirée de N002:154-156 (« Nous parlons d'identifier des auteurs de crimes graves »).
+  - Raison 2 : « aucun » confirmé à l'annotation. Le repli croisé de Duplessy (N002:92, vote « pour » vérifié, PA841351) reste noté.
+  - Ligne 2 : « fichier » plutôt que « fichage », mot du camp critique (N002:117).
+  - Les lignes taisent la condition de consentement, annoncée par le Gouvernement (N002:121, :137) et contestée par Duplessy (N002:129). Elle n'apparaît plus que dans la raison 4, comme argument d'une oratrice.
   - Tension : la lecture Précaution/Innovation est possible ; S est confirmé à l'annotation.
   - « Émeline K/Bidi » s'affiche tel quel (arbitrage de forme, point 7).
   - L'amendement no 25 (2904/AN/25) et le texte de la commission no 2904 n'étaient pas publiés au 10 octobre 2026 (fichiers locaux vides ou invalides). Les lignes et l'auteur restent sourcés sur le seul compte rendu (CRSANR5L17S2026E1N002). L'article mis aux voix est celui du texte de la commission, puisque les suppressions sont examinées d'abord.
-- Statut : prête pour la vérification indépendante après annotation à l'aveugle de la raison 4.
+- Statut : prête pour la vérification indépendante après annotation à l'aveugle de la raison 4 ; repli écrit ci-dessus si elle est lue pôle 0.
 
 ### Case S (rang tiré au scellement) · scrutin 2190 (17e législature)
 - Titre : Supprimer les zones à faibles émissions
