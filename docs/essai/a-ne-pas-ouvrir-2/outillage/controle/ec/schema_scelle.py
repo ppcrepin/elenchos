@@ -1,9 +1,9 @@
-"""Schéma fermé du fichier scellé, version 4 (schéma, parties 1.2, 2 et 4.1 étape 4)."""
+"""Schéma fermé du fichier scellé, version 5 (schéma 2, parties 1.2, 2 et 5.1, étape 4)."""
 
 import re
 import unicodedata
 
-from .jeu import PERSONNAGES, TEXTES, TENSIONS, FERMETES, QUOTIDIENS
+from .jeu import PERSONNAGES, JOUES, TOUS, HISTOIRE, TENSIONS, FERMETES, MEMBRES, rang_texte
 from .sources import date_valide
 
 RE_ADRESSE = re.compile(
@@ -75,6 +75,14 @@ class Verif:
         return True
 
 
+RE_HEX64 = re.compile(r"[0-9a-f]{64}")
+OBJETS = ("texte", "article", "amendement", "motion", "resolution")
+ALPHAS = ("1/6", "1/4", "1/3")
+CLES_RACINE = ["absences", "calendrier", "cercle", "format", "graine", "histoire", "personnages",
+               "reglage", "reponses", "reponses_atypiques", "semaines", "statut", "textes",
+               "vecteurs_test", "version"]
+
+
 def chaines(obj, chemin=""):
     """Toutes les chaînes d'un objet JSON, clés comprises, avec leur chemin."""
     if isinstance(obj, str):
@@ -88,15 +96,20 @@ def chaines(obj, chemin=""):
             yield from chaines(v, f"{chemin}/{k}")
 
 
+def _texte_ou_null(v, valeurs, chemin, ver):
+    if v is not None and v not in valeurs:
+        ver.err(chemin, f"texte ou null attendu, trouvé {v!r}")
+
+
 def verifier_schema(d, date_scellement):
-    """Étape 4. Rend la liste des erreurs (vide si passée)."""
+    """Étape 4. Rend (erreurs, candidat) ; candidat vrai si `statut` vaut « provisoire »."""
     v = Verif()
-    if not v.cles(d, "", ["absences", "cercle", "format", "graine", "personnages", "reglage",
-                          "reponses", "reponses_atypiques", "textes", "vecteurs_test", "version"]):
-        return v.erreurs
+    if not v.cles(d, "", CLES_RACINE):
+        return v.erreurs, False
     v.chaine(d["format"], "/format", valeurs=["elenchos-essai-scelle"])
-    if v.entier(d["version"], "/version") and d["version"] != 4:
-        v.err("/version", f"version {d['version']} (attendu : 4)")
+    if v.entier(d["version"], "/version") and d["version"] != 5:
+        v.err("/version", f"version {d['version']} (attendu : 5)")
+    v.chaine(d["statut"], "/statut", valeurs=["provisoire", "final"])
     v.chaine(d["graine"], "/graine", RE_HEX16)
     if v.liste(d["vecteurs_test"], "/vecteurs_test", 3):
         for i, o in enumerate(d["vecteurs_test"]):
@@ -106,9 +119,41 @@ def verifier_schema(d, date_scellement):
                 v.chaine(o["cle"], c + "/cle")
                 v.chaine(o["hex8"], c + "/hex8", RE_HEX8)
                 v.entier(o["n"], c + "/n", 0, 2 ** 32 - 1)
-    if v.cles(d["cercle"], "/cercle", ["inviteuse", "nom"]):
-        v.chaine(d["cercle"]["inviteuse"], "/cercle/inviteuse")
+    # 2.3 cercle
+    if v.cles(d["cercle"], "/cercle", ["invitant", "membres", "nom"]):
+        v.chaine(d["cercle"]["invitant"], "/cercle/invitant", valeurs=PERSONNAGES)
         v.chaine(d["cercle"]["nom"], "/cercle/nom")
+        if v.liste(d["cercle"]["membres"], "/cercle/membres", 5):
+            for i, m in enumerate(d["cercle"]["membres"]):
+                c = f"/cercle/membres/{i}"
+                if v.cles(m, c, ["depuis", "membre"]):
+                    v.entier(m["depuis"], c + "/depuis", -90, 15)
+                    v.chaine(m["membre"], c + "/membre", valeurs=MEMBRES)
+    # 2.4 calendrier et semaines
+    if v.liste(d["calendrier"], "/calendrier", 15):
+        for i, o in enumerate(d["calendrier"]):
+            c = f"/calendrier/{i}"
+            if not v.cles(o, c, ["deviner_porteur", "jour", "manche", "nom_jour", "repondu",
+                                 "revelation_porteur", "revele", "saut", "type"]):
+                continue
+            v.booleen(o["deviner_porteur"], c + "/deviner_porteur")
+            v.entier(o["jour"], c + "/jour", 1, 15)
+            for k in ("manche", "repondu", "revele"):
+                _texte_ou_null(o[k], TOUS, f"{c}/{k}", v)
+            v.chaine(o["nom_jour"], c + "/nom_jour",
+                     valeurs=["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"])
+            v.chaine(o["revelation_porteur"], c + "/revelation_porteur", valeurs=["aucune", "lue", "jamais_lue"])
+            if o["saut"] is not None:
+                v.entier(o["saut"], c + "/saut", 1, 2)
+            v.chaine(o["type"], c + "/type", valeurs=["joue", "joue_puis_saut", "saute", "cloture"])
+    if v.liste(d["semaines"], "/semaines", 15):
+        for i, o in enumerate(d["semaines"]):
+            c = f"/semaines/{i}"
+            if v.cles(o, c, ["dernier_jour", "numero", "premier_jour"]):
+                v.entier(o["dernier_jour"], c + "/dernier_jour", -90, 15)
+                v.entier(o["numero"], c + "/numero", 1, 15)
+                v.entier(o["premier_jour"], c + "/premier_jour", -90, 15)
+    # 2.2 personnages
     if v.cles(d["personnages"], "/personnages", PERSONNAGES):
         for p in PERSONNAGES:
             c = f"/personnages/{p}"
@@ -125,11 +170,37 @@ def verifier_schema(d, date_scellement):
                     if v.cles(o["profil"][t], ct, ["fermete", "position"]):
                         v.chaine(o["profil"][t]["fermete"], ct + "/fermete", valeurs=FERMETES)
                         v.entier(o["profil"][t]["position"], ct + "/position", 0, 100)
-    if v.cles(d["textes"], "/textes", TEXTES):
-        for tid in TEXTES:
+    # 2.5 textes joués
+    if v.cles(d["textes"], "/textes", JOUES):
+        for tid in JOUES:
             _texte(v, d["textes"][tid], f"/textes/{tid}", date_scellement)
-    if v.cles(d["reponses"], "/reponses", TEXTES):
-        for tid in TEXTES:
+    # 2.6 histoire
+    h = d["histoire"]
+    if v.cles(h, "/histoire", ["resume_sha256", "textes", "tirage"]):
+        v.chaine(h["resume_sha256"], "/histoire/resume_sha256", RE_HEX64)
+        v.entier(h["tirage"], "/histoire/tirage", 1, 200)
+        if v.cles(h["textes"], "/histoire/textes", HISTOIRE):
+            for hid in HISTOIRE:
+                c = f"/histoire/textes/{hid}"
+                o = h["textes"][hid]
+                if not v.cles(o, c, ["fiche", "jour", "raisons", "sens", "tension"]):
+                    continue
+                v.entier(o["jour"], c + "/jour", -90, -1)
+                v.entier(o["sens"], c + "/sens", 0, 1)
+                v.chaine(o["tension"], c + "/tension", valeurs=TENSIONS)
+                if v.liste(o["raisons"], c + "/raisons", 4):
+                    for i, r in enumerate(o["raisons"]):
+                        ci = f"{c}/raisons/{i}"
+                        if v.cles(r, ci, ["cote", "pole", "rang"]):
+                            v.chaine(r["cote"], ci + "/cote", valeurs=["pour", "contre"])
+                            _pole(v, r["pole"], ci + "/pole")
+                            v.entier(r["rang"], ci + "/rang", 1, 4)
+                if o["fiche"] is not None and v.cles(o["fiche"], c + "/fiche", ["titre", "vote"]):
+                    v.chaine(o["fiche"]["titre"], c + "/fiche/titre")
+                    _vote(v, o["fiche"]["vote"], c + "/fiche/vote", date_scellement)
+    # 2.7 réponses, absences, atypiques
+    if v.cles(d["reponses"], "/reponses", TOUS):
+        for tid in TOUS:
             c = f"/reponses/{tid}"
             o = d["reponses"][tid]
             if not isinstance(o, dict):
@@ -147,7 +218,7 @@ def verifier_schema(d, date_scellement):
             c = f"/absences/{p}"
             if v.liste(d["absences"][p], c):
                 for i, t in enumerate(d["absences"][p]):
-                    v.chaine(t, f"{c}/{i}", valeurs=TEXTES)
+                    v.chaine(t, f"{c}/{i}", valeurs=TOUS)
                 _ordre_textes(v, d["absences"][p], c)
     if v.cles(d["reponses_atypiques"], "/reponses_atypiques", PERSONNAGES):
         for p in PERSONNAGES:
@@ -158,25 +229,30 @@ def verifier_schema(d, date_scellement):
                     if v.cles(o, f"{c}/{i}", ["cote_tire", "texte"]):
                         if o["cote_tire"] not in (1, -1, None) or isinstance(o["cote_tire"], bool):
                             v.err(f"{c}/{i}/cote_tire", f"valeur non permise : {o['cote_tire']!r}")
-                        if v.chaine(o["texte"], f"{c}/{i}/texte", valeurs=TEXTES):
+                        if v.chaine(o["texte"], f"{c}/{i}/texte", valeurs=TOUS):
                             ts.append(o["texte"])
                 _ordre_textes(v, ts, c)
-    if v.cles(d["reglage"], "/reglage", ["seuils_stricts"]):
-        v.booleen(d["reglage"]["seuils_stricts"], "/reglage/seuils_stricts")
-    # Toutes les chaînes : NFC, sans caractère de contrôle (le fichier scellé n'a
-    # aucun texte de carnet : aucune exception).
+    # 2.8 réglage
+    if v.cles(d["reglage"], "/reglage", ["alpha", "barre", "facteur", "seuils_stricts"]):
+        rg = d["reglage"]
+        v.chaine(rg["alpha"], "/reglage/alpha", valeurs=ALPHAS)
+        if v.entier(rg["barre"], "/reglage/barre") and rg["barre"] != 16:
+            v.err("/reglage/barre", f"{rg['barre']} (seule valeur permise : 16)")
+        if v.entier(rg["facteur"], "/reglage/facteur") and rg["facteur"] not in (2, 3, 4):
+            v.err("/reglage/facteur", f"{rg['facteur']} (valeurs permises : 2, 3, 4)")
+        v.booleen(rg["seuils_stricts"], "/reglage/seuils_stricts")
     for chemin, s in chaines(d):
         if unicodedata.normalize("NFC", s) != s:
             v.err(chemin, "chaîne pas en NFC")
         if any(unicodedata.category(ch) == "Cc" for ch in s):
             v.err(chemin, "caractère de contrôle dans une chaîne")
-    return v.erreurs
+    return v.erreurs, d.get("statut") == "provisoire"
 
 
 def _ordre_textes(v, ts, chemin):
-    idx = [TEXTES.index(t) for t in ts if t in TEXTES]
+    idx = [rang_texte(t) for t in ts if t in TOUS]
     if idx != sorted(set(idx)):
-        v.err(chemin, "textes pas dans l'ordre des textes, ou répétés")
+        v.err(chemin, "textes pas dans l'ordre du calendrier, ou répétés")
 
 
 def _raison(v, r, chemin):
@@ -185,15 +261,32 @@ def _raison(v, r, chemin):
     return v.entier(r, chemin, 1, 4)
 
 
-def _elu(v, o, chemin, avec_elision):
-    cles = ["feminin", "groupe", "nom"] + (["elision"] if avec_elision else [])
-    if not v.cles(o, chemin, cles):
+def _pole(v, pole, chemin):
+    if pole != "aucun" and (pole not in (0, 1) or isinstance(pole, bool)):
+        v.err(chemin, f"valeur non permise : {pole!r}")
+
+
+def _groupe(v, g, chemin, null_permis):
+    if g is None:
+        if not null_permis:
+            v.err(chemin, "null permis seulement pour un député")
         return
-    v.booleen(o["feminin"], chemin + "/feminin")
-    v.chaine(o["groupe"], chemin + "/groupe")
-    v.chaine(o["nom"], chemin + "/nom")
-    if avec_elision:
-        v.booleen(o["elision"], chemin + "/elision")
+    v.chaine(g, chemin)
+
+
+def _vote(v, vo, c, date_scellement):
+    if not v.cles(vo, c, ["date", "etape", "issue", "objet", "suite"]):
+        return
+    if v.chaine(vo["date"], c + "/date"):
+        if not date_valide(vo["date"]):
+            v.err(c + "/date", f"jour qui n'existe pas ou mal écrit : {vo['date']!r}")
+        elif date_scellement is not None and vo["date"] > date_scellement:
+            v.err(c + "/date", f"postérieure au jour du scellement ({date_scellement})")
+    v.chaine(vo["etape"], c + "/etape", valeurs=["navette", "definitif", "aucune"])
+    v.chaine(vo["issue"], c + "/issue", valeurs=["adopte", "rejete"])
+    v.chaine(vo["objet"], c + "/objet", valeurs=OBJETS)
+    if vo["suite"] is not None:
+        v.chaine(vo["suite"], c + "/suite", valeurs=["texte_tombe", "texte_retire"])
 
 
 def _texte(v, t, c, date_scellement):
@@ -201,11 +294,17 @@ def _texte(v, t, c, date_scellement):
                          "tension", "titre", "vote"]):
         return
     a = t["auteur"]
-    if isinstance(a, dict) and a.get("type") == "gouvernement":
+    typ = a.get("type") if isinstance(a, dict) else None
+    if typ == "gouvernement":
         v.cles(a, c + "/auteur", ["type"])
-    elif isinstance(a, dict) and a.get("type") in ("depute", "senateur"):
+    elif typ == "commission":
+        if v.cles(a, c + "/auteur", ["libelle", "type"]):
+            v.chaine(a["libelle"], c + "/auteur/libelle")
+    elif typ in ("depute", "senateur"):
         if v.cles(a, c + "/auteur", ["feminin", "groupe", "nom", "type"]):
-            _elu(v, {k: a[k] for k in ("feminin", "groupe", "nom")}, c + "/auteur", False)
+            v.booleen(a["feminin"], c + "/auteur/feminin")
+            v.chaine(a["nom"], c + "/auteur/nom")
+            _groupe(v, a["groupe"], c + "/auteur/groupe", typ == "depute")
     else:
         v.err(c + "/auteur", "forme d'auteur non permise")
     if v.liste(t["considerations"], c + "/considerations", 4):
@@ -214,28 +313,23 @@ def _texte(v, t, c, date_scellement):
             if not v.cles(o, ci, ["cote", "depute", "pole", "rang", "texte"]):
                 continue
             v.chaine(o["cote"], ci + "/cote", valeurs=["pour", "contre"])
-            if o["pole"] != "aucun" and (o["pole"] not in (0, 1) or isinstance(o["pole"], bool)):
-                v.err(ci + "/pole", f"valeur non permise : {o['pole']!r}")
+            _pole(v, o["pole"], ci + "/pole")
             v.entier(o["rang"], ci + "/rang", 1, 4)
             v.chaine(o["texte"], ci + "/texte")
-            _elu(v, o["depute"], ci + "/depute", True)
+            dep = o["depute"]
+            if v.cles(dep, ci + "/depute", ["elision", "feminin", "groupe", "nom"]):
+                v.booleen(dep["elision"], ci + "/depute/elision")
+                v.booleen(dep["feminin"], ci + "/depute/feminin")
+                v.chaine(dep["nom"], ci + "/depute/nom")
+                _groupe(v, dep["groupe"], ci + "/depute/groupe", True)
     v.chaine(t["lien_scrutin"], c + "/lien_scrutin", RE_ADRESSE)
     if v.liste(t["lignes"], c + "/lignes", 3):
         for i, s in enumerate(t["lignes"]):
             v.chaine(s, f"{c}/lignes/{i}")
-    if v.entier(t["sens"], c + "/sens", 0, 1):
-        pass
+    v.entier(t["sens"], c + "/sens", 0, 1)
     if v.liste(t["sources"], c + "/sources", non_vide=True):
         for i, s in enumerate(t["sources"]):
             v.chaine(s, f"{c}/sources/{i}", RE_ADRESSE)
     v.chaine(t["tension"], c + "/tension", valeurs=TENSIONS)
     v.chaine(t["titre"], c + "/titre")
-    if v.cles(t["vote"], c + "/vote", ["date", "etape", "issue"]):
-        vo = t["vote"]
-        if v.chaine(vo["date"], c + "/vote/date"):
-            if not date_valide(vo["date"]):
-                v.err(c + "/vote/date", f"jour qui n'existe pas ou mal écrit : {vo['date']!r}")
-            elif date_scellement is not None and vo["date"] > date_scellement:
-                v.err(c + "/vote/date", f"postérieure au jour du scellement ({date_scellement})")
-        v.chaine(vo["etape"], c + "/vote/etape", valeurs=["navette", "definitif", "aucune"])
-        v.chaine(vo["issue"], c + "/vote/issue", valeurs=["adopte", "rejete", "sans_vote_ensemble"])
+    _vote(v, t["vote"], c + "/vote", date_scellement)
