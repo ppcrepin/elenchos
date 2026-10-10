@@ -6,6 +6,7 @@ Jalon 1 :
   histoire         trace C de l'histoire (version 1) et résumé (version 1), à partir
                    du fichier scellé seul ; V6 ; comparaison aux traces P et S
   journal          validité d'un journal version 4 (schéma 2, partie 4.4)
+  controles-2-4    contrôles 2, 3 (calibrage refait de r = 1 au r scellé) et 4
   comparer         différences entre deux fichiers JSON (JSON Pointer)
 
 Les contrôles 2 à 14, les phrases attendues et le rejeu des parties viennent au
@@ -189,6 +190,22 @@ def cmd_journal(a):
     return 0 if not defauts else 1
 
 
+def cmd_controles234(a):
+    from ec import canon
+    from ec.controles234 import rapport
+    octets = Path(a.fichier).read_bytes()
+    d = canon.lire_strict(octets)
+    premier = Path(a.premier)
+    emp = Path(a.empreinte_publiee)
+    prof = Path(a.profils)
+    texte, verdict = rapport(d, octets, premier.read_bytes(), emp.read_text(encoding="utf-8"),
+                             prof.read_text(encoding="utf-8"),
+                             {"fichier": affiche(a.fichier), "premier": affiche(premier),
+                              "empreinte": affiche(emp), "profils": affiche(prof)})
+    ecrire(texte, a.sortie)
+    return 0 if all(verdict.values()) else 1
+
+
 def cmd_comparer(a):
     from ec.comparer import comparer_octets
     same, diffs = comparer_octets(Path(a.a).read_bytes(), Path(a.b).read_bytes())
@@ -235,6 +252,14 @@ def main(argv=None):
     c.add_argument("--confusables", help="confusables.txt d'Unicode (règle 6 : squelette du pseudo)")
     c.add_argument("--sortie")
     c.set_defaults(f=cmd_journal)
+
+    c = sp.add_parser("controles-2-4", help="contrôles 2, 3 (calibrage refait) et 4 (partie 5.2)")
+    c.add_argument("fichier")
+    c.add_argument("--premier", default=str(RACINE / "docs" / "essai" / "a-ne-pas-ouvrir" / "fichier-scelle.json"))
+    c.add_argument("--empreinte-publiee", default=str(RACINE / "docs" / "essai" / "empreinte.md"))
+    c.add_argument("--profils", default=str(RACINE / "docs" / "essai" / "a-ne-pas-ouvrir" / "profils.md"))
+    c.add_argument("--sortie")
+    c.set_defaults(f=cmd_controles234)
 
     c = sp.add_parser("comparer", help="différences entre deux fichiers JSON")
     c.add_argument("a")

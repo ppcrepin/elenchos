@@ -78,7 +78,7 @@
 - **4.3** : inchangé ; la justesse suit D-024 ; la redistribution est celle du premier essai.
 - **4.4** : inchangé.
 - **À quatre membres** (histoire, et manches des personnages au jour 1) : il y a au plus trois réponses possibles ; les étapes 2 et 3 de 4.3 les servent toutes, dans l'ordre de l'étape 1, sans remplacement. Ce n'est pas une règle de plus : la règle générale donne ce résultat.
-- **Constat** : dans l'ordre retenu, le curseur du porteur ne peut être net dans une manche de personnage que pour sa carte de T12 (S), devinée le jour 13, après E1, T3, T6 et T9 ; dans l'ordre R2, seulement pour sa carte de T11 (L). Ailleurs, ses cartes se servent à la rareté.
+- **Constat** : dans l'ordre retenu, le curseur du porteur ne peut être net dans une manche de personnage que pour sa carte de T12 (S), devinée le jour 13, après E1, T3, T6 et T9 ; dans l'ordre R2, seulement pour sa carte de T12 (P), devinée le jour 13, après E2, T2, T5 et T9. Ailleurs, ses cartes se servent à la rareté.
 
 **6. Portrait du porteur** : W = 3w partout où son portrait est calculé (Moi, Le Cercle, écran d'un proche, phrase nette, Pas de Côté, R3 sur ses cartes), jamais en 3.2. Facteur lu dans le fichier scellé, valeurs permises 2, 3 ou 4.
 
@@ -139,7 +139,7 @@ Au-delà de r = 200 : défaut, renvoyé à GD. Les raisons de l'échec de chaque
 - un Pas de Côté d'un personnage sur une révélation lue, s'il existe dans le lot ;
 - la barre pleine par le premier curseur net.
 
-Partie témoin ajoutée : un Pas de Côté du porteur sur T12 (S), révélé au vote le jour 14. Dans l'ordre R2, il est listé comme impossible.
+Partie témoin ajoutée : un Pas de Côté du porteur sur T12 (S), révélé au vote le jour 14. Dans l'ordre R2, il porte sur T12 (P), dans les mêmes conditions.
 
 **13. Chiffres constants** : ceux du §9 public, plus la part de réponses atypiques parmi ses cartes, les remplacements et cartes identiques, les départages, et les impossibilités.
 
@@ -153,7 +153,17 @@ Partie témoin ajoutée : un Pas de Côté du porteur sur T12 (S), révélé au 
   - Au jour 14, T ne peut pas être net ; S, à cinq réponses, le devient plus facilement que P et L (à dire au dévoilement).
   - Pas de Côté du porteur : possible sur S seulement, à la révélation de T12 (jour 14, au vote, lue), si son curseur S est net après T9 et que sa réponse à T12 va nettement contre lui.
   - À dire au porteur à la livraison : « quatre ou cinq réponses par tension » ne vaut pas pour Tradition/Changement (trois).
-- **Ordre R2** (un texte S tombe sans remplaçant dans S) : S L P S L T S | L P L S L P T | P. Porteur : S 4 (E1, T3, T6, T10), P 4 (E2, T2, T8, T12), T 3, L 5 (T1, T4, T7, T9, T11). Lot : S 5, P 5, T 3, L 5. Manches inchangées. Pas de Côté du porteur impossible. *Note du 10 octobre 2026 : R2 demande une cinquième fiche L, qui n'existe pas (quatre fiches L, pas de réserve L). À trancher avant le scellement : rédiger une cinquième fiche L parmi les candidats du relevé, ou réécrire R2 avec la réserve 5242 (T), ce qui demande un nouvel ordre vérifié (jamais deux jours de suite sur la même tension, E9, D-028). Tant que rien n'est décidé, un texte S qui tombe n'a pas de repli écrit.*
+- **Ordre R2** (un texte de case S tombe au contrôle ; il n'y a pas de réserve S). *Réécrit le 10 octobre 2026 : l'ancien R2 demandait une cinquième fiche L, qui n'existe pas.* La réserve 5242 (T, rejetée) devient T14 ; 5359 quitte T14 et prend une case P. Entrée inchangée (E1 S, E2 P, E3 T). T0 à T14 : S L P S L P T | L S P T S P L | T.
+  - Cases : S, les trois textes restants, dans l'ordre de la liste « Cases S » ; P : 840, 2139, 6770, 5359 ; T : 2758, 3449 ; L inchangées. Tirage comme ci-dessous.
+  - Réponses du porteur avant le second dimanche : S 4 (E1, T3, T8, T11), P 5 (E2, T2, T5, T9, T12), T 3 (E3, T6, T10), L 4 (T1, T4, T7, T13). Au jour 7, au plus trois par tension. La phrase publique (trois sur T, quatre ou cinq ailleurs) reste exacte.
+  - Manches du porteur : S (T0), L (T1), P (T2), T (T6), L (T13).
+  - Lot : S 5 (T0 compris), P 5, T 4 (T14 compris), L 4. Jamais deux jours de suite sur la même tension ; T0 n'a pas la tension de H90.
+  - Pas de Côté du porteur : possible sur P seulement, à la révélation de T12 (jour 14, au vote, lue), si son curseur P est net après T9 et que sa réponse à T12 va nettement contre lui. Au jour 14, T ne peut pas être net ; P, à cinq réponses, le devient plus facilement que S et L (à dire au dévoilement).
+  - Sens (E9) : P 2 de sens 0 et 3 de sens 1 ; T 1 et 2 ; L 2 et 2 ; S 2 et 2 si le texte tombé est de sens 1 (7922, 2190, 8167). Si c'est 795, S garde un seul texte de sens 0 (E1) pour trois de sens 1 : E9 est relâchée sur S, faute de stock.
+  - Mélange : 10 rejetés sur 18 si le texte tombé est rejeté (S 2, P 3, T 3, L 2), 11 si c'est 2190 (S 3) ; bornes de D-028 tenues ; chaque tension garde un adopté et un rejeté ; A.4 tenu (amendement : E1 adopté ; article : 7386 rejeté ; texte : 2758 rejeté).
+  - Pourquoi T14 : la réserve, texte de mœurs que A.2 rend discutable (réserve de dernier recours, arbitrage de l'orchestrateur), y pèse le moins : jamais devinée, répondue après la phrase du second dimanche, sans réponse atypique. 5359, sans paire d'inattendus, entre dans le jeu : un Pas de Côté de personnage devient possible sur sa révélation (point 12).
+  - Limites : si 2190 tombe, les cinq titres en « Supprimer » du lot sont tous rejetés (7922, 8167, 6770, 5359, 5242) et le verbe prédit de nouveau le résultat. Textes en présentation B répondus avant le second dimanche : quatre si 795 ou 2190 tombe (point 15). À dire au dévoilement.
+  - Si E1 tombe : Contenu choisit un texte de case S qui se lit seul (A.4, Entrée) pour le remplacer, puis R2 s'applique à la case vidée. Si T0 tombe : pas de repli écrit. T0 exige un texte entier ou un article central de sens 0, et aucun autre texte S ne l'offre ; il faudrait rédiger une fiche de plus.
 - **Ordre R3** (aucun tirage de calibrage ne passe avec cette entrée) : entrée S, P, L (E3 = 3370) ; T0 à T14 : S T P S L T S | P L S P L S T | P.
 - **Sens (E9).** Dans chaque tension, les réponses du porteur avant le second dimanche couvrent les deux sens, à un texte près. T0 reçoit un texte S de sens 0, ce qui équilibre le lot S (3 de chaque sens) ; les cinq autres S sont 2 de sens 0 et 3 de sens 1 ; T14 un texte P, choisi (P est à égalité). C'est une cible : si le stock ne la permet pas, on la relâche avant les règles de D-028. Elle limite le biais d'approbation noté au premier essai.
 - **Rôles choisis, cases tirées.** E1 = 1161, E2 = 7386, E3 = 3708, T0 = 1262, T14 = 5359. Cases S : 795, 7922, 2190, 8167. Cases P : 840, 2139, 6770. Cases T : 2758, 3449. Cases L : 3370, 707, 2484, 989. Réserve : 5242 (T, rejetée), la seule.
@@ -185,7 +195,7 @@ Une marge étroite pour L'Original d'Odile (environ 0,37 contre 0,3) explique qu
 
 **§6, point 7 (Le Pas de Côté), fin du dernier sous-point**
 
-Dans l'ordre retenu, il est possible sur S seulement : sa cinquième réponse S (T12) est révélée au vote le jour 14, et lue. Dans l'ordre R2, il est impossible.
+Dans l'ordre retenu, il est possible sur S seulement : sa cinquième réponse S (T12) est révélée au vote le jour 14, et lue. Dans l'ordre R2, il est impossible. *(Mise à jour du 10 octobre 2026 : l'ordre R2 a été réécrit ; il y est possible sur P seulement, à la révélation de T12. Voir le point 14.)*
 
 **Annexe A, A.6 (Contenu), sous « Le reste de la fiche va dans `a-ne-pas-ouvrir-2/textes/` : »**
 

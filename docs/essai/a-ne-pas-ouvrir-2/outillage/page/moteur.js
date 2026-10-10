@@ -1,8 +1,8 @@
 /* Moteur de la page du second essai (outillage d'essai, D-001 tenu).
  *
- * ÉTAT AU LOT 2 (histoire) : les règles communes (portrait, manches, révélations,
- * titres, tempéraments, Pas de Côté), `histoire` et `resume`. `calculer`
- * (jours de l'essai) arrive au lot 3 ; d'ici là il lève une erreur.
+ * LOTS 2 ET 3 : les règles communes (portrait, manches, révélations, titres,
+ * tempéraments, Pas de Côté), `histoire` et `resume` (lot 2), `calculer`
+ * et `cartesServies` (lot 3).
  * Le moteur du premier essai est gardé dans tests/premier-essai/.
  *
  * Fonctions pures : elles ne lisent ni l'écran, ni la mémoire, ni l'horloge,
@@ -16,6 +16,12 @@
  *        de l'arrivée, pour la trace de l'histoire (trace.js, version témoin).
  *   resume(arrivee) -> le résumé de la partie 3.2 du schéma (V6), en chaînes
  *        ASCII et fractions écrites « p/q ».
+ *   calculer(scelle, cal, arrivee, journal) -> R : les jours 1 à K de la
+ *        partie (trace de partie, partie 4.3, sans les durées ni les entrées),
+ *        R.sauts, R.titres (toutes les semaines tombées), R.agregats ; en plus,
+ *        pour les écrans, R.jours[j].cartes_porteur et .compte_a_rebours.
+ *   cartesServies(scelle, cal, arrivee) -> j -> {n, cachee} : les cartes du
+ *        porteur, qui ne dépendent que du fichier (règle 7 du journal).
  *   regles -> les règles une à une, pour les tests et pour le lot 3.
  *
  * Renvois : « §n » = simulation-2.md ; « caché n » = a-ne-pas-ouvrir-2/
@@ -92,6 +98,11 @@ var ElenchosMoteur = (function (N) {
     var w = cl.w.fois(facteur);
     return { sw: s.sw.plus(w), swp: cl.pole === 1 ? s.swp.plus(w) : s.swp };
   }
+  function retirer(s, cl, facteur) {
+    if (cl.w.estZero()) { return s; }
+    var w = cl.w.fois(facteur);
+    return { sw: s.sw.moins(w), swp: cl.pole === 1 ? s.swp.moins(w) : s.swp };
+  }
   /** §5.2 : centre, largeur, netteté. */
   function curseur(s) {
     var c = F(2).plus(s.swp).divise(F(4).plus(s.sw));
@@ -106,8 +117,11 @@ var ElenchosMoteur = (function (N) {
   /**
    * reponsePorteur(t) : la réponse du porteur au texte t, ou null (lot 3 :
    * lue dans le journal). Dans l'histoire, le porteur n'a pas de réponse.
+   * arrivee (lot 3, facultatif) : l'état à l'arrivée ; les sommes des
+   * personnages partent alors de ses `sommes` (vues le jour de l'arrivée),
+   * que V6 a vérifiées, au lieu de refaire l'histoire.
    */
-  function contexte(scelle, cal, reponsePorteur) {
+  function contexte(scelle, cal, reponsePorteur, arrivee) {
     exiger(scelle && scelle.format === 'elenchos-essai-scelle' && scelle.version === 5, 'fichier scellé : format ou version inattendus');
     exiger(cal && typeof cal.texteRepondu === 'function', 'calendrier absent');
     var tir = N.creerTirage(scelle.graine);
@@ -148,8 +162,27 @@ var ElenchosMoteur = (function (N) {
     /* Sommes de chaque membre, par tension, sur l'entrée et les textes répondus
      * jusqu'au jour d compris, avec ses propres poids (facteur pour le porteur). */
     var memo = Object.create(null);
+    var graine = arrivee ? { jour: cal.premier - 2, sommes: arrivee.sommes } : null;
     function sommesJusqua(m, d) {
       var tab = memo[m];
+      if (!tab && graine && a(graine.sommes, m)) {
+        tab = memo[m] = { dernier: graine.jour, parJour: Object.create(null) };
+        tab.parJour[String(graine.jour)] = graine.sommes[m];
+      }
+      if (tab && d < tab.premier) { d = tab.premier; }
+      if (tab && !tab.parJour[String(d)] && d < tab.dernier) {
+        // Avant la graine (Pas de Côté sur le dernier texte de l'histoire) : on retire, jour après jour, les réponses.
+        var cur = tab.parJour[String(graine.jour)];
+        for (var x = graine.jour; x > d; x--) {
+          var tx0 = cal.texteRepondu(x);
+          if (tx0 !== null) {
+            var r0 = reponse(m, tx0);
+            if (r0) { var t0 = texte(tx0); var c0 = {}; TENSIONS.forEach(function (y) { c0[y] = cur[y]; }); c0[t0.tension] = retirer(cur[t0.tension], classer(t0, r0), facteur(m)); cur = c0; }
+          }
+          tab.parJour[String(x - 1)] = cur;
+        }
+        return tab.parJour[String(d)];
+      }
       if (!tab) {
         var s0 = {};
         TENSIONS.forEach(function (x) { s0[x] = sommesVides(); });
@@ -157,10 +190,11 @@ var ElenchosMoteur = (function (N) {
           var r = reponse(m, t);
           if (r) { var tx = texte(t); s0[tx.tension] = ajouter(s0[tx.tension], classer(tx, r), facteur(m)); }
         });
-        tab = memo[m] = { dernier: premierJour - 1, parJour: Object.create(null) };
+        tab = memo[m] = { premier: premierJour - 1, dernier: premierJour - 1, parJour: Object.create(null) };
         tab.parJour[String(premierJour - 1)] = s0;
       }
       if (d < premierJour - 1) { d = premierJour - 1; }
+      if (tab.parJour[String(d)]) { return tab.parJour[String(d)]; }
       while (tab.dernier < d) {
         var prec = tab.parJour[String(tab.dernier)];
         var jour = tab.dernier + 1;
@@ -345,7 +379,7 @@ var ElenchosMoteur = (function (N) {
       }
       // Le porteur : ses réponses vues dans les cartes de g, déjà révélées, même tension, poids normaux (caché 4).
       var s = sommesVides();
-      for (var d = ctx.premierJour; d <= j - 1; d++) {
+      for (var d = Math.max(ctx.premierJour, ctx.cal.depuis(PORTEUR)); d <= j - 1; d++) {
         var m = mancheDe(d, g);
         if (!m || m.places.indexOf(PORTEUR) < 0) { continue; }
         var tm = ctx.texte(m.texte);
@@ -722,20 +756,403 @@ var ElenchosMoteur = (function (N) {
     };
   }
 
-  /** Lot 3. */
-  function calculer() { throw ErreurMoteur('calculer : lot 3, pas encore écrit'); }
+  /* ------------------------------------------------------------------ */
+  /* Phrases (§5.5 à §5.7 du premier essai ; §5.7 du second)             */
+  /* ------------------------------------------------------------------ */
+
+  var POLES = {
+    S: ['la sécurité', 'la liberté'], P: ['la précaution', "l'innovation"],
+    T: ['la tradition', 'le changement'], L: ['la décision locale', 'la décision nationale']
+  };
+  var ENTRE = { S: 'sécurité et liberté', P: 'précaution et innovation', T: 'tradition et changement', L: 'local et national' };
+  function aPole(p) { return p.indexOf('le ') === 0 ? 'au ' + p.slice(3) : 'à ' + p; }
+
+  /** §5.6 du premier essai (règle 18, R1). */
+  function phraseDuJour(tension, cl) {
+    var p = POLES[tension];
+    var s;
+    if (cl.classe === 'arbitrage') { s = "Aujourd'hui, tu as fait passer " + p[cl.pole] + ' avant ' + p[1 - cl.pole] + '.'; }
+    else if (cl.classe === 'penchant') { s = "Aujourd'hui, tu as penché vers " + p[cl.pole] + '.'; }
+    else if (cl.classe === 'tiraille') { s = "Aujourd'hui, tu as donné du poids " + aPole(p[0]) + ' comme ' + aPole(p[1]) + '.'; }
+    else { s = "Aujourd'hui, tu n'as penché ni vers " + p[0] + ' ni vers ' + p[1] + '.'; }
+    return N.typographier(s);
+  }
+
+  /** §5.3 du second essai : nets du plus éloigné de 1/2, puis plus grand Σ, puis S, P, T, L ; puis flous du plus étroit. */
+  function ordreMoi(tensions) {
+    var rang = function (t) { return TENSIONS.indexOf(t); };
+    var nets = TENSIONS.filter(function (t) { return tensions[t].net; }).sort(function (x, y) {
+      var c = tensions[y].c.moins(DEMI).abs().cmp(tensions[x].c.moins(DEMI).abs());
+      if (c !== 0) { return c; }
+      c = tensions[y].somme_w.cmp(tensions[x].somme_w);
+      return c !== 0 ? c : rang(x) - rang(y);
+    });
+    var flous = TENSIONS.filter(function (t) { return !tensions[t].net; }).sort(function (x, y) {
+      var c = tensions[x].l.cmp(tensions[y].l);
+      return c !== 0 ? c : rang(x) - rang(y);
+    });
+    return nets.concat(flous);
+  }
+
+  /**
+   * §5.7 du second essai, phrase de la semaine lue à l'ouverture du dimanche d.
+   * jourReference : la lecture précédente (veille du dimanche précédent), ou
+   * l'état après l'entrée pour la première semaine de l'essai.
+   */
+  function phraseSemaine(ctx, numero, d, jourReference) {
+    var lecture = {}, ref = [];
+    var sL = ctx.sommesJusqua(PORTEUR, d - 1), sR = ctx.sommesJusqua(PORTEUR, jourReference);
+    TENSIONS.forEach(function (t) {
+      var c = curseur(sL[t]);
+      lecture[t] = { c: c.c, net: c.net, somme_w: c.somme_w };
+      if (curseur(sR[t]).net) { ref.push(t); }
+    });
+    var devenues = TENSIONS.filter(function (t) { return lecture[t].net && ref.indexOf(t) < 0 && !lecture[t].c.egal(DEMI); });
+    // Poids de la semaine, poids normaux (S1, partie 3.9).
+    var poids = {};
+    TENSIONS.forEach(function (t) { poids[t] = { comptent: 0, pole0: F(0), pole1: F(0) }; });
+    ctx.cal.textesRepondusSemaine(numero).forEach(function (n) {
+      var r = ctx.reponse(PORTEUR, n);
+      if (!r) { return; }
+      var tx = ctx.texte(n), cl = classer(tx, r);
+      if (cl.w.estZero()) { return; }
+      var pt = poids[tx.tension];
+      if (cl.pole === 0) { pt.pole0 = pt.pole0.plus(cl.w); } else { pt.pole1 = pt.pole1.plus(cl.w); }
+      pt.comptent += 1;
+    });
+    var tension = null, cas, phrase;
+    if (devenues.length) {
+      tension = devenues.slice().sort(function (x, y) {
+        var c = lecture[y].c.moins(DEMI).abs().cmp(lecture[x].c.moins(DEMI).abs());
+        if (c !== 0) { return c; }
+        c = lecture[y].somme_w.cmp(lecture[x].somme_w);
+        return c !== 0 ? c : TENSIONS.indexOf(x) - TENSIONS.indexOf(y);
+      })[0];
+      cas = 'nette';
+      phrase = 'Entre ' + ENTRE[tension] + ', tu choisis le plus souvent ' + POLES[tension][lecture[tension].c.sup(DEMI) ? 1 : 0] + '.';
+    } else {
+      var retenues = TENSIONS.filter(function (t) { return poids[t].comptent >= 2; });
+      if (retenues.length === 0) {
+        cas = 'floue';
+        phrase = 'Cette semaine, ton portrait est encore flou. Chaque réponse le précise.';
+      } else {
+        tension = retenues.reduce(function (best, t) {
+          var c = poids[t].pole0.moins(poids[t].pole1).abs().cmp(poids[best].pole0.moins(poids[best].pole1).abs());
+          if (c !== 0) { return c > 0 ? t : best; }
+          return poids[t].pole0.plus(poids[t].pole1).sup(poids[best].pole0.plus(poids[best].pole1)) ? t : best;
+        });
+        var diff = poids[tension].pole0.cmp(poids[tension].pole1);
+        if (diff === 0) {
+          cas = 'egalite';
+          phrase = 'Cette semaine, entre ' + ENTRE[tension] + ", tu as penché autant d'un côté que de l'autre.";
+        } else {
+          cas = 'difference';
+          phrase = 'Cette semaine, entre ' + ENTRE[tension] + ', tu as le plus souvent choisi ' + POLES[tension][diff > 0 ? 0 : 1] + '.';
+        }
+      }
+    }
+    return { cas: cas, devenues: devenues, lecture: lecture, phrase: N.typographier(phrase), poids: poids, reference: ref, tension: tension };
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* L'avis du cercle (§7.14, D-025)                                     */
+  /* ------------------------------------------------------------------ */
+
+  function avisCercle(ctx, t) {
+    if (!a(ctx.scelle.textes, t) || ctx.estEntree(t)) { return null; } // texte abstrait : pas de vote
+    var niveaux = ctx.membres.map(function (m) { return ctx.reponse(m, t); })
+      .filter(function (r) { return r !== null; }).map(function (r) { return r.niveau; }).sort(function (x, y) { return x - y; });
+    var n = niveaux.length;
+    if (n < 3) { return null; }
+    var comptes = [0, 0, 0, 0, 0];
+    niveaux.forEach(function (v) { comptes[v - 1] += 1; });
+    var milieu, cotes;
+    if (n % 2 === 1) { milieu = [niveaux[(n - 1) / 2]]; cotes = [cote(milieu[0])]; }
+    else {
+      var x = niveaux[n / 2 - 1], y = niveaux[n / 2];
+      milieu = x === y ? [x] : [x, y];
+      cotes = [cote(x), cote(y)];
+    }
+    var commun = cotes.every(function (c) { return c === cotes[0]; }) ? cotes[0] : 0;
+    return { comptes: comptes, ligne: commun > 0 ? 'adopte' : (commun < 0 ? 'rejete' : 'partage'), milieu: milieu };
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* « Déjà joué aujourd'hui » (§7.5 du premier essai)                    */
+  /* ------------------------------------------------------------------ */
+
+  function minutesR(m) { return (m - 1080 + 1440) % 1440; }
+  /** Personnages affichés dans « Déjà joué aujourd'hui » le jour j, à l'heure lue (« HH:MM »). */
+  function visagesDejaJoue(scelle, cal, j, heure) {
+    var t = cal.texteRepondu(j);
+    var r = minutesR(N.lireHeure(heure));
+    return cal.membres.filter(function (p) {
+      return p !== PORTEUR && t !== null && a(scelle.reponses[t], p) && minutesR(N.lireHeure(scelle.personnages[p].heure_de_jeu)) <= r;
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Les jours de l'essai (partie 4.3 ; lot 3)                           */
+  /* ------------------------------------------------------------------ */
+
+  function copieJson(v) { return v === null || v === undefined ? null : JSON.parse(JSON.stringify(v)); }
+
+  /** Cartes servies au porteur le jour j : elles ne dépendent que du fichier (règle 7 du journal). */
+  function cartesServies(scelle, cal, arrivee) {
+    var ctx = contexte(scelle, cal, null, arrivee);
+    var memo = {};
+    return function (j) {
+      if (!a(memo, j)) {
+        if (!cal.existe(j) || !cal.ligne(j).deviner_porteur) { memo[j] = null; }
+        else {
+          var m = calculerManche(ctx, PORTEUR, j, function () { return null; }, null);
+          var cachee = -1;
+          m.cartes.forEach(function (c, i) { if (c.cachee) { cachee = i; } });
+          memo[j] = { cachee: cachee, n: m.cartes.length };
+        }
+      }
+      return memo[j];
+    };
+  }
+
+  /**
+   * calculer(scelle, cal, arrivee, journal) : tout ce que la trace de partie
+   * (partie 4.3) tire du fichier, de l'état à l'arrivée et du journal, jours 1
+   * à K, sans les durées. Fonction pure ; le journal n'est pas modifié.
+   */
+  function calculer(scelle, cal, arrivee, journal) {
+    exiger(journal && journal.format === 'elenchos-essai-journal' && journal.version === 4, 'journal : format ou version');
+    exiger(arrivee && arrivee.coupure === cal.premier - 1, 'état à l\'arrivée absent');
+    var J = journal.jours;
+    var P = cal.premier, K = P - 1;
+    while (a(J, String(K + 1))) { K++; }
+    exiger(K >= P && K <= cal.dernier, 'journal : jours atteints');
+    var jour = function (j) { return J[String(j)]; };
+    var entreeJ = jour(P).coups.entree;
+
+    function reponsePorteur(t) {
+      if (cal.textesEntree.indexOf(t) >= 0) { return entreeJ && entreeJ[t] && entreeJ[t].reponse ? entreeJ[t].reponse : null; }
+      if (a(scelle.histoire.textes, t)) { return null; }
+      var d = cal.jourDeReponse(t);
+      if (d < P || d > K) { return null; }
+      return jour(d).coups.reponse || null;
+    }
+    var ctx = contexte(scelle, cal, reponsePorteur, arrivee);
+
+    var manches = {}, revelations = {}, cartesPorteur = {};
+    manches[P - 1] = arrivee.manche_jour_0.manches;
+    function mancheDe(d, g) { return manches[d] && manches[d][g] ? manches[d][g] : null; }
+
+    for (var j = P; j <= K; j++) {
+      manches[j] = {};
+      if (cal.ligne(j).manche !== null) {
+        ctx.personnages.forEach(function (g) {
+          if (ctx.estMembre(g, j) && ctx.present(g, j)) { manches[j][g] = calculerManche(ctx, g, j, mancheDe, null); }
+        });
+        if (cal.ligne(j).deviner_porteur) {
+          var dv = jour(j).coups.deviner;
+          var mp = calculerManche(ctx, PORTEUR, j, mancheDe, dv ? dv.cartes : null);
+          cartesPorteur[j] = mp;
+          if (dv) { manches[j][PORTEUR] = mp; } // R10 : une manche jamais ouverte n'a pas de cartes
+        } else {
+          exiger(jour(j).coups.deviner === null, 'jour ' + j + ' : Deviner hors des jours où il s\'ouvre');
+        }
+      }
+      if (cal.texteRepondu(j - 2) !== null) {
+        var rv = calculerRevelation(ctx, j, manches[j - 1], revelations);
+        revelations[j] = { avis_cercle: avisCercle(ctx, rv.texte), devineurs: rv.devineurs, pas_de_cote: rv.pas_de_cote, texte: rv.texte };
+      } else { revelations[j] = null; }
+    }
+
+    // Titres des semaines de l'essai dont le dimanche est atteint.
+    var semainesEssai = cal.semainesEssai.map(function (n) { return cal.semaine(n); }).filter(function (w) { return w.dernier_jour <= K; });
+    var titresEssai = semainesEssai.map(function (w) { return calculerTitres(ctx, w.numero, revelations, manches); });
+    var dimanches = {}, tempsParJour = {};
+    semainesEssai.forEach(function (w, i) {
+      var d = w.dernier_jour;
+      var prec = i === 0 ? P - 1 : semainesEssai[i - 1].dernier_jour - 1;
+      var temps = {};
+      ctx.personnages.forEach(function (p) { temps[p] = calculerTemperaments(ctx, d, p); });
+      tempsParJour[d] = temps;
+      var x = titresEssai[i];
+      dimanches[d] = { devin: x.devin, fidele: x.fidele, mystere: x.mystere, phrase_semaine: phraseSemaine(ctx, w.numero, d, prec),
+        sans_faute: x.sans_faute, semaine: x.semaine, surprise: x.surprise, temperaments: temps };
+    });
+    var tousTitres = arrivee.titres.concat(titresEssai);
+
+    function aUnTitulaire(x) { return x.sans_faute.length > 0 || x.devin.titulaire !== null || x.mystere.titulaire !== null || x.fidele.titulaires.length > 0; }
+
+    var barrePleine = false;
+    var ouverturePrec = null;
+    var jours = {};
+    for (var d = P; d <= K; d++) {
+      var l = cal.ligne(d), c = jour(d).coups;
+      var joue = cal.estJoue(d);
+      var R = {};
+
+      // Entrée (jour d'arrivée) : présente dès que 1.2 a été affiché ; en mode moteur, toujours.
+      R.entree = null;
+      if (cal.estArrivee(d) && (jour(d).etapes === null || jour(d).etapes.entree === true)) {
+        var textes = {}, justes = 0;
+        cal.textesEntree.forEach(function (E) {
+          var inv = scelle.reponses[E][cal.invitant];
+          var pari = entreeJ && entreeJ[E] ? entreeJ[E].pari : null;
+          var juste = pari === null || pari === undefined ? null : cote(pari) === cote(inv.niveau);
+          if (juste === true) { justes++; }
+          textes[E] = { invitant: { niveau: inv.niveau, raison: inv.raison }, juste: juste };
+        });
+        R.entree = { justes: justes, textes: textes };
+      }
+
+      R.manches = l.manche !== null ? manches[d] : null;
+      R.revelation = revelations[d];
+
+      // Message de 18h (E1, §0) : jours joués sauf l'arrivée, et points de saut.
+      R.message = null;
+      if ((joue && !cal.estArrivee(d)) || cal.estPointDeSaut(d)) {
+        var mv = mancheDe(d - 1, PORTEUR);
+        var forme = mv && mv.cartes.length >= 1 ? 'cartes' : (reponsePorteur(cal.texteRepondu(d - 2)) ? 'vote' : 'question');
+        R.message = { forme: forme, titres: cal.estDimanche(d) && !!dimanches[d] && aUnTitulaire(dimanches[d]) };
+      }
+
+      // Phrase du jour : chaque jour où le porteur a répondu, rattrapage compris.
+      R.phrase_jour = null;
+      if (c.reponse) {
+        var tj = l.repondu, cl = classer(ctx.texte(tj), c.reponse);
+        R.phrase_jour = { classe: cl.classe, phrase: phraseDuJour(ctx.texte(tj).tension, cl), pole: cl.w.estZero() ? null : cl.pole, texte: tj, w: cl.w };
+      }
+
+      R.attente = jour(d).attente ? { lectures: jour(d).attente.lectures.map(function (x) { return { heure: x.heure, visages: visagesDejaJoue(scelle, cal, d, x.heure) }; }) } : null;
+      R.dimanche = dimanches[d] || null;
+
+      // Portrait du porteur et barre (§5.8, §5.9 ; partie 4.3.6).
+      var sp = ctx.sommesJusqua(PORTEUR, d);
+      var tensions = {};
+      TENSIONS.forEach(function (t) { tensions[t] = curseur(sp[t]); });
+      var n = cal.textesEntree.filter(function (E) { return reponsePorteur(E) !== null; }).length;
+      for (var x = P; x <= d; x++) { if (jour(x).coups.reponse) { n++; } }
+      barrePleine = barrePleine || n >= scelle.reglage.barre || TENSIONS.some(function (t) { return tensions[t].net; });
+      R.portrait = { barre: { longueur: barrePleine ? F(1) : F(n, scelle.reglage.barre), n: n, pleine: barrePleine }, ordre_moi: ordreMoi(tensions), tensions: tensions };
+
+      // Curseurs vus : entrée et textes répondus jusqu'au jour j − 2, poids normaux.
+      R.curseurs_vus = {};
+      ctx.personnages.forEach(function (p) {
+        var s = ctx.sommesJusqua(p, d - 2);
+        R.curseurs_vus[p] = {};
+        TENSIONS.forEach(function (t) { R.curseurs_vus[p][t] = curseur(s[t]); });
+      });
+
+      // Le Cercle affiché : la dernière semaine tombée, les tempéraments du dernier calcul.
+      var sem = tousTitres.filter(function (w) { return cal.semaine(w.semaine).dernier_jour <= d; }).pop();
+      var titresCercle = {};
+      ctx.membres.forEach(function (m) {
+        var lt = [];
+        if (sem.sans_faute.indexOf(m) >= 0) { lt.push('sans_faute'); }
+        if (sem.devin.titulaire === m) { lt.push('devin'); }
+        if (sem.mystere.titulaire === m) { lt.push('mystere'); }
+        if (sem.fidele.titulaires.indexOf(m) >= 0) { lt.push('fidele'); }
+        titresCercle[m] = lt;
+      });
+      var dTemp = Object.keys(tempsParJour).map(Number).filter(function (y) { return y <= d; }).pop();
+      var temps = dTemp === undefined ? arrivee.temperaments : tempsParJour[dTemp];
+      var tempsCercle = {};
+      ctx.personnages.forEach(function (p) { tempsCercle[p] = temps[p].temperaments.slice(); });
+      R.cercle = { surprise: sem.surprise.texte, temperaments: tempsCercle, titres: titresCercle };
+
+      // « Ses surprises » : cartes révélées de ce proche attribuées à un membre dont la réponse différait.
+      R.surprises_proches = {};
+      ctx.personnages.forEach(function (p) { R.surprises_proches[p] = []; });
+      for (var y = d; y >= P; y--) {
+        var mr = mancheDe(y - 1, PORTEUR);
+        if (!mr || !revelations[y]) { continue; }
+        var jus = revelations[y].devineurs[PORTEUR].justes;
+        mr.cartes.forEach(function (cc, i) {
+          if (a(R.surprises_proches, cc.auteur_compte) && !estPasse(cc.designe) && !jus[i]) { R.surprises_proches[cc.auteur_compte].push(mr.texte); }
+        });
+      }
+
+      // Mesures sans les durées (partie 4.3.10) : jours joués, points de saut, clôture.
+      R.mesures = null;
+      if (cal.aUneOuverture(d)) {
+        var o = jour(d).ouverture;
+        var mrv = mancheDe(d - 1, PORTEUR);
+        var rvp = revelations[d] && revelations[d].devineurs[PORTEUR] ? revelations[d].devineurs[PORTEUR] : null;
+        var cach = mrv ? mrv.cartes.filter(function (cc) { return cc.cachee; })[0] : null;
+        R.mesures = {
+          abandon: joue ? c.abandon : null,
+          compte: cal.estArrivee(d) ? c.compte : null,
+          duree_deviner: null, duree_entree: null, duree_repondre: null, duree_seance: null,
+          entree_verdicts: R.entree ? cal.textesEntree.filter(function (E) { return R.entree.textes[E].juste !== null; })
+            .map(function (E) { return R.entree.textes[E].juste ? 'juste' : 'faux'; }) : null,
+          jours_ecoules: o !== null && ouverturePrec !== null ? N.joursEcoules(ouverturePrec, o) : null,
+          ouvert: copieJson(c.ouvert),
+          passer: c.deviner ? c.deviner.cartes.filter(function (cc) { return cc.designe === 'passe'; }).length : 0,
+          pendant_deviner: copieJson(c.pendant_deviner),
+          relire: c.relire,
+          revelation_raison_tentee: cach ? cach.raison_devinee !== null : null,
+          revelation_rouverte: joue && l.revelation_porteur === 'lue' ? c.rouvrir : null,
+          revelation_verdicts: rvp ? rvp.verdicts.slice() : null
+        };
+      }
+      if (jour(d).ouverture !== null) { ouverturePrec = jour(d).ouverture; }
+
+      // Pour les écrans : cartes à servir, libellé du compte à rebours (§7.6).
+      R.cartes_porteur = cartesPorteur[d] || null;
+      R.compte_a_rebours = null;
+      if (joue) {
+        var mj = mancheDe(d, PORTEUR);
+        R.compte_a_rebours = (mj && mj.cartes.length >= 1) || (cal.texteRepondu(d - 1) !== null && reponsePorteur(cal.texteRepondu(d - 1))) ? 'revelation' : 'nouveau_texte';
+      }
+      jours[String(d)] = R;
+    }
+
+    var sauts = journal.sauts.map(function (s) {
+      return { coups: copieJson(s.coups), depart: s.depart,
+        mesures: { duree_page: null, duree_saut: null, durees_textes: null, ouvert: copieJson(s.coups.ouvert) },
+        numero: s.numero, textes_atteints: s.textes_atteints };
+    });
+
+    return { K: K, agregats: agregats(ctx, revelations, manches, titresEssai, K), jours: jours, sauts: sauts, titres: tousTitres };
+  }
+
+  /** « Sur tout l'essai » (§8.4 ; S1, partie 3.10) : manches jouées depuis l'arrivée et déjà révélées. */
+  function agregats(ctx, revelations, manches, titresEssai, K) {
+    var cal = ctx.cal, P = cal.premier;
+    var revelesRepondus = 0;
+    for (var j = P; j <= K; j++) {
+      if (revelations[j] && a(ctx.scelle.textes, revelations[j].texte) && ctx.reponse(PORTEUR, revelations[j].texte)) { revelesRepondus++; }
+    }
+    if (revelesRepondus < 5) { return { justesse_personnages_entre_eux: null, justesse_personnages_sur_porteur: null, titres_tires_au_sort: null }; }
+    var entre = { justes: 0, total: 0 }, sur = { justes: 0, total: 0 };
+    for (var d = P + 1; d <= K; d++) {
+      if (!revelations[d]) { continue; }
+      Object.keys(revelations[d].devineurs).forEach(function (g) {
+        if (g === PORTEUR) { return; }
+        var m = manches[d - 1][g];
+        m.cartes.forEach(function (c, i) {
+          var cible = c.auteur_compte === PORTEUR ? sur : entre;
+          cible.total += 1;
+          if (revelations[d].devineurs[g].justes[i]) { cible.justes += 1; }
+        });
+      });
+    }
+    var tirages = 0;
+    titresEssai.forEach(function (w) { [w.devin, w.mystere, w.surprise].forEach(function (x) { if (x.departage === 'tirage') { tirages++; } }); });
+    return { justesse_personnages_entre_eux: entre.total ? entre : null, justesse_personnages_sur_porteur: sur.total ? sur : null, titres_tires_au_sort: tirages };
+  }
 
   return {
     ErreurMoteur: ErreurMoteur,
     PORTEUR: PORTEUR, TENSIONS: TENSIONS, ORDRE_TEMPERAMENTS: ORDRE_TEMPERAMENTS,
-    histoire: histoire, resume: resume, calculer: calculer,
+    histoire: histoire, resume: resume, calculer: calculer, cartesServies: cartesServies, visagesDejaJoue: visagesDejaJoue,
     regles: {
       contexte: contexte, cote: cote, valeur: valeur, identiques: identiques, classer: classer,
       sommesVides: sommesVides, ajouter: ajouter, curseur: curseur, mediane: mediane,
       coteAttendu: coteAttendu, score: score, raisonDevinee: raisonDevinee,
       calculerManche: calculerManche, redistribuer: redistribuer, estJuste: estJuste,
       pasDeCote: pasDeCote, calculerRevelation: calculerRevelation, calculerTitres: calculerTitres,
-      calculerTemperaments: calculerTemperaments, TEMP: TEMP
+      calculerTemperaments: calculerTemperaments, TEMP: TEMP,
+      phraseDuJour: phraseDuJour, phraseSemaine: phraseSemaine, ordreMoi: ordreMoi, avisCercle: avisCercle, agregats: agregats
     }
   };
 })(ElenchosNoyau);

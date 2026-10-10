@@ -40,6 +40,10 @@ COMBI_SUITE = {
 }
 
 
+def rang_cle(t):
+    return {"E1": -3, "E2": -2, "E3": -1}.get(t, None) if not t.isdigit() else int(t)
+
+
 def nom_texte(t):
     return t if not t.isdigit() else f"T{t}"
 
@@ -293,7 +297,9 @@ def verifier_groupes(d, groupes, amo_dossiers):
             lus.append(org)
             if org["libelleAbrege"]:
                 abreges.add(org["libelleAbrege"])
-            if org["libelle"] is None or unicodedata.normalize("NFC", org["libelle"]) != g:
+            # Q-G1 (tranché) : comparaison après remplacement de U+2019 par U+0027.
+            lib = None if org["libelle"] is None else unicodedata.normalize("NFC", org["libelle"]).replace("\u2019", "'")
+            if lib != g:
                 e.append(f"partie 2.10 : {ident} : `groupe` {g!r} ≠ libelle de l'organe {org['libelle']!r} ({org['chemin']})")
             if org["libelle"] is not None and org["libelle"] in (org["libelleAbrege"], org["libelleAbrev"]):
                 e.append(f"partie 2.10 : {ident} : le libelle {org['libelle']!r} n'est qu'un sigle "
@@ -447,12 +453,30 @@ def etape7(d):
 
 # ------------------------------------------------------------------ étape 8
 
+def rangs_attendus(d, roles, cases, tirage):
+    """Fichier caché 2, point 14 (Q-F1 tranché, commit 3d8aabf) : {scrutin: clé du texte}.
+    Les cases d'une tension, numérotées i = 1, 2, … dans l'ordre de la liste, sont triées
+    par t("ordre-texte|{tension}|{i}") ; la première va à la première case de la tension
+    (T1 à T13, ordre du calendrier, tensions lues dans le fichier), et ainsi de suite."""
+    out = {n: t for t, n in roles.items()}
+    detail = []
+    for T, liste in cases.items():
+        libres = [str(k) for k in range(1, 14) if d["textes"][str(k)]["tension"] == T]
+        tri = sorted(range(1, len(liste) + 1), key=lambda i: tirage.cle_tri(f"ordre-texte|{T}|{i}"))
+        if len(tri) != len(libres):
+            detail.append(f"tension {T} : {len(liste)} cases pour {len(libres)} rangs libres ({', '.join('T' + x for x in libres)})")
+            continue
+        for i, k in zip(tri, libres):
+            out[liste[i - 1]] = k
+    return out, detail
+
+
 def ordre_raisons(tid, tirage):
     tri = sorted(range(1, 5), key=lambda i: tirage.cle_tri(f"ordre-raisons|{tid}|{i}"))
     return {i: r + 1 for r, i in enumerate(tri)}
 
 
-def etape8(d, fiches, votes, scrutins_b):
+def etape8(d, fiches, votes, scrutins_b, cases=None):
     """Fidélité aux fiches (schéma 2, partie 5.1, étape 8). scrutins_b : numéros de
     scrutin des textes en présentation B (paramètre de l'orchestrateur) ou None."""
     e, info = [], []
@@ -505,6 +529,21 @@ def etape8(d, fiches, votes, scrutins_b):
                     e.append(f"{ch}/lignes/{i} ({src}) : pas en NFC")
                 if len(l) > MAX_LIGNE:
                     e.append(f"{ch}/lignes/{i} ({src}) : {len(l)} points de code (au plus {MAX_LIGNE})")
+    # Rangs des cases (fichier caché, point 14)
+    if cases is not None:
+        attendu, det = rangs_attendus(d, cases[0], cases[1], tg)
+        e.extend(f"rangs des cases : {x}" for x in det)
+        for t, f in fiches.items():
+            if t == "H86":
+                continue
+            a = attendu.get(f["_scrutin"])
+            if a != t:
+                e.append(f"en-tête {f['_rang']} · scrutin {f['_scrutin']} : le tirage du point 14 donne "
+                         + (f"{nom_texte(a)}" if a is not None else "un scrutin hors des rôles et des cases"))
+        info.append("rangs des cases (point 14) : " + ", ".join(
+            f"{n}→{nom_texte(t)}" for n, t in sorted(attendu.items(), key=lambda x: rang_cle(x[1]))))
+    else:
+        info.append("rangs des cases : fichier caché non lu, non vérifiés")
     # Présentation B
     if scrutins_b is None:
         info.append("présentation B : liste non fournie, ligne 3 fixe non vérifiée (étape incomplète)")
@@ -660,7 +699,11 @@ def controle1(octets, srcs, date_scellement, empreinte_publiee=None, page=None, 
         votes, ignorees = sources.lire_votes(srcs["votes"][1], srcs["votes"][0])
     except sources.ErreurSource as x:
         return stop(8, [f"lecture des fiches : {x}"])
-    e, info8, detail_ordre = etape8(d, fiches, votes, scrutins_b)
+    try:
+        cases = sources.lire_cases(srcs["regles"][1]) if "regles" in srcs else None
+    except sources.ErreurSource as x:
+        return stop(8, [f"lecture des cases : {x}"])
+    e, info8, detail_ordre = etape8(d, fiches, votes, scrutins_b, cases)
     if e:
         return stop(8, e)
     if verdict["sources"] is False:

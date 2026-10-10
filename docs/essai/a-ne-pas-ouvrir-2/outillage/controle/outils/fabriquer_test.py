@@ -42,17 +42,17 @@ ORDRE = "S L P S L T S P L S P L S T P".split()
 
 
 def rangs_des_cases(tg):
-    """Lecture de test de t("ordre-texte|tension|i") : i = numéro de scrutin ; les cases
-    d'une tension, triées par t croissant, remplissent ses rangs libres dans l'ordre du
-    calendrier (QUESTIONS.md, Q-F1)."""
+    """Fichier caché 2, point 14 (commit 3d8aabf) : cases numérotées i = 1, 2, … dans
+    l'ordre de leur liste, triées par t("ordre-texte|tension|i"), vers les rangs libres
+    de la tension dans l'ordre du calendrier."""
     out = {}
     roles = {int(k) for k in ROLES if k.isdigit()}
     for T, cases in CASES.items():
         libres = [n for n in range(15) if ORDRE[n] == T and n not in roles]
-        tri = sorted(cases, key=lambda s: tg.cle_tri(f"ordre-texte|{T}|{s}"))
+        tri = sorted(range(1, len(cases) + 1), key=lambda i: tg.cle_tri(f"ordre-texte|{T}|{i}"))
         assert len(libres) == len(tri), (T, libres, tri)
-        for n, s in zip(libres, tri):
-            out[s] = n
+        for n, i in zip(libres, tri):
+            out[cases[i - 1]] = n
     for k, s in ROLES.items():
         if k.isdigit():
             out[s] = int(k)
@@ -153,8 +153,8 @@ def tables_test(fiches, dossiers):
     noms = sorted({r["nom"] for f in fiches.values() if not f["_legere"] for r in f["raisons"]
                    if r["nom"][0] in sources.INITIALES_CHOIX})
     for n in noms:
-        ini = "h muet" if n[0] == "H" else "voyelle"
-        lignes.append(f"| `{n}` | {ini} | `d'` |")
+        ini = {"H": "h muet", "Y": "son y"}.get(n[0], "voyelle")
+        lignes.append(f"| `{n}` | {ini} | `{sources.ACCORD_FORME[ini]}` |")
     lignes.append("")
     return "\n".join(lignes), manquants
 
@@ -218,7 +218,7 @@ def construire(sortie, dossiers, calibrer):
         return d, extras
 
     rapport = [f"Fichier de TEST, graine = SHA-256(« elenchos-essai-2|graine| » + {E_TEST})[:16] = {tg.prefixe}",
-               "Rangs des cases (lecture de test, Q-F1) : " + ", ".join(f"{s}→T{n}" for s, n in sorted(rang_de.items(), key=lambda x: x[1])),
+               "Rangs des cases (point 14) : " + ", ".join(f"{s}→T{n}" for s, n in sorted(rang_de.items(), key=lambda x: x[1])),
                f"Groupes sans organe trouvé dans amo (identifiant fictif PO9…) : {manquants or 'aucun'}", ""]
     retenu = None
     for r in range(1, max(1, calibrer) + 1):

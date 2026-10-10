@@ -506,3 +506,95 @@ def lire_fiches_personnages(texte_simulation):
     return sortie
 
 
+
+
+# ---------------------------------------------------------------- profils.md (premier essai, contrôle 2)
+
+ENTETE_TENSIONS = "| | S | P | T | L |"
+
+
+def _rangees_personnages(rangees, ou):
+    noms = [cs[0] for _, cs in rangees]
+    if sorted(noms) != sorted(PERSONNAGES) or len(noms) != 4:
+        raise ErreurSource(f"{ou} : il faut une ligne par personnage, exactement")
+    return {cs[0]: (num, cs[1:]) for num, cs in rangees}
+
+
+def _pole_court(t, mot, o):
+    a, b = POLES_COURTS[t]
+    if mot == a:
+        return 0
+    if mot == b:
+        return 1
+    raise ErreurSource(f"{o} : pôle inattendu pour {t} : {mot!r}")
+
+
+def lire_profils(texte_profils):
+    """`a-ne-pas-ouvrir/profils.md` : profils cachés, réponses types et d (fichier caché 2,
+    point 2 : « recopié tel quel » ; ses parties « Réponses atypiques » et « Absences » sont
+    remplacées, le corrigé de F1 ne sert plus)."""
+    lignes = lignes_de(texte_profils)
+    res = {}
+    debut, sec = section(lignes, "Profils cachés", "## ")
+    ou = "profils.md, « Profils cachés »"
+    rs = _rangees_personnages(tableau_par_entete(sec, debut + 1, ENTETE_TENSIONS, ou), ou)
+    profils = {}
+    for p, (num, cs) in rs.items():
+        profils[p] = {}
+        for t, c in zip(TENSIONS, cs):
+            m = re.fullmatch(r"([01]),([0-9]{2}) (faible|moyenne|forte)", c)
+            if not m:
+                raise ErreurSource(f"{ou}, ligne {num} : cellule mal écrite : {c!r}")
+            pos = 100 * int(m.group(1)) + int(m.group(2))
+            if pos > 100:
+                raise ErreurSource(f"{ou}, ligne {num} : position au-delà de 100 : {c!r}")
+            profils[p][t] = {"fermete": m.group(3), "position": pos}
+    res["profils"] = profils
+    debut, sec = section(lignes, "Réponse type qui en découle", "## ")
+    ou = "profils.md, « Réponse type qui en découle »"
+    rs = _rangees_personnages(tableau_par_entete(sec, debut + 1, ENTETE_TENSIONS, ou, rang=0), ou)
+    types = {}
+    for p, (num, cs) in rs.items():
+        types[p] = {}
+        for t, c in zip(TENSIONS, cs):
+            o = f"{ou}, ligne {num}"
+            if c == "neutre":
+                types[p][t] = ("neutre", None)
+                continue
+            m = re.fullmatch(r"(simple|très), vers (\S+)", c)
+            if not m:
+                raise ErreurSource(f"{o} : cellule mal écrite : {c!r}")
+            types[p][t] = (m.group(1), _pole_court(t, m.group(2), o))
+    res["types"] = types
+    rs = _rangees_personnages(tableau_par_entete(sec, debut + 1, ENTETE_TENSIONS, ou, rang=1), ou)
+    ds = {}
+    for p, (num, cs) in rs.items():
+        ds[p] = {}
+        for t, c in zip(TENSIONS, cs):
+            m = re.fullmatch(r"([+−])([0-9]+),([0-9]+)", c)
+            if not m:
+                raise ErreurSource(f"{ou}, ligne {num} : cellule de d mal écrite : {c!r}")
+            v = Fraction(int(m.group(2) + m.group(3)), 10 ** len(m.group(3)))
+            ds[p][t] = v if m.group(1) == "+" else -v
+    res["d"] = ds
+    return res
+
+
+# ---------------------------------------------------------------- fichier caché 2, point 14 (Q-F1)
+
+def lire_cases(texte_regles):
+    """Rôles choisis et cases tirées du fichier caché, point 14. Rend
+    ({"E1": n, …, "0": n, "14": n}, {tension: [n, …]}) dans l'ordre des listes."""
+    m = re.search(r"\*\*Rôles choisis, cases tirées\.\*\* (.+)", texte_regles)
+    if not m:
+        raise ErreurSource("fichier caché, point 14 : ligne « Rôles choisis, cases tirées. » absente")
+    ligne = m.group(1)
+    roles = {}
+    for nom, n in re.findall(r"\b(E[1-3]|T0|T14) = ([0-9]+)", ligne):
+        roles[nom[1:] if nom.startswith("T") else nom] = int(n)
+    cases = {}
+    for t, liste in re.findall(r"Cases ([SPTL]) : ([0-9, ]+)\.", ligne):
+        cases[t] = [int(x) for x in liste.split(", ")]
+    if sorted(roles) != sorted(["E1", "E2", "E3", "0", "14"]) or sorted(cases) != sorted(TENSIONS):
+        raise ErreurSource(f"fichier caché, point 14 : rôles {roles} ou cases {cases} incomplets")
+    return roles, cases

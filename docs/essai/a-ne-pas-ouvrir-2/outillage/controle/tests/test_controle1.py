@@ -233,6 +233,7 @@ class TestControle1(unittest.TestCase):
 
 
 class TestLecteurFiches(unittest.TestCase):
+    lancer = staticmethod(lancer)
     def fiches(self, remplacer):
         d, _, _ = commun.fabrique()
         out = []
@@ -246,6 +247,22 @@ class TestLecteurFiches(unittest.TestCase):
     def test_entete_provisoire_refuse(self):
         with self.assertRaisesRegex(sources.ErreurSource, "en-tête de fiche non reconnu"):
             sources.lire_fiches(self.fiches([(r"^### T3 · scrutin", "### Case S · scrutin")]))
+
+    def test_rang_faux_refuse(self):
+        d, _, _ = commun.fabrique()
+        srcs = commun.sources_test()
+        nom = srcs["S"][0]
+        t = srcs["S"][1]
+        import re as _re
+        rangs = _re.findall(r"^### T([0-9]+) · scrutin", t, flags=_re.M)
+        a, b = rangs[1], rangs[2]   # deux cases S échangées
+        t2 = _re.sub(rf"^### T{a} · scrutin", "### TXX · scrutin", t, flags=_re.M)
+        t2 = _re.sub(rf"^### T{b} · scrutin", f"### T{a} · scrutin", t2, flags=_re.M)
+        t2 = t2.replace("### TXX · scrutin", f"### T{b} · scrutin")
+        srcs = dict(srcs)
+        srcs["S"] = (nom, t2, t2.encode())
+        texte, v = lancer(srcs=srcs)
+        self.assertEqual(etape_en_echec(texte), 8)
 
     def test_suffixe_refuse(self):
         with self.assertRaisesRegex(sources.ErreurSource, "en-tête"):

@@ -6,7 +6,8 @@
 const N = require('../noyau.js');
 const E = require('../etat.js');
 
-/** Cartes servies au porteur, en attendant le moteur : trois, la troisième à raison cachée. */
+/** Cartes servies au porteur sans moteur (lot 1) : trois, la troisième à raison cachée.
+ *  Depuis le lot 3, options.cartes(j) donne les vraies (M.cartesServies). */
 const CARTES = { n: 3, cachee: 2 };
 
 /** Horloge et heure de Paris simulées : chaque appel avance d'une minute, à partir du lundi 19 octobre 2026, 8 h. */
@@ -33,13 +34,18 @@ function reponseType(scelle, texte, k) {
  *   arretA   : {jour, moment: 'debut' | 'apres-reponse' | 'entree', raison, f2} — arrêt
  *   recharger(etat) : rend l'état relu (JSON) ; appelé à chaque jour et au milieu des rattrapages
  *   pasDeFin : laisse la partie en cours à la clôture
+ *   cartes(j) : {n, cachee} cartes servies le jour j (lot 3 : M.cartesServies) ; CARTES par défaut
+ *   visages(j, n) : les visages posés, carte par carte ; ['Valentin', 'passe', 'Odile'] par défaut
+ *   raison(j) : la raison tentée sur la carte cachée ; 'aucune' par défaut (null : pas de tentative)
+ *   reponse(texte, k) : la réponse du porteur ; reponseType par défaut
+ *   paris(E, i) : le pari de l'entrée ; 1 + 2i mod 5 par défaut
  */
 function jouer(scelle, cal, options) {
   const o = options || {};
   const hz = horloges();
   const recharger = o.recharger || (x => x);
   let etat = E.nouvelEtat(cal);
-  let k = 0;
+  const rep = o.reponse || ((t, k) => reponseType(scelle, t, k));
   const toucher = () => E.toucher(etat, cal, hz.pp(), 1, hz.instant);
   const arret = (j, moment) => o.arretA && o.arretA.jour === j && o.arretA.moment === moment;
   const arreter = () => { toucher(); E.arreter(etat, cal, o.arretA.raison || null, o.arretA.f2 || null); return etat; };
@@ -60,8 +66,8 @@ function jouer(scelle, cal, options) {
       E.consentir(etat, cal);
       if (arret(j, 'entree')) { return arreter(); }
       cal.textesEntree.forEach((t, i) => {
-        E.repondreEntree(etat, cal, scelle, t, reponseType(scelle, t, i + 1));
-        E.parierEntree(etat, cal, t, 1 + ((i * 2) % 5));
+        E.repondreEntree(etat, cal, scelle, t, rep(t, i + 1));
+        E.parierEntree(etat, cal, t, o.paris ? o.paris(t, i) : 1 + ((i * 2) % 5));
       });
       E.terminerCompte(etat, cal, o.pseudo || 'Témoin-l-lot-un', o.compte || 'email_valider', hz.pp());
     }
@@ -70,18 +76,22 @@ function jouer(scelle, cal, options) {
       E.compter(etat, cal, 'cercle');
       const ab = o.abandons && o.abandons[j];
       if (ab === 'rien') { E.allerAuJourSuivant(etat, cal, true); continue; }
-      E.ouvrirDeviner(etat, cal, j, CARTES.n, hz.pp());
+      const cartes = o.cartes ? o.cartes(j) : CARTES;
+      E.ouvrirDeviner(etat, cal, j, cartes.n, hz.pp());
       E.compter(etat, cal, 'proche', true);
       E.compter(etat, cal, 'relire');
-      const visages = ['Valentin', 'passe', 'Odile'];
-      const jusqua = ab === 'faces' ? 1 : CARTES.n;
+      const visages = o.visages ? o.visages(j, cartes.n) : ['Valentin', 'passe', 'Odile'];
+      const jusqua = ab === 'faces' ? 1 : cartes.n;
       for (let i = 0; i < jusqua; i++) { E.poserCarte(etat, j, i, visages[i], hz.pp()); }
-      if (jusqua === CARTES.n) { E.poserRaison(etat, scelle, cal, j, CARTES.cachee, 'aucune', hz.pp()); }
+      const raison = o.raison ? o.raison(j) : 'aucune';
+      if (jusqua === cartes.n && raison !== null && ['Agathe', 'Nassim', 'Odile', 'Valentin'].includes(visages[cartes.cachee])) {
+        E.poserRaison(etat, scelle, cal, j, cartes.cachee, raison, hz.pp());
+      }
       if (ab) { E.allerAuJourSuivant(etat, cal, true); continue; }
       E.validerDeviner(etat, j, hz.pp());
       E.afficherRepondre(etat, cal, j, hz.pp());
       toucher();
-      E.repondre(etat, scelle, cal, j, reponseType(scelle, cal.ligne(j).repondu, j), hz.pp());
+      E.repondre(etat, scelle, cal, j, rep(cal.ligne(j).repondu, j), hz.pp());
       if (arret(j, 'apres-reponse')) { return arreter(); }
       E.repondreCarnet(etat, cal, j, 'moment', cal.estArrivee(j) ? 'defi' : 'deviner');
       if (cal.sauts.length && j === cal.sauts[0].reprise) { E.repondreCarnet(etat, cal, j, 'saut_clair', 'en_partie'); }
@@ -110,7 +120,7 @@ function jouer(scelle, cal, options) {
       }
       if (r.rang === r.repondus) { E.afficherTexteRattrapage(etat, cal, hz.pp()); continue; }
       toucher();
-      E.repondre(etat, scelle, cal, r.jour, reponseType(scelle, r.texte, r.jour + 1), hz.pp());
+      E.repondre(etat, scelle, cal, r.jour, rep(r.texte, r.jour + 1), hz.pp());
       if (arret(r.jour, 'rattrapage')) { return arreter(); }
       etat = recharger(etat);
     }
