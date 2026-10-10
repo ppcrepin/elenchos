@@ -124,7 +124,8 @@ var ElenchosCarnet = (function (N, J, X) {
       }
       if (c.compte !== null) { l.push('Compte : ' + COMPTE[c.compte] + '.'); }
     }
-    if (cal.ligne(j).deviner_porteur) { l.push('Boutons touchés : Relire ' + m.relire + ' fois, Passer ' + m.passer + ' fois.'); }
+    // Jours 1 (une fois l'entrée finie), 2, 3, 7 et 14, même à 0 ; jamais aux points de saut ni à la clôture (§8.12).
+    if (cal.ligne(j).deviner_porteur && !(arrivee && c.compte === null)) { l.push('Boutons touchés : Relire ' + m.relire + ' fois, Passer ' + m.passer + ' fois.'); }
     if (m.revelation_verdicts !== null && m.revelation_verdicts !== undefined) {
       var v = m.revelation_verdicts;
       if (v.length === 0) { l.push('Révélation : aucune carte.'); }
@@ -239,7 +240,31 @@ var ElenchosCarnet = (function (N, J, X) {
     return t;
   }
 
-  return { texte: texte, duree: duree, moment: moment, VERDICTS: VERDICTS, PERSONNAGES: PERSONNAGES, ErreurCarnet: ErreurCarnet };
+  /**
+   * La copie i du journal (partie 4.3.11 ; E.releverCopie), refaite telle qu'au toucher de
+   * la copie : jours atteints jusqu'au sien, son jour et ses sauts tels qu'ils étaient,
+   * ses durées. calculer(journal) : le moteur (M.calculer, avec le fichier et l'état à
+   * l'arrivée). Rend {texte, mesures}. La page et le contrôle 13 passent par ici tous deux.
+   */
+  function texteCopie(scelle, cal, journal, durees, i, calculer) {
+    var cp = journal.copies[i], dc = durees.copies[i];
+    exiger(cp && dc, 'copie ' + i + ' absente');
+    var jours = {}, dj = {};
+    for (var j = cal.premier; j <= cp.jour; j++) {
+      var d = journal.jours[String(j)];
+      exiger(d, 'jour ' + j + ' absent du journal');
+      jours[String(j)] = j < cp.jour ? d : { attente: null, coups: cp.coups, etapes: cp.etapes, ouverture: d.ouverture, versions: cp.versions };
+      dj[String(j)] = j < cp.jour ? durees.jours[String(j)] :
+        { duree_deviner: dc.duree_deviner, duree_entree: dc.duree_entree, duree_repondre: dc.duree_repondre, duree_seance: dc.duree_seance };
+    }
+    var jt = { arret: null, copies: [], empreinte_scelle: journal.empreinte_scelle, fin: null, format: journal.format, jours: jours,
+      partie: journal.partie, sauts: cp.sauts, version: journal.version };
+    var R = calculer(jt);
+    var t = texte(scelle, cal, jt, R, { jours: dj, sauts: dc.sauts, copies: [] }, { type: 'copie' });
+    return { texte: t, mesures: R.jours[String(cp.jour)].mesures };
+  }
+
+  return { texte: texte, texteCopie: texteCopie, duree: duree, moment: moment, VERDICTS: VERDICTS, PERSONNAGES: PERSONNAGES, ErreurCarnet: ErreurCarnet };
 })(ElenchosNoyau, ElenchosJournal, ElenchosTextes);
 
 /*node-debut*/

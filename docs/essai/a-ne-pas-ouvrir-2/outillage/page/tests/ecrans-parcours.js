@@ -265,6 +265,8 @@ async function saut(P, numero, total, options) {
   await P.toucher('saut-confirmer');
   for (let k = 1; k <= total; k++) {
     await P.voit((numero === 1 ? 'Premier' : 'Second') + ' saut · texte ' + k + ' sur ' + total);
+    // Pendant un saut, la révélation ne se reprend pas (« Reprendre la révélation » absent).
+    assert.ok(!(await P.existe('rouvrir')), 'rouvrir proposé pendant un saut');
     if (o.arreterAu === k) { return 'arret'; }
     if (o.recharger === k) { await P.page.reload(); await P.page.waitForTimeout(100); await P.sansErreur('rechargement'); await P.voit('texte ' + k + ' sur ' + total); }
     await repondre(P, 1 + (k % 5), k % 4 === 0 ? 'aucune' : 1 + (k % 4), 'ratt-position', 'ratt-suivant-raison', 'ratt-raison', 'ratt-valider');
@@ -383,8 +385,12 @@ async function parcoursA(navigateur) {
   await P.voit('Premier saut · jeudi à samedi');
   await P.voit('Semaine 1');
   await P.capture('copie-j7');
+  const copieJ7 = await P.page.evaluate(() => document.getElementById('zone-carnet').textContent);
   await P.toucher('aller-jour-suivant');
-  await P.journalValide(true);
+  const jc = await P.journalValide(true);
+  assert.equal(jc.copies.length, 1, 'le relevé de la copie est dans le journal');
+  assert.equal(jc.copies[0].jour, 7);
+  assert.equal((await P.page.evaluate(() => window.ElenchosEssai.durees())).copies.length, 1);
   noter('A : dimanche 1 (titres, phrase, carnet, copie)');
 
   // Jour 8 : second saut.
@@ -433,6 +439,17 @@ async function parcoursA(navigateur) {
   await P.toucher('voir-devoilement');
   await P.voit('Le dévoilement');
   await P.capture('devoilement');
+  // Dévoilement sur la partie de test : tous les panneaux, aucun trou, l'empreinte du fichier scellé.
+  const dv = await P.page.evaluate(() => ({ n: document.querySelectorAll('.panneau').length, t: Array.from(document.querySelectorAll('.panneau')).map((x) => { const c = x.cloneNode(true); c.querySelectorAll('pre').forEach((p) => p.remove()); return c.textContent; }).join('\n'),
+    controle: (document.querySelector('details.controle') || {}).textContent || '', empreinte: window.ElenchosEssai.empreinte(),
+    copies: window.ElenchosEssai.copies() }));
+  assert.ok(dv.n >= 7, 'panneaux du dévoilement : ' + dv.n);
+  const trou = /.{0,60}(?:À ÉCRIRE|undefined|NaN|null|\[object|\{[a-zA-Z_]+\}).{0,60}/.exec(dv.t);
+  assert.ok(!trou, 'trou dans le dévoilement : ' + (trou && trou[0]));
+  assert.ok(dv.controle.replace(/\s+/g, '').includes(dv.empreinte) && dv.controle.includes('"graine"'), 'empreinte absente du panneau de contrôle');
+  assert.equal(j.copies.length, 1, 'la copie du jour 7 reste dans le journal final');
+  assert.equal(dv.copies.length, 1);
+  assert.equal(normaliser(dv.copies[0].texte), normaliser(copieJ7), 'texte de la copie rebâti = texte copié au jour 7');
   await P.toucher('effacer');
   await P.voit('Tout effacer ?');
   await P.toucher('effacer-confirmer');
@@ -470,6 +487,13 @@ async function parcoursB(navigateur) {
   await P.voit("Arrêter l'essai ?");
   await P.toucher('arret-confirmer');
   await P.voit('Essai arrêté pendant le premier saut.');
+  // L'arrêt est écrit dès la confirmation (E.arreter) : un rechargement retrouve la page des questions.
+  const ea = await P.etat();
+  assert.ok(ea.arret, 'arrêt écrit à la confirmation');
+  await P.journalValide(false);
+  await P.page.reload(); await P.page.waitForTimeout(100);
+  await P.voit('Essai arrêté pendant le premier saut.');
+  assert.ok(await P.existe('arret-raison'), 'page des questions d\'arrêt retrouvée au rechargement');
   await P.toucher('arret-raison', { valeur: 'vu_assez' });
   await P.toucher('arret-f2', { valeur: 'de_plus_en_plus' });
   await P.capture('arret-questions');
@@ -477,6 +501,9 @@ async function parcoursB(navigateur) {
   await P.voit('Essai arrêté pendant le premier saut.');
   await P.voit('Raison de l');
   await P.voit("Jusqu'ici, deviner était : De plus en plus amusant.");
+  const ef = await P.etat();
+  assert.equal(ef.arret.raison, 'vu_assez');
+  assert.equal(ef.arret.f2, 'de_plus_en_plus');
   const carnet = await P.page.evaluate(() => document.getElementById('zone-carnet').textContent);
   await P.journalValide(false);
   await P.page.reload(); await P.page.waitForTimeout(100);

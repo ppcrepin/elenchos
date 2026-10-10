@@ -33,6 +33,8 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
   var lecture = null, relireHeure = true;
   /** Copies du carnet faites pendant ce chargement (version témoin, partie 4.3.11). */
   var copiesDuChargement = [];
+  /** Relevés E.releverCopie des copies faites pendant ce chargement (Q-K7) : jamais écrits, rendus au socle. */
+  var relevesCopies = [];
   var ancienneInfo = null;
   /** La note passagère à ôter quand le toucher en cours aura fait son geste. */
   var noteAEffacer = null;
@@ -525,7 +527,8 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
   /** « Reprendre la révélation » / « Revoir la révélation » (E3, §7.18). */
   function ligneRouvrir() {
     var k = K();
-    if (!cal.estJoue(k) || cal.ligne(k).revelation_porteur !== 'lue' || !revelationPresente(k)) { return null; }
+    // Jamais pendant un saut en cours (jour de reprise atteint sans ouverture compris, Q-J3).
+    if (E.sautEnCours(etat()) || !cal.estJoue(k) || cal.ligne(k).revelation_porteur !== 'lue' || !revelationPresente(k)) { return null; }
     var rev = jourE(etat(), k).page.rev;
     if (!rev || !rev.commencee || rev.ouverte) { return null; }
     var fini = rev.max >= sequenceRevelation(k).length - 1;
@@ -760,7 +763,7 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
       var noms = N.listeEt(liste.map(nomOuMarque));
       corps.push(label(t(X.badgeRare)), faces(liste.map(function (m) { return dot(initiale(m), 'L'); })),
         big(tp(el.type === 'pas_de_cote' ? X.pasDeCote(noms, liste.length > 1) : X.sansFaute(noms, liste.length > 1))),
-        p(t(el.type === 'pas_de_cote' ? X.pasDeCoteLigne : X.sansFauteLigne)));
+        p(t(el.type === 'pas_de_cote' ? X.pasDeCoteLigne(liste.length > 1) : X.sansFauteLigne)));
     } else if (el.type === 'devin' || el.type === 'mystere') {
       var tit = r.dimanche[el.type].titulaire;
       corps.push(label(t(X.titresDeLaSemaine(cal.nomCercle))), faces([dot(initiale(tit), 'L')]),
@@ -1124,12 +1127,14 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
   /* Le cadre : barre, bande, pages (§8)                                */
   /* ================================================================== */
 
-  function momentArret() { var e = etat(); return CR.moment(cal, E.journal(e, cal, socle.empreinte()), E.K(e)); }
+  function journalCourant() { return E.journal(etat(), cal, socle.empreinte(), undefined, relevesCopies); }
+  function dureesCourantes() { return E.fichierDurees(etat(), cal, socle.horloge(), undefined, relevesCopies); }
+  function momentArret() { return CR.moment(cal, journalCourant(), K()); }
   function libelleBarre() {
     var e = etat();
     if (!e) { return X.barreDebut; }
     var v = vue(), c = v.cadre;
-    if (e.arret || v.arretEnCours) {
+    if (e.arret) {
       var m = momentArret();
       return m.quoi === 'entree' ? X.barreArretEntree : (m.quoi === 'saut' ? X.barreArretSaut(m.n) : X.barreArretJour(m.k));
     }
@@ -1145,7 +1150,7 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
     var v = e ? vue() : null;
     var pageCadre = !e || !!v.cadre;
     var gauche = h('div', { class: 'barre-gauche' }, h('div', { class: 'barre-jour' }, t(libelleBarre())));
-    var enJeu = e && !pageCadre && !e.arret && !e.fin && !v.arretEnCours;
+    var enJeu = e && !pageCadre && !e.arret && !e.fin;
     if (enJeu && K() <= cal.dernierJeu) { gauche.appendChild(h('button', { type: 'button', class: 'barre-arret', action: 'arreter' }, t(X.arreterLEssai))); }
     var droite = enJeu ? h('button', { type: 'button', class: 'bouton-cadre barre-qui', action: 'qui-est-qui' }, t(X.quiEstQuiBouton)) : null;
     return h('header', { class: 'barre' }, gauche, droite);
@@ -1248,7 +1253,7 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
           var pret = r.rang === r.repondus;
           actions = [bouton(X.texteSuivantCadre, 'texte-suivant', { avant: pret, desactive: !pret, aria: pret ? null : t(X.texteSuivantIndisponible) })];
         }
-      } else if (et.arret || et.fin || v.arretEnCours) {
+      } else if (et.arret || et.fin) {
         actions = [];
       } else if (v.tel.ecran === 'fiche' && v.tel.dernier) {
         actions = [bouton(X.continuer, 'cloture-apres-dernier', { avant: true })];
@@ -1316,7 +1321,7 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
   /* ---- Pages du début (§8.2) ---- */
 
   function pageAncienne() {
-    return [titrePage(t(X.ancienneTitre)), panneau(h('p', null, t(ancienneInfo && ancienneInfo.deuxParties ? X.ancienneTexteDeux(appareil) : X.ancienneTexte(appareil)))), pied(true)];
+    return [titrePage(t(ancienneInfo && ancienneInfo.deuxParties ? X.ancienneTitreDeux : X.ancienneTitre)), panneau(h('p', null, t(ancienneInfo && ancienneInfo.deuxParties ? X.ancienneTexteDeux(appareil) : X.ancienneTexte(appareil)))), pied(true)];
   }
   function pageMessage0() {
     var m = X.message0(appareil);
@@ -1400,9 +1405,10 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
     var m = momentArret();
     return m.quoi === 'entree' ? X.arretTeteEntree : (m.quoi === 'saut' ? X.arretTeteSaut(m.n) : X.arretTeteJour(m.k));
   }
-  function pageArretQuestions(c) {
-    var contenu = [titrePage(t(teteArret())), panneau(h('p', { class: 'fort' }, t(X.arretRaison)), choix(libelles(J.CODES.arret, X.choixArret), c.raison, 'arret-raison'))];
-    if (K() >= J.JOUR_F2) { contenu.push(panneau(h('p', { class: 'fort' }, t(X.f2Arret)), choix(libelles(J.CODES.f2, X.choixF2), c.f2, 'arret-f2'))); }
+  function pageArretQuestions() {
+    var a = etat().arret;
+    var contenu = [titrePage(t(teteArret())), panneau(h('p', { class: 'fort' }, t(X.arretRaison)), choix(libelles(J.CODES.arret, X.choixArret), a.raison, 'arret-raison'))];
+    if (a.jour >= J.JOUR_F2) { contenu.push(panneau(h('p', { class: 'fort' }, t(X.f2Arret)), choix(libelles(J.CODES.f2, X.choixF2), a.f2, 'arret-f2'))); }
     contenu.push(pied(true));
     return contenu;
   }
@@ -1424,64 +1430,112 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
 
   /** Carnet final (fin ou arrêt), recalculé sur l'état gardé (§8.12). */
   function texteCarnetFinal() {
-    var e = etat();
-    var j = E.journal(e, cal, socle.empreinte());
-    return CR.texte(scelle, cal, j, R(), E.fichierDurees(e, cal, socle.horloge()), { type: e.fin ? 'fin' : 'arret' });
+    return CR.texte(scelle, cal, journalCourant(), R(), dureesCourantes(), { type: etat().fin ? 'fin' : 'arret' });
   }
   /** Copie en cours d'essai (§8.12) : le carnet figé à ce toucher. Rend {texte, copie de la trace}. */
   function faireCopie() {
-    var e = etat(), k = E.K(e);
-    var j = E.journal(e, cal, socle.empreinte());
-    var D = E.fichierDurees(e, cal, socle.horloge());
-    var texte = CR.texte(scelle, cal, j, R(), D, { type: 'copie' });
-    var d = j.jours[String(k)];
-    var cp = { coups: d.coups, etapes: d.etapes, jour: k, mesures: R().jours[String(k)].mesures,
-      sauts: j.sauts.map(function (s) { return { coups: s.coups, textes_atteints: s.textes_atteints }; }), texte: texte, versions: d.versions };
+    // Le relevé est pris au toucher (E.releverCopie), jamais écrit ; le texte se refait sur lui (CR.texteCopie),
+    // comme le refera le contrôle 13 sur le journal.
+    relevesCopies.push(E.releverCopie(etat(), cal, socle.horloge()));
+    var i = relevesCopies.length - 1;
+    var j = journalCourant();
+    var x = CR.texteCopie(scelle, cal, j, dureesCourantes(), i, function (jt) { return M.calculer(scelle, cal, socle.arrivee(), jt); });
+    var cp = Object.assign({}, j.copies[i], { mesures: x.mesures, texte: x.texte });
     copiesDuChargement.push(JSON.parse(JSON.stringify(cp, function (cle, val) { return val instanceof N.Fraction ? val.toString() : val; })));
-    return texte;
+    return x.texte;
   }
 
-  /* ---- Dévoilement (§8.6) ---- */
+  /* ---- Dévoilement (§8.6 ; a-ne-pas-ouvrir-2/devoilement.md, gabarits et règles de calcul) ---- */
 
-  function pageDevoilement() {
-    var contenu = [titrePage(t(X.devoilementTitre))];
-    contenu.push(panneau(h('p', null, t(X.devoilementOuverture))));
-    contenu.push(panneau(h('h2', null, t(X.commentLire)), h('p', null, t(X.commentLirePlace)), h('p', null, t(X.commentLireContreProfil)),
-      h('p', null, t(X.commentLireAbsences)), h('p', null, t(X.commentLireJour))));
-    var h86 = Object.keys(scelle.histoire.textes).filter(function (x) { return scelle.histoire.textes[x].fiche; })[0];
-    contenu.push(panneau(h('h2', null, t(X.histoireTitre)), h('p', null, t(X.histoireTextes(h86 ? titreDe(h86) : ''))),
-      h('p', null, t(X.histoireTirage(String(scelle.histoire.tirage)))), h('p', null, t(X.histoireFacteur(X.nombresEnLettres[scelle.reglage.facteur]))),
-      h('p', null, t(X.histoireHorsDePortee))));
-    var k = K();
-    personnages().forEach(function (pp) {
-      var f = scelle.personnages[pp];
-      var b = [h('h2', null, t(pp + ', ' + f.age + ' ans · ' + f.metier + ', ' + f.ville)), h('p', null, t(X.phraseProfil[pp] || X.A_ECRIRE))];
-      ['S', 'P', 'T', 'L'].forEach(function (code) {
-        var pl = X.T8[indexT8(code)].poles, pr = f.profil[code];
-        var lecture = pr.position >= 41 && pr.position <= 59 ? X.auMilieuProfil : (pr.position < 41 ? pl[0] : pl[1]);
-        b.push(h('p', null, t(X.ligneProfil(pl[0], pl[1], lecture, pr.position, pr.fermete))));
-      });
-      b.push(h('p', { class: 'fort' }, t(X.reponsesContre)));
-      scelle.reponses_atypiques[pp].filter(function (a) { return Object.prototype.hasOwnProperty.call(scelle.textes, a.texte) && cal.textesEntree.indexOf(a.texte) < 0; })
-        .forEach(function (a) {
-          var tx = texteDe(a.texte), rep = scelle.reponses[a.texte][pp], jr = cal.jourDeReponse(a.texte);
-          var extra = [];
-          if (a.cote_tire !== null) { extra.push(X.profilNeutre); }
-          var jd = jr + 1;
-          if (jd <= k && cal.existe(jd) && Rj(jd).manches && Rj(jd).manches[PORTEUR] &&
-              Rj(jd).manches[PORTEUR].cartes.some(function (c) { return c.auteur === pp; })) { extra.push(X.aDeviner(jd, nomJour(jd))); }
-          b.push(h('div', { class: 'atypique' }, h('p', null, t(X.jourTitre(jr, tx.titre))), h('p', null, t(position(rep.niveau) + ' · ' + raisonEnLigne(tx, rep.raison))),
-            extra.length ? h('p', null, t(extra.join(' '))) : null));
-        });
-      var avantH = Object.keys(scelle.histoire.textes);
-      var atypH = scelle.reponses_atypiques[pp].filter(function (a) { return avantH.indexOf(a.texte) >= 0; }).length;
-      var repH = avantH.filter(function (x) { return scelle.reponses[x] && Object.prototype.hasOwnProperty.call(scelle.reponses[x], pp); }).length;
-      b.push(h('p', null, t(X.avantArrivee(atypH, repH))));
-      var abs = scelle.absences[pp].filter(function (x) { return Object.prototype.hasOwnProperty.call(scelle.textes, x); }).map(function (x) { return String(cal.jourDeReponse(x)); });
-      b.push(h('p', null, t(abs.length ? X.joursSansJouer(N.listeEt(abs)) : X.joursSansJouerAucun)));
-      b.push(h('p', null, t(X.joursSansJouerAvant)), h('p', null, t(X.temperamentsJour14)));
-      contenu.push(h('section', { class: 'panneau', 'aria-label': pp }, b));
+  function enLettres(n) { return X.nombresEnLettres[n] || String(n); }
+  function nomTension(code) { var pl = X.T8[indexT8(code)].poles; return pl[0] + ' ou ' + pl[1]; }
+  /** Le dernier dimanche de l'essai (« le second dimanche ») : fin de la dernière semaine de l'essai. */
+  function dernierDimanche() { return cal.semaine(cal.semainesEssai[cal.semainesEssai.length - 1]).dernier_jour; }
+  /** Textes du porteur avant le second dimanche, entrée comprise (E1 à E3, T1 à T13), dans l'ordre. */
+  function textesPorteurAvant(jour) {
+    var l = cal.textesEntree.slice();
+    for (var j = cal.premier; j < jour; j++) { var t2 = cal.ligne(j).repondu; if (t2 !== null) { l.push(t2); } }
+    return l;
+  }
+  function panneauPourVous() {
+    var f = scelle.reglage.facteur, d14 = dernierDimanche();
+    var compte = function (liste, code) { return liste.filter(function (x) { return texteDe(x).tension === code; }).length; };
+    var tous = textesPorteurAvant(d14);
+    var n = {}; ['S', 'P', 'T', 'L'].forEach(function (c) { n[c] = compte(tous, c); });
+    var fermees = ['S', 'P', 'T', 'L'].filter(function (c) { return n[c] * f < 10; }).map(nomTension);
+    var l = [h('h2', null, t(X.pourVousTitre)),
+      h('p', null, t(X.pourVousFacteur(enLettres(f), enLettres(2 * f)))),
+      h('p', null, t(X.pourVousCurseurs(n.S, n.P, n.T, n.L, X.motSeuil[f], fermees.length ? N.listeEt(fermees) : null)))];
+    // Le Pas de Côté : textes Tn (n ≤ 13) dont la tension compte déjà au moins 10/f textes avant lui.
+    var possibles = [];
+    for (var j = cal.premier; j < d14; j++) {
+      var tj = cal.ligne(j).repondu;
+      if (tj === null) { continue; }
+      if (compte(textesPorteurAvant(j), texteDe(tj).tension) * f >= 10) { possibles.push({ jour: j + 2, tension: nomTension(texteDe(tj).tension) }); }
+    }
+    l.push(h('p', null, t(!possibles.length ? X.pasDeCoteImpossible : X.pasDeCotePossible(possibles.length === 1 ?
+      X.pasDeCoteJour(possibles[0].jour, possibles[0].tension) :
+      X.pasDeCoteJours(possibles.map(function (x) { return X.pasDeCoteJourListe(x.jour, x.tension); }).join(' ; '))))));
+    // {pts14}, {pts15} : cartes servies au porteur dans ses manches révélées pendant chaque semaine de l'essai (plafond, sans les coups).
+    var cs = M.cartesServies(scelle, cal, socle.arrivee());
+    var pts = cal.semainesEssai.map(function (w) {
+      var sem = cal.semaine(w), total = 0;
+      for (var d = sem.premier_jour - 1; d < sem.dernier_jour; d++) { if (cal.existe(d) && cal.ligne(d).deviner_porteur) { total += cs(d).n; } }
+      return total;
     });
+    l.push(h('p', null, t(X.pourVousTitres(enLettres(pts[0]), enLettres(pts[1])))));
+    var supprimer = Object.keys(scelle.textes).filter(function (x) { return /^Supprimer/.test(scelle.textes[x].titre); });
+    if (supprimer.length >= 2 && supprimer.every(function (x) { return scelle.textes[x].vote.issue === 'rejete'; })) { l.push(h('p', null, t(X.pourVousSupprimer))); }
+    return h('section', { class: 'panneau' }, l);
+  }
+  function panneauPersonnage(pp) {
+    var f = scelle.personnages[pp], k = K();
+    var b = [h('h2', null, t(X.titrePersonnage(pp, f.age, f.metier, f.ville))), h('p', null, t(X.phraseProfil[pp]))];
+    ['S', 'P', 'T', 'L'].forEach(function (code) {
+      var pl = X.T8[indexT8(code)].poles, pr = f.profil[code];
+      var lecture = pr.position >= 41 && pr.position <= 59 ? X.auMilieuProfil : (pr.position < 41 ? pl[0] : pl[1]);
+      b.push(h('p', null, t(X.ligneProfil(pl[0], pl[1], lecture, pr.position, pr.fermete))));
+    });
+    var dernierTexte = cal.ligne(cal.dernierJeu).repondu;
+    var pendantEssai = function (x) { return Object.prototype.hasOwnProperty.call(scelle.textes, x) && cal.textesEntree.indexOf(x) < 0 && x !== dernierTexte; };
+    var atyp = scelle.reponses_atypiques[pp].filter(function (a) { return pendantEssai(a.texte); });
+    if (!atyp.length) { b.push(h('p', { class: 'fort' }, t(X.reponsesContreAucune))); }
+    else {
+      b.push(h('p', { class: 'fort' }, t(X.reponsesContre)));
+      atyp.forEach(function (a) {
+        var tx = texteDe(a.texte), rep = scelle.reponses[a.texte][pp], n = cal.jourDeReponse(a.texte);
+        var extra = [];
+        if (a.cote_tire !== null) { extra.push(X.profilNeutre); }
+        // La réponse était une carte de la manche du porteur du jour n + 1, et cette manche a été ouverte.
+        var mp = n + 1 <= k && cal.existe(n + 1) && Rj(n + 1).manches ? Rj(n + 1).manches[PORTEUR] : null;
+        if (mp && mp.cartes.some(function (c) { return c.auteur === pp; })) { extra.push(X.aDeviner(n + 1)); }
+        b.push(h('div', { class: 'atypique' }, h('p', null, t(X.jourTitre(n, tx.titre))), h('p', null, t(position(rep.niveau) + ' · ' + raisonEnLigne(tx, rep.raison))),
+          extra.length ? h('p', null, t(extra.join(' '))) : null));
+      });
+    }
+    var abs = scelle.absences[pp].filter(pendantEssai).map(function (x) { return String(cal.jourDeReponse(x)); });
+    b.push(h('p', null, t(abs.length ? X.joursSansJouer(N.listeEt(abs)) : X.joursSansJouerAucun)));
+    var hist = Object.keys(scelle.histoire.textes);
+    var aH = scelle.reponses_atypiques[pp].filter(function (a) { return hist.indexOf(a.texte) >= 0; }).length;
+    var mH = scelle.absences[pp].filter(function (x) { return hist.indexOf(x) >= 0; }).length;
+    b.push(h('p', null, t(X.avantArrivee(aH, hist.length - mH, mH, hist.length))));
+    // Tempéraments au second dimanche, s'il a été atteint (après un arrêt plus tôt, le calcul n'existe pas).
+    var d14 = dernierDimanche();
+    var dm = d14 <= k ? Rj(d14).dimanche : null;
+    if (dm) {
+      var temps = dm.temperaments[pp].temperaments;
+      if (!temps.length) { b.push(h('p', null, t(X.temperamentsAucun))); }
+      else { b.push(h('p', null, t(X.temperamentsTete))); X.ORDRE_TEMPERAMENTS.filter(function (c) { return temps.indexOf(c) >= 0; }).forEach(function (c) { b.push(h('p', null, t(X.temperamentsRegles[c]))); }); }
+    }
+    return h('section', { class: 'panneau', 'aria-label': pp }, b);
+  }
+  function pageDevoilement() {
+    var contenu = [titrePage(t(X.devoilementTitre)), panneau(h('p', null, t(X.devoilementOuverture)))];
+    contenu.push(h('section', { class: 'panneau' }, [h('h2', null, t(X.commentLire))].concat(X.commentLireTextes(X.motAlpha[scelle.reglage.alpha]).map(function (x) { return h('p', null, t(x)); }))));
+    var h86 = Object.keys(scelle.histoire.textes).filter(function (x) { return scelle.histoire.textes[x].fiche; })[0];
+    contenu.push(h('section', { class: 'panneau' }, [h('h2', null, t(X.avantTitre))].concat(X.avantTextes(h86 ? titreDe(h86) : '', String(scelle.histoire.tirage)).map(function (x) { return h('p', null, t(x)); }))));
+    contenu.push(panneauPourVous());
+    personnages().forEach(function (pp) { contenu.push(panneauPersonnage(pp)); });
     var groupes = socle.empreinte().match(/.{4}/g);
     var lignesEmp = [0, 1, 2, 3].map(function (i) { return groupes.slice(4 * i, 4 * i + 4).join(' '); }).join('\n');
     contenu.push(h('details', { class: 'panneau controle' }, h('summary', null, t(X.pourLeControle)),
@@ -1490,7 +1544,7 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
       h('p', null, t(X.graine)), h('pre', { class: 'code-brut' }, scelle.graine),
       h('p', null, t(X.tirage)), h('pre', { class: 'code-brut' }, String(scelle.histoire.tirage)),
       h('p', null, t(X.fichierScelle)), h('pre', { class: 'code-brut scelle' }, N.utf8Decoder(N.base64Decoder(SCELLE_B64)))));
-    contenu.push(panneau(h('p', null, t(X.devoilementFin)), h('p', null, t(X.effacerInvite))));
+    contenu.push(panneau(h('p', null, t(X.devoilementFin)), h('p', null, t(X.devoilementEffacer))));
     contenu.push(pied(true));
     return contenu;
   }
@@ -1505,7 +1559,7 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
       case 'saut': contenu = pageSaut(); break;
       case 'carnet': contenu = pageCarnet(c); break;
       case 'arret-confirmation': contenu = pageArretConfirmation(); break;
-      case 'arret-questions': contenu = pageArretQuestions(c); break;
+      case 'arret-questions': contenu = pageArretQuestions(); break;
       case 'cloture-questions': contenu = pageClotureQuestions(c); break;
       case 'export': contenu = pageExport(c); break;
       case 'devoilement': contenu = pageDevoilement(); break;
@@ -2059,21 +2113,17 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
   A['arret-confirmer'] = function () {
     geste(function (e, hh) {
       var k = E.K(e);
+      // L'arrêt est écrit dès la confirmation, raison et F2 à compléter (§8.10).
       if (cal.aUneOuverture(k)) { E.marquer(e, k, 'fige', hh); }
-      e.vue.arretEnCours = true;
-      e.vue.cadre = { page: 'arret-questions', raison: null, f2: null };
+      E.arreter(e, cal, null, null);
+      e.vue.cadre = { page: 'arret-questions' };
     });
     apres();
   };
-  A['arret-raison'] = function (b) { var v = b.getAttribute('data-valeur'); geste(function (e) { e.vue.cadre.raison = v; }); apres({ focus: false }); };
-  A['arret-f2'] = function (b) { var v = b.getAttribute('data-valeur'); geste(function (e) { e.vue.cadre.f2 = v; }); apres({ focus: false }); };
+  A['arret-raison'] = function (b) { var v = b.getAttribute('data-valeur'); geste(function (e) { E.completerArret(e, cal, 'raison', v); }); apres({ focus: false }); };
+  A['arret-f2'] = function (b) { var v = b.getAttribute('data-valeur'); geste(function (e) { E.completerArret(e, cal, 'f2', v); }); apres({ focus: false }); };
   A['arret-continuer'] = function () {
-    var c = vue().cadre;
-    geste(function (e) {
-      E.arreter(e, cal, c.raison || null, E.K(e) >= J.JOUR_F2 ? (c.f2 || null) : null);
-      delete e.vue.arretEnCours;
-      e.vue.cadre = { page: 'export', mode: 'final' };
-    });
+    geste(function (e) { e.vue.cadre = { page: 'export', mode: 'final' }; });
     bande.messageCopie = null; apres();
   };
   A['voir-devoilement'] = function () { bande.messageCopie = null; geste(function (e) { e.vue.cadre = { page: 'devoilement' }; }); apres(); };
@@ -2147,7 +2197,8 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
     },
     revenu: function () { if (etat() && !vue().cadre && vue().tel.ecran === 'attente') { relireHeure = true; rendre(); } },
     carnet: function () { var e = etat(); return e && (e.fin || e.arret) ? texteCarnetFinal() : null; },
-    copies: function () { return JSON.parse(JSON.stringify(copiesDuChargement)); }
+    copies: function () { return JSON.parse(JSON.stringify(copiesDuChargement)); },
+    relevesCopies: function () { return relevesCopies; }
   };
 
   function demarrer() {

@@ -129,3 +129,25 @@ test('Durée : forme « {m} min {ss} s »', () => {
   assert.equal(CR.duree(42), '0 min 42 s');
   assert.equal(CR.duree(7503), '125 min 03 s');
 });
+
+test('Copie relevée (releverCopie) : le texte rebâti à la fin (texteCopie) est celui que le porteur a copié ce jour-là', () => {
+  const etat = PT.jouer(S, cal, { cartes: cartes, arretA: { jour: 7, moment: 'apres-reponse' } });
+  etat.arret = null;
+  const direct = carnetDe(etat, { type: 'copie' });
+  const r = E.releverCopie(etat, cal, etat.horloge);
+  const j = E.journal(etat, cal, EMPREINTE, undefined, [r]);
+  const d = E.fichierDurees(etat, cal, etat.horloge, undefined, [r]);
+  assert.equal(j.copies.length, 1);
+  assert.equal(d.copies.length, 1);
+  M.calculer(S, cal, arrivee, j); // le journal avec sa copie passe la validation du moteur
+  const c = CR.texteCopie(S, cal, j, d, 0, (jt) => M.calculer(S, cal, arrivee, jt));
+  assert.equal(c.texte, direct);
+  assert.ok(c.mesures, 'mesures du jour de la copie');
+});
+
+test('Boutons touchés (§8.12) : seulement les jours avec Deviner, une fois l\'entrée finie ; jamais aux jours 4, 8 ni à la clôture', () => {
+  const t = carnetDe(PT.jouer(S, cal, { cartes: cartes, annuler: { 4: 2 } }));
+  const bloc = (titre) => t.split('\n\n').filter((x) => x.startsWith(titre))[0] || '';
+  for (const titre of ['Jour 4 ', 'Jour 8 ', 'Clôture']) assert.ok(!bloc(titre).includes('Boutons touchés'), titre);
+  assert.ok(t.includes('Boutons touchés'), 'présent ailleurs');
+});

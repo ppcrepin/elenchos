@@ -230,7 +230,8 @@ var ElenchosTextes = (function (N) {
     sansFauteLigne: 'Sept jours sans erreur, sans rien passer.',
     // §7.22 : « {Prénom} décroche Le Pas de Côté. » ; la ligne de dessous n'est pas encore écrite (Game design).
     pasDeCote: function (noms, pluriel) { return noms + (pluriel ? ' décrochent' : ' décroche') + ' Le Pas de Côté.'; },
-    pasDeCoteLigne: A_ECRIRE,
+    // Ligne de Game design (§7.22, annexe C point 10) : un titulaire, ou plusieurs sur une seule carte.
+    pasDeCoteLigne: function (pluriel) { return pluriel ? "Des réponses à l'opposé de ce que disaient leurs portraits." : "Une réponse à l'opposé de ce que disait son portrait."; },
     titresDeLaSemaine: function (cercle) { return 'Les titres de la semaine · ' + cercle; },
     devin: function (nom) { return 'Le Devin : ' + nom; },
     devinLigne: 'a le mieux deviné les autres cette semaine',
@@ -364,8 +365,9 @@ var ElenchosTextes = (function (N) {
     // Page A (§8.2), partie du premier essai
     ancienneTitre: 'La partie du premier essai est encore là',
     ancienneTexte: function (appareil) { return 'Votre ' + appareil + " garde encore vos réponses du premier essai. Elles ne servent plus, et l'essai ne garde qu'une partie à la fois : la page les efface avant de commencer. Votre carnet du premier essai, déjà dans la conversation, n'est pas touché."; },
-    // Cas rare des deux parties : proposition de Juridique (§8.2, note de l'assembleur), mots pas encore confirmés par UX.
-    ancienneTexteDeux: function (appareil) { return 'Votre ' + appareil + " garde encore vos réponses du premier essai. Elles ne servent plus : la page les efface. Votre partie en cours n'est pas touchée. Votre carnet du premier essai, déjà dans la conversation, n'est pas touché."; },
+    // Cas rare des deux parties (§8.2 A, UX, relu par Juridique le 10 octobre 2026).
+    ancienneTitreDeux: 'Une partie du premier essai est revenue',
+    ancienneTexteDeux: function (appareil) { return 'Votre ' + appareil + " garde de nouveau une partie du premier essai, avec vos réponses s'il y en a. Elles ne servent plus : la page les efface quand vous touchez le bouton. Ni votre partie du second essai ni votre carnet du premier essai, déjà dans la conversation, ne sont touchés."; },
     effacerEtCommencer: 'Effacer et commencer',
     effacerEtReprendre: 'Effacer et reprendre',
     ancienneConfirmationTitre: 'Effacer la partie du premier essai ?',
@@ -528,44 +530,87 @@ var ElenchosTextes = (function (N) {
     effacerInvite: 'Une fois votre carnet copié, vous pouvez tout effacer.',
     efface: 'La page a tout effacé.',
 
-    /* Dévoilement (§8.6). Le texte complet est à écrire par UX, sur les phrases de Game design ci-dessous
-       (arbitrage de l'orchestrateur) ; les passages qui dépendent du fichier caché sont à fournir par qui peut le lire. */
+    /* Dévoilement (§8.6 ; textes d'UX et de Game design du 10 octobre 2026 :
+       a-ne-pas-ouvrir-2/devoilement.md, gabarits et règles de calcul). Tous regroupés ici. */
     devoilementTitre: 'Le dévoilement',
-    devoilementOuverture: A_ECRIRE,
+    devoilementOuverture: "Voici ce que la page vous cachait : comment l'histoire du cercle a été calculée, le profil de chaque personnage, ses réponses données exprès contre ce profil et ses jours sans jouer. Tout en bas, « Pour le contrôle » : l'empreinte à comparer avec celle publiée dans la conversation.",
     commentLire: 'Comment lire',
-    commentLirePlace: A_ECRIRE,
-    commentLireContreProfil: A_ECRIRE,
-    commentLireAbsences: A_ECRIRE,
-    commentLireJour: '« Jour {n} » : le texte répondu le jour n, deviné le jour n + 1, révélé le jour n + 2.',
-    histoireTitre: A_ECRIRE,
-    histoireTextes: function (titre) { return 'Les treize semaines d\'avant votre arrivée ont été calculées avec les mêmes règles, sur des textes sans titre (une tension, un sens), sauf « ' + titre + ' ».'; },
-    histoireTirage: function (r) { return 'Le calcul a été refait jusqu\'à remplir des critères écrits d\'avance : curseurs nets, tempéraments, surprise de la semaine, titres variés. Tirage retenu : ' + r + '.'; },
-    histoireFacteur: function (fois) { return 'Votre portrait comptait vos réponses ' + fois + ' fois.'; },
-    histoireHorsDePortee: A_ECRIRE,
+    commentLireTextes: function (cinq) {
+      return [
+        "Chaque personnage a gardé le profil du premier essai. Pour chaque tension, une place de 0 à 100 : 0 pour la première valeur (Sécurité), 100 pour la seconde (Liberté individuelle) ; de 41 à 59, au milieu. Et une fermeté : plus elle était forte, plus ses réponses s'éloignaient de Neutre, jusqu'à « Très ».",
+        'Les réponses de chacun découlaient de son profil, sauf environ une sur ' + cinq + ", tirée au sort et donnée exprès contre ce profil pour que rien ne se devine à coup sûr : le côté opposé, sans « Très » (si le profil donnait Neutre, un côté tiré au sort). Quand ce côté allait contre sa valeur, il prenait l'argument inattendu de ce côté s'il y en avait un (au nom de sa valeur, ou pratique), sinon l'argument attendu. Jamais à deux textes qui se suivent, jamais plus de deux personnages pour un même texte.",
+        "Chacun s'absentait parfois, par tirage : une chance sur quatorze à chaque texte, jamais deux fois en sept textes de suite, jamais plus d'un absent pour un même texte. Ce jour-là, ni réponse ni devinette.",
+        "Aux trois textes d'entrée et au texte du dernier jour, personne ne répondait contre son profil ni ne s'absentait.",
+        'Toutes les réponses des personnages ont été calculées par des règles fixes, écrites et scellées avant l\'essai, sans rien savoir des vôtres.',
+        '« Jour 2 » : le texte répondu le jour 2, deviné le jour 3, révélé le jour 4. « Jour 0 » : la veille de votre arrivée.'
+      ];
+    },
+    /** {cinq} : mot de 1/α + 1 (α = reglage.alpha). */
+    motAlpha: { '1/6': 'sept', '1/4': 'cinq', '1/3': 'quatre' },
+    avantTitre: 'Avant votre arrivée',
+    avantTextes: function (titreH86, r) {
+      return [
+        "Les treize semaines d'avant votre arrivée ont été calculées avec les mêmes règles, sur des textes sans titre ni mots : pour chacun, seulement une tension, la valeur qu'il faisait passer devant l'autre, et quatre raisons réduites à leur côté et à la valeur qu'elles servaient. Une seule exception : « " + titreH86 + ' », la surprise de la semaine que vous avez vue en arrivant. Sur ce texte, deux personnages ont répondu exprès contre leur profil, pour qu\'il devienne cette surprise.',
+        "Pour ressembler à un cercle de trois mois, cette histoire devait remplir des conditions écrites avant l'essai : des curseurs nets pour chacun, des tempéraments, cette surprise de la semaine, des titres variés. Le calcul a été refait, tirage après tirage, jusqu'au premier qui les remplissait. Tirage retenu : " + r + '.'
+      ];
+    },
+    pourVousTitre: "Ce que l'essai changeait pour vous",
+    pourVousFacteur: function (trois, six) {
+      return 'Votre portrait comptait chacune de vos réponses ' + trois + " fois, celles des personnages une fois ; et avec quatre tensions seulement, chacune revenait deux fois plus souvent que dans le jeu. Votre portrait avançait donc environ " + six + ' fois plus vite.';
+    },
+    pourVousCurseurs: function (nS, nP, nT, nL, seuil, fermees) {
+      return "Jusqu'au second dimanche, vous aviez " + nS + ' textes sur Sécurité ou Liberté individuelle, ' + nP + ' sur Précaution ou Innovation, ' + nT +
+        ' sur Tradition ou Changement et ' + nL + ' sur Local ou National, entrée comprise. Un curseur devenait net quand ses réponses pesaient au moins ' + seuil +
+        " : une réponse favorable ou défavorable avec l'argument attendu pèse 1 ; avec un argument pratique ou aucune des quatre raisons, 1/2 ; avec un argument au nom de l'autre valeur, 0 ; Neutre, 0. Avec si peu de réponses, une seule qui pèse 0 pouvait suffire à l'empêcher." +
+        (fermees ? ' Sur ' + fermees + ', votre curseur ne pouvait pas devenir net.' : '');
+    },
+    /** {seuil} : 10/f écrit en mots (f = 2, 3, 4). */
+    motSeuil: { 2: '5', 3: '3 et 1/3', 4: '2 et 1/2' },
+    pasDeCotePossible: function (jours) { return 'Le Pas de Côté ne vous était possible qu\'à la révélation ' + jours + ', et seulement si votre curseur y était déjà net.'; },
+    pasDeCoteJour: function (j, tension) { return 'du jour ' + j + ', sur ' + tension; },
+    pasDeCoteJours: function (liste) { return 'de ces jours : ' + liste; },
+    pasDeCoteJourListe: function (j, tension) { return 'jour ' + j + ', sur ' + tension; },
+    pasDeCoteImpossible: 'Le Pas de Côté vous était impossible : aucun de vos curseurs ne pouvait être net assez tôt.',
+    pourVousTitres: function (pts14, pts15) {
+      return 'Les sauts vous ont fermé un titre et en ont presque fermé un autre. Vos cartes ne pouvaient être révélées que trois jours la première semaine et un jour la seconde ; celles des personnages, presque chaque jour. Le Sans-Faute demande des cartes révélées au moins cinq jours de la semaine : il vous était impossible. Le Devin va à qui marque le plus de points dans la semaine : vous pouviez en marquer au plus ' +
+        pts14 + ' la première semaine et ' + pts15 + ' la seconde, quand un personnage pouvait en marquer jusqu\'à trois par jour.';
+    },
+    pourVousSupprimer: 'Tous les titres qui commençaient par « Supprimer » ont été rejetés : ce premier mot laissait deviner le vote.',
     phraseProfil: {
       Agathe: 'Faite pour ressembler à Nassim, sauf entre local et national.',
       Nassim: 'Fait pour ressembler à Agathe, sauf entre local et national.',
       Odile: 'Tranchée : loin du milieu et fermeté forte, sur les quatre tensions.',
       Valentin: 'Des valeurs que sa vie ne laisse pas deviner.'
     },
+    titrePersonnage: function (prenom, age, metier, ville) { return prenom + ', ' + age + ' ans · ' + metier + ', ' + ville; },
     ligneProfil: function (p0, p1, lecture, p, fermete) { return p0 + ' ou ' + p1 + ' : ' + lecture + ' (' + p + ' sur 100, fermeté ' + fermete + ').'; },
     auMilieuProfil: 'au milieu',
     reponsesContre: "Réponses contre son profil pendant l'essai :",
+    reponsesContreAucune: "Réponses contre son profil pendant l'essai : aucune.",
     jourTitre: function (n, titre) { return 'Jour ' + n + ' · ' + titre; },
     profilNeutre: 'Son profil donnait Neutre.',
-    aDeviner: function (n, jour) { return "Vous l'aviez à deviner le jour " + n + ' (' + jour + ').'; },
-    avantArrivee: function (a, b) { return 'Avant votre arrivée : ' + a + ' réponses contre son profil sur ' + b + '.'; },
+    aDeviner: function (n) { return "Vous l'aviez à deviner le jour " + n + '.'; },
     joursSansJouer: function (liste) { return "Jours sans jouer pendant l'essai : " + liste + '.'; },
     joursSansJouerAucun: "Jours sans jouer pendant l'essai : aucun.",
-    joursSansJouerAvant: A_ECRIRE,
-    temperamentsJour14: A_ECRIRE,
+    avantArrivee: function (a, b, m, total) {
+      return 'Avant votre arrivée : ' + a + ' ' + (a >= 2 ? 'réponses' : 'réponse') + ' contre son profil sur ' + b + ', et ' + m + ' ' + (m >= 2 ? 'jours' : 'jour') + ' sans jouer sur ' + total + '.';
+    },
+    temperamentsAucun: 'Ses tempéraments au second dimanche : aucun.',
+    temperamentsTete: 'Ses tempéraments au second dimanche, sur les huit semaines précédentes :',
+    temperamentsRegles: {
+      original: "L'Original : seul de son côté, favorable ou défavorable, sur au moins 3 de ses réponses sur 10.",
+      pont: 'Le Pont : quand les autres se partageaient entre favorable et défavorable, seul à répondre Neutre, sur au moins 1 de ces textes sur 8 (et au moins 6 textes ainsi partagés).',
+      mesure: 'Le Mesuré : Neutre sur au moins 1 de ses réponses sur 3.',
+      tranche: 'Le Tranché : « Très favorable » ou « Très défavorable » sur au moins 1 de ses réponses sur 2.'
+    },
     pourLeControle: 'Pour le contrôle',
-    graine: 'Graine :',
-    tirage: 'Numéro de tirage :',
-    fichierScelle: 'Fichier scellé :',
     empreinteDe: 'Empreinte du fichier scellé :',
     comparez: function (date, heure) { return 'Si vous le voulez, comparez-la, ligne par ligne, avec celle publiée dans la conversation le ' + date + ' à ' + heure + ' : elles doivent être identiques. Si un seul caractère diffère, dites-le dans la conversation.'; },
+    graine: 'Graine :',
+    tirage: "Tirage retenu pour l'histoire :",
+    fichierScelle: 'Fichier scellé :',
     devoilementFin: 'Les règles et le lot du second essai sont dans « a-ne-pas-ouvrir-2 » : vous pouvez maintenant l\'ouvrir.',
+    devoilementEffacer: 'Si votre carnet est bien dans la conversation, vous pouvez tout effacer.',
 
     /* Arrêts techniques (S1 §8.11 ; §8.9 du second essai : repère V6, « V1 à V6 ») */
     arretVerifTitre: "La page s'est arrêtée par précaution.",
