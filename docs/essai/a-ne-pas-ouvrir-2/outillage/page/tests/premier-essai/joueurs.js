@@ -8,7 +8,7 @@
  */
 'use strict';
 const N = require('../../noyau.js');
-const M = require('../../moteur.js');
+const M = require('./moteur-premier-essai.js');
 
 const PERSOS = M.PERSONNAGES;
 const TENSIONS = M.TENSIONS;

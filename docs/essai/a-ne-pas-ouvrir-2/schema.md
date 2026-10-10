@@ -345,7 +345,7 @@ En-tête exact :
 
 - **`libelle`** : le libellé court, entre accents graves, avec une minuscule au début et commençant par « commission ». Par exemple `commission des affaires sociales`.
 - Caractères : ceux de la partie 2.10, sans « & » ni parenthèses. 80 points de code au plus.
-- **Forme courte d'une commission spéciale.** Si le libellé officiel, une fois mis en minuscule au début, dépasse 80 points de code, le `libelle` s'écrit « commission spéciale sur {intitulé court du projet} ». La colonne Source donne alors le libellé officiel de l'organe, suivi de « forme courte rédigée par Contenu, relue par UX ». Pour une telle ligne, le contrôle ne vérifie que la forme (règles ci-dessus) ; la fidélité de la forme courte relève des deux relectures.
+- **Forme courte d'une commission spéciale.** Si le libellé officiel, une fois mis en minuscule au début, dépasse 80 points de code, le `libelle` s'écrit « commission spéciale sur {intitulé court du projet} ». La colonne Source donne alors le libellé officiel de l'organe, suivi de « forme courte rédigée par Contenu, relue par UX ». Pour une telle ligne, le contrôle ne vérifie que la forme (règles ci-dessus) ; la fidélité de la forme courte relève des deux relectures. (Arbitrage de l'orchestrateur, 10 octobre 2026 : pour l'article ajouté en commission spéciale, la commission plutôt que le premier signataire de l'amendement de commission, introuvable dans les données locales ; Game design préférait le signataire.)
 - Chaque `auteur.libelle` du fichier figure au tableau, et chaque ligne sert au moins une fois.
 
 **Lignes : à remplir par Contenu.**
@@ -794,7 +794,8 @@ Aucune autre clé.
 - **D-028** :
   - entre 6 et 12 textes rejetés sur les 18 ;
   - au moins un rejeté parmi E1 à E3 ;
-  - tout objet servi au moins deux fois compte au moins un adopté et un rejeté (A.4).
+  - tout objet servi au moins deux fois compte au moins un adopté et un rejeté (A.4) ;
+  - au moins un texte d'objet `texte` ou `article` a `issue` = `"rejete"` (A.4).
 - **E8** : titres de 60 points de code au plus, sans « : », titre de H86 compris.
 - **D-034** : les règles de la partie 2.5.
 - **Groupes et considérations** : les quatre `groupe` d'un texte sont deux à deux différents, et `null` compte comme une valeur, permise une fois au plus. C'est une hypothèse, à confirmer par Contenu (partie 8).
@@ -868,7 +869,7 @@ C'est la forme de S1, partie 4.5, sur les 18 textes, avec ces changements :
 - **`vote`** :
   - « 1.6 » pour E1 à E3, avec {objet} et {étape-texte} (§7.10) ;
   - « 2.7d » pour T0 à T13 ;
-  - « 5.4 » pour les textes que l'Historique montre (partie 8, point UX-2) ;
+  - « 5.4 » pour les textes que l'Historique montre (partie 8, point UX-2), et pour la fiche de T14 affichée à la clôture (§7.5, point 2) : pour T14 seulement, les phrases du vote, {suite} comprise, sont permises à partir de l'ouverture de la clôture, jamais avant ;
   - **{objet}** a une phrase de plus, pour `resolution` : « C'était une résolution, un texte qui invite le Gouvernement à agir, sans l'y obliger. » ;
   - **{suite}** suit {objet} {étape-texte}, en 1.6, 2.7d et 5.4 : « Le texte entier est tombé avec lui. » pour `texte_tombe` ; « Le jour même, le texte entier a été retiré. » pour `texte_retire` ; rien pour `null` ;
   - la phrase {suite}, quand elle existe, entre dans `interdites_avant_revelation`, comme la phrase d'étape (jamais avant 18h).
@@ -879,7 +880,7 @@ C'est la forme de S1, partie 4.5, sur les 18 textes, avec ces changements :
 ## 6. Versions, historique, repli
 
 - **Historique** :
-  - fichier scellé, version 5 (9 octobre 2026) : tout ce qui est décrit en partie 2. Complétée le 10 octobre 2026 sans changer de numéro, ce qui suppose qu'aucun candidat n'ait encore été produit : objet `resolution`, champ `vote.suite`, limite de `groupe` à 70, vérification des groupes contre `amo`, forme courte des commissions spéciales, règles de lecture des fiches (partie 5.1, étape 8) ;
+  - fichier scellé, version 5 (9 octobre 2026) : tout ce qui est décrit en partie 2. Complétée le 10 octobre 2026 sans changer de numéro, ce qui suppose qu'aucun candidat n'ait encore été produit (le fichier de test du lot 1 est régénéré) : objet `resolution`, champ `vote.suite`, limite de `groupe` à 70, vérification des groupes contre `amo`, forme courte des commissions spéciales, règles de lecture des fiches (partie 5.1, étape 8) ;
   - trace version 4 et journal version 4 : partie 4.3 ;
   - nouveaux formats : la trace de l'histoire (version 1) et le résumé (version 1) ;
   - fichier des durées, version 2 ; phrases attendues, version 2.

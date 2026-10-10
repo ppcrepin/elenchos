@@ -534,7 +534,7 @@ Le §7.9 de la simulation 1 vaut pour un texte entier. Ce qui s'ajoute :
   - Gros titre inchangé : « Texte adopté. » ou « Texte rejeté. » (D-014).
   - {objet} : « C'était une résolution, un texte qui invite le Gouvernement à agir, sans l'y obliger. » (mots d'UX ; la virgule et « l'y » évitent de lire « à [agir sans l'obliger] »).
   - Elle prend la place de {objet} dans les gabarits du tableau ci-dessus : en 2.7d, « Le {date}. C'était une résolution, … » ; en 5.4, « Vote : adopté le {date}. C'était une résolution, … » (ou « rejeté »).
-- **Suite du texte.** Un champ fermé, `vote.suite`, garde un fait du jour même du scrutin qui change le sort du texte entier. Sans lui, une ligne exacte peut tromper : « C'était un article d'un texte plus long. » laisse croire que le texte a continué.
+- **Suite du texte.** Un champ fermé, `vote.suite`, garde un fait du jour même du scrutin qui change le sort du texte entier. Sans lui, une ligne exacte pourrait tromper : un article rejeté qui a fait tomber tout un texte afficherait seulement « C'était un article d'un texte plus long. ».
   - `texte_tombe` (seulement pour un article rejeté) : « Le texte entier est tombé avec lui. »
   - `texte_retire` (pour un article ou un amendement) : « Le jour même, le texte entier a été retiré. »
   - `null` dans tous les autres cas : rien.
@@ -571,7 +571,7 @@ Ces points remplacent « Groupe » et « D'un seul tenant » du §7.10 de la sim
 
 - **Un seul auteur.** Quand un texte est déposé par plusieurs personnes, « Proposé par » nomme la première personne nommée dans le texte déposé, avec son mandat et son groupe au dépôt. C'est la logique du premier signataire d'un amendement (A.7, point 4) et des textes signés « et plusieurs de ses collègues ». (Avis unanimes.)
   - Limite, dite franchement : un auteur seul peut attribuer à un camp une mesure portée par plusieurs groupes. Piste de Game design pour l'étape 6 : le gabarit validé, suivi de « avec des députés de {n} autres groupes ». Elle touche D-014 : elle n'entre pas dans l'essai.
-- **Le libellé du moment.** Fait foi le libellé de l'organe dont l'élu était membre à la date retenue : le dépôt pour l'auteur, la séance pour une raison. Si ce libellé n'est qu'un sigle, l'élu n'est pas retenu. On ne prend jamais le libellé d'un autre organe, même s'il désigne le même groupe. (arbitrage de l'orchestrateur : règle mécanique, par identifiant et date ; positions : Back-end et Game design, jamais un autre organe ; UX acceptait un autre organe si Contenu prouvait que c'est le même groupe, écarté parce que cette preuve demande un jugement.)
+- **Le libellé du moment.** Fait foi le libellé de l'organe dont l'élu était membre à la date retenue : le dépôt pour l'auteur, la séance pour une raison. Si ce libellé n'est qu'un sigle, l'élu n'est pas retenu (pour une raison, on prend un autre orateur ; pour l'auteur d'un texte, le texte va en réserve). On ne prend jamais le libellé d'un autre organe, même s'il désigne le même groupe. (arbitrage de l'orchestrateur : règle mécanique, par identifiant et date ; positions : Back-end et Game design, jamais un autre organe ; UX acceptait un autre organe si Contenu prouvait que c'est le même groupe, écarté parce que cette preuve demande un jugement.)
 - **Noms de groupes longs.** Le nom officiel reste entier, jusqu'à 70 caractères (schéma de Back-end ; 60 auparavant). La longueur d'un nom de groupe ne guide jamais le choix d'un orateur. (Avis unanimes.)
 - **Noms de personnes.** Un nom s'affiche exactement comme l'institution l'écrit ; Front-end empêche toute coupure de ligne à l'intérieur d'un nom de personne. (Avis unanimes.)
 
@@ -1349,7 +1349,7 @@ Le bouton touché en 1.8 n'est gardé que si Game design en fait une mesure (c'e
 **La partie du premier essai** (condition de Juridique, avant le premier jour).
 - La page la repère à la seule présence de la clé `elenchos-essai:partie` dans la liste des clés, jamais à son contenu. Elle ne déclenche donc jamais l'arrêt M1.
 - **Si elle est là**, une page du cadre propose de l'effacer, avant tout le reste (texte d'UX, avec confirmation). L'essai ne commence pas tant qu'elle est là.
-- **L'effacement retire** `elenchos-essai:partie`, `elenchos-essai:verif` et `elenchos-essai:sonde-icone`, c'est-à-dire toutes les clés « elenchos-essai: » sauf celles du second essai. La trace de la page-test part donc avec elle (Juridique). Si des traces restent sans `elenchos-essai:partie` (`verif`, `sonde-icone`), la page n'affiche pas cette page, ne les lit pas et n'y touche pas ; « Tout effacer » les retire.
+- **L'effacement retire** `elenchos-essai:partie`, `elenchos-essai:verif` et `elenchos-essai:sonde-icone`, c'est-à-dire toutes les clés « elenchos-essai: » sauf celles du second essai. La trace de la page-test part donc avec elle (Juridique). Si des traces restent sans `elenchos-essai:partie` (`verif`, `sonde-icone`), la page n'affiche pas cette page, ne les lit pas et n'y touche pas ; « Tout effacer » les retire (comportement du code au lot 1 ; à confirmer par Juridique, qui peut demander qu'elles partent au départ, ce qui ajouterait une écriture au contrôle 5).
 - **Cas rare : les deux parties à la fois.** Il arrive si une ancienne page restée en cache a été rouverte après le début du second essai. La même page d'effacement s'affiche. `partie-2` n'est pas touchée, et la partie reprend à son étape. UX dit si la phrase « la page les efface avant de commencer » doit changer dans ce cas. [Assembleur : pas de réponse d'UX à ce jour.]
 - **« Tout effacer »** (5.7, clôture, arrêt) retire toutes les clés « elenchos-essai: », sans exception.
 
@@ -1704,7 +1704,7 @@ L'auteur du programme de contrôle relit ce schéma.
   - T1 à T14.
 - **Plus** une réserve non scellée (rejetée et T ; la seconde réserve prévue est entrée dans le lot, mise à jour du 10 octobre 2026) et la fiche légère H86.
 - **Avant la phrase du second dimanche**, le porteur répond à 16 textes : trois sur Tradition/Changement, faute de stock (le repli prévu devient l'ordre retenu), quatre ou cinq sur chacune des autres tensions. Le détail est au fichier caché.
-- **Ordre des tensions** : fixé par GD (fichier caché). E1 à E3, T0 et T14 sont choisis pour leur rôle ; dans chaque tension, les autres textes vont dans leurs cases par tirage au scellement (D-028 : « dans un ordre tiré au hasard »), avec une contrainte de sens. Un ordre de repli est prévu si un texte tombe à la vérification (fichier caché).
+- **Ordre des tensions** : fixé par GD (fichier caché). E1 à E3, T0 et T14 sont choisis pour leur rôle ; dans chaque tension, les autres textes vont dans leurs cases par un tirage déterministe tiré de la graine (D-028 : « dans un ordre tiré au hasard »), calculé avant le contrôle et repris tel quel au scellement, avec une contrainte de sens. Un ordre de repli est prévu si un texte tombe à la vérification (fichier caché).
 - **D-028** et **D-034** : comme Contenu les écrit, A.3 et A.7 ci-dessous. [Assembleur : les deux puces de Game design sur ces points redisent Contenu sans écart ; une seule version est gardée.]
 - **E4, E5, E8, E9 et E11** : comme Contenu les applique.
 
@@ -1719,14 +1719,14 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
   - E1 à E3 : les textes d'entrée (défi de Valentin) ;
   - T0 : déjà répondu par les personnages, servi en Deviner le jour 1, jamais répondu par le porteur ;
   - T1 à T14 : répondus par le porteur, les jours joués et pendant les sauts.
-- **2 fiches de réserve, non scellées :** une rejetée, une Tradition/Changement. Une réserve remplace d'abord un texte de même tension, puis de même résultat. *[Mise à jour du 10 octobre 2026 : une réserve est entrée dans le lot à la place d'un texte écarté par A.5 ; il en reste une, rejetée et Tradition/Changement.]*
+- **1 fiche de réserve, non scellée :** rejetée et Tradition/Changement. Une réserve remplace d'abord un texte de même tension, puis de même résultat. *[Mise à jour du 10 octobre 2026 : une seconde réserve, prévue à l'origine, est entrée dans le lot à la place d'un texte écarté par A.5.]*
 - **1 fiche légère :** la surprise de la semaine d'avant l'arrivée (A.6).
 - **Fenêtre :** 17e législature, votes jusqu'au 2 octobre 2026 ; et, pour les cases que la 17e ne remplit pas, la 16e législature (2022-2024), comme au premier essai. Tout est déjà voté (E11). (Arbitrage de l'orchestrateur, 9 octobre 2026, après le relevé ciblé : dans la 17e législature, Précaution/Innovation, Tradition/Changement et Local/National n'offrent pas assez de textes conformes ; positions : Contenu proposait d'ouvrir la 16e pour T, ou d'assouplir E9 et la répartition par tension. L'exclusion des dossiers et des mesures du premier essai, A.5, vaut dans les deux législatures. Un groupe s'écrit tel qu'il était au dépôt, §7.11.)
 - **Où :** toutes les fiches du lot, réserves comprises, vont dans `docs/essai/a-ne-pas-ouvrir-2/textes/`, jamais dans `a-ne-pas-ouvrir/`, que le porteur peut lire depuis le premier dévoilement. Seul `a-ne-pas-ouvrir/textes/conventions.md` est cité, parce qu'il ne dévoile rien du second lot.
 
 **A.2 Tensions et sens**
 - **Répartition.** S, P, T, L. Avant la phrase du second dimanche, le porteur répond à 16 textes (E1 à E3, T1 à T13), La convention 13 de Game design en voulait quatre par tension ; le stock ne donne que trois textes Tradition/Changement qui passent les conventions : c'est le repli prévu (annexe A, partie Game design), et les autres tensions en reçoivent quatre ou cinq. T0 et T14 complètent deux tensions, que Game design choisit avec l'ordre (fichier caché).
-- **E9.** Dans chaque tension, les deux sens, à un texte près.
+- **E9.** Dans chaque tension, les deux sens, à un texte près. Pour l'essai, c'est une cible : si le stock ne la permet pas, elle est relâchée avant les règles de D-028 (convention d'essai).
 - **Tradition/Changement.** Aucun texte de mœurs ou de religion qui suive une ligne de parti (inchangé).
 
 **A.3 Mélange (D-028)**
@@ -1762,7 +1762,7 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
 **A.7 Fiches : conventions 1 à 10, avec ces changements**
 1. **Titres :** sans deux-points, 60 caractères au plus (E8).
 2. **Groupes :** en toutes lettres, pris dans la liste fermée (E5). Remplace le libellé court de la convention 8 et du §7.10, sous réserve d'UX pour la place à l'écran. (arbitrage de l'orchestrateur : jamais de sigle dans l'essai, §7.11 ; la ligne est ramenée à cette règle ; positions : Contenu, « le sigle officiel seulement là où la place manque » ; UX, jamais de sigle.)
-   - Convention d'essai du 10 octobre 2026 : fait foi le libellé de l'organe au moment (le dépôt pour l'auteur, la séance pour une raison) ; si ce libellé n'est qu'un sigle, l'élu n'est pas retenu ; jamais le libellé d'un autre organe (§7.11). Le nom officiel reste entier, jusqu'à 70 caractères ; sa longueur ne guide pas le choix des orateurs.
+   - Convention d'essai du 10 octobre 2026 : fait foi le libellé de l'organe au moment (le dépôt pour l'auteur, la séance pour une raison) ; si ce libellé n'est qu'un sigle, l'élu n'est pas retenu (pour une raison, on prend un autre orateur ; pour l'auteur d'un texte, le texte va en réserve) ; jamais le libellé d'un autre organe (§7.11). Le nom officiel reste entier, jusqu'à 70 caractères (points de code) ; sa longueur ne guide pas le choix des orateurs.
 3. **Vote :** la ligne dit l'objet du vote (E4). Les faits viennent de Contenu, les mots d'UX. Proposition, à confirmer par UX et Back-end, pour un amendement ou un article :
    - rejeté : étape `aucune` ;
    - adopté : l'étape du texte après cette lecture (`navette` ou `aucune`, comme au §7.10) ; jamais `definitif` : si aucune case n'est exacte, le texte va en réserve. (arbitrage de l'orchestrateur : position d'UX ; Contenu en tient compte au relevé ; positions : Contenu, `navette` ou `definitif` ; UX, jamais `definitif`.)
@@ -1801,10 +1801,10 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
 Conventions d'essai ajoutées le 10 octobre 2026 (arbitrage de l'orchestrateur sur les points de forme du lot, après les avis de Back-end, d'UX et de Game design ; aucune décision n'est modifiée) :
 
 12. **Lignes : 90 caractères au plus** (points de code), titre non compris. À 390 px, 90 signes tiennent en deux rangées ; au-delà, on passe à trois (estimation d'UX, à mesurer par Front-end). Le contrôle 1 le vérifie.
-13. **Titres qui retirent quelque chose.** Tout titre dont la mesure retire ou supprime quelque chose commence par « Supprimer », qu'il s'agisse d'un amendement de suppression ou d'un article qui supprime. Un seul verbe pour tous ces titres, pour que le verbe n'annonce pas le résultat (A.4). Le titre garde au plus une négation et 60 caractères.
+13. **Titres qui retirent quelque chose.** Tout titre dont la mesure retire ou supprime quelque chose commence par « Supprimer », qu'il s'agisse d'un amendement de suppression ou d'un article qui supprime. Un seul verbe pour tous ces titres, pour que le verbe n'annonce pas le résultat (A.4). Le titre garde au plus une négation et 60 caractères. (Proposition de Game design, hors brief, retenue par l'orchestrateur ; UX proposait d'aligner la ligne 3 sur le verbe des titres d'alors, « retirerait ».)
 14. **Quand la mesure servie est l'amendement de suppression lui-même** (A.4) :
     - lignes 1 et 2 : ce que ferait l'article, au conditionnel ;
-    - ligne 3 : une phrase fixe, la même pour tout le lot, « Cet amendement supprimerait tout l'article qui prévoit ces mesures. » On ne comprend un retrait qu'après avoir lu ce qui est retiré, et une phrase identique se reconnaît d'un texte à l'autre. Le contrôle 1 vérifie l'égalité exacte.
+    - ligne 3 : une phrase fixe, la même pour tout le lot, « Cet amendement supprimerait tout l'article qui prévoit ces mesures. » On ne comprend un retrait qu'après avoir lu ce qui est retiré, et une phrase identique se reconnaît d'un texte à l'autre. Le contrôle 1 vérifie l'égalité exacte. (Proposition d'UX ; Game design a retiré sa règle du lot, qui mettait le retrait en ligne 2.)
 15. **Forme des fiches pour le lecteur du contrôle 1** (schéma de Back-end, partie 5.1, étape 8) :
     - une ligne « - Objet du vote : » dans chaque fiche ;
     - un auteur Gouvernement s'écrit « - Auteur : Gouvernement ; … » ;

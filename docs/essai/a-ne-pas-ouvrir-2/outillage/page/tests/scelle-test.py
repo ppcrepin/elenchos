@@ -14,8 +14,17 @@ Ce fichier n'est PAS le fichier scellé : il est inventé, au format du schéma
   tests aient des données de la bonne forme ; ce calcul ne fait pas foi.
 - `personnages` est recopié du fichier scellé du premier essai (contrôle 2 : « les mêmes
   personnages ») : le fichier source est passé en paramètre.
-- `histoire.resume_sha256` est un bouche-trou : le résumé (V6) se calcule au lot 2.
+- `histoire.resume_sha256` : sans `--resume`, un bouche-trou (la page s'arrête en V6) ;
+  avec `--resume FICHIER`, le SHA-256 des octets de ce fichier, qui est le résumé canonique
+  (schéma, partie 3) calculé par la page elle-même (`node tests/resume-test.js`, lot 2).
+  C'est circulaire, et voulu : cela laisse la page démarrer sur le fichier de test ; cela ne
+  prouve rien de la concordance de l'histoire entre la page, le contrôle et le scellement.
+  Le résumé ne dépend pas de `resume_sha256` (partie 3.4, « Pas de circularité ») : les deux
+  passes donnent le même fichier, octet pour octet, à chaque exécution.
 La graine dérive d'une empreinte de commit fictive (E_FICTIVE), jamais d'un vrai commit.
+
+Lot 2 (10 octobre 2026) : `vote.suite` et l'objet `resolution` (schéma, partie 2.5, à jour du
+10 octobre) ; toutes les combinaisons permises de `objet`, `issue`, `etape` et `suite` y sont.
 """
 
 import argparse
@@ -117,7 +126,7 @@ def histoire(tir):
         fiche = None
         if i == 86:
             fiche = {"titre": "Texte d'essai inventé H86, surprise de la semaine",
-                     "vote": {"date": "2026-06-04", "etape": "navette", "issue": "adopte", "objet": "texte"}}
+                     "vote": {"date": "2026-06-04", "etape": "navette", "issue": "adopte", "objet": "texte", "suite": None}}
         textes[h] = {"fiche": fiche, "jour": j, "raisons": raisons, "sens": s, "tension": t}
     assert textes["H86"]["tension"] == "P" and textes["H86"]["sens"] == 0
     return textes
@@ -127,8 +136,18 @@ VOTES = [  # objet, issue, etape : toutes les combinaisons permises (partie 2.5)
     ("texte", "adopte", "navette"), ("texte", "adopte", "definitif"), ("texte", "rejete", "navette"),
     ("texte", "rejete", "aucune"), ("article", "adopte", "navette"), ("article", "adopte", "aucune"),
     ("article", "rejete", "aucune"), ("amendement", "adopte", "navette"), ("amendement", "rejete", "aucune"),
-    ("motion", "rejete", "aucune"),
+    ("motion", "rejete", "aucune"), ("resolution", "adopte", "aucune"), ("resolution", "rejete", "aucune"),
 ]
+
+
+def suite_du_vote(k, objet, issue):
+    """`vote.suite` (partie 2.5) : texte_tombe sur un article rejeté, texte_retire sur un article
+    ou un amendement, une fois chacun au moins ; null ailleurs."""
+    if objet == "article" and issue == "rejete":
+        return "texte_tombe"
+    if objet == "amendement" and issue == "adopte":
+        return "texte_retire"
+    return None
 
 
 def auteur(k, nom):
@@ -180,7 +199,8 @@ def texte_joue(cle, k, tension, s, tir, inattendus):
         "sources": ["https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/0"],
         "tension": tension,
         "titre": "Texte d'essai inventé %s" % (cle if cle.startswith("E") else "T" + cle),
-        "vote": {"date": "2025-%02d-%02d" % (1 + k % 12, 1 + k % 28), "etape": etape, "issue": issue, "objet": objet},
+        "vote": {"date": "2025-%02d-%02d" % (1 + k % 12, 1 + k % 28), "etape": etape, "issue": issue, "objet": objet,
+                 "suite": suite_du_vote(k, objet, issue)},
     }
 
 
@@ -188,6 +208,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--personnages", required=True, help="fichier scellé du premier essai (pour `personnages`)")
     ap.add_argument("--sortie", required=True)
+    ap.add_argument("--resume", help="résumé canonique de l'histoire (node tests/resume-test.js) dont le SHA-256 est inscrit")
     a = ap.parse_args()
     with open(a.personnages, "rb") as f:
         premier = json.loads(f.read().decode("utf-8"))
@@ -202,6 +223,10 @@ def main():
         textes[cle] = texte_joue(cle, k, tension, (k + 1) % 2, tir, inatt)
 
     hist = histoire(tir)
+    resume_sha256 = sha("provisoire|résumé de l'histoire non calculé (lot 2)")
+    if a.resume:
+        with open(a.resume, "rb") as f:
+            resume_sha256 = hashlib.sha256(f.read()).hexdigest()
     ordre_textes = ["E1", "E2", "E3"] + ["H%d" % i for i in range(1, 91)] + [str(n) for n in range(0, 15)]
     nb_raisons = {c: len(textes[c]["considerations"]) for c in textes}
     nb_raisons.update({h: len(hist[h]["raisons"]) for h in hist})
@@ -233,7 +258,7 @@ def main():
         "cercle": CERCLE,
         "format": "elenchos-essai-scelle",
         "graine": graine,
-        "histoire": {"resume_sha256": sha("provisoire|résumé de l'histoire non calculé (lot 2)"),
+        "histoire": {"resume_sha256": resume_sha256,
                      "textes": hist, "tirage": 1},
         "personnages": premier["personnages"],
         "reglage": {"alpha": "1/4", "barre": 16, "facteur": 3, "seuils_stricts": False},
