@@ -7,7 +7,8 @@ Remarques du rédacteur sur le lot :
 - **Paires d'inattendus (D-034), après annotation.**
   - pratique / croisé : E2 ;
   - croisé / pratique : 840 ;
-  - pratique / pratique : 2139, 6770, T14.
+  - pratique / pratique : 2139, 6770.
+  - aucun inattendu (A.7, point 6) : T14.
   - Trois croisés de la rédaction ont été lus « aucun » par les deux annotateurs (E2 R2, 840 R4, 6770 R4) : ils deviennent pratiques et la paire tient.
 - **Chiffre A.8.** 5 textes servis avec la paire sur 5 (lot choisi : surestimé). Croisés lus comme tels : 3 sur 10 inattendus.
 - **Constat pour le lot.** L'argument « ce qu'on ne produit plus ici sera importé, en pire pour l'environnement » est lu « aucun », pas Précaution, à chaque fois (E2 R2, 840 R4 ; même figure chez Humbert, 5359).
@@ -63,7 +64,6 @@ Remarques du rédacteur sur le lot :
     - SOC 1 abstention.
   - **Symétrie (vérificateur).** Le croisé « contre » est constructif, la pratique « pour » négative : léger avantage « raisonnable » au côté « contre », à surveiller. Aucun meilleur inattendu « pour » hors GDR et UDR n'a été relu.
   - **Rechanges vérifiées.** Duparay (DR, pour), N268:469 ; Loubet (RN, pour), N268:461 ; Laernoes (EcoS, contre), N268:471 ; Laisney (LFI-NFP, contre), N268:465.
-  - **Écho avec T14.** La raison 1 fait écho à la raison 4 de T14, du côté opposé ; les mots sont différents.
   - **Ce débat n'est jamais cité au porteur hors de cette fiche.**
 - Prête pour le scellement : oui.
 
@@ -221,22 +221,23 @@ Remarques du rédacteur sur le lot :
 - Tension : P ; sens s = 1
 - Raisons :
   1. « Interdire sans financer la recherche de produits de remplacement est une hérésie. » — pour · pôle 1 — Sébastien Humbert, député, Rassemblement National [vote : pour] — extrait : « Interdire les produits phytosanitaires sans donner les moyens requis à la recherche de produits de substitution est une hérésie. » (CRSANR5L17S2026O1N147.txt:372)
-  2. « Le fumier contient le même nitrate que l'engrais chimique, mais reste permis. » — pour · pôle aucun — Nicolas Turquois, député, Les Démocrates [vote : pour] — extrait : « il interdit les engrais azotés de synthèse mais non les effluents d'élevage. Pourtant, derrière ces deux produits de nature différente, on trouve les mêmes molécules de nitrate, qui impactent de la même façon les nappes. C'est la quantité qui joue et non l'origine. » (CRSANR5L17S2026O1N148.txt:46)
+  2. « On interdit d'avance et en bloc, sans évaluer d'abord les effets. » — pour · pôle 1 — Lionel Duparay, député, Droite Républicaine [vote : pour] — extrait : « l'instauration d'interdictions générales et anticipées, notamment en matière d'utilisation d'intrants agricoles, sans évaluation préalable de leurs impacts économiques, techniques et sociaux, fait peser un risque important sur l'équilibre des exploitations » (CRSANR5L17S2026O1N147.txt:453)
   3. « Près de vingt millions de personnes ont bu une eau hors normes. » — contre · pôle 0 — Julie Laernoes, députée, Écologiste et Social [vote : contre] — extrait : « Les données sont implacables : en 2024, près de 20 millions de personnes ont consommé au moins une fois une eau non conforme aux normes en matière de pesticides. » (CRSANR5L17S2026O1N147.txt:326)
-  4. « Traiter l'eau coûte plus cher qu'aider les agriculteurs à changer de pratiques. » (nouvelle, à annoter) — contre · pôle aucun — Mathilde Hignet, députée, La France insoumise - Nouveau Front Populaire [vote : contre] — extrait : « Il est plus coûteux pour la collectivité de traiter l'eau pour la rendre potable que d'accompagner les agriculteurs et agricultrices à changer de pratiques. » (CRSANR5L17S2026O1N148.txt:35)
+  4. « Traiter l'eau coûte plus cher qu'aider les agriculteurs à changer de pratiques. » — contre · pôle 0 — Mathilde Hignet, députée, La France insoumise - Nouveau Front Populaire [vote : contre] — extrait : « Il est plus coûteux pour la collectivité de traiter l'eau pour la rendre potable que d'accompagner les agriculteurs et agricultrices à changer de pratiques. » (CRSANR5L17S2026O1N148.txt:35)
 - Vérifications de l'auteur :
-  - **Groupes.** 4 groupes (Rassemblement National, Les Démocrates, Écologiste et Social, La France insoumise - Nouveau Front Populaire).
+  - **Groupes.** 4 groupes (Rassemblement National, Droite Républicaine, Écologiste et Social, La France insoumise - Nouveau Front Populaire).
   - **Côtés.** 2 pour l'amendement (1, 2), 2 contre (3, 4).
-  - **Pôles.** Pôle 1 : 1. Pôle 0 : 3. Aucun : 2, 4 (un par côté, en inattendue).
-  - **Type (D-034).** Attendues : 1, 3. Pratiques : 2 (pour), 4 (contre).
-  - **Votes vérifiés dans VTANR5L17V5359.json.** Humbert PA842085 pour ; Turquois PA722162 pour ; Laernoes PA794146 contre ; Hignet PA794082 contre (absente des « pours » et des « abstentions »).
-  - **Annotation à l'aveugle.** Raisons 1 et 3 confirmées ; raison 4 nouvelle, à annoter.
+  - **Pôles.** Pôle 1 : 1, 2. Pôle 0 : 3, 4.
+  - **Type (D-034).** Aucun inattendu (A.7, point 6) : deux attendues de chaque côté.
+  - **Votes vérifiés dans VTANR5L17V5359.json.** Humbert PA842085 pour ; Duparay PA870009 pour ; Laernoes PA794146 contre ; Hignet PA794082 contre (absente des « pours » et des « abstentions »).
+  - **Annotation à l'aveugle.** Raison 1 (Humbert) lue pôle 1 ; raison 2 (Duparay) lue pôle 1 par les deux annotateurs du premier passage ; raison 3 (Laernoes) lue pôle 0 ; raison 4 (Hignet) lue pôle 0 par les deux annotateurs des troisième et quatrième passages.
   - **Longueurs.** Titre 60 car. ; lignes 85/90/67 car. (point final compris) ; raisons de 12/12/12/12 mots.
   - **Sources des lignes (texte no 2427, article 1er, voté tel quel : la suppression a été mise aux voix la première).**
     - Ligne 1 : II, 2° (« une zone soumise à contrainte environnementale et [...] un programme pluriannuel d'actions obligatoires » dans « les aires d'alimentation des captages ») ; II, 3° b.
     - Ligne 2 : II, 4° (« Avant le 1er janvier 2030, le représentant de l'État dans le département met en place des mesures limitant ou interdisant, le cas échéant, certaines occupations des sols et l'utilisation d'intrants, pour les zones les plus contributives [...] au sein des captages prioritaires », seuils pour « engrais azotés minéraux » et « produits phytopharmaceutiques de synthèse »).
     - Ligne 3 : phrase fixe ; N147:452.
 - Doutes :
+  - **Arbitrage de l'orchestrateur (10 octobre 2026), après le quatrième passage d'annotation.** La raison de Hignet, prévue en pratique (« aucun »), a été lue au pôle 0 par les deux derniers annotateurs (« prévenir à la source plutôt que réparer »). Le côté « contre » n'avait donc plus d'inattendu. On applique A.7, point 6, « aucun inattendu » : Turquois (pratique « pour ») sort, Duparay (attendue de pôle 1, lue 1 par les deux annotateurs du premier passage) revient en raison 2. Deux attendues de chaque côté, quatre groupes, votes vérifiés. Le Feur reste écartée : son côté même ne se lit pas du premier coup (quatrième passage).
   - **Suite.** `texte_retire` ; phrase à 18h (UX) : « Le jour même, le texte entier a été retiré. »
   - **Raison 4 remplacée.** La raison de Le Feur (« Voter ce texte, c'est choisir un courage mesuré plutôt que l'immobilisme. », N147:324) est lue du bon côté mais au pôle 0, deux lectures sur trois. Avec Laernoes (attendue, pôle 0), le côté « contre » n'avait plus d'inattendu, alors que le côté « pour » garde Turquois : la règle « un de chaque côté, ou aucun » était rompue.
   - **Choix de Hignet.** Sa pratique de coût est prise en échange : argument d'efficacité, pôle « aucun » peu discutable, prononcé contre les amendements de suppression, vote vérifié. La paire devient pratique / pratique.
