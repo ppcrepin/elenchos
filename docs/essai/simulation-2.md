@@ -1789,6 +1789,7 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
 8. **Arguments sur la mesure** (amendement ou article). Une raison peut venir de tout le débat en séance, à la même lecture, sur la mesure votée : discussion générale, orateurs inscrits sur l'article, amendements identiques ou concurrents, sous-amendements. Trois conditions :
    1. elle parle de cette mesure, pas du texte en général ;
    2. la mesure n'a pas changé sur le point visé entre l'extrait et le vote ;
+      *Convention d'essai (Contenu) : l'extrait peut venir après le scrutin, dans la même discussion et sur la même mesure, si la mesure n'a pas changé entre les deux (cas des amendements de repli examinés après le rejet d'une suppression) ; la fiche le dit alors.*
    3. l'orateur a voté dans le sens de sa raison à ce scrutin-là (convention 1 pour un absent ou un abstentionniste).
 
    Les propos du Gouvernement ne sont jamais des raisons.

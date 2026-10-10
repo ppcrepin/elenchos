@@ -1,6 +1,6 @@
 # Vote de l'Assemblée pour chaque texte du second essai (objet `vote` du schéma, partie 2.5)
 
-*Relevé fait deux fois, indépendamment, le 10 octobre 2026 : par les rédacteurs dans les fiches (Contenu) et par un second agent Contenu sur un autre modèle, sans voir les fiches (`releve-votes2.md`, scratchpad). Les deux relevés concordent sur les 20 scrutins pour l'objet, l'issue, la date, l'étape et la suite, au point près dit plus bas (2758), qui découle d'une règle du lot et non d'un écart de fait. `date` = champ `dateScrutin` du fichier de scrutin. Les rangs des cases (« S· », « P· », « T· », « L· ») sont fixés par le tirage t("ordre-texte|tension|i") au scellement.*
+*Relevé fait deux fois, indépendamment, le 10 octobre 2026 : par les rédacteurs dans les fiches (Contenu) et par un second agent Contenu sur un autre modèle, sans voir les fiches (`releve-votes2.md`, scratchpad). Les deux relevés concordent sur les 20 scrutins pour l'objet, l'issue, la date, l'étape et la suite, au point près dit plus bas (2758), qui découle d'une règle du lot et non d'un écart de fait. `date` = champ `dateScrutin` du fichier de scrutin. Les rangs des cases (« S· », « P· », « T· », « L· ») sont fixés par le tirage t("ordre-texte|tension|i"), calculé à partir de la graine avant le contrôle (A.7, point 15).*
 
 | Rang | Scrutin | `objet` | `issue` | `date` | `etape` | `suite` | Preuve principale |
 |---|---|---|---|---|---|---|---|

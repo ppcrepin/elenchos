@@ -1,6 +1,6 @@
 # Fiches L · Local (pôle 0) – National (pôle 1)
 
-*Rédigées par Contenu le 10 octobre 2026 à partir des comptes rendus officiels (open data de l'Assemblée nationale, 16e et 17e législatures). Vérifiées une fois et annotées à l'aveugle, puis corrigées le 10 octobre 2026. Toutes les raisons ont été annotées à l'aveugle. Typographie simple ; l'ordre des raisons est tiré au scellement.*
+*Rédigées par Contenu le 10 octobre 2026 à partir des comptes rendus officiels (open data de l'Assemblée nationale, 16e et 17e législatures). Vérifiées une fois et annotées à l'aveugle, puis corrigées le 10 octobre 2026. Toutes les raisons ont été annotées à l'aveugle. Les raisons réécrites (3370 R2, 2484 R1) ont été vérifiées par le Vérificateur le 10 octobre 2026 : extraits N123:825 et N018:427 exacts, votes « pour » PA642847 et PA793860 confirmés. Typographie simple ; l'ordre des raisons est tiré au scellement.*
 
 Remarques du rédacteur sur le lot :
 - Les extraits sont recopiés des fichiers `cr-texte` en typographie simple, avec l'apostrophe droite. Dans les comptes rendus, l'apostrophe est courbe.

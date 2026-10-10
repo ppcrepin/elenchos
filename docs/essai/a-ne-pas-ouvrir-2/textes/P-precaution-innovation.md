@@ -115,7 +115,7 @@ Remarques du rédacteur sur le lot :
   - **Raison 4.** Lue « aucun » par les deux annotateurs. Lépinau prête à la résolution une interdiction ferme dans la zone française (N119:413) ; le texte dit « souhaitable ».
   - **Issue devinable.** Gouvernement favorable, neuf groupes signataires (Castellani, Brotherson et Vermorel-Marques, LR, sont co-signataires). Interdiction déjà annoncée par le Gouvernement (N119:464).
   - **Proximité.** Thème voisin d'E2 (voir sa fiche). Thierry était déjà l'auteur du texte 12 du premier essai.
-- Prête pour la vérification indépendante (raison 3 annotée : côté « contre », pôle 1, sûr ; raison 2 : côté retrouvé aux trois lectures, jugée fragile : gardée par arbitrage de l'orchestrateur).
+- Prête (raisons 2 et 3 vérifiées par le Vérificateur : extraits N119:478 et :435 exacts, votes « pour » PA721118 et « abstention » PA346054 confirmés ; raison 2 gardée par arbitrage, fragilité notée).
 
 ### Case P · scrutin 2139 (17e législature)
 - Titre : Centres de données, faciliter leur construction
@@ -156,7 +156,8 @@ Remarques du rédacteur sur le lot :
   - **Tension.** Elle peut être lue Local ↔ National (ligne 2) ; annotation : P confirmée. La tolérance de 30 % sur l'artificialisation (alinéa 42) est laissée hors des lignes.
   - **Condition 2 de la règle 8.** L'amendement no 2648, adopté entre les extraits et le vote, ne touche pas les points cités.
   - **Même dossier que 2190 (case S).** Mesures sans rapport, tensions différentes.
-- Prête pour la vérification indépendante (raison 1 annotée : côté retrouvé, pôle 1 sous la tension P retenue).
+  - **Titre.** « Faciliter » est le verbe du mécanisme, gardé ; 3370 a retiré le même verbe (arbitrage de l'orchestrateur, sur l'avis du Vérificateur).
+- Prête (raison 1 vérifiée par le Vérificateur : extraits N180:120 et :126 exacts, vote « pour » PA794802 confirmé ; pôle 1 sous la tension P retenue).
 
 ### Case P · scrutin 6770 (17e législature)
 - Titre : Supprimer l'article facilitant les réserves d'eau agricoles
@@ -199,13 +200,14 @@ Remarques du rédacteur sur le lot :
   - **Raison 3 réécrite (vérificateur).** « Retard » seul était vague ; « le cœur de l'urgence agricole » est dans la même ligne de l'extrait. Le pôle 1 reste fragile : elle peut être lue « aucun ». Le côté « contre » n'aurait alors plus d'attendue ; Martineau (Dem, N240:28) ne règle rien, il est lui aussi « aucun ».
   - **Raison 4.** Lue « aucun » par les deux annotateurs : elle devient pratique. Je garde la phrase. La variante du vérificateur (« ces retenues servent aussi ») adoucirait « l'usage prioritaire ». « Retenues collinaires » est le mot de l'orateur, contesté en séance (Pilato, N240:140), et l'écart avec la ligne 1 (« pour irriguer ») est le sien.
   - **Symétrie.** Le côté « pour » (chercheurs, État de droit) paraît plus principiel que le côté « contre » : à surveiller.
+  - **Titre.** « Facilitant » est le verbe du mécanisme, gardé ; 3370 a retiré le même verbe (arbitrage de l'orchestrateur, sur l'avis du Vérificateur).
   - **Tension.** Elle peut être lue Local ↔ National (gouvernance locale de l'eau) ; P confirmée à l'annotation.
   - **Le vote.**
     - Pour : LFI-NFP 26, EcoS 8, SOC 1.
     - Contre : RN 38, EPR 26, SOC 17, DR 16, HOR 13, Dem 12, UDR 8, LIOT 2, NI 2.
     - Abstentions : EcoS 1, GDR 1.
   - **En-tête.** Le suffixe « · présentation B » est passé ici (arbitrage 9 de forme).
-- Prête pour la vérification indépendante (raison 3 annotée : côté « contre » retrouvé, pôle 1, hésitant ; « aucun » possible, voir Doutes).
+- Prête (raison 3 vérifiée par le Vérificateur : extrait N240:128 exact, vote « contre » PA796050 confirmé ; pôle 1 hésitant, voir Doutes).
 
 ### T14 · scrutin 5359 (17e législature)
 - Titre : Supprimer l'article sur les pesticides près de l'eau potable
@@ -248,8 +250,8 @@ Remarques du rédacteur sur le lot :
   - **Arbitrage de l'orchestrateur (10 octobre 2026), après le quatrième passage d'annotation.** La raison de Hignet, prévue en pratique (« aucun »), a été lue au pôle 0 par les deux derniers annotateurs (« prévenir à la source plutôt que réparer »). Le côté « contre » n'avait donc plus d'inattendu. On applique A.7, point 6, « aucun inattendu » : Turquois (pratique « pour ») sort, Duparay (attendue de pôle 1, lue 1 par les deux annotateurs du premier passage) revient en raison 2. Deux attendues de chaque côté, quatre groupes, votes vérifiés. Le Feur reste écartée : son côté même ne se lit pas du premier coup (quatrième passage).
   - **Suite.** `texte_retire` ; phrase à 18h (UX) : « Le jour même, le texte entier a été retiré. »
   - **Point 6 de A.7.** Aucun croisé « contre » d'un groupe libre n'a été relu : Le Feur est lu au pôle 0 ou d'un côté incertain, Coggia (EPR) donne l'avis de la commission.
-  - **Raison 1 (Humbert, confirmée).** Je n'ai pas pris son croisé (« Ce que nos agriculteurs ne produiront plus ici, nous serons dans l'obligation de l'importer », N147:376) : cette figure a été lue « aucun » dans ce lot (E2 R2, 840 R4).
-  - **Raison 2.** Duparay décrit les interdictions anticipées ; elle s'appuie sur une distinction (engrais de synthèse ou effluents) que la ligne 2 n'a pas, faute de place.
+  - **Raison 1 (Humbert, confirmée ; quatrième passage, Q01 : côté retrouvé, pôle 1, sûr).** Je n'ai pas pris son croisé (« Ce que nos agriculteurs ne produiront plus ici, nous serons dans l'obligation de l'importer », N147:376) : cette figure a été lue « aucun » dans ce lot (E2 R2, 840 R4).
+  - **Raison 2.** Duparay décrit les interdictions anticipées ; elle s'appuie sur une distinction (engrais de synthèse ou effluents) que la ligne 2 n'a pas, faute de place. Les deux annotateurs du premier passage l'ont lue pôle 1 en notant qu'« évaluer d'abord » peut aussi se lire comme une prudence (pôle 0).
   - **Raison 3 (Laernoes, confirmée).** « Au moins une fois » et « en pesticides » restent dans l'extrait.
   - **Raison 4.** Elle compare deux coûts sans chiffre ; elle se lit contre la suppression (garder l'article, c'est accompagner les changements de pratiques). La même oratrice est première signataire de l'amendement servi en 6770 : rien ne l'interdit, à signaler à Game design.
   - **Écho avec E2.** Il disparaît avec le retrait de Le Feur.
@@ -259,7 +261,7 @@ Remarques du rédacteur sur le lot :
     - Contre : LFI-NFP 46, EcoS 37, SOC 24, EPR 16, GDR 5, HOR 2, Dem 1.
   - **Tension.** Elle peut être lue Local ↔ National ; P confirmée à l'annotation.
   - **En-tête.** Le suffixe « · présentation B » est passé ici (arbitrage 9 de forme).
-- Prête pour la vérification indépendante (raison 4 annotée : pôle 0 aux 3e et 4e passages ; aucun inattendu, A.7 point 6).
+- Prête (quatre raisons vérifiées par le Vérificateur : extraits N147:372, :453, :326 et N148:35 exacts, votes confirmés ; aucun inattendu, A.7 point 6).
 
 ### H86 · scrutin 7313 (17e législature)
 - Titre : Vaisselle en plastique interdite dans les cantines d'enfants

@@ -4,7 +4,7 @@
 
 Remarques du rédacteur sur le lot :
 - Les extraits sont recopiés en typographie simple. Dans les comptes rendus, l'apostrophe est courbe.
-- Votes personnels : 24 sur 24 vérifiés dans le fichier JSON de chaque scrutin. Tous vont dans le sens de la raison, et aucun orateur retenu n'est absent de la liste nominative. Les fiches E1, T0 et 795 ont été revérifiées par le vérificateur indépendant, extraits compris ; 7922 (raison 4), 2190 (raison 4) et 8167 attendent la vérification indépendante.
+- Votes personnels : 24 sur 24 vérifiés dans le fichier JSON de chaque scrutin. Tous vont dans le sens de la raison, et aucun orateur retenu n'est absent de la liste nominative. Les raisons et extraits de E1, T0 et 795 ont été revérifiés par le vérificateur indépendant. Le Vérificateur a ensuite contrôlé, le 10 octobre 2026, les raisons 4 de 7922 et de 2190, les quatre raisons de 8167 (extraits, interventions entières, votes) et les sources des lignes corrigées de E1, 795 et 8167.
 - Répartition des 24 raisons (8167 comprise, 8279 écartée) :
   - Rassemblement National 5, Écologiste et Social 4 ;
   - Droite Républicaine 3, La France insoumise - Nouveau Front Populaire 3, Socialistes et apparentés 3 ;
@@ -60,7 +60,7 @@ Remarques du rédacteur sur le lot :
   - Raison 2 : l'amendement n'a pas de clause explicite sur la « vie privée » ; Huyghe décrit le régime général de retranscription. Raison fidèle à son extrait, jugée recevable par le vérificateur.
   - Raison 4 : elle vient de la discussion sur le 15 ter, mais vise nommément le 15 quater. Si une lecture ultérieure la lit « pôle 1 », il faut deux attendues de chaque côté : Huyghe, même ligne 887 (« risques d'atteinte à la vie et à l'intégrité physique des enquêteurs », pôle 0), au lieu de sa raison 2, et Cathala, même ligne 877, en attendue (« Ces micros et caméras activés à distance pourraient espionner n'importe qui. »).
   - Le sort de la mesure en commission mixte paritaire n'a pas été vérifié. Le compte rendu écrit « 700 » pour « 770 » (N143:884).
-- Statut : prête pour la vérification indépendante (lignes et titre corrigés ; raisons inchangées et déjà annotées).
+- Statut : prête (raisons déjà vérifiées ; sources des lignes corrigées retrouvées par le Vérificateur, am-1043-5.txt l. 63, 68-69).
 
 ### T0 · scrutin 1262 (17e législature)
 - Titre : Courtes peines de prison sans aménagement d'office
@@ -147,7 +147,7 @@ Remarques du rédacteur sur le lot :
   - Homonyme : PA793944 est une autre Alexandra Martin.
   - Josserand parle aussi en T0.
   - Titre en « sans … » : il décrit le résultat de la mesure, sans verbe de retrait ; A.7 point 13 n'est pas appliqué (arbitrage de l'orchestrateur).
-- Statut : prête pour la vérification indépendante (lignes 2 et 3 corrigées ; raisons déjà annotées).
+- Statut : prête (raisons déjà vérifiées ; sources des lignes 2 et 3 retrouvées par le Vérificateur, am-0628-17.txt l. 27, 29, 64).
 
 ### Case S (rang tiré au scellement) · scrutin 7922 (17e législature)
 - Titre : Supprimer les nouveaux usages de l'ADN dans les enquêtes
@@ -179,7 +179,7 @@ Remarques du rédacteur sur le lot :
   - Sources des lignes : E1N002:86 et :88 (bases privées à l'étranger, surtout américaines ; Fnaeg élargi) ; :90 et :94 (habilitation générale à consulter des fichiers ; crimes anciens et sériels) ; :98 et :104 (ministre : inscription au Fnaeg ; crimes en série ou non élucidés).
 - Doutes :
   - Présentation B : être favorable, c'est soutenir le retrait.
-  - **Raison 4 remplacée.** La version réécrite de Bergantz (« Comparer l'ADN serait encadré et réservé aux enquêtes sans aucun suspect. », Les Démocrates, N002:94) a été lue pôle 0 à la seconde annotation, après « aucun » et 1 à la première. Elle est remplacée par Pouzyreff, annotée deux fois : côté « contre » sûr aux deux passages ; pôle 0 (3e passage) puis 1 (4e), hésitant. Arbitrage de l'orchestrateur : pôle 1 gardé (règle d'aveugle3 : une lecture rejoint le rédacteur, ici le quatrième passage, sur le modèle le plus capable). Si le pôle 0 était retenu, le repli ci-dessous s'applique.
+  - **Raison 4 remplacée.** La version réécrite de Bergantz (« Comparer l'ADN serait encadré et réservé aux enquêtes sans aucun suspect. », Les Démocrates, N002:94) a été lue pôle 0 à la seconde annotation, après « aucun » et 1 à la première. Elle est remplacée par Pouzyreff, annotée deux fois : côté « contre » sûr aux deux passages ; pôle 0 (3e passage) puis 1 (4e), hésitant. Arbitrage de l'orchestrateur : pôle 1 gardé (règle d'aveugle3 : une des deux lectures rejoint le rédacteur, soit deux sur trois). Si le pôle 0 était retenu, le repli ci-dessous s'applique.
   - Raison 4 : la phrase ne garde que le consentement. La suite de l'extrait (« participer à la recherche de criminels ») est laissée de côté, parce qu'elle tirerait la lecture vers le pôle 0. Le recueil du consentement est contesté en séance par Capdevielle (N002:140) et Taurinya (N002:143). C'est une affirmation de l'oratrice, invérifiable sans le texte de la commission.
   - **Si la raison 4 est lue pôle 0**, on applique A.7, point 6 : aucun inattendu des deux côtés, deux attendues nettes de chaque côté, quatre groupes, votes vérifiés.
     - Côté « pour » : Faucillon (Gauche Démocrate et Républicaine) et Élisa Martin (La France insoumise - Nouveau Front Populaire), qui remplace sa raison 2 par sa phrase sur la vie privée (N002:179, « nous souhaitons protéger absolument la vie privée des personnes », pôle 1).
@@ -190,7 +190,7 @@ Remarques du rédacteur sur le lot :
   - Tension : la lecture Précaution/Innovation est possible ; S est confirmé à l'annotation.
   - « Émeline K/Bidi » s'affiche tel quel (arbitrage de forme, point 7).
   - L'amendement no 25 (2904/AN/25) et le texte de la commission no 2904 n'étaient pas publiés au 10 octobre 2026 (fichiers locaux vides ou invalides). Les lignes et l'auteur restent sourcés sur le seul compte rendu (CRSANR5L17S2026E1N002). L'article mis aux voix est celui du texte de la commission, puisque les suppressions sont examinées d'abord.
-- Statut : prête pour la vérification indépendante (raison 4 annotée, lectures partagées 0 / 1).
+- Statut : prête (raison 4 vérifiée par le Vérificateur : extrait N002:156 exact, intervention relue, vote « contre » PA721916 confirmé ; pôle lu 0 puis 1, arbitrage ci-dessus).
 
 ### Case S (rang tiré au scellement) · scrutin 2190 (17e législature)
 - Titre : Supprimer les zones à faibles émissions
@@ -228,7 +228,7 @@ Remarques du rédacteur sur le lot :
   - Auteur : forme courte arbitrée par l'orchestrateur (arbitrage de forme, point 5). Le libellé officiel est en 2.10 bis, colonne Source.
   - La saisine du Conseil constitutionnel figure au dossier ; le sort de la mesure n'a pas été vérifié.
   - Même dossier que 2139 (P) : au plus deux scrutins par dossier, la règle tient.
-- Statut : prête pour la vérification indépendante (raison 4 annotée : « aucun », hésitant ; repli écrit ci-dessus si Sother est lu pôle 0).
+- Statut : prête (raison 4 vérifiée par le Vérificateur : extrait N219:935 exact, vote « contre » PA841681 confirmé ; pôle « aucun », hésitant ; repli ci-dessus).
 
 ### (écartée) scrutin 8279 (17e législature) — fiche non rédigée
 - Motif : règle A.5. L'ensemble du projet de loi contient le délit d'organisation de rave-party (deux ans et 30 000 euros) et la pénalisation de la participation, mesure jouée au premier essai (texte E1, scrutin 6124) : CRSANR5L17S2026E1N014.txt:340, :285, :264. Il prolonge aussi la vidéosurveillance algorithmique jusqu'en 2030 (:285, :346). Texte de plus de 70 articles (:346) : trois lignes seraient un choix éditorial fort.
@@ -275,4 +275,4 @@ Remarques du rédacteur sur le lot :
   - 35 votants seulement (N012:54). Albertini est rapporteur.
   - Taverne parle aussi en E1 : le porteur reverra son nom.
   - Même dossier que 8279, écarté : un seul scrutin servi dans ce dossier.
-- Statut : prête pour la vérification indépendante (titre et lignes corrigés ; raisons inchangées et déjà annotées).
+- Statut : prête (quatre raisons vérifiées par le Vérificateur : extraits N012:24, :30, :32, :43 exacts, votes confirmés ; sources des lignes 1 et 2 retrouvées, texte de commission l. 1110-1111, 1116, 1119, 1130, 1225-1226).
