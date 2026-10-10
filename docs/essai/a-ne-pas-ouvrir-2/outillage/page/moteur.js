@@ -1101,9 +1101,10 @@ var ElenchosMoteur = (function (N) {
         });
       }
 
-      // Mesures sans les durées (partie 4.3.10) : jours joués, points de saut, clôture.
+      // Mesures sans les durées (partie 4.3.10) : jours joués, points de saut, clôture, s'ils ont été ouverts
+      // (un jour de reprise atteint sans ouverture, règle 4, n'a pas de séance : pas de mesures).
       R.mesures = null;
-      if (cal.aUneOuverture(d)) {
+      if (cal.aUneOuverture(d) && jour(d).ouverture !== null) {
         var o = jour(d).ouverture;
         var mrv = mancheDe(d - 1, PORTEUR);
         var rvp = revelations[d] && revelations[d].devineurs[PORTEUR] ? revelations[d].devineurs[PORTEUR] : null;

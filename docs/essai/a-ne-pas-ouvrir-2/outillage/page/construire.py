@@ -3,8 +3,9 @@
 SECOND ESSAI, LOT 1 (simulation-2.md, §8.8 ; a-ne-pas-ouvrir-2/schema.md, partie 7.1, point 6) :
 fichier scellé en version 5 ; un fichier "provisoire" (candidat 1, fichier de test) ne
 s'embarque que dans la version témoin : la version du porteur n'est alors pas écrite.
-Sources du socle ajoutées. Reste au lot 6 : la table du squelette tirée de confusables.txt
-(CONFUSABLES, vide en attendant), les chaînes nouvelles des écrans vérifiées contre les polices.
+Sources du socle ajoutées. Lot 6 : la table du squelette (CONFUSABLES) est lue dans
+confusables/table-16.0.0.json, tirée de confusables.txt 16.0.0 par confusables/reduire.py ;
+l'empreinte de sa source doit être celle du §8.8 de simulation-2.md.
 
 Outillage d'essai (D-001 tenu). Python 3.11, bibliothèque standard seulement.
 
@@ -49,6 +50,9 @@ FACES = [  # fichier, famille CSS, graisse, style
 # Chasses attendues de U+202F, en millièmes de cadratin (§8.8, « Valeurs attendues »).
 CHASSES_202F = {"alegreya-700.woff2": 116, "alegreya-italique-500.woff2": 124, "alegreya-italique-700.woff2": 116,
                 "alegreya-sans-400.woff2": 103, "alegreya-sans-700.woff2": 101, "alegreya-sans-italique-400.woff2": 105}
+# §8.8 de simulation-2.md : confusables.txt, version 16.0.0.
+CONFUSABLES_VERSION = "16.0.0"
+CONFUSABLES_SHA256 = "95bd0aad6dced5ebc63436f459c06ab21a8d107cd842fb57f5c3a1e91bca8611"
 LIGNE_LICENCE = "Polices réduites ; glyphe vide U+202F (espace fine insécable) ajouté à chaque face."
 MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
 
@@ -211,7 +215,7 @@ def main():
     provisoire = scelle["statut"] == "provisoire"
     # Lots 4 et 5 : un texte encore à écrire (marque A_ECRIRE de textes.js) n'atteint jamais la version du porteur.
     textes_js = lire_utf8(os.path.join(ICI, "textes.js"))
-    a_ecrire = re.findall(r"([A-Za-z_]+)\s*:\s*A_ECRIRE\b", textes_js)
+    a_ecrire = [x for x in re.findall(r"([A-Za-z_]+)\s*:\s*A_ECRIRE\b", textes_js) if x != "A_ECRIRE"]  # l'export de la marque elle-même n'en est pas un
     if a_ecrire and not provisoire:
         echec("textes encore à écrire (textes.js, A_ECRIRE) : " + ", ".join(a_ecrire))
 
@@ -253,11 +257,21 @@ def main():
             echec("le repère du fichier scellé figure dans " + nom)
         corps.append("/* ---- " + nom + " ---- */\n" + js)
     b64 = base64.b64encode(octets).decode("ascii")
+    # Table des lettres qui imitent les nôtres (§8.8 ; §7.19, E7), versionnée avec l'empreinte de sa source.
+    chemin_table = os.path.join(ICI, "confusables", "table-%s.json" % CONFUSABLES_VERSION)
+    with open(chemin_table, "rb") as f:
+        octets_table = f.read()
+    t_conf = json.loads(octets_table.decode("ascii"))
+    if t_conf.get("source_sha256") != CONFUSABLES_SHA256 or t_conf.get("version") != CONFUSABLES_VERSION:
+        echec("table des confusables : source ou version inattendues")
+    if not all(len(k) == 1 and re.fullmatch(r"[A-Za-z]", v) for k, v in t_conf["table"].items()):
+        echec("table des confusables : une entrée n'est pas un caractère vers une lettre de A à Z")
+    js_confusables = json.dumps(t_conf["table"], ensure_ascii=True, sort_keys=True, separators=(",", ":"))
     entete = ("var ENTREES = " + json.dumps({"version_page": version, "consultes_le": entrees["consultes_le"],
                                               "empreinte_publiee_le": entrees["empreinte_publiee_le"],
                                               "empreinte_publiee_a": entrees["empreinte_publiee_a"]}, sort_keys=True) + ";\n"
               "var SCELLE_B64 = " + REPERE + '"' + b64 + '";\n'
-              "var CONFUSABLES = {};\n")
+              "var CONFUSABLES = " + js_confusables + ";\n")
     script = "\n(function () {\n'use strict';\n" + entete + "\n".join(corps) + "\n})();\n"
     temoin = "\n(function () {\n'use strict';\n" + "\n".join(sans_node(lire_utf8(os.path.join(ICI, n))) for n in SOURCES_TEMOIN) + "\n})();\n"
 
@@ -314,7 +328,9 @@ def main():
         sorties[chemin] = (len(o), sha256(o))
     rapport = ["Rapport de construction de la page de l'essai", "Version de la page : %d" % version,
                "Fichier scellé : SHA-256 %s" % entrees["empreinte"],
-               "Statut du fichier scellé : %s%s" % (scelle["statut"], " (version du porteur non écrite)" if provisoire else ""), ""]
+               "Statut du fichier scellé : %s%s" % (scelle["statut"], " (version du porteur non écrite)" if provisoire else ""),
+               "Table des confusables : confusables.txt %s (SHA-256 %s), %d entrées ; table-%s.json SHA-256 %s"
+               % (CONFUSABLES_VERSION, CONFUSABLES_SHA256, len(t_conf["table"]), CONFUSABLES_VERSION, sha256(octets_table)), ""]
     for chemin in sorted(sorties):
         rapport.append("%s : %d octets, SHA-256 %s" % (chemin, sorties[chemin][0], sorties[chemin][1]))
     rapport += ["", "Politique de sécurité, version du porteur :", csp_porteur, "", "Politique de sécurité, version témoin :", csp_temoin,

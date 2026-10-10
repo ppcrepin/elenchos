@@ -1,0 +1,18 @@
+Fichier scellé : SHA-256 587dbac7ecbde1c9b9e6d555a1ff162a6c4e42ece2a9fe82cef27f3baed36db0
+a : premier essai (a) et « au centre » : toujours Neutre, raison « aucune » ; pari Neutre sur Valentin ; passe chaque carte et valide ; aucun curseur net, phrase de la semaine « floue », barre à 16 puis 17 sans curseur net
+b : premier essai (b) : réponses variées, toutes les raisons cachées tentées (justes ou non), « Reprendre » les jours pairs, Le Fidèle du porteur en semaine 14 (T1 à T6)
+c : premier essai (c) : lit le fichier et attribue tout juste, raisons cachées comprises ; entrée 3 sur 3 face à Valentin ; compte Apple
+d : « tranché » : toujours l'argument attendu, vers le même pôle sur chaque tension ; curseurs nets, phrase « nette » au second dimanche ; compte e-mail « Plus tard »
+e : Pas de Côté du porteur sur T12 (S), révélé au vote le jour 14 ; barre pleine au premier curseur net, avant 16 réponses
+f : « nuancé » (fichier caché, point 12) : l'argument inattendu une fois par tension, l'attendu ailleurs ; voir LISTE.txt pour ce que cela donne sur S
+g : souvent l'argument inattendu (une réponse sur deux par tension) : aucun curseur net, barre pleine à 16 sans curseur net
+h : « Abandonner cette journée » au jour 1 (après l'entrée, avant Deviner), au jour 3 (un visage posé, puis le saut) et au jour 7 (Deviner plein non validé, dimanche) ; formes « question » et « vote » du message de 18h
+i : « Abandonner cette journée » aux jours 2 (Deviner plein non validé) et 14 (avant Deviner) : clôture au vote, sans cartes
+j : « Annuler » sur la page du saut (deux fois au premier, une au second), puis le saut
+k : arrêt pendant le second saut (rattrapage), raison et F2 posées après la confirmation
+l : arrêt après la dernière réponse du premier rattrapage, avant « Aller au dimanche » : dimanche atteint sans ouverture (L1-4)
+m : arrêt pendant l'entrée, avant toute réponse : barre à 0, compte nul
+n : arrêt à l'ouverture du jour 2 (avant le jour-seuil de F2)
+o : arrêt au jour 3, après la réponse, avec F2 (jour-seuil)
+p : entrée 0 sur 3 face à Valentin (paris du côté opposé) ; compte Google ; raison cachée jamais tentée
+q : jumeaux : sur chaque carte, désigne un personnage non servi qui avait la même réponse s'il y en a un ; sinon l'auteur

@@ -1,58 +1,54 @@
-/* Bloc de la version témoin (simulation.md, §9 ; schema.md, partie 3.1).
+/* Bloc de la version témoin, second essai (simulation-2.md, §9 ; schéma, parties 4.1 à 4.3).
  *
- * Présent dans la seule version témoin, placé avant le script principal.
- * Il relève les lectures d'« En attendant » (évènement
- * elenchos-essai:lecture) et, sur demande du harnais, écrit la trace à
- * partir de ce que la page a gardé et calculé (point d'accès
- * window.ElenchosEssai), sans rien recalculer ni rien modifier. Il n'ajoute
- * ni bouton ni export. Avec trace.js (ElenchosTrace) devant lui.
+ * Présent dans la seule version témoin, placé avant le script principal, avec
+ * trace.js (ElenchosTrace) devant lui. Il n'ajoute ni bouton ni export, ne
+ * recalcule rien que la page ne calcule déjà : il lit le point d'accès
+ * window.ElenchosEssai (socle.js) et met les résultats au format des traces.
+ *
+ *   ElenchosTemoin.releves()            -> {lectures, copies} du chargement en cours
+ *   ElenchosTemoin.trace(partie, precedents) -> trace de partie v4 (mode interface)
+ *   ElenchosTemoin.traceMoteur(journal) -> trace de partie v4 d'un journal donné (mode moteur)
+ *   ElenchosTemoin.traceHistoire()      -> trace de l'histoire v1 (une fois par fichier)
  */
 'use strict';
 
 var ElenchosTemoin = (function (TR) {
-  var lectures = [];
-  window.addEventListener('elenchos-essai:lecture', function (e) { lectures.push(JSON.parse(JSON.stringify(e.detail))); });
-
   function E() { return window.ElenchosEssai; }
 
-  /** Relevés du chargement en cours (partie 3.1, « Relevés hors de la mémoire »). */
-  function releves() { return { lectures: lectures.slice(), copies: E().copies() }; }
+  /** Relevés du chargement en cours (« relevés hors de la mémoire ») : lectures d'« En attendant », copies du carnet. */
+  function releves() { return { lectures: E().lectures(), copies: E().copies() }; }
 
   /**
-   * Trace de la partie (partie 3.2). partie : {id, mode, graine} (harnais) ;
-   * precedents : relevés des chargements précédents, dans l'ordre, que le
-   * harnais a pris avant chaque rechargement ; mis bout à bout avec ceux-ci.
+   * Trace de la partie jouée (mode interface). partie : {graine, id, mode} (harnais) ;
+   * precedents : relevés des chargements précédents, pris par le harnais avant chaque
+   * rechargement ; mis bout à bout avec ceux du chargement en cours.
    */
   function trace(partie, precedents) {
     var tous = (precedents || []).concat([releves()]);
-    var toutesLectures = [], toutesCopies = [];
-    tous.forEach(function (r) { toutesLectures = toutesLectures.concat(r.lectures); toutesCopies = toutesCopies.concat(r.copies); });
+    var lectures = [], copies = [];
+    tous.forEach(function (r) { lectures = lectures.concat(r.lectures); copies = copies.concat(r.copies); });
     var j = E().journal();
     j.partie = partie;
-    var R = E().resultats();
-    var D = E().durees();
-    var seances = j.seances.map(function (s) {
-      var ls = toutesLectures.filter(function (l) { return l.seance === s.k; });
-      return Object.assign({}, s, { attente: ls.length ? { lectures: ls.map(function (l) { return { heure: l.heure }; }) } : null });
+    Object.keys(j.jours).forEach(function (k) {
+      var ls = lectures.filter(function (l) { return String(l.jour) === k; });
+      j.jours[k].attente = ls.length ? { lectures: ls.map(function (l) { return { heure: l.heure }; }) } : null;
     });
-    j.seances = seances;
-    var t = TR.assembler(j, R, D, E().carnet(), toutesCopies, E().empreinte());
-    t.seances.forEach(function (s) {
-      var ls = toutesLectures.filter(function (l) { return l.seance === s.k; });
-      s.attente = ls.length ? { lectures: ls.map(function (l) { return { heure: l.heure, visages: l.visages }; }) } : null;
-    });
-    return t;
+    var R = E().calculer(j);
+    return TR.partie(j, R, E().durees(), E().carnet(), copies, E().empreinte(), E().resumeSha256());
   }
 
-  /** Rejeu par le moteur de la version témoin seul (mode moteur, partie 3.1). */
+  /** Rejeu d'un journal par le moteur de la version témoin seul (mode moteur, partie 4.1). */
   function traceMoteur(journal) {
-    var R = E().calculer(journal);
-    var D = journal.seances.map(function (s) { return { k: s.k, duree_seance: null, duree_deviner: null, duree_repondre: null }; });
-    var t = TR.assembler(journal, R, D, null, [], E().empreinte());
-    t.seances.forEach(function (s, k) { s.attente = R.seances[k].attente ? TR.enTrace(R.seances[k].attente) : null; });
-    return t;
+    return TR.partie(journal, E().calculer(journal), null, null, [], E().empreinte(), E().resumeSha256());
   }
 
-  window.ElenchosTemoin = Object.freeze({ releves: releves, trace: trace, traceMoteur: traceMoteur });
+  /** Trace de l'histoire (partie 4.2), calculée par la page dans le navigateur. */
+  function traceHistoire() {
+    var collecte = {};
+    var a = E().histoire(collecte);
+    return TR.histoire(collecte, E().resume(a), E().resumeSha256(a), E().empreinte());
+  }
+
+  window.ElenchosTemoin = Object.freeze({ releves: releves, trace: trace, traceMoteur: traceMoteur, traceHistoire: traceHistoire });
   return window.ElenchosTemoin;
 })(ElenchosTrace);

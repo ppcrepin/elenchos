@@ -5,6 +5,7 @@
 'use strict';
 const N = require('../noyau.js');
 const E = require('../etat.js');
+const Jn = require('../journal.js');
 
 /** Cartes servies au porteur sans moteur (lot 1) : trois, la troisième à raison cachée.
  *  Depuis le lot 3, options.cartes(j) donne les vraies (M.cartesServies). */
@@ -35,8 +36,10 @@ function reponseType(scelle, texte, k) {
  *   recharger(etat) : rend l'état relu (JSON) ; appelé à chaque jour et au milieu des rattrapages
  *   pasDeFin : laisse la partie en cours à la clôture
  *   cartes(j) : {n, cachee} cartes servies le jour j (lot 3 : M.cartesServies) ; CARTES par défaut
- *   visages(j, n) : les visages posés, carte par carte ; ['Valentin', 'passe', 'Odile'] par défaut
- *   raison(j) : la raison tentée sur la carte cachée ; 'aucune' par défaut (null : pas de tentative)
+ *   visages(j, n, etat) : les visages posés, carte par carte ; ['Valentin', 'passe', 'Odile'] par défaut
+ *   raison(j, etat) : la raison tentée sur la carte cachée ; 'aucune' par défaut (null : pas de tentative)
+ *   compte : la voie de 1.8 ('email_valider' par défaut) ; pseudo ; fin : les codes des questions de fin
+ *   arretA.raison, arretA.f2 : posées après la confirmation (E.completerArret), F2 dès le jour 3
  *   reponse(texte, k) : la réponse du porteur ; reponseType par défaut
  *   paris(E, i) : le pari de l'entrée ; 1 + 2i mod 5 par défaut
  */
@@ -48,7 +51,15 @@ function jouer(scelle, cal, options) {
   const rep = o.reponse || ((t, k) => reponseType(scelle, t, k));
   const toucher = () => E.toucher(etat, cal, hz.pp(), 1, hz.instant);
   const arret = (j, moment) => o.arretA && o.arretA.jour === j && o.arretA.moment === moment;
-  const arreter = () => { toucher(); E.arreter(etat, cal, o.arretA.raison || null, o.arretA.f2 || null); return etat; };
+  const arreter = () => {
+    toucher();
+    const k = E.K(etat);
+    if (cal.aUneOuverture(k) && E.jour(etat, k).ouverture !== null && !E.sautEnCours(etat)) { E.marquer(etat, k, 'fige', hz.pp()); }
+    E.arreter(etat, cal, null, null);
+    if (o.arretA.raison) { E.completerArret(etat, cal, 'raison', o.arretA.raison); }
+    if (o.arretA.f2) { E.completerArret(etat, cal, 'f2', o.arretA.f2); }
+    return etat;
+  };
 
   for (let j = cal.premier; j <= cal.dernier; j++) {
     etat = recharger(etat);
@@ -57,7 +68,7 @@ function jouer(scelle, cal, options) {
     toucher();
     if (cal.estCloture(j)) {
       if (o.pasDeFin) { return etat; }
-      E.finir(etat, cal, { f2: 'toujours_autant', servi: 'revelations', regle: 'claire', avis: 'apprenait', raisons: 'un_peu', portrait: 'un_peu', barre: 'comprise', suspense: 'vrai' });
+      E.finir(etat, cal, o.fin || { f2: 'toujours_autant', servi: 'revelations', regle: 'claire', avis: 'apprenait', raisons: 'un_peu', portrait: 'un_peu', barre: 'comprise', suspense: 'vrai' });
       return etat;
     }
     if (arret(j, 'debut')) { return arreter(); }
@@ -80,10 +91,10 @@ function jouer(scelle, cal, options) {
       E.ouvrirDeviner(etat, cal, j, cartes.n, hz.pp());
       E.compter(etat, cal, 'proche', true);
       E.compter(etat, cal, 'relire');
-      const visages = o.visages ? o.visages(j, cartes.n) : ['Valentin', 'passe', 'Odile'];
+      const visages = o.visages ? o.visages(j, cartes.n, etat) : ['Valentin', 'passe', 'Odile'];
       const jusqua = ab === 'faces' ? 1 : cartes.n;
       for (let i = 0; i < jusqua; i++) { E.poserCarte(etat, j, i, visages[i], hz.pp()); }
-      const raison = o.raison ? o.raison(j) : 'aucune';
+      const raison = o.raison ? o.raison(j, etat) : 'aucune';
       if (jusqua === cartes.n && raison !== null && ['Agathe', 'Nassim', 'Odile', 'Valentin'].includes(visages[cartes.cachee])) {
         E.poserRaison(etat, scelle, cal, j, cartes.cachee, raison, hz.pp());
       }

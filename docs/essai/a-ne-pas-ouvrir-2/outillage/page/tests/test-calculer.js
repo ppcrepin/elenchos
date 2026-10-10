@@ -137,7 +137,7 @@ for (const [nom, fichier] of Object.entries(FICHIERS)) {
       assert.equal(r.message !== null, (cal.estJoue(d) && !cal.estArrivee(d)) || cal.estPointDeSaut(d), 'message ' + d);
       assert.equal(r.phrase_jour !== null, c.reponse !== null, 'phrase du jour ' + d);
       assert.equal(r.dimanche !== null, cal.estDimanche(d) && d <= cal.dernierJeu, 'dimanche ' + d);
-      assert.equal(r.mesures !== null, cal.aUneOuverture(d), 'mesures ' + d);
+      assert.equal(r.mesures !== null, cal.aUneOuverture(d) && j.jours[String(d)].ouverture !== null, 'mesures ' + d);
       assert.equal(r.cartes_porteur !== null, l.deviner_porteur, 'cartes ' + d);
       if (l.deviner_porteur) {
         assert.deepEqual(x.cartes(d), { cachee: r.cartes_porteur.cartes.findIndex(cc => cc.cachee), n: r.cartes_porteur.cartes.length });
@@ -373,7 +373,7 @@ for (const [nom, fichier] of Object.entries(FICHIERS)) {
     verifierJournal(x, a2);
     R = M.calculer(scelle, cal, arrivee, a2);
     assert.equal(R.K, s1.reprise);
-    assert.equal(R.jours[String(s1.reprise)].mesures.jours_ecoules, null); // jour de reprise sans ouverture (L1-4)
+    assert.equal(R.jours[String(s1.reprise)].mesures, null); // jour de reprise sans ouverture (L1-4) : pas de séance, pas de mesures
     assert.ok(R.jours[String(s1.reprise)].dimanche); // le dimanche est atteint : ses titres tombent
     const enCours = jouer(x, { pasDeFin: true });
     R = M.calculer(scelle, cal, arrivee, enCours);

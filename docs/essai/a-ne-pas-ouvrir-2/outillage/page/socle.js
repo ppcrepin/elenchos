@@ -275,7 +275,10 @@ var ElenchosSocle = (function (N, C, J, E, Me, MoteurDeLaPage) {
         copies: function () { return ecrans && ecrans.copies ? ecrans.copies() : []; },
         /** Le moteur sur un journal donné (rejeu en mode moteur, §9) : calcul pur, rien n'est écrit. */
         calculer: function (j) { return scelle && arrivee ? M.calculer(scelle, cal, arrivee, j) : null; },
-        histoire: function (collecteur) { return scelle ? M.histoire(scelle, cal, collecteur) : null; }
+        histoire: function (collecteur) { return scelle ? M.histoire(scelle, cal, collecteur) : null; },
+        /** Le résumé (partie 3.2) d'un état à l'arrivée (celui de la page par défaut), et son empreinte (V6). */
+        resume: function (a) { return scelle ? M.resume(a || arrivee) : null; },
+        resumeSha256: function (a) { return scelle ? N.sha256(N.utf8Encoder(N.jsonCanonique(M.resume(a || arrivee)))) : null; }
       });
     }
 
