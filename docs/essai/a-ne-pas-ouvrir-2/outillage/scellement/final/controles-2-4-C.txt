@@ -1,0 +1,22 @@
+Programme de contrôle (C), second essai — contrôles 2, 3 et 4 (schéma 2, partie 5.2)
+==============================================================================
+Fichier : docs/essai/a-ne-pas-ouvrir-2/outillage/scellement/final/fichier-scelle-candidat-final.json (SHA-256 587dbac7ecbde1c9b9e6d555a1ff162a6c4e42ece2a9fe82cef27f3baed36db0)
+Premier fichier scellé : docs/essai/a-ne-pas-ouvrir/fichier-scelle.json (SHA-256 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64)
+Empreinte publiée lue dans : docs/essai/empreinte.md ; profils lus dans : docs/essai/a-ne-pas-ouvrir/profils.md (SHA-256 87867c2968b945a97323ec7a3a2e0a203e9945893ca8165b18a7ae971f2b6f3b)
+
+Contrôle 2 (profils) : passé
+  · premier fichier scellé : SHA-256 59db748499fd1ece3d5bf6f8ec4b3fed3badd15eb39cf474cd0e31d3045c7b64 = empreinte publiée
+  · personnages : identiques octet pour octet au premier fichier (1522 octets, SHA-256 1f8aceeab20bf0905b77f313a0f2701512c473f672efbcad49be1e59267089a0)
+  · réponses types (s = 1) : Agathe S simple Liberté, P simple Innovation, T neutre, L simple Local | Nassim S très Liberté, P simple Innovation, T neutre, L simple National | Odile S très Sécurité, P très Précaution, T très Changement, L très Local | Valentin S neutre, P simple Précaution, T simple Tradition, L simple National
+  · laissé au Vérificateur : « aucune étiquette politique » (ne se vérifie pas par programme)
+
+Contrôle 3 (réponses, histoire comprise ; calibrage refait ; résumé) : passé
+  · réponses recalculées : 412 ; réponses atypiques : 74 (histoire 64, essai 10) ; α = 1/4 ; r = 1
+  · résumé recalculé : SHA-256 d6e090f40d7a9ab4d46736f12959b6131815ddf603b22a71eac94ca2d5c58644 = histoire.resume_sha256
+  Calibrage refait (fichier caché 2, point 10), r = 1 à 1 :
+    r =   1 : REMPLIT c1 à c5 — c1 : nets : Agathe SPL; Nassim SPL; Odile SPTL; Valentin PTL ; c2 : tempéraments : Agathe []; Nassim []; Odile ['original', 'tranche']; Valentin ['pont'] ; c3 : tous candidats : H86 (aucun) ; textes titrés : H86 ; c4 : Devin : 4 titulaires ; Mystère : 4 ; semaines à trois Fidèles ou moins : 10 ; c5 : écarts : aucun
+
+Contrôle 4 (absences, histoire comprise) : passé
+  · absences recalculées : histoire 16, essai 4 ; Agathe essai ['5'] ; Nassim essai [] ; Odile essai ['1', '9'] ; Valentin essai ['3']
+
+Verdict : aucun défaut trouvé

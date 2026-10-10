@@ -1,0 +1,83 @@
+Programme de contrôle (C), second essai — contrôle 1 du fichier scellé (schéma 2, partie 5.1)
+==============================================================================
+Fichier contrôlé : docs/essai/a-ne-pas-ouvrir-2/outillage/scellement/final/fichier-scelle-candidat-final.json
+SHA-256 du fichier : 587dbac7ecbde1c9b9e6d555a1ff162a6c4e42ece2a9fe82cef27f3baed36db0  (72408 octets)
+Jour du scellement (paramètre) : 2026-10-10
+Commit du dépôt au moment du contrôle : ff3518475d0b96ff55883d0c63c2ef1d8b525a11 (sources identiques à ce commit)
+
+Sources lues (SHA-256) :
+  05088aeb95380e6d3d4916e4bdee44bbd3b2c7999fbe3c6d0174a650341de36f  docs/essai/a-ne-pas-ouvrir-2/textes/S-securite-liberte.md
+  d8e138e3801b5dbe27bec4f06574d3ab242dca2dc2e1d692d301376936e306d6  docs/essai/a-ne-pas-ouvrir-2/textes/P-precaution-innovation.md
+  2bc9882cdc127c107e0399c128625a7802d4bb9f371f4f2e9c421eef7de5c53e  docs/essai/a-ne-pas-ouvrir-2/textes/T-tradition-changement.md
+  fb38c3bb212a9ff0ba48816309802e0f371da13cf504a8c3cad2a4b4f182643d  docs/essai/a-ne-pas-ouvrir-2/textes/L-local-national.md
+  af34c5c545c793bb5cb45153b0d8d1055a2e8ad1c3b459faaa874cd3dbec9fb1  docs/essai/a-ne-pas-ouvrir-2/textes/votes.md
+  5ee0187c282582fbc55435186ed4b9ed134c866a546b9548ddfdea58b7997dce  docs/essai/a-ne-pas-ouvrir-2/schema.md
+  ad7c42e0b44abe1f26e7b2cd85c71253230494e018ba11c7edbd684800ad0b51  docs/essai/a-ne-pas-ouvrir-2/regles-de-calcul-2.md
+  82625e27f45b9f484e5d5c14d619b858710354f499e6f8f8aeb4a386fc245f57  docs/essai/simulation.md
+  5fde1822fda633ab3dce30cbdae87fff2a4ca141e4f0674c6a94f222b3cceb7e  docs/essai/simulation-2.md
+Mêmes sources que l'agent qui scelle : non comparé (relevé non fourni)
+
+Contrôle 1 (fichier scellé)
+------------------------------------------------------------------------------
+  Étape 1 (empreinte) : non faite — empreinte publiée non fournie
+  Étape 2 (données embarquées) : non faite — page construite non fournie
+  Étape 3 (forme) : passée — UTF-8 strict ; relu puis remis en forme canonique, mêmes octets
+  Étape 4 (schéma) : passée — statut « final » ; schéma fermé, version 5, types, adresses, dates (toutes ≤ 2026-10-10)
+  Étape 5 (cohérence interne) : passée — tables exigées (calendrier, semaines, cercle), histoire (point 2 bis), votes et suites, D-028, A.4, E8, D-034, groupes deux à deux différents, réponses, absences, réponses atypiques, §1, vecteurs, ordre des tensions, groupes (2.10, 22 lignes), commissions (2.10 bis, 1), élisions (2.11, 14)
+    · rejetés : 10 sur 18 (E2, E3, T4, T5, T6, T8, T9, T10, T12, T14) ; objets : amendement 9 (1 adoptés), article 5 (4 adoptés), resolution 1 (1 adoptés), texte 3 (2 adoptés)
+    · ordre des tensions : retenu (S L P S L T S P L S P L S T P ; entrée S P T)
+    · amo lu : 9504f252b865da582af86b024b8034e68e197501d4365755c85fcc6e3f0ce98b  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO800484.json  (PO800484, GP, libelle 'Démocrate (MoDem et Indépendants)', libelleAbrege 'Dem', libelleAbrev 'DEM')
+    · amo lu : 5fa70261caf6a5c282b0c0beb84b0012f92e03fc8d107b67189e144c275ef19b  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO800526.json  (PO800526, GP, libelle 'Écologiste - NUPES', libelleAbrege 'Ecolo - NUPES', libelleAbrev 'ECOLO')
+    · amo lu : 789e8921051a3306a827e5e516f1361da1d1bd38837d731ceaf79c00ec552e56  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO800502.json  (PO800502, GP, libelle 'Gauche démocrate et républicaine - NUPES', libelleAbrege 'GDR - NUPES', libelleAbrev 'GDR-NUPES')
+    · amo lu : 8869ec007acdeb8b13685ea6ddf1b9b481da0d24f25a7c2b91320de0bb591dd1  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO800514.json  (PO800514, GP, libelle 'Horizons et apparentés', libelleAbrege 'HOR', libelleAbrev 'HOR')
+    · amo lu : 56ee12082591f43373a1df347a0051fd8a56674f12503b6e68129e5fd26965e8  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO800490.json  (PO800490, GP, libelle 'La France insoumise - Nouvelle Union Populaire écologique et sociale', libelleAbrege 'LFI - NUPES', libelleAbrev 'LFI-NUPES')
+    · amo lu : ccba34cbc9adcd16379a131b6bc5f88c9ac41dfc754e44bb3943b9998a35a27a  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO800508.json  (PO800508, GP, libelle 'Les Républicains', libelleAbrege 'LR', libelleAbrev 'LR')
+    · amo lu : 64c8296a504fd13b5037b17cc74f34a704f628bd8950aa7a5026981eb73761aa  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO800532.json  (PO800532, GP, libelle 'Libertés, Indépendants, Outre-mer et Territoires', libelleAbrege 'LIOT', libelleAbrev 'LIOT')
+    · amo lu : 148787fa49296c040335b301a7438d82bcaa03e1cff2d7227545a2c021129fb8  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO800520.json  (PO800520, GP, libelle 'Rassemblement National', libelleAbrege 'RN', libelleAbrev 'RN')
+    · amo lu : a7a2745d9143f8f3d6cd4d94ddabbb1b3385ebcf8bae255d892c49bdec420c94  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO800538.json  (PO800538, GP, libelle 'Renaissance', libelleAbrege 'RE', libelleAbrev 'RE')
+    · amo lu : 5366f84d0c6811c6cf976aa4a44e91ba92508aef12cbde3e583ae379ad45e7a2  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO830170.json  (PO830170, GP, libelle 'Socialistes et apparentés', libelleAbrege 'SOC', libelleAbrev 'SOC-A')
+    · amo lu : 880d9424c604a721cb1f4d235f676121bdd5b99a1bf9efa3d23b57400e5e0cf8  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO845425.json  (PO845425, GP, libelle 'Droite Républicaine', libelleAbrege 'DR', libelleAbrev 'DR')
+    · amo lu : bec3489978d4cca9cf42cefc99eaf770f4313b0671aaeb4c65ac8b96c1078c79  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO845439.json  (PO845439, GP, libelle 'Écologiste et Social', libelleAbrege 'EcoS', libelleAbrev 'ECOS')
+    · amo lu : 3d1de2fb50301c0efa5e9da9d3d030037c06066be600822dfd2b07b00dd9ab42  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO845407.json  (PO845407, GP, libelle 'Ensemble pour la République', libelleAbrege 'EPR', libelleAbrev 'EPR')
+    · amo lu : c67016f9d64b0dc6b12453c4cc53ef1af7b99b8c9eb61f1c8f1feb7c7b831aaa  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO845514.json  (PO845514, GP, libelle 'Gauche Démocrate et Républicaine', libelleAbrege 'GDR', libelleAbrev 'GDR')
+    · amo lu : 72290d523665138785be373c27d058dc98d01de13d1d47de3b0e0ee52c5e8735  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO845470.json  (PO845470, GP, libelle 'Horizons & Indépendants', libelleAbrege 'HOR', libelleAbrev 'HOR')
+    · amo lu : ad579c89363702543f8a12dcfe541342f3428177a3b5a64f44d9d013ff40ff9e  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO845413.json  (PO845413, GP, libelle 'La France insoumise - Nouveau Front Populaire', libelleAbrege 'LFI-NFP', libelleAbrev 'LFI-NFP')
+    · amo lu : 3974a57260c7134716fc9fe21d21989a9ffee0a23d53433a702682a2f8cd658d  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO845454.json  (PO845454, GP, libelle 'Les Démocrates', libelleAbrege 'Dem', libelleAbrev 'DEM')
+    · amo lu : a57c6d67c336a41a76aa9ee8199ca76e1e7b84cef81020f510f4500582bad03f  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO845485.json  (PO845485, GP, libelle 'Libertés, Indépendants, Outre-mer et Territoires', libelleAbrege 'LIOT', libelleAbrev 'LIOT')
+    · amo lu : d0a6d1b097fe9959f750d3080ddb3b2a354696df35c5ffbcfcc483efd3cd4926  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO845401.json  (PO845401, GP, libelle 'Rassemblement National', libelleAbrege 'RN', libelleAbrev 'RN')
+    · amo lu : f5a7a0c80e0dfa55400d75a9895c4d341c5f3aa29a0011cc913ed398e3de35a1  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO845419.json  (PO845419, GP, libelle 'Socialistes et apparentés', libelleAbrege 'SOC', libelleAbrev 'SOC')
+    · amo lu : aa4317d8ee5d45239458f52f446ba3c73b8e9c73aa8d37d6e0f8115a6fc3e96e  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO872880.json  (PO872880, GP, libelle 'Union des droites pour la République', libelleAbrege 'UDR', libelleAbrev 'UDDPLR')
+    · amo lu : e0353fba041ab6e89bdfc085f69163550007c675db57d23d07c713e58e6203a9  /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/contenu-an/amo/json/organe/PO732421.json  (PO732421, GROUPESENAT, libelle 'Rassemblement des démocrates, progressistes et indépendants', libelleAbrege 'RDPI', libelleAbrev 'LREMP')
+    · commission 'commission spéciale sur la simplification de la vie économique' : forme courte, forme seule vérifiée (partie 2.10 bis)
+    · genres des raisons (D-034, recalculés) : E1 : pour croisee/attendue ; contre attendue/pratique | E2 : pour attendue/pratique ; contre attendue/croisee | E3 : pour pratique/attendue ; contre pratique/attendue | T0 : pour attendue/croisee ; contre attendue/croisee | T1 : pour croisee/attendue ; contre attendue/pratique | T2 : pour attendue/croisee ; contre attendue/pratique | T3 : pour pratique/attendue ; contre pratique/attendue | T4 : pour croisee/attendue ; contre pratique/attendue | T5 : pour attendue/pratique ; contre attendue/croisee | T6 : pour attendue/pratique ; contre croisee/attendue | T7 : pour pratique/attendue ; contre pratique/attendue | T8 : pour attendue/pratique ; contre pratique/attendue | T9 : pour attendue/pratique ; contre attendue/croisee | T10 : pour attendue/pratique ; contre pratique/attendue | T11 : pour pratique/attendue ; contre attendue/pratique | T12 : pour attendue/croisee ; contre croisee/attendue | T13 : pour pratique/attendue ; contre attendue/croisee | T14 : pour attendue/attendue ; contre attendue/attendue
+  Étape 6 (vecteurs de test) : passée — les trois vecteurs recalculés sont identiques
+  Étape 7 (typographie simple) : passée — 334 chaînes affichées
+  Étape 8 (fidélité aux fiches) : passée — 18 fiches, H86 et votes.md relus ; en-têtes stricts ; titre, lignes (90 au plus), objet (fiche et votes.md), vote, suite, auteur, lien, sources, tension, sens et raisons identiques, raisons dans l'ordre tiré
+    · rangs des cases (point 14) : 1161→E1, 7386→E2, 3708→E3, 1262→T0, 2484→T1, 840→T2, 2190→T3, 707→T4, 2758→T5, 795→T6, 2139→T7, 989→T8, 7922→T9, 6770→T10, 3370→T11, 8167→T12, 3449→T13, 5359→T14
+    · présentation B : scrutin 7922 = T9, scrutin 8167 = T12, scrutin 6770 = T10, scrutin 5359 = T14
+    · lignes de votes.md ignorées (rang hors des 18 textes et de H86) : ligne 26 « Réserve T »
+    · ordre d'affichage tiré (clé « ordre-raisons|texte|i ») : numéro de fiche → rang
+       E1 : 1→4, 2→2, 3→1, 4→3
+       E2 : 1→1, 2→2, 3→3, 4→4
+       E3 : 1→3, 2→1, 3→4, 4→2
+       T0 : 1→3, 2→4, 3→1, 4→2
+       T1 : 1→3, 2→2, 3→1, 4→4
+       T2 : 1→2, 2→3, 3→1, 4→4
+       T3 : 1→4, 2→3, 3→2, 4→1
+       T4 : 1→4, 2→2, 3→3, 4→1
+       T5 : 1→2, 2→4, 3→1, 4→3
+       T6 : 1→1, 2→3, 3→4, 4→2
+       T7 : 1→4, 2→1, 3→3, 4→2
+       T8 : 1→3, 2→4, 3→2, 4→1
+       T9 : 1→2, 2→4, 3→1, 4→3
+      T10 : 1→1, 2→4, 3→3, 4→2
+      T11 : 1→4, 2→1, 3→2, 4→3
+      T12 : 1→1, 2→2, 3→4, 4→3
+      T13 : 1→2, 2→1, 3→3, 4→4
+      T14 : 1→4, 2→2, 3→3, 4→1
+  Contrôle 1 : partiel : étape 1 non faite (son entrée manque) ; étape 2 non faite (son entrée manque) ; Mêmes sources non comparé (étape 8)
+  Hors étapes (ajout de C) : graine recalculée (§0) sur E = 83d05a44d3a254c39478071b3b86f52481f7a508 : 50d5971698eeaf54 ; identique à celle du fichier
+
+Hors de portée d'un programme : la vérité des champs de `vote` (objet, issue, date, étape, suite), l'exactitude du mandat et du groupe et leur moment, la justesse de chaque Forme d'élision et des formes courtes de commission.
+
+Verdict : aucun défaut trouvé (contrôle 1 partiel)

@@ -1,0 +1,6 @@
+Réglage (fichier caché, point 11)
+  Graine de réglage g_R = f8a5378b0426dbc7 = 16 premiers chiffres hex de SHA-256("elenchos-essai-2|reglage|50d5971698eeaf54") ; 200 parties ; paramètres du candidat : alpha 1/4, facteur 3, seuils stricts non.
+  Joueur simulé, ses quinze cartes (jumeaux comptés justes) : 1549 sur 3000 = 1549/3000 (semaine 14 : 878/1800 ; semaine 15 : 179/600 ; T13 : 492/600). Seuils : > 7/10 monte α, < 7/20 baisse α.
+  Personnages sur les cartes du joueur simulé (auteur_compte), semaine 15 : 1769 sur 4255 = 1769/4255 (semaine 14 : 1142 sur 3158). Seuil : > 3/5 donne les seuils stricts.
+  Curseurs nets du joueur simulé au jour 14 (fin du jour, T14 compris, facteur 3) : moyenne 73/36 sur 72 joueurs sans réponse type neutre ; 327/200 sur tous. 1 à 3 : facteur 3 ; < 1 : 4 ; > 3 : 2.
+  Décision : alpha 1/4 ; seuils stricts non ; facteur 3.
