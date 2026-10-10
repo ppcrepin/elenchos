@@ -40,6 +40,9 @@ function reponseType(scelle, texte, k) {
  *   raison(j, etat) : la raison tentée sur la carte cachée ; 'aucune' par défaut (null : pas de tentative)
  *   compte : la voie de 1.8 ('email_valider' par défaut) ; pseudo ; fin : les codes des questions de fin
  *   arretA.raison, arretA.f2 : posées après la confirmation (E.completerArret), F2 dès le jour 3
+ *   gestes : false = ni « Reprendre », ni Le Cercle, ni proche, ni Relire, ni fiche (tous les compteurs à 0)
+ *   carnet(j) : {moment, saut_clair, hesite, moment_semaine} du carnet du jour ; memeJour : toute la partie le même jour
+ *   copier(j, etat, horloge) : appelé à la fin d'un jour joué, avant « Aller au jour suivant » (copie du carnet)
  *   reponse(texte, k) : la réponse du porteur ; reponseType par défaut
  *   paris(E, i) : le pari de l'entrée ; 1 + 2i mod 5 par défaut
  */
@@ -49,6 +52,7 @@ function jouer(scelle, cal, options) {
   const recharger = o.recharger || (x => x);
   let etat = E.nouvelEtat(cal);
   const rep = o.reponse || ((t, k) => reponseType(scelle, t, k));
+  const gestes = o.gestes !== false;
   const toucher = () => E.toucher(etat, cal, hz.pp(), 1, hz.instant);
   const arret = (j, moment) => o.arretA && o.arretA.jour === j && o.arretA.moment === moment;
   const arreter = () => {
@@ -83,14 +87,13 @@ function jouer(scelle, cal, options) {
       E.terminerCompte(etat, cal, o.pseudo || 'Témoin-l-lot-un', o.compte || 'email_valider', hz.pp());
     }
     if (cal.estJoue(j)) {
-      if (cal.ligne(j).revelation_porteur === 'lue' && j % 2 === 0) { E.compter(etat, cal, 'rouvrir'); }
-      E.compter(etat, cal, 'cercle');
+      if (gestes && cal.ligne(j).revelation_porteur === 'lue' && j % 2 === 0) { E.compter(etat, cal, 'rouvrir'); }
+      if (gestes) { E.compter(etat, cal, 'cercle'); }
       const ab = o.abandons && o.abandons[j];
       if (ab === 'rien') { E.allerAuJourSuivant(etat, cal, true); continue; }
       const cartes = o.cartes ? o.cartes(j) : CARTES;
       E.ouvrirDeviner(etat, cal, j, cartes.n, hz.pp());
-      E.compter(etat, cal, 'proche', true);
-      E.compter(etat, cal, 'relire');
+      if (gestes) { E.compter(etat, cal, 'proche', true); E.compter(etat, cal, 'relire'); }
       const visages = o.visages ? o.visages(j, cartes.n, etat) : ['Valentin', 'passe', 'Odile'];
       const jusqua = ab === 'faces' ? 1 : cartes.n;
       for (let i = 0; i < jusqua; i++) { E.poserCarte(etat, j, i, visages[i], hz.pp()); }
@@ -104,25 +107,27 @@ function jouer(scelle, cal, options) {
       toucher();
       E.repondre(etat, scelle, cal, j, rep(cal.ligne(j).repondu, j), hz.pp());
       if (arret(j, 'apres-reponse')) { return arreter(); }
-      E.repondreCarnet(etat, cal, j, 'moment', cal.estArrivee(j) ? 'defi' : 'deviner');
-      if (cal.sauts.length && j === cal.sauts[0].reprise) { E.repondreCarnet(etat, cal, j, 'saut_clair', 'en_partie'); }
+      const q = o.carnet ? o.carnet(j) : { moment: cal.estArrivee(j) ? 'defi' : 'deviner', saut_clair: 'en_partie', hesite: ['deviner', 'saut'], moment_semaine: 'portrait' };
+      E.repondreCarnet(etat, cal, j, 'moment', q.moment);
+      if (cal.sauts.length && j === cal.sauts[0].reprise) { E.repondreCarnet(etat, cal, j, 'saut_clair', q.saut_clair); }
       if (cal.estDimanche(j)) {
-        E.repondreCarnet(etat, cal, j, 'hesite', ['deviner', 'saut']);
-        E.repondreCarnet(etat, cal, j, 'moment_semaine', 'portrait');
+        E.repondreCarnet(etat, cal, j, 'hesite', q.hesite);
+        E.repondreCarnet(etat, cal, j, 'moment_semaine', q.moment_semaine);
       }
       toucher();
+      if (o.copier) { o.copier(j, etat, hz.pp()); }
       E.allerAuJourSuivant(etat, cal, false);
-      hz.sauter(1);
+      if (!o.memeJour) { hz.sauter(1); }
       continue;
     }
     // Point de saut : la révélation se lit, puis la page du saut, « Annuler » éventuel, puis le rattrapage.
     const n = (o.annuler && o.annuler[j]) || 0;
     for (let i = 0; i < n; i++) { E.ouvrirPageSaut(etat, cal, hz.pp()); toucher(); E.annulerSaut(etat, cal); }
-    E.compter(etat, cal, 'qui_est_qui'); // seule ouverture possible avant la confirmation (règle 9)
+    if (gestes) { E.compter(etat, cal, 'qui_est_qui'); } // seule ouverture possible avant la confirmation (règle 9)
     E.ouvrirPageSaut(etat, cal, hz.pp());
     toucher();
     E.confirmerSaut(etat, cal, hz.instant(), hz.pp());
-    E.compter(etat, cal, 'qui_est_qui');
+    if (gestes) { E.compter(etat, cal, 'qui_est_qui'); }
     for (;;) {
       const r = E.rattrapage(etat, cal);
       if (r.termine) {
@@ -137,7 +142,7 @@ function jouer(scelle, cal, options) {
     }
     toucher();
     E.finirSaut(etat, cal, hz.pp());
-    hz.sauter(cal.saut(cal.sautDuJour(j).numero).jours.length);
+    if (!o.memeJour) { hz.sauter(cal.saut(cal.sautDuJour(j).numero).jours.length); }
     j = E.K(etat) - 1;
   }
   return etat;

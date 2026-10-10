@@ -63,7 +63,7 @@ async function session(ralenti, travail) {
     const attendu = fs.readFileSync(fTraceH, 'utf8');
     if (texteH === attendu) { dire('histoire : trace du navigateur identique à ' + path.basename(fTraceH) + ' (' + attendu.length + ' octets)'); }
     else { ecart('histoire : la trace du navigateur diffère de ' + fTraceH); }
-    const ids = fs.readdirSync(dTemoins).filter(x => fs.existsSync(path.join(dTemoins, x, 'journal.json'))).sort();
+    const ids = fs.readdirSync(dTemoins).filter(x => fs.existsSync(path.join(dTemoins, x, 'journal.json')) && !fs.existsSync(path.join(dTemoins, x, 'durees.json'))).sort(); // mode moteur seulement
     for (const id of ids) {
       const journal = JSON.parse(fs.readFileSync(path.join(dTemoins, id, 'journal.json'), 'utf8'));
       const t = await env.page.evaluate((j) => window.ElenchosTemoin.traceMoteur(j), journal);

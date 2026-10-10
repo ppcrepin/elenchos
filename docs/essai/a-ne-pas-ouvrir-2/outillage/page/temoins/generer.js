@@ -62,11 +62,19 @@ const tensionsVues = {};
 function premiereFois(cle, t) { const k = cle + '|' + tx(t).tension; if (tensionsVues[k]) { return false; } tensionsVues[k] = true; return true; }
 let compteurAlterne = {};
 
+/** Réponses tirées, sans hasard caché : SHA-256 de « r|i|texte » et « n|i|texte ». */
+const tire = (k, n) => parseInt(N.sha256(N.utf8Encoder(k)).slice(0, 8), 16) % n;
+function hasard(i) {
+  return (t) => { const n = tx(t).considerations.length; const r = tire('r|' + i + '|' + t, n + 1); return { niveau: 1 + tire('n|' + i + '|' + t, 5), raison: r === n ? 'aucune' : r + 1 }; };
+}
+
 /* ---------------- Les témoins ---------------- */
 
+const OPTIONS_A = require('./options-a.js');
+
 const TEMOINS = [
-  { id: 'a', but: 'premier essai (a) et « au centre » : toujours Neutre, raison « aucune » ; pari Neutre sur Valentin ; passe chaque carte et valide ; aucun curseur net, phrase de la semaine « floue », barre à 16 puis 17 sans curseur net',
-    o: { reponse: neutre, paris: () => 3, visages: (j, n) => Array(n).fill('passe'), raison: () => null } },
+  { id: 'a', but: 'partie témoin (a), coups du tableau (A) des carnets de référence : toujours Neutre, raison « aucune » ; pari Neutre sur Valentin ; passe chaque carte et valide ; rien d\'ouvert ; carnet « Aucun » ; mêmes coups en mode interface dans a-interface/ (carnet et copie du jour 7)',
+    o: OPTIONS_A },
   { id: 'b', but: 'premier essai (b) : réponses variées, toutes les raisons cachées tentées (justes ou non), « Reprendre » les jours pairs, Le Fidèle du porteur en semaine 14 (T1 à T6)',
     o: { raison: (j, e) => { const m = cartesDuJour(e, j); const c = m.cartes.find(x => x.cachee); const vraie = m.possibles[c.auteur].raison; return j % 2 ? (vraie === 'aucune' ? 1 : vraie) : 'aucune'; } } },
   { id: 'c', but: 'premier essai (c) : lit le fichier et attribue tout juste, raisons cachées comprises ; entrée 3 sur 3 face à Valentin ; compte Apple',
@@ -77,7 +85,7 @@ const TEMOINS = [
     o: { compte: 'email_plus_tard', reponse: (t) => attendue(t, 1) } },
   { id: 'e', but: 'Pas de Côté du porteur sur T12 (S), révélé au vote le jour 14 ; barre pleine au premier curseur net, avant 16 réponses',
     o: { reponse: (t, k) => (tx(t).tension === 'S' ? attendue(t, t === '12' ? 0 : 1) : PT.reponseType(scelle, t, k)) } },
-  { id: 'f', but: '« nuancé » (fichier caché, point 12) : l\'argument inattendu une fois par tension, l\'attendu ailleurs ; voir LISTE.txt pour ce que cela donne sur S',
+  { id: 'f', but: '« nuancé » (fichier caché, point 12) : l\'argument inattendu une fois par tension, l\'attendu ailleurs ; S, qui a cinq réponses, devient nette quand même (voir LISEZ-MOI.txt)',
     o: { reponse: (t) => (premiereFois('f', t) ? inattendue(t, 1) : attendue(t, 1)) } },
   { id: 'g', but: 'souvent l\'argument inattendu (une réponse sur deux par tension) : aucun curseur net, barre pleine à 16 sans curseur net',
     o: { reponse: (t) => { const k = 'g|' + tx(t).tension; compteurAlterne[k] = (compteurAlterne[k] || 0) + 1; return compteurAlterne[k] % 2 ? attendue(t, 1) : inattendue(t, 1); } } },
@@ -108,7 +116,15 @@ const TEMOINS = [
         if (choix !== 'passe') { pris.push(choix); }
         return choix;
       });
-    } } }
+    }, raison: (j, e) => { const m = cartesDuJour(e, j); const c = m.cartes.find(x => x.cachee); const r = m.possibles[c.auteur].raison; return r === 'aucune' ? null : r; } } },
+  { id: 'r', but: 'réponses tirées (clé « hasard-38 ») : Le Mystère de la semaine 1 départagé par tirage',
+    o: { reponse: hasard(38) } },
+  { id: 's', but: 'réponses tirées (clé « hasard-9 ») : Le Devin de la semaine 1 départagé par tirage',
+    o: { reponse: hasard(9) } },
+  { id: 't', but: 'réponses copiées sur celles de Nassim (jumeau du porteur à chaque texte) : Le Devin de la semaine 2 départagé par les raisons cachées',
+    o: { reponse: (t) => rep('Nassim', t) || neutre() } },
+  { id: 'u', but: 'à contre-courant : l\'argument attendu, du côté opposé à la majorité des personnages ; surprise de la semaine 2 départagée par le nombre d\'erreurs',
+    o: { reponse: (t) => { const r = PERSOS.map(p => rep(p, t)).filter(Boolean); const f = r.filter(x => x.niveau > 3).length, d = r.filter(x => x.niveau < 3).length; return attendue(t, f >= d ? 1 - tx(t).sens : tx(t).sens); } } }
 ];
 
 /* ---------------- Génération ---------------- */

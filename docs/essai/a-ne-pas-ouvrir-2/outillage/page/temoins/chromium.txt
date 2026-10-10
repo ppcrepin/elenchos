@@ -1,0 +1,27 @@
+Chromium (playwright-core 1.56.1), version témoin : /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/frontend-lot6-construction/temoin/index.html (SHA-256 879b2ebd13f4a0fbf347f2aca0faad42b07631156c625b9d8da0eb43de6fc74f)
+chargement : 274 ms
+histoire : trace du navigateur identique à trace-histoire-P.json (448519 octets)
+témoin a : rejoué dans Chromium, trace identique à la trace P de Node
+témoin b : rejoué dans Chromium, trace identique à la trace P de Node
+témoin c : rejoué dans Chromium, trace identique à la trace P de Node
+témoin d : rejoué dans Chromium, trace identique à la trace P de Node
+témoin e : rejoué dans Chromium, trace identique à la trace P de Node
+témoin f : rejoué dans Chromium, trace identique à la trace P de Node
+témoin g : rejoué dans Chromium, trace identique à la trace P de Node
+témoin h : rejoué dans Chromium, trace identique à la trace P de Node
+témoin i : rejoué dans Chromium, trace identique à la trace P de Node
+témoin j : rejoué dans Chromium, trace identique à la trace P de Node
+témoin k : rejoué dans Chromium, trace identique à la trace P de Node
+témoin l : rejoué dans Chromium, trace identique à la trace P de Node
+témoin m : rejoué dans Chromium, trace identique à la trace P de Node
+témoin n : rejoué dans Chromium, trace identique à la trace P de Node
+témoin o : rejoué dans Chromium, trace identique à la trace P de Node
+témoin p : rejoué dans Chromium, trace identique à la trace P de Node
+témoin q : rejoué dans Chromium, trace identique à la trace P de Node
+témoin r : rejoué dans Chromium, trace identique à la trace P de Node
+témoin s : rejoué dans Chromium, trace identique à la trace P de Node
+témoin t : rejoué dans Chromium, trace identique à la trace P de Node
+témoin u : rejoué dans Chromium, trace identique à la trace P de Node
+ralenti 30 fois : chargement 10511 ms ; vue de secours cachée à 20099 ms ; premier rendu de contenu à 1272 ms
+ÉCART : la vue de secours a pu être peinte : premier rendu à 1272 ms, cachée à 20099 ms
+RÉSULTAT : écarts (voir plus haut)

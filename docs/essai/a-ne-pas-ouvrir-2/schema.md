@@ -571,7 +571,7 @@ Dans ce tableau, « joué » désigne les jours de type `joue`, « point de saut
 | `curseurs_vus` | toujours | par personnage et par tension, `{"c", "l", "net", "somme_w"}` : entrée et textes répondus jusqu'au jour j − 2, poids normaux |
 | `cercle` | toujours | partie 4.3.7 |
 | `surprises_proches` | toujours | comme dans S1. Un jumeau désigné n'y entre pas (D-024), ni une passe, ni un texte d'entrée. Une surprise est une carte révélée de la manche du porteur, rangée sous son `auteur_compte`, où le porteur a désigné un membre dont la réponse diffère. Un membre qui n'a pas répondu à ce texte compte comme une réponse différente. Ne sont pas des surprises : un jumeau, une passe, une carte vide, un texte d'entrée. Les cartes vont de la plus récente à la plus ancienne. |
-| `mesures` | jours joués, points de saut, clôture | partie 4.3.10 |
+| `mesures` | jours joués, points de saut, clôture, s'ils ont une ouverture (un jour de reprise atteint sans ouverture, règle 4, n'en a pas) | partie 4.3.10 |
 
 À la clé d'un arrêt, les règles de S1, partie 3.3, s'appliquent.
 

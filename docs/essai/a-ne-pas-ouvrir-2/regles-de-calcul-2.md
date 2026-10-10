@@ -129,7 +129,7 @@ Au-delà de r = 200 : défaut, renvoyé à GD. Les raisons de l'échec de chaque
 
 **12. Parties témoins.** On ajoute à la liste du premier essai les parties de `spec2-game-design-v2.md` D, plus les cas suivants :
 - **tranché** : il prend toujours l'attendue ; phrase nette au jour 14 ;
-- **nuancé** : il prend l'inattendu une fois par tension ; aucun curseur net, barre pleine à 16 sans curseur net ;
+- **nuancé** : il prend l'inattendu une fois par tension sur P, T et L, deux fois sur S (correction du 10 octobre 2026 : une seule fois laissait S nette au jour 12) ; aucun curseur net, barre pleine à 16 sans curseur net ;
 - **au centre** : il répond toujours Neutre ;
 - un abandon au jour 7 avant les titres ;
 - « Annuler » au saut ;

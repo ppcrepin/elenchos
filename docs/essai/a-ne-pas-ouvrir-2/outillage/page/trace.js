@@ -141,7 +141,7 @@ var ElenchosTrace = (function () {
       return x;
     });
     return {
-      agregats: enTrace(R.agregats), arret: copie(journal.arret), carnet: carnetTexte === undefined ? null : carnetTexte,
+      agregats: enTrace(R.agregats), arret: copie(journal.arret), carnet: carnetTexte === undefined || carnetTexte === null ? null : { texte: carnetTexte },
       copies: copies || [], empreinte_scelle: empreinte, fin: copie(journal.fin), format: 'elenchos-essai-trace',
       jours: jours, partie: copie(journal.partie), resume_histoire: resumeSha256, sauts: sauts, version: 4
     };

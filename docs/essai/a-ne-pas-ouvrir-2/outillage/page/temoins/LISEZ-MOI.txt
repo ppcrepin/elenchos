@@ -1,0 +1,37 @@
+Joueurs témoins du second essai (lot 6, Front-end A). Outillage d'essai (D-001 tenu).
+
+Commandes (depuis outillage/page/), sur le fichier scellé final :
+  node temoins/generer.js ../scellement/final/fichier-scelle-candidat-final.json      -> temoins/<id>/journal.json, trace-P.json ; temoins.txt
+  node temoins/a-interface.js ../scellement/final/fichier-scelle-candidat-final.json temoins/a-interface
+                                                                                      -> partie (a) en mode interface : journal, durées, carnet, copie du jour 7, trace P
+  sh temoins/comparer.sh ../scellement/final/fichier-scelle-candidat-final.json       -> rejeu de chaque journal par le contrôle (C), trace-C.json, resultats.txt
+  node temoins/couverture.js ../scellement/final/fichier-scelle-candidat-final.json   -> couverture.txt (cas montrés, témoin par témoin)
+  node temoins/comparer-reference.js ../references/carnets-et-cas-chiffres.md temoins/a-interface
+                                                                                      -> carnet et copie de (a) contre les carnets de référence (B) et (C)
+  node harnais/temoins-chromium.js CONSTRUCTION FICHIER_SCELLE temoins TRACE_HISTOIRE_P [RALENTI]
+                                                                                      -> dans Chromium : histoire, rejeu de chaque témoin, vue de secours
+
+Les témoins (une ligne chacun) : temoins.txt ; a-interface : la partie (a) en mode interface, avec le carnet et une copie au jour 7.
+
+Mode des journaux : `moteur` (schéma, partie 4.3.1), sauf a-interface (`interface`). Les coups sont joués par les seules
+transitions d'etat.js (tests/partie-test.js), comme le feraient les écrans ; les témoins qui visent un cas lisent le
+fichier scellé (réponses des personnages), ce qui est permis à un témoin, jamais à la page.
+
+Écart à la définition du fichier caché (point 12, « nuancé ») : « l'inattendu une fois par tension » laisse quatre
+arbitrages nets sur S (cinq réponses) : S devient nette au jour 12 (Σ = 12), alors que le point 12 attend « aucun curseur
+net, barre pleine à 16 sans curseur net ». Le témoin f le montre ; le témoin g (l'inattendu une réponse sur deux) donne,
+lui, aucun curseur net et la barre pleine à 16.
+
+Cas impossibles avec ce fichier (vérifiés) :
+- manche du porteur à 1 ou 2 cartes, écran 5.12 : chaque texte a au moins trois réponses de personnages ;
+- verdict « juste par la même réponse avec la raison » : le seul jumeau non servi des cinq manches du porteur est sur une carte sans raison cachée (jour 7) ;
+- Le Pas de Côté d'un personnage pendant l'essai : il ne dépend que des réponses scellées, et aucune n'y donne lieu ;
+- un dimanche sauté : aucun, par le calendrier (§0).
+Cas non atteints, sans preuve d'impossibilité (21 témoins et 92 stratégies du porteur essayées) : Le Sans-Faute d'un
+personnage en semaine 14 ou 15 ; un tempérament qui change au jour 7 ou 14.
+
+Cas qui demandent les écrans (mode interface, dans le navigateur ; instance B) :
+- pseudo refusé par une lettre d'un autre alphabet (message à l'écran) ; rond à deux lettres ; les trois boutons de 1.8 dessinés ;
+- rattrapage interrompu (rechargement) puis repris ; durées après une fermeture de l'app (contrôle 14 i) ;
+- révélation fermée puis rouverte (la ligne « Reprendre / Revoir ») ; abandon d'un dimanche avant les titres (phrase perdue) ;
+- variantes du carnet du contrôle 12 ; captures du contrôle 14 h ; parties jouées par l'interface (au moins dix au hasard, §9).

@@ -23,6 +23,12 @@ Lot 3 (moteur du porteur) : rien de téléchargé.
 - Trace de partie de la page : `node tests/trace-partie.js FICHIER_SCELLE JOURNAL SORTIE [DUREES]`.
 - Mesure : `node tests/mesure-histoire.js` mesure aussi `calculer` (partie complète) à chaque geste.
 
+Lot 6 (témoins et construction) : rien de téléchargé par la page.
+- `confusables.txt` 16.0.0 d'Unicode (UTS #39), SHA-256 `95bd0aad6dced5ebc63436f459c06ab21a8d107cd842fb57f5c3a1e91bca8611` (§8.8) : copie déjà présente dans l'environnement (relevée par le programme de contrôle ; www.unicode.org n'est pas joignable d'ici). Non versionnée ; la table réduite l'est : `python3 -I confusables/reduire.py CONFUSABLES_TXT confusables/table-16.0.0.json` (même entrée, mêmes octets ; 1 292 entrées, 22 Ko), lue par `construire.py`.
+- Témoins : `temoins/LISEZ-MOI.txt` (commandes, liste, cas impossibles, cas d'écran).
+- Harnais Chromium du lot 6 : `node harnais/temoins-chromium.js CONSTRUCTION FICHIER_SCELLE temoins TRACE_HISTOIRE_P [RALENTI]`.
+- Entrées de construction factices pour le fichier final : `temoins/entrees-final-factices.json` (`empreinte_publiee_le` 2026-01-01, `empreinte_publiee_a` 00:00, `consultes_le` 2026-10-09 : à remplacer au lot 7, voir le rapport).
+
 ## Premier essai
 
 Outillage d'essai (D-001 tenu ; `simulation.md`, « Décisions touchées »). Écrit par Front-end le 6 octobre 2026.
