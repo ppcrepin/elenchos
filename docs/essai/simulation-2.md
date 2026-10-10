@@ -1770,6 +1770,7 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
    - Les amendements identiques d'autres groupes sont notés dans la fiche ; leur affichage revient à UX. [Assembleur : UX n'a pas encore écrit cet affichage.]
    - Pour un amendement du Gouvernement : « Proposé par le Gouvernement. »
    - Convention d'essai du 10 octobre 2026 : un texte déposé par plusieurs personnes a un seul auteur, la première personne nommée dans le texte déposé (§7.11) ; les autres sont notées dans la fiche.
+   - Convention d'essai du 10 octobre 2026 : pour un article ajouté en commission, l'auteur est la commission (schéma 2.10 bis).
 5. **Raisons (D-034) :** quatre, deux « pour » et deux « contre », de quatre groupes. De chaque côté, une raison attendue et une seconde, attendue ou inattendue :
    - *attendue* : elle sert le pôle de son côté (« pour » : le pôle s ; « contre » : l'autre) ;
    - *inattendue croisée* : elle défend son côté au nom du pôle d'en face ;

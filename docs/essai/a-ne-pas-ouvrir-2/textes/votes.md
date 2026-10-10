@@ -1,6 +1,6 @@
 # Vote de l'Assemblée pour chaque texte du second essai (objet `vote` du schéma, partie 2.5)
 
-*Relevé fait deux fois, indépendamment, le 10 octobre 2026 : par les rédacteurs dans les fiches (Contenu) et par un second agent Contenu sur un autre modèle, sans voir les fiches (`releve-votes2.md`, scratchpad). Les deux relevés concordent sur les 20 scrutins pour l'objet, l'issue, la date, l'étape et la suite, aux deux points près dits plus bas, qui découlent de règles du lot et non d'un écart de fait. `date` = champ `dateScrutin` du fichier de scrutin. Les rangs des cases (« S· », « P· », « T· », « L· ») sont fixés par le tirage t("ordre-texte|tension|i") au scellement.*
+*Relevé fait deux fois, indépendamment, le 10 octobre 2026 : par les rédacteurs dans les fiches (Contenu) et par un second agent Contenu sur un autre modèle, sans voir les fiches (`releve-votes2.md`, scratchpad). Les deux relevés concordent sur les 20 scrutins pour l'objet, l'issue, la date, l'étape et la suite, au point près dit plus bas (2758), qui découle d'une règle du lot et non d'un écart de fait. `date` = champ `dateScrutin` du fichier de scrutin. Les rangs des cases (« S· », « P· », « T· », « L· ») sont fixés par le tirage t("ordre-texte|tension|i") au scellement.*
 
 | Rang | Scrutin | `objet` | `issue` | `date` | `etape` | `suite` | Preuve principale |
 |---|---|---|---|---|---|---|---|
@@ -25,8 +25,9 @@
 | H86 | 17e, 7313 | texte | adopte | 2026-06-04 | navette | null | CRSANR5L17S2026O1N263.txt:168-171 ; dossier DLR5L17N51775 : SN1-DEPOT le même jour |
 | Réserve T | 17e, 5242 | amendement | rejete | 2026-01-28 | aucune | null | CRSANR5L17S2026O1N131.txt:94-97 |
 
-**Points où les deux relevés diffèrent, par règle du lot et non par fait :**
+**Un point où les deux relevés diffèrent, par règle du lot et non par fait :**
 - **2758 (présentation A, fichier caché, point 14).** Le second relevé, fait sur les données brutes, écrit ce qui a été voté : les amendements de suppression de l'article unique, `amendement`, `adopte`, avec `suite` = `texte_retire` (l'auteur a retiré la proposition le jour même). Le lot sert l'article comme rejeté (présentation A) : `texte`, `rejete`. Avec cet objet, `texte_retire` n'est pas une combinaison permise (schéma 2.5) ; « Texte rejeté. » est exact et suffit (avis d'UX, arbitrages de forme). `suite` = `null`.
-- **7386 (`etape`).** Après le rejet, le texte repart formellement au Sénat (SN2-DEPOT). Les deux relevés écrivent `aucune`, seule valeur permise pour un article rejeté ; la phrase de suite (« Avec lui, l'Assemblée a rejeté le texte entier. ») ne dit pas que le texte est mort.
+
+**7386 (`etape`), à noter.** Après le rejet, le texte repart formellement au Sénat (SN2-DEPOT). Les deux relevés écrivent `aucune`, seule valeur permise pour un article rejeté ; la phrase de suite (« Avec lui, l'Assemblée a rejeté le texte entier. ») ne dit pas que le texte est mort.
 
 **Preuves indirectes, à dire au porteur s'il le demande :** pour 3370, 3449 et 2484 (16e législature), le dossier législatif n'est pas en local ; l'étape `navette` découle d'une première lecture à l'Assemblée suivie d'un examen au Sénat, dit en séance ou dans le texte adopté, et confirmé par le second relevé sur des sources publiques en ligne.

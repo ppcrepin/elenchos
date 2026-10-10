@@ -1,6 +1,6 @@
 # Fiches P · Précaution (pôle 0) – Innovation (pôle 1) · second essai
 
-*Rédigées par Contenu le 10 octobre 2026, à partir des comptes rendus officiels (open data de l'Assemblée nationale, 16e et 17e législatures). Vérification indépendante le 10 octobre 2026 (aucun bloquant), puis annotation à l'aveugle ; corrigées le même jour. Les raisons marquées « (nouvelle, à annoter) » repassent l'annotation à l'aveugle avant le scellement. Typographie simple (apostrophe droite). Mots comptés séparés par des espaces (convention 2) ; caractères comptés un à un, point final compris (90 au plus par ligne). Groupes en toutes lettres (A.7, point 2). L'ordre d'affichage des raisons est tiré au scellement ; les en-têtes « Case P » reçoivent leur clé au tirage (t("ordre-texte|P|i")).*
+*Rédigées par Contenu le 10 octobre 2026, à partir des comptes rendus officiels (open data de l'Assemblée nationale, 16e et 17e législatures). Vérification indépendante le 10 octobre 2026 (aucun bloquant), puis annotation à l'aveugle ; corrigées le même jour. Toutes les raisons ont été annotées à l'aveugle. Typographie simple (apostrophe droite). Mots comptés séparés par des espaces (convention 2) ; caractères comptés un à un, point final compris (90 au plus par ligne). Groupes en toutes lettres (A.7, point 2). L'ordre d'affichage des raisons est tiré au scellement ; les en-têtes « Case P » reçoivent leur clé au tirage (t("ordre-texte|P|i")).*
 
 Remarques du rédacteur sur le lot :
 - **Votes.** 19 votes personnels sur 20 vérifiés dans le fichier du scrutin, tous dans le sens de la raison ; Maquet (840) s'est abstenu et est admis par la convention 1.
@@ -10,9 +10,9 @@ Remarques du rédacteur sur le lot :
   - pratique / pratique : 2139, 6770.
   - aucun inattendu (A.7, point 6) : T14.
   - Trois croisés de la rédaction ont été lus « aucun » par les deux annotateurs (E2 R2, 840 R4, 6770 R4) : ils deviennent pratiques et la paire tient.
-- **Chiffre A.8.** 5 textes servis avec la paire sur 5 (lot choisi : surestimé). Croisés lus comme tels : 3 sur 10 inattendus.
+- **Chiffre A.8.** 4 textes servis avec la paire sur 5 (T14 n'en a pas ; lot choisi : surestimé). Croisés lus comme tels : 2 sur 8 inattendus. Pour le bilan A.8 des quatre lots : la paire est présente dans 17 textes sur 18 (S 6/6, P 4/5, T 3/3, L 4/4) : 6 pratique/pratique (2190, 2139, 6770, E3, 3370, 989), 2 croisé/croisé (T0, 8167) et 9 mixtes.
 - **Constat pour le lot.** L'argument « ce qu'on ne produit plus ici sera importé, en pire pour l'environnement » est lu « aucun », pas Précaution, à chaque fois (E2 R2, 840 R4 ; même figure chez Humbert, 5359).
-- **Groupes.** 17e législature : EPR 3, RN 3, EcoS 3, LFI-NFP 2, GDR 1, UDR 1, SOC 1, DR 1, Dem 1. 16e législature : LIOT 1, GDR-NUPES 1, LR 1, RN 1.
+- **Groupes.** 17e législature (16 raisons) : EPR 2, RN 3, EcoS 3, LFI-NFP 3, GDR 1, UDR 1, SOC 1, DR 2. 16e législature : LIOT 1, GDR-NUPES 1, LR 1, RN 1.
 - **Amendements de suppression.** 6770 et 5359 sont servis en présentation B : titre en « Supprimer », ligne 3 fixe. « Pour » veut dire pour l'amendement.
 
 ### E2 · scrutin 7386 (17e législature)
@@ -64,6 +64,7 @@ Remarques du rédacteur sur le lot :
     - SOC 1 abstention.
   - **Symétrie (vérificateur).** Le croisé « contre » est constructif, la pratique « pour » négative : léger avantage « raisonnable » au côté « contre », à surveiller. Aucun meilleur inattendu « pour » hors GDR et UDR n'a été relu.
   - **Rechanges vérifiées.** Duparay (DR, pour), N268:469 ; Loubet (RN, pour), N268:461 ; Laernoes (EcoS, contre), N268:471 ; Laisney (LFI-NFP, contre), N268:465.
+  - **Annotation.** Tension P, lue aussi L, avec s = 0.
   - **Ce débat n'est jamais cité au porteur hors de cette fiche.**
 - Prête pour le scellement : oui.
 
@@ -87,8 +88,8 @@ Remarques du rédacteur sur le lot :
 - Tension : P ; sens s = 0
 - Raisons :
   1. « On ne sait rien des effets d'une exploitation, n'agissons pas à l'aveugle. » — pour · pôle 0 — Michel Castellani, député, Libertés, Indépendants, Outre-mer et Territoires [vote : pour] — extrait : « nous ne savons rien des conséquences que pourrait engendrer leur exploitation. Or nous ne pouvons plus nous permettre d'agir à l'aveugle. » (CRSANR5L16S2023O1N119.txt:409)
-  2. « Inventons les solutions de demain plutôt que refaire les erreurs du passé. » (nouvelle, à annoter) — pour · pôle 1 — Moetai Brotherson, député, Gauche démocrate et républicaine - NUPES [vote : pour] — extrait : « j'ai confiance dans le génie français : pour moi, il ne consiste pas à reproduire les erreurs du passé, mais à inventer les solutions de l'avenir – des solutions vertueuses. » (CRSANR5L16S2023O1N119.txt:478)
-  3. « Plutôt qu'une pause, explorons vite pour savoir si l'on peut exploiter. » (nouvelle, à annoter) — contre · pôle 1 — Emmanuel Maquet, député, Les Républicains [vote : abstention] — extrait : « Confiant dans le rôle de la science et de la recherche, le groupe Les Républicains propose d'accélérer les travaux d'exploration des fonds marins afin d'identifier rapidement si l'exploitation est envisageable sans nuire à la biodiversité. » ; « Pour toutes ces raisons, le groupe Les Républicains ne votera pas avec la NUPES pour l'adoption de cette proposition de résolution. » (CRSANR5L16S2023O1N119.txt:435)
+  2. « Inventons les solutions de demain plutôt que refaire les erreurs du passé. » — pour · pôle 1 — Moetai Brotherson, député, Gauche démocrate et républicaine - NUPES [vote : pour] — extrait : « j'ai confiance dans le génie français : pour moi, il ne consiste pas à reproduire les erreurs du passé, mais à inventer les solutions de l'avenir – des solutions vertueuses. » (CRSANR5L16S2023O1N119.txt:478)
+  3. « Plutôt qu'une pause, explorons vite pour savoir si l'on peut exploiter. » — contre · pôle 1 — Emmanuel Maquet, député, Les Républicains [vote : abstention] — extrait : « Confiant dans le rôle de la science et de la recherche, le groupe Les Républicains propose d'accélérer les travaux d'exploration des fonds marins afin d'identifier rapidement si l'exploitation est envisageable sans nuire à la biodiversité. » ; « Pour toutes ces raisons, le groupe Les Républicains ne votera pas avec la NUPES pour l'adoption de cette proposition de résolution. » (CRSANR5L16S2023O1N119.txt:435)
   4. « Renoncer chez nous, c'est déplacer l'exploitation ailleurs, en pire pour l'environnement. » — contre · pôle aucun — Hervé de Lépinau, député, Rassemblement National [vote : contre] — extrait : « renoncer à nos propres richesses, c'est simplement déplacer leur exploitation ailleurs et dans de moins bonnes conditions environnementales que chez nous. » (CRSANR5L16S2023O1N119.txt:421)
 - Vérifications de l'auteur :
   - **Groupes.** 4 groupes (Libertés, Indépendants, Outre-mer et Territoires ; Gauche démocrate et républicaine - NUPES ; Les Républicains ; Rassemblement National).
@@ -105,13 +106,14 @@ Remarques du rédacteur sur le lot :
 - Doutes :
   - **Forme du vote.** Objet `resolution`, étape `aucune` (arbitrage 2 de forme). Phrase d'objet (UX) : « C'était une résolution, un texte qui invite le Gouvernement à agir, sans l'y obliger. » Gros titre inchangé (D-014).
   - **Raison 2 réécrite.** Le côté était retrouvé mais jugé fragile par les deux annotateurs. « Génie français » est retiré (il pouvait se lire comme de la fierté nationale), et l'opposition passé/avenir est mise en tête.
+  - **Annotation de la raison 2 (4e passage, Q08).** Côté « pour » retrouvé du premier coup, pôle 1, hésitant ; l'annotateur la juge fragile (D-034), comme les deux annotateurs d'aveugle3. Arbitrage de l'orchestrateur : gardée, le côté a été retrouvé du premier coup aux trois lectures (A.7, point 10 tenu). Fragilité à surveiller : la raison peut se lire sans pôle.
   - **Raison 3 réécrite (vérificateur).** « Plutôt qu'une pause » rend le refus de voter de son groupe (dernière phrase de N119:435, ajoutée à l'extrait) : le côté se lit sans hésiter.
   - **Ligne 3.** « tant que ce doute dure » rend le caractère temporaire de l'interdiction souhaitée (vérificateur).
   - **Convention 1 pour Maquet.** Seuls RN (50) et LR (6) ont voté contre ; les six LR « contre » n'ont pas argumenté.
   - **Raison 4.** Lue « aucun » par les deux annotateurs. Lépinau prête à la résolution une interdiction ferme dans la zone française (N119:413) ; le texte dit « souhaitable ».
   - **Issue devinable.** Gouvernement favorable, neuf groupes signataires (Castellani, Brotherson et Vermorel-Marques, LR, sont co-signataires). Interdiction déjà annoncée par le Gouvernement (N119:464).
   - **Proximité.** Thème voisin d'E2 (voir sa fiche). Thierry était déjà l'auteur du texte 12 du premier essai.
-- Prête pour le scellement : après annotation des raisons 2 et 3.
+- Prête pour la vérification indépendante (raison 3 annotée : côté « contre », pôle 1, sûr ; raison 2 : côté retrouvé aux trois lectures, jugée fragile : gardée par arbitrage de l'orchestrateur).
 
 ### Case P · scrutin 2139 (17e législature)
 - Titre : Centres de données, faciliter leur construction
@@ -128,7 +130,7 @@ Remarques du rédacteur sur le lot :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2025O1N219
 - Tension : P ; sens s = 1
 - Raisons :
-  1. « S'y opposer, c'est avoir vingt ou trente ans de retard. » (nouvelle, à annoter) — pour · pôle 1 — Charles Sitzenstuhl, député, Ensemble pour la République [vote : pour] — extrait : « Vous ne comprenez pas que la nouvelle économie numérique crée de la valeur et de l'emploi. » (CRSANR5L17S2025O1N180.txt:120) ; « Votre position dans ce débat sur les data centers est effarante. [...] Toutes vos interventions démontrent que vous avez vingt, voire trente ans de retard sur le monde moderne. » (CRSANR5L17S2025O1N180.txt:126)
+  1. « S'y opposer, c'est avoir vingt ou trente ans de retard. » — pour · pôle 1 — Charles Sitzenstuhl, député, Ensemble pour la République [vote : pour] — extrait : « Vous ne comprenez pas que la nouvelle économie numérique crée de la valeur et de l'emploi. » (CRSANR5L17S2025O1N180.txt:120) ; « Votre position dans ce débat sur les data centers est effarante. [...] Toutes vos interventions démontrent que vous avez vingt, voire trente ans de retard sur le monde moderne. » (CRSANR5L17S2025O1N180.txt:126)
   2. « Pas de centres en France, pas de souveraineté française sur ces centres. » — pour · pôle aucun — Matthias Renault, député, Rassemblement National [vote : pour] — extrait : « Si les centres de données ne s'installent pas en France, par définition, il n'y aura pas de souveraineté française sur les centres de données. » (CRSANR5L17S2025O1N180.txt:529)
   3. « Ces centres consomment énormément d'eau, alors que nos réserves diminuent. » — contre · pôle 0 — Cyrielle Chatelain, députée, Écologiste et Social [vote : contre] — extrait : « ces installations sont extrêmement consommatrices d'eau » ; « Alors que notre réserve en eau diminue, veut-on vraiment utiliser celle-ci pour refroidir des data centers » (CRSANR5L17S2025O1N180.txt:110)
   4. « Un emploi pour dix mille mètres carrés, c'est très peu d'emplois. » — contre · pôle aucun — Claire Lejeune, députée, La France insoumise - Nouveau Front Populaire [vote : contre] — extrait : « L'installation de centres de données permet la création d'un emploi pour 10 000 mètres carrés ; elle crée donc très peu d'emplois » (CRSANR5L17S2025O1N219.txt:487)
@@ -146,11 +148,12 @@ Remarques du rédacteur sur le lot :
     - Ligne 3 : N219:481 et :499 (amendement no 2648 adopté ; il vise aussi des projets industriels, capacité réservée « dans des zones » : simplification acceptée par le vérificateur).
 - Doutes :
   - **Raison 1 réécrite (vérificateur).** « Refuser ces centres » déplaçait l'attaque : les opposants contestaient les dérogations (N180:134), pas les centres. « S'y opposer » renvoie au texte servi. L'écart de force avec les deux faits chiffrés du côté « contre » reste ; il n'y a rien de plus concret chez un groupe libre (Bouquin, RN, N180:509, est « aucun »).
+  - **Annotation de la raison 1 (4e passage, Q02).** Côté retrouvé ; pôle 1 si la tension est P, « aucun » si elle est L (l'annotateur retient L, hésitant). Si elle est lue « aucun », le côté « pour » n'aurait plus d'attendue : texte à remplacer (A.7, point 6, dernière phrase). Tension P retenue (trois lectures sur quatre) : pôle 1.
   - **Pas de croisé possible.** Cazeneuve, Croizier et Lebec sont absents du scrutin (vérifié) ; les autres croisés possibles sont dans des groupes déjà pris.
   - **Tension.** Elle peut être lue Local ↔ National (ligne 2) ; annotation : P confirmée. La tolérance de 30 % sur l'artificialisation (alinéa 42) est laissée hors des lignes.
   - **Condition 2 de la règle 8.** L'amendement no 2648, adopté entre les extraits et le vote, ne touche pas les points cités.
   - **Même dossier que 2190 (case S).** Mesures sans rapport, tensions différentes.
-- Prête pour le scellement : après annotation de la raison 1.
+- Prête pour la vérification indépendante (raison 1 annotée : côté retrouvé, pôle 1 sous la tension P retenue).
 
 ### Case P · scrutin 6770 (17e législature)
 - Titre : Supprimer l'article facilitant les réserves d'eau agricoles
@@ -163,7 +166,7 @@ Remarques du rédacteur sur le lot :
 - Auteur : Mathilde Hignet, députée, La France insoumise - Nouveau Front Populaire au dépôt.
   - Première signataire selon le titre du scrutin, PA794082, groupe PO845413.
   - Amendement défendu par Stambach-Terrenoir (N240:82).
-  - Identiques : no 523 (Belluco, EcoS), no 1471 (Biteau, EcoS). Nos 1359 et 1949 (LIOT) retirés (N240:92).
+  - Identiques : no 523 (Belluco, Écologiste et Social), no 1471 (Biteau, Écologiste et Social). Nos 1359 et 1949 (Libertés, Indépendants, Outre-mer et Territoires) retirés (N240:92).
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/6770
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N240
@@ -173,7 +176,7 @@ Remarques du rédacteur sur le lot :
 - Raisons :
   1. « Selon les chercheurs, ces réserves aggraveront les risques de sécheresse et d'inondation. » — pour · pôle 0 — Anne Stambach-Terrenoir, députée, La France insoumise - Nouveau Front Populaire [vote : pour] — extrait : « les hydrologues et les chercheurs vous disent tous que c'est une mal-adaptation face au changement climatique [...] et qu'au contraire, ces installations aggraveront les risques de sécheresse mais aussi d'inondations en empêchant l'eau de s'infiltrer dans les sols. » (CRSANR5L17S2026O1N240.txt:83)
   2. « L'article vise surtout à laisser l'État ignorer les décisions de justice. » — pour · pôle aucun — Delphine Batho, députée, Écologiste et Social [vote : pour] — extrait : « En réalité, cet article vise surtout à permettre à l'État de ne pas appliquer les décisions de justice. » (CRSANR5L17S2026O1N240.txt:42)
-  3. « Le stockage de l'eau doit progresser, c'est le cœur de l'urgence agricole. » (nouvelle, à annoter) — contre · pôle 1 — Philippe Schreck, député, Rassemblement National [vote : contre] — extrait : « Nous avons besoin de progresser en matière de stockage de l'eau car nous avons pris du retard. C'est le cœur de l'urgence agricole. » (CRSANR5L17S2026O1N240.txt:128)
+  3. « Le stockage de l'eau doit progresser, c'est le cœur de l'urgence agricole. » — contre · pôle 1 — Philippe Schreck, député, Rassemblement National [vote : contre] — extrait : « Nous avons besoin de progresser en matière de stockage de l'eau car nous avons pris du retard. C'est le cœur de l'urgence agricole. » (CRSANR5L17S2026O1N240.txt:128)
   4. « Ces retenues d'eau servent d'abord à lutter contre les incendies. » — contre · pôle aucun — Jean-Pierre Vigier, député, Droite Républicaine [vote : contre] — extrait : « ces retenues collinaires sont multi-usages – ce mot est très important –, l'usage prioritaire étant la sécurité incendie » ; « grâce à ces retenues, un incendie qui menaçait un village et 200 hectares de terre a été circonscrit sur 80 hectares » (CRSANR5L17S2026O1N240.txt:141)
 - Vérifications de l'auteur :
   - **Groupes.** 4 groupes (La France insoumise - Nouveau Front Populaire, Écologiste et Social, Rassemblement National, Droite Républicaine).
@@ -198,7 +201,7 @@ Remarques du rédacteur sur le lot :
     - Contre : RN 38, EPR 26, SOC 17, DR 16, HOR 13, Dem 12, UDR 8, LIOT 2, NI 2.
     - Abstentions : EcoS 1, GDR 1.
   - **En-tête.** Le suffixe « · présentation B » est passé ici (arbitrage 9 de forme).
-- Prête pour le scellement : après annotation de la raison 3.
+- Prête pour la vérification indépendante (raison 3 annotée : côté « contre » retrouvé, pôle 1, hésitant ; « aucun » possible, voir Doutes).
 
 ### T14 · scrutin 5359 (17e législature)
 - Titre : Supprimer l'article sur les pesticides près de l'eau potable
@@ -211,7 +214,7 @@ Remarques du rédacteur sur le lot :
 - Auteur : Nicolas Tryzna, député, Droite Républicaine au dépôt.
   - Premier signataire selon le titre du scrutin, PA842121, membre du groupe PO845425 depuis le 14 novembre 2025.
   - Amendement défendu par Duparay (N147:452).
-  - Identiques : no 46 (Kasbarian, EPR), no 47 (Blin, DR), no 70 (Minard, DR).
+  - Identiques : no 46 (Kasbarian, Ensemble pour la République), no 47 (Blin, Droite Républicaine), no 70 (Minard, Droite Républicaine).
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/5359
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N147
@@ -231,7 +234,7 @@ Remarques du rédacteur sur le lot :
   - **Type (D-034).** Aucun inattendu (A.7, point 6) : deux attendues de chaque côté.
   - **Votes vérifiés dans VTANR5L17V5359.json.** Humbert PA842085 pour ; Duparay PA870009 pour ; Laernoes PA794146 contre ; Hignet PA794082 contre (absente des « pours » et des « abstentions »).
   - **Annotation à l'aveugle.** Raison 1 (Humbert) lue pôle 1 ; raison 2 (Duparay) lue pôle 1 par les deux annotateurs du premier passage ; raison 3 (Laernoes) lue pôle 0 ; raison 4 (Hignet) lue pôle 0 par les deux annotateurs des troisième et quatrième passages.
-  - **Longueurs.** Titre 60 car. ; lignes 85/90/67 car. (point final compris) ; raisons de 12/12/12/12 mots.
+  - **Longueurs.** Titre 60 car. ; lignes 85/89/67 car. (point final compris) ; raisons de 12/12/12/12 mots.
   - **Sources des lignes (texte no 2427, article 1er, voté tel quel : la suppression a été mise aux voix la première).**
     - Ligne 1 : II, 2° (« une zone soumise à contrainte environnementale et [...] un programme pluriannuel d'actions obligatoires » dans « les aires d'alimentation des captages ») ; II, 3° b.
     - Ligne 2 : II, 4° (« Avant le 1er janvier 2030, le représentant de l'État dans le département met en place des mesures limitant ou interdisant, le cas échéant, certaines occupations des sols et l'utilisation d'intrants, pour les zones les plus contributives [...] au sein des captages prioritaires », seuils pour « engrais azotés minéraux » et « produits phytopharmaceutiques de synthèse »).
@@ -239,12 +242,9 @@ Remarques du rédacteur sur le lot :
 - Doutes :
   - **Arbitrage de l'orchestrateur (10 octobre 2026), après le quatrième passage d'annotation.** La raison de Hignet, prévue en pratique (« aucun »), a été lue au pôle 0 par les deux derniers annotateurs (« prévenir à la source plutôt que réparer »). Le côté « contre » n'avait donc plus d'inattendu. On applique A.7, point 6, « aucun inattendu » : Turquois (pratique « pour ») sort, Duparay (attendue de pôle 1, lue 1 par les deux annotateurs du premier passage) revient en raison 2. Deux attendues de chaque côté, quatre groupes, votes vérifiés. Le Feur reste écartée : son côté même ne se lit pas du premier coup (quatrième passage).
   - **Suite.** `texte_retire` ; phrase à 18h (UX) : « Le jour même, le texte entier a été retiré. »
-  - **Raison 4 remplacée.** La raison de Le Feur (« Voter ce texte, c'est choisir un courage mesuré plutôt que l'immobilisme. », N147:324) est lue du bon côté mais au pôle 0, deux lectures sur trois. Avec Laernoes (attendue, pôle 0), le côté « contre » n'avait plus d'inattendu, alors que le côté « pour » garde Turquois : la règle « un de chaque côté, ou aucun » était rompue.
-  - **Choix de Hignet.** Sa pratique de coût est prise en échange : argument d'efficacité, pôle « aucun » peu discutable, prononcé contre les amendements de suppression, vote vérifié. La paire devient pratique / pratique.
-  - **Point 6 de A.7.** Aucun croisé « contre » d'un groupe libre n'a été relu : Le Feur et Coggia (EPR) sont lus au pôle 0 ou donnent l'avis de la commission. Le Feur n'est donc plus disponible comme croisé.
-  - **Autre solution écartée.** Retirer aussi l'inattendu « pour » (Turquois → Duparay ou Corneloup, deux attendues de chaque côté) : moins robuste. Le pôle 1 de Duparay a été lu comme hésitant, et Corneloup est une pratique.
+  - **Point 6 de A.7.** Aucun croisé « contre » d'un groupe libre n'a été relu : Le Feur est lu au pôle 0 ou d'un côté incertain, Coggia (EPR) donne l'avis de la commission.
   - **Raison 1 (Humbert, confirmée).** Je n'ai pas pris son croisé (« Ce que nos agriculteurs ne produiront plus ici, nous serons dans l'obligation de l'importer », N147:376) : cette figure a été lue « aucun » dans ce lot (E2 R2, 840 R4).
-  - **Raison 2.** Elle s'appuie sur une distinction (engrais de synthèse ou effluents) que la ligne 2 n'a pas, faute de place. Turquois décrit le texte plus durement qu'il n'est ; les lignes donnent le vrai texte.
+  - **Raison 2.** Duparay décrit les interdictions anticipées ; elle s'appuie sur une distinction (engrais de synthèse ou effluents) que la ligne 2 n'a pas, faute de place.
   - **Raison 3 (Laernoes, confirmée).** « Au moins une fois » et « en pesticides » restent dans l'extrait.
   - **Raison 4.** Elle compare deux coûts sans chiffre ; elle se lit contre la suppression (garder l'article, c'est accompagner les changements de pratiques). La même oratrice est première signataire de l'amendement servi en 6770 : rien ne l'interdit, à signaler à Game design.
   - **Écho avec E2.** Il disparaît avec le retrait de Le Feur.
@@ -254,7 +254,7 @@ Remarques du rédacteur sur le lot :
     - Contre : LFI-NFP 46, EcoS 37, SOC 24, EPR 16, GDR 5, HOR 2, Dem 1.
   - **Tension.** Elle peut être lue Local ↔ National ; P confirmée à l'annotation.
   - **En-tête.** Le suffixe « · présentation B » est passé ici (arbitrage 9 de forme).
-- Prête pour le scellement : après annotation de la raison 4.
+- Prête pour la vérification indépendante (raison 4 annotée : pôle 0 aux 3e et 4e passages ; aucun inattendu, A.7 point 6).
 
 ### H86 · scrutin 7313 (17e législature)
 - Titre affiché : Vaisselle en plastique interdite dans les cantines d'enfants (60 car.)

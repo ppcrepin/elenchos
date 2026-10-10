@@ -4,7 +4,7 @@
 
 Remarques du rédacteur sur le lot :
 - Les extraits sont recopiés en typographie simple. Dans les comptes rendus, l'apostrophe est courbe.
-- Votes personnels : 24 sur 24 vérifiés dans le fichier JSON de chaque scrutin. Tous vont dans le sens de la raison, et aucun orateur retenu n'est absent de la liste nominative. Le vérificateur indépendant les a revérifiés, ainsi que les 24 extraits.
+- Votes personnels : 24 sur 24 vérifiés dans le fichier JSON de chaque scrutin. Tous vont dans le sens de la raison, et aucun orateur retenu n'est absent de la liste nominative. Les fiches E1, T0 et 795 ont été revérifiées par le vérificateur indépendant, extraits compris ; 7922 (raison 4), 2190 (raison 4) et 8167 attendent la vérification indépendante.
 - Répartition des 24 raisons (8167 comprise, 8279 écartée) :
   - Rassemblement National 5, Écologiste et Social 4 ;
   - Droite Républicaine 3, La France insoumise - Nouveau Front Populaire 3, Socialistes et apparentés 3 ;
@@ -12,7 +12,7 @@ Remarques du rédacteur sur le lot :
   - Ensemble pour la République 2.
 
   Le Rassemblement National est surreprésenté parce que les débats l'imposent : sur E1 et 8167, seuls RN, EPR et HOR plaident « pour » le texte (« contre » le retrait pour 8167).
-- D-034, après l'annotation : chaque fiche a un inattendu de chaque côté.
+- D-034 : chaque fiche a un inattendu de chaque côté ; pour 7922, la raison 4 est lue 0 puis 1 (arbitrage noté dans la fiche).
   - Types (côté « pour », puis côté « contre ») : E1 croisé/pratique ; T0 croisé/croisé ; 795 pratique/croisé ; 7922 pratique/croisé ; 2190 pratique/pratique ; 8167 croisé/croisé.
   - Raisons « aucun » : 5 (E1 R4, 795 R2, 7922 R2, 2190 R2, 2190 R4), toutes en inattendue, au plus une par côté.
 - Présentation B (7922, 8167) :
@@ -31,7 +31,7 @@ Remarques du rédacteur sur le lot :
   3. Faute d'autre moyen, un juge l'autoriserait pour un à six mois au plus selon le cas.
 - Vote : adopté, 76 pour, 27 contre, 1 abstention (24 mars 2025) ; amendement no 5 et identiques rétablissant l'article 15 quater, en première lecture ; le Sénat devait encore voter le texte (dossier DLR5L17N50169 : AN1-DEBATS-DEC et CMP-DEPOT le 1er avril 2025) (CRSANR5L17S2025O1N143.txt:909 ; VTANR5L17V1161.json).
 - Objet du vote : amendement
-- Auteur : Michaël Taverne, député, Rassemblement National ; premier signataire de l'amendement no 5 (an-web/am-1043-5.txt, l. 15 ; cosignataires du même groupe) et premier nommé par le titre du scrutin ; CRSANR5L17S2025O1N143.txt:884-885. Amendements identiques : no 635 Olivier Marleix (Droite Républicaine), no 770 Sébastien Huyghe (Ensemble pour la République), no 786 Éric Martineau (Les Démocrates), no 844 Éric Ciotti (UDR), no 908 Vincent Caure, rapporteur (Ensemble pour la République) (N143:884-888).
+- Auteur : Michaël Taverne, député, Rassemblement National au dépôt ; premier signataire de l'amendement no 5 (an-web/am-1043-5.txt, l. 15 ; cosignataires du même groupe) et premier nommé par le titre du scrutin ; CRSANR5L17S2025O1N143.txt:884-885. Amendements identiques : no 635 Olivier Marleix (Droite Républicaine), no 770 Sébastien Huyghe (Ensemble pour la République), no 786 Éric Martineau (Les Démocrates), no 844 Éric Ciotti (Union des droites pour la République), no 908 Vincent Caure, rapporteur (Ensemble pour la République) (N143:884-888).
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/1161
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2025O1N143
@@ -70,7 +70,7 @@ Remarques du rédacteur sur le lot :
   3. L'aménagement serait possible jusqu'à deux ans, par exemple si le condamné travaille.
 - Vote : adopté, 63 pour, 42 contre, 2 abstentions (3 avril 2025) ; vote sur l'ensemble, en première lecture ; le Sénat devait encore voter (dossier DLR5L17N50631 : SN1-DEPOT le 3 avril 2025, SN1-DEBATS-DEC le 1er juillet 2025) (CRSANR5L17S2025O1N160.txt:987 ; VTANR5L17V1262.json).
 - Objet du vote : texte
-- Auteur : Loïc Kervran, député, Horizons & Indépendants ; dossier DLR5L17N50631 (initiateur PA719052, AN1-DEPOT le 15 octobre 2024) ; CRSANR5L17S2025O1N159.txt:453.
+- Auteur : Loïc Kervran, député, Horizons & Indépendants au dépôt ; dossier DLR5L17N50631 (initiateur PA719052, AN1-DEPOT le 15 octobre 2024) ; CRSANR5L17S2025O1N159.txt:453.
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/1262
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2025O1N160
@@ -104,6 +104,7 @@ Remarques du rédacteur sur le lot :
   - Le texte adopté n'a pas été lu ; les lignes reposent sur des descriptions concordantes en séance.
   - EPR s'est majoritairement abstenu (N160:956) ; 107 votants.
   - Josserand parle aussi en 795.
+  - Titre en « sans … » : il décrit le résultat de la mesure, sans verbe de retrait ; A.7 point 13 n'est pas appliqué (arbitrage de l'orchestrateur).
 - Statut : prête (vérification indépendante passée, aucune correction).
 
 ### Case S (rang tiré au scellement) · scrutin 795 (17e législature)
@@ -114,7 +115,7 @@ Remarques du rédacteur sur le lot :
   3. Il trancherait au cas par cas, selon l'acte et la personnalité du jeune.
 - Vote : rejeté, 27 pour, 81 contre, 7 abstentions (13 février 2025) ; amendement no 17 rétablissant l'article 5 (supprimé en commission), en première lecture (CRSANR5L17S2025O1N102.txt:138 ; VTANR5L17V795.json).
 - Objet du vote : amendement
-- Auteur : Alexandra Martin, députée, Droite Républicaine ; première signataire de l'amendement no 17 (an-web/am-0628-17.txt, l. 16 ; cosignataires : Corneloup, Bonnivard, Bazin, Ray) et nommée par le titre du scrutin (PA793342, Alpes-Maritimes) ; N102:94-95. Pas d'amendement identique (discussion commune avec les nos 59, 40 et 48).
+- Auteur : Alexandra Martin, députée, Droite Républicaine au dépôt ; première signataire de l'amendement no 17 (an-web/am-0628-17.txt, l. 16 ; cosignataires : Corneloup, Bonnivard, Bazin, Ray) et nommée par le titre du scrutin (PA793342, Alpes-Maritimes) ; N102:94-95. Pas d'amendement identique (discussion commune avec les nos 59, 40 et 48).
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/795
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2025O1N102
@@ -145,6 +146,7 @@ Remarques du rédacteur sur le lot :
   - Raison 1 : « les adultes, notamment dans le narcotrafic » devient « des trafiquants » ; l'exposé sommaire le dit aussi (l. 45-46, l. 69-70).
   - Homonyme : PA793944 est une autre Alexandra Martin.
   - Josserand parle aussi en T0.
+  - Titre en « sans … » : il décrit le résultat de la mesure, sans verbe de retrait ; A.7 point 13 n'est pas appliqué (arbitrage de l'orchestrateur).
 - Statut : prête pour la vérification indépendante (lignes 2 et 3 corrigées ; raisons déjà annotées).
 
 ### Case S (rang tiré au scellement) · scrutin 7922 (17e législature)
@@ -155,7 +157,7 @@ Remarques du rédacteur sur le lot :
   3. Cet amendement supprimerait tout l'article qui prévoit ces mesures.
 - Vote : rejeté, 41 pour, 80 contre, 0 abstention (1er juillet 2026) ; amendements identiques nos 25, 64, 175 et 233 de suppression de l'article 3 du projet de loi sur la justice criminelle et le respect des victimes, en première lecture (CRSANR5L17S2026E1N002.txt:126 ; VTANR5L17V7922.json).
 - Objet du vote : amendement
-- Auteur : Émeline K/Bidi, députée, Gauche Démocrate et Républicaine ; première signataire nommée par le titre du scrutin (amendement no 25, défendu en séance par Elsa Faucillon, E1N002:85-86). Identiques : no 64 Colette Capdevielle (Socialistes et apparentés), no 175 Élisa Martin (La France insoumise - Nouveau Front Populaire), no 233 Emmanuel Duplessy (Écologiste et Social).
+- Auteur : Émeline K/Bidi, députée, Gauche Démocrate et Républicaine au dépôt ; première signataire nommée par le titre du scrutin (amendement no 25, défendu en séance par Elsa Faucillon, E1N002:85-86). Identiques : no 64 Colette Capdevielle (Socialistes et apparentés), no 175 Élisa Martin (La France insoumise - Nouveau Front Populaire), no 233 Emmanuel Duplessy (Écologiste et Social).
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/7922
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026E1N002
@@ -164,7 +166,7 @@ Remarques du rédacteur sur le lot :
   1. « Un cousin pourrait être impliqué dans une enquête sans avoir jamais consenti. » — pour · pôle 1 — Elsa Faucillon, députée, Gauche Démocrate et Républicaine [vote : pour] — extrait : « Elles risquent d'impliquer dans le cadre d'une enquête des personnes n'ayant jamais consenti à l'utilisation de leurs données génétiques, uniquement en raison de leurs liens familiaux – un cousin, un oncle, une tante pourraient être concernés » (CRSANR5L17S2026E1N002.txt:86)
   2. « Au vu du nombre d'affaires qu'on pourrait résoudre, cela paraît disproportionné. » — pour · pôle aucun — Élisa Martin, députée, La France insoumise - Nouveau Front Populaire [vote : pour] — extrait : « Le dispositif cible les cold cases – les affaires anciennes non résolues –, mais paraît manifestement disproportionné par rapport au nombre d'affaires susceptibles d'être résolues ainsi » (CRSANR5L17S2026E1N002.txt:90)
   3. « Ces outils permettent de neutraliser des tueurs en série et des pédocriminels. » — contre · pôle 0 — Laurent Marcangeli, député, Horizons & Indépendants [vote : contre] — extrait : « nous pouvons compter au rang de nos alliés et amis tous les systèmes qui nous permettront de mettre définitivement hors d'état de nuire un pédocriminel, un tueur en série ou une personne qui commet des crimes répétés » ; « il permet de lutter efficacement contre des criminels en série » (CRSANR5L17S2026E1N002.txt:119)
-  4. « Les bases utilisées recueillent le consentement éclairé de leurs utilisateurs. » — contre · pôle 1 — Natalia Pouzyreff, députée, Ensemble pour la République [vote : contre] — extrait : « Les bases de données ADN qui peuvent collaborer avec le FBI sont très bien identifiées et recueillent le consentement éclairé des personnes. Sachez que certaines personnes choisissent de s'inscrire sur ces bases de données, plutôt que sur d'autres, précisément parce qu'elles souhaitent participer à la recherche de criminels » (CRSANR5L17S2026E1N002.txt:156) (nouvelle, à annoter)
+  4. « Les bases utilisées recueillent le consentement éclairé de leurs utilisateurs. » — contre · pôle 1 — Natalia Pouzyreff, députée, Ensemble pour la République [vote : contre] — extrait : « Les bases de données ADN qui peuvent collaborer avec le FBI sont très bien identifiées et recueillent le consentement éclairé des personnes. Sachez que certaines personnes choisissent de s'inscrire sur ces bases de données, plutôt que sur d'autres, précisément parce qu'elles souhaitent participer à la recherche de criminels » (CRSANR5L17S2026E1N002.txt:156)
 - Vérifications de l'auteur :
   - Groupes : 4 (Gauche Démocrate et Républicaine, La France insoumise - Nouveau Front Populaire, Horizons & Indépendants, Ensemble pour la République). Côtés : 2 pour, 2 contre.
   - Types D-034 : 1 attendue, 2 pratique, 3 attendue, 4 croisée. Un inattendu de chaque côté ; « aucun » une fois, en inattendue.
@@ -177,7 +179,7 @@ Remarques du rédacteur sur le lot :
   - Sources des lignes : E1N002:86 et :88 (bases privées à l'étranger, surtout américaines ; Fnaeg élargi) ; :90 et :94 (habilitation générale à consulter des fichiers ; crimes anciens et sériels) ; :98 et :104 (ministre : inscription au Fnaeg ; crimes en série ou non élucidés).
 - Doutes :
   - Présentation B : être favorable, c'est soutenir le retrait.
-  - **Raison 4 remplacée.** La version réécrite de Bergantz (« Comparer l'ADN serait encadré et réservé aux enquêtes sans aucun suspect. », Les Démocrates, N002:94) a été lue pôle 0 à la seconde annotation, après « aucun » et 1 à la première. Elle est remplacée par Pouzyreff, à annoter.
+  - **Raison 4 remplacée.** La version réécrite de Bergantz (« Comparer l'ADN serait encadré et réservé aux enquêtes sans aucun suspect. », Les Démocrates, N002:94) a été lue pôle 0 à la seconde annotation, après « aucun » et 1 à la première. Elle est remplacée par Pouzyreff, annotée deux fois : côté « contre » sûr aux deux passages ; pôle 0 (3e passage) puis 1 (4e), hésitant. Arbitrage de l'orchestrateur : pôle 1 gardé (règle d'aveugle3 : une lecture rejoint le rédacteur, ici le quatrième passage, sur le modèle le plus capable). Si le pôle 0 était retenu, le repli ci-dessous s'applique.
   - Raison 4 : la phrase ne garde que le consentement. La suite de l'extrait (« participer à la recherche de criminels ») est laissée de côté, parce qu'elle tirerait la lecture vers le pôle 0. Le recueil du consentement est contesté en séance par Capdevielle (N002:140) et Taurinya (N002:143). C'est une affirmation de l'oratrice, invérifiable sans le texte de la commission.
   - **Si la raison 4 est lue pôle 0**, on applique A.7, point 6 : aucun inattendu des deux côtés, deux attendues nettes de chaque côté, quatre groupes, votes vérifiés.
     - Côté « pour » : Faucillon (Gauche Démocrate et Républicaine) et Élisa Martin (La France insoumise - Nouveau Front Populaire), qui remplace sa raison 2 par sa phrase sur la vie privée (N002:179, « nous souhaitons protéger absolument la vie privée des personnes », pôle 1).
@@ -188,7 +190,7 @@ Remarques du rédacteur sur le lot :
   - Tension : la lecture Précaution/Innovation est possible ; S est confirmé à l'annotation.
   - « Émeline K/Bidi » s'affiche tel quel (arbitrage de forme, point 7).
   - L'amendement no 25 (2904/AN/25) et le texte de la commission no 2904 n'étaient pas publiés au 10 octobre 2026 (fichiers locaux vides ou invalides). Les lignes et l'auteur restent sourcés sur le seul compte rendu (CRSANR5L17S2026E1N002). L'article mis aux voix est celui du texte de la commission, puisque les suppressions sont examinées d'abord.
-- Statut : prête pour la vérification indépendante après annotation à l'aveugle de la raison 4 ; repli écrit ci-dessus si elle est lue pôle 0.
+- Statut : prête pour la vérification indépendante (raison 4 annotée, lectures partagées 0 / 1).
 
 ### Case S (rang tiré au scellement) · scrutin 2190 (17e législature)
 - Titre : Supprimer les zones à faibles émissions
@@ -208,7 +210,7 @@ Remarques du rédacteur sur le lot :
   1. « On ne peut pas interdire aux artisans d'entrer dans les grandes villes. » — pour · pôle 1 — Guillaume Lepers, député, Droite Républicaine [vote : pour] — extrait : « Je pense aussi à nos artisans : on ne peut pas leur interdire d'entrer dans nos grandes villes, il y va de leur liberté » (CRSANR5L17S2025O1N219.txt:921)
   2. « Des ruraux auraient plus de mal à aller se soigner en ville. » — pour · pôle aucun — Christophe Bentz, député, Rassemblement National [vote : pour] — extrait : « Je m'oppose fermement aux ZFE au nom de la santé des Français » (CRSANR5L17S2025O1N220.txt:232) ; « les Sud-Marnais dépendent désormais grandement de tous les services de santé de la ZFE de Dijon » ; « Aggravera-t-on encore leurs difficultés d'accès aux soins ? » (CRSANR5L17S2025O1N220.txt:234)
   3. « Les enfants des quartiers les plus pollués souffrent souvent d'asthme. » — contre · pôle 0 — Sabrina Sebaihi, députée, Écologiste et Social [vote : contre] — extrait : « C'est pourtant dans ce type de territoires qu'on trouve les personnes les plus malades, les plus exposées à la pollution de l'air, avec une prévalence très importante de l'asthme chez les enfants » (CRSANR5L17S2025O1N219.txt:937)
-  4. « En Italie ou à Bruxelles, ces zones fonctionnent, mieux vaut les améliorer. » — contre · pôle aucun — Thierry Sother, député, Socialistes et apparentés [vote : contre] — extrait : « Dans de nombreuses villes européennes, les ZFE fonctionnent » ; « Que ce soit en Italie ou en Belgique, à Bruxelles, les ZFE fonctionnent » ; « Supprimer le dispositif n'est pas une bonne chose ; transformons-le pour le rendre plus efficace ! » (CRSANR5L17S2025O1N219.txt:935) (nouvelle, à annoter)
+  4. « En Italie ou à Bruxelles, ces zones fonctionnent, mieux vaut les améliorer. » — contre · pôle aucun — Thierry Sother, député, Socialistes et apparentés [vote : contre] — extrait : « Dans de nombreuses villes européennes, les ZFE fonctionnent » ; « Que ce soit en Italie ou en Belgique, à Bruxelles, les ZFE fonctionnent » ; « Supprimer le dispositif n'est pas une bonne chose ; transformons-le pour le rendre plus efficace ! » (CRSANR5L17S2025O1N219.txt:935)
 - Vérifications de l'auteur :
   - Groupes : 4 (Droite Républicaine, Rassemblement National, Écologiste et Social, Socialistes et apparentés). Côtés : 2 pour, 2 contre.
   - Types D-034 : 1 attendue, 2 pratique, 3 attendue, 4 pratique. Un inattendu de chaque côté ; « aucun » deux fois, une par côté, en inattendue.
@@ -217,7 +219,7 @@ Remarques du rédacteur sur le lot :
   - Titre 39 car. ; lignes 87/65/53 car. ; raisons de 12/12/10/12 mots.
   - Sources des lignes : N219:906 (restriction de circulation selon Crit'Air) ; N220:53 (ministre : 42 collectivités ont une ZFE) ; N219:845 et N220:255 (suppression du dispositif).
 - Doutes :
-  - **Raison 4 remplacée.** Les deux annotateurs ont lu Morel (« On a le droit de circuler, mais aussi celui de respirer. », Les Démocrates, N220:71) pôle 0. Le côté « contre » n'avait plus d'inattendu, d'où le pratique prévu dans la fiche : Sother, à annoter.
+  - **Raison 4 remplacée.** Les deux annotateurs ont lu Morel (« On a le droit de circuler, mais aussi celui de respirer. », Les Démocrates, N220:71) pôle 0. Le côté « contre » n'avait plus d'inattendu, d'où le pratique prévu dans la fiche : Sother, annoté (côté « contre » net, pôle « aucun », hésitant ; autre lecture : 0).
     - Si Sother est lu pôle 0, il faut supprimer l'inattendu des deux côtés. Les deux raisons « contre » sont alors Sebaihi et Morel (pôle 0). Côté « pour », Bentz est remplacé par une attendue de pôle 1, par exemple Pierre Meurin, Rassemblement National, vote « pour » vérifié (PA793852), N220:59, « atteinte majeure à la liberté de circulation de personnes qui détiennent le permis de conduire » ; la formulation est à écrire sans le mot du pôle.
   - Raison 2 : l'annotation l'a lue « aucun » (accès aux soins) ; elle devient l'inattendu pratique du côté « pour ». Texte inchangé. La question rhétorique devient une phrase au conditionnel, sans devenir une règle absolue.
   - Raison 1 : le mot « liberté » est retiré (convention 3).
@@ -226,7 +228,7 @@ Remarques du rédacteur sur le lot :
   - Auteur : forme courte arbitrée par l'orchestrateur (arbitrage de forme, point 5). Le libellé officiel est en 2.10 bis, colonne Source.
   - La saisine du Conseil constitutionnel figure au dossier ; le sort de la mesure n'a pas été vérifié.
   - Même dossier que 2139 (P) : au plus deux scrutins par dossier, la règle tient.
-- Statut : prête pour la vérification indépendante après annotation à l'aveugle de la raison 4 ; repli écrit ci-dessus si elle tombe.
+- Statut : prête pour la vérification indépendante (raison 4 annotée : « aucun », hésitant ; repli écrit ci-dessus si Sother est lu pôle 0).
 
 ### (écartée) scrutin 8279 (17e législature) — fiche non rédigée
 - Motif : règle A.5. L'ensemble du projet de loi contient le délit d'organisation de rave-party (deux ans et 30 000 euros) et la pénalisation de la participation, mesure jouée au premier essai (texte E1, scrutin 6124) : CRSANR5L17S2026E1N014.txt:340, :285, :264. Il prolonge aussi la vidéosurveillance algorithmique jusqu'en 2030 (:285, :346). Texte de plus de 70 articles (:346) : trois lignes seraient un choix éditorial fort.
@@ -240,7 +242,7 @@ Remarques du rédacteur sur le lot :
   3. Cet amendement supprimerait tout l'article qui prévoit ces mesures.
 - Vote : rejeté, 12 pour, 23 contre, 0 abstention (10 juillet 2026) ; amendements identiques nos 200, 228, 272, 462 et 468 de suppression de l'article 9 du projet de loi visant à offrir des réponses immédiates aux phénomènes troublant l'ordre public, en première lecture (CRSANR5L17S2026E1N012.txt:52 ; VTANR5L17V8167.json).
 - Objet du vote : amendement
-- Auteur : Max Mathiasin, député, Libertés, Indépendants, Outre-mer et Territoires ; premier signataire de l'amendement no 200 (an-web/am-2984-200.txt, l. 17 ; cosignataires du même groupe) et nommé par le titre du scrutin ; E1N012:19-20. Identiques : no 228 (défendu par Pouria Amirshahi, Écologiste et Social), no 272 Roger Vicot (Socialistes et apparentés), no 462 (défendu par Andrée Taurinya, La France insoumise - Nouveau Front Populaire), no 468 Nicolas Sansu (Gauche Démocrate et Républicaine).
+- Auteur : Max Mathiasin, député, Libertés, Indépendants, Outre-mer et Territoires au dépôt ; premier signataire de l'amendement no 200 (an-web/am-2984-200.txt, l. 17 ; cosignataires du même groupe) et nommé par le titre du scrutin ; E1N012:19-20. Identiques : no 228 (défendu par Pouria Amirshahi, Écologiste et Social), no 272 Roger Vicot (Socialistes et apparentés), no 462 (défendu par Andrée Taurinya, La France insoumise - Nouveau Front Populaire), no 468 Nicolas Sansu (Gauche Démocrate et Républicaine).
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/8167
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026E1N012
@@ -255,7 +257,7 @@ Remarques du rédacteur sur le lot :
   - Groupes : 4. Côtés : 2 pour, 2 contre.
   - Types D-034 : 1 attendue, 2 croisée, 3 attendue, 4 croisée. Pôles confirmés ou gardés à l'annotation.
   - Votes vérifiés dans VTANR5L17V8167.json : 1 pour (PA794494), 2 pour (PA605745), 3 contre (PA794502), 4 contre (PA794278).
-  - Titre 52 car. ; lignes 90/90/67 car. ; raisons de 12/12/11/12 mots.
+  - Titre 52 car. ; lignes 89/90/67 car. ; raisons de 12/12/11/12 mots.
   - Sources des lignes, toutes relues sur le texte de la commission no 2984 :
     - ligne 1 : « contrôler l'identité de toute personne, quel que soit son comportement » (l. 1110), agents des services spécialisés dans les trafics (l. 1107-1109) ;
     - ligne 2 : finalité, la lutte contre les trafics, le blanchiment et le recel (l. 1099-1104) ; 40 km de la frontière terrestre avec les États Schengen (l. 1113-1116) ; 40 km du littoral (l. 1118-1119) ; aéroports (l. 1130 et III ter, l. 1088-1095) ;

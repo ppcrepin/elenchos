@@ -1,6 +1,6 @@
 # Fiches L · Local (pôle 0) – National (pôle 1)
 
-*Rédigées par Contenu le 10 octobre 2026 à partir des comptes rendus officiels (open data de l'Assemblée nationale, 16e et 17e législatures). Vérifiées une fois et annotées à l'aveugle, puis corrigées le 10 octobre 2026. Les raisons marquées « nouvelle, à annoter » repassent l'annotation à l'aveugle (convention 7). Typographie simple ; l'ordre des raisons est tiré au scellement.*
+*Rédigées par Contenu le 10 octobre 2026 à partir des comptes rendus officiels (open data de l'Assemblée nationale, 16e et 17e législatures). Vérifiées une fois et annotées à l'aveugle, puis corrigées le 10 octobre 2026. Toutes les raisons ont été annotées à l'aveugle. Typographie simple ; l'ordre des raisons est tiré au scellement.*
 
 Remarques du rédacteur sur le lot :
 - Les extraits sont recopiés des fichiers `cr-texte` en typographie simple, avec l'apostrophe droite. Dans les comptes rendus, l'apostrophe est courbe.
@@ -38,8 +38,8 @@ Remarques du rédacteur sur le lot :
   - Pôles : pôle 0 : 1 (raison 1) ; pôle 1 : 1 (raison 3) ; aucun : 2 (raisons 2 et 4), un par côté, tous deux inattendus.
   - Types (D-034) : 1 attendue, 2 inattendue pratique, 3 attendue, 4 inattendue pratique.
   - Votes vérifiés dans VTANR5L16V3370.json : 1 pour (PA795430), 2 pour (PA642847), 3 contre (PA796106), 4 contre (PA793852).
-  - Raison 2 nouvelle, à annoter. Elle remplace le croisé, que les deux annotateurs ont lu « contre » (aveugle3, R14). Raisons 1, 3 et 4 confirmées à l'aveugle.
-  - Comptes : titre 54 car. ; lignes 83/87/90 car. ; raisons de 12/12/12/10 mots. Titre et ligne 3 réécrits.
+  - Raison 2 annotée à l'aveugle (aveugle4, Q09) : côté « pour » retrouvé, pôle « aucun », sûr. Elle remplace le croisé, que les deux annotateurs ont lu « contre » (aveugle3, R14). Raisons 1, 3 et 4 confirmées à l'aveugle.
+  - Comptes : titre 54 car. ; lignes 83/87/89 car. ; raisons de 12/12/12/10 mots. Titre et ligne 3 réécrits.
   - Sources des lignes :
     - ligne 1 : N123:692 (articles 40 et 41 de la loi « 3DS », huit ans, pour les régions qui le souhaitent) et :713 ;
     - ligne 2 : l16b1959_proposition-loi.txt:159-164 (délégation de signature aux agents de l'État) ; N123:694, :702, :713 et :724 ;
@@ -111,6 +111,7 @@ Remarques du rédacteur sur le lot :
   - Le RN (20 contre) n'est pas représenté ; son argument (Mauvieux, N090:667) est celui de Nury.
   - Contexte tu : l'avis conforme des communes (amendement 2200) venait d'être adopté.
   - Risque de lecture Précaution/Innovation : le sujet est l'énergie.
+  - Annotation (4e passage, Y06) : tension L et s = 1 retenus, mais le sens dépend de la lecture : le préfet tranche en dernier = s 1, les communes proposent d'abord = s 0.
 
 ### T? · scrutin 2484 (16e législature)
 - Titre : Grands projets industriels, l'État délivrerait les permis
@@ -137,7 +138,7 @@ Remarques du rédacteur sur le lot :
   - Pôles : pôle 1 : 1 (raison 1) ; pôle 0 : 2 (raisons 2 et 3) ; aucun : 1 (raison 4).
   - Types (D-034) : 1 attendue, 2 inattendue croisée, 3 attendue, 4 inattendue pratique.
   - Votes vérifiés dans VTANR5L16V2484.json : 1 pour (PA793860), 2 pour (PA719372), 3 contre (PA793980), 4 contre (PA795200).
-  - Raison 1 réécrite, nouvelle, à annoter. Raisons 2, 3 et 4 confirmées à l'aveugle.
+  - Raison 1 réécrite, puis annotée à l'aveugle (aveugle4, Q03) : côté « pour » retrouvé, pôle 1, sûr. Raisons 2, 3 et 4 confirmées à l'aveugle.
   - Comptes : titre 57 car. ; lignes 87/84/90 car. ; raisons de 11/12/11/10 mots. Titre réécrit.
   - Sources des lignes :
     - ligne 1 : N027:690 (projets d'intérêt national majeur « identifiés […] dans un décret ») et :726 ;
@@ -200,7 +201,7 @@ Remarques du rédacteur sur le lot :
   - Raison 2 : Pantel parle de son intercommunalité de montagne, sur l'amendement concurrent no 4 (convention 8 : même mesure, la restitution). « Parfois » garde cette condition.
   - Aucun croisé ne passe :
     - Allemand (« injustice », N129:93) a voté contre ;
-    - Schreck et Bentz (RN) défendent la restitution, mais le RN a voté contre à l'unanimité (27 ; convention 1) ;
+    - Schreck et Bentz (Rassemblement National) défendent la restitution, mais le RN a voté contre à l'unanimité (27 ; convention 1) ;
     - côté contre, Warsmann et Martineau donnent des arguments pratiques.
   - Camp lisible à la révélation : le « pour » n'a que des voix de gauche. Le RN et la Droite Républicaine ont défendu la liberté communale (Schreck N129:80, Dragon N129:149, Vigier N129:201), puis voté contre cet amendement. Bentz (RN, N129:231) dit d'ailleurs la même chose que la raison 2. Inévitable (convention 1).
   - Le thème de l'eau revient dans le lot (6770, 5359), sur d'autres dossiers.

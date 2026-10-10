@@ -4,7 +4,7 @@
 
 Remarques du rédacteur sur le lot :
 - Annotation à l'aveugle :
-  - tensions et sens confirmés pour les quatre textes ;
+  - tensions et sens confirmés pour 3708, 2758 et 5242 ; 3449 : tension T gardée, lue aussi P (s = 0) puis S (s = 0) à l'aveugle (aveugle3, aveugle4) ;
   - 15 raisons sur 16 confirmées ;
   - 5242 R4 (Garin), lue « aucun » par les deux annotateurs, devient pratique.
 - Aucune raison n'a été réécrite à la correction.
@@ -126,7 +126,8 @@ Remarques du rédacteur sur le lot :
     - Il faudrait alors une attendue d'un autre groupe : Faucillon (GDR-NUPES, PA721896, vote pour la suppression vérifié par la vérification indépendante), « Une langue évolue par son usage, c'est un fait à accepter. » (N018:83).
   - Ligne 2 : la formulation est arbitrée (« mots communs aux deux genres ») parce que « épicènes » est un mot savant. Ce point ne peut pas être omis : c'est le plus critiqué du texte. Le rapporteur voulait le retirer par une réécriture (N017:924-926), jamais examinée. Pas de guillemets dans les lignes.
   - Ligne 3 : « contenant un seul de ces signes » remplace « même pour un seul signe », pour ne pas appuyer la sévérité (remarque d'orientation du vérificateur).
-  - Le vote oppose presque le seul RN au reste (LR absent, N018:140-144). Texte touchant aux mœurs : la condition A.2 est à garder en vue (aveugle3). Le débat parle surtout d'égalité entre femmes et hommes ; les raisons choisies parlent de la langue.
+  - A.2 : arbitrage de l'orchestrateur (10 octobre 2026) : texte retenu. L'écriture inclusive est une règle de langue et d'école, rangée en Tradition/Changement, pas une question de mœurs au sens de A.2 (famille, sexualité, religion) ; et le lot T n'a pas d'autre texte (la réserve 5242, elle, est un texte de mœurs, d'où son statut de dernier recours). Limite : le vote oppose presque le seul RN au reste (LR absent, N018:140-144) ; l'issue peut se deviner par le camp de l'auteur.
+  - Le débat parle surtout d'égalité entre femmes et hommes ; les raisons choisies parlent de la langue.
   - Groupe de Bannier : libellé de l'organe PO800484, « Démocrate (MoDem et Indépendants) ». Le compte rendu imprime « Démocrate (MODEM et indépendants) » (N018:12). On suit la règle de la partie 2.10 (`libelle`).
 
 ### T{case} · scrutin 3449 (16e législature)
@@ -178,6 +179,7 @@ Remarques du rédacteur sur le lot :
   - Raison 4 : Arenas conditionne un soutien à l'association des oppositions au décret (N140:244), puis vote contre. L'amendement 44 a ensuite ajouté la concertation du V sans retirer le diplôme. Remplaçant pratique : Davi (même groupe, PA793452, vote contre vérifié), « Faute de diplômés, flamenco, tango ou hip-hop risqueraient de manquer d'enseignants. » (N140:64).
   - Tension fragile :
     - un annotateur lit aussi P (sens 0), où les quatre raisons tomberaient bien ;
+    - au quatrième passage, la première lecture est S (s = 0), puis T (s = 1) en autre lecture ;
     - le débat porte aussi sur le statut et le métier (État/Marché), la liberté de créer (S) et la sélection sociale (Égalité).
   - Vote mince : 44 votants, sujet peu clivant.
   - Deux autrices (Colboc pour RE, Bazin-Malgras pour LR). Selon l'arbitrage, seule la première nommée s'affiche.
