@@ -60,7 +60,9 @@ def rangs_des_cases(tg):
 
 
 RE_ENTETE_PROV = re.compile(
-    r"^### (?:Case [SPTL](?: \(rang tiré au scellement\))?|T\?|T\{case\}) · scrutin ([0-9]+) \(([0-9]+)e législature\)$")
+    r"^### (?:Case [SPTL](?: \(rang tiré au scellement\))?|T\?|T\{case\}|T[0-9]+) · scrutin ([0-9]+) \(([0-9]+)e législature\)$")
+# Depuis le scellement (commit 83d05a4), les fiches portent les rangs tirés sur la graine finale
+# (« ### T{n} · scrutin … ») : ils sont remplacés par ceux du tirage sur la graine du fichier de test.
 CORRECTIONS = [
     # (motif, remplacement) : les remplacements proposés au rapport du jalon 1.
     (re.compile(r"^(- Objet du vote : (?:texte|article|amendement|motion|resolution)) \(.*\)$"), r"\1"),
@@ -78,7 +80,7 @@ def copier_fiches(sortie, rang_de):
         lignes = (TEXTES / nom).read_text(encoding="utf-8").split("\n")
         for i, l in enumerate(lignes):
             m = RE_ENTETE_PROV.match(l)
-            if m:
+            if m and int(m.group(1)) in rang_de:
                 n = rang_de[int(m.group(1))]
                 lignes[i] = f"### T{n} · scrutin {m.group(1)} ({m.group(2)}e législature)"
                 journal.append(f"{nom}:{i + 1} : en-tête → {lignes[i]}")
@@ -90,8 +92,8 @@ def copier_fiches(sortie, rang_de):
         (sortie / "textes" / nom).write_text("\n".join(lignes), encoding="utf-8")
     lignes = (TEXTES / "votes.md").read_text(encoding="utf-8").split("\n")
     for i, l in enumerate(lignes):
-        m = re.match(r"^\| [SPTL]· \| (1[67])e, ([0-9]+) \|", l)
-        if m:
+        m = re.match(r"^\| (?:[SPTL]·|T[0-9]+) \| (1[67])e, ([0-9]+) \|", l)
+        if m and int(m.group(2)) in rang_de:
             n = rang_de[int(m.group(2))]
             lignes[i] = l.replace(l[:l.index(" | ", 2)], f"| T{n}", 1)
             journal.append(f"votes.md:{i + 1} : rang → T{n}")
