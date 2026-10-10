@@ -19,7 +19,7 @@
 - **Deviner et révéler** : cinq manches (T0, T1, T2, T6, T13), quinze cartes en tout. Le jumeau compte juste (D-024) ; l'avis du cercle s'affiche à la révélation dès trois réponses, en escalier, sans aucun nombre (D-025 ; §4, §7.14, §7.23).
 - **Ce qui devient vivant** : curseurs nets, tempéraments, phrase « nette » du dimanche, Le Pas de Côté (§5, §6).
 - **Raisons (D-034)** : toujours quatre, deux de chaque côté, avec un argument inattendu de chaque côté ou aucun. Rien ne change à l'écran (§7.21, annexe A).
-- **Lot et délai** : 18 textes scellés (6 à 12 rejetés, cible 7), deux réserves, une fiche légère ; 5,5 à 7 jours de calendrier entre la spécification validée et la page contrôlée, Contenu en parallèle (annexe A, « Lots et délai »).
+- **Lot et délai** : 18 textes scellés (6 à 12 rejetés, cible 7), une réserve, une fiche légère ; 5,5 à 7 jours de calendrier entre la spécification validée et la page contrôlée, Contenu en parallèle (annexe A, « Lots et délai »).
 
 ## 0. Cadre commun (Game design)
 
@@ -1349,7 +1349,7 @@ Le bouton touché en 1.8 n'est gardé que si Game design en fait une mesure (c'e
 **La partie du premier essai** (condition de Juridique, avant le premier jour).
 - La page la repère à la seule présence de la clé `elenchos-essai:partie` dans la liste des clés, jamais à son contenu. Elle ne déclenche donc jamais l'arrêt M1.
 - **Si elle est là**, une page du cadre propose de l'effacer, avant tout le reste (texte d'UX, avec confirmation). L'essai ne commence pas tant qu'elle est là.
-- **L'effacement retire** `elenchos-essai:partie`, `elenchos-essai:verif` et `elenchos-essai:sonde-icone`, c'est-à-dire toutes les clés « elenchos-essai: » sauf celles du second essai. La trace de la page-test part donc avec elle (Juridique).
+- **L'effacement retire** `elenchos-essai:partie`, `elenchos-essai:verif` et `elenchos-essai:sonde-icone`, c'est-à-dire toutes les clés « elenchos-essai: » sauf celles du second essai. La trace de la page-test part donc avec elle (Juridique). Si des traces restent sans `elenchos-essai:partie` (`verif`, `sonde-icone`), la page n'affiche pas cette page, ne les lit pas et n'y touche pas ; « Tout effacer » les retire.
 - **Cas rare : les deux parties à la fois.** Il arrive si une ancienne page restée en cache a été rouverte après le début du second essai. La même page d'effacement s'affiche. `partie-2` n'est pas touchée, et la partie reprend à son étape. UX dit si la phrase « la page les efface avant de commencer » doit changer dans ce cas. [Assembleur : pas de réponse d'UX à ce jour.]
 - **« Tout effacer »** (5.7, clôture, arrêt) retire toutes les clés « elenchos-essai: », sans exception.
 
@@ -1406,7 +1406,7 @@ Environ les deux tiers du code sont repris sans changement :
 
 | Élément | Moteur | Téléphone ou cadre | Contrôles |
 |---|---|---|---|
-| Calendrier | Une table lue dans le fichier scellé. Plus aucun 14, 15 ou 16 écrit en dur. Les règles de validité du journal sont réécrites pour cette table. | Barre « Jour 7 · dimanche » (UX) | 6 à 13 |
+| Calendrier | Une table lue dans le fichier scellé. Plus aucun 14, 15, 16 ni 91 écrit en dur. Les règles de validité du journal sont réécrites pour cette table. | Barre « Jour 7 · dimanche » (UX) | 6 à 13 |
 | Histoire | `histoire(scellé)`, mise en cache, V6 | Le Cercle : initiales, tempéraments, titres. Treize semaines de titres passés, dont la liste défile à l'intérieur de l'écran. Écran d'un proche au portrait net. Surprise d'avant l'arrivée : son titre seul ; l'encadré n'ouvre rien (UX, §7.16). | 3, 6 à 10, 14 j |
 | Entrée | Revient. L'invitant est lu dans le fichier (Valentin). | 1.1 à 1.9 du premier essai, 1.8 redessiné | 6, 11 |
 | Sauts, rattrapage | Séances couvertes, manches jamais ouvertes (R10), révélation au début du saut | Page du saut et sa frise, repère « Texte n sur m », note de la bande | 6 à 14 |
@@ -1436,7 +1436,7 @@ Environ les deux tiers du code sont repris sans changement :
 - **§8.9, §8.11, §8.13** : inchangés.
 - La note « Qui, durée, droits » garde le texte du §8.9 de `simulation.md`, avec une phrase de plus à la fin de son paragraphe « Qui voit vos réponses » : « Les boutons Apple et Google de l'écran du compte sont dessinés : ils ne se connectent à rien, et la page n'envoie rien à Apple ni à Google. » Le reste ne change pas : l'avis du cercle n'est vu que du porteur (confirmé par Juridique).
 
-- **Arrêt V6** (§8.8) : l'arrêt 1 du §8.11 de  (à confirmer par UX)
+- **Arrêt V6** (§8.8) : l'arrêt 1 du §8.11 de `simulation.md` (« Vérification ratée au chargement ») s'applique tel quel, avec le repère **V6** ; sa parenthèse « V1 à V5 » se lit « V1 à V6 ». Une erreur pendant le calcul de l'histoire donne le même arrêt, avec le même repère. (à confirmer par UX)
 
 ### 8.10 Arrêter l'essai (UX)
 
@@ -1502,7 +1502,7 @@ Fin du carnet
 - **« Entrée » et « Compte »** : au jour 1 seulement, dès que la ligne est atteinte.
   - {verdict} vaut « juste » ou « faux ». Il ne dépend que de Valentin et de la devinette, jamais des réponses du porteur : confirmé par Juridique, sous la condition du contrôle 12.
   - {suite} au jour 1 : « , dont {D} pour l'entrée, {D} pour deviner et {D} pour répondre ». La durée de l'entrée va du premier affichage de 1.2 au bouton du compte (ou à « Valider » ou « Plus tard » de 1.9).
-- **Aux jours 4 et 8** : Ouverture, Version, Durée, Révélation, Raison cachée, Ouvert. Ni « Journée abandonnée », ni moment préféré. Le bloc du jour s'arrête au toucher « Avancer au dimanche » qui confirme le saut : ce qui précède (y compris une page du saut quittée par « Annuler ») compte dans le jour ; ce qui suit, dans le bloc de saut.
+- **Aux jours 4 et 8** : Ouverture, Version, Durée, Révélation, Raison cachée, Ouvert. Ni « Journée abandonnée », ni moment préféré. La durée du jour s'arrête à l'ouverture de la page du saut que « Avancer au dimanche » confirme : ce qui précède (y compris une page du saut quittée par « Annuler ») compte dans le jour ; la page confirmée et ce qui suit, jusqu'au toucher « Aller au dimanche », comptent dans le bloc de saut. Les touchers comptés du jour (ligne « Version ») vont, eux, jusqu'au toucher qui confirme le saut.
 - **« Révélation rouverte »** : chaque jour qui a une révélation qu'on peut fermer (jours 2, 3, 7, 14), même à 0.
 - **« Journée abandonnée »** : chaque jour joué, après l'entrée.
 - **« Pendant Deviner »** : chaque jour où l'écran Deviner a été affiché (jours 1, 2, 3, 7, 14), même à 0 : les ouvertures du Cercle et de l'écran d'un proche faites pendant que Deviner est affiché (mesure de D-023, §8.4). Elles comptent aussi dans la ligne « Ouvert ».
@@ -1598,7 +1598,7 @@ L'auteur du programme de contrôle relit ce schéma.
 14. Navigateur et publication. En plus du premier essai :
     - (b) mémoire :
       - ancienne partie présente, absente, et les deux clés à la fois ;
-      - la page du premier essai, reconstruite depuis ses sources et chargée sur la même mémoire, ne touche pas `partie-2` ;
+      - la page du premier essai, reconstruite depuis ses sources et chargée sur la même mémoire, ne touche pas `partie-2` à son chargement (elle crée alors `elenchos-essai:partie`, ce qui fait proposer l'effacement au retour sur la nouvelle page ; son « Tout effacer », lui, retire toutes les clés « elenchos-essai: », `partie-2` comprise : cas d'une ancienne page restée en cache, limite connue) ;
       - « Annuler » sur la page du saut ne change que le compte de touchers, rien de la partie ;
       - un rechargement au milieu du rattrapage reprend au texte suivant ;
     - (c) l'inventaire des sites du compte est refait avant la publication ;
@@ -1702,7 +1702,7 @@ L'auteur du programme de contrôle relit ce schéma.
   - E1, E2, E3 : entrée (défi de Valentin), trois tensions différentes (ordre au fichier caché).
   - T0 : répondu par les personnages, deviné le jour 1. Jamais répondu par le porteur ; texte entier ou article central.
   - T1 à T14.
-- **Plus** deux réserves non scellées (une rejetée, une T) et la fiche légère H86.
+- **Plus** une réserve non scellée (rejetée et T ; la seconde réserve prévue est entrée dans le lot, mise à jour du 10 octobre 2026) et la fiche légère H86.
 - **Avant la phrase du second dimanche**, le porteur répond à 16 textes : trois sur Tradition/Changement, faute de stock (le repli prévu devient l'ordre retenu), quatre ou cinq sur chacune des autres tensions. Le détail est au fichier caché.
 - **Ordre des tensions** : fixé par GD (fichier caché). E1 à E3, T0 et T14 sont choisis pour leur rôle ; dans chaque tension, les autres textes vont dans leurs cases par tirage au scellement (D-028 : « dans un ordre tiré au hasard »), avec une contrainte de sens. Un ordre de repli est prévu si un texte tombe à la vérification (fichier caché).
 - **D-028** et **D-034** : comme Contenu les écrit, A.3 et A.7 ci-dessous. [Assembleur : les deux puces de Game design sur ces points redisent Contenu sans écart ; une seule version est gardée.]
@@ -1719,7 +1719,7 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
   - E1 à E3 : les textes d'entrée (défi de Valentin) ;
   - T0 : déjà répondu par les personnages, servi en Deviner le jour 1, jamais répondu par le porteur ;
   - T1 à T14 : répondus par le porteur, les jours joués et pendant les sauts.
-- **2 fiches de réserve, non scellées :** une rejetée, une Tradition/Changement. Une réserve remplace d'abord un texte de même tension, puis de même résultat.
+- **2 fiches de réserve, non scellées :** une rejetée, une Tradition/Changement. Une réserve remplace d'abord un texte de même tension, puis de même résultat. *[Mise à jour du 10 octobre 2026 : une réserve est entrée dans le lot à la place d'un texte écarté par A.5 ; il en reste une, rejetée et Tradition/Changement.]*
 - **1 fiche légère :** la surprise de la semaine d'avant l'arrivée (A.6).
 - **Fenêtre :** 17e législature, votes jusqu'au 2 octobre 2026 ; et, pour les cases que la 17e ne remplit pas, la 16e législature (2022-2024), comme au premier essai. Tout est déjà voté (E11). (Arbitrage de l'orchestrateur, 9 octobre 2026, après le relevé ciblé : dans la 17e législature, Précaution/Innovation, Tradition/Changement et Local/National n'offrent pas assez de textes conformes ; positions : Contenu proposait d'ouvrir la 16e pour T, ou d'assouplir E9 et la répartition par tension. L'exclusion des dossiers et des mesures du premier essai, A.5, vaut dans les deux législatures. Un groupe s'écrit tel qu'il était au dépôt, §7.11.)
 - **Où :** toutes les fiches du lot, réserves comprises, vont dans `docs/essai/a-ne-pas-ouvrir-2/textes/`, jamais dans `a-ne-pas-ouvrir/`, que le porteur peut lire depuis le premier dévoilement. Seul `a-ne-pas-ouvrir/textes/conventions.md` est cité, parce qu'il ne dévoile rien du second lot.

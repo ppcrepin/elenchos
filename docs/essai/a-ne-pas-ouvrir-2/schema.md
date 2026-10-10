@@ -515,7 +515,7 @@ Dans ce tableau, « joué » désigne les jours de type `joue`, « point de saut
 |---|---|---|
 | `ouverture` | jours joués, points de saut, clôture (jamais un jour sauté) | entrée : premier toucher du jour, quel qu'il soit. Au jour 1, c'est le premier toucher de la partie, pages du cadre comprises. |
 | `versions` | avec `ouverture`, en mode `interface` | comme dans S1. Au jour 4 ou 8, les touchers comptés vont jusqu'au toucher qui confirme le saut. |
-| `etapes` | jours joués, en mode `interface` | entrée : `{"deviner", "entree", "repondre"}`, trois booléens. `entree` : l'écran 1.2 a été affiché ; il n'est non nul qu'au jour 1. |
+| `etapes` | jours joués, en mode `interface` | entrée : `{"deviner", "entree", "repondre"}`. `deviner` et `repondre` sont des booléens ; `entree` (l'écran 1.2 a été affiché) est un booléen au jour 1 et vaut `null` les autres jours. |
 | `coups` | toujours | partie 4.3.3 |
 | `entree` | jour 1, dès que 1.2 a été affiché | `{"justes", "textes"}`. Chaque texte E vaut `{"invitant": {"niveau", "raison"}, "juste": booléen ou null}`. Le pari est juste s'il est du bon côté (D-011). |
 | `manches` | jours 1 à 14 | par devineur. Chaque personnage présent joue. Le porteur n'a une clé que si sa manche a été ouverte, c'est-à-dire si `coups.deviner` n'est pas nul. |
@@ -577,7 +577,7 @@ Dans ce tableau, « joué » désigne les jours de type `joue`, « point de saut
 | `suspense` | `sans`, `un_peu`, `vrai` |
 | raison d'arrêt | inchangés |
 
-- `arret` vaut `{"f2", "jour", "raison"}`. Le carnet déduit de l'état « pendant l'entrée » ou « pendant le {premier | second} saut ».
+- `arret` vaut `{"f2", "jour", "raison"}`. Le carnet déduit du journal « pendant l'entrée » (`compte` nul au jour 1) ou « pendant le {premier | second} saut » (`arret.jour` est un jour de ce saut confirmé, ou son jour de reprise sans ouverture, règle 4).
 - `fin` vaut `{"avis", "barre", "f2", "portrait", "raisons", "regle", "servi", "suspense"}`.
 - F1 disparaît (§8.5).
 
@@ -683,7 +683,7 @@ Forme de S1, partie 3.9, avec ces écarts :
 - `abandon` : jours joués seulement.
 - `revelation_rouverte` : jours 2, 3, 7 et 14, même à 0.
 - `pendant_deviner` : quand Deviner s'est affiché.
-- Aux jours 4 et 8, les durées s'arrêtent au toucher qui confirme le saut.
+- Aux jours 4 et 8, les durées s'arrêtent à l'ouverture de la page du saut confirmée ; `sauts[].mesures.duree_saut` va de cette ouverture au toucher « Aller au dimanche », et `duree_page` de cette ouverture au toucher qui confirme (§8.12). Les touchers de `versions` vont jusqu'au toucher qui confirme.
 
 **`agregats`** : les trois lignes de S1, calculées sur les manches des jours 1 à 15. Une attribution à un jumeau compte juste. On garde le seuil « pas de chiffre sous cinq textes répondus parmi les textes révélés ». `titres_tires_au_sort` va de 0 à 6 (semaines 14 et 15).
 
@@ -715,7 +715,7 @@ Aucune autre clé.
 **Validité du journal.** Les règles de S1, partie 3.12, s'appliquent, réécrites pour la table du calendrier. Un échec fait refuser le journal, avec la règle et le chemin JSON Pointer.
 
 1. **Forme** : `version` vaut 4 ; l'empreinte est celle du fichier donné au programme.
-2. **Partie** : inchangé.
+2. **Partie** : inchangé. Le journal que la page tire de son propre état, qui n'est jamais comparé, porte `id` = `"porteur"`, `graine` = `null` et le mode `interface`.
 3. **Jours atteints.**
    - Les clés vont de « 1 » à « K », sans trou, avec K ≤ 15.
    - `fin` n'est non nul que si K = 15 ; sinon `arret.jour` = K ≤ 14.
@@ -724,7 +724,7 @@ Aucune autre clé.
      - jour j point de saut : le saut de ce jour existe et `reponse` du jour j n'est pas nul ;
      - jour j sauté : `reponse` du jour j n'est pas nul.
 4. **Ouvertures.**
-   - Elles ne sont non nulles qu'aux jours joués, aux points de saut et à la clôture, et elles y sont toujours non nulles.
+   - Elles ne sont non nulles qu'aux jours joués, aux points de saut et à la clôture, et elles y sont toujours non nulles, sauf dans un cas : un arrêt après la dernière réponse d'un rattrapage et avant « Aller au dimanche ». Le jour de reprise est alors atteint (§0) mais n'a pas d'ouverture, puisque les touchers d'un saut confirmé et pas fini comptent au saut.
    - Elles ne décroissent jamais. Règles du changement d'heure : S1, partie 3.12, règle 4.
    - `sauts[i].depart` se situe entre l'ouverture de son point de saut et celle du jour de reprise, s'il est atteint.
 5. **Versions** : non nulles exactement là où `ouverture` l'est, en mode `interface`. Règles de S1.
@@ -749,12 +749,12 @@ Aucune autre clé.
    - `abandon` vrai suppose `reponse` nulle.
    - Au jour 15, `reponse` est nulle.
 9. **Compteurs.**
-   - `relire` et `pendant_deviner` supposent `deviner` non nul.
+   - `relire` supérieur à 0 suppose `deviner` non nul ; `pendant_deviner` est non nul exactement quand `deviner` l'est.
    - `rouvrir` n'est non nul qu'aux jours 2, 3, 7 et 14.
    - `annuler_saut` n'existe qu'aux jours 4 et 8.
-   - Aux jours sautés, tous les compteurs valent 0.
+   - Aux jours sautés, `relire`, `rouvrir` et les quatre entiers de `ouvert` valent 0 ; `annuler_saut`, `abandon` et `pendant_deviner` valent `null`.
 10. **Carnet.**
-    - `moment` n'existe qu'aux jours joués, parmi les choix proposés selon les écrans affichés (mode `interface`) ou parmi tous ceux de la liste du jour (mode `moteur`). Il ne dépend jamais de `reponse`.
+    - `moment` n'existe qu'aux jours joués, parmi les choix de la liste du jour. En mode `interface`, « Deviner » suppose `etapes.deviner`, « Donner mon avis » et « Ma phrase du jour » supposent `etapes.repondre` ; les autres choix ne sont pas filtrés (les écrans qui les montrent, 3.3a et 3.3e, ne sont pas dans `etapes`). Il ne dépend jamais de `reponse`.
     - `saut_clair` n'existe qu'au jour 7. `hesite` et `moment_semaine` n'existent qu'aux jours 7 et 14.
     - `hesite` contient des codes distincts, dans l'ordre de la liste ; `nulle_part` est seul.
 11. **Attente** : seulement aux jours joués dont la journée est finie, avec au moins une lecture.
