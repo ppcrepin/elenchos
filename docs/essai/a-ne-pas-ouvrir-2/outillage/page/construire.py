@@ -1,5 +1,11 @@
 """Construction de la page de l'essai (simulation.md, §8.8 « Construction » ; §9, contrôle 5).
 
+SECOND ESSAI, LOT 1 (simulation-2.md, §8.8 ; a-ne-pas-ouvrir-2/schema.md, partie 7.1, point 6) :
+fichier scellé en version 5 ; un fichier "provisoire" (candidat 1, fichier de test) ne
+s'embarque que dans la version témoin : la version du porteur n'est alors pas écrite.
+Sources du socle ajoutées. Reste au lot 6 : la table du squelette tirée de confusables.txt
+(CONFUSABLES, vide en attendant), les chaînes nouvelles des écrans vérifiées contre les polices.
+
 Outillage d'essai (D-001 tenu). Python 3.11, bibliothèque standard seulement.
 
     python3 -I construire.py --scelle FICHIER_SCELLE.json --entrees ENTREES.json --sortie DOSSIER
@@ -28,7 +34,8 @@ import sys
 import unicodedata
 
 ICI = os.path.dirname(os.path.abspath(__file__))
-SOURCES_SCRIPT = ["noyau.js", "moteur.js", "textes.js", "interface.js"]
+SOURCES_SCRIPT = ["noyau.js", "calendrier.js", "journal.js", "etat.js", "memoire.js", "moteur.js", "textes.js", "socle.js", "interface.js"]
+VERSION_SCELLE = 5
 SOURCES_TEMOIN = ["trace.js", "temoin.js"]
 REPERE = "/*elenchos-scelle*/"
 FACES = [  # fichier, famille CSS, graisse, style
@@ -132,17 +139,22 @@ def sans_node(js):
 
 
 def chaines_affichees(scelle):
-    """Chaînes du fichier scellé qui s'affichent (schema.md, partie 4.1, étape 7)."""
-    l = [scelle["cercle"]["nom"], scelle["cercle"]["inviteuse"]]
+    """Chaînes du fichier scellé qui s'affichent (schéma du second essai, partie 5.1, étape 7)."""
+    l = [scelle["cercle"]["nom"], scelle["cercle"]["invitant"]]
     for p in scelle["personnages"].values():
         l += [p["metier"], p["ville"], p["ligne_de_vie"]]
     for t in scelle["textes"].values():
         l += [t["titre"]] + t["lignes"]
         a = t["auteur"]
-        if a["type"] != "gouvernement":
-            l += [a["nom"], a["groupe"]]
+        if a["type"] in ("depute", "senateur"):
+            l += [a["nom"]] + ([a["groupe"]] if a["groupe"] is not None else [])
+        elif a["type"] == "commission":
+            l += [a["libelle"]]
         for c in t["considerations"]:
-            l += [c["texte"], c["depute"]["nom"], c["depute"]["groupe"]]
+            l += [c["texte"], c["depute"]["nom"]] + ([c["depute"]["groupe"]] if c["depute"]["groupe"] is not None else [])
+    for h in scelle["histoire"]["textes"].values():
+        if h["fiche"] is not None:
+            l += [h["fiche"]["titre"]]
     return l
 
 
@@ -192,8 +204,11 @@ def main():
     texte_scelle = octets.decode("utf-8")
     scelle = json.loads(texte_scelle)
     canonique = json.dumps(scelle, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False)
-    if canonique != texte_scelle or scelle.get("format") != "elenchos-essai-scelle" or scelle.get("version") != 4:
+    if canonique != texte_scelle or scelle.get("format") != "elenchos-essai-scelle" or scelle.get("version") != VERSION_SCELLE:
         echec("fichier scellé : forme canonique, format ou version inattendus")
+    if scelle.get("statut") not in ("provisoire", "final"):
+        echec("fichier scellé : statut inattendu")
+    provisoire = scelle["statut"] == "provisoire"
 
     # Polices : empreintes versionnées, couverture des caractères affichés.
     dossier_polices = os.path.join(ICI, "polices")
@@ -236,7 +251,8 @@ def main():
     entete = ("var ENTREES = " + json.dumps({"version_page": version, "consultes_le": entrees["consultes_le"],
                                               "empreinte_publiee_le": entrees["empreinte_publiee_le"],
                                               "empreinte_publiee_a": entrees["empreinte_publiee_a"]}, sort_keys=True) + ";\n"
-              "var SCELLE_B64 = " + REPERE + '"' + b64 + '";\n')
+              "var SCELLE_B64 = " + REPERE + '"' + b64 + '";\n'
+              "var CONFUSABLES = {};\n")
     script = "\n(function () {\n'use strict';\n" + entete + "\n".join(corps) + "\n})();\n"
     temoin = "\n(function () {\n'use strict';\n" + "\n".join(sans_node(lire_utf8(os.path.join(ICI, n))) for n in SOURCES_TEMOIN) + "\n})();\n"
 
@@ -276,16 +292,24 @@ def main():
 
     verifier(porteur, temoin_page, script, temoin, b64)
 
-    os.makedirs(os.path.join(args.sortie, "porteur"), exist_ok=True)
+    if not provisoire:
+        os.makedirs(os.path.join(args.sortie, "porteur"), exist_ok=True)
     os.makedirs(os.path.join(args.sortie, "temoin"), exist_ok=True)
     sorties = {}
-    for chemin, contenu in (("porteur/index.html", porteur), ("temoin/index.html", temoin_page), ("version.txt", str(version) + "\n")):
+    a_ecrire = [("temoin/index.html", temoin_page), ("version.txt", str(version) + "\n")]
+    if provisoire:
+        # Schéma, partie 2.9 : un fichier provisoire ne s'embarque jamais dans la version du porteur.
+        shutil.rmtree(os.path.join(args.sortie, "porteur"), ignore_errors=True)
+    else:
+        a_ecrire.insert(0, ("porteur/index.html", porteur))
+    for chemin, contenu in a_ecrire:
         o = contenu.encode("utf-8")
         with open(os.path.join(args.sortie, chemin), "wb") as f:
             f.write(o)
         sorties[chemin] = (len(o), sha256(o))
     rapport = ["Rapport de construction de la page de l'essai", "Version de la page : %d" % version,
-               "Fichier scellé : SHA-256 %s" % entrees["empreinte"], ""]
+               "Fichier scellé : SHA-256 %s" % entrees["empreinte"],
+               "Statut du fichier scellé : %s%s" % (scelle["statut"], " (version du porteur non écrite)" if provisoire else ""), ""]
     for chemin in sorted(sorties):
         rapport.append("%s : %d octets, SHA-256 %s" % (chemin, sorties[chemin][0], sorties[chemin][1]))
     rapport += ["", "Politique de sécurité, version du porteur :", csp_porteur, "", "Politique de sécurité, version témoin :", csp_temoin,

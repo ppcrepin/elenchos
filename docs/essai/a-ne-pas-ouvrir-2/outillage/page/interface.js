@@ -1,5 +1,12 @@
 /* Interface de la page de l'essai (outillage d'essai, D-001 tenu).
  *
+ * SECOND ESSAI, ÉTAT AU LOT 1 : copie des écrans du premier essai, pas encore
+ * adaptée (lots 4 et 5, instance B). Elle ne marche pas avec le socle du
+ * second essai. Ce qu'elle faisait elle-même et que fait désormais socle.js,
+ * à retirer d'ici : contexte, vérifications V1 à V5, mémoire, horloges,
+ * toucher compté, gestionnaire des touchers, point d'accès, démarrage. Le
+ * contrat entre socle, moteur et écrans est dans INTERFACE.md.
+ *
  * Téléphone (§7), cadre (§8.1 à §8.10), mémoire et durées (§8.4, §8.8),
  * arrêts techniques (§8.11), écrans hors de l'icône (§8.13).
  * Rendu par createElement et textContent seulement ; positions des

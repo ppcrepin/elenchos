@@ -16,17 +16,20 @@ Remarques du rédacteur sur le lot :
 - Titre : Pétrole et gaz outre-mer, autoriser de nouveau les forages
 - Lignes :
   1. Depuis 2017, la loi interdit de chercher de nouveaux gisements de pétrole ou de gaz.
-  2. Cette interdiction serait levée en Guyane et dans d'autres outre-mer, pas en métropole.
-  3. On pourrait y chercher du pétrole ou du gaz, puis l'exploiter si l'on en trouvait.
-- Vote : rejeté, 64 pour, 74 contre, 1 abstention (11 juin 2026). Objet : article (article 1er, amendé, article central ; après son rejet, la proposition de loi est rejetée). En première lecture ; étape : aucune (CRSANR5L17S2026O1N268.txt:701 et :708).
+  2. Elle serait levée dans les régions d'outre-mer, comme la Guyane, pas en métropole.
+  3. La région pourrait y accorder des permis de chercher, puis d'exploiter, pétrole et gaz.
+- Vote : rejeté, 64 pour, 74 contre, 1 abstention (11 juin 2026). Objet : article (article 1er, amendé, article central : après son rejet, la proposition de loi est rejetée), en première lecture ; étape : aucune (CRSANR5L17S2026O1N268.txt:701 et :708).
 - Auteur : Georges Patient, sénateur, Rassemblement des démocrates, progressistes et indépendants, au dépôt.
   - Sénat, 3 décembre 2025 : acte SN1-DEPOT du dossier DLR5L17N53304, texte PIONSNR5S479B0185, initiateur PA415499.
   - Groupe PO732421, libelle « Rassemblement des démocrates, progressistes et indépendants », du 28 juin 2017 au 30 septembre 2026.
-  - Transmis à l'Assemblée le 30 janvier 2026 (AN1-DEPOT, PIONANR5L17B2415).
-  - CRSANR5L17S2026O1N268.txt:449 (« le texte proposé par le sénateur Patient ») et :489.
+  - Texte adopté par le Sénat le 29 janvier 2026, transmis à l'Assemblée le 30 janvier 2026 (no 2415, AN1-DEPOT).
+  - CRSANR5L17S2026O1N268.txt:449 et :489.
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/7386
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N268
+- Autres textes utilisés pour les lignes (hors `sources`, convention 9) :
+  - https://www.assemblee-nationale.fr/dyn/17/textes/l17b2415_proposition-loi
+  - amendement no 7 sur le texte no 2415
 - Tension : P ; sens s = 1
 - Raisons :
   1. « Mieux vaut prendre le risque de décider que subir sans fin l'inaction. » — pour · pôle 1 — Davy Rimane, député, Gauche Démocrate et Républicaine [vote : pour] — extrait : « Alors je prends le risque de me tromper, car l'immobilisme est devenu une certitude d'échec. Oui, je préfère prendre le risque d'une décision plutôt que de subir éternellement les conséquences de l'inaction. » (CRSANR5L17S2026O1N268.txt:456)
@@ -37,56 +40,52 @@ Remarques du rédacteur sur le lot :
   - **Groupes.** 4 groupes (Gauche Démocrate et Républicaine, Union des droites pour la République, Socialistes et apparentés, Ensemble pour la République).
   - **Côtés.** 2 pour (1, 2), 2 contre (3, 4).
   - **Pôles.** Pôle 1 : 1, 4. Pôle 0 : 2, 3.
-  - **Type (D-034).** Attendues : 1 (pour), 3 (contre). Inattendues croisées : 2 (pour), 4 (contre).
-  - **Votes vérifiés dans VTANR5L17V7386.json.** Rimane PA795876 pour (PO845514) ; Bloch PA840889 pour (PO872880) ; Benbrahim PA841315 contre (PO845419) ; Givernet PA718674 contre (PO845407).
+  - **Type (D-034).** Attendues : 1, 3. Inattendues croisées : 2 (pour), 4 (contre).
+  - **Votes vérifiés dans VTANR5L17V7386.json.** Rimane PA795876 pour ; Bloch PA840889 pour ; Benbrahim PA841315 contre ; Givernet PA718674 contre.
   - **Nouvelles : 1 à 4.**
-  - **Longueurs.** Titre 58 car. ; lignes 84/87/82 car. ; raisons de 12/12/9/11 mots.
+  - **Longueurs.** Titre 58 car. ; lignes 84/81/87 car. ; raisons de 12/12/9/11 mots.
   - **Sources des lignes.**
-    - Ligne 1 : N268:439 (« la loi dite Hulot, qui met fin à la recherche et à l'exploitation des hydrocarbures ») et N268:461 (« interdit de rechercher, d'explorer et d'exploiter de nouveaux gisements d'hydrocarbures sur le territoire national »).
-    - Ligne 2 : N268:469 (« abroger dans les territoires d'outre-mer l'interdiction ») ; N268:447 (« si cette proposition de loi évoque l'ensemble des territoires ultramarins, [...] la Guyane ») ; N268:637-641 (amendement no 22 adopté : Saint-Pierre-et-Miquelon exclu) ; N268:602 et :692 (amendements nos 24 et 29, qui étendaient à tout le territoire, rejetés).
-    - Ligne 3 : titre du scrutin (« recherche, d'exploration et d'exploitation ») ; N268:453 (autorisations données par la collectivité) ; N268:463 (« derrière elle, il y a toujours une perspective d'exploitation »).
+    - Ligne 1 : texte no 2415, II (« loi no 2017-1839 du 30 décembre 2017 mettant fin à la recherche ainsi qu'à l'exploitation des hydrocarbures ») ; N268:439 et :461.
+    - Ligne 2 : texte no 2415, I, 1° (la section « n'est pas applicable à Saint-Pierre-et-Miquelon ni dans les régions d'outre-mer lorsqu'elles exercent les compétences mentionnées à l'article L. 611-19 ») ; amendement no 22 adopté, Saint-Pierre-et-Miquelon retiré (N268:637-641) ; amendements nos 24 et 29 d'extension à tout le territoire rejetés (N268:602, :692) ; Guyane : N268:447 et :453.
+    - Ligne 3 : texte no 2415, II, 1° (demandes de « permis exclusif de recherches », d'« autorisation de prospections préalables » ou de « concession » « déposées auprès [...] d'une région d'outre-mer »).
 - Doutes :
-  - **Article amendé, non relu.** L'article 1er voté avait été amendé deux fois :
-    - par l'amendement no 7 (Laernoes, alinéa 4, « afin d'éviter un vote conforme », N268:632-633), dont le contenu n'est pas relu ;
-    - par l'amendement no 22 (Saint-Pierre-et-Miquelon retiré du champ).
-  - **Ligne 3 contestée.** Rimane affirme que le texte « n'autorise aucune exploitation ; il rétablit uniquement la possibilité d'explorer » (N268:456). Le titre et Duparay disent recherche, exploration et exploitation (N268:469). Le texte de l'article est à relire avant la vérification (adresses en fin de rapport).
+  - **Amendement no 7 (Laernoes, adopté).** Il supprime l'alinéa 4 : « 2° Le second alinéa des articles L. 661-1 et L. 691-1 est supprimé. » Le contenu de ces articles du code minier n'est pas disponible localement, donc son effet n'est pas établi. L'exposé sommaire veut « empêcher l'introduction d'un régime dérogatoire » ; en séance, l'autrice dit vouloir « éviter un vote conforme » (N268:632). Les deux dérogations, au I, 1° et au II, 1°, restaient dans l'article voté. Les lignes reposent sur elles.
+  - **« Comme la Guyane ».** L'article L. 611-19 n'est pas relu. La présence de la Guyane parmi les régions concernées repose sur le débat (N268:447, :453).
+  - **Exploitation.** Rimane affirme que le texte n'autorise « aucune exploitation » (N268:456). Le texte vise aussi les concessions, donc la ligne 3 suit le texte. Les décisions restent des permis accordés au cas par cas.
   - **Le vote croise les camps.**
     - Pour : RN 38, GDR 8, HOR 5, UDR 5, EPR 2, DR 2, Dem 2, LFI-NFP 1, SOC 1.
     - Contre : LFI-NFP 29, EcoS 17, EPR 15, SOC 10, Dem 3.
-    - SOC 1 abstention ; LIOT ne vote pas.
-    - Les raisons « pour » viennent de GDR et d'UDR pour ne pas signaler un camp.
-    - Califer (SOC) n'a pas voté ; sa mise au point dit « pour ».
-  - **Votes absents.** Turquois (Dem), Poussier-Winsback (HOR) et Pannier-Runacher (EPR) ne figurent pas dans les listes nominatives : non retenus.
+    - SOC 1 abstention.
+    - Les raisons « pour » viennent de GDR et d'UDR, pour ne pas signaler un camp.
+    - Turquois, Poussier-Winsback et Pannier-Runacher n'ont pas voté : non retenus.
   - **Rechanges vérifiées.**
-    - Duparay (DR, pour), pôle 1, « au vu des progrès technologiques [...] de ne pas fermer définitivement la porte à de futures explorations » (N268:469).
-    - Loubet (RN, pour), « on ne trouve pas ce qu'on s'interdit de chercher » (N268:461).
-    - Laernoes (EcoS, contre), climat (N268:471).
-    - Laisney (LFI-NFP, contre), climat (N268:465).
-  - **Lectures possibles de la raison 2.** Elle peut être lue « aucun » (efficacité) : elle resterait inattendue, la paire tient.
-  - **Lectures possibles de la raison 4.** Elle peut être lue comme un argument de souveraineté (le même paragraphe parle de souveraineté) : seule la partie sur l'avenir est gardée.
-  - **Écho avec T14.** La raison 1 fait écho à la raison 4 de T14 (le risque contre l'immobilisme), du côté opposé d'une interdiction. Les mots sont différents ; à signaler à Game design.
-  - **Titre.** « forages » simplifie recherche et exploitation. Variante plus proche de l'intitulé officiel : « Pétrole et gaz outre-mer, lever l'interdiction » (46 car.).
-  - **Ligne de révélation, à proposer à UX.** Après le vote : « Sans cet article, la proposition de loi est tombée. » Sinon, « Texte rejeté. » sur un article peut laisser croire que le texte a continué.
-  - **Consigne : ce débat n'est jamais cité au porteur hors de cette fiche.**
-- Prête pour la vérification indépendante : oui, sous deux réserves :
-  - relire l'article 1er et l'amendement no 7 pour la ligne 3 ;
-  - annotation à l'aveugle des 4 raisons, côté compris.
+    - Duparay (DR, pour), N268:469.
+    - Loubet (RN, pour), N268:461.
+    - Laernoes (EcoS, contre), N268:471.
+    - Laisney (LFI-NFP, contre), N268:465.
+  - **Lectures possibles.** La raison 2 peut être lue « aucun » : elle resterait inattendue. La raison 4 peut être lue comme un argument de souveraineté.
+  - **Écho avec T14.** La raison 1 fait écho à la raison 4 de T14, du côté opposé ; les mots sont différents.
+  - **Titre.** Variante plus proche de l'intitulé officiel : « Pétrole et gaz outre-mer, lever l'interdiction ».
+  - **Ligne de révélation à proposer à UX.** « Sans cet article, la proposition de loi est tombée. »
+  - **Ce débat n'est jamais cité au porteur hors de cette fiche.**
+- Prête pour la vérification indépendante : oui. Il reste l'annotation à l'aveugle des 4 raisons, côté compris. L'effet de l'amendement no 7 reste à établir si l'on récupère le code minier (L. 661-1, L. 691-1, L. 611-19).
 
 ### Case P · scrutin 840 (16e législature)
 - Titre : Mines au fond des mers, demander une pause mondiale
 - Lignes :
   1. Le Gouvernement serait invité, sans y être obligé, à défendre une pause mondiale.
-  2. Il voterait contre les règles internationales qui autoriseraient ces mines sous la mer.
-  3. Il interdirait aussi d'extraire des métaux au fond des eaux françaises.
-- Vote : adopté, 215 pour, 56 contre, 28 abstentions (17 janvier 2023). Objet : proposition de résolution (article 34-1 de la Constitution), vote sur l'ensemble ; étape : à fixer, voir Doutes (CRSANR5L16S2023O1N119.txt:496-497).
+  2. Il bloquerait les règles autorisant ces mines, tant que leurs dégâts restent possibles.
+  3. Dans les eaux françaises, la règle devrait évoluer pour les interdire aussi.
+- Vote : adopté, 215 pour, 56 contre, 28 abstentions (17 janvier 2023). Objet : proposition de résolution (article 34-1 de la Constitution, article unique), vote sur l'ensemble ; étape : à fixer, voir Doutes (CRSANR5L16S2023O1N119.txt:496-497).
 - Auteur : Nicolas Thierry, député, Écologiste - NUPES.
-  - Proposition de résolution no 440.
-  - Groupe PO800526 « Écologiste - NUPES », du 29 juin 2022 au 9 juin 2024.
-  - CRSANR5L16S2023O1N119.txt:399 et :403 (« La résolution que j'ai l'honneur de défendre »).
-  - Dossier non relevé localement.
+  - Proposition de résolution no 440, enregistrée le 7 novembre 2022, premier nom des signataires.
+  - Groupe PO800526, du 29 juin 2022 au 9 juin 2024.
+  - CRSANR5L16S2023O1N119.txt:399 et :403.
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/16/scrutins/840
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/16/comptes-rendus/seance/CRSANR5L16S2023O1N119
+- Autres textes utilisés pour les lignes (hors `sources`, convention 9) :
+  - https://www.assemblee-nationale.fr/dyn/16/textes/l16b0440_proposition-resolution
 - Tension : P ; sens s = 0
 - Raisons :
   1. « On ne sait rien des effets d'une exploitation, n'agissons pas à l'aveugle. » — pour · pôle 0 — Michel Castellani, député, Libertés, Indépendants, Outre-mer et Territoires [vote : pour] — extrait : « nous ne savons rien des conséquences que pourrait engendrer leur exploitation. Or nous ne pouvons plus nous permettre d'agir à l'aveugle. » (CRSANR5L16S2023O1N119.txt:409)
@@ -97,28 +96,28 @@ Remarques du rédacteur sur le lot :
   - **Groupes.** 4 groupes (Libertés, Indépendants, Outre-mer et Territoires ; Gauche démocrate et républicaine - NUPES ; Les Républicains ; Rassemblement National).
   - **Côtés.** 2 pour (1, 2), 2 contre (3, 4).
   - **Pôles.** Pôle 0 : 1, 4. Pôle 1 : 2, 3.
-  - **Type (D-034).** Attendues : 1 (pour), 3 (contre). Croisées : 2 (pour), 4 (contre).
-  - **Votes vérifiés dans VTANR5L16V840.json.** Castellani PA719138 pour (PO800532) ; Brotherson PA721118 pour (PO800502) ; Maquet PA346054 abstention (PO800508) ; Lépinau PA642988 contre (PO800520). Contrôle négatif : Lépinau et Maquet absents des listes « pours ».
+  - **Type (D-034).** Attendues : 1, 3. Croisées : 2 (pour), 4 (contre).
+  - **Votes vérifiés dans VTANR5L16V840.json.** Castellani PA719138 pour ; Brotherson PA721118 pour ; Maquet PA346054 abstention ; Lépinau PA642988 contre. Contrôle négatif fait.
   - **Nouvelles : 1 à 4.**
-  - **Longueurs.** Titre 51 car. ; lignes 81/87/71 car. ; raisons de 12/11/12/11 mots.
+  - **Longueurs.** Titre 51 car. ; lignes 81/87/76 car. ; raisons de 12/11/12/11 mots.
   - **Sources des lignes.**
-    - Ligne 1 : N119:399 (« invitant le Gouvernement à défendre un moratoire ») ; N119:421 (« même s'il ne revêt pas de caractère contraignant »).
-    - Ligne 2 : N119:405 (« voter contre l'adoption, par l'AIFM [...], du règlement pour l'exploitation minière et de tout contrat d'exploitation »).
-    - Ligne 3 : N119:405 (« d'interdire l'exploitation minière des fonds marins dans les eaux relevant de sa juridiction ») et N119:413 ; métaux : N119:421 et :448.
+    - Ligne 1 : titre de la résolution (« invitant le Gouvernement à défendre un moratoire ») ; dispositif (« Invite donc le Gouvernement à défendre cette position dans l'ensemble des enceintes internationales pertinentes ») ; N119:421 (« ne revêt pas de caractère contraignant »).
+    - Ligne 2 : dispositif (« que la France bloque l'adoption de toute réglementation pour l'exploitation minière des fonds marins par l'AIFM », « tant qu'il n'aura pas été démontré [...] que cette activité extractive peut être entreprise sans dégrader les écosystèmes marins »).
+    - Ligne 3 : dispositif (« Estime [...] qu'en France une évolution du cadre réglementaire est souhaitable [...] pour interdire tout projet d'exploitation jusqu'à ce que le niveau de connaissance scientifique garantisse [...] »).
 - Doutes :
-  - **Étape d'une résolution (E4).** Le schéma (2.5) n'admet pour un « texte » adopté que `navette` ou `definitif`. Aucune n'est exacte : une résolution n'a pas de navette et n'oblige à rien. Proposition à Back-end et UX :
-    - **(Recommandé)** une valeur d'objet nouvelle `resolution`, issue `adopte`, étape `aucune`, avec la phrase d'objet « C'était une résolution, un texte qui invite le Gouvernement à agir sans l'obliger. ». Elle suit la forme validée de la phrase de l'amendement ; le gros titre reste « Texte adopté. » (D-014).
-    - Objet `texte` avec une valeur d'étape nouvelle `resolution` portant la même phrase : plus simple pour le schéma, mais elle mêle la nature du vote et l'étape.
-  - **Convention 1 pour Maquet.** Maquet (LR) s'est abstenu. Il est admis parce que seuls RN (50) et LR (6) ont voté contre. Les six LR « contre » n'ont pas argumenté : Le Fur et Hetzel n'ont fait que des interruptions. Sa phrase de groupe (« ne votera pas [...] pour l'adoption », N119:435) va dans le sens de son abstention.
-  - **Issue devinable.** Le Gouvernement était favorable, 170 signataires de neuf groupes (N119:403), adoption par 215 voix contre 56. De plus, le secrétaire d'État annonce que l'interdiction dans les eaux françaises est déjà décidée (N119:464) : la ligne 3 redit en partie une décision existante.
+  - **Correction.** L'ancienne ligne 3 (« Il interdirait aussi d'extraire des métaux au fond des eaux françaises ») suivait le discours de l'auteur (N119:405). Le dispositif ne fait que juger souhaitable une évolution des règles françaises : la ligne suit désormais le texte. La moitié haute mer du moratoire se lit dans « pause mondiale ».
+  - **Étape d'une résolution.** La forme sera fixée avec Back-end et UX. Ma proposition reste :
+    - **(Recommandé)** objet `resolution`, issue `adopte`, étape `aucune`, phrase d'objet « C'était une résolution, un texte qui invite le Gouvernement à agir sans l'obliger. » ; gros titre « Texte adopté. » (D-014).
+    - Sinon : objet `texte` avec une valeur d'étape `resolution` portant la même phrase.
+  - **Convention 1 pour Maquet.** Maquet (LR) s'est abstenu. Il est admis parce que seuls RN (50) et LR (6) ont voté contre, et que les six LR « contre » n'ont pas argumenté.
+  - **Co-signataires.** Castellani, Brotherson et un député LR, Vermorel-Marques, sont co-signataires (texte no 440). Le texte est transpartisan.
+  - **Issue devinable.** Gouvernement favorable, neuf groupes signataires. La France avait déjà annoncé l'interdiction dans ses eaux (N119:464).
   - **Lectures de côté à risque.**
     - La raison 2 peut être lue comme de la fierté nationale.
-    - La raison 3 peut paraître compatible avec le moratoire : le côté « pour » défend aussi l'exploration (Panonacle, « oui à l'exploration, non à l'exploitation », N119:411). L'annotation doit tester le côté.
-  - **Rechange de la raison 3.** Lépinau, pôle 1, « les industries de pointe et les nouvelles technologies [...] sont infiniment dépendantes de l'approvisionnement en métaux stratégiques » (N119:421). Il est du même groupe que la raison 4 : l'échange obligerait à prendre un croisé de Maquet (« les plus hauts standards de protection de l'environnement », N119:427), dont le côté se lit moins bien.
-  - **Souveraineté écartée.** Le discours RN est surtout un discours de souveraineté : seule la phrase sur l'environnement est prise.
-  - **Proximité avec d'autres textes.** Thème voisin d'E2 (voir sa fiche) et du premier essai (2460, CO2 sous la mer). Nicolas Thierry était déjà l'auteur du texte 12 du premier essai : le porteur peut le reconnaître à 18h.
-  - **Ancienneté.** Janvier 2023 : c'est le texte le plus ancien du lot P.
-- Prête pour la vérification indépendante : oui, si la forme de l'étape est fixée par Back-end et UX ; annotation des 4 raisons à faire.
+    - La raison 3 peut paraître compatible avec la résolution, qui ne vise que l'exploitation.
+  - **Raison 4.** Lépinau prête à la résolution une interdiction ferme dans la zone économique exclusive française (N119:413). Le dispositif dit « souhaitable » : fidèle à l'orateur, mais l'adversaire le relèvera.
+  - **Proximité.** Thème voisin d'E2 (voir sa fiche). Thierry était déjà l'auteur du texte 12 du premier essai.
+- Prête pour la vérification indépendante : oui. La forme de l'étape est en attente de Back-end et UX ; annotation des 4 raisons à faire.
 
 ### Case P · scrutin 2139 (17e législature)
 - Titre : Centres de données, faciliter leur construction
@@ -164,7 +163,7 @@ Remarques du rédacteur sur le lot :
 - Titre : Retirer l'article qui facilite les réserves d'eau agricoles
 - Lignes :
   1. Cet article faciliterait les réserves d'eau pour irriguer et allégerait leurs procédures.
-  2. Si un juge annulait un droit de pomper, le préfet pourrait en accorder un pour deux ans.
+  2. Si un juge annulait un droit de pomper, l'État pourrait laisser pomper jusqu'à deux ans.
   3. Cet amendement retirerait l'article tout entier.
 - Vote : rejeté, 35 pour, 134 contre, 2 abstentions (21 mai 2026). Objet : amendement (no 237 et identiques nos 523 et 1471, de suppression de l'article 5 du projet de loi d'urgence pour la protection et la souveraineté agricoles), en première lecture ; étape : aucune (CRSANR5L17S2026O1N240.txt:206-207).
 - Auteur : Mathilde Hignet, députée, La France insoumise - Nouveau Front Populaire.
@@ -193,6 +192,7 @@ Remarques du rédacteur sur le lot :
     - Ligne 2 : N240:112 (« en cas d'annulation d'une autorisation unique de prélèvement, il rend possible la délivrance d'une autorisation temporaire de deux ans ») ; N240:83, :164 et :209 (le préfet).
     - Ligne 3 : N240:82 (« tendant à supprimer l'article ») et :204-207.
 - Doutes :
+  - **Ligne 2 corrigée** sur le texte de la commission no 2765 (article 5, art. L. 214-3-2 créé : « à titre provisoire et pour une durée maximale de deux ans [...] autoriser la poursuite des prélèvements »), au lieu de « en accorder un pour deux ans ».
   - **Présentation B.** Être favorable, c'est retirer l'article (pôle 0). Le titre n'a qu'une négation (« Retirer », puis « facilite »). L'annotateur dit aussi ce que soutient une réponse « favorable » (règle de Game design).
   - **Ordre des lignes.** Les lignes 1 et 2 disent l'article, la ligne 3 le retrait. Game design voulait la ligne 2 pour le retrait ; je le mets en dernier pour que la description de l'article ne soit pas coupée. À trancher par UX.
   - **Raison 4.** Vigier parle de « retenues collinaires ». Les partisans de la suppression disent que l'article vise surtout des réserves de substitution, dites « mégabassines » (Pilato, N240:140 ; Stambach-Terrenoir, N240:159). La raison dit « retenues d'eau » : fidèle à l'orateur, mais l'adversaire dira qu'elle embellit l'article. Elle peut aussi être lue « aucun » (utilité) : elle resterait inattendue.
@@ -212,17 +212,19 @@ Remarques du rédacteur sur le lot :
 - Titre : Retirer l'article sur les pesticides près de l'eau potable
 - Lignes :
   1. Autour des points de pompage d'eau potable, des plans d'action seraient obligatoires.
-  2. Près des plus menacés, pesticides et engrais azotés chimiques seraient interdits en 2030.
+  2. Près des plus menacés, l'État limiterait ou interdirait engrais et pesticides avant 2030.
   3. Cet amendement retirerait l'article entier, avec ces deux mesures.
 - Vote : rejeté, 106 pour, 131 contre, 2 abstentions (12 février 2026). Objet : amendement (no 1 et identiques nos 46, 47 et 70, de suppression de l'article 1er de la proposition de loi pour protéger l'eau potable, nos 2308, 2427), en première lecture ; étape : aucune (CRSANR5L17S2026O1N148.txt:62-63).
 - Auteur : Nicolas Tryzna, député, Droite Républicaine.
-  - Premier signataire selon le titre du scrutin (VTANR5L17V5359.json), PA842121, membre du groupe PO845425 depuis le 14 novembre 2025.
-  - Amendement défendu par Lionel Duparay (N147:452).
-  - Identiques : no 46 (Kasbarian, EPR), no 47 (Blin, DR), no 70 (Minard, DR) (N147:454-471).
+  - Premier signataire selon le titre du scrutin, PA842121, membre du groupe PO845425 depuis le 14 novembre 2025.
+  - Amendement défendu par Duparay (N147:452).
+  - Identiques : no 46 (Kasbarian, EPR), no 47 (Blin, DR), no 70 (Minard, DR).
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/5359
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N147
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026O1N148
+- Autres textes utilisés pour les lignes (hors `sources`, convention 9) :
+  - https://www.assemblee-nationale.fr/dyn/17/textes/l17b2427_texte-adopte-commission
 - Tension : P ; sens s = 1
 - Raisons :
   1. « On interdit d'avance et en bloc, sans évaluer d'abord les effets. » — pour · pôle 1 — Lionel Duparay, député, Droite Républicaine [vote : pour] — extrait : « l'instauration d'interdictions générales et anticipées, notamment en matière d'utilisation d'intrants agricoles, sans évaluation préalable de leurs impacts économiques, techniques et sociaux, fait peser un risque important sur l'équilibre des exploitations » (CRSANR5L17S2026O1N147.txt:453)
@@ -234,30 +236,30 @@ Remarques du rédacteur sur le lot :
   - **Côtés.** 2 pour l'amendement (1, 2), 2 contre (3, 4).
   - **Pôles.** Pôle 1 : 1, 4. Pôle 0 : 3. Aucun : 2.
   - **Type (D-034).** Attendues : 1, 3. Pratique : 2 (pour). Croisé : 4 (contre).
-  - **Votes vérifiés dans VTANR5L17V5359.json.** Duparay PA870009 pour ; Turquois PA722162 pour ; Laernoes PA794146 contre ; Le Feur PA719412 contre. Contrôle : Duparay et Turquois absents des « contres ».
+  - **Votes vérifiés dans VTANR5L17V5359.json.** Duparay PA870009 pour ; Turquois PA722162 pour ; Laernoes PA794146 contre ; Le Feur PA719412 contre.
   - **Nouvelles : 1 à 4.**
-  - **Longueurs.** Titre 58 car. ; lignes 85/89/66 car. ; raisons de 11/12/12/10 mots.
-  - **Sources des lignes.**
-    - Ligne 1 : N147:472 (« systématiser les programmes pluriannuels d'actions obligatoires ») et N147:328 (planification pluriannuelle).
-    - Ligne 2 : N147:328 (« interdiction ferme et générale, à l'horizon 2030, des pesticides de synthèse et engrais azotés minéraux au sein des AAC prioritaires ») et N148:46.
-    - Ligne 3 : N147:452 (« visant à supprimer l'article 1er »).
+  - **Longueurs.** Titre 58 car. ; lignes 85/90/66 car. ; raisons de 11/12/12/10 mots.
+  - **Sources des lignes (texte no 2427, article 1er, voté tel quel puisque la suppression a été mise aux voix la première).**
+    - Ligne 1 : II, 2° (« une zone soumise à contrainte environnementale et [...] un programme pluriannuel d'actions obligatoires » dans « les aires d'alimentation des captages ») et II, 3° b (« délimite »).
+    - Ligne 2 : II, 4° (« Avant le 1er janvier 2030, le représentant de l'État dans le département met en place des mesures limitant ou interdisant, le cas échéant, certaines occupations des sols et l'utilisation d'intrants, pour les zones les plus contributives [...] au sein des captages prioritaires », seuils « en matière d'engrais azotés minéraux et des produits phytopharmaceutiques de synthèse »).
+    - Ligne 3 : N147:452.
 - Doutes :
-  - **Retrait le jour même.** Le jour du vote, vers 17h40, le rapporteur a retiré la proposition de loi (« j'annonce que nous allons retirer la proposition de loi », N148:562). La présidence en prend acte : « il n'y a pas lieu de poursuivre la discussion de ce texte » (N148:565). Le scrutin servi reste valable.
-  - **Ligne de révélation proposée.** Elle va sous la ligne du vote (mots à confirmer par UX) : « Le jour même, son auteur a retiré la proposition de loi, qui n'a donc pas été votée. » Sans elle, « Texte rejeté. » sur la suppression laisse croire que l'article a continué. T14 est répondu le jour 14 : la ligne ne sert que si la page montre sa révélation (dévoilement ou clôture).
-  - **Ligne 2 à vérifier (bloquant).** Elle suit Martineau : interdiction en 2030 dans les seules aires de captage « prioritaires », rendues par « les plus menacés ». Minard décrit une interdiction « dans ces mêmes aires », toutes les aires, et de « tout engrais ou produit phytosanitaire » (N147:472). À trancher sur le texte de commission no 2427, absent de la copie locale. « Chimiques » rend « de synthèse » (91 caractères sinon) ; « pesticides » rend « pesticides de synthèse ».
-  - **Pôle 1 faible (relevé no 2).** La raison 1 suit le précédent du premier essai : « On interdit en bloc, même ce qui est sans danger » et « La prudence poussée à l'excès... » ont été annotées pôle 1. Si l'annotation lit « aucun », le côté « pour » n'a plus d'attendue. Il faudra alors une autre raison, ou le repli prévu par Game design (T14 sur L).
-  - **Croisé « pour » possible, écarté.** Kasbarian (EPR, pour) : « ces agriculteurs utilisent des traitements de manière encadrée [...] de nombreuses molécules sont déjà interdites » (N147:461). Il est écarté parce qu'EPR est déjà pris par la raison 4 ; le seul autre croisé « contre » est aussi EPR (Coggia).
-  - **Autres rechanges vérifiées.**
-    - Côté « pour » : Corneloup (DR, pour), pratique, « Seuls 3 070 captages sur 33 000 dépassent le seuil de 80 % des exigences de qualité pour au moins un pesticide » (N148:50) ; Martineau (Dem, pour), « agriculture de précision » (N147:332).
-    - Côté « contre » : Hignet (LFI-NFP, contre), pratique, coût du traitement de l'eau (N148:35).
-  - **Écho avec E2.** La raison 4 fait écho à la raison 1 d'E2, du côté opposé ; les mots sont différents.
-  - **« Poison ».** C'est le mot de l'oratrice (raison 3). L'adversaire peut juger ce côté alarmiste.
+  - **Correction de la ligne 2.** L'ancienne ligne (« seraient interdits en 2030 ») suivait les orateurs. Le texte dit « limitant ou interdisant, le cas échéant », avant 2030, dans les zones les plus contributives des captages prioritaires. « Les plus menacés » rend les captages prioritaires (liste du Grenelle, arrêté préfectoral). Le texte ajoute qu'en cas de non-conformité, les substances en cause sont exclues dans les zones concernées : non dit, faute de place.
+  - **Raisons plus dures que le texte.** Les raisons 1 et 2 décrivent le texte plus durement qu'il n'est (« interdictions générales », « il interdit les engrais »), comme Minard (N147:472). Elles sont fidèles à leurs extraits, mais l'adversaire dira que le côté « pour » s'en prend à un texte plus dur que le vrai. Les lignes donnent le vrai texte.
+  - **Retrait le jour même.** Le rapporteur a retiré la proposition de loi en fin d'après-midi (N148:562) ; la présidence en prend acte (N148:565).
+  - **Ligne de révélation proposée**, sous le vote (mots d'UX) : « Le jour même, son auteur a retiré la proposition de loi, qui n'a donc pas été votée. » Elle ne sert que si la page montre la révélation de T14.
+  - **Pôle 1 faible.** Précédent du premier essai : Juvin, Corneloup. Si l'annotation lit « aucun », il faut une autre raison ou le repli de Game design.
+  - **Croisé « pour » écarté.** Kasbarian (EPR, pour, N147:461) est écarté parce qu'EPR est déjà pris par la raison 4.
+  - **Rechanges vérifiées.**
+    - Côté « pour » : Corneloup (DR, pour, N148:50) ; Martineau (Dem, pour, N147:332).
+    - Côté « contre » : Hignet (LFI-NFP, contre, N148:35).
+  - **Écho avec E2.** La raison 4 fait écho à la raison 1 d'E2, du côté opposé.
+  - **« Poison ».** C'est le mot de l'oratrice (raison 3).
   - **Le vote croise les camps.**
     - Pour : RN 69, DR 13, Dem 8, EPR 6, UDR 6, HOR 3, LIOT 1.
     - Contre : LFI-NFP 46, EcoS 37, SOC 24, EPR 16, GDR 5, HOR 2, Dem 1.
-    - HOR 2 abstentions.
-  - **Tension.** Elle peut être lue Local ↔ National (obligations des collectivités). Thème voisin du premier essai (cadmium, PFAS).
-- Prête pour la vérification indépendante : non, tant que la portée de la ligne 2 n'est pas confirmée sur le texte no 2427. Ensuite oui, avec annotation des 4 raisons et du sens « favorable ».
+  - **Tension.** Elle peut être lue Local ↔ National (I : obligations des collectivités, non dites dans les lignes).
+- Prête pour la vérification indépendante : oui, sous une réserve : vérifier que « près des plus menacés » rend fidèlement « zones les plus contributives au sein des captages prioritaires ». Annotation des 4 raisons et du sens « favorable » à faire.
 
 ### H86 · scrutin 7313 (17e législature) · fiche légère
 - Titre affiché : Vaisselle en plastique interdite dans les cantines d'enfants (60 car., apostrophe droite)

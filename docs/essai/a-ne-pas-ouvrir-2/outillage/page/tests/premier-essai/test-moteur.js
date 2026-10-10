@@ -4,13 +4,13 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const N = require('../noyau.js');
-const M = require('../moteur.js');
-const TR = require('../trace.js');
+const N = require('../../noyau.js');
+const M = require('../../moteur.js');
+const TR = require('../../trace.js');
 const J = require('./joueurs.js');
 const T = require('./temoins.js');
 
-const SCELLE = process.env.ELENCHOS_SCELLE || path.join(__dirname, '../../../fichier-scelle.json');
+const SCELLE = process.env.ELENCHOS_SCELLE || path.join(__dirname, '../../../../../a-ne-pas-ouvrir/fichier-scelle.json');
 const OCTETS = new Uint8Array(fs.readFileSync(SCELLE));
 const EMPREINTE = N.sha256(OCTETS);
 const scelle = JSON.parse(N.utf8Decoder(OCTETS));
@@ -481,7 +481,7 @@ test('Durées et corrigé de F1', () => {
 /* Gabarit du §8.12, lu dans simulation.md                             */
 /* ------------------------------------------------------------------ */
 
-const { gabaritCarnet } = require('../harnais/gabarit.js');
+const { gabaritCarnet } = require('../../harnais/gabarit.js');
 
 test('Carnet : chaque ligne suit une ligne du gabarit du §8.12 (lu dans simulation.md)', () => {
   const g = gabaritCarnet();

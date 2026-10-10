@@ -7,8 +7,8 @@
  * ici, à la main, et ne lisent jamais les profils cachés.
  */
 'use strict';
-const N = require('../noyau.js');
-const M = require('../moteur.js');
+const N = require('../../noyau.js');
+const M = require('../../moteur.js');
 
 const PERSOS = M.PERSONNAGES;
 const TENSIONS = M.TENSIONS;
