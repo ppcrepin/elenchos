@@ -369,6 +369,7 @@ En-tête exact :
 - **`libelle`** : le libellé court, entre accents graves, avec une minuscule au début et commençant par « commission ». Par exemple `commission des affaires sociales`.
 - Caractères : ceux de la partie 2.10, sans « & » ni parenthèses. 80 points de code au plus.
 - **Forme courte d'une commission spéciale.** Si le libellé officiel, une fois mis en minuscule au début, dépasse 80 points de code, le `libelle` s'écrit « commission spéciale sur {intitulé court du projet} ». La colonne Source donne alors le libellé officiel de l'organe, suivi de « forme courte rédigée par Contenu, relue par UX ». Pour une telle ligne, le contrôle ne vérifie que la forme (règles ci-dessus) ; la fidélité de la forme courte relève des deux relectures. (Arbitrage de l'orchestrateur, 10 octobre 2026 : pour l'article ajouté en commission spéciale, la commission plutôt que le premier signataire de l'amendement de commission, introuvable dans les données locales ; Game design préférait le signataire.)
+- **Fidélité à la source** (contrôle 1). Pour chaque ligne qui n'est pas une forme courte, le contrôle lit l'organe de l'Identifiant dans `amo` (chemin et SHA-256 au rapport). Il vérifie que `libelle` est égal au `libelle` de l'organe, en NFC, après deux changements seulement : la première lettre mise en minuscule, et chaque U+2019 remplacée par U+0027. Un écart fait échouer le contrôle 1. Repli, si la copie locale d'`amo` n'est pas utilisable : la forme seule, et le rapport le dit.
 - Chaque `auteur.libelle` du fichier figure au tableau, et chaque ligne sert au moins une fois.
 
 **Lignes** remplies par Contenu le 10 octobre 2026 sur le lot final (1 ligne, pour le texte 2190), dans le tableau ci-dessus.
@@ -519,7 +520,7 @@ Exemple tronqué, valeurs inventées :
 | `version` | entier | `1` |
 | `empreinte_scelle` | hex64 | SHA-256 du fichier scellé |
 | `jours` | objet, clés « -90 » à « 0 » | une entrée par jour (ci-dessous) |
-| `semaines` | tableau de 13 objets | les titres des semaines 1 à 13, avec leurs décomptes : la forme de S1, partie 3.9, sans `phrase_semaine` ni `pas_de_cote` ; `sans_faute` suit R7 (§6, point 6), chaque semaine. Dans `surprise`, `attributions` et `erreurs` portent tous les textes révélés dans la semaine, titrés ou non, pour que le contrôle vérifie le critère c3. Les clés `points`, `raisons`, `tentatives` et `erreurs` portent les quatre personnages. |
+| `semaines` | tableau de 13 objets | les titres des semaines 1 à 13, avec leurs décomptes : la forme de S1, partie 3.9, sans `phrase_semaine` ni `pas_de_cote` ; `sans_faute` suit R7 (§6, point 6), chaque semaine. Dans `surprise`, `attributions` et `erreurs` portent tous les textes révélés dans la semaine, titrés ou non, pour que le contrôle vérifie le critère c3. `texte` et `departage`, eux, suivent la règle de la surprise du fichier caché (point 9), sur les seuls textes candidats. Le départage calculé sur tous les textes (critère c3) n'est écrit qu'aux rapports du scellement et du contrôle. Les clés `points`, `raisons`, `tentatives` et `erreurs` portent les quatre personnages. |
 | `arrivee` | objet | `{"curseurs", "resume", "resume_sha256", "temperaments"}` |
 
 **`jours.<j>`** vaut `{"manches", "repondu", "revelation"}`.
@@ -528,7 +529,7 @@ Exemple tronqué, valeurs inventées :
 - **`revelation`** : `null` aux jours −90 et −89. Sinon, `{"devineurs", "pas_de_cote", "texte"}` (partie 4.3.5), sans `avis_cercle` : un texte abstrait n'a pas de vote.
 
 **`arrivee`** :
-- **`curseurs`** : par personnage, puis par tension, `{"c", "l", "net", "somme_w"}`.
+- **`curseurs`** : les curseurs du résumé (entrée et H1 à H90, poids normaux), avec `l` et `net` en plus. Ils sont égaux à `jours.1.curseurs_vus` de toute trace de partie.
 - **`temperaments`** : par personnage, le détail du jour 0 (partie 4.3.8).
 - **`resume`** : l'objet de la partie 3.
 - **`resume_sha256`** : son empreinte.
@@ -559,17 +560,17 @@ Dans ce tableau, « joué » désigne les jours de type `joue`, « point de saut
 | `versions` | avec `ouverture`, en mode `interface` | comme dans S1. Au jour 4 ou 8, les touchers comptés vont jusqu'au toucher qui confirme le saut. |
 | `etapes` | jours joués, en mode `interface` | entrée : `{"deviner", "entree", "repondre"}`. `deviner` et `repondre` sont des booléens ; `entree` (l'écran 1.2 a été affiché) est un booléen au jour 1 et vaut `null` les autres jours. |
 | `coups` | toujours | partie 4.3.3 |
-| `entree` | jour 1, dès que 1.2 a été affiché | `{"justes", "textes"}`. Chaque texte E vaut `{"invitant": {"niveau", "raison"}, "juste": booléen ou null}`. Le pari est juste s'il est du bon côté (D-011). |
+| `entree` | jour 1 : en mode `interface`, dès que 1.2 a été affiché (`etapes.entree` vrai) ; en mode `moteur`, toujours | `{"justes", "textes"}`. Chaque texte E vaut `{"invitant": {"niveau", "raison"}, "juste": booléen ou null}`. Le pari est juste s'il est du bon côté (D-011). |
 | `manches` | jours 1 à 14 | par devineur. Chaque personnage présent joue. Le porteur n'a une clé que si sa manche a été ouverte, c'est-à-dire si `coups.deviner` n'est pas nul. |
 | `revelation` | jours 1 à 15 | partie 4.3.5 |
-| `message` | jours joués sauf le jour 1, et points de saut | `{"forme": "cartes", "vote" ou "question", "titres": booléen}` (E1, §0). `titres` n'est vrai que le dimanche, s'il y a au moins un titulaire. |
+| `message` | jours joués sauf le jour 1, et points de saut | `{"forme": "cartes", "vote" ou "question", "titres": booléen}` (E1, §0). `titres` n'est vrai que le dimanche, si Le Sans-Faute, Le Devin, Le Mystère ou Le Fidèle de la semaine a au moins un titulaire, personnage ou porteur. Le Sans-Faute compte (il vit comme un titre, R7) ; la surprise de la semaine ne compte pas : ce n'est pas un titre, elle nomme un texte et non une personne, et n'a pas de titulaire. |
 | `phrase_jour` | chaque jour où le porteur a répondu, rattrapage compris | comme dans S1, partie 3.8 |
 | `attente` | jours joués dont la journée est finie | comme dans S1. Le 2.5 réduit du rattrapage ne lit pas l'heure. |
 | `dimanche` | jours 7 et 14 | partie 4.3.8 |
 | `portrait` | toujours | partie 4.3.6 |
 | `curseurs_vus` | toujours | par personnage et par tension, `{"c", "l", "net", "somme_w"}` : entrée et textes répondus jusqu'au jour j − 2, poids normaux |
 | `cercle` | toujours | partie 4.3.7 |
-| `surprises_proches` | toujours | comme dans S1. Un jumeau désigné n'y entre pas (D-024), ni une passe, ni un texte d'entrée. |
+| `surprises_proches` | toujours | comme dans S1. Un jumeau désigné n'y entre pas (D-024), ni une passe, ni un texte d'entrée. Une surprise est une carte révélée de la manche du porteur, rangée sous son `auteur_compte`, où le porteur a désigné un membre dont la réponse diffère. Un membre qui n'a pas répondu à ce texte compte comme une réponse différente. Ne sont pas des surprises : un jumeau, une passe, une carte vide, un texte d'entrée. Les cartes vont de la plus récente à la plus ancienne. |
 | `mesures` | jours joués, points de saut, clôture | partie 4.3.10 |
 
 À la clé d'un arrêt, les règles de S1, partie 3.3, s'appliquent.
@@ -661,14 +662,14 @@ Dans ce tableau, « joué » désigne les jours de type `joue`, « point de saut
 - **`tensions.<t>`** vaut `{"c", "l", "net", "somme_w"}`, où `somme_w` = Σ facteur·w (§5.9).
 - **`ordre_moi`** : l'ordre du §5.3 du second essai, sur les quatre tensions de l'essai.
 - **`barre`** vaut `{"longueur", "n", "pleine"}` :
-  - `n` : le nombre de réponses validées du porteur, entrée comprise ;
+  - `n` : le nombre de réponses validées du porteur, entrée comprise, rattrapage compris, au jour de son texte ; `n` vaut 17 au jour 14 dans une partie complète ;
   - `pleine` : `n` ≥ `reglage.barre`, ou au moins un curseur du porteur est net. Une fois vrai, il le reste ;
   - `longueur` : la fraction « 1 » si `pleine`, sinon `n / barre`.
 
 #### 4.3.7 Le Cercle affiché
 
 **`cercle`** vaut `{"surprise", "temperaments", "titres"}`.
-- **`titres.<membre>`** : les titres de la dernière semaine dont le dimanche est atteint, dans l'ordre Le Sans-Faute, Le Devin, Le Mystère, Le Fidèle.
+- **`titres.<membre>`** : une clé par membre, porteur compris ; un tableau de codes parmi `sans_faute`, `devin`, `mystere`, `fidele`, dans cet ordre, vide sans titre ; ce sont les titres de la dernière semaine dont le dimanche est atteint.
 - **`temperaments.<personnage>`** : ceux du dernier calcul (jour 0, 7 ou 14).
 - **`surprise`** : le texte de la surprise de cette même semaine, ou `null`. Du jour 1 au jour 6, c'est « H86 ».
 
@@ -682,7 +683,7 @@ Forme de S1, partie 3.9, avec ces écarts :
 
 **`phrase_semaine`** vaut `{"cas", "devenues", "lecture", "phrase", "poids", "reference", "tension"}`.
 - `lecture` : les quatre tensions du porteur à l'ouverture du dimanche, avant la réponse du dimanche, au format `{"c", "net", "somme_w"}`.
-- `reference` : les tensions nettes à la lecture précédente. Au jour 7, c'est l'état après l'entrée.
+- `reference` : les tensions nettes à la lecture précédente. Au jour 7, c'est l'état après l'entrée. Un dimanche abandonné avant les titres garde sa lecture : elle sert de référence au dimanche suivant.
 - `devenues` : les tensions nettes à la lecture, absentes de `reference`, dont le centre ne vaut pas exactement 1/2.
 - `cas` vaut `"nette"`, `"difference"`, `"egalite"` ou `"floue"`.
 - `poids` : comme dans S1, sur les réponses de la semaine, avec les poids normaux w, sans le facteur. Le facteur multiplie tous les poids d'une semaine : il ne change ni la tension retenue, ni le cas, ni la phrase.
@@ -727,7 +728,7 @@ Forme de S1, partie 3.9, avec ces écarts :
 - `pendant_deviner` : quand Deviner s'est affiché.
 - Aux jours 4 et 8, les durées s'arrêtent à l'ouverture de la page du saut confirmée ; `sauts[].mesures.duree_saut` va de cette ouverture au toucher « Aller au dimanche », et `duree_page` de cette ouverture au toucher qui confirme (§8.12). Les touchers de `versions` vont jusqu'au toucher qui confirme.
 
-**`agregats`** : les trois lignes de S1, calculées sur les manches des jours 1 à 15. Une attribution à un jumeau compte juste. On garde le seuil « pas de chiffre sous cinq textes répondus parmi les textes révélés ». `titres_tires_au_sort` va de 0 à 6 (semaines 14 et 15).
+**`agregats`** : les trois lignes de S1, calculées sur les manches jouées depuis l'arrivée (jours 1 à 14) et déjà révélées (jours 2 à 15). La manche du jour 0 sur H90, révélée au jour 1, n'y entre pas. Le seuil compte les réponses du porteur aux textes T0 à T13 déjà révélés. Ni H90 ni les textes d'entrée n'y entrent. Une attribution à un jumeau compte juste. On garde le seuil « pas de chiffre sous cinq textes répondus parmi les textes révélés ». `titres_tires_au_sort` va de 0 à 6 (semaines 14 et 15).
 
 #### 4.3.11 Carnet et copies
 
@@ -750,7 +751,7 @@ Aucune autre clé.
 **Le fichier des durées, version 2.**
 - `jours.<j>` vaut `{"duree_deviner", "duree_entree", "duree_repondre", "duree_seance"}`.
 - `sauts[i]` vaut `{"duree_page", "duree_saut", "durees_textes", "numero"}`.
-- `copies` : les quatre clés d'un jour.
+- `copies[i]` vaut `{"duree_deviner", "duree_entree", "duree_repondre", "duree_seance", "sauts"}`. Les quatre durées sont celles du jour de la copie. `sauts` a un élément par saut confirmé à l'instant de la copie, aux clés de `sauts[i]`. Pour un saut pas fini, `duree_saut` et la durée du dernier texte atteint vont jusqu'au toucher de la copie, et `durees_textes` a `textes_atteints` éléments. Toutes ces valeurs sont prises au toucher de la copie, comme `copies` dans la trace (partie 4.3.11).
 
 **Masquage** (S1, partie 4.2, étape 3, étendue) : toute valeur entière dont la clé commence par `duree`, et chaque élément entier d'un tableau dont la clé commence par `duree`, devient 0. La présence est comparée, la valeur jamais.
 
@@ -766,7 +767,7 @@ Aucune autre clé.
      - jour j point de saut : le saut de ce jour existe et `reponse` du jour j n'est pas nul ;
      - jour j sauté : `reponse` du jour j n'est pas nul.
 4. **Ouvertures.**
-   - Elles ne sont non nulles qu'aux jours joués, aux points de saut et à la clôture, et elles y sont toujours non nulles, sauf dans un cas : un arrêt après la dernière réponse d'un rattrapage et avant « Aller au dimanche ». Le jour de reprise est alors atteint (§0) mais n'a pas d'ouverture, puisque les touchers d'un saut confirmé et pas fini comptent au saut.
+   - Elles ne sont non nulles qu'aux jours joués, aux points de saut et à la clôture, et elles y sont toujours non nulles, sauf dans un cas : un arrêt après la dernière réponse d'un rattrapage et avant « Aller au dimanche ». Le jour de reprise est alors atteint (§0) mais n'a pas d'ouverture, puisque les touchers d'un saut confirmé et pas fini comptent au saut. Ce jour-là, `ouverture` et `versions` valent `null` ; `etapes` vaut `{"deviner": false, "entree": null, "repondre": false}` en mode `interface` (c'est un jour joué, règle 12) ; `abandon` vaut `false` ; `relire`, `rouvrir` et les quatre entiers de `ouvert` valent 0, et les quatre clés de `carnet` valent `null`. Ce qui se touche ou s'ouvre à ce moment compte au saut.
    - Elles ne décroissent jamais. Règles du changement d'heure : S1, partie 3.12, règle 4.
    - `sauts[i].depart` se situe entre l'ouverture de son point de saut et celle du jour de reprise, s'il est atteint.
 5. **Versions** : non nulles exactement là où `ouverture` l'est, en mode `interface`. Règles de S1.
@@ -798,7 +799,7 @@ Aucune autre clé.
 10. **Carnet.**
     - `moment` n'existe qu'aux jours joués, parmi les choix de la liste du jour. En mode `interface`, « Deviner » suppose `etapes.deviner`, « Donner mon avis » et « Ma phrase du jour » supposent `etapes.repondre` ; les autres choix ne sont pas filtrés (les écrans qui les montrent, 3.3a et 3.3e, ne sont pas dans `etapes`). Il ne dépend jamais de `reponse`.
     - `saut_clair` n'existe qu'au jour 7. `hesite` et `moment_semaine` n'existent qu'aux jours 7 et 14.
-    - `hesite` contient des codes distincts, dans l'ordre de la liste ; `nulle_part` est seul.
+    - `hesite` contient des codes distincts, dans l'ordre de la liste ; `nulle_part` est seul. `hesite` n'est jamais un tableau vide : sans choix, il vaut `null`.
 11. **Attente** : seulement aux jours joués dont la journée est finie, avec au moins une lecture.
 12. **Étapes** (mode `interface`).
     - Elles sont non nulles exactement aux jours joués.
@@ -867,7 +868,7 @@ On retire `cercle.inviteuse` et on ajoute `cercle.invitant`.
 - **Point final** : là où le lecteur de S1 attend « . » suivi d'une espace, le lecteur v2 admet aussi un point en fin de ligne.
 - **Lignes** (contrôlées sur le fichier et sur les fiches) :
   - chaque élément de `lignes` fait au plus 90 points de code, en NFC (A.7) ;
-  - pour les textes en présentation B (fichier caché, point 14), dont la liste est passée en paramètre par l'orchestrateur, la ligne 3 est égale, à l'identique, à la phrase fixe de A.7 : « Cet amendement supprimerait tout l'article qui prévoit ces mesures. »
+  - pour les textes en présentation B (fichier caché, point 14), la ligne 3 est égale, à l'identique, à la phrase fixe de A.7 : « Cet amendement supprimerait tout l'article qui prévoit ces mesures. » La liste de ces textes est passée en paramètre par l'orchestrateur, sous la forme des numéros de scrutin du fichier caché, point 14, séparés par des virgules. Le contrôle rapproche chaque numéro de l'en-tête de fiche qui le porte. Il refuse un numéro qui ne désigne pas exactement une fiche de texte joué, et il écrit au rapport la clé (T{n} ou E{n}) de chacun. Sans la liste, l'étape le dit et le contrôle 1 reste partiel.
 - **H86** : seules les lignes `Titre` et `Tension` sont lues, plus sa ligne de `votes.md`.
 - **`votes.md`** : en-tête « | Rang | Scrutin | `objet` | `issue` | `date` | `etape` | `suite` | Preuve principale | ». Une ligne par texte joué et une pour H86.
   - La colonne `objet` admet `resolution`.
@@ -925,7 +926,7 @@ C'est la forme de S1, partie 4.5, sur les 18 textes, avec ces changements :
   - fichier scellé, version 5 (9 octobre 2026) : tout ce qui est décrit en partie 2. Complétée le 10 octobre 2026 sans changer de numéro, ce qui suppose qu'aucun candidat n'ait encore été produit (le fichier de test du lot 1 est régénéré) : objet `resolution`, champ `vote.suite`, limite de `groupe` à 70, vérification des groupes contre `amo`, forme courte des commissions spéciales, règles de lecture des fiches (partie 5.1, étape 8) ;
   - trace version 4 et journal version 4 : partie 4.3 ;
   - nouveaux formats : la trace de l'histoire (version 1) et le résumé (version 1) ;
-  - fichier des durées, version 2 ; phrases attendues, version 2.
+  - fichier des durées, version 2, complété le 10 octobre 2026 (`sauts` dans `copies`) sans changer de numéro ; phrases attendues, version 2.
 - **Ce que la page refuse à V4** : tout `format` ou toute `version` autre que `"elenchos-essai-scelle"` et 5. Elle refuse donc le fichier du premier essai.
 - **Repli : l'histoire scellée** (§8.8, si un budget est dépassé).
   - Le fichier passe en version 6, avec `histoire.etat_arrivee` égal au résumé lui-même (partie 3).
@@ -965,7 +966,7 @@ C'est la forme de S1, partie 4.5, sur les 18 textes, avec ces changements :
 2. **Contrôle 1** : les étapes de la partie 5.1.
    - Tables exigées.
    - D-028, D-034, E8.
-   - Groupes et commissions : chaque `groupe` comparé au `libelle` de son organe dans `amo` (chemin et SHA-256 au rapport), ou, en repli, à la liste de codes de la partie 2.10.
+   - Groupes et commissions : chaque `groupe`, et chaque `libelle` de commission hors forme courte, comparé au `libelle` de son organe dans `amo` (chemin et SHA-256 au rapport) ; en repli, la liste de codes de la partie 2.10 pour les groupes, la forme seule pour les commissions.
    - Combinaisons de `suite`.
    - Lignes de 90 points de code au plus ; ligne 3 fixe des textes en présentation B (liste en paramètre).
    - Fidélité aux fiches du second lot, H86 comprise, avec les en-têtes stricts (partie 5.1, étape 8).
@@ -1022,8 +1023,8 @@ C'est la forme de S1, partie 4.5, sur les 18 textes, avec ces changements :
 
 **Hors de ces deux rôles, à transmettre**
 - **UX-1** : le repère de l'arrêt V6 (§8.11).
-- **UX-2** : T0, jamais répondu par le porteur, figure-t-il dans l'Historique (5.3, 5.4) ? Les phrases attendues en dépendent.
-- **UX-3** : l'affichage des amendements identiques d'autres groupes. Il n'a pas de champ pour l'instant ; s'il en faut un, il entre dans la version 5 avant le candidat 1 (aucun fichier n'est encore scellé). La version 6 reste réservée au repli (partie 6).
+- **UX-2** : T0, jamais répondu par le porteur, figure-t-il dans l'Historique (5.3, 5.4) ? Les phrases attendues en dépendent. **Clos (UX, 10 octobre 2026) : non.** T0 n'apparaît pas dans l'Historique ; son vote et ses auteurs ne se lisent qu'à sa révélation (jour 2), en 2.7d et 2.7e (`simulation-2.md`, §7.1).
+- **UX-3** : l'affichage des amendements identiques d'autres groupes. Il n'a pas de champ pour l'instant ; s'il en faut un, il entre dans la version 5 avant le candidat 1 (aucun fichier n'est encore scellé). La version 6 reste réservée au repli (partie 6). **Clos (UX, 10 octobre 2026) : rien ne s'ajoute, aucun champ.** Seul l'auteur de l'amendement retenu au fichier est nommé ; la version 5 ne change pas (`simulation-2.md`, §7.11).
 - **Contenu-1** : les tables des parties 2.10, 2.10 bis et 2.11, et les formes de lignes de la partie 5.1, étape 8.
 - **Contenu-2** : l'auteur d'une raison peut-il être un non-inscrit, et compte-t-il comme « un groupe » ? Le schéma en permet un par texte.
 

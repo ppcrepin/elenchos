@@ -79,7 +79,7 @@ Un texte répondu le jour j est deviné le jour j + 1 et révélé le jour j + 2
   5. Écran verrouillé du jour 7, avec le message de 18h du dimanche.
   
   Mots et formes : UX (§7.4, §8.1 ter) [renvoi].
-- **« Annuler »** ramène au téléphone : la révélation du jour, Le Cercle, Moi. La seule suite possible reste « Avancer au dimanche ». Les jours 4 et 8 n'offrent jamais de Deviner : les manches de T3 et de T7 ne sont jamais ouvertes.
+- **« Annuler »** ramène au téléphone, sur 2.7f. Ces jours-là, la révélation n'a pas d'onglets et le jour n'a pas d'Aujourd'hui : Le Cercle et Moi ne sont pas accessibles. La seule suite possible reste « Avancer au dimanche ». Les jours 4 et 8 n'offrent jamais de Deviner : les manches de T3 et de T7 ne sont jamais ouvertes.
 - **Rattrapage.**
   - C'est l'écran Répondre du produit, un texte à la fois. La phrase du jour s'affiche après chaque réponse (règle 18).
   - Une réponse est exigée pour chaque texte (UX). « Arrêter l'essai » reste possible.
@@ -338,7 +338,7 @@ Le téléphone montre le produit, en « tu » : les maquettes validées (D-014) 
   - 1.12 ne sert pas : au premier Aujourd'hui, une manche est ouverte (§7.2, fin).
 - **5.2** : sans la ligne « Tempérament » (le porteur n'en a aucun : il faut deux mois, règle 13).
   - Lignes : « Semaine {n} » · « {titres} · Amis ».
-- **5.3** : les trois textes d'entrée y figurent (E6), en bas de la liste, la plus ancienne en bas. Chacun à gauche « Pour commencer · {titre} », à droite « {Position} ». L'essai n'a pas de dates : « Pour commencer » tient lieu de jour.
+- **5.3** : les trois textes d'entrée y figurent (E6), en bas de la liste, la plus ancienne en bas. Chacun à gauche « Pour commencer · {titre} », à droite « {Position} ». L'essai n'a pas de dates : « Pour commencer » tient lieu de jour. T0 n'y figure pas : le porteur l'a deviné sans y avoir répondu. Son vote et ses auteurs ne se lisent qu'à sa révélation (jour 2), en 2.7d et 2.7e.
 - **5.7** : la ligne « E-mail » devient « Connexion ». Sa valeur dépend du bouton touché en 1.8 : « Apple », « Google » ou « toi@exemple.fr ».
 - **2.5 pendant un saut** : réduit (§7.4).
 - **Croix des révélations (2.7a à 3.3e)** :
@@ -533,7 +533,7 @@ Le §7.9 de la simulation 1 vaut pour un texte entier. Ce qui s'ajoute :
 - **Résolution.** `vote.objet` reçoit une cinquième valeur, `resolution`, pour une proposition de résolution (article 34-1 de la Constitution). Issue `adopte` ou `rejete`, étape `aucune` seulement : une résolution n'a pas de suite.
   - Gros titre inchangé : « Texte adopté. » ou « Texte rejeté. » (D-014).
   - {objet} : « C'était une résolution, un texte qui invite le Gouvernement à agir, sans l'y obliger. » (mots d'UX ; la virgule et « l'y » évitent de lire « à [agir sans l'obliger] »).
-  - Elle prend la place de {objet} dans les gabarits du tableau ci-dessus : en 2.7d, « Le {date}. C'était une résolution, … » ; en 5.4, « Vote : adopté le {date}. C'était une résolution, … » (ou « rejeté »).
+  - Elle prend la place de {objet} dans les gabarits du tableau ci-dessus : en 2.7d, « Le {date}. C'était une résolution, … » ; en 5.4, « Vote : adopté le {date}. C'était une résolution, … » (ou « rejeté ») ; en 1.6, « L'Assemblée : texte {adopté | rejeté} le {date}. C'était une résolution, … ».
 - **Suite du texte.** Un champ fermé, `vote.suite`, garde un fait du jour même du scrutin qui change le sort du texte entier. Sans lui, une ligne exacte pourrait tromper : un article rejeté qui a fait tomber tout un texte afficherait seulement « C'était un article d'un texte plus long. ».
   - `texte_tombe` (seulement pour un article rejeté) : « Avec lui, l'Assemblée a rejeté le texte entier. »
   - `texte_retire` (pour un article ou un amendement) : « Le jour même, le texte entier a été retiré. »
@@ -558,7 +558,7 @@ Ces points remplacent « Groupe » et « D'un seul tenant » du §7.10 de la sim
   - En 5.4, le même gabarit, mandat compris. Exemple inventé : « Proposé par Karim Benali, député du groupe Les Démocrates. »
   - Pourquoi : écrits en toutes lettres après une virgule, plusieurs noms se lisent comme des adjectifs (« députée, Écologiste et Social ») ; et l'un d'eux contient lui-même des virgules (« Libertés, Indépendants, Outre-mer et Territoires »).
   - Si la virgule validée est gardée : « {nom}, {mandat}, {groupe} » (en 5.4, « {nom}, {groupe} » pour un député). Rien d'autre ne change.
-- **Député non inscrit** : « {nom}, {député | députée} sans groupe ».
+- **Député non inscrit** : « {nom}, {député | députée} sans groupe ». Sur tous les écrans, 5.4 compris. En 5.4, le mandat est omis pour un député inscrit, mais il reste ici : « {nom}, sans groupe » se lirait comme une qualité de la personne. Dans la liste des raisons de 5.4, « sans groupe » reste seul sur sa ligne, comme un nom de groupe.
 - **Amendement de commission** : « Proposé par la {commission}. » {commission} est le libellé court, avec une minuscule au début, tiré de la liste de Contenu (par exemple « commission des affaires sociales »).
 - **Gouvernement** : « Proposé par le Gouvernement. » (inchangé).
 - **5.4, liste des raisons** : à droite, le nom, puis à la ligne le groupe (ou « sans groupe »), sans virgule.
@@ -571,6 +571,7 @@ Ces points remplacent « Groupe » et « D'un seul tenant » du §7.10 de la sim
 
 - **Un seul auteur.** Quand un texte est déposé par plusieurs personnes, « Proposé par » nomme la première personne nommée dans le texte déposé, avec son mandat et son groupe au dépôt. C'est la logique du premier signataire d'un amendement (A.7, point 4) et des textes signés « et plusieurs de ses collègues ». (Avis unanimes.)
   - Limite, dite franchement : un auteur seul peut attribuer à un camp une mesure portée par plusieurs groupes. Piste de Game design pour l'étape 6 : le gabarit validé, suivi de « avec des députés de {n} autres groupes ». Elle touche D-014 : elle n'entre pas dans l'essai.
+  - Il en va de même pour un amendement : si d'autres groupes ont déposé un amendement identique, seul l'auteur de l'amendement retenu au fichier est nommé, et rien ne s'ajoute. La limite dite ci-dessus vaut aussi pour ce cas.
 - **Le libellé du moment.** Fait foi le libellé de l'organe dont l'élu était membre à la date retenue : le dépôt pour l'auteur, la séance pour une raison. Si ce libellé n'est qu'un sigle, l'élu n'est pas retenu (pour une raison, on prend un autre orateur ; pour l'auteur d'un texte, le texte va en réserve). On ne prend jamais le libellé d'un autre organe, même s'il désigne le même groupe. (arbitrage de l'orchestrateur : règle mécanique, par identifiant et date ; positions : Back-end et Game design, jamais un autre organe ; UX acceptait un autre organe si Contenu prouvait que c'est le même groupe, écarté parce que cette preuve demande un jugement.)
 - **Noms de groupes longs.** Le nom officiel reste entier, jusqu'à 70 caractères (schéma de Back-end ; 60 auparavant). La longueur d'un nom de groupe ne guide jamais le choix d'un orateur. (Avis unanimes.)
 - **Noms de personnes.** Un nom s'affiche exactement comme l'institution l'écrit ; Front-end empêche toute coupure de ligne à l'intérieur d'un nom de personne. (Avis unanimes.)
@@ -651,7 +652,7 @@ On range les n réponses au texte révélé, de « Très défavorable » à « T
 - **Ce qui change pour le porteur.** Ses curseurs se resserrent plus vite (calcul de Game design : poids triples). Un ou deux peuvent devenir nets pendant l'essai. Les mots validés ne changent pas.
 - **Moi › Portrait, sans curseur net : 5.11**, de haut en bas :
   - l'encadré de la barre ;
-  - les huit curseurs (les quatre tensions écartées restent floues et immobiles) ;
+  - les huit curseurs : les quatre tensions de l'essai dans l'ordre du §5.3 (toutes floues ici, donc de la plus étroite à la plus large, à égalité S, P, T, L), puis les quatre tensions écartées, floues et immobiles, dans l'ordre fixe ;
   - la phrase validée « Chaque réponse le précise. Il faut environ trois mois pour les premiers curseurs nets. ». Elle reste vraie pour le jeu : la note de la bande dit l'écart de l'essai.
 - **Moi › Portrait, dès qu'un curseur est net : 4.1**, de haut en bas :
   - l'en-tête « Moi », la roue dentée, les sous-onglets ;
@@ -791,7 +792,10 @@ Cette section remplace « ne s'affiche qu'en 3.2 et dans le carnet ».
   - E6 (« Pour commencer », §7.1) ;
   - la phrase nette du dimanche (§7.15) ;
   - les curseurs nets, les tempéraments, les initiales (§7.16) ;
-  - Le Pas de Côté, avec la règle de Game design. Ses mots sont ceux de l'annonce d'un badge rare : « {Prénom} décroche Le Pas de Côté. ». La ligne de dessous est à écrire par Game design, sur le modèle « Sept jours sans erreur, sans rien passer. ». Ce texte n'est dans aucune maquette : il entre dans l'annexe C. [Assembleur : la ligne de dessous n'est pas encore écrite.]
+  - Le Pas de Côté, avec la règle de Game design. Ses mots sont ceux de l'annonce d'un badge rare : « {Prénom} décroche Le Pas de Côté. ». La ligne de dessous, écrite par Game design le 10 octobre 2026 sur le modèle « Sept jours sans erreur, sans rien passer. » (typographie simple) :
+    - un titulaire : « Une réponse à l'opposé de ce que disait son portrait. » ;
+    - plusieurs titulaires sur une seule carte, comme le Sans-Faute : « {A} et {B} décrochent Le Pas de Côté. », puis « Des réponses à l'opposé de ce que disaient leurs portraits. »
+    - Ce texte n'est dans aucune maquette : il entre dans l'annexe C.
 - **R8** : hors de portée (un seul cercle).
 - **R9** : appliquée (tempéraments sous les visages, dans ce cercle).
 - **R10** : c'est le passage au jour suivant qui ferme la manche.
@@ -1039,15 +1043,15 @@ Le porteur verra ces formes à la livraison, dans la liste de ce qui est nouveau
   - « Vous ne pourrez pas y revenir. » ;
   - « Abandonner » · « Annuler ». « Annuler » est mis en avant, à droite (en bas si les boutons s'empilent).
   - « Abandonner » ouvre « Votre carnet du jour ». Rien n'est joué avant « Aller au jour suivant » : « Annuler » ramène à la journée, intacte.
-- **Phrases de perte.** R10 appliquée, confirmée par Game design : un visage posé compte.
-  - **Révélation pas finie, cartes à deviner ce jour-là** : « La révélation s'arrêtera là. Vous ne devinerez pas les réponses d'hier, et vous ne répondrez pas au texte du jour. »
-  - **Le dimanche** : si 3.3a n'a pas été affiché, la première phrase devient « La révélation s'arrêtera là, sans les titres ni votre phrase de la semaine. ». Si 3.3a a été affiché mais pas 3.3e : « La révélation s'arrêtera là, sans votre phrase de la semaine. ».
-  - **Révélation finie, Deviner jamais affiché** : « Vous ne devinerez pas les réponses d'hier, et vous ne répondrez pas au texte du jour. »
-  - **Deviner affiché, pas validé** :
-    - aucune carte avec un visage : « {Votre carte comptera | Vos deux cartes compteront | Vos trois cartes compteront} comme {passée | passées}, et vous ne répondrez pas au texte du jour. » ;
-    - certaines cartes avec un visage : « Les visages déjà posés comptent comme si vous aviez validé ; {la carte sans visage comptera | les deux cartes sans visage compteront} comme {passée | passées}. Vous ne répondrez pas au texte du jour. » ;
-    - toutes les cartes avec un visage : « Les visages déjà posés comptent comme si vous aviez validé. Vous ne répondrez pas au texte du jour. »
-  - **Deviner fait, ou rien à deviner** : « Vous ne répondrez pas au texte du jour. ». Avec une position choisie sans raison : « Vous ne répondrez pas au texte du jour : une position sans raison ne compte pas. »
+- **Phrases de perte.** R10 appliquée, confirmée par Game design : un visage posé compte. La phrase se compose de deux parties, dans cet ordre.
+  1. **Si la révélation du jour n'est pas finie** (celle que « Reprendre la révélation » rouvrirait, §7.18) : « La révélation s'arrêtera là. ». Le dimanche, si 3.3a n'a pas été affiché : « La révélation s'arrêtera là, sans les titres ni votre phrase de la semaine. ». Si 3.3a a été affiché mais pas 3.3e : « La révélation s'arrêtera là, sans votre phrase de la semaine. ».
+  2. **Puis, selon Deviner et Répondre** :
+     - Deviner jamais affiché : « Vous ne devinerez pas les réponses d'hier, et vous ne répondrez pas au texte du jour. » ;
+     - Deviner affiché, pas validé, aucune carte avec un visage : « {Votre carte comptera | Vos deux cartes compteront | Vos trois cartes compteront} comme {passée | passées}, et vous ne répondrez pas au texte du jour. » ;
+     - certaines cartes avec un visage : « Les visages déjà posés comptent comme si vous aviez validé ; {la carte sans visage comptera | les deux cartes sans visage compteront} comme {passée | passées}. Vous ne répondrez pas au texte du jour. » ;
+     - toutes les cartes avec un visage : « Les visages déjà posés comptent comme si vous aviez validé. Vous ne répondrez pas au texte du jour. » ;
+     - Deviner fait, ou rien à deviner : « Vous ne répondrez pas au texte du jour. ». Avec une position choisie sans raison : « Vous ne répondrez pas au texte du jour : une position sans raison ne compte pas. »
+  - Exemple : « La révélation s'arrêtera là. Vos deux cartes compteront comme passées, et vous ne répondrez pas au texte du jour. »
 
 ### 8.1 ter Le saut : la page, le rattrapage, la note qui suit (UX)
 **Déclenchement** (convention d'essai, dans l'ordre que le porteur a validé : « Vous voyez d'abord la révélation de vos devinettes du mercredi. Puis une page montre la semaine »).
@@ -1112,7 +1116,10 @@ Des pages du cadre, dans cet ordre. La barre affiche « Début ».
    - Bouton : « Effacer et commencer ». Il ouvre la confirmation « Effacer la partie du premier essai ? » / « C'est définitif. » · « Annuler » · « Effacer ».
    - L'effacement retire aussi la trace de la page-test (Juridique). Sans effacement, l'essai ne commence pas.
 
-*[Assembleur : Front-end (§8.8) demande à UX si la phrase « la page les efface avant de commencer » doit changer dans le cas rare où les deux parties sont là. Proposition de Juridique, mots à confirmer par UX : dans ce cas, « Elles ne servent plus, et l'essai ne garde qu'une partie à la fois : la page les efface avant de commencer. » devient « Elles ne servent plus : la page les efface. Votre partie en cours n'est pas touchée. », et le bouton devient « Effacer et reprendre ».]*
+**Cas rare : les deux parties à la fois** (§8.8). Même page, avec ces mots :
+- Titre : « Une partie du premier essai est revenue »
+- « Votre {appareil} garde de nouveau des réponses du premier essai. Elles ne servent plus : la page les efface. Ni votre partie du second essai ni votre carnet du premier essai, déjà dans la conversation, ne sont touchés. »
+- Bouton : « Effacer et reprendre ». Confirmation inchangée : « Effacer la partie du premier essai ? » / « C'est définitif. » · « Annuler » · « Effacer ». Après « Effacer », la partie reprend à son étape.
 
 **B. Le premier message** (texte de Juridique, revalidé par lui le 9 octobre 2026). C'est le texte du §8.2 de `simulation.md`, dont la dernière puce est remplacée par les deux dernières ci-dessous :
 « **Vos réponses restent dans votre {appareil}.** La page n'envoie rien, pas même à l'équipe. Pour que personne d'autre ne les voie, et pour ne pas les perdre :
@@ -1196,7 +1203,7 @@ La règle de Juridique du premier essai s'applique telle quelle : rien qui chang
 - **Aux jours 1 à 3**, les ouvertures du Cercle et de l'écran d'un proche faites pendant que Deviner est affiché (proposition d'UX). C'est la mesure de D-023 : le nouveau venu se sert-il du Cercle pour deviner ? Ligne « Pendant Deviner » du carnet (§8.12).
 - **Après chaque saut** (jours 7 et 14) : les mêmes ouvertures (proposition d'UX).
 - **Bloc de saut** : durée du saut, dont la page du saut ; durée de chaque réponse de rattrapage. C'est le même risque assumé que la durée de Répondre au premier essai : attachée à un texte, elle dit l'hésitation, pas la réponse.
-- **Sur tout l'essai** : les trois lignes du premier essai, calculées sur la période de l'essai (manches des jours 1 à 15), avec « pas de chiffre » sous cinq textes répondus parmi les textes révélés.
+- **Sur tout l'essai** : les trois lignes du premier essai, calculées sur la période de l'essai (manches jouées des jours 1 à 14 et révélées des jours 2 à 15 ; celle du jour 0 sur H90 n'y entre pas), avec « pas de chiffre » sous cinq textes répondus parmi les textes révélés.
 - **Jamais** :
   - « adopté », « rejeté » ou « partagé » texte par texte, ni « seul de son avis », ni le temps passé sur le graphique ;
   - un curseur, le nombre de curseurs nets du porteur, la forme de sa phrase du dimanche, un Pas de Côté ;
@@ -1360,8 +1367,9 @@ Le bouton touché en 1.8 n'est gardé que si Game design en fait une mesure (c'e
   - aucun fichier d'Apple ou de Google embarqué ni chargé (règle de Juridique ; politique de sécurité) ;
   - ce que fait leur toucher : UX ;
   - leur aspect : la Direction artistique. À défaut, des boutons en texte seul. Les logos suivent des règles de marque qui ne se règlent qu'à l'étape 6.
-- **Refus du pseudo (E7, §7.19 d'UX [renvoi]).** La comparaison avec les prénoms se fait sur un « squelette » au sens d'Unicode UTS #39 : décomposition, accents retirés, minuscules, et chaque lettre d'un autre alphabet qui imite une lettre latine (le а cyrillique pour le a) ramenée à cette lettre.
-  - La table de ces lettres est réduite aux caractères qui se ramènent à une seule lettre latine de base. Elle est tirée, à la construction, du fichier `confusables.txt` d'Unicode (version et SHA-256 notés). Elle pèse quelques Ko, selon mon estimation.
+- **Refus du pseudo (E7, §7.19 d'UX [renvoi]).** La comparaison avec les prénoms se fait sur un « squelette » au sens d'Unicode UTS #39 : une lettre d'un autre alphabet qui imite une lettre latine (le а cyrillique pour le a) est ramenée à cette lettre.
+  - Forme comparée : minuscules (correspondance par défaut), décomposition NFD sans les signes de catégorie Mn, chaque caractère de la table remplacé par sa lettre, puis de nouveau minuscules et NFD sans signes ; la même opération est appliquée au prénom.
+  - Table : `confusables.txt` version 16.0.0 (SHA-256 `95bd0aad6dced5ebc63436f459c06ab21a8d107cd842fb57f5c3a1e91bca8611`), lignes dont la source est un seul caractère et la cible une seule lettre de A à Z ou de a à z. Elle est tirée à la construction ; elle pèse quelques Ko, selon mon estimation.
   - Aucune fonction ne dépend de la langue du navigateur (contrôle 5).
 
 **Sauts et rattrapage, dans la mémoire.**
@@ -1436,7 +1444,7 @@ Environ les deux tiers du code sont repris sans changement :
 - **§8.9, §8.11, §8.13** : inchangés.
 - La note « Qui, durée, droits » garde le texte du §8.9 de `simulation.md`, avec une phrase de plus à la fin de son paragraphe « Qui voit vos réponses » : « Les boutons Apple et Google de l'écran du compte sont dessinés : ils ne se connectent à rien, et la page n'envoie rien à Apple ni à Google. » Le reste ne change pas : l'avis du cercle n'est vu que du porteur (confirmé par Juridique).
 
-- **Arrêt V6** (§8.8) : l'arrêt 1 du §8.11 de `simulation.md` (« Vérification ratée au chargement ») s'applique tel quel, avec le repère **V6** ; sa parenthèse « V1 à V5 » se lit « V1 à V6 ». Une erreur pendant le calcul de l'histoire donne le même arrêt, avec le même repère. (à confirmer par UX)
+- **Arrêt V6** (§8.8) : l'arrêt 1 du §8.11 de `simulation.md` (« Vérification ratée au chargement ») s'applique tel quel, avec le repère **V6** ; sa parenthèse « V1 à V5 » se lit « V1 à V6 ». Une erreur pendant le calcul de l'histoire donne le même arrêt, avec le même repère.
 
 ### 8.10 Arrêter l'essai (UX)
 
@@ -1502,7 +1510,9 @@ Fin du carnet
 - **« Entrée » et « Compte »** : au jour 1 seulement, dès que la ligne est atteinte.
   - {verdict} vaut « juste » ou « faux ». Il ne dépend que de Valentin et de la devinette, jamais des réponses du porteur : confirmé par Juridique, sous la condition du contrôle 12.
   - {suite} au jour 1 : « , dont {D} pour l'entrée, {D} pour deviner et {D} pour répondre ». La durée de l'entrée va du premier affichage de 1.2 au bouton du compte (ou à « Valider » ou « Plus tard » de 1.9).
-- **Aux jours 4 et 8** : Ouverture, Version, Durée, Révélation, Raison cachée, Ouvert. Ni « Journée abandonnée », ni moment préféré. La durée du jour s'arrête à l'ouverture de la page du saut que « Avancer au dimanche » confirme : ce qui précède (y compris une page du saut quittée par « Annuler ») compte dans le jour ; la page confirmée et ce qui suit, jusqu'au toucher « Aller au dimanche », comptent dans le bloc de saut. Les touchers comptés du jour (ligne « Version ») vont, eux, jusqu'au toucher qui confirme le saut.
+- **Aux jours 4 et 8** : Ouverture, Jours écoulés, Version, Durée, Révélation, Raison cachée, Ouvert. Ni « Journée abandonnée », ni moment préféré. La durée du jour s'arrête à l'ouverture de la page du saut que « Avancer au dimanche » confirme : ce qui précède (y compris une page du saut quittée par « Annuler ») compte dans le jour ; la page confirmée et ce qui suit, jusqu'au toucher « Aller au dimanche », comptent dans le bloc de saut. Les touchers comptés du jour (ligne « Version ») vont, eux, jusqu'au toucher qui confirme le saut.
+- **« Boutons touchés : Relire, Passer »** : aux jours 1 (une fois l'entrée finie), 2, 3, 7 et 14, même à 0, que Deviner ait été affiché ou non. Jamais aux jours 4 et 8, ni à la clôture. Le bloc de saut a sa propre ligne, « Boutons touchés : Annuler {n} fois ».
+- **{verdicts}** : chaque verdict vaut « juste avec la raison », « juste », « juste par la même réponse avec la raison », « juste par la même réponse », « faux » ou « passé ».
 - **« Révélation rouverte »** : chaque jour qui a une révélation qu'on peut fermer (jours 2, 3, 7, 14), même à 0.
 - **« Journée abandonnée »** : chaque jour joué, après l'entrée.
 - **« Pendant Deviner »** : chaque jour où l'écran Deviner a été affiché (jours 1, 2, 3, 7, 14), même à 0 : les ouvertures du Cercle et de l'écran d'un proche faites pendant que Deviner est affiché (mesure de D-023, §8.4). Elles comptent aussi dans la ligne « Ouvert ».
@@ -1874,7 +1884,7 @@ Conventions d'essai ajoutées le 10 octobre 2026 (arbitrage de l'orchestrateur s
 7. Dans des cas jamais affichés : les tempéraments sous les visages ; les initiales sur les barres ; l'écran d'un proche net ; « Semaine {n} » en 5.2 et 5.5 ; « Pour commencer · {titre} » en 5.3 ; la surprise de la semaine d'avant l'arrivée.
 8. Pour le lecteur d'écran : les barres du Cercle, les superpositions de 4.3, l'avis du cercle (avec ses mots de part).
 9. « Milieu des réponses », sous l'avis du cercle.
-10. « {Prénom} décroche Le Pas de Côté. » et sa ligne (à écrire par Game design).
+10. « {Prénom} décroche Le Pas de Côté. » et sa ligne (Game design, 10 octobre 2026, typographie simple) : un titulaire, « Une réponse à l'opposé de ce que disait son portrait. » ; plusieurs titulaires sur une seule carte, comme le Sans-Faute, « {A} et {B} décrochent Le Pas de Côté. », puis « Des réponses à l'opposé de ce que disaient leurs portraits. »
 11. Les points 1 à 10 de l'annexe C de la version de travail d'UX, sauf le 4 (remplacé par le point 5 ci-dessus) et le 5 (formes du message de 18h, inchangées), recopiés mot pour mot :
     1. La ligne de règle de Deviner (§7.12 [renvoi]).
     2. « C'était {Y}. {X} avait répondu la même chose. »

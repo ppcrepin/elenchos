@@ -141,7 +141,34 @@ Au-delà de r = 200 : défaut, renvoyé à GD. Les raisons de l'échec de chaque
 
 Partie témoin ajoutée : un Pas de Côté du porteur sur T12 (S), révélé au vote le jour 14. Dans l'ordre R2, il porte sur T12 (P), dans les mêmes conditions.
 
-**13. Chiffres constants** : ceux du §9 public, plus la part de réponses atypiques parmi ses cartes, les remplacements et cartes identiques, les départages, et les impossibilités.
+**13. Chiffres constants** (rapport de scellement). Ils ne dépendent pas des coups du porteur. Sauf mention, ils portent sur ses cinq manches (jours 1, 2, 3, 7 et 14 ; textes T0, T1, T2, T6 et T13), dans une partie menée à la clôture, chaque manche ouverte et chaque révélation lue. Ses cartes sont celles que sert le point 5 : elles ne dépendent que du fichier scellé. Les chiffres sont calculés par le programme de scellement et par le programme de contrôle, sans que l'un voie le code de l'autre ; une différence est un défaut. Les fractions sont exactes et irréductibles. « Même réponse » veut dire même niveau et même raison, « aucune » comprise (D-024).
+1. **Cartes servies** au porteur : par manche, puis le total.
+2. **Réponses atypiques parmi ses cartes** : cartes dont (`auteur_compte`, texte) figure dans `reponses_atypiques`, sur toutes ses cartes. Le compte est le même avec l'auteur d'origine, car la redistribution ne fait que permuter des cartes identiques.
+3. **Remplacements** de cartes identiques (§4.3 du premier essai, étape 3) : leur nombre, puis pour chacun le jour, la place, la carte écartée et la carte mise à sa place.
+4. **Cartes identiques servies ensemble** : nombre de manches, nombre de cartes.
+5. **Égalités de classement** : la somme des `departages` de ses cinq manches.
+6. **Jumeaux non servis** : pour chaque carte, les personnages autres que son `auteur_compte` qui ont donné la même réponse au texte et ne sont l'`auteur_compte` d'aucune carte de la manche. On donne le nombre de couples (carte, personnage) et le nombre de cartes qui en ont au moins un.
+7. **Justesse au hasard (D-024)** : pour chaque carte, h = (nombre de `candidats` de la manche qui ont donné la même réponse au texte) / (nombre de `candidats`).
+   - **Espérance** : la somme des h. C'est le nombre moyen de cartes justes d'un joueur qui pose un visage au hasard sur chaque carte, chaque visage au plus une fois, sans jamais passer. On la donne en tout, rapportée au nombre de cartes, puis sur les cartes qui ne sont pas des réponses atypiques, puis par personnage (cartes dont il est l'`auteur_compte`).
+   - **Loi** : dans chaque manche, les k cartes reçoivent l'une des affectations sans répétition de k visages parmi les candidats, toutes également probables ; les manches sont indépendantes. On donne la probabilité exacte de chaque nombre de cartes justes, de 0 au total, et la chance d'en avoir x ou moins.
+8. **Réponses par texte révélé** : pour chaque texte de T0 à T13, le nombre de personnages qui y ont répondu, puis le plus petit de ces nombres. La réponse du porteur s'y ajoute quand il a répondu. Le seuil de l'avis du cercle est de trois réponses.
+9. **« Texte rejeté. »** : parmi E1 à E3 et T0 à T13, les textes dont le vote est un rejet, en nombre et en liste. T14 est donné à part (sa fiche le montre à la clôture).
+10. **Raisons « aucune »** :
+    - chez les personnages : sur leurs réponses, en trois comptes (entrée E1 à E3 ; histoire H1 à H90 ; essai T0 à T14) ;
+    - parmi les cartes du porteur : affichées, cachées, et cartes à raison cachée déplacées par le §4.4 (définitions du premier essai).
+11. **Cercle unanimement neutre** : nombre de textes de T0 à T14 où tous les personnages qui ont répondu ont dit Neutre. Attendu : 0.
+12. **État à l'arrivée** : curseurs nets, tempéraments, titres des semaines 1 à 13 et surprise, repris du résumé (schéma, partie 3), que les deux programmes calculent déjà.
+13. **Pas de Côté des personnages** : les couples (personnage, texte) sur H90 et sur T0 à T13, selon le §6, point 7, et le point 8 ci-dessus.
+14. **Inattendus du lot** : pour chaque texte E1 à E3 et T0 à T14, et pour chaque côté, le type de la raison qui n'est pas attendue :
+    - « croisé » : son pôle est celui de l'autre côté ;
+    - « pratique » : son pôle est « aucun » ;
+    - « sans » : sinon.
+
+    On donne ensuite le nombre de textes pour chaque combinaison.
+15. **Impossibilités** :
+    - (a) l'écran 5.12 : le plus petit nombre de réponses de personnages sur T0, T1, T2, T6 et T13 ;
+    - (b) Le Sans-Faute du porteur : le nombre de jours où ses cartes sont révélées, semaine par semaine (3, puis 1, contre 5 exigés) ;
+    - (c) Le Pas de Côté du porteur : les textes où il est possible. Ce sont les textes révélés au plus tard le jour 15 d'une tension où le porteur a, avant eux, au moins ⌈10 / facteur⌉ réponses, entrée comprise. Avec le facteur 3 et l'ordre retenu, seul T12 l'est.
 
 **14. Annexe A cachée (ordre, sens, lot)** *(mise à jour du 9 octobre 2026, composition du lot)*
 - **Ordre retenu.** Le stock, 16e législature comprise, ne donne que trois textes T : le repli à trois textes T devient l'ordre retenu. L'ordre à quatre textes T et l'ancien repli (cinquième réponse sur L) sont abandonnés : L n'a pas six textes qui passent les conventions.
@@ -208,9 +235,11 @@ Dans l'ordre retenu, il est possible sur S seulement : sa cinquième réponse S 
 - Un cercle unanimement neutre est impossible : aucune tension n'a trois profils neutres, Odile n'est jamais neutre, et une réponse atypique n'est jamais neutre (2.3).
 - Rejetés du lot retenu : S 3, P 3, T 2, L 2 (10 sur 18). *(Mise à jour du 10 octobre 2026 : S 2 et 9 sur 18 avant que 8167, rejeté, remplace 8279, adopté ; point 14.)*
 
-**§8.6, point 2, deuxième puce** (texte d'origine) :
+**§8.6, point 2, deuxième puce** (texte remplacé par Game design le 10 octobre 2026 : l'ancien disait « chacun gardait sa valeur quand une raison le permettait », ce qui est inexact, car une raison pratique ne sert aucune des deux valeurs) :
 
-   - « Environ une réponse sur {cinq} était donnée exprès contre le profil. Dans ces réponses, chacun gardait sa valeur quand une raison le permettait : il changeait de position, pas de valeur. » (règle cachée de D-034). [Game design, 10 octobre 2026 : « {quatre} » corrigé en « {cinq} », le mot de 1/α + 1 (point 3, 2.3).]
+   - « Les réponses de chacun découlaient de son profil, sauf environ une sur {cinq}, donnée exprès contre ce profil pour que rien ne se devine à coup sûr : le côté opposé, sans « Très » (si le profil donnait Neutre, un côté tiré au sort). Quand ce côté allait contre sa valeur, il prenait l'argument inattendu de ce côté s'il y en avait un (au nom de sa valeur, ou pratique), sinon l'argument attendu. » (règle cachée de D-034). [Game design, 10 octobre 2026 : « {quatre} » corrigé en « {cinq} », le mot de 1/α + 1 (point 3, 2.3).]
+     - **Règle de {cinq}** : le mot du nombre 1/α + 1, α lu dans `reglage.alpha`. Cela donne « sept » pour 1/6, « cinq » pour 1/4, « quatre » pour 1/3 (schéma, 2.8). On ne dit jamais α.
+     - **Exactitude** : un côté n'a jamais deux arguments inattendus (D-034). Pour les fermetés faible, moyenne et forte, la table 2.2 bis revient donc à « l'inattendu s'il existe, sinon l'attendu ». « aucune » n'arrive qu'en dernier recours.
 
 **« Limites et doutes », Game design, point « La règle « même valeur » »** (texte d'origine) :
 
