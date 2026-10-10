@@ -1,0 +1,7 @@
+Preuve de publication du second essai (contrôle 14 g), workflow .github/workflows/essai2-preuve-publication.yml.
+Run 38090014798, 10 octobre 2026 : réussie.
+- gh-pages : commit f9680802ad7db281d89151c5efcbfa6be452a8ff (« Publier la page du second essai (version 1) »), sur cabcaa6129c9bce1022bc540a1ff6e1137f1a1c4 (premier essai) : remplacement sans réécriture.
+- Dernière construction Pages : état « built », commit égal ; fin à 2026-10-10T21:51:08Z (23h51, heure de Paris).
+- Page servie https://ppcrepin.github.io/elenchos/essai/ : SHA-256 2840b610f632ccb4364b359730288248176598377052b2a7700ea4dcad4c9827, égal au rapport de construction ; image identique (c92f86f3…cb727).
+- Lue 13 min 9 s après la fin du déploiement.
+Inventaire des sites Pages (contrôle 14 c), run 38089151764, juste avant la publication : /elenchos/essai/ 200, /kartme/ 200, les autres chemins 404 (comme au premier essai).
