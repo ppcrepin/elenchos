@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-zScsLLimTZRtb1NPJK68wDvCw53xobbZkNssFIS5yAY='; style-src 'sha256-fyu7zgwCr87Zht+IOjjigr2er8rchZAm+cMKzkn7wHU='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-zScsLLimTZRtb1NPJK68wDvCw53xobbZkNssFIS5yAY='; style-src 'sha256-hdqKQ//xtfHm4y9guJO0d8UoFWM2ZlUdzXhKw+4rOfo='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
@@ -330,8 +330,8 @@ details.panneau > :not(summary) { margin: 10px 0 0; }
 /* Vue de secours (simulation-2.md, §8.8) : cachée, puis rendue visible au bout de 2 s par le seul style ; le script la retire
    ([hidden]) dès le premier écran, et elle apparaît quand même si le script ne démarre pas. Ce n'est pas un mouvement :
    prefers-reduced-motion ne la touche pas. */
-#vue-secours { visibility: hidden; animation: secours-apparait 0s linear 2s 1 normal forwards; }
-@keyframes secours-apparait { from { visibility: hidden; } to { visibility: visible; } }
+#vue-secours { visibility: hidden; animation: secours-apparait 2s step-end 0s 1 normal forwards; }
+@keyframes secours-apparait { 0% { visibility: hidden; } 100% { visibility: visible; } }
 .vue-seule h1, .vue-couchee h1 { font-size: 21.6px; font-weight: 600; line-height: 1.25; margin: 0; }
 .vue-seule h1:focus { outline: none; }
 .vue-seule details > summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 600; }

@@ -4,15 +4,15 @@ Fichier scellé : SHA-256 587dbac7ecbde1c9b9e6d555a1ff162a6c4e42ece2a9fe82cef27f
 Statut du fichier scellé : final
 Table des confusables : confusables.txt 16.0.0 (SHA-256 95bd0aad6dced5ebc63436f459c06ab21a8d107cd842fb57f5c3a1e91bca8611), 1292 entrées ; table-16.0.0.json SHA-256 baeca72ec1b096602cc0db594c92278a07620c7911a02fa5acb8b5567e1cd76b
 
-porteur/index.html : 702509 octets, SHA-256 1b8bc687d6d3f4da21d1481265bb0d2fcbb2c4b36285368f73ccaf2e3d1292e0
-temoin/index.html : 713948 octets, SHA-256 2a9173531a0de4ebb0019d9a7007841310d5c9210e68fc785c6b489ffa71fad3
+porteur/index.html : 702511 octets, SHA-256 2840b610f632ccb4364b359730288248176598377052b2a7700ea4dcad4c9827
+temoin/index.html : 713950 octets, SHA-256 ea700340e96ba244cdede8ed9a45a10309aeaa943ffbecdb51013845e454a507
 version.txt : 2 octets, SHA-256 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
 
 Politique de sécurité, version du porteur :
-default-src 'none'; script-src 'sha256-zScsLLimTZRtb1NPJK68wDvCw53xobbZkNssFIS5yAY='; style-src 'sha256-fyu7zgwCr87Zht+IOjjigr2er8rchZAm+cMKzkn7wHU='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'
+default-src 'none'; script-src 'sha256-zScsLLimTZRtb1NPJK68wDvCw53xobbZkNssFIS5yAY='; style-src 'sha256-hdqKQ//xtfHm4y9guJO0d8UoFWM2ZlUdzXhKw+4rOfo='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'
 
 Politique de sécurité, version témoin :
-default-src 'none'; script-src 'sha256-UTTpBg6lsK+gb7QU9Fp1w1fAlqwuKk5hx4kT52yw+NI=' 'sha256-zScsLLimTZRtb1NPJK68wDvCw53xobbZkNssFIS5yAY='; style-src 'sha256-fyu7zgwCr87Zht+IOjjigr2er8rchZAm+cMKzkn7wHU='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'
+default-src 'none'; script-src 'sha256-UTTpBg6lsK+gb7QU9Fp1w1fAlqwuKk5hx4kT52yw+NI=' 'sha256-zScsLLimTZRtb1NPJK68wDvCw53xobbZkNssFIS5yAY='; style-src 'sha256-hdqKQ//xtfHm4y9guJO0d8UoFWM2ZlUdzXhKw+4rOfo='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'
 
 Polices :
 alegreya-700.woff2 : SHA-256 adfe23802afbc25a0122b1298b0d0c59ba1d14e991044286550d66b3910a475d
