@@ -20,7 +20,7 @@ Remarques du rédacteur sur le lot :
   - ligne de 90 caractères au plus ;
   - ligne `- Objet du vote :` partout ;
   - « au dépôt » sans virgule ;
-  - en-têtes `T{case}` gardés jusqu'au tirage.
+  - en-têtes `T{case}` gardés jusqu'au tirage, puis remplacés par le vrai T{n} le 10 octobre 2026 (graine finale).
 
 ### E3 · scrutin 3708 (17e législature)
 - Titre : Moins d'argent de l'État aux communes qui aident la corrida
@@ -75,7 +75,7 @@ Remarques du rédacteur sur le lot :
   - Ligne 3 : « tradition » apparaît dans une ligne, pas dans une raison (la convention 3 ne vise que les raisons). C'est la lettre de l'article 521-1 du code pénal.
   - Le vote traverse les blocs (SOC, Dem et DR divisés) : l'issue se devine mal par le camp.
 
-### T{case} · scrutin 2758 (16e législature)
+### T5 · scrutin 2758 (16e législature)
 *{case} = 5 ou 13, fixé au tirage t("ordre-texte|T|i") du scellement. En-tête à compléter avant tout passage du programme de contrôle. Présentation A.*
 - Titre : École et actes officiels, écriture inclusive interdite
 - Lignes :
@@ -132,7 +132,7 @@ Remarques du rédacteur sur le lot :
   - Le débat parle surtout d'égalité entre femmes et hommes ; les raisons choisies parlent de la langue.
   - Groupe de Bannier : libellé de l'organe PO800484, « Démocrate (MoDem et Indépendants) ». Le compte rendu imprime « Démocrate (MODEM et indépendants) » (N018:12). On suit la règle de la partie 2.10 (`libelle`).
 
-### T{case} · scrutin 3449 (16e législature)
+### T13 · scrutin 3449 (16e législature)
 *{case} = 5 ou 13, fixé au tirage t("ordre-texte|T|i") du scellement. En-tête à compléter avant tout passage du programme de contrôle.*
 - Titre : Diplôme de professeur de danse étendu à d'autres danses
 - Lignes :

@@ -70,7 +70,7 @@ Remarques du rédacteur sur le lot :
   - **Ce débat n'est jamais cité au porteur hors de cette fiche.**
 - Prête pour le scellement : oui.
 
-### Case P · scrutin 840 (16e législature)
+### T2 · scrutin 840 (16e législature)
 - Titre : Mines au fond des mers, demander une pause mondiale
 - Lignes :
   1. Le Gouvernement serait invité, sans y être obligé, à défendre une pause mondiale.
@@ -119,7 +119,7 @@ Remarques du rédacteur sur le lot :
   - **Proximité.** Thème voisin d'E2 (voir sa fiche). Thierry était déjà l'auteur du texte 12 du premier essai.
 - Prête (raisons 2 et 3 vérifiées par le Vérificateur : extraits N119:478 et :435 exacts, votes « pour » PA721118 et « abstention » PA346054 confirmés ; raison 2 gardée par arbitrage, fragilité notée).
 
-### Case P · scrutin 2139 (17e législature)
+### T7 · scrutin 2139 (17e législature)
 - Titre : Centres de données, faciliter leur construction
 - Lignes :
   1. Les grands centres de données stratégiques pourraient être déclarés d'intérêt national.
@@ -162,7 +162,7 @@ Remarques du rédacteur sur le lot :
   - **Titre.** « Faciliter » est le verbe du mécanisme, gardé ; 3370 a retiré le même verbe (arbitrage de l'orchestrateur, sur l'avis du Vérificateur).
 - Prête (raison 1 vérifiée par le Vérificateur : extraits N180:120 et :126 exacts, vote « pour » PA794802 confirmé ; pôle 1 sous la tension P retenue).
 
-### Case P · scrutin 6770 (17e législature)
+### T10 · scrutin 6770 (17e législature)
 - Titre : Supprimer l'article facilitant les réserves d'eau agricoles
 - Lignes :
   1. Cet article faciliterait les réserves d'eau pour irriguer et allégerait leurs procédures.

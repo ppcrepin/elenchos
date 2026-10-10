@@ -13,7 +13,7 @@ Remarques du rédacteur sur le lot :
 - Votes personnels : 16 sur 16 vérifiés dans le fichier du scrutin, tous dans le sens de la raison.
 - Groupes : écrits en toutes lettres (limite de 70 points de code). Moment retenu : la séance de l'extrait pour une raison, le dépôt pour l'auteur.
 
-### T? · scrutin 3370 (16e législature)
+### T11 · scrutin 3370 (16e législature)
 - Titre : Régions gérant des routes nationales, pouvoirs élargis
 - Lignes :
   1. Depuis 2022, les régions volontaires peuvent gérer à l'essai des routes nationales.
@@ -65,7 +65,7 @@ Remarques du rédacteur sur le lot :
     - Prix de ce choix : La France insoumise, premier groupe opposant (36 contre), n'est pas représentée.
   - Les Écologistes se sont abstenus (Arrighi). Vote serré : 120 votants.
 
-### T? · scrutin 707 (16e législature)
+### T4 · scrutin 707 (16e législature)
 - Titre : Énergies renouvelables, le préfet en dernier recours
 - Lignes :
   1. Les communes proposeraient les zones où accueillir en priorité des énergies renouvelables.
@@ -115,7 +115,7 @@ Remarques du rédacteur sur le lot :
   - Risque de lecture Précaution/Innovation : le sujet est l'énergie.
   - Annotation (4e passage, Y06) : tension L et s = 1 retenus, mais le sens dépend de la lecture : le préfet tranche en dernier = s 1, les communes proposent d'abord = s 0.
 
-### T? · scrutin 2484 (16e législature)
+### T1 · scrutin 2484 (16e législature)
 - Titre : Grands projets industriels, l'État délivrerait les permis
 - Lignes :
   1. Le Gouvernement pourrait déclarer un grand projet industriel d'intérêt national majeur.
@@ -160,7 +160,7 @@ Remarques du rédacteur sur le lot :
   - Risque de lecture Précaution/Innovation (industrie, environnement).
   - Remplaçant de la raison 4, au besoin : Mickaël Bouloux, Socialistes et apparentés (membre de l'intergroupe NUPES), vote contre (PA794094), N027:784. Condition 8.1 plus faible : il parlait sur l'amendement 1428.
 
-### T? · scrutin 989 (17e législature)
+### T8 · scrutin 989 (17e législature)
 - Titre : Eau, les communes pourraient la reprendre
 - Lignes :
   1. Une loi de 2015 oblige les communes à confier l'eau à leur communauté de communes en 2026.

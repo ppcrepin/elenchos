@@ -109,7 +109,7 @@ Remarques du rédacteur sur le lot :
   - Titre en « sans … » : il décrit le résultat de la mesure, sans verbe de retrait ; A.7 point 13 n'est pas appliqué (arbitrage de l'orchestrateur).
 - Statut : prête (vérification indépendante passée, aucune correction).
 
-### Case S (rang tiré au scellement) · scrutin 795 (17e législature)
+### T6 · scrutin 795 (17e législature)
 - Titre : Mineurs dès 13 ans sans réduction de peine automatique
 - Lignes :
   1. Un mineur de 13 ans ou plus risque en principe deux fois moins de prison qu'un adulte.
@@ -152,7 +152,7 @@ Remarques du rédacteur sur le lot :
   - Titre en « sans … » : il décrit le résultat de la mesure, sans verbe de retrait ; A.7 point 13 n'est pas appliqué (arbitrage de l'orchestrateur).
 - Statut : prête (raisons déjà vérifiées ; sources des lignes 2 et 3 retrouvées par le Vérificateur, am-0628-17.txt l. 27, 29, 64).
 
-### Case S (rang tiré au scellement) · scrutin 7922 (17e législature)
+### T9 · scrutin 7922 (17e législature)
 - Titre : Supprimer les nouveaux usages de l'ADN dans les enquêtes
 - Lignes :
   1. L'ADN de crimes anciens ou en série pourrait être comparé à des bases privées étrangères.
@@ -196,7 +196,7 @@ Remarques du rédacteur sur le lot :
   - L'amendement no 25 (2904/AN/25) et le texte de la commission no 2904 n'étaient pas publiés au 10 octobre 2026 (fichiers locaux vides ou invalides). Les lignes et l'auteur restent sourcés sur le seul compte rendu (CRSANR5L17S2026E1N002). L'article mis aux voix est celui du texte de la commission, puisque les suppressions sont examinées d'abord.
 - Statut : prête (raison 4 vérifiée par le Vérificateur : extrait N002:156 exact, intervention relue, vote « contre » PA721916 confirmé ; pôle lu 0 puis 1, arbitrage ci-dessus).
 
-### Case S (rang tiré au scellement) · scrutin 2190 (17e législature)
+### T3 · scrutin 2190 (17e législature)
 - Titre : Supprimer les zones à faibles émissions
 - Lignes :
   1. Dans une zone à faibles émissions, les véhicules trop polluants peuvent être interdits.
@@ -238,7 +238,7 @@ Remarques du rédacteur sur le lot :
 - Motif : règle A.5. L'ensemble du projet de loi contient le délit d'organisation de rave-party (deux ans et 30 000 euros) et la pénalisation de la participation, mesure jouée au premier essai (texte E1, scrutin 6124) : CRSANR5L17S2026E1N014.txt:340, :285, :264. Il prolonge aussi la vidéosurveillance algorithmique jusqu'en 2030 (:285, :346). Texte de plus de 70 articles (:346) : trois lignes seraient un choix éditorial fort.
 - Remplacement : la réserve 8167 entre dans la même case (fichier caché, point 14).
 
-### Case S (rang tiré au scellement) · scrutin 8167 (17e législature)
+### T12 · scrutin 8167 (17e législature)
 - Titre : Supprimer les nouveaux contrôles près des frontières
 - Lignes :
   1. Des policiers spécialisés pourraient contrôler quelqu'un, quel que soit son comportement.
