@@ -101,19 +101,19 @@ Remarques du rédacteur sur le lot :
   - Groupe de Bannier : libellé de l'organe PO800484, « Démocrate (MoDem et Indépendants) ». Le compte rendu imprime « Démocrate (MODEM et indépendants) » (N018:12). On suit la règle de la partie 2.10 (`libelle`).
 
 ### T{case} · scrutin 3449 (16e législature)
-*{case} = 5 ou 13, fixé au tirage. Lignes provisoires : le texte adopté n'est pas lu (voir Doutes).*
+*{case} = 5 ou 13, fixé au tirage t("ordre-texte|T|i") du scellement. En-tête à compléter avant tout passage du programme de contrôle.*
 - Titre : Diplôme de professeur de danse ouvert à d'autres danses
 - Lignes :
   1. Réservé au classique, au jazz et au contemporain, il s'ouvrirait à d'autres danses.
-  2. Les danses concernées seraient choisies après concertation avec le monde de la danse.
-  3. Il faudrait ce diplôme pour enseigner ces danses contre paiement, hors simple animation.
-- Vote : adopté, 37 pour, 7 contre, 0 abstention (7 mars 2024) ; article 1er de la proposition de loi n° 1149, amendé (amendements nos 58, 24 et 44 sous-amendé, adoptés : N140:208, :220, :293-299), en première lecture (CRSANR5L16S2024O1N140.txt:300-303 ; VTANR5L16V3449.json, 44 votants) ; texte entier adopté le même jour (scrutin 3456, 36 pour, 6 contre : N140:677-678), puis transmis au Sénat (n° 407 selon une recherche web, non relue) ; `etape` = `navette`.
+  2. Les danses concernées seraient choisies en concertation avec le monde de la danse.
+  3. Pour les enseigner contre paiement, il faudrait ce diplôme ou une dispense.
+- Vote : adopté, 37 pour, 7 contre, 0 abstention (7 mars 2024) ; article 1er de la proposition de loi n° 1149, tel qu'amendé en séance (amendements nos 58, 24 et 44 sous-amendé par les nos 60, 56 et 61, adoptés : N140:208, :220, :293-299), en première lecture (CRSANR5L16S2024O1N140.txt:300-303 ; VTANR5L16V3449.json, 44 votants, 44 exprimés) ; texte entier adopté le même jour (scrutin 3456, 36 pour, 6 contre : N140:677-678 ; texte adopté n° 254, l16t0254 l. 1-27), le Sénat devant encore se prononcer ; `etape` = `navette`.
 - Objet du vote : article
-- Auteur : Fabienne Colboc, députée, Renaissance au dépôt (acteur PA719814, mandat de groupe PM800602 du 29 juin 2022 au 9 juin 2024, organe PO800538 ; date de dépôt de la PPL n° 1149 à relever) ; proposition de loi « de Mmes Fabienne Colboc et Valérie Bazin-Malgras » (CRSANR5L16S2024O1N140.txt:9).
+- Auteur : Fabienne Colboc, députée, Renaissance au dépôt (25 avril 2023, l16b1149 l. 8 ; proposition « présentée par Mmes Fabienne Colboc et Valérie Bazin-Malgras », l16b1149 l. 24-25 ; acteur PA719814, mandat de groupe PM800602 du 29 juin 2022 au 9 juin 2024, organe PO800538) ; CRSANR5L16S2024O1N140.txt:9.
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/16/scrutins/3449
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/16/comptes-rendus/seance/CRSANR5L16S2024O1N140
-- Autres documents utilisés pour les lignes, le vote ou l'auteur (hors `sources`, convention 9) : https://www.assemblee-nationale.fr/dyn/16/textes/l16t0254_texte-adopte-seance.pdf (à lire) ; https://www.assemblee-nationale.fr/dyn/16/textes/l16b1149_proposition-loi.pdf (à lire)
+- Autres documents utilisés pour les lignes, le vote ou l'auteur (hors `sources`, convention 9) : https://www.assemblee-nationale.fr/dyn/16/textes/l16t0254_texte-adopte-seance.pdf ; https://www.assemblee-nationale.fr/dyn/16/textes/l16b1149_proposition-loi.pdf
 - Tension : T ; sens s = 1
 - Raisons :
   1. « Valorisons les danses nouvelles, comme le hip-hop, avec la reconnaissance de l'État. » — pour · pôle 1 — Isabelle Périgault, députée, Les Républicains [vote : pour] — extrait : « Cette proposition de loi, cela a été dit, répond à une double exigence : sécuriser la pratique de ces danses – choisie par un nombre croissant d'élèves – et valoriser ces esthétiques nouvelles en leur apportant la reconnaissance de l'État. Inclure la danse hip-hop dans le cadre commun permettra par ailleurs de contrôler l'honorabilité des professeurs de danse concernés » (CRSANR5L16S2024O1N140.txt:54)
@@ -124,32 +124,28 @@ Remarques du rédacteur sur le lot :
   - Groupes : Les Républicains, Démocrate (MoDem et Indépendants), Gauche démocrate et républicaine - NUPES, La France insoumise - Nouvelle Union Populaire écologique et sociale (4 différents).
   - Côtés : 2 pour (1, 2), 2 contre (3, 4).
   - Pôles : 1 = raisons 1 et 4 ; 0 = raison 3 ; aucun = raison 2.
-  - Inattendus : « pour » pratique (2), « contre » croisé (4).
+  - Inattendus (D-034) : « pour » pratique (2), « contre » croisé (4). Aucun croisé côté « pour » : Califer (N140:278) est trop ambigu, Delaporte n'a pas voté.
   - Votes vérifiés dans VTANR5L16V3449.json : PA795406 pour, PA793792 pour, PA793174 contre, PA795084 contre.
-  - Compte : titre 53 car. ; lignes 82/85/88 car. ; raisons de 12/12/10/12 mots ; toutes nouvelles.
-  - Sources des lignes (provisoires) :
-    - ligne 1 : N140:13 (« étendre à de nouvelles pratiques chorégraphiques ») et :17 (classique, contemporaine, jazz) ;
-    - ligne 2 : amendement 44 et sous-amendement 60 (« esthétiques concernées » déterminées en concertation, N140:272-274, :293-299) et N140:70 ;
-    - ligne 3 : N140:64 (« Nul ne peut enseigner la danse contre rétribution […] s'il n'est muni […] du diplôme d'État », citation de l'article), N140:151 et :208 (animation hors champ, amendement 58).
+  - Compte : titre 53 car. ; lignes 82/84/75 car. ; raisons de 12/12/10/12 mots ; toutes nouvelles.
+  - Sources des lignes :
+    - ligne 1 : TA 254, article 1er, 4° (l. 46-49 : le cinquième alinéa devient « Le titre de professeur de danse est assorti de la mention des disciplines de danse. ») ; exposé des motifs l16b1149 l. 143-146 (« en supprimant la limitation posée aux options danse classique, contemporaine ou jazz par l'actuel article L.362-1 ») ; N140:17 ;
+    - ligne 2 : TA 254, V (l. 77-87 : « Les esthétiques concernées et les référentiels du diplôme d'État […] sont déterminés en concertation avec les organisations syndicales […], les acteurs régionaux, les associations des filières, les fédérations agréées, les pédagogues reconnus et les représentants des écoles privées ») ;
+    - ligne 3 : premier alinéa de L. 362-1, maintenu (TA l. 38), cité en séance (N140:64 : « Nul ne peut enseigner la danse contre rétribution ou faire usage du titre de professeur de danse ou d'un titre équivalent s'il n'est muni […] du diplôme d'État ») et résumé par l'exposé (l16b1149 l. 137-139) ; dispense du 3° maintenue (TA l. 43-44 et IV l. 73-75 ; exposé l. 154-157).
 - Doutes :
-  - **Bloquant : le texte adopté (TA n° 254) n'est pas lu.** Le site de l'Assemblée et celui du Sénat ne répondent pas depuis mes outils (ENOTFOUND).
-    - Une recherche web signale un III bis : « L'enseignement de danses traditionnelles à titre bénévole ne requiert l'obtention d'aucun diplôme d'État. »
-    - L'amendement 24 (Califer), adopté, exclut les danses traditionnelles et régionales « dont la rareté de l'offre et de la maîtrise technique aurait été constatée » (N140:215, :220). Le relevé ne le mentionnait pas.
-    - La dispense par l'expérience est contestée en séance. Bilongo la dit supprimée par l'article 1er (N140:38) ; la rapporteure la dit possible (N140:147), et l'article 4 la règle.
-    - La ligne 3 est à confirmer sur le texte adopté. Elle devra peut-être nommer ces exceptions.
-    - Adresses à récupérer : https://www.assemblee-nationale.fr/dyn/16/textes/l16t0254_texte-adopte-seance.pdf et https://www.assemblee-nationale.fr/dyn/16/textes/l16b1149_proposition-loi.pdf (pour la date de dépôt).
-  - **Bloquant pour le schéma : nom de groupe trop long.** Le `libelle` de PO800490, « La France insoumise - Nouvelle Union Populaire écologique et sociale », compte 68 points de code, alors que la partie 2.10 en permet 60.
-    - Or tous les « contre » de ce scrutin sont LFI-NUPES (6) ou GDR-NUPES (1). Ce texte ne peut donc pas tenir deux groupes « contre » sans LFI-NUPES.
-    - À trancher par Back-end et UX : relever la limite à 70, ou admettre une forme officielle plus courte. Le compte rendu imprime aussi « La France insoumise-Nouvelle Union populaire, écologique et sociale » (N140:61).
-  - Tension fragile. Le débat parle aussi de métier et de statut (État/Marché), de liberté de créer (S) et de sélection sociale (Égalité).
+  - Ligne 3 simplifie :
+    - « ce diplôme ou une dispense » omet le certificat d'aptitude (2° de L. 362-1) et les équivalences de diplômes français ou étrangers (exposé l. 154-155) ;
+    - le III bis (enseignement bénévole des danses traditionnelles, sans diplôme) n'est pas dit : il est hors du champ « contre paiement » de la ligne ;
+    - le III (alternance, « Le présent III ne s'applique pas au secteur de l'animation ») n'est pas dit.
+  - Ligne 2 : « choisies » rend « déterminés en concertation ». L'arrêté du V fixe les référentiels et les conditions d'exercice des danses non concernées. « le monde de la danse » résume la liste du V.
+  - Obligation ou faculté : c'est le cœur de la dispute en séance. Les rapporteures disent qu'il n'y a « aucune obligation » (N140:70, :76) ; l'opposition dit que l'enseignement payé exige le diplôme (N140:64, :140, :205). La lettre du texte donne raison à la ligne 3 pour les danses qui entreront dans le champ du V ; la ligne 1 rend la lecture des rapporteures (une ouverture). Le vérificateur adversaire doit juger cet équilibre.
+  - Amendement 24 : voir plus haut. Le III bis est sa trace probable, non vérifiée ; les lignes n'en dépendent pas.
   - Raison 3 :
-    - je l'ai préférée à l'extrait du relevé (Monnet, N140:27, danses traditionnelles et patrimoine immatériel), dont le point a été en partie modifié ensuite par l'amendement 24. La condition 2 de A.7.8 n'aurait pas tenu ;
-    - l'extrait retenu (N140:253) vient après les amendements 58 et 24 ;
-    - risque : l'annotateur peut lire « hors de tout cadre » comme de la liberté. Si la raison n'est pas lue pôle 0, remplaçant : Bilongo (LFI-NUPES, PA795616, vote contre vérifié), « Les plus grands ont appris dans la rue, sans diplôme, et y dansent encore. » (N140:46). Il prend alors la place d'Arenas (même groupe), et Monnet passe en pratique : « Coût et durée de la formation : ce diplôme fermerait le métier aux plus modestes. » (N140:66).
-  - Raison 4 : Arenas dit aussi, dans le même passage, « donnons sa chance au produit » et promet un soutien si les oppositions sont associées au décret (N140:244). Il a voté contre. Ensuite, l'amendement 44 a ajouté une concertation sans retirer le diplôme. Remplaçant pratique : Davi (LFI-NUPES, PA793452, vote contre vérifié), « Faute de diplômés, flamenco, tango ou hip-hop risqueraient de manquer d'enseignants. » (N140:64).
-  - Raison 2 : l'amendement 58 sort l'animation du champ, ce qui touche en partie le constat « cours animés par des non-diplômés ». Le constat vaut encore pour l'enseignement.
+    - je l'ai préférée à Monnet N140:27 (danses traditionnelles), dont le point a pu être touché par le III bis (si celui-ci vient de l'amendement 24) ;
+    - risque d'annotation : « hors de tout cadre » peut se lire comme de la liberté. Remplaçant : Bilongo (La France insoumise - Nouvelle Union Populaire écologique et sociale, PA795616, vote contre vérifié), « Les plus grands ont appris dans la rue, sans diplôme, et y dansent encore. » (N140:46). Il prend la place d'Arenas (même groupe), et Monnet passe en pratique : « Coût et durée de la formation : ce diplôme fermerait le métier aux plus modestes. » (N140:66).
+  - Raison 4 : Arenas promet aussi un soutien si les oppositions sont associées au décret (N140:244), mais il a voté contre. L'amendement 44 a ensuite ajouté la concertation du V sans retirer le diplôme. Remplaçant pratique : Davi (même groupe, PA793452, vote contre vérifié), « Faute de diplômés, flamenco, tango ou hip-hop risqueraient de manquer d'enseignants. » (N140:64).
+  - Tension fragile. Le débat porte aussi sur le statut et le métier (État/Marché), la liberté de créer (S) et la sélection sociale (Égalité).
   - Vote mince : 44 votants, sujet peu clivant.
-  - Le texte a deux autrices (Colboc pour RE, Bazin-Malgras pour LR). L'affichage d'un second auteur revient à UX.
+  - Deux autrices (Colboc pour RE, Bazin-Malgras pour LR). L'affichage d'une seconde autrice revient à UX.
 
 ### Réserve T · scrutin 5242 (17e législature)
 *Non scellée (A.1). Elle remplace d'abord un texte T.*
