@@ -117,7 +117,8 @@ function comparerTexte(nom, obtenu, attendu) {
   }
   const sansScript = path.join(path.dirname(page), 'sans-script.html');
   fs.writeFileSync(sansScript, fs.readFileSync(page, 'utf8').replace(/<script>[\s\S]*?<\/script>/g, ''));
-  await session({ ouvrir: { page: sansScript } }, async (env) => {
+  // Sans horloge de l'outil : l'animation CSS suit le temps réel, que l'horloge simulée ne fait pas avancer au même pas (constaté sous WebKit).
+  await session({ ouvrir: { page: sansScript, heure: null } }, async (env) => {
     const lire = () => env.page.evaluate(() => ({ t: performance.now(), v: getComputedStyle(document.getElementById('vue-secours')).visibility }));
     let x = await lire(); while (x.t < 1900) { await env.page.waitForTimeout(20); x = await lire(); }
     let y = await lire(); while (y.t < 2200) { await env.page.waitForTimeout(20); y = await lire(); }
