@@ -398,6 +398,26 @@ for (const [nom, fichier] of Object.entries(FICHIERS)) {
     // Arrêt tôt : sous le seuil, aucun chiffre.
     const tot = jouer(x, { arretA: { jour: cal.premier + 2, moment: 'debut' } });
     assert.deepEqual(M.calculer(scelle, cal, arrivee, tot).agregats, { justesse_personnages_entre_eux: null, justesse_personnages_sur_porteur: null, titres_tires_au_sort: null });
+    // Le seuil ne compte que les textes du calendrier révélés (T0 à T13), ni l'entrée ni H90 (Game design, 10 octobre 2026).
+    // Arrêt à l'ouverture du point de saut : révélés et répondus, T1 et T2 seulement (2) ; avec l'entrée, on en compterait 5.
+    const point = cal.sauts[0].point;
+    const a4 = jouer(x, { arretA: { jour: point, moment: 'debut' } });
+    const repondusReveles = d => cal.jours.filter(l => l.jour <= d && l.revele && scelle.textes[l.revele] && !cal.textesEntree.includes(l.revele)
+      && a4.jours[String(cal.jourDeReponse(l.revele))] && a4.jours[String(cal.jourDeReponse(l.revele))].coups.reponse).length;
+    assert.equal(repondusReveles(point), 2);
+    assert.equal(M.calculer(scelle, cal, arrivee, a4).agregats.justesse_personnages_entre_eux, null);
+    // Arrêt à l'ouverture du premier dimanche : T1 à T5 révélés et répondus (5) → les chiffres existent.
+    const dim = cal.sauts[0].reprise;
+    const a7 = jouer(x, { arretA: { jour: dim, moment: 'debut' } });
+    const R7 = M.calculer(scelle, cal, arrivee, a7);
+    assert.notEqual(R7.agregats.justesse_personnages_entre_eux, null);
+    // La manche du jour 0 (H90) n'y entre pas : les cartes comptées sont celles des manches jouées depuis l'arrivée.
+    let total = 0;
+    for (let d = cal.premier + 1; d <= dim; d++) {
+      Object.entries(R7.jours[String(d)].revelation.devineurs).forEach(([g]) => { if (g !== 'porteur') { total += R7.jours[String(d - 1)].manches[g].cartes.length; } });
+    }
+    const ag = R7.agregats;
+    assert.equal(ag.justesse_personnages_entre_eux.total + (ag.justesse_personnages_sur_porteur ? ag.justesse_personnages_sur_porteur.total : 0), total);
   });
 }
 

@@ -37,7 +37,7 @@ socle.demarrer(ecrans);
 Ordre de `demarrer` (§8.8 ; partie 3.4 ; FE-4), tout dans la même tâche :
 1. contexte : hors de l'icône → `ecrans.hors(type, appareil)` (`'ailleurs'`, `'autre'`, `'onglet'`) ; rien n'est vérifié ni écrit ;
 2. V1 à V5 (V4 : version 5, forme canonique, **table du calendrier cohérente**) ; V5 : les trois vecteurs du §0 ;
-3. `M.histoire(scelle, cal)`, `M.resume(arrivee)`, SHA-256, V6. Un moteur sans `histoire` (lot 1) ou une erreur donne aussi V6 ;
+3. `M.histoire(scelle, cal)`, `M.resume(arrivee)`, SHA-256, V6. Un moteur sans `histoire` (lot 1) ou une erreur donne aussi V6. Avant un arrêt V, le socle lit `partie-2` en lecture seule pour `partieLisible` ; il n'écrit rien ;
 4. `verif-2` : écrite, relue, effacée ; sinon arrêt 2 ;
 5. `partie-2` relue ; illisible → arrêt 1, repère M1 (rien n'est effacé ni réécrit) ;
 6. liste des clés : si `elenchos-essai:partie` y est → `ecrans.ancienne({deuxParties, appareil})`, **rien n'est écrit** ; « Effacer » confirmé → `socle.effacerAncienne()`, qui retire toutes les clés « elenchos-essai: » sauf `partie-2` et `verif-2`, puis commence ou reprend ;
@@ -48,13 +48,14 @@ Ordre de `demarrer` (§8.8 ; partie 3.4 ; FE-4), tout dans la même tâche :
 | Membre | Obligatoire | Rôle |
 |---|---|---|
 | `rendre()` | oui | tout dessiner depuis `socle.etat()` et `socle.resultats()` |
-| `arret(n, repere)` | oui | arrêts du §8.11 : `n` = 1 (repère `'V1'`…`'V6'`, `'M1'`), 2, 3 ; vue seule, texte d'UX |
+| `arret(n, repere, info)` | oui | arrêts du §8.11 : `n` = 1 (repère `'V1'`…`'V6'`, `'M1'`), 2, 3 ; vue seule, texte d'UX. Pour `n` = 1 et un repère V, `info` = `{partieLisible}` : vrai si `partie-2` se lit (lecture seule, forme sans calendrier, §2) ; absent pour M1, 2 et 3. |
 | `hors(type, appareil)` | oui | écrans hors de l'icône (§8.13) |
 | `ancienne({deuxParties, appareil})` | oui | page A du §8.2 (« La partie du premier essai est encore là ») |
 | `actions` | oui | `{nom: function (bouton) {…}}` ; le socle appelle `actions[data-action]` au clic, sauf `aria-disabled="true"` |
 | `avantToucher(ev)` | non | appelé au `pointerdown`, avant le toucher compté (par exemple : effacer une note de la bande) |
 | `revenu()` | non | retour au premier plan, état relu et identique (par exemple : relire l'heure de 2.5) |
 | `carnet()`, `copies()` | non | texte du carnet et copies du chargement, pour le point d'accès de la version témoin |
+| `relevesCopies()` | non | les relevés `E.releverCopie` des copies du carnet faites pendant ce chargement, dans l'ordre ; le socle les passe à `E.journal` et `E.fichierDurees` (point d'accès) |
 
 ## 4. Ce que le socle fournit aux écrans (`socle`)
 
@@ -92,7 +93,7 @@ Exemples pour les écrans, sans nombre en dur :
 
 - `ouverture`, `versions`, `etapes`, `coups`, `sauts[].{numero, depart, textes_atteints, coups}`, `arret`, `fin` : **le journal version 4** (partie 4.4). Les écrans ne les changent que par les transitions.
 - `pp` : repères de durée (horloge de premier plan, ms). `page` (par jour et par saut) et `vue` : **à l'instance B**, libres (révélation en cours, écran affiché, pile…), jamais dans le journal. `vue` doit rester un objet (vérifié à la relecture, M1).
-- `E.journal(etat, cal, empreinte)`, `E.fichierDurees(etat, cal, maintenant)` ; `E.K(etat)`, `E.jour(etat, j)`, `E.jourCourant`, `E.journeeFinie(etat, cal, j)`, `E.sautEnCours(etat)`, `E.rattrapage(etat, cal)` → `{numero, total, repondus, termine, rang, jour, texte, reprise}`, `E.texteEntreeCourant`.
+- `E.journal(etat, cal, empreinte[, partie, releves])`, `E.fichierDurees(etat, cal, maintenant[, partieId, releves])` (`releves` : les relevés `E.releverCopie` du chargement ; Q-K7) ; `E.toucher` rend `'clos'` dès que `arret` ou `fin` n'est pas nul : plus rien n'est compté ; `E.K(etat)`, `E.jour(etat, j)`, `E.jourCourant`, `E.journeeFinie(etat, cal, j)`, `E.sautEnCours(etat)`, `E.rattrapage(etat, cal)` → `{numero, total, repondus, termine, rang, jour, texte, reprise}`, `E.texteEntreeCourant`.
 
 **Écrans → transitions** (dans `socle.geste`, `h` = horloge ; `S` = scellé, `cal`) :
 
@@ -109,17 +110,19 @@ Exemples pour les écrans, sans nombre en dur :
 | « Valider » de Deviner | `E.validerDeviner(e, j, h)` |
 | premier affichage de 2.3 | `E.afficherRepondre(e, cal, j, h)` |
 | 2.4 « Valider » (jour joué ou rattrapage) | `E.repondre(e, S, cal, j, {niveau, raison}, h)` ; au rattrapage, `j = E.rattrapage(e, cal).jour`, et le jour suivant est atteint dans la même écriture |
-| « Relire » ; « Reprendre / Revoir la révélation » | `E.compter(e, cal, 'relire' \| 'rouvrir')` |
+| « Relire » ; « Reprendre / Revoir la révélation » | `E.compter(e, cal, 'relire' \| 'rouvrir')` ; `'rouvrir'` est refusé pendant un saut en cours (jour de reprise atteint sans ouverture compris, Q-J3) |
 | Le Cercle, Moi, écran d'un proche, « Qui est qui » | `E.compter(e, cal, 'cercle' \| 'moi' \| 'proche' \| 'qui_est_qui', deviner_affiche)` |
 | carnet du jour | `E.repondreCarnet(e, cal, j, 'moment' \| 'saut_clair' \| 'hesite' \| 'moment_semaine', code)` |
-| ouverture de « Votre carnet du jour » | `E.marquer(e, j, 'fige', h)` (les durées du jour s'arrêtent, comme au premier essai) |
+| ouverture de « Votre carnet du jour » | rien : la durée du jour court jusqu'au toucher « Aller au jour suivant », carnet compris (§8.4 de `simulation.md`). `fige` n'est posé que par `E.confirmerSaut`, à la confirmation de « Arrêter l'essai », et au « Continuer » des questions de fin. |
+| « Copier mon carnet » en cours d'essai | `E.releverCopie(e, cal, h)` → relevé `{journal, durees}`, pris au toucher de la copie, gardé par les écrans pour le chargement (jamais écrit) et rendu par `ecrans.relevesCopies()` |
 | « Aller au jour suivant » | `E.allerAuJourSuivant(e, cal, abandon)` ; `abandon` vrai après « Abandonner » confirmé |
 | ouverture de la page du saut | `E.ouvrirPageSaut(e, cal, h)` |
 | « Annuler » de la page du saut | `E.annulerSaut(e, cal)` |
 | « Avancer au dimanche » (page) | `E.confirmerSaut(e, cal, socle.instantDuSaut(), h)` ; le premier texte du rattrapage est atteint |
 | « Texte suivant » | `E.afficherTexteRattrapage(e, cal, h)` |
 | « Aller au dimanche » | `E.finirSaut(e, cal, h)` ; le toucher suivant ouvre le dimanche |
-| « Arrêter l'essai », confirmé | `E.arreter(e, cal, raison, f2)` (F2 dès le jour 3) |
+| « Arrêter l'essai », confirmé | `E.marquer(e, j, 'fige', h)` si le jour a une ouverture, puis `E.arreter(e, cal, null, null)` dans la même écriture |
+| raison d'arrêt, F2 (page de questions) | `E.completerArret(e, cal, 'raison' \| 'f2', code)` (code ou `null` ; F2 dès le jour 3) |
 | questions de fin | `E.finir(e, cal, {f2, servi, regle, avis, raisons, portrait, barre, suspense})` |
 | « Tout effacer », confirmé | `socle.toutEffacer()` |
 | autres repères (fin de Répondre, « Continuer »…) | `E.marquer(e, j, nom, h)`, noms : `E.REPERES_JOUR` |
@@ -141,7 +144,7 @@ Pseudo : `ElenchosJournal.pseudoGardable(x, socle.confusables())` donne le refus
   - `R.jours[j]` : `entree`, `manches`, `revelation` (avec `avis_cercle`, `jumeaux`, verdicts, `pas_de_cote`), `message`, `phrase_jour`, `dimanche`, `portrait` (avec `barre`), `curseurs_vus`, `cercle`, `surprises_proches`, `mesures` (sans les durées) ; en plus, pour les écrans :
     - `cartes_porteur` : la manche du porteur à servir les jours où `deviner_porteur` est vrai, **même avant l'ouverture de Deviner** (`designe` et `raison_devinee` lus dans le journal) ; son nombre de cartes sert à `E.ouvrirDeviner`, son `cachee` à la raison ;
     - `compte_a_rebours` : `'revelation'` ou `'nouveau_texte'` (libellé de 2.5, §7.6), aux jours joués ; `null` ailleurs ;
-    - présence (partie 4.3.2) : `manches` jours 1 à 14 (le porteur n'y a une clé que si Deviner s'est affiché ; `cartes_porteur` existe dès que `deviner_porteur` est vrai) ; `revelation` chaque jour (au jour 1, le texte abstrait de la veille, sans `avis_cercle`) ; `message` aux jours joués sauf l'arrivée et aux points de saut ; `phrase_jour` si le porteur a répondu ; `dimanche` aux dimanches de l'essai ; `mesures` aux jours qui ont une ouverture ; `entree` le jour d'arrivée dès que 1.2 s'est affiché (`etapes.entree`).
+    - présence (partie 4.3.2) : `manches` jours 1 à 14 (le porteur n'y a une clé que si Deviner s'est affiché ; `cartes_porteur` existe dès que `deviner_porteur` est vrai) ; `revelation` chaque jour (au jour 1, le texte abstrait de la veille, sans `avis_cercle`) ; `message` aux jours joués sauf l'arrivée et aux points de saut ; `phrase_jour` si le porteur a répondu ; `dimanche` aux dimanches de l'essai ; `mesures` aux jours qui ont une ouverture ; `entree` le jour d'arrivée dès que 1.2 s'est affiché (`etapes.entree`) ; en mode `moteur`, toujours.
     - pour les écrans : 2.7d lit `revelation.avis_cercle` (`comptes`, `milieu`, `ligne`) ; la ligne du jumeau (§7.13) se lit dans `revelation.devineurs.porteur.jumeaux` et dans `manches.porteur.cartes[i].designe` ; Le Pas de Côté dans `revelation.pas_de_cote` ; 3.3a à 3.3e dans `dimanche` (`phrase_semaine.cas` vaut `nette` pour la phrase validée) ; Moi dans `portrait` (`ordre_moi`, `barre.longueur`, `barre.pleine`) ; Le Cercle dans `cercle` et `curseurs_vus` ; « Ses surprises » dans `surprises_proches` ; 2.6 dans `message`.
   - `R.sauts[i]` : mesures du saut, sans les durées ;
   - `R.titres` : les titres de chaque semaine tombée (1 à 13 depuis l'histoire, puis 14 et 15), pour les titres passés ;

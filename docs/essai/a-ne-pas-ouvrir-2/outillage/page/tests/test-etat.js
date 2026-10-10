@@ -267,3 +267,90 @@ test('Forme de l\'état relu : un état abîmé est refusé (arrêt 1, M1)', () 
     assert.throws(() => E.verifierForme(e, cal), /état/, 'cas ' + i);
   });
 });
+
+/* ------------------------------------------------------------------ */
+/* Demandes de Back-end (10 octobre 2026) : arrêt complété, partie     */
+/* close, « Reprendre » pendant un saut, copies avec leurs durées      */
+/* ------------------------------------------------------------------ */
+
+const instant = () => '2026-10-25T10:00+01:00';
+function etatPendantSaut() {
+  // Arrêt pendant le rattrapage du premier saut, puis l'arrêt retiré : l'état juste avant la confirmation.
+  const s1 = cal.sauts[0];
+  const e = P.jouer(scelle, cal, { arretA: { jour: s1.sautes[0], moment: 'rattrapage' } });
+  e.arret = null;
+  assert.ok(E.sautEnCours(e));
+  return e;
+}
+
+test('Arrêt confirmé pendant un saut : plus aucun toucher ne compte (« clos ») ; la durée du saut ne bouge plus', () => {
+  const e = etatPendantSaut();
+  const s = E.sautEnCours(e);
+  assert.equal(E.toucher(e, cal, 9e8, 1, instant), 'saut');          // le toucher qui confirme l'arrêt compte encore
+  E.arreter(e, cal, null, null);
+  const avant = E.dureesSaut(e, 0, 9e8);
+  const jourAvant = JSON.stringify(E.jour(e, E.K(e)));
+  assert.equal(E.toucher(e, cal, 2e9, 1, instant), 'clos');           // page de questions : rien n'est compté
+  assert.equal(E.toucher(e, cal, 3e9, 1, instant), 'clos');
+  assert.deepEqual(E.dureesSaut(e, 0, 4e9), avant);
+  assert.equal(JSON.stringify(E.jour(e, E.K(e))), jourAvant);
+  assert.equal(s.pp.dernier, 9e8);
+  // Après la fin aussi.
+  const f = P.jouer(scelle, cal, {});
+  assert.equal(E.toucher(f, cal, 9e9, 1, instant), 'clos');
+});
+
+test('completerArret : raison et F2 posées après la confirmation ; F2 dès le jour 3 ; jamais sans arrêt ni après la fin', () => {
+  const e = etatPendantSaut();
+  E.arreter(e, cal, null, null);
+  E.completerArret(e, cal, 'raison', 'vu_assez');
+  E.completerArret(e, cal, 'f2', 'toujours_autant');
+  E.completerArret(e, cal, 'raison', null); // choix effacé
+  assert.deepEqual(e.arret, { f2: 'toujours_autant', jour: E.K(e), raison: null });
+  assert.deepEqual(ecarts(e), []);
+  assert.throws(() => E.completerArret(e, cal, 'raison', 'inconnu'), /état/);
+  assert.throws(() => E.completerArret(e, cal, 'f1', null), /état/);
+  // Arrêt au jour 2 : F2 refusée.
+  const t = P.jouer(scelle, cal, { arretA: { jour: cal.premier + 1, moment: 'debut' } });
+  assert.throws(() => E.completerArret(t, cal, 'f2', 'jamais'), /état/);
+  E.completerArret(t, cal, 'raison', 'pas_le_temps');
+  // Sans arrêt, ou après la fin : refusé.
+  assert.throws(() => E.completerArret(etatPendantSaut(), cal, 'raison', 'autre'), /état/);
+  const f = P.jouer(scelle, cal, {});
+  assert.throws(() => E.completerArret(f, cal, 'raison', 'autre'), /état/);
+});
+
+test('« Reprendre la révélation » refusé pendant un saut en cours, même le jour de reprise atteint sans ouverture (Q-J3)', () => {
+  const s1 = cal.sauts[0];
+  const e = P.jouer(scelle, cal, { arretA: { jour: s1.reprise, moment: 'avant-aller-au-dimanche' } });
+  e.arret = null;
+  assert.equal(E.K(e), s1.reprise);
+  assert.ok(E.sautEnCours(e));
+  assert.throws(() => E.compter(e, cal, 'rouvrir'), /saut/);
+  assert.equal(E.jour(e, s1.reprise).coups.rouvrir, 0);
+});
+
+test('Copie du carnet pendant un saut (Q-K7) : durées et sauts pris au toucher de la copie, repris par le journal et le fichier des durées', () => {
+  const e = etatPendantSaut();
+  E.toucher(e, cal, 5e8, 1, instant);
+  const releve = E.releverCopie(e, cal, 5e8);
+  const figees = JSON.parse(JSON.stringify(releve));
+  // Le saut continue : ses durées courent, celles du relevé non.
+  E.toucher(e, cal, 9e8, 1, instant);
+  assert.ok(E.dureesSaut(e, 0, 9e8).duree_saut > releve.durees.sauts[0].duree_saut);
+  assert.deepEqual(releve, figees);
+  const D = E.fichierDurees(e, cal, 9e8, undefined, [releve]);
+  assert.equal(D.copies.length, 1);
+  assert.deepEqual(Object.keys(D.copies[0]).sort(), ['duree_deviner', 'duree_entree', 'duree_repondre', 'duree_seance', 'sauts']);
+  assert.deepEqual(D.copies[0].sauts, figees.durees.sauts);
+  assert.equal(D.copies[0].sauts[0].durees_textes.length, e.sauts[0].textes_atteints);
+  const j = E.journal(e, cal, EMPREINTE, undefined, [releve]);
+  assert.deepEqual(Object.keys(j.copies[0]).sort(), ['coups', 'etapes', 'jour', 'sauts', 'versions']);
+  assert.equal(j.copies[0].jour, E.K(e));
+  assert.deepEqual(j.copies[0].sauts, j.sauts);
+  E.arreter(e, cal, null, null);
+  assert.deepEqual(J.valider(scelle, cal, E.journal(e, cal, EMPREINTE, undefined, [releve]), opts()), []);
+  // Sans relevé : tableaux vides, comme avant.
+  assert.deepEqual(E.fichierDurees(e, cal, 9e8).copies, []);
+  assert.deepEqual(E.journal(e, cal, EMPREINTE).copies, []);
+});

@@ -157,6 +157,9 @@ var ElenchosEtat = (function (N, J) {
    * toucher d'un jour (seule lecture de l'heure, §8.8, « L'heure »).
    */
   function toucher(etat, cal, horloge, version, lireInstant) {
+    // Partie close (arrêt confirmé, ou fin) : plus aucun toucher n'entre dans un jour ni dans un saut ;
+    // le toucher qui confirme l'arrêt a déjà été compté, au pointerdown, avant le clic.
+    if (etat.arret !== null || etat.fin !== null) { return 'clos'; }
     var s = sautEnCours(etat);
     if (s) { s.pp.dernier = horloge; return 'saut'; }
     var k = K(etat), d = jour(etat, k);
@@ -403,6 +406,7 @@ var ElenchosEtat = (function (N, J) {
     var k = K(etat), d = jour(etat, k);
     if (quoi === 'relire') { exiger(d.coups.deviner !== null, 'Relire sans Deviner'); d.coups.relire += 1; return; }
     if (quoi === 'rouvrir') {
+      exiger(!s, 'Reprendre pendant un saut en cours (Q-J3)');
       exiger(cal.estJoue(k) && cal.ligne(k).revelation_porteur === 'lue', 'Reprendre sans révélation à rouvrir');
       d.coups.rouvrir += 1; return;
     }
@@ -432,6 +436,18 @@ var ElenchosEtat = (function (N, J) {
     exiger(raison === null || J.CODES.arret.indexOf(raison) >= 0, 'raison d\'arrêt');
     exiger(f2 === null || (k >= J.JOUR_F2 && J.CODES.f2.indexOf(f2) >= 0), 'F2 à l\'arrêt');
     etat.arret = { f2: f2, jour: k, raison: raison };
+  }
+  /**
+   * Raison d'arrêt ou F2, posées sur la page de questions après la confirmation
+   * (§8.10) : l'arrêt est écrit dès la confirmation, raison et F2 à null, puis
+   * complété (modèle du premier essai). code : un code de sa liste, ou null.
+   */
+  function completerArret(etat, cal, champ, code) {
+    exiger(etat.arret !== null && etat.fin === null, 'pas d\'arrêt à compléter');
+    exiger(champ === 'raison' || champ === 'f2', 'champ d\'arrêt inconnu : ' + champ);
+    if (champ === 'raison') { exiger(code === null || J.CODES.arret.indexOf(code) >= 0, 'raison d\'arrêt'); }
+    else { exiger(code === null || (etat.arret.jour >= J.JOUR_F2 && J.CODES.f2.indexOf(code) >= 0), 'F2 à l\'arrêt'); }
+    etat.arret[champ] = code;
   }
   function finir(etat, cal, codes) {
     exiger(K(etat) === cal.dernier, 'fin avant la clôture');
@@ -486,8 +502,29 @@ var ElenchosEtat = (function (N, J) {
   /* Journal (partie 4.4)                                               */
   /* ================================================================== */
 
-  /** Le journal des entrées, version 4, tiré de l'état. */
-  function journal(etat, cal, empreinte, partie) {
+  /**
+   * Relevé d'une copie du carnet en cours d'essai (partie 4.3.11 ; Q-K7), pris au
+   * toucher de la copie : ce que le journal en garde (coups, étapes, jour, sauts,
+   * versions) et ses durées à cet instant, jour et sauts confirmés. Un relevé
+   * n'est jamais écrit dans la mémoire (§8.8 du premier essai, « relevés hors de
+   * la mémoire ») : les écrans le gardent pour le chargement, et le passent à
+   * journal() et à fichierDurees().
+   */
+  function releverCopie(etat, cal, maintenant) {
+    var k = K(etat), d = jour(etat, k);
+    exiger(k <= cal.dernierJeu, 'copie à la clôture : c\'est le carnet de fin');
+    var dj = dureesJour(etat, cal, k, maintenant);
+    return {
+      durees: { duree_deviner: dj.duree_deviner, duree_entree: dj.duree_entree, duree_repondre: dj.duree_repondre, duree_seance: dj.duree_seance,
+        sauts: etat.sauts.map(function (s, i) { return dureesSaut(etat, i, maintenant); }) },
+      journal: { coups: copie(d.coups), etapes: d.etapes ? copie(d.etapes) : null, jour: k,
+        sauts: etat.sauts.map(function (s) { return { coups: copie(s.coups), depart: s.depart, numero: s.numero, textes_atteints: s.textes_atteints }; }),
+        versions: d.ouverture === null ? null : d.versions.slice() }
+    };
+  }
+
+  /** Le journal des entrées, version 4, tiré de l'état ; copies : les relevés de releverCopie, dans l'ordre. */
+  function journal(etat, cal, empreinte, partie, copies) {
     var jours = {};
     Object.keys(etat.jours).forEach(function (k) {
       var d = etat.jours[k];
@@ -497,7 +534,7 @@ var ElenchosEtat = (function (N, J) {
     });
     return {
       arret: etat.arret ? copie(etat.arret) : null,
-      copies: [],
+      copies: (copies || []).map(function (c) { return copie(c.journal); }),
       empreinte_scelle: empreinte,
       fin: etat.fin ? copie(etat.fin) : null,
       format: J.FORMAT,
@@ -508,17 +545,32 @@ var ElenchosEtat = (function (N, J) {
     };
   }
 
-  /** Durées au format du fichier des durées, version 2 (partie 4.4). */
-  function fichierDurees(etat, cal, maintenant, partieId) {
+  /** Durées au format du fichier des durées, version 2 (partie 4.4) ; copies : les relevés de releverCopie. */
+  function fichierDurees(etat, cal, maintenant, partieId, copies) {
     var jours = {};
     Object.keys(etat.jours).forEach(function (k) { jours[k] = dureesJour(etat, cal, +k, maintenant); });
-    return { format: 'elenchos-essai-durees', version: 2, partie: partieId || 'porteur', jours: jours, copies: [],
+    return { format: 'elenchos-essai-durees', version: 2, partie: partieId || 'porteur', jours: jours,
+      copies: (copies || []).map(function (c) { return copie(c.durees); }),
       sauts: etat.sauts.map(function (s, i) { return dureesSaut(etat, i, maintenant); }) };
   }
 
   /* ================================================================== */
   /* Forme de l'état relu (arrêt 1, repère M1)                          */
   /* ================================================================== */
+
+  /**
+   * Forme d'un état 2 sans le calendrier (arrêts V, `partieLisible`) : V1 à V6 ont
+   * pu échouer sur le fichier scellé lui-même. Lève une erreur sinon.
+   */
+  function formeSansCalendrier(o) {
+    exiger(o && typeof o === 'object' && o.format === FORMAT, 'format');
+    exiger(Number.isSafeInteger(o.ecritures) && o.ecritures >= 0, 'compteur d\'écritures');
+    exiger(typeof o.horloge === 'number' && isFinite(o.horloge) && o.horloge >= 0, 'horloge');
+    exiger(o.jours && typeof o.jours === 'object' && !Array.isArray(o.jours) && Object.keys(o.jours).length >= 1, 'jours');
+    exiger(Array.isArray(o.sauts), 'sauts');
+    exiger(o.vue && typeof o.vue === 'object' && !Array.isArray(o.vue), 'vue');
+    return o;
+  }
 
   /** Lève une erreur si l'objet relu n'a pas la forme d'un état 2 pour ce calendrier. */
   function verifierForme(o, cal) {
@@ -559,9 +611,9 @@ var ElenchosEtat = (function (N, J) {
     ouvrirPageSaut: ouvrirPageSaut, annulerSaut: annulerSaut, confirmerSaut: confirmerSaut,
     afficherTexteRattrapage: afficherTexteRattrapage, finirSaut: finirSaut,
     allerAuJourSuivant: allerAuJourSuivant, compter: compter, repondreCarnet: repondreCarnet,
-    arreter: arreter, finir: finir,
-    dureesJour: dureesJour, dureesSaut: dureesSaut, fichierDurees: fichierDurees,
-    journal: journal, verifierForme: verifierForme
+    arreter: arreter, completerArret: completerArret, finir: finir,
+    dureesJour: dureesJour, dureesSaut: dureesSaut, fichierDurees: fichierDurees, releverCopie: releverCopie,
+    journal: journal, verifierForme: verifierForme, formeSansCalendrier: formeSansCalendrier
   };
 })(ElenchosNoyau, ElenchosJournal);
 

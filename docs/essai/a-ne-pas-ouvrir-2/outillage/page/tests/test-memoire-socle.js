@@ -51,7 +51,7 @@ function env(opts) {
   w.self = w; w.top = o.cadre ? {} : w;
   let t = 0;
   const ecrans = {
-    rendre: () => appels.push(['rendre']), arret: (n, r) => appels.push(['arret', n, r]), hors: (x) => appels.push(['hors', x]),
+    rendre: () => appels.push(['rendre']), arret: (n, r, info) => appels.push(info === undefined ? ['arret', n, r] : ['arret', n, r, info]), hors: (x) => appels.push(['hors', x]),
     ancienne: (x) => appels.push(['ancienne', x.deuxParties]), actions: {}
   };
   const socle = S.creer({
@@ -105,7 +105,7 @@ test('Vérifications du chargement : V2, V4 (version, table), V5, V6', () => {
   for (const [repere, o] of cas) {
     const x = env(o);
     assert.equal(x.demarrer(), 'arret', repere);
-    assert.deepEqual(x.appels, [['arret', 1, repere]], repere);
+    assert.deepEqual(x.appels, [['arret', 1, repere, { partieLisible: false }]], repere); // aucune partie gardée
     assert.equal(x.st.length, 0, repere + ' : rien d\'écrit');
   }
   // L'état à l'arrivée est gelé en profondeur et n'est jamais écrit en mémoire.
@@ -135,8 +135,32 @@ test('V6 avec le vrai moteur (lot 2) : l\'histoire du fichier de test passe ; un
   autre.reponses[h][p].niveau = autre.reponses[h][p].niveau === 5 ? 1 : 5;
   const y = env({ scelleB64: b64(autre), moteur: M });
   assert.equal(y.demarrer(), 'arret');
-  assert.deepEqual(y.appels, [['arret', 1, 'V6']]);
+  assert.deepEqual(y.appels, [['arret', 1, 'V6', { partieLisible: false }]]);
   assert.equal(y.st.length, 0);
+});
+
+test('Arrêt V : `partieLisible` lu en lecture seule dans `partie-2` (forme sans calendrier), jamais dans la clé du premier essai', () => {
+  // Une partie gardée valide, puis un fichier scellé refusé en V4 : partieLisible vrai, rien de changé.
+  const x = env();
+  x.demarrer();
+  const st = x.st;
+  st.m.set('elenchos-essai:partie', 'ancien');
+  const avant = JSON.stringify([...st.m.entries()]);
+  st.lus = [];
+  const y = env({ stockage: st, scelleB64: b64(scelleAvecResume(s => { s.calendrier[5].revele = '2'; })) });
+  assert.equal(y.demarrer(), 'arret');
+  assert.deepEqual(y.appels, [['arret', 1, 'V4', { partieLisible: true }]]);
+  assert.equal(JSON.stringify([...st.m.entries()]), avant, 'aucune clé ni compteur changé');
+  assert.deepEqual(st.lus, ['elenchos-essai:partie-2']);
+  // Partie gardée abîmée : faux, et toujours rien d'écrit.
+  for (const abime of ['{', JSON.stringify({ format: 2, ecritures: 0, horloge: 0, jours: {}, sauts: [], vue: {} }), JSON.stringify({ format: 2, ecritures: -1, horloge: 0, jours: { 1: {} }, sauts: [], vue: {} })]) {
+    const st2 = new Stockage({ 'elenchos-essai:partie-2': abime });
+    const z = env({ stockage: st2, scelleB64: b64(scelleAvecResume(s => { s.vecteurs_test[1].n += 1; })) });
+    z.demarrer();
+    assert.deepEqual(z.appels, [['arret', 1, 'V5', { partieLisible: false }]], abime);
+    assert.equal(st2.m.get('elenchos-essai:partie-2'), abime);
+  }
+  // M1, arrêts 2 et 3 : pas de troisième argument (voir les autres tests).
 });
 
 test('Mémoire refusée : arrêt 2 ; partie illisible : arrêt 1 (M1), rien n\'est effacé ni réécrit', () => {

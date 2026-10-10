@@ -58,6 +58,20 @@ var ElenchosMemoire = (function () {
   function lireBrut(stockage) { return stockage.getItem(CLE); }
 
   /**
+   * Arrêts V (§8.11 du premier essai) : la partie gardée se lit-elle ? Lecture
+   * seule de `partie-2`, jamais de la clé du premier essai ; rien n'est écrit.
+   * forme(o) lève si la forme ne convient pas. Toute exception donne faux.
+   */
+  function partieLisible(stockage, forme) {
+    try {
+      var brut = lireBrut(stockage);
+      if (brut === null) { return false; }
+      forme(JSON.parse(brut));
+      return true;
+    } catch (e) { return false; }
+  }
+
+  /**
    * L'état gardé, ou null s'il n'y en a pas. Lève une erreur s'il est
    * illisible (arrêt 1, repère M1) ; verifierForme(o) lève aussi.
    */
@@ -99,7 +113,7 @@ var ElenchosMemoire = (function () {
   return {
     PREFIXE: PREFIXE, CLE: CLE, CLE_VERIF: CLE_VERIF, CLE_ANCIENNE: CLE_ANCIENNE,
     listeDesCles: listeDesCles, releverCles: releverCles, memoireMarche: memoireMarche,
-    lireEtat: lireEtat, ecrire: ecrire, effacerAncienne: effacerAncienne, toutEffacer: toutEffacer
+    lireEtat: lireEtat, partieLisible: partieLisible, ecrire: ecrire, effacerAncienne: effacerAncienne, toutEffacer: toutEffacer
   };
 })();
 

@@ -176,9 +176,21 @@ var ElenchosSocle = (function (N, C, J, E, Me, MoteurDeLaPage) {
 
     function toutEffacer() { Me.toutEffacer(stockage()); efface = true; }
 
+    /**
+     * Arrêts techniques (§8.11 du premier essai). Pour un arrêt 1 de repère V,
+     * info = {partieLisible} : la partie gardée se lit-elle (état déjà chargé,
+     * ou `partie-2` lue en lecture seule, forme sans calendrier) ? Le texte
+     * « Rien n'est effacé… » n'est affiché que dans ce cas. Rien n'est écrit.
+     * Pour M1, 2 et 3 : pas de troisième argument.
+     */
     function arreter(n, repere) {
       if (arretTechnique) { return; }
       arretTechnique = true;
+      if (n === 1 && /^V[0-9]+$/.test(repere || '')) {
+        var lisible = etat !== null || Me.partieLisible(stockage(), E.formeSansCalendrier);
+        ecrans.arret(n, repere, { partieLisible: lisible });
+        return;
+      }
       ecrans.arret(n, repere || null);
     }
 
@@ -192,7 +204,7 @@ var ElenchosSocle = (function (N, C, J, E, Me, MoteurDeLaPage) {
       if (!etat || efface || arretTechnique || couche()) { return; }
       var copie = JSON.parse(JSON.stringify(etat));
       var ou = E.toucher(copie, cal, horloge(), VERSION, lireInstant);
-      if (ou === 'aucun' || ou === 'fige') { return; }
+      if (ou === 'aucun' || ou === 'fige' || ou === 'clos') { return; } // 'clos' : partie arrêtée ou finie
       avancerHorloge(copie);
       if (ecrireEtat(copie)) { etat = copie; }
     }
@@ -245,13 +257,16 @@ var ElenchosSocle = (function (N, C, J, E, Me, MoteurDeLaPage) {
     /* Point d'accès en lecture (§9, « Une seule source »)              */
     /* ---------------------------------------------------------------- */
 
+    /** Relevés des copies du carnet faites pendant ce chargement (E.releverCopie), gardés par les écrans (lot 5). */
+    function relevesCopies() { return ecrans && ecrans.relevesCopies ? ecrans.relevesCopies() : []; }
+
     function pointDAcces() {
       W.ElenchosEssai = Object.freeze({
         version: VERSION,
         empreinte: function () { return empreinte; },
         etat: function () { return etat ? JSON.parse(JSON.stringify(etat)) : null; },
-        journal: function () { return etat ? E.journal(etat, cal, empreinte) : null; },
-        durees: function () { return etat ? E.fichierDurees(etat, cal, horloge()) : null; },
+        journal: function () { return etat ? E.journal(etat, cal, empreinte, undefined, relevesCopies()) : null; },
+        durees: function () { return etat ? E.fichierDurees(etat, cal, horloge(), undefined, relevesCopies()) : null; },
         resultats: function () { return etat ? resultats() : null; },
         arrivee: function () { return arrivee; },
         lectures: function () { return JSON.parse(JSON.stringify(lectures)); },
