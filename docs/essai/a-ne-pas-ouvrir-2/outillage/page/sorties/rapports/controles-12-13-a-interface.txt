@@ -1,0 +1,9 @@
+Contrôle 12 (variantes) : python3 -I controle.py variantes sur les traces C de (a)-interface et de ses trois variantes
+4 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+code 0
+
+Contrôle 13 (carnets) : carnet et copie de la page contre C
+temoins/a-interface : carnet final : identique (durées masquées) copie 0 : identique (durées masquées) (code 0)
+sorties/variantes/favorable : carnet final : identique (durées masquées) copie 0 : identique (durées masquées) (code 0)
+sorties/variantes/defavorable : carnet final : identique (durées masquées) copie 0 : identique (durées masquées) (code 0)
+sorties/variantes/raisons : carnet final : identique (durées masquées) copie 0 : identique (durées masquées) (code 0)

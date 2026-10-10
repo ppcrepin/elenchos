@@ -29,6 +29,13 @@ Lot 6 (témoins et construction) : rien de téléchargé par la page.
 - Harnais Chromium du lot 6 : `node harnais/temoins-chromium.js CONSTRUCTION FICHIER_SCELLE temoins TRACE_HISTOIRE_P [RALENTI]`.
 - Entrées de construction factices pour le fichier final : `temoins/entrees-final-factices.json` (`empreinte_publiee_le` 2026-01-01, `empreinte_publiee_a` 00:00, `consultes_le` 2026-10-09 : à remplacer au lot 7, voir le rapport).
 
+Lot 7 (contrôles et publication, part A) : rien de téléchargé. Depuis ce dossier :
+- Reconstruction avec les entrées réelles, en une commande : `sh harnais/construire-final.sh AAAA-MM-JJ HH:MM [CONSULTES_LE]` (date et heure de Paris du message de publication de l'empreinte). Écrit `../../entrees-construction.json`, `sorties/construction/` (dont `rapport-construction.txt`, lu par la passe WebKit) et `sorties/rapports/controle5.txt` ; reconstruit une seconde fois et compare les octets.
+- Contrôle 5 : `node harnais/controle5-2.js --construction DOSSIER --scelle F --page-test ../../../page-test-icone/source.html [--sortie RAPPORT]`.
+- Parties au hasard en mode moteur (200, graine tirée de l'empreinte) : `node temoins/hasard.js FICHIER_SCELLE DOSSIER 200`, puis `sh temoins/comparer.sh FICHIER_SCELLE DOSSIER`.
+- Passe du moteur dans un navigateur (V1 à V6, trace de l'histoire, témoins et parties au hasard, performance, vue de secours) : `node harnais/passe-moteur.js --navigateur chromium|webkit --construction DOSSIER --scelle F --temoins temoins --trace-histoire TRACE_HISTOIRE_P [--hasard DOSSIER] [--rapport-construction RAPPORT] [--ralentis 3,5,7,30]` ; WebKit par `.github/workflows/essai2-passe-webkit.yml` seulement.
+- Rapports du lot 7 : `sorties/rapports/`.
+
 ## Premier essai
 
 Outillage d'essai (D-001 tenu ; `simulation.md`, « Décisions touchées »). Écrit par Front-end le 6 octobre 2026.

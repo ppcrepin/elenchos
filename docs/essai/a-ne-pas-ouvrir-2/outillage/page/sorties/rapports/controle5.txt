@@ -1,0 +1,70 @@
+Contrôle 5 du second essai, sur /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/frontend-lot6-construction
+
+juste : déclaration d’encodage dans les 1 024 premiers octets
+juste : balises du §8.8 en tête, dans leur ordre
+juste : version du porteur : un seul bloc de script et un seul bloc de style — 1 script(s), 1 style(s)
+juste : politique de sécurité : empreintes des deux seuls blocs
+juste : version témoin : deux blocs de script, empreintes des deux
+juste : les deux versions ne diffèrent que par le bloc témoin et son empreinte
+juste : aucune fonction de trace dans la version du porteur
+juste : aucun attribut style ni gestionnaire écrit dans le HTML
+juste : scripts : rien de « hasard du navigateur » (Math\.random)
+juste : scripts : rien de « hasard du navigateur » (crypto\.)
+juste : scripts : rien de « évaluation de code » (\beval\s*\()
+juste : scripts : rien de « évaluation de code » (\bFunction\s*\()
+juste : scripts : rien de « évaluation de code » (setTimeout\s*\(\s*['"])
+juste : scripts : rien de « évaluation de code » (setInterval\s*\(\s*['"])
+juste : scripts : rien de « effacement global du stockage » (\.clear\s*\()
+juste : scripts : rien de « formatage selon la langue » (\bIntl\b)
+juste : scripts : rien de « formatage selon la langue » (toLocale)
+juste : scripts : rien de « Date pour lire une date » (new Date\b)
+juste : scripts : rien de « Date pour lire une date » (Date\.parse)
+juste : scripts : rien de « Date pour lire une date » (Date\.UTC)
+juste : scripts : rien de « heure de l’appareil » (getTimezoneOffset|getHours|getMinutes|getDate\(|getDay\(|getMonth|getFullYear)
+juste : scripts : rien de « HTML écrit par le script » (innerHTML|outerHTML|insertAdjacentHTML|document\.write)
+juste : scripts : rien de « requête » (\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource|\bimport\s*\(|importScripts)
+juste : scripts : rien de « mémoire interdite (§8.8) » (sessionStorage|indexedDB|\bcaches\b|serviceWorker|document\.cookie|\bcookie\b)
+juste : scripts : rien de « image hors data: » (new Image|createElement\(\s*['"]img)
+juste : scripts : rien de « navigation ou message » (window\.open|postMessage|location\.href\s*=|location\.assign|location\.replace)
+juste : scripts : rien de « attribut style écrit » (setAttribute\(\s*['"]style)
+juste : scripts : rien de « theme-color changé par le script » (theme-color)
+juste : scripts : rien de « manifeste » (manifest)
+juste : clés de mémoire : toutes sous « elenchos-essai: » — elenchos-essai:
+juste : localStorage : seulement getItem, setItem, removeItem, key, length
+juste : adresse de la page : seulement location.origin (diagnostic affiché) et location.reload (« Reprendre ici »)
+juste : fichier scellé embarqué : repère présent une fois
+juste : fichier scellé embarqué : octets identiques au fichier scellé
+juste : six faces embarquées — 6 faces
+juste : police alegreya-700.woff2 : glyphe vide relié à U+202F, chasse 116 millièmes — U+202F : glyphe 425, vide, 116 millièmes
+juste : police alegreya-italique-500.woff2 : glyphe vide relié à U+202F, chasse 124 millièmes — U+202F : glyphe 423, vide, 124 millièmes
+juste : police alegreya-italique-700.woff2 : glyphe vide relié à U+202F, chasse 116 millièmes — U+202F : glyphe 425, vide, 116 millièmes
+juste : police alegreya-sans-400.woff2 : glyphe vide relié à U+202F, chasse 103 millièmes — U+202F : glyphe 431, vide, 103 millièmes
+juste : police alegreya-sans-700.woff2 : glyphe vide relié à U+202F, chasse 101 millièmes — U+202F : glyphe 431, vide, 101 millièmes
+juste : police alegreya-sans-italique-400.woff2 : glyphe vide relié à U+202F, chasse 105 millièmes — U+202F : glyphe 432, vide, 105 millièmes
+juste : commentaire : ligne de licence des polices
+juste : commentaire : texte complet de OFL-alegreya.txt (licence et mentions de copyright)
+juste : commentaire : texte complet de OFL-alegreyasans.txt (licence et mentions de copyright)
+juste : commentaire : pied de page (hébergeur, source)
+juste : HTML : seule la vue de secours porte du texte — La page n’a pas pu démarrer. Ce n’est pas une erreur de votre part, et cette pag
+juste : la clé de la page-test n’est nommée qu’en commentaire ; elle part avec l’ancienne partie, par le préfixe (§8.8)
+juste : détection du contexte : chaque instruction de la page-test v2 dans socle.js (window. et guillemets mis à part ; « tactile », inutilisée, omise)
+juste : anciennes clés repérées par la seule liste des clés : getItem seulement sur partie-2 et verif-2 — CLE_VERIF, CLE_VERIF, CLE
+juste : aucune écriture hors de partie-2 et verif-2 — CLE_VERIF, CLE
+juste : effacements : verif-2, et les seules clés « elenchos-essai: » de l’ancienne partie ou de « Tout effacer » — CLE_VERIF, c, c
+juste : aucun accès à la mémoire hors de memoire.js (socle.js ne fait que la passer)
+juste : état à l’arrivée gelé en profondeur, jamais écrit en mémoire (socle.js, verifierHistoire : gelerProfond ; Me.ecrire ne reçoit que l’état)
+juste : facteur et longueur de la barre lus dans le fichier (reglage.facteur, reglage.barre)
+juste : aucun 14, 15, 16 ni 91 écrit en dur (schéma, partie 7.1), hors commentaires et chaînes — {}
+juste : boutons de 1.8 : des boutons, sans lien, requête ni ressource venue d’ailleurs
+juste : aucun champ d’e-mail : le seul champ saisissable est le pseudo (1.8b affiche une adresse dessinée)
+juste : graphique, barre et frise faits d’éléments HTML : ni canvas, ni svg, ni image
+
+Toutes les vérifications sont justes (58).
+
+Relecture du code (non décidé par ce programme) :
+- le moteur ne lit ni l’écran, ni la mémoire, ni l’horloge, ni le hasard : moteur.js n’appelle ni document, ni localStorage, ni Date, ni Math.random (vérifié par les motifs ci-dessus) ;
+- réponses des personnages lues dans le fichier scellé (moteur.js, contexte.reponse), indépendantes de celles du porteur ; sélection sans les profils cachés : calculerManche ne lit que les réponses et les curseurs ; les profils ne servent qu’au côté attendu des personnages devineurs (règles 1 §3.2) ;
+- cartes du porteur indépendantes de ses coups : M.cartesServies ne reçoit pas le journal (tests/test-calculer.js, deux joueurs) ;
+- aucun accès à la mémoire avant la détection du contexte, ni hors de l’icône : socle.js, demarrer (contexte, puis V1 à V6, puis Me.memoireMarche) ;
+- ancienne partie : la page d’effacement s’affiche avant toute écriture (socle.js, demarrer : releverCles, puis ecrans.ancienne, « rien n’est écrit ») ;
+- compte simulé : 1.8, 1.8b et 1.9 ne font que E.terminerCompte (interface.js, actions compte-*, code-*).

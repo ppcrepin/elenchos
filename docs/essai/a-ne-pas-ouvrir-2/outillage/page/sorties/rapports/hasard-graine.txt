@@ -1,0 +1,3 @@
+Fichier scellé : SHA-256 587dbac7ecbde1c9b9e6d555a1ff162a6c4e42ece2a9fe82cef27f3baed36db0
+Graine des parties au hasard : d4e2f0cc85970a22 (SHA-256 de « elenchos-essai-2|hasard| » + empreinte, 16 premiers chiffres)
+Nombre : 200

@@ -1,8 +1,8 @@
 # Outillage du second essai (simulation-2.md, §9, contrôle 14 (g) ; §8.8 « Publication ») : preuve de publication.
-# À placer dans .github/workflows/ (l'orchestrateur le range) ; le script lancé, harnais/preuve-publication.sh du second
-# essai, est lu sur main. Mêmes règles que essai-preuve-publication.yml : lancement manuel seulement, au moins dix minutes
-# après la fin du déploiement Pages ; droits en lecture seule ; aucun secret (seul le jeton éphémère de la tâche, pour
-# l'API Pages) ; rien de téléversé ni de poussé ; machine Linux sans dépendance installée.
+# Le script lancé, harnais/preuve-publication.sh du second essai, est lu sur main. Mêmes règles que
+# essai-preuve-publication.yml : lancement manuel seulement, au moins dix minutes après la fin du déploiement Pages ;
+# droits en lecture seule ; aucun secret (seul le jeton éphémère de la tâche, pour l'API Pages) ; rien de téléversé ni
+# de poussé ; machine Linux sans dépendance installée.
 # Entrées : le commit de gh-pages attendu, le SHA-256 attendu de essai/index.html (rapport de construction) et, pour la
 # preuve du remplacement, le commit de gh-pages du premier essai.
 name: Essai 2 - preuve de publication

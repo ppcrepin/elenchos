@@ -1,0 +1,67 @@
+Le Fidèle du porteur, semaine 14 : a a-interface b c d e f g j k l p q r s t u
+Le Fidèle du porteur, semaine 15 : a a-interface b c d e f g i j p q r s t u
+Pas de Côté du porteur (révélation lue) : e
+R3 : surprise par la distance (curseur net de l’auteur) : a a-interface b c d e f g h i j k l m n o p q r s t u
+R3 : surprise par la rareté (curseur flou) : a a-interface b c d e f g h i j k l m n o p q r s t u
+abandon au jour 1 : h
+abandon au jour 14 : i
+abandon au jour 2 : i
+abandon au jour 3 : h
+abandon au jour 7 : h
+arrêt au jour 1 : m
+arrêt au jour 11 (saut) : k
+arrêt au jour 2 : n
+arrêt au jour 3 : o
+arrêt au jour 7 (saut) : l
+avis : deux mentions du milieu : a a-interface b c d e f g h i j k l n o p q r s t u
+avis : ligne « adopte » : a a-interface b c d e f g h i j k l p q r s t u
+avis : ligne « partage » : a a-interface b c d e f g h i j k l n o p q r s t u
+avis : ligne « rejete » : a a-interface b c d e f g h i j k l p q r s t u
+avis : milieu neutre : a a-interface b c d e f g h i j k p q r s t u
+avis du cercle à 3 réponses : h
+avis du cercle à 4 réponses : a a-interface b c d e f g h i j k l n o p q r s t u
+avis du cercle à 5 réponses : a a-interface b c d e f g h i j k l p q r s t u
+barre au-delà : a a-interface b c d e f g j p q r s t u
+barre pleine exactement (16) : a a-interface b c d e f g j p q r s t u
+barre pleine par le premier curseur net : d e f t u
+barre à 0 : m
+barre à mi-chemin : a a-interface b c d e f g h i j k l p q r s t u
+carte à raison cachée déplacée (raison « aucune ») : a a-interface b c d e f g i j k l n o p q r s t u
+cartes identiques remplacées (personnage) : a a-interface b c d e f g h i j k l p q r s t u
+cartes identiques remplacées (porteur) : a a-interface b c d e f g h i j k p q r s t u
+cartes identiques servies ensemble (porteur) : a a-interface b c d e f g h i j k l o p q r s t u
+compte apple : c
+compte email_plus_tard : d
+compte email_valider : a a-interface b e f g h i j k l n o q r s t u
+compte google : p
+curseur net du porteur : d e f t u
+côté attendu du porteur : -1 : b c d e f g h i j k l p q r t u
+côté attendu du porteur : 0 : b c h i j p q r s t u
+côté attendu du porteur : 1 : b c d e f g h i j k p q r s t u
+côté attendu du porteur : inconnu : a a-interface b c d e f g h i j k l n o p q r s t u
+départage devin par raisons : t
+départage devin par tirage : s
+départage mystere par erreurs : g
+départage mystere par tirage : r
+départage surprise par erreurs : u
+départage surprise par tirage : a a-interface b c e i j p q
+entrée 0 sur 3 : b d e f g h i j k l m n o p q r s t u
+entrée 1 sur 3 : a a-interface
+entrée 3 sur 3 : c
+jumeau désigné par un personnage : a a-interface b c d e f g h i j k p q r s t u
+manche du porteur à 3 cartes : a a-interface b c d e f g h i j k l n o p q r s t u
+message « cartes » : a a-interface b c d e f g h i j k l n o p q r s t u
+message « question » : h
+message « vote » + titres : a a-interface b c d e f g h i j k l p q r s t u
+partie menée à la clôture : a a-interface b c d e f g h i j p q r s t u
+phrase de la semaine « difference » : b c d e f i j k l p q r s t
+phrase de la semaine « egalite » : u
+phrase de la semaine « floue » : a a-interface b c g h i j p q r s
+phrase de la semaine « nette » : d e f t u
+verdict faux : b d e f g h i j k l n o p r s t u
+verdict jumeau : q
+verdict juste : b c d e f g h i j k p q r s t u
+verdict juste_et_raison : b c q
+verdict passe : a a-interface b d e f g h i j k l n o p r s t u
+« Annuler » au saut : j
+« Texte rejeté. » sur une révélation lue : a a-interface b c d e f g h i j k l p q r s t u
