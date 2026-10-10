@@ -140,9 +140,16 @@ var ElenchosTrace = (function () {
       ['duree_page', 'duree_saut', 'durees_textes'].forEach(function (c) { x.mesures[c] = d ? copie(d[c]) : null; });
       return x;
     });
+    // Copies (partie 4.3.11) : les mesures du moteur n'ont pas de durées ; comme pour les jours et les sauts, elles
+    // viennent du fichier des durées (copies[i]), quand il y en a un.
+    var copiesTrace = (copies || []).map(function (c, i) {
+      var x = copie(c), d = D && D.copies && D.copies[i] ? D.copies[i] : null;
+      if (x.mesures && d) { ['duree_deviner', 'duree_entree', 'duree_repondre', 'duree_seance'].forEach(function (k) { x.mesures[k] = d[k]; }); }
+      return x;
+    });
     return {
       agregats: enTrace(R.agregats), arret: copie(journal.arret), carnet: carnetTexte === undefined || carnetTexte === null ? null : { texte: carnetTexte },
-      copies: copies || [], empreinte_scelle: empreinte, fin: copie(journal.fin), format: 'elenchos-essai-trace',
+      copies: copiesTrace, empreinte_scelle: empreinte, fin: copie(journal.fin), format: 'elenchos-essai-trace',
       jours: jours, partie: copie(journal.partie), resume_histoire: resumeSha256, sauts: sauts, version: 4
     };
   }

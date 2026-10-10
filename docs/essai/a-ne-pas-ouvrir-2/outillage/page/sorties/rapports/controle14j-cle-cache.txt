@@ -1,0 +1,22 @@
+Contrôle 14 j remesuré après la clé du cache (M.cleCalcul), tests/lot7/controle14.js de B, point j, Chromium ralenti 4 fois, même machine, même partie (284 gestes).
+Avant (socle.js, moteur.js, trace.js de HEAD) :
+(j) performance (Chromium ralenti quatre fois)
+passé (j) calcul de l'histoire (budget 1 s) : 129, 109, 126 ms — médiane 126 ms
+passé (j) chargement entier, de la navigation au premier écran (à comparer aux 2 s de la vue de secours) : 689, 743, 912 ms — médiane 743 ms
+(j) traitement le plus long par sorte de geste (ms) : rev-suivant 125, rev-jouer 85, croix 83, notification 80, cloture-continuer 68, onglet-cercle 66, onglet-jour 61, visage 55, retour 54, feuille-raison 53
+(j) gestes au-delà de 100 ms : rev-suivant (jour 7, revelation) 125 ms
+ÉCART (j) temps par geste (budget 100 ms) sur une partie entière de 284 gestes : 847 évènements de plus de 16 ms, traitement max 125 ms, 95e centile 38 ms — click 125 ms
+
+Après, premier passage :
+(j) performance (Chromium ralenti quatre fois)
+passé (j) calcul de l'histoire (budget 1 s) : 106, 81, 68 ms — médiane 81 ms
+passé (j) chargement entier, de la navigation au premier écran (à comparer aux 2 s de la vue de secours) : 813, 754, 755 ms — médiane 755 ms
+(j) traitement le plus long par sorte de geste (ms) : onglet-cercle 72, visage 65, aller-jour-suivant 64, rev-jouer 64, onglet-moi 56, deviner-valider 53, croix 47, notification 46, rouvrir 46, code-valider 45
+passé (j) temps par geste (budget 100 ms) sur une partie entière de 284 gestes : 847 évènements de plus de 16 ms, traitement max 72 ms, 95e centile 28 ms
+
+Après, second passage :
+(j) performance (Chromium ralenti quatre fois)
+passé (j) calcul de l'histoire (budget 1 s) : 88, 76, 72 ms — médiane 76 ms
+passé (j) chargement entier, de la navigation au premier écran (à comparer aux 2 s de la vue de secours) : 595, 661, 662 ms — médiane 661 ms
+(j) traitement le plus long par sorte de geste (ms) : visage 76, code-valider 66, onglet-cercle 63, deviner-valider 60, aller-jour-suivant 52, notification 50, proche 48, ratt-valider 48, croix 46, rev-jouer 46
+passé (j) temps par geste (budget 100 ms) sur une partie entière de 284 gestes : 847 évènements de plus de 16 ms, traitement max 76 ms, 95e centile 26 ms

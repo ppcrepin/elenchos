@@ -1,14 +1,14 @@
 Passe du moteur, chromium (playwright-core 1.56.1)
 juste : porteur/index.html identique à la construction de référence
 juste : temoin/index.html identique à la construction de référence
-juste : V1 à V6 et premier écran (chargement 304 ms)
+juste : V1 à V6 et premier écran (chargement 212 ms)
 juste : trace de l'histoire identique
 juste : 221 parties sur 221 rejouées, traces identiques
-performance : histoire recalculée 20 ms (tirage déjà en cache ; le chargement entier, plus haut, la contient à froid) ; geste : médiane 8 ms, max 15 ms (budget 100)
-ralenti 4 fois : chargement 731 ms (V1 à V6, histoire à froid et premier écran ; budget de la vue de secours : 2 000), histoire recalculée 89 ms ; vue de secours visible sur 0 image(s) sur 147
-ralenti 3 fois : chargement 528 ms (V1 à V6, histoire à froid et premier écran ; budget de la vue de secours : 2 000) ; vue de secours visible sur 0 image(s) sur 135
-ralenti 5 fois : chargement 859 ms (V1 à V6, histoire à froid et premier écran ; budget de la vue de secours : 2 000) ; vue de secours visible sur 0 image(s) sur 153
-ralenti 7 fois : chargement 1550 ms (V1 à V6, histoire à froid et premier écran ; budget de la vue de secours : 2 000) ; vue de secours visible sur 0 image(s) sur 125
-ralenti 30 fois : chargement 7248 ms (V1 à V6, histoire à froid et premier écran ; budget de la vue de secours : 2 000) ; vue de secours visible sur 0 image(s) sur 135
-juste : sans script, vue de secours cachée à 1920 ms, visible à 2210 ms
+performance : histoire recalculée 15 ms (tirage déjà en cache ; le chargement entier, plus haut, la contient à froid) ; geste : médiane 5 ms, max 8 ms (budget 100)
+ralenti 4 fois : chargement 799 ms (V1 à V6, histoire à froid et premier écran ; budget de la vue de secours : 2 000), histoire recalculée 85 ms ; vue de secours visible sur 0 image(s) sur 149
+ralenti 3 fois : chargement 532 ms (V1 à V6, histoire à froid et premier écran ; budget de la vue de secours : 2 000) ; vue de secours visible sur 0 image(s) sur 137
+ralenti 5 fois : chargement 1169 ms (V1 à V6, histoire à froid et premier écran ; budget de la vue de secours : 2 000) ; vue de secours visible sur 0 image(s) sur 164
+ralenti 7 fois : chargement 1827 ms (V1 à V6, histoire à froid et premier écran ; budget de la vue de secours : 2 000) ; vue de secours visible sur 0 image(s) sur 129
+ralenti 30 fois : chargement 7445 ms (V1 à V6, histoire à froid et premier écran ; budget de la vue de secours : 2 000) ; vue de secours visible sur 0 image(s) sur 141
+juste : sans script, vue de secours cachée à 1907 ms, visible à 2212 ms
 réussi

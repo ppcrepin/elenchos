@@ -1,0 +1,45 @@
+Contrôle 12 (« variantes ») partie par partie, sur la trace C : gabarit du carnet et des copies, pseudo absent, rien de l'avis du cercle, de la barre ni du Pas de Côté dans les blocs de jour et de saut
+arret-j1-compte : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+arret-j1-deviner : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+arret-j1-entree : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+arret-j14-attente : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+arret-j2-revelation : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+arret-j3-attente : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+arret-j3-repondre : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+arret-j4-apres-annuler : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+arret-j4-revelation : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+arret-j7-deviner : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+arret-j8-apres-annuler : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+arret-saut1-texte2 : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+arret-saut2-texte5 : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+ecran-abandon-dimanche : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+ecran-abandons-jours : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+ecran-compte-apple : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+ecran-compte-email-plus-tard : variante 0 : carnet : le pseudo figure dans le carnet
+variante 0 : copie 0 : le pseudo figure dans le carnet
+ecran-compte-email : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+ecran-compte-google : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+ecran-durees-fermeture : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+ecran-fermeture-app : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+ecran-pseudo-alphabet : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+ecran-rattrapage-recharge : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+ecran-revelation-rouverte : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+ecran-rond-deux-lettres : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+hasard-ecran-01 : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+hasard-ecran-02 : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+hasard-ecran-03 : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+hasard-ecran-04 : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+hasard-ecran-05 : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+hasard-ecran-06 : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+hasard-ecran-07 : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+hasard-ecran-08 : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+hasard-ecran-09 : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+hasard-ecran-10 : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+hasard-ecran-11 : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+hasard-ecran-12 : 1 variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent
+code 1
+
+Écart de ecran-compte-email-plus-tard : faux positif du programme de contrôle. Le pseudo de cette partie fait deux lettres et
+se retrouve à l'intérieur de mots du gabarit du carnet (« Jour », « Journée », « Jours »). Il ne figure jamais comme mot entier,
+ni dans le carnet (0 sur 19 occurrences de ces deux lettres) ni dans la copie (0 sur 13). Le test de controle/ec/carnet.py
+(verifier_forme, « if pseudo and pseudo in texte ») cherche une sous-chaîne ; il faudrait chercher le pseudo comme mot entier.

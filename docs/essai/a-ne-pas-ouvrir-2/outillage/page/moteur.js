@@ -1146,6 +1146,21 @@ var ElenchosMoteur = (function (N) {
     return { K: K, agregats: agregats(ctx, revelations, manches, titresEssai, K), jours: jours, sauts: sauts, titres: tousTitres };
   }
 
+  /**
+   * Clé de `calculer` pour un journal : exactement ce que `calculer` en lit (format, version ; par jour atteint :
+   * coups, étape « entrée », attente, ouverture ; sauts), sans les versions, les autres étapes, la partie, les
+   * copies, l'arrêt ni la fin. Deux journaux de même clé donnent les mêmes résultats (tests/test-calculer.js,
+   * qui relève chaque lecture de `calculer`). Le socle s'en sert pour ne recalculer qu'au besoin.
+   */
+  function cleCalcul(journal) {
+    var jours = {};
+    Object.keys(journal.jours).forEach(function (k) {
+      var d = journal.jours[k];
+      jours[k] = [d.coups, d.etapes === null ? null : d.etapes.entree === true, d.attente, d.ouverture];
+    });
+    return JSON.stringify([journal.format, journal.version, jours, journal.sauts]);
+  }
+
   /** « Sur tout l'essai » (§8.4 ; S1, partie 3.10) : manches jouées depuis l'arrivée et déjà révélées. */
   function agregats(ctx, revelations, manches, titresEssai, K) {
     var cal = ctx.cal, P = cal.premier;
@@ -1175,7 +1190,7 @@ var ElenchosMoteur = (function (N) {
   return {
     ErreurMoteur: ErreurMoteur,
     PORTEUR: PORTEUR, TENSIONS: TENSIONS, ORDRE_TEMPERAMENTS: ORDRE_TEMPERAMENTS,
-    histoire: histoire, resume: resume, calculer: calculer, cartesServies: cartesServies, visagesDejaJoue: visagesDejaJoue,
+    histoire: histoire, resume: resume, calculer: calculer, cleCalcul: cleCalcul, cartesServies: cartesServies, visagesDejaJoue: visagesDejaJoue,
     temperamentsAu: temperamentsAu, reponsesDuJournal: reponsesDuJournal,
     regles: {
       contexte: contexte, cote: cote, valeur: valeur, identiques: identiques, classer: classer,

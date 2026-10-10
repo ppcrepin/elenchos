@@ -16,7 +16,7 @@ on:
       scelle:
         description: "Fichier scellé (chemin dans le dépôt)"
         type: string
-        default: docs/essai/a-ne-pas-ouvrir-2/outillage/scellement/final/fichier-scelle-candidat-final.json
+        default: docs/essai/a-ne-pas-ouvrir-2/fichier-scelle.json
       entrees:
         description: "Entrées de construction (chemin dans le dépôt)"
         type: string

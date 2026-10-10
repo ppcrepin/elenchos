@@ -1,4 +1,4 @@
-Contrôle 5 du second essai, sur /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/frontend-lot6-construction
+Contrôle 5 du second essai, sur /home/user/elenchos/docs/essai/a-ne-pas-ouvrir-2/outillage/page/sorties/construction
 
 juste : déclaration d’encodage dans les 1 024 premiers octets
 juste : balises du §8.8 en tête, dans leur ordre

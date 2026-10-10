@@ -12,7 +12,7 @@
 | `etat.js` | état format 2 : transitions (un geste = une écriture), durées, journal tiré de l'état | A | fait, testé |
 | `memoire.js` | clés `partie-2` et `verif-2`, ancienne partie par la liste des clés, arrêts 2 et 3 | A | fait, testé |
 | `socle.js` | contexte, V1 à V6, départ, horloges, toucher compté, gestionnaire unique, point d'accès | A | fait, testé hors navigateur |
-| `moteur.js` | `histoire`, `resume` (lot 2) ; `calculer`, `cartesServies`, `visagesDejaJoue` (lot 3) ; `regles` (les règles une à une) | A | lots 2 et 3 faits, testés ; le moteur du premier essai est rangé dans `tests/premier-essai/moteur-premier-essai.js` |
+| `moteur.js` | `histoire`, `resume` (lot 2) ; `calculer`, `cartesServies`, `visagesDejaJoue` (lot 3) ; `cleCalcul` (lot 7, clé du cache) ; `regles` (les règles une à une) | A | lots 2 et 3 faits, testés ; le moteur du premier essai est rangé dans `tests/premier-essai/moteur-premier-essai.js` |
 | `trace.js` | assemblage des traces (version témoin seulement) : `histoire(collecte, resume, sha, empreinte)`, `tracerHistoire(N, C, M, octets)` (lot 2) ; `partie(journal, R, durees, carnet, copies, empreinte, resumeSha)` (lot 3) | A | traces de l'histoire et de partie faites ; branchement dans la version témoin au lot 6 |
 | `textes.js`, `interface.js`, `style.css`, `carnet.js` (à créer) | écrans, mots, formes, carnet | B | **copies du premier essai, à adapter aux lots 4 et 5** |
 | `construire.py` | construction | A et B | version 5, statut, sources ; table des lettres au lot 6 |
@@ -61,7 +61,7 @@ Ordre de `demarrer` (§8.8 ; partie 3.4 ; FE-4), tout dans la même tâche :
 
 - `geste(function (e, h) { … })` : **un geste, une écriture.** La fonction reçoit une copie de l'état et l'horloge de premier plan `h` (ms) ; elle appelle une ou plusieurs transitions d'`ElenchosEtat`, et peut changer `e.vue` ou le sac `page` d'un jour. Si elle réussit, la copie devient l'état et s'écrit d'un bloc ; si une transition lève `ErreurEtat`, rien ne change, rien ne s'écrit, et l'erreur remonte (c'est un défaut d'écran). Après un arrêt technique ou « Tout effacer », plus rien ne s'écrit.
 - Le **toucher compté** est fait par le socle (`pointerdown`, `keydown`) : ouverture du jour, versions, dernier toucher. Pendant un saut confirmé et pas fini, il compte au saut.
-- `etat()`, `scelle()`, `cal()`, `arrivee()`, `empreinte()`, `resultats()` (moteur, recalculé quand l'état change), `confusables()`, `horloge()`.
+- `etat()`, `scelle()`, `cal()`, `arrivee()`, `empreinte()`, `resultats()` (moteur, recalculé seulement quand ce qu'il lit du journal change : `M.cleCalcul`, lot 7 ; le même objet est rendu tant que la clé ne change pas), `confusables()`, `horloge()`.
 - `lireParis()` : **seulement** à l'affichage de 2.5 aux jours joués (« En attendant ») ; relevé pour la version témoin.
 - `instantDuSaut()` : **seulement** pour `E.confirmerSaut` (« C'est la seule heure lue pendant un saut », partie 4.3.9).
 - `effacerAncienne()`, `toutEffacer()`, `arreter(n, repere)`, `efface()`.

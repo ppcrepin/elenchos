@@ -1,0 +1,23 @@
+Rapport de construction de la page de l'essai
+Version de la page : 1
+Fichier scellé : SHA-256 587dbac7ecbde1c9b9e6d555a1ff162a6c4e42ece2a9fe82cef27f3baed36db0
+Statut du fichier scellé : final
+Table des confusables : confusables.txt 16.0.0 (SHA-256 95bd0aad6dced5ebc63436f459c06ab21a8d107cd842fb57f5c3a1e91bca8611), 1292 entrées ; table-16.0.0.json SHA-256 baeca72ec1b096602cc0db594c92278a07620c7911a02fa5acb8b5567e1cd76b
+
+porteur/index.html : 702509 octets, SHA-256 1b8bc687d6d3f4da21d1481265bb0d2fcbb2c4b36285368f73ccaf2e3d1292e0
+temoin/index.html : 713948 octets, SHA-256 2a9173531a0de4ebb0019d9a7007841310d5c9210e68fc785c6b489ffa71fad3
+version.txt : 2 octets, SHA-256 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+
+Politique de sécurité, version du porteur :
+default-src 'none'; script-src 'sha256-zScsLLimTZRtb1NPJK68wDvCw53xobbZkNssFIS5yAY='; style-src 'sha256-fyu7zgwCr87Zht+IOjjigr2er8rchZAm+cMKzkn7wHU='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'
+
+Politique de sécurité, version témoin :
+default-src 'none'; script-src 'sha256-UTTpBg6lsK+gb7QU9Fp1w1fAlqwuKk5hx4kT52yw+NI=' 'sha256-zScsLLimTZRtb1NPJK68wDvCw53xobbZkNssFIS5yAY='; style-src 'sha256-fyu7zgwCr87Zht+IOjjigr2er8rchZAm+cMKzkn7wHU='; font-src data:; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'
+
+Polices :
+alegreya-700.woff2 : SHA-256 adfe23802afbc25a0122b1298b0d0c59ba1d14e991044286550d66b3910a475d
+alegreya-italique-500.woff2 : SHA-256 3f8e4edeb2cb39853c8dde550b18ea09b68577f822147d820e0e5c687a58d330
+alegreya-italique-700.woff2 : SHA-256 282886b01571de621b9c16a73cf1fdf994f110258abd3a0b1a8363c51cf35299
+alegreya-sans-400.woff2 : SHA-256 6dea87b3f48b1f27810eea454e1f19969668c8844d3c3d9101708ebcf00db93e
+alegreya-sans-700.woff2 : SHA-256 bf00f3ff909c8f38b0e97d74070c543c69c4d0768586cd3f2f6fd206a67c9b2d
+alegreya-sans-italique-400.woff2 : SHA-256 4e92ae206eabfadb744f502c9eb91965474e7bc88f31d20a81c19c33b61ff768

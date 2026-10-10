@@ -3,12 +3,12 @@
 # la commande unique qui reconstruit la page avec les entrées réelles et écrit le rapport de construction.
 # Outillage d'essai (D-001 tenu).
 #
-#   sh harnais/construire-final.sh AAAA-MM-JJ HH:MM [CONSULTES_LE]
+#   sh harnais/construire-final.sh AAAA-MM-JJ HH:MM CONSULTES_LE
 #
 #   AAAA-MM-JJ, HH:MM  date et heure de Paris du message de publication de l'empreinte (§8.11) :
 #                      empreinte_publiee_le, empreinte_publiee_a.
-#   CONSULTES_LE       facultatif ; par défaut celui de temoins/entrees-final-factices.json.
-#   SCELLE=chemin      variable facultative ; par défaut le fichier final du scellement.
+#   CONSULTES_LE       date de consultation des sources (AAAA-MM-JJ), donnée par l'orchestrateur.
+#   SCELLE=chemin      variable facultative ; par défaut a-ne-pas-ouvrir-2/fichier-scelle.json.
 #   ENTREES, SORTIE, RAPPORTS : variables facultatives (essai de la commande hors du dépôt) ; par défaut ci-dessous.
 #
 # Lancée depuis n'importe où. Écrit, sans rien committer :
@@ -22,14 +22,14 @@ set -eu
 ICI=$(cd "$(dirname "$0")/.." && pwd)
 RACINE=$(cd "$ICI/../.." && pwd)                 # docs/essai/a-ne-pas-ouvrir-2
 DEPOT=$(cd "$RACINE/../../.." && pwd)
-SCELLE=${SCELLE:-$RACINE/outillage/scellement/final/fichier-scelle-candidat-final.json}
+SCELLE=${SCELLE:-$RACINE/fichier-scelle.json}
 ENTREES=${ENTREES:-$RACINE/entrees-construction.json}
 SORTIE=${SORTIE:-$ICI/sorties/construction}
 RAPPORTS=${RAPPORTS:-$ICI/sorties/rapports}
 PAGE_TEST=$DEPOT/docs/essai/page-test-icone/source.html
 
-[ $# -ge 2 ] && [ $# -le 3 ] || { echo "usage : sh harnais/construire-final.sh AAAA-MM-JJ HH:MM [CONSULTES_LE]" >&2; exit 2; }
-LE=$1; A=$2; CONSULTES=${3:-}
+[ $# -eq 3 ] || { echo "usage : sh harnais/construire-final.sh AAAA-MM-JJ HH:MM CONSULTES_LE" >&2; exit 2; }
+LE=$1; A=$2; CONSULTES=$3
 
 python3 -I - "$SCELLE" "$ICI/temoins/entrees-final-factices.json" "$ENTREES" "$LE" "$A" "$CONSULTES" <<'PY'
 import datetime, hashlib, json, re, sys

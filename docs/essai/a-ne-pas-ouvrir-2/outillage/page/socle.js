@@ -213,10 +213,14 @@ var ElenchosSocle = (function (N, C, J, E, Me, MoteurDeLaPage) {
     /* Résultats du moteur                                              */
     /* ---------------------------------------------------------------- */
 
-    /** Résultats du moteur pour l'état présent, recalculés seulement quand l'état a changé (lots 2 et 3). */
+    /**
+     * Résultats du moteur pour l'état présent, recalculés seulement quand ce que lit le moteur a changé
+     * (M.cleCalcul : ni les versions, ni la vue, ni les repères d'horloge, ni le compteur d'écritures ; lot 7).
+     */
     function resultats() {
-      var cle = etat.ecritures + '|' + JSON.stringify(etat.jours) + JSON.stringify(etat.sauts);
-      if (cle !== resultatsCle) { resultatsCache = M.calculer(scelle, cal, arrivee, E.journal(etat, cal, empreinte)); resultatsCle = cle; }
+      var j = E.journal(etat, cal, empreinte);
+      var cle = M.cleCalcul(j);
+      if (cle !== resultatsCle) { resultatsCache = M.calculer(scelle, cal, arrivee, j); resultatsCle = cle; }
       return resultatsCache;
     }
 
