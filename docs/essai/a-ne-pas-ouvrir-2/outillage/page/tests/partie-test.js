@@ -80,6 +80,7 @@ function jouer(scelle, cal, options) {
       if (ab) { E.allerAuJourSuivant(etat, cal, true); continue; }
       E.validerDeviner(etat, j, hz.pp());
       E.afficherRepondre(etat, cal, j, hz.pp());
+      toucher();
       E.repondre(etat, scelle, cal, j, reponseType(scelle, cal.ligne(j).repondu, j), hz.pp());
       if (arret(j, 'apres-reponse')) { return arreter(); }
       E.repondreCarnet(etat, cal, j, 'moment', cal.estArrivee(j) ? 'defi' : 'deviner');
@@ -88,6 +89,7 @@ function jouer(scelle, cal, options) {
         E.repondreCarnet(etat, cal, j, 'hesite', ['deviner', 'saut']);
         E.repondreCarnet(etat, cal, j, 'moment_semaine', 'portrait');
       }
+      toucher();
       E.allerAuJourSuivant(etat, cal, false);
       hz.sauter(1);
       continue;

@@ -491,8 +491,9 @@ var ElenchosEtat = (function (N, J) {
     var jours = {};
     Object.keys(etat.jours).forEach(function (k) {
       var d = etat.jours[k];
+      // Un jour atteint mais pas encore touché n'a ni ouverture ni versions (partie 4.4, règle 5).
       jours[k] = { attente: null, coups: copie(d.coups), etapes: d.etapes ? copie(d.etapes) : null, ouverture: d.ouverture,
-        versions: d.versions === null ? null : d.versions.slice() };
+        versions: d.ouverture === null ? null : d.versions.slice() };
     });
     return {
       arret: etat.arret ? copie(etat.arret) : null,

@@ -14,15 +14,16 @@ Remarques du rédacteur sur le lot :
 ### E1 · scrutin 1161 (17e législature)
 - Titre : Téléphones activés à distance pour écouter et filmer
 - Lignes :
-  1. Les enquêteurs pourraient activer à distance micro et caméra d'un téléphone ou ordinateur.
-  2. Ce serait réservé au crime organisé le plus grave, faute d'autre moyen sûr.
-  3. Il faudrait l'accord écrit d'un juge, pour un mois au plus pendant l'enquête.
+  1. Les enquêteurs pourraient activer à distance micro et caméra d'un téléphone portable.
+  2. Ce serait réservé à des crimes graves, comme le meurtre en bande organisée.
+  3. Faute d'autre moyen, un juge l'autoriserait pour un mois au plus pendant l'enquête.
 - Vote : adopté, 76 pour, 27 contre, 1 abstention (24 mars 2025) ; amendement no 5 et identiques rétablissant l'article 15 quater, en première lecture ; le Sénat devait encore voter le texte (dossier DLR5L17N50169 : AN1-DEBATS-DEC et CMP-DEPOT le 1er avril 2025) (CRSANR5L17S2025O1N143.txt:909 ; VTANR5L17V1161.json).
 - Objet du vote : amendement
-- Auteur : Michaël Taverne, député, Rassemblement National ; premier signataire nommé par le titre du scrutin (amendement no 5), CRSANR5L17S2025O1N143.txt:884-885. Amendements identiques : no 635 Olivier Marleix (Droite Républicaine), no 770 Sébastien Huyghe (Ensemble pour la République), no 786 Éric Martineau (Les Démocrates), no 844 Éric Ciotti (UDR), no 908 Vincent Caure, rapporteur (Ensemble pour la République) (N143:884-888).
+- Auteur : Michaël Taverne, député, Rassemblement National ; premier signataire de l'amendement no 5 (an-web/am-1043-5.txt, l. 15 ; cosignataires du même groupe) et premier nommé par le titre du scrutin ; CRSANR5L17S2025O1N143.txt:884-885. Amendements identiques : no 635 Olivier Marleix (Droite Républicaine), no 770 Sébastien Huyghe (Ensemble pour la République), no 786 Éric Martineau (Les Démocrates), no 844 Éric Ciotti (UDR), no 908 Vincent Caure, rapporteur (Ensemble pour la République) (N143:884-888).
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/1161
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2025O1N143
+- Autres sources utilisées pour les lignes (hors `sources`, convention 9) : amendement no 5 au texte no 1043, https://www.assemblee-nationale.fr/dyn/17/amendements/1043/AN/5
 - Tension : S ; sens s = 0
 - Raisons :
   1. « Face à des criminels qui séquestrent et tuent, il faut ces moyens. » — pour · pôle 0 — Michaël Taverne, député, Rassemblement National [vote : pour] — extrait : « Si on veut lutter efficacement contre la criminalité organisée, il faut s'en donner les moyens. Je rappelle que nous parlons du haut du spectre, d'individus qui mettent des contrats sur la tête des autres, font du trafic d'armes, séquestrent et tuent » (CRSANR5L17S2025O1N143.txt:885)
@@ -31,21 +32,26 @@ Remarques du rédacteur sur le lot :
   4. « Le Conseil constitutionnel a déjà censuré une mesure presque identique. » — contre · pôle aucun — Gabrielle Cathala, députée, La France insoumise - Nouveau Front Populaire [vote : contre] — extrait : « Les articles 15 ter et 15 quater tendent à autoriser la police à activer à distance des caméras et micros d'appareils, notamment de téléphones et d'ordinateurs » ; « le Conseil constitutionnel, saisi par notre groupe, avait censuré en 2023 une disposition quasi identique » (CRSANR5L17S2025O1N143.txt:877)
 - Vérifications de l'auteur :
   - Groupes : 4 (Rassemblement National, Ensemble pour la République, Écologiste et Social, La France insoumise - Nouveau Front Populaire). Côtés : 2 pour (1, 2), 2 contre (3, 4).
-  - Types D-034 : 1 attendue, 2 croisée, 3 attendue, 4 pratique. Un inattendu de chaque côté.
+  - Types D-034 : 1 attendue, 2 croisée, 3 attendue, 4 pratique. Un inattendu de chaque côté ; « aucun » une fois, en inattendue.
   - Votes vérifiés dans VTANR5L17V1161.json : 1 pour (PA794502), 2 pour (PA267200), 3 contre (PA794778), 4 contre (PA842187).
-  - Règle 8, condition 2 : les amendements identiques sont adoptés tels quels (N143:910), sans modification entre les extraits et le vote.
-  - Titre 52 car. ; lignes 90/74/77 car. ; raisons de 12/11/12/10 mots.
-  - Sources des lignes : N143:885 et :887 (activation à distance aux fins d'enregistrement, conditions, ordonnance écrite et motivée) ; N143:889 (infractions les plus graves, subsidiarité, trente jours au plus pendant l'enquête) ; N143:893 (ministre : quinze jours renouvelables une fois en enquête).
+  - Règle 8, condition 2 : les identiques sont adoptés tels quels (N143:910).
+  - Titre 52 car. ; lignes 85/74/82 car. ; raisons de 12/11/12/10 mots.
+  - Sources des lignes, toutes relues sur l'amendement (am-1043-5.txt) :
+    - ligne 1 : « activation à distance d'un appareil électronique mobile […] captation […] des paroles […] ou de l'image » (l. 62-65) ;
+    - ligne 2 : infractions des 1° à 6° et 11° à 12° de l'article 706-73 (l. 47-48), avec l'exemple du meurtre en bande organisée donné par le rapporteur (N143:889) ;
+    - ligne 3 : impossibilité de poser le dispositif classique ou risque pour les agents (l. 57-60) ; autorisation du juge des libertés et de la détention ou du juge d'instruction (l. 61-62) ; « quinze jours, renouvelable une fois » en enquête (l. 68-69).
 - Doutes :
-  - L'auteur est aussi l'orateur de la raison 1 : seuls le Rassemblement National et Ensemble pour la République ont parlé « pour » l'article 15 quater (Juvin n'a parlé que du 15 ter ; Martineau, Marleix et Ciotti ont « défendu » sans parler).
-  - Raison 4 : l'intervention se place dans la discussion du 15 ter, mais vise nommément le 15 quater. La censure de 2023 portait bien sur la captation de sons et d'images. Condition 1 de la règle 8 jugée remplie.
-  - Si l'annotation lit la raison 4 « pôle 1 », il faut passer à deux attendues de chaque côté : Huyghe, même ligne 887 (« risques d'atteinte à la vie et à l'intégrité physique des enquêteurs », pôle 0), au lieu de sa raison 2, et Élisa Martin à la place de Cathala, même groupe (N143:895, « Très intrusif, ce procédé pourrait briser le secret des échanges avec l'avocat. »).
-  - Raison 3 : Regol dit ne pas avoir entendu évoquer l'exclusion de ces appareils. La reformulation est à faire juger par le vérificateur de fidélité.
-  - Les lignes taisent la durée en instruction (six mois), les lieux protégés et la non-retranscription des échanges avec les avocats (N143:887, :889).
-  - Le titre du scrutin dit « téléphones et ordinateurs » à travers Cathala, mais l'article vise les « appareils électroniques ».
-  - Le sort de la mesure en commission mixte paritaire n'a pas été vérifié.
-  - Le texte de l'amendement n'a pas été lu. Adresse supposée : https://www.assemblee-nationale.fr/dyn/17/amendements/1043/AN/5
-  - Le compte rendu écrit « 700 » pour « 770 » à la ligne 884.
+  - L'auteur est aussi l'orateur de la raison 1 : seuls le Rassemblement National et Ensemble pour la République ont parlé « pour » l'article 15 quater.
+  - Ligne 1 : l'amendement vise tout « appareil électronique mobile », donc aussi les tablettes et les ordinateurs portables. « Téléphone portable » est le cas principal, retenu pour la lisibilité. Aucun type d'appareil n'est exclu, ce qui confirme la raison 3.
+  - Les lignes taisent trois points de l'amendement :
+    - la durée en instruction (deux mois, renouvelables deux fois, l. 69-70) ;
+    - l'exclusion des appareils des députés, sénateurs, magistrats, avocats, journalistes et médecins (l. 84-86) ;
+    - l'interdiction de retranscrire les échanges avec un avocat, les sources d'un journaliste et les lieux protégés (l. 88-100).
+
+    Les ajouter pencherait vers le « pour ». À juger par l'adversaire.
+  - Raison 2 : l'amendement n'a pas de clause explicite sur la « vie privée » ; Huyghe décrit le régime général de retranscription. La raison est fidèle à son extrait ; à faire juger par le vérificateur de fidélité.
+  - Raison 4 : elle vient de la discussion sur le 15 ter, mais vise nommément le 15 quater. Si l'annotation la lit « pôle 1 », il faut deux attendues de chaque côté : Huyghe, même ligne 887 (« risques d'atteinte à la vie et à l'intégrité physique des enquêteurs », pôle 0), au lieu de sa raison 2, et Cathala, même ligne 877, en attendue (« Ces micros et caméras activés à distance pourraient espionner n'importe qui. »).
+  - Le sort de la mesure en commission mixte paritaire n'a pas été vérifié. Le compte rendu écrit « 700 » pour « 770 » (N143:884).
 - Statut : prête pour l'annotation à l'aveugle, puis la vérification indépendante.
 
 ### T0 · scrutin 1262 (17e législature)
@@ -97,13 +103,14 @@ Remarques du rédacteur sur le lot :
 - Lignes :
   1. Un mineur de 13 ans ou plus risque en principe deux fois moins de prison qu'un adulte.
   2. Cette réduction ne serait plus la règle, mais l'exception.
-  3. Le juge déciderait selon l'acte et le jeune, et devrait justifier s'il l'accorde.
-- Vote : rejeté, 27 pour, 81 contre, 7 abstentions (13 février 2025) ; amendement no 17 à l'article 5 (supprimé en commission), en première lecture (CRSANR5L17S2025O1N102.txt:138 ; VTANR5L17V795.json).
+  3. Le juge déciderait au cas par cas, selon l'acte et la personnalité du jeune.
+- Vote : rejeté, 27 pour, 81 contre, 7 abstentions (13 février 2025) ; amendement no 17 rétablissant l'article 5 (supprimé en commission), en première lecture (CRSANR5L17S2025O1N102.txt:138 ; VTANR5L17V795.json).
 - Objet du vote : amendement
-- Auteur : Alexandra Martin, députée, Droite Républicaine ; première signataire nommée par le titre du scrutin (amendement no 17, PA793342, Alpes-Maritimes) ; N102:94-95. Pas d'amendement identique (discussion commune avec les nos 59, 40 et 48).
+- Auteur : Alexandra Martin, députée, Droite Républicaine ; première signataire de l'amendement no 17 (an-web/am-0628-17.txt, l. 16 ; cosignataires : Corneloup, Bonnivard, Bazin, Ray) et nommée par le titre du scrutin (PA793342, Alpes-Maritimes) ; N102:94-95. Pas d'amendement identique (discussion commune avec les nos 59, 40 et 48).
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/795
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2025O1N102
+- Autres sources utilisées pour les lignes (hors `sources`, convention 9) : amendement no 17 au texte no 628, https://www.assemblee-nationale.fr/dyn/17/amendements/0628/AN/17
 - Tension : S ; sens s = 0
 - Raisons :
   1. « Des trafiquants se servent de jeunes parce que leurs peines sont réduites. » — pour · pôle 0 — Alexandra Martin, députée, Droite Républicaine [vote : pour] — extrait : « Je veux également envoyer un signal aux adultes qui, notamment dans le cadre du narcotrafic, instrumentalisent des jeunes en raison de l'atténuation des peines qu'ils encourent ou menacent leurs familles » (CRSANR5L17S2025O1N102.txt:95)
@@ -114,17 +121,21 @@ Remarques du rédacteur sur le lot :
   - Groupes : 4. Côtés : 2 pour, 2 contre.
   - Types D-034 : 1 attendue, 2 croisée, 3 attendue, 4 croisée.
   - Votes vérifiés dans VTANR5L17V795.json : 1 pour (PA793342), 2 pour (PA841075), 3 contre (PA610968), 4 contre (PA794686).
-  - Titre 54 car. ; lignes 86/59/81 car. ; raisons de 12/12/12/11 mots.
-  - Sources des lignes : N102:95 (automaticité dès 13 ans, l'exception devient la règle, décision du juge, motivation) ; N102:97 (peine encourue divisée par deux) ; N102:152 (atténuation à la moitié).
+  - Titre 54 car. ; lignes 86/59/76 car. ; raisons de 12/12/12/11 mots.
+  - Sources des lignes :
+    - ligne 1 : N102:97 (peine encourue divisée par deux) et N102:152 (atténuation à la moitié) ; dispositif : « seize » devient « treize » (am-0628-17.txt, l. 27) ;
+    - ligne 2 : suppression de « à titre exceptionnel et », et « n'y a pas lieu » devient « a lieu » d'appliquer l'atténuation (l. 29-31). La réduction ne s'applique donc plus que si le tribunal le décide ;
+    - ligne 3 : « compte tenu des circonstances de l'espèce et de la personnalité du mineur » (article L. 121-7 modifié, dans son texte en vigueur) et exposé sommaire, l. 63-64.
 - Doutes :
+  - **Ligne 3 corrigée.** La version précédente disait que le juge « devrait justifier s'il l'accorde ». Cette obligation figure dans l'exposé sommaire (l. 64-65) et dans le discours de l'autrice (N102:95), pas dans le dispositif, qui supprime le second alinéa de l'article L. 121-7. Le contenu de cet alinéa n'est pas lu.
+  - Le dispositif n'a été lu qu'à travers l'amendement, sans le code de la justice pénale des mineurs en vigueur. La lecture des lignes 2 et 3 (réduction seulement si le tribunal le décide) est la mienne, appuyée sur l'exposé sommaire (l. 62-64).
   - **Pôles des raisons 2 et 3 incertains.** Au premier essai, « À cet âge, on a moins de recul » était classée pôle 0 et « nier l'autonomie des ados » pôle 1. Par analogie, la raison 3 pourrait être lue pôle 0. Le côté « contre » n'aurait alors plus d'attendue et le texte tomberait. Remplaçant prévu par Game design : 805.
-  - Tension : la lecture Responsabilité individuelle est possible (risque principal, déjà relevé).
-  - Josserand parle aussi de son amendement no 59, concurrent dans la même discussion commune (règle 8).
-  - Juste après ce vote, une version plus étroite (nos 40 et 48, 16 ans et plus en double récidive) est adoptée (N102:146). D'où « dès 13 ans » et « la règle » dans le titre et les lignes : le « rejeté » de 18h ne doit pas paraître incohérent.
-  - Raison 1 : « les adultes, notamment dans le narcotrafic » devient « des trafiquants ».
+  - Tension : la lecture Responsabilité individuelle est possible (risque principal). L'exposé sommaire parle de « responsabiliser » (l. 67, l. 74).
+  - Josserand parle aussi de son amendement no 59, concurrent (règle 8).
+  - Une version plus étroite (nos 40 et 48) est adoptée juste après (N102:146). D'où « dès 13 ans » et « la règle » dans le titre et les lignes.
+  - Raison 1 : « les adultes, notamment dans le narcotrafic » devient « des trafiquants » ; l'exposé sommaire le dit aussi (l. 45-46, l. 69-70).
   - Homonyme : PA793944 est une autre Alexandra Martin.
-  - Le texte de l'amendement n'a pas été lu. Adresse supposée : https://www.assemblee-nationale.fr/dyn/17/amendements/0628/AN/17
-- Statut : prête pour l'annotation à l'aveugle, sous la réserve des pôles des raisons 2 et 3.
+- Statut : prête pour l'annotation à l'aveugle, sous la réserve des pôles des raisons 2 et 3 ; puis vérification indépendante.
 
 ### Case S (rang tiré au scellement) · scrutin 7922 (17e législature)
 - Titre : Retirer les nouveaux usages de l'ADN dans les enquêtes
@@ -157,7 +168,7 @@ Remarques du rédacteur sur le lot :
   - Les lignes taisent la condition de consentement des utilisateurs des bases, annoncée par le Gouvernement et contestée par Duplessy (N002:129, :137). L'adversaire doit juger si cette absence penche vers le retrait.
   - Tension : la lecture Précaution/Innovation est possible.
   - Le nom « K/Bidi » contient une barre oblique : à faire relire par UX pour l'affichage.
-  - Le texte de l'amendement n'a pas été lu. Adresse supposée : https://www.assemblee-nationale.fr/dyn/17/amendements/2904/AN/25
+  - L'amendement no 25 (2904/AN/25) et le texte de la commission no 2904 n'étaient pas publiés au 10 octobre 2026 : les lignes et l'auteur restent sourcés sur le seul compte rendu (CRSANR5L17S2026E1N002).
 - Statut : prête pour l'annotation à l'aveugle, étendue à la présentation B (l'annotateur dit aussi ce que soutient « favorable »).
 
 ### Case S (rang tiré au scellement) · scrutin 2190 (17e législature)
@@ -200,18 +211,19 @@ Remarques du rédacteur sur le lot :
 - Motif : règle A.5. L'ensemble du projet de loi contient le délit d'organisation de rave-party (deux ans et 30 000 euros) et la pénalisation de la participation, mesure jouée au premier essai (texte E1, scrutin 6124) : CRSANR5L17S2026E1N014.txt:340, :285, :264. Il prolonge aussi la vidéosurveillance algorithmique jusqu'en 2030 (:285, :346). Texte de plus de 70 articles (:346) : trois lignes seraient un choix éditorial fort.
 - Remplacement : la réserve 8167 entre dans la même case (fichier caché, point 14).
 
-### Réserve S · scrutin 8167 (17e législature)
-- Titre : Retirer les nouveaux contrôles d'identité aux frontières
+### Case S (rang tiré au scellement) · scrutin 8167 (17e législature)
+- Titre : Retirer les nouveaux contrôles près des frontières et côtes
 - Lignes :
-  1. Des policiers pourraient contrôler et fouiller une personne sans motif particulier.
-  2. Ce serait possible jusqu'à 40 km des frontières, et dans les ports et aéroports.
+  1. Des policiers pourraient contrôler et fouiller une personne, quel que soit son comportement.
+  2. Ce serait possible jusqu'à 40 km des frontières et des côtes, et dans les aéroports.
   3. Cet amendement retirerait ce pouvoir en supprimant tout l'article.
 - Vote : rejeté, 12 pour, 23 contre, 0 abstention (10 juillet 2026) ; amendements identiques nos 200, 228, 272, 462 et 468 de suppression de l'article 9 du projet de loi visant à offrir des réponses immédiates aux phénomènes troublant l'ordre public, en première lecture (CRSANR5L17S2026E1N012.txt:52 ; VTANR5L17V8167.json). Présentation B : être favorable, c'est soutenir le retrait.
 - Objet du vote : amendement
-- Auteur : Max Mathiasin, député, Libertés, Indépendants, Outre-mer et Territoires ; premier signataire nommé par le titre du scrutin (amendement no 200), E1N012:19-20. Identiques : no 228 (défendu par Pouria Amirshahi, Écologiste et Social), no 272 Roger Vicot (Socialistes et apparentés), no 462 (défendu par Andrée Taurinya, La France insoumise - Nouveau Front Populaire), no 468 Nicolas Sansu (Gauche Démocrate et Républicaine).
+- Auteur : Max Mathiasin, député, Libertés, Indépendants, Outre-mer et Territoires ; premier signataire de l'amendement no 200 (an-web/am-2984-200.txt, l. 17 ; cosignataires du même groupe) et nommé par le titre du scrutin ; E1N012:19-20. Identiques : no 228 (défendu par Pouria Amirshahi, Écologiste et Social), no 272 Roger Vicot (Socialistes et apparentés), no 462 (défendu par Andrée Taurinya, La France insoumise - Nouveau Front Populaire), no 468 Nicolas Sansu (Gauche Démocrate et Républicaine).
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/8167
 - Sources :
   - https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/CRSANR5L17S2026E1N012
+- Autres sources utilisées pour les lignes (hors `sources`, convention 9) : amendement no 200, https://www.assemblee-nationale.fr/dyn/17/amendements/2984/AN/200 ; texte de la commission no 2984, article 9 (an-web/l17b2984_texte-adopte-commission.txt, l. 1079-1235)
 - Tension : S ; sens s = 1
 - Raisons :
   1. « On pourrait être contrôlé et fouillé sans avoir rien fait de suspect. » — pour · pôle 1 — Roger Vicot, député, Socialistes et apparentés [vote : pour] — extrait : « Il y a un risque réel d'atteinte aux libertés publiques, car les contrôles d'identité et les fouilles de personnes, de bagages ou de véhicules seront autorisés en l'absence de tout comportement suspect » (CRSANR5L17S2026E1N012.txt:24)
@@ -222,14 +234,21 @@ Remarques du rédacteur sur le lot :
   - Groupes : 4. Côtés : 2 pour, 2 contre.
   - Types D-034 : 1 attendue, 2 croisée, 3 attendue, 4 croisée.
   - Votes vérifiés dans VTANR5L17V8167.json : 1 pour (PA794494), 2 pour (PA605745), 3 contre (PA794502), 4 contre (PA794278).
-  - Titre 56 car. ; lignes 83/81/66 car. ; raisons de 12/12/11/12 mots.
-  - Sources des lignes : E1N012:24 (contrôles et fouilles sans comportement suspect ; frontières, ports, aéroports) ; :32 (rayon de 40 km) ; :49 (40 km autour des gares et aéroports).
+  - Titre 59 car. ; lignes 92/84/66 car. ; raisons de 12/12/11/12 mots.
+  - Sources des lignes, toutes relues sur le texte de la commission no 2984 :
+    - ligne 1 : « contrôler l'identité de toute personne, quel que soit son comportement » (l. 1110), visite des véhicules (l. 1149-1151), fouille des bagages (l. 1187-1189), palpation (l. 1203-1207) ;
+    - ligne 2 : 40 km de la frontière terrestre avec les États Schengen (l. 1113-1116), 40 km du littoral (l. 1118-1119), aéroports (l. 1130 et III ter, l. 1088-1095) ;
+    - ligne 3 : « Supprimer cet article » (am-2984-200.txt, l. 24).
+
+    Raison 4 confirmée par le texte : douze heures consécutives au plus dans un même lieu (l. 1223-1226).
 - Doutes :
-  - Le relevé n° 2 ne voyait pas d'inattendu côté « contre ». Je lis les garanties d'Albertini (raison 4) comme un inattendu croisé.
-  - Les raisons 2 et 4 peuvent être annotées « aucun » ; elles resteraient des inattendues et la règle tiendrait.
-  - 35 votants seulement (hémicycle presque vide, N012:54).
-  - Albertini est rapporteur.
-  - Taverne parle aussi en E1, et Josserand en T0 et en 795 : le porteur reverra les mêmes noms.
-  - Le périmètre exact (zones douanières, gares) est à lire dans l'article ; Bernalicis parle des gares (N012:49).
-  - Le texte de l'amendement n'a pas été lu. Adresse supposée : https://www.assemblee-nationale.fr/dyn/17/amendements/2984/AN/200
-- Statut : prête pour l'annotation à l'aveugle ; elle entre si 8279 sort (recommandé).
+  - **Titre et ligne 2 corrigés.** Le périmètre comprend aussi le littoral (40 km), absent de la version précédente.
+  - Pour tenir la longueur des lignes, sont tus : la mer jusqu'à 12 milles (l. 1121-1125), les ports, gares ferroviaires ou routières internationales et leurs abords (l. 1130-1132), certaines sections d'autoroute (l. 1134-1137) et les trains internationaux (l. 1139-1147).
+  - Ligne 1 : le contrôle est limité à une liste de trafics (stupéfiants, blanchiment, recel, l. 1099-1104) et aux agents de services spécialisés (l. 1107-1109). Le texte interdit aussi tout « contrôle systématique » (l. 1226) et prévoit que le procureur soit informé au-delà d'une heure (l. 1228-1229). Ces garanties ne figurent pas dans les lignes ; à juger par l'adversaire.
+  - Le texte de la commission a pu changer en séance avant ce vote : seules les lignes 1079-1235 du texte de commission sont lues. Les lignes 1 et 2 concordent avec les orateurs (Vicot N012:24, Bernalicis N012:49, Albertini N012:32).
+  - Raison 2 : Mathiasin, l'auteur, porte le même argument (am-2984-200.txt, l. 65-76). Les raisons 2 et 4 peuvent être annotées « aucun » ; elles resteraient des inattendues et la règle tiendrait.
+  - 35 votants seulement (N012:54). Albertini est rapporteur.
+  - Longueur : la ligne 1 fait 92 caractères, plus que toute ligne du premier essai (89 au plus) ; aucune limite n'est écrite. À faire juger par UX (note de l'orchestrateur).
+  - Taverne parle aussi en E1 : le porteur reverra son nom.
+  - Même dossier que 8279, écarté : un seul scrutin servi dans ce dossier.
+- Statut : prête pour l'annotation à l'aveugle, étendue à la présentation B, puis la vérification indépendante.
