@@ -392,7 +392,7 @@ Le résumé contient **tout ce que `calculer` reprend de l'histoire**. Les répo
   - quatre personnages, quatre tensions ;
   - calculés sur l'entrée et sur H1 à H90, avec les poids normaux (§5.1, §5.2) ;
   - c'est à la fois le curseur vu par le porteur au jour 1 (textes répondus jusqu'au jour −1) et le point de départ du curseur « juste avant » du Pas de Côté de T0 ;
-  - pour Le Pas de Côté sur H90 (révélé au jour 1, dans `calculer`), le curseur « juste avant » s'obtient en retirant de ces sommes la réponse à H90, lue dans le fichier ;
+  - pour Le Pas de Côté sur H90 (révélé au jour 1, dans `calculer`), le curseur « juste avant » s'obtient en retirant de ces sommes la réponse à H90, lue dans le fichier. Si cette réponse est un arbitrage net (w = 1, pôle π), le curseur d'avant H90 a Σw = somme_w − 1 et Σw·π = c·(4 + somme_w) − 2 − π. Sinon, ou si le personnage était absent à H90, il n'y a pas de Pas de Côté (§6, point 7 : il faut un arbitrage net). Le résumé ne change pas ;
   - `c` vaut (2 + Σ w·π) / (4 + Σ w).
 - **`manche_jour_0`** :
   - une clé par personnage présent au jour 0 ;

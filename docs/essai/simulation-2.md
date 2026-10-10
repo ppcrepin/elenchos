@@ -1806,7 +1806,8 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
 - **Réglage** :
   - le facteur du portrait accéléré (3, ou 4 ou 2 si le réglage l'exige ; le contrôle vérifie que la valeur est l'une des trois permises par la spécification : 2, 3 ou 4) ; (arbitrage de l'orchestrateur : la règle de Game design, §5.9, fixe les valeurs ; positions : Game design, 2, 3 ou 4 ; Front-end, 3 ou 4.)
   - la longueur de la barre ;
-  - la part de réponses atypiques, α (1/6, 1/4 ou 1/3) ;
+  - la part de réponses atypiques (valeur par défaut et crans : fichier caché) ;
+  - les seuils stricts (second réglage du premier essai).
 
   Les autres seuils (tempéraments, Pas de Côté, netteté) restent dans la spécification, et chaque programme les tient de son côté. Les lire dans le fichier rendrait le contrôle moins indépendant.
 - **Résumé de l'histoire** : son SHA-256 seulement (V6). Le résumé complet est dans le rapport de scellement.
