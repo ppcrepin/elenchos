@@ -1,0 +1,40 @@
+Programme de contrôle (C), second essai — l'histoire (jours −90 à 0), à partir du fichier scellé seul
+==============================================================================
+Fichier scellé : docs/essai/a-ne-pas-ouvrir-2/outillage/scellement/candidat-1/fichier-scelle-candidat-1.json
+SHA-256 du fichier scellé : f3b8819e7f0f4d171e8774ab62e3b4f7d1a15b5bbc9502b79997ce9ba20987c3
+Trace C de l'histoire : /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/trace-C-c1.json — SHA-256 2efde8abba32eb73b2f85f8db96c1e12739f16c1dfaaab8cfe2839b1709f4c2c (443832 octets)
+Résumé C : /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/resume-C-c1.json — SHA-256 1dd912ed7ec4a9aee3eb608746c9b4b46ecfa62b8a1fed73db18a50765fa0fcc (3574 octets)
+
+V6 (empreinte du résumé recalculé = histoire.resume_sha256) : égale
+Comparaison au résumé du scellement (resume-histoire.json) (docs/essai/a-ne-pas-ouvrir-2/outillage/scellement/candidat-1/resume-histoire.json, SHA-256 1dd912ed7ec4a9aee3eb608746c9b4b46ecfa62b8a1fed73db18a50765fa0fcc) : identique, octet pour octet
+Comparaison à la trace P (/tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/trace-P-c1.json, SHA-256 2efde8abba32eb73b2f85f8db96c1e12739f16c1dfaaab8cfe2839b1709f4c2c) : identique, octet pour octet
+Comparaison à la trace S (docs/essai/a-ne-pas-ouvrir-2/outillage/scellement/candidat-1/trace-histoire-S.json, SHA-256 2efde8abba32eb73b2f85f8db96c1e12739f16c1dfaaab8cfe2839b1709f4c2c) : identique, octet pour octet
+
+Critères du calibrage (fichier caché 2, point 10), recalculés sur ce fichier (information ; le calibrage refait de r = 1 au r scellé est le contrôle 3, jalon suivant) :
+  c1 : rempli — nets : Agathe SPL; Nassim SPL; Odile SPTL; Valentin PTL
+  c2 : rempli — tempéraments : Agathe []; Nassim []; Odile ['original', 'tranche']; Valentin ['pont']
+  c3 : rempli — tous candidats : H86 (aucun) ; textes titrés : H86
+  c4 : rempli — Devin : 4 titulaires ; Mystère : 4 ; semaines à trois Fidèles ou moins : 12
+  c5 : rempli — écarts : aucun
+
+État à l'arrivée (résumé) :
+  semaine  1 : Devin Valentin, Mystère Nassim, Fidèles ['Agathe', 'Nassim', 'Odile', 'Valentin'], Sans-Faute [], surprise None
+  semaine  2 : Devin Nassim, Mystère Valentin, Fidèles ['Agathe', 'Nassim'], Sans-Faute [], surprise None
+  semaine  3 : Devin Agathe, Mystère Agathe, Fidèles ['Agathe', 'Nassim', 'Valentin'], Sans-Faute [], surprise None
+  semaine  4 : Devin Odile, Mystère Odile, Fidèles ['Agathe', 'Nassim', 'Odile'], Sans-Faute [], surprise None
+  semaine  5 : Devin Nassim, Mystère Nassim, Fidèles ['Nassim', 'Odile', 'Valentin'], Sans-Faute [], surprise None
+  semaine  6 : Devin Valentin, Mystère Agathe, Fidèles ['Agathe', 'Valentin'], Sans-Faute [], surprise None
+  semaine  7 : Devin Nassim, Mystère Agathe, Fidèles ['Agathe', 'Odile', 'Valentin'], Sans-Faute [], surprise None
+  semaine  8 : Devin Agathe, Mystère Agathe, Fidèles ['Agathe', 'Nassim'], Sans-Faute [], surprise None
+  semaine  9 : Devin Nassim, Mystère Agathe, Fidèles ['Nassim'], Sans-Faute [], surprise None
+  semaine 10 : Devin Odile, Mystère Odile, Fidèles ['Nassim', 'Odile', 'Valentin'], Sans-Faute [], surprise None
+  semaine 11 : Devin Nassim, Mystère Agathe, Fidèles ['Agathe', 'Nassim', 'Valentin'], Sans-Faute [], surprise None
+  semaine 12 : Devin Nassim, Mystère Agathe, Fidèles ['Agathe', 'Nassim', 'Odile'], Sans-Faute [], surprise None
+  semaine 13 : Devin Agathe, Mystère Nassim, Fidèles ['Nassim', 'Valentin'], Sans-Faute [], surprise H86
+  Agathe : tempéraments [] ; curseurs S c=12/13 Σw=22 ; P c=11/13 Σw=22 ; T c=4/7 Σw=3 ; L c=7/45 Σw=37/2
+  Nassim : tempéraments [] ; curseurs S c=22/25 Σw=21 ; P c=10/13 Σw=22 ; T c=2/3 Σw=7/2 ; L c=44/51 Σw=43/2
+  Odile : tempéraments ['original', 'tranche'] ; curseurs S c=4/25 Σw=21 ; P c=6/23 Σw=19 ; T c=8/9 Σw=23 ; L c=1/5 Σw=16
+  Valentin : tempéraments ['pont'] ; curseurs S c=1/2 Σw=6 ; P c=5/47 Σw=39/2 ; T c=3/22 Σw=18 ; L c=35/44 Σw=18
+  Pas de Côté dans l'histoire : 9 révélation(s) : jour -43 H46 ['Odile'], jour -39 H50 ['Agathe', 'Nassim'], jour -25 H64 ['Valentin'], jour -21 H68 ['Agathe', 'Nassim'], jour -20 H69 ['Odile'], jour -19 H70 ['Agathe'], jour -17 H72 ['Valentin'], jour -11 H78 ['Nassim'], jour -10 H79 ['Odile']
+
+Verdict : aucun écart

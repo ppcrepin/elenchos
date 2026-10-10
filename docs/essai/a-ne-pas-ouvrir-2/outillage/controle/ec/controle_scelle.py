@@ -1,38 +1,50 @@
-"""Contrôle 1 (étapes 1 à 8), contrôles 2 à 4 et annexe A du fichier caché, sur un
-fichier scellé (ou candidat). Schéma, partie 4.1.
+"""Contrôle 1 du second essai (schéma 2, partie 5.1 ; S1, partie 4.1, pour tout ce
+que la partie 5.1 ne change pas), sur un fichier scellé ou candidat.
 
-Le premier échec du contrôle 1 arrête tout. Une étape dont l'entrée manque est
-« non faite », jamais « passée ». Les contrôles 2 à 4 et l'annexe A listent
-toutes leurs différences, chacune avec le détail du calcul.
+Le premier échec arrête le contrôle 1. Une étape dont l'entrée manque est « non
+faite », jamais « passée ». Les contrôles 2 à 4 viennent au jalon suivant.
 """
 
 import base64
-import hashlib
 import re
 import unicodedata
 from fractions import Fraction as F
 
-from . import canon, regles, sources
-from .jeu import (PERSONNAGES, TEXTES, TENSIONS, QUOTIDIENS, ENTREE, POLES_COURTS,
-                  ORDRE_TENSIONS_QUOTIDIENS, TENSIONS_ENTREE, cote, LIBELLE_NIVEAU)
+from . import amo, calendrier, canon, regles, sources
+from .jeu import (PERSONNAGES, JOUES, ENTREE, HISTOIRE, TOUS, ORDRES_TENSIONS)
 from .schema_scelle import verifier_schema
-from .tirage import Tirage, sha256_hex
+from .tirage import Tirage, sha256_hex, graine_essai2
 
 GUILLEMETS = set("\u00ab\u00bb\u0022\u201c\u201d\u2039\u203a")
-COMMIT_GRAINE = "7f4d367278ecf07b01ebad883b7ec75cf7840820"
-CLES_VECTEURS = ("raison|Odile|E2|3", "hasard|Nassim|12|porteur", "surprise-semaine|2|11")
+CLES_VECTEURS = ("raison|Odile|E2|3", "hasard|Nassim|13|porteur", "ecart-hstar|1|Valentin")
 REPERE = b"/*elenchos-scelle*/"
+PHRASE_B = "Cet amendement supprimerait tout l'article qui prévoit ces mesures."
+MAX_LIGNE = 90
+MAX_TITRE = 60
+
+# Combinaisons permises (schéma 2, partie 2.5).
+COMBI_VOTE = {
+    ("texte", "adopte"): ("navette", "definitif"),
+    ("texte", "rejete"): ("navette", "aucune"),
+    ("article", "adopte"): ("navette", "aucune"),
+    ("amendement", "adopte"): ("navette", "aucune"),
+    ("article", "rejete"): ("aucune",),
+    ("amendement", "rejete"): ("aucune",),
+    ("motion", "rejete"): ("aucune",),
+    ("resolution", "adopte"): ("aucune",),
+    ("resolution", "rejete"): ("aucune",),
+}
+COMBI_SUITE = {
+    "texte_tombe": ({"article"}, {"rejete"}),
+    "texte_retire": ({"article", "amendement"}, {"adopte", "rejete"}),
+}
 
 
-def fmt_n(n):
-    return f"N={n} (t≈{n / 2**32:.6f})"
+def nom_texte(t):
+    return t if not t.isdigit() else f"T{t}"
 
 
-def fmt_f(x):
-    return canon.frac(x)
-
-
-# ------------------------------------------------------------------ étapes
+# ------------------------------------------------------------------ étapes 1 et 2
 
 def etape1(octets, empreinte_publiee):
     if empreinte_publiee is None:
@@ -60,82 +72,284 @@ def etape2(octets, page):
     return True, [f"repère présent une fois, suivi du base64 exact ({len(b64)} caractères)"]
 
 
-def etape5(d, fiches_sim, groupes, elisions):
+# ------------------------------------------------------------------ étape 5
+
+def genre_raison(cote_, pole, s):
+    """Schéma 2, partie 2.5 : attendue, croisée ou pratique."""
+    pi_c = s if cote_ == "pour" else 1 - s
+    if pole == "aucun":
+        return "pratique"
+    return "attendue" if pole == pi_c else "croisee"
+
+
+def defauts_d034(t):
     e = []
+    s = t["sens"]
+    par_cote = {"pour": [], "contre": []}
+    for c in t["considerations"]:
+        par_cote[c["cote"]].append(genre_raison(c["cote"], c["pole"], s))
+    inatt = {}
+    for cote_, gs in par_cote.items():
+        if len(gs) != 2:
+            e.append(f"côté « {cote_} » : {len(gs)} raisons (attendu : 2)")
+        if "attendue" not in gs:
+            e.append(f"côté « {cote_} » : aucune raison attendue")
+        inatt[cote_] = sum(1 for g in gs if g != "attendue")
+        if gs.count("pratique") > 1:
+            e.append(f"côté « {cote_} » : « aucun » plus d'une fois")
+    if inatt["pour"] != inatt["contre"] or inatt["pour"] not in (0, 1):
+        e.append(f"inattendues : {inatt['pour']} « pour », {inatt['contre']} « contre » (attendu : 0 et 0, ou 1 et 1)")
+    return e, {k: v for k, v in par_cote.items()}
+
+
+def ordre_retenu(d):
+    ts = [d["textes"][str(n)]["tension"] for n in range(15)]
+    ent = tuple(d["textes"][e]["tension"] for e in ENTREE)
+    for nom, (ordre, entree) in ORDRES_TENSIONS.items():
+        if ts == ordre and ent == entree:
+            return nom, ts, ent
+    return None, ts, ent
+
+
+def etape5(d, fiches_sim, tables, amo_dossiers):
+    """Rend (erreurs, notes, informations). `tables` : {"groupes", "commissions",
+    "elisions"} déjà lues ; `amo_dossiers` : dossiers des données ouvertes (ou [])."""
+    e, notes, info = [], [], []
     textes = d["textes"]
-    for tid in TEXTES:
+    # Tables exigées (parties 2.3 et 2.4)
+    for cle, att in (("calendrier", calendrier.table_calendrier()), ("semaines", calendrier.table_semaines()),
+                     ("cercle", calendrier.table_cercle())):
+        if d[cle] != att:
+            if isinstance(att, list):
+                for i, (x, y) in enumerate(zip(d[cle], att)):
+                    if x != y:
+                        e.append(f"/{cle}/{i} : {canon.canonique(x)} ≠ recalcul du §0 {canon.canonique(y)}")
+            else:
+                e.append(f"/{cle} : {canon.canonique(d[cle])} ≠ recalcul {canon.canonique(att)}")
+    # Histoire (fichier caché 2, point 2 bis)
+    tg = Tirage(d["graine"])
+    h_att, _ = regles.textes_histoire(tg)
+    for i, hid in enumerate(HISTOIRE, start=1):
+        o = d["histoire"]["textes"][hid]
+        a = h_att[hid]
+        if o["jour"] != i - 91:
+            e.append(f"/histoire/textes/{hid}/jour : {o['jour']} ≠ {i - 91}")
+        for k in ("tension", "sens", "raisons"):
+            if o[k] != a[k]:
+                e.append(f"/histoire/textes/{hid}/{k} : {canon.canonique(o[k])} ≠ point 2 bis {canon.canonique(a[k])}")
+        if (o["fiche"] is not None) != (hid == "H86"):
+            e.append(f"/histoire/textes/{hid}/fiche : seul H86 a une fiche")
+    h86 = d["histoire"]["textes"]["H86"]
+    if (h86["tension"], h86["sens"]) != ("P", 0):
+        e.append(f"/histoire/textes/H86 : tension et sens ({h86['tension']}, {h86['sens']}) ≠ (P, 0)")
+    # Textes joués
+    rejetes = []
+    par_objet = {}
+    for tid in JOUES:
         t = textes[tid]
-        cons = t["considerations"]
-        for i, c in enumerate(cons):
+        ch = f"/textes/{tid}"
+        for i, c in enumerate(t["considerations"]):
             if c["rang"] != i + 1:
-                e.append(f"/textes/{tid}/considerations/{i}/rang : {c['rang']} ≠ place {i + 1}")
+                e.append(f"{ch}/considerations/{i}/rang : {c['rang']} ≠ place {i + 1}")
             s = c["texte"]
             if not s or s[-1] not in ".?!":
-                e.append(f"/textes/{tid}/considerations/{i}/texte : ne finit pas par « . », « ? » ou « ! »")
+                e.append(f"{ch}/considerations/{i}/texte : ne finit pas par « . », « ? » ou « ! »")
             else:
                 j = len(s) - 2
                 if s[-1] in "?!" and j >= 0 and s[j] == " ":
                     j -= 1
                 if s[0] in GUILLEMETS or (j >= 0 and s[j] in GUILLEMETS):
-                    e.append(f"/textes/{tid}/considerations/{i}/texte : guillemet à un bord")
-        gs = [c["depute"]["groupe"] for c in cons]
+                    e.append(f"{ch}/considerations/{i}/texte : guillemet à un bord")
+        gs = [c["depute"]["groupe"] for c in t["considerations"]]
         if len(set(gs)) != 4:
-            e.append(f"/textes/{tid}/considerations : groupes pas tous différents : {gs}")
+            e.append(f"{ch}/considerations : groupes pas deux à deux différents (null compte comme une valeur) : {gs}")
+        d34, genres = defauts_d034(t)
+        for x in d34:
+            e.append(f"{ch} : D-034 : {x}")
+        notes.append(f"{nom_texte(tid)} : " + " ; ".join(f"{k} {'/'.join(v)}" for k, v in genres.items()))
         v = t["vote"]
-        permis = {"adopte": ("navette", "definitif"), "rejete": ("navette", "aucune"),
-                  "sans_vote_ensemble": ("aucune",)}
-        if v["etape"] not in permis[v["issue"]]:
-            e.append(f"/textes/{tid}/vote : combinaison non permise ({v['issue']}, {v['etape']})")
+        perm = COMBI_VOTE.get((v["objet"], v["issue"]))
+        if perm is None or v["etape"] not in perm:
+            e.append(f"{ch}/vote : combinaison non permise (objet {v['objet']}, issue {v['issue']}, étape {v['etape']})")
+        if v["suite"] is not None:
+            objs, iss = COMBI_SUITE[v["suite"]]
+            if v["objet"] not in objs or v["issue"] not in iss:
+                e.append(f"{ch}/vote/suite : {v['suite']} non permise avec objet {v['objet']} et issue {v['issue']}")
+        if v["issue"] == "rejete":
+            rejetes.append(tid)
+        par_objet.setdefault(v["objet"], []).append(v["issue"])
+        if len(t["titre"]) > MAX_TITRE or ":" in t["titre"]:
+            e.append(f"{ch}/titre : E8 : {len(t['titre'])} points de code, « : » {'présent' if ':' in t['titre'] else 'absent'}")
+    fv = h86["fiche"]
+    if fv is not None:
+        if len(fv["titre"]) > MAX_TITRE or ":" in fv["titre"]:
+            e.append(f"/histoire/textes/H86/fiche/titre : E8 : {len(fv['titre'])} points de code")
+        v = fv["vote"]
+        perm = COMBI_VOTE.get((v["objet"], v["issue"]))
+        if perm is None or v["etape"] not in perm:
+            e.append(f"/histoire/textes/H86/fiche/vote : combinaison non permise")
+        if v["suite"] is not None:
+            objs, iss = COMBI_SUITE[v["suite"]]
+            if v["objet"] not in objs or v["issue"] not in iss:
+                e.append("/histoire/textes/H86/fiche/vote/suite : combinaison non permise")
+    # D-028 (schéma 2, partie 5.1)
+    if not 6 <= len(rejetes) <= 12:
+        e.append(f"D-028 : {len(rejetes)} textes rejetés sur 18 (attendu : 6 à 12)")
+    if not any(t in rejetes for t in ENTREE):
+        e.append("D-028 : aucun rejeté parmi E1 à E3")
+    for obj, iss in par_objet.items():
+        if len(iss) >= 2 and not ({"adopte", "rejete"} <= set(iss)):
+            e.append(f"A.4 : l'objet « {obj} », servi {len(iss)} fois, n'a pas un adopté et un rejeté ({iss})")
+    if not any(textes[t]["vote"]["objet"] in ("texte", "article") and textes[t]["vote"]["issue"] == "rejete"
+               for t in JOUES):
+        e.append("A.4 : aucun texte d'objet « texte » ou « article » n'est rejeté")
+    info.append(f"rejetés : {len(rejetes)} sur 18 ({', '.join(nom_texte(t) for t in rejetes)}) ; "
+                "objets : " + ", ".join(f"{o} {len(i)} ({i.count('adopte')} adoptés)" for o, i in sorted(par_objet.items())))
+    # Réponses, absences, réponses atypiques (partie 2.7)
     for p in PERSONNAGES:
         abs_ = d["absences"][p]
         for a in abs_:
-            if a not in QUOTIDIENS:
-                e.append(f"/absences/{p} : absence sur un texte qui n'est pas quotidien : {a}")
-        for tid in TEXTES:
+            if a in ENTREE or a == "14":
+                e.append(f"/absences/{p} : absence sur {nom_texte(a)} (jamais sur E1 à E3 ni sur T14)")
+        for tid in TOUS:
             a_rep = p in d["reponses"][tid]
             if a_rep == (tid in abs_):
-                m1 = "a" if a_rep else "n'a pas"
-                m2 = "est" if tid in abs_ else "n'est pas"
-                e.append(f"/reponses/{tid} : {p} {m1} de réponse, et ce texte {m2} dans ses absences")
+                e.append(f"/reponses/{tid} : {p} {'a' if a_rep else 'n a pas'} de réponse, et ce texte "
+                         f"{'est' if tid in abs_ else 'n est pas'} dans ses absences")
         for o in d["reponses_atypiques"][p]:
-            if o["texte"] not in QUOTIDIENS or p not in d["reponses"][o["texte"]]:
-                e.append(f"/reponses_atypiques/{p} : texte {o['texte']} pas quotidien ou sans réponse")
+            if o["texte"] in ENTREE or o["texte"] == "14" or p not in d["reponses"][o["texte"]]:
+                e.append(f"/reponses_atypiques/{p} : {nom_texte(o['texte'])} (jamais sur E1 à E3 ni T14, toujours sur une réponse)")
+    for tid in TOUS:
+        n_abs = sum(1 for p in PERSONNAGES if tid in d["absences"][p])
+        if n_abs > 1:
+            e.append(f"/absences : {n_abs} absences sur {nom_texte(tid)} (au plus une)")
+        if len(d["reponses"][tid]) < 3:
+            e.append(f"/reponses/{tid} : {len(d['reponses'][tid])} réponses de personnages (au moins trois)")
+    # Fiches du §1, cercle, vecteurs
     for p in PERSONNAGES:
         for k in ("age", "metier", "ville", "ligne_de_vie", "heure_de_jeu"):
             if d["personnages"][p][k] != fiches_sim[p][k]:
                 e.append(f"/personnages/{p}/{k} : {d['personnages'][p][k]!r} ≠ §1 {fiches_sim[p][k]!r}")
-    if d["cercle"] != {"nom": "Amis", "inviteuse": "Agathe"}:
-        e.append(f"/cercle : {d['cercle']!r} (attendu : Amis, Agathe)")
     for i, vt in enumerate(d["vecteurs_test"]):
         if vt["chaine"] != d["graine"] + "|" + vt["cle"]:
             e.append(f"/vecteurs_test/{i}/chaine ≠ graine + « | » + cle")
         if vt["n"] != int(vt["hex8"], 16):
             e.append(f"/vecteurs_test/{i}/n ≠ valeur de hex8")
-    # Groupes (partie 2.7)
-    couples = {(g, ch) for g, ch, _, _ in groupes}
-    servis = set()
-    for tid in TEXTES:
-        t = textes[tid]
+    # Ordre des tensions (fichier caché 2, point 14)
+    nom, ts, ent = ordre_retenu(d)
+    if nom is None:
+        e.append(f"ordre des tensions : T0 à T14 = {' '.join(ts)}, entrée = {' '.join(ent)} : ni l'ordre retenu, ni R2, ni R3")
+    else:
+        info.append(f"ordre des tensions : {nom} ({' '.join(ts)} ; entrée {' '.join(ent)})")
+    # Groupes, commissions, élisions
+    eg, ig = verifier_groupes(d, tables["groupes"], amo_dossiers)
+    e.extend(eg)
+    info.extend(ig)
+    e.extend(verifier_commissions(d, tables["commissions"], amo_dossiers, info))
+    e.extend(verifier_elisions(d, tables["elisions"]))
+    return e, notes, info
+
+
+def elus(d):
+    """[(chemin, nom, groupe, chambre)] : auteurs élus et députés des considérations."""
+    out = []
+    for tid in JOUES:
+        t = d["textes"][tid]
         a = t["auteur"]
-        elus = []
-        if a["type"] == "depute":
-            elus.append((f"/textes/{tid}/auteur", a["groupe"], "Assemblée"))
-        elif a["type"] == "senateur":
-            elus.append((f"/textes/{tid}/auteur", a["groupe"], "Sénat"))
+        if a["type"] in ("depute", "senateur"):
+            out.append((f"/textes/{tid}/auteur", a["nom"], a["groupe"],
+                        "Assemblée" if a["type"] == "depute" else "Sénat"))
         for i, c in enumerate(t["considerations"]):
-            elus.append((f"/textes/{tid}/considerations/{i}/depute", c["depute"]["groupe"], "Assemblée"))
-        for chemin, g, ch in elus:
-            if (g, ch) not in couples:
-                e.append(f"{chemin}/groupe : {g!r} absent du tableau de la partie 2.7 pour la chambre {ch}")
-            servis.add((g, ch))
+            out.append((f"/textes/{tid}/considerations/{i}/depute", c["depute"]["nom"], c["depute"]["groupe"],
+                        "Assemblée"))
+    return out
+
+
+def verifier_groupes(d, groupes, amo_dossiers):
+    """Partie 2.10 : emploi dans le fichier, puis vérification contre `amo` (ou repli)."""
+    e, info = [], []
+    couples = {(g, ch) for g, ch, _, _, _ in groupes}
+    servis = set()
+    for chemin, nom, g, ch in elus(d):
+        if g is None:
+            continue
+        if (g, ch) not in couples:
+            e.append(f"{chemin}/groupe : {g!r} absent du tableau de la partie 2.10 pour la chambre {ch}")
+        servis.add((g, ch))
+        for x in sources.defauts_ecriture_groupe(g):
+            e.append(f"{chemin}/groupe : {g!r} : {x}")
     for g, ch in sorted(couples - servis):
-        e.append(f"partie 2.7 : le couple ({ch}, {g}) ne sert jamais dans le fichier")
-    # Initiales et élision (partie 2.8)
+        e.append(f"partie 2.10 : le couple ({ch}, {g}) ne sert jamais dans le fichier")
+    repli = []
+    abreges = set()
+    lus = []
+    for g, ch, leg, ids, _ in groupes:
+        for ident in ids:
+            try:
+                org = amo.lire_organe(amo_dossiers, ident)
+            except amo.ErreurAmo as x:
+                repli.append((g, ident, str(x)))
+                continue
+            lus.append(org)
+            if org["libelleAbrege"]:
+                abreges.add(org["libelleAbrege"])
+            if org["libelle"] is None or unicodedata.normalize("NFC", org["libelle"]) != g:
+                e.append(f"partie 2.10 : {ident} : `groupe` {g!r} ≠ libelle de l'organe {org['libelle']!r} ({org['chemin']})")
+            if org["libelle"] is not None and org["libelle"] in (org["libelleAbrege"], org["libelleAbrev"]):
+                e.append(f"partie 2.10 : {ident} : le libelle {org['libelle']!r} n'est qu'un sigle "
+                         f"(libelleAbrege {org['libelleAbrege']!r}, libelleAbrev {org['libelleAbrev']!r})")
+            for q, h in org["autres"]:
+                if h != org["sha256"]:
+                    info.append(f"amo : {ident} : autre copie différente, non lue : {q} ({h})")
+    for org in lus:
+        info.append(f"amo lu : {org['sha256']}  {org['chemin']}  ({org['uid']}, {org['codeType']}, "
+                    f"libelle {org['libelle']!r}, libelleAbrege {org['libelleAbrege']!r}, libelleAbrev {org['libelleAbrev']!r})")
+    if repli:
+        codes = set(sources.CODES_REPLI) | abreges
+        for g, ident, pourquoi in repli:
+            info.append(f"amo inutilisable pour {ident} ({pourquoi}) : repli sur la liste de codes")
+            if g in codes:
+                e.append(f"partie 2.10 : {ident} : `groupe` {g!r} est un code de la liste de repli")
+    return e, info
+
+
+def verifier_commissions(d, commissions, amo_dossiers, info):
+    e = []
+    libs = {lib: (ids, src, courte) for lib, ids, src, courte in commissions}
+    servis = set()
+    for tid in JOUES:
+        a = d["textes"][tid]["auteur"]
+        if a["type"] == "commission":
+            if a["libelle"] not in libs:
+                e.append(f"/textes/{tid}/auteur/libelle : {a['libelle']!r} absent du tableau de la partie 2.10 bis")
+            servis.add(a["libelle"])
+    for lib in sorted(set(libs) - servis):
+        e.append(f"partie 2.10 bis : {lib!r} ne sert jamais dans le fichier")
+    for lib, (ids, src, courte) in libs.items():
+        if courte:
+            info.append(f"commission {lib!r} : forme courte, forme seule vérifiée (partie 2.10 bis)")
+            continue
+        for ident in ids:
+            try:
+                org = amo.lire_organe(amo_dossiers, ident)
+            except amo.ErreurAmo as x:
+                info.append(f"commission {lib!r} : {ident} non lu ({x})")
+                continue
+            off = org["libelle"] or ""
+            court = off[:1].lower() + off[1:]
+            info.append(f"commission {lib!r} : {ident} libelle {off!r} ({org['sha256']}  {org['chemin']}) : "
+                        + ("égal, majuscule initiale mise en minuscule" if court == lib else
+                           "DIFFÉRENT (information, voir QUESTIONS.md, Q-C2)"))
+    return e
+
+
+def verifier_elisions(d, elisions):
+    e = []
     noms_choix = set()
-    for tid in TEXTES:
-        t = textes[tid]
+    for tid in JOUES:
+        t = d["textes"][tid]
         a = t["auteur"]
-        if a["type"] != "gouvernement":
+        if a["type"] in ("depute", "senateur"):
             if not a["nom"] or a["nom"][0] not in sources.INITIALES_PERMISES:
                 e.append(f"/textes/{tid}/auteur/nom : initiale non permise : {a['nom']!r}")
         for i, c in enumerate(t["considerations"]):
@@ -147,52 +361,58 @@ def etape5(d, fiches_sim, groupes, elisions):
                 continue
             if nom[0] in sources.INITIALES_CHOIX:
                 noms_choix.add(nom)
-                if nom in elisions:
-                    attendu = elisions[nom][1] == "d'"
-                else:
-                    attendu = None
+                attendu = (elisions[nom][1] == "d'") if nom in elisions else None
             else:
                 attendu = False
             if attendu is not None and dep["elision"] != attendu:
                 e.append(f"{ch}/elision : {dep['elision']} (attendu : {attendu})")
-    tab = set(elisions)
-    for n in sorted(noms_choix - tab):
-        e.append(f"partie 2.8 : {n!r} demande un choix et n'est pas au tableau")
-    for n in sorted(tab - noms_choix):
-        e.append(f"partie 2.8 : {n!r} est au tableau sans être un député de considération dont l'initiale demande un choix")
+    for n in sorted(noms_choix - set(elisions)):
+        e.append(f"partie 2.11 : {n!r} demande un choix et n'est pas au tableau")
+    for n in sorted(set(elisions) - noms_choix):
+        e.append(f"partie 2.11 : {n!r} est au tableau sans être un député de considération dont l'initiale demande un choix")
     for n, (ini, forme) in elisions.items():
         if sources.ACCORD_FORME[ini] != forme:
-            e.append(f"partie 2.8 : {n!r} : Forme {forme!r} et Initiale {ini!r} ne s'accordent pas")
+            e.append(f"partie 2.11 : {n!r} : Forme {forme!r} et Initiale {ini!r} ne s'accordent pas")
     return e
 
+
+# ------------------------------------------------------------------ étapes 6 et 7
 
 def etape6(d):
     e = []
     tg = Tirage(d["graine"])
     for i, cle in enumerate(CLES_VECTEURS):
-        att = {"cle": cle, "chaine": tg.chaine(cle), "hex8": tg.hex8(cle), "n": tg.n(cle)}
+        att = {"chaine": tg.chaine(cle), "cle": cle, "hex8": tg.hex8(cle), "n": tg.n(cle)}
         if d["vecteurs_test"][i] != att:
             e.append(f"/vecteurs_test/{i} : {d['vecteurs_test'][i]!r} ≠ recalcul {att!r}")
     return e
 
 
 def chaines_affichees(d):
-    out = [("/cercle/nom", d["cercle"]["nom"]), ("/cercle/inviteuse", d["cercle"]["inviteuse"])]
+    out = [("/cercle/nom", d["cercle"]["nom"]), ("/cercle/invitant", d["cercle"]["invitant"])]
     for p in PERSONNAGES:
         for k in ("metier", "ville", "ligne_de_vie"):
             out.append((f"/personnages/{p}/{k}", d["personnages"][p][k]))
-    for tid in TEXTES:
+    for tid in JOUES:
         t = d["textes"][tid]
         out.append((f"/textes/{tid}/titre", t["titre"]))
         for i, l in enumerate(t["lignes"]):
             out.append((f"/textes/{tid}/lignes/{i}", l))
-        if t["auteur"]["type"] != "gouvernement":
-            out.append((f"/textes/{tid}/auteur/nom", t["auteur"]["nom"]))
-            out.append((f"/textes/{tid}/auteur/groupe", t["auteur"]["groupe"]))
+        a = t["auteur"]
+        if a["type"] in ("depute", "senateur"):
+            out.append((f"/textes/{tid}/auteur/nom", a["nom"]))
+            if a["groupe"] is not None:
+                out.append((f"/textes/{tid}/auteur/groupe", a["groupe"]))
+        if a["type"] == "commission":
+            out.append((f"/textes/{tid}/auteur/libelle", a["libelle"]))
         for i, c in enumerate(t["considerations"]):
             out.append((f"/textes/{tid}/considerations/{i}/depute/nom", c["depute"]["nom"]))
-            out.append((f"/textes/{tid}/considerations/{i}/depute/groupe", c["depute"]["groupe"]))
+            if c["depute"]["groupe"] is not None:
+                out.append((f"/textes/{tid}/considerations/{i}/depute/groupe", c["depute"]["groupe"]))
             out.append((f"/textes/{tid}/considerations/{i}/texte", c["texte"]))
+    f = d["histoire"]["textes"]["H86"]["fiche"]
+    if f is not None:
+        out.append(("/histoire/textes/H86/fiche/titre", f["titre"]))
     return out
 
 
@@ -201,9 +421,8 @@ RE_TRANCHES = re.compile(r"[0-9]{1,3}(?: [0-9]{3})+")
 
 
 def typo_simple(s):
-    """Erreurs de typographie simple d'une chaîne (étape 7)."""
     e = []
-    if "\u2019" in s:
+    if "’" in s:
         e.append("contient U+2019")
     for ch in sorted({c for c in s if unicodedata.category(c) == "Zs" and c != " "}):
         e.append(f"contient U+{ord(ch):04X} (espace de catégorie Zs autre que U+0020)")
@@ -226,17 +445,20 @@ def etape7(d):
     return e
 
 
-def ordre_raisons(tid, n_fiche, tirage):
-    """Rangs d'affichage des quatre raisons de fiche (fichier caché, §2)."""
-    tri = sorted(range(1, n_fiche + 1), key=lambda i: tirage.cle_tri(f"ordre-raisons|{tid}|{i}"))
+# ------------------------------------------------------------------ étape 8
+
+def ordre_raisons(tid, tirage):
+    tri = sorted(range(1, 5), key=lambda i: tirage.cle_tri(f"ordre-raisons|{tid}|{i}"))
     return {i: r + 1 for r, i in enumerate(tri)}
 
 
-def etape8(d, fiches, votes):
-    e = []
+def etape8(d, fiches, votes, scrutins_b):
+    """Fidélité aux fiches (schéma 2, partie 5.1, étape 8). scrutins_b : numéros de
+    scrutin des textes en présentation B (paramètre de l'orchestrateur) ou None."""
+    e, info = [], []
     tg = Tirage(d["graine"])
     detail_ordre = {}
-    for tid in TEXTES:
+    for tid in JOUES:
         f = fiches[tid]
         t = d["textes"][tid]
         ch = f"/textes/{tid}"
@@ -252,216 +474,68 @@ def etape8(d, fiches, votes):
         if t["lien_scrutin"] != f["lien"]:
             e.append(f"{ch}/lien_scrutin : {t['lien_scrutin']!r} ≠ ligne « Lien du scrutin » {f['lien']!r}")
         if t["lien_scrutin"] != lien:
-            e.append(f"{ch}/lien_scrutin : {t['lien_scrutin']!r} ≠ adresse tirée du titre de la fiche {lien!r}")
+            e.append(f"{ch}/lien_scrutin : {t['lien_scrutin']!r} ≠ adresse tirée de l'en-tête de la fiche {lien!r}")
         vo = votes[tid]
         if (vo["leg"], vo["scrutin"]) != (f["_leg"], f["_scrutin"]):
             e.append(f"{ch} : votes.md donne le scrutin {vo['leg']}e, {vo['scrutin']} ; la fiche {f['_leg']}e, {f['_scrutin']}")
         if t["vote"] != vo["vote"]:
-            e.append(f"{ch}/vote : {t['vote']!r} ≠ votes.md {vo['vote']!r}")
+            e.append(f"{ch}/vote : {canon.canonique(t['vote'])} ≠ votes.md {canon.canonique(vo['vote'])}")
+        if t["vote"]["objet"] != f["objet"]:
+            e.append(f"{ch}/vote/objet : {t['vote']['objet']!r} ≠ ligne « Objet du vote » de la fiche {f['objet']!r}")
         if t["auteur"] != f["auteur"]:
-            e.append(f"{ch}/auteur : {t['auteur']!r} ≠ fiche {f['auteur']!r}")
-        rangs = ordre_raisons(tid, 4, tg)
-        detail_ordre[tid] = [(i, rangs[i], tg.n(f"ordre-raisons|{tid}|{i}")) for i in range(1, 5)]
+            e.append(f"{ch}/auteur : {canon.canonique(t['auteur'])} ≠ fiche {canon.canonique(f['auteur'])}")
+        rangs = ordre_raisons(tid, tg)
+        detail_ordre[tid] = [(i, rangs[i]) for i in range(1, 5)]
         for r in f["raisons"]:
             rang = rangs[r["i"]]
             c = t["considerations"][rang - 1]
             ci = f"{ch}/considerations/{rang - 1}"
-            att = {"texte": r["texte"], "cote": r["cote"], "pole": r["pole"]}
-            obt = {"texte": c["texte"], "cote": c["cote"], "pole": c["pole"]}
+            att = {"cote": r["cote"], "pole": r["pole"], "texte": r["texte"]}
+            obt = {"cote": c["cote"], "pole": c["pole"], "texte": c["texte"]}
             if att != obt:
                 e.append(f"{ci} : {obt!r} ≠ raison {r['i']} de la fiche {att!r}")
-            att = {"nom": r["nom"], "feminin": r["feminin"], "groupe": r["groupe"]}
-            obt = {k: c["depute"][k] for k in ("nom", "feminin", "groupe")}
+            att = {"feminin": r["feminin"], "groupe": r["groupe"], "nom": r["nom"]}
+            obt = {k: c["depute"][k] for k in ("feminin", "groupe", "nom")}
             if att != obt:
                 e.append(f"{ci}/depute : {obt!r} ≠ raison {r['i']} de la fiche {att!r}")
-    return e, detail_ordre
-
-
-# ------------------------------------------------------------------ contrôles 2 à 4
-
-def type_en_poles(niveau, s=1):
-    """Réponse type écrite en pôles, pour s = 1 : (« neutre »|« simple »|« très », pôle)."""
-    if niveau == 3:
-        return ("neutre", None)
-    intensite = "très" if niveau in (1, 5) else "simple"
-    pole = 1 if niveau >= 4 else 0
-    return (intensite, pole)
-
-
-def controle2(d, prof):
-    e = []
-    for p in PERSONNAGES:
-        if d["personnages"][p]["profil"] != prof["profils"][p]:
-            e.append(f"/personnages/{p}/profil : {d['personnages'][p]['profil']!r} ≠ profils.md {prof['profils'][p]!r}")
-    types = {}
-    for p in PERSONNAGES:
-        types[p] = {}
-        for T in TENSIONS:
-            pr = prof["profils"][p][T]
-            pos = F(pr["position"], 100)
-            pt = regles.position_type(pos, 1, pr["fermete"])
-            types[p][T] = type_en_poles(pt["niveau"])
-            if types[p][T] != prof["types"][p][T]:
-                e.append(f"réponse type {p} {T} : recalcul {types[p][T]} ≠ profils.md {prof['types'][p][T]} (d = {fmt_f(pt['d'])})")
-            if pt["d"] != prof["d"][p][T]:
-                e.append(f"d {p} {T} : recalcul {fmt_f(pt['d'])} ≠ profils.md {fmt_f(prof['d'][p][T])}")
-            f1 = "milieu" if abs(pos - F(1, 2)) < F(1, 10) else (1 if pos > F(1, 2) else 0)
-            if f1 != prof["f1"][p][T]:
-                e.append(f"corrigé F1 {p} {T} : recalcul {f1} ≠ profils.md {prof['f1'][p][T]}")
-    # contraintes calculables
-    A, N = types["Agathe"], types["Nassim"]
-    for T in ("S", "P"):
-        if A[T][1] is None or A[T][1] != N[T][1]:
-            e.append(f"contrainte : Agathe et Nassim pas du même côté sur {T} ({A[T]}, {N[T]})")
-    if A["T"][0] != "neutre" or N["T"][0] != "neutre":
-        e.append(f"contrainte : Agathe et Nassim pas neutres tous deux sur T ({A['T']}, {N['T']})")
-    if A["L"][1] is None or N["L"][1] is None or A["L"][1] == N["L"][1]:
-        e.append(f"contrainte : Agathe et Nassim pas opposés sur L ({A['L']}, {N['L']})")
-    for T in TENSIONS:
-        pr = prof["profils"]["Odile"][T]
-        dd = regles.position_type(F(pr["position"], 100), 1, pr["fermete"])["d"]
-        if pr["fermete"] != "forte" or abs(dd) < F(56, 100):
-            e.append(f"contrainte : Odile sur {T} : fermeté {pr['fermete']}, |d| = {fmt_f(abs(dd))} (attendu : forte, |d| ≥ 0,56)")
-    partage = {"S": (1, 2, 1), "P": (2, 2, 0), "T": (1, 1, 2), "L": (2, 2, 0)}  # (pôle 0, pôle 1, neutres)
-    for T in TENSIONS:
-        c = (sum(1 for p in PERSONNAGES if types[p][T][1] == 0),
-             sum(1 for p in PERSONNAGES if types[p][T][1] == 1),
-             sum(1 for p in PERSONNAGES if types[p][T][0] == "neutre"))
-        if c != partage[T]:
-            e.append(f"contrainte : partage du cercle sur {T} : (pôle 0, pôle 1, neutres) = {c} ≠ {partage[T]}")
-    for p in PERSONNAGES:
-        t = types[p]
-        if t["S"] == ("très", 0) and t["T"] == ("très", 0):
-            e.append(f"contrainte : {p} a « très, vers Sécurité » et « très, vers Tradition »")
-        if t["S"] == ("très", 1) and t["T"] == ("très", 1):
-            e.append(f"contrainte : {p} a « très, vers Liberté » et « très, vers Changement »")
-    return e, types
-
-
-def textes_reduits(d):
-    return {tid: {"tension": t["tension"], "sens": t["sens"],
-                  "considerations": regles.considerations_reduites(t)}
-            for tid, t in d["textes"].items()}
-
-
-def recalculer_reponses(d, prof):
-    """Réponses recalculées (contrôle 3) à partir de profils.md, des textes scellés et de la graine."""
-    tg = Tirage(d["graine"])
-    txts = textes_reduits(d)
-    atyp, det_proc = regles.placer_atypiques(prof["nb_atypiques"], PERSONNAGES,
-                                             prof["absences"], tg)
-    reps, cotes, details = {}, {}, {}
-    for p in PERSONNAGES:
-        r, c, det = regles.toutes_les_reponses(p, prof["profils"][p], txts, tg,
-                                                set(atyp[p]), set(prof["absences"][p]))
-        reps[p], cotes[p], details[p] = r, c, det
-    return atyp, det_proc, reps, cotes, details
-
-
-def fmt_detail(p, tid, det, txt_scelle):
-    l = []
-    l.append(f"    p = {fmt_f(det['p'])}, fermeté {det['fermete']}, sens s = {det['sens']}")
-    l.append(f"    a = {fmt_f(det['a'])}, d = {fmt_f(det['d'])}")
-    if det.get("atypique"):
-        l.append(f"    réponse atypique : réponse type {LIBELLE_NIVEAU[det['niveau_type']]}"
-                 + (f" ; côté tiré par {det['cle_cote']} : {fmt_n(det['n_cote'])} → {det['cote_tire']:+d}"
-                    if det["cle_cote"] else "") + f" ; niveau retenu {LIBELLE_NIVEAU[det['niveau']]}")
+        # Lignes : 90 points de code au plus, en NFC, sur le fichier et sur les fiches
+        for src, ls in (("fichier", t["lignes"]), ("fiche", f["lignes"])):
+            for i, l in enumerate(ls):
+                if unicodedata.normalize("NFC", l) != l:
+                    e.append(f"{ch}/lignes/{i} ({src}) : pas en NFC")
+                if len(l) > MAX_LIGNE:
+                    e.append(f"{ch}/lignes/{i} ({src}) : {len(l)} points de code (au plus {MAX_LIGNE})")
+    # Présentation B
+    if scrutins_b is None:
+        info.append("présentation B : liste non fournie, ligne 3 fixe non vérifiée (étape incomplète)")
     else:
-        l.append(f"    niveau {det['niveau']} ({LIBELLE_NIVEAU[det['niveau']]})")
-    cons = {c["rang"]: c for c in txt_scelle["considerations"]}
-    l.append("    considérations (rang : côté, pôle) : " + " ; ".join(
-        f"{r} : {cons[r]['cote']}, {cons[r]['pole']}" for r in sorted(cons)))
-    l.append(f"    E = {det['E']} ; pôle visé = {det['pole_vise']}")
-    l.append("    niveaux de choix : " + " ; ".join(f"{n} {xs}" for n, xs in det["niveaux"]))
-    if det["candidates"]:
-        l.append(f"    niveau retenu : {det['niveau_retenu']} ; candidates : " + " ; ".join(
-            f"{r} ({cle} : {fmt_n(n)})" for r, cle, n in det["candidates"]))
+        par_scrutin = {f["_scrutin"]: t for t, f in fiches.items() if t in JOUES}
+        for n in scrutins_b:
+            tid = par_scrutin.get(n)
+            if tid is None:
+                e.append(f"présentation B : scrutin {n} absent des fiches des textes joués")
+                continue
+            for src, ls in (("fichier", d["textes"][tid]["lignes"]), ("fiche", fiches[tid]["lignes"])):
+                if ls[2] != PHRASE_B:
+                    e.append(f"/textes/{tid}/lignes/2 ({src}, présentation B, scrutin {n}) : {ls[2]!r} ≠ phrase fixe {PHRASE_B!r}")
+        info.append("présentation B : " + ", ".join(f"scrutin {n} = {nom_texte(par_scrutin[n])}"
+                                                   for n in scrutins_b if n in par_scrutin))
+    # H86 : Titre, Tension, et sa ligne de votes.md
+    fh = fiches["H86"]
+    h = d["histoire"]["textes"]["H86"]
+    if h["fiche"] is None:
+        e.append("/histoire/textes/H86/fiche : null")
     else:
-        l.append("    aucune candidate : « aucune »")
-    return l
-
-
-def controle3(d, prof):
-    e = []
-    # condition d'application de la règle 2.2
-    for tid in TEXTES:
-        t = d["textes"][tid]
-        s = t["sens"]
-        for c in t["considerations"]:
-            ok = c["pole"] == "aucun" or (c["cote"] == "pour" and c["pole"] == s) or \
-                (c["cote"] == "contre" and c["pole"] == 1 - s)
-            if not ok:
-                e.append(f"condition de la règle 2.2 : texte {tid}, rang {c['rang']} : "
-                         f"« {c['cote']} » au pôle {c['pole']} avec s = {s} (à soumettre à Game design)")
-    if e:
-        return e, None
-    try:
-        atyp, det_proc, reps, cotes, details = recalculer_reponses(d, prof)
-    except regles.Defaut as x:
-        return [f"procédure des réponses atypiques : {x}"], None
-    for p in PERSONNAGES:
-        for tid in TEXTES:
-            att = reps[p].get(tid)
-            obt = d["reponses"][tid].get(p)
-            if att != obt:
-                e.append(f"/reponses/{tid}/{p} : fichier {obt!r} ≠ recalcul {att!r}")
-                if tid in details[p]:
-                    e.extend(fmt_detail(p, tid, details[p][tid], d["textes"][tid]))
-        att = [{"cote_tire": cotes[p][str(n)], "texte": str(n)} for n in atyp[p]]
-        if d["reponses_atypiques"][p] != att:
-            e.append(f"/reponses_atypiques/{p} : fichier {d['reponses_atypiques'][p]!r} ≠ recalcul {att!r}")
-            for et in det_proc[p]["etapes"]:
-                e.append(f"    étape {et['etape']} (textes {et['plage'][0]} à {et['plage'][1]}) : "
-                         f"refusés {et['refuses']} ; retenu {et['retenu']}")
-    return e, (atyp, det_proc, reps, cotes, details)
-
-
-def controle4(d, prof):
-    e = []
-    for p in PERSONNAGES:
-        if d["absences"][p] != prof["absences"][p]:
-            e.append(f"/absences/{p} : {d['absences'][p]!r} ≠ profils.md {prof['absences'][p]!r}")
-    return e
-
-
-def annexe_a(d):
-    e = []
-    ordre = [d["textes"][str(n)]["tension"] for n in range(1, 15)]
-    if ordre != ORDRE_TENSIONS_QUOTIDIENS:
-        e.append(f"ordre des tensions {' '.join(ordre)} ≠ {' '.join(ORDRE_TENSIONS_QUOTIDIENS)}")
-    ent = tuple(d["textes"][t]["tension"] for t in ENTREE)
-    if ent != TENSIONS_ENTREE:
-        e.append(f"tensions d'entrée {ent} ≠ {TENSIONS_ENTREE}")
-    for T in TENSIONS:
-        sens = {d["textes"][str(n)]["sens"] for n in range(1, 15) if d["textes"][str(n)]["tension"] == T}
-        if sens != {0, 1}:
-            e.append(f"tension {T} : sens des textes quotidiens {sorted(sens)} (il faut au moins un de chaque)")
-    for tid in TEXTES:
-        cs = d["textes"][tid]["considerations"]
-        cotes = [c["cote"] for c in cs]
-        poles = [c["pole"] for c in cs]
-        if "pour" not in cotes or "contre" not in cotes:
-            e.append(f"texte {tid} : il faut au moins une raison « pour » et une « contre »")
-        if 0 not in poles or 1 not in poles:
-            e.append(f"texte {tid} : il faut au moins une raison par pôle")
-        if poles.count("aucun") > 1:
-            e.append(f"texte {tid} : plus d'une raison « aucun »")
-    for T, (avec, sans) in (("S", (2, 2)), ("T", (2, 1))):
-        ts = [str(n) for n in range(1, 14) if d["textes"][str(n)]["tension"] == T]
-        a = sum(1 for t in ts if any(c["pole"] == "aucun" for c in d["textes"][t]["considerations"]))
-        if (a, len(ts) - a) != (avec, sans):
-            e.append(f"textes {T} devinés : {a} avec une raison « aucun », {len(ts) - a} sans (attendu : {avec} et {sans})")
-    return e
-
-
-def compter_aucune(d):
-    c = {"entree": [], "devines": [], "14": []}
-    for tid in TEXTES:
-        for p, r in d["reponses"][tid].items():
-            if r["raison"] == "aucune":
-                cle = "entree" if tid in ENTREE else ("14" if tid == "14" else "devines")
-                c[cle].append(f"{p} au texte {tid}")
-    return c
+        if h["fiche"]["titre"] != fh["titre"]:
+            e.append(f"/histoire/textes/H86/fiche/titre : {h['fiche']['titre']!r} ≠ fiche {fh['titre']!r}")
+        if h["fiche"]["vote"] != votes["H86"]["vote"]:
+            e.append(f"/histoire/textes/H86/fiche/vote : {canon.canonique(h['fiche']['vote'])} ≠ votes.md "
+                     f"{canon.canonique(votes['H86']['vote'])}")
+    if (h["tension"], h["sens"]) != fh["tension"]:
+        e.append(f"/histoire/textes/H86 : tension et sens ({h['tension']}, {h['sens']}) ≠ fiche {fh['tension']}")
+    if (votes["H86"]["leg"], votes["H86"]["scrutin"]) != (fh["_leg"], fh["_scrutin"]):
+        e.append("H86 : votes.md et la fiche ne donnent pas le même scrutin")
+    return e, info, detail_ordre
 
 
 # ------------------------------------------------------------------ rapport
@@ -477,37 +551,37 @@ class Rapport:
         return "\n".join(self.l) + "\n"
 
 
-def controle_scelle(octets, srcs, date_scellement, nb_atypiques_rapport=None,
-                    empreinte_publiee=None, page=None, empreintes_scellement=None,
-                    chemin_fichier="", commit=None, detail_complet=False, appliquees=None,
-                    entrees_construction=None):
-    """srcs : {nom de source : (chemin affiché, texte, octets)} pour les clés
-    simulation, profils, schema, votes, S, P, T, L. Rend (texte du rapport, verdict)."""
+def controle1(octets, srcs, date_scellement, empreinte_publiee=None, page=None, empreintes_scellement=None,
+              chemin_fichier="", commit=None, commit_spec=None, scrutins_b=None, amo_dossiers=(),
+              tables_source="schema"):
+    """srcs : {clé : (chemin affiché, texte, octets)} pour S, P, T, L, votes, schema,
+    simulation (§1 des personnages), simulation2 et, si `tables_source` le dit, la
+    source des tableaux 2.10, 2.10 bis, 2.11. Rend (texte du rapport, verdict)."""
     R = Rapport()
-    verdict = {"controle1": None, "controle2": None, "controle3": None, "controle4": None,
-               "annexe_a": None, "sources": None, "graine": None}
-    R("Programme de contrôle (C) — contrôle du fichier scellé (schéma, partie 4.1)")
+    verdict = {"controle1": None, "sources": None, "graine": None, "candidat": None}
+    R("Programme de contrôle (C), second essai — contrôle 1 du fichier scellé (schéma 2, partie 5.1)")
     R("=" * 78)
     R(f"Fichier contrôlé : {chemin_fichier}")
     R(f"SHA-256 du fichier : {sha256_hex(octets)}  ({len(octets)} octets)")
-    R(f"Jour du scellement (paramètre, recopié du rapport de scellement) : {date_scellement}")
+    R(f"Jour du scellement (paramètre) : {date_scellement}")
     if commit:
         R(f"Commit du dépôt au moment du contrôle : {commit}")
     R("")
     R("Sources lues (SHA-256) :")
-    for cle in ("S", "P", "T", "L", "votes", "profils", "simulation", "schema"):
+    for cle in srcs:
         chemin, _, o = srcs[cle]
         R(f"  {sha256_hex(o)}  {chemin}")
-    for chemin, o in (appliquees or []):
-        R(f"  {sha256_hex(o)}  {chemin}  (spécification appliquée par le code, pas lue par le programme)")
     if empreintes_scellement is not None:
         diff = []
-        for cle in ("S", "P", "T", "L", "votes", "profils", "simulation", "schema"):
+        for cle in srcs:
             chemin, _, o = srcs[cle]
             nom = chemin.split("/")[-1]
             autre = empreintes_scellement.get(nom) or empreintes_scellement.get(chemin)
             if autre is None:
-                diff.append(f"  {nom} : absent du relevé de l'agent qui scelle")
+                if cle in ("S", "P", "T", "L", "votes"):
+                    diff.append(f"  {nom} : absent du relevé de l'agent qui scelle")
+                else:
+                    R(f"  ({nom} : absent du relevé de l'agent qui scelle, non comparé)")
             elif autre != sha256_hex(o):
                 diff.append(f"  {nom} : agent qui scelle {autre} ≠ C {sha256_hex(o)}")
         verdict["sources"] = not diff
@@ -515,6 +589,7 @@ def controle_scelle(octets, srcs, date_scellement, nb_atypiques_rapport=None,
         for x in diff:
             R(x)
     else:
+        diff = []
         R("Mêmes sources que l'agent qui scelle : non comparé (relevé non fourni)")
     R("")
 
@@ -523,14 +598,14 @@ def controle_scelle(octets, srcs, date_scellement, nb_atypiques_rapport=None,
         for m in msgs:
             R(f"    - {m}")
         R("")
-        R("Le contrôle 1 s'arrête au premier échec (schéma, partie 4.1) : contrôles 2 à 4 non faits.")
+        R("Le contrôle 1 s'arrête au premier échec.")
+        R("Verdict : DÉFAUT(S) TROUVÉ(S)")
         verdict["controle1"] = False
         return R.texte(), verdict
 
     R("Contrôle 1 (fichier scellé)")
     R("-" * 78)
     etats = []
-    manque_c1 = []
     ok, msgs = etape1(octets, empreinte_publiee)
     if ok is False:
         return stop(1, msgs)
@@ -545,23 +620,33 @@ def controle_scelle(octets, srcs, date_scellement, nb_atypiques_rapport=None,
     if not ok:
         return stop(3, [msg])
     R("  Étape 3 (forme) : passée — UTF-8 strict ; relu puis remis en forme canonique, mêmes octets")
-    e = verifier_schema(d, date_scellement)
+    e, candidat = verifier_schema(d, date_scellement)
     if e:
         return stop(4, e)
-    R("  Étape 4 (schéma) : passée — schéma fermé, version 4, types, adresses, dates "
-      f"(toutes ≤ {date_scellement})")
+    verdict["candidat"] = candidat
+    R("  Étape 4 (schéma) : passée" + (" — CANDIDAT (statut « provisoire »)" if candidat else " — statut « final »")
+      + f" ; schéma fermé, version 5, types, adresses, dates (toutes ≤ {date_scellement})")
     try:
         fiches_sim = sources.lire_fiches_personnages(srcs["simulation"][1])
-        groupes = sources.lire_groupes(srcs["schema"][1])
-        elisions = sources.lire_elisions(srcs["schema"][1])
+        tsrc = srcs[tables_source]
+        tables = {"groupes": sources.lire_groupes(tsrc[1], tsrc[0]),
+                  "commissions": sources.lire_commissions(tsrc[1], tsrc[0]),
+                  "elisions": sources.lire_elisions(tsrc[1], tsrc[0])}
     except sources.ErreurSource as x:
         return stop(5, [f"lecture d'une source : {x}"])
-    e = etape5(d, fiches_sim, groupes, elisions)
+    e, notes, info = etape5(d, fiches_sim, tables, list(amo_dossiers))
     if e:
+        for x in info:
+            R(f"    · {x}")
         return stop(5, e)
-    R(f"  Étape 5 (cohérence interne) : passée — rangs, groupes distincts, ponctuation et guillemets, "
-      f"votes, absences, réponses atypiques, fiches du §1, cercle, vecteurs ; partie 2.7 "
-      f"({len(groupes)} lignes, règles tenues, chaque couple sert) ; partie 2.8 ({len(elisions)} noms)")
+    R("  Étape 5 (cohérence interne) : passée — tables exigées (calendrier, semaines, cercle), histoire "
+      "(point 2 bis), votes et suites, D-028, A.4, E8, D-034, groupes deux à deux différents, réponses, "
+      "absences, réponses atypiques, §1, vecteurs, ordre des tensions, groupes (2.10, "
+      f"{len(tables['groupes'])} lignes), commissions (2.10 bis, {len(tables['commissions'])}), "
+      f"élisions (2.11, {len(tables['elisions'])})")
+    for x in info:
+        R(f"    · {x}")
+    R("    · genres des raisons (D-034, recalculés) : " + " | ".join(notes))
     e = etape6(d)
     if e:
         return stop(6, e)
@@ -572,154 +657,49 @@ def controle_scelle(octets, srcs, date_scellement, nb_atypiques_rapport=None,
     R(f"  Étape 7 (typographie simple) : passée — {len(chaines_affichees(d))} chaînes affichées")
     try:
         fiches = sources.lire_fiches([(srcs[k][0], srcs[k][1]) for k in ("S", "P", "T", "L")])
-        votes = sources.lire_votes(srcs["votes"][1])
+        votes, ignorees = sources.lire_votes(srcs["votes"][1], srcs["votes"][0])
     except sources.ErreurSource as x:
         return stop(8, [f"lecture des fiches : {x}"])
-    e, detail_ordre = etape8(d, fiches, votes)
+    e, info8, detail_ordre = etape8(d, fiches, votes, scrutins_b)
     if e:
         return stop(8, e)
-    # « Mêmes sources » fait partie de l'étape 8 (schéma, partie 4.1) : deux empreintes
-    # différentes d'un même fichier sont un échec ; sans le relevé, le contrôle 1 n'est pas complet.
     if verdict["sources"] is False:
-        return stop(8, ["comparaison aux 17 fiches et à votes.md : passée",
-                        "Mêmes sources : le programme de contrôle et l'agent qui scelle n'ont pas lu "
-                        "les mêmes sources"] + [x.strip() for x in diff])
-    R("  Étape 8 (fidélité aux fiches) : passée — 17 fiches et votes.md relus ; titre, lignes, vote, "
-      "auteur, lien, sources, tension, sens et raisons identiques, raisons dans l'ordre tiré ; "
-      + ("mêmes sources que l'agent qui scelle" if verdict["sources"] else
-         "Mêmes sources : non comparé (relevé non fourni)"))
-    R("    Ordre d'affichage tiré (clé « ordre-raisons|texte|i ») : numéro de fiche → rang")
-    for tid in TEXTES:
-        R(f"      {tid:>2} : " + ", ".join(f"{i}→{r}" for i, r, _ in detail_ordre[tid]))
-    complet = all(etats) and verdict["sources"] is True
-    verdict["controle1"] = True if complet else "partiel"
+        return stop(8, ["comparaison aux fiches : passée", "Mêmes sources : NON"] + [x.strip() for x in diff])
+    R("  Étape 8 (fidélité aux fiches) : passée — 18 fiches, H86 et votes.md relus ; en-têtes stricts ; "
+      "titre, lignes (90 au plus), objet (fiche et votes.md), vote, suite, auteur, lien, sources, tension, "
+      "sens et raisons identiques, raisons dans l'ordre tiré")
+    for x in info8:
+        R(f"    · {x}")
+    if ignorees:
+        R("    · lignes de votes.md ignorées (rang hors des 18 textes et de H86) : "
+          + ", ".join(f"ligne {n} « {r} »" for n, r in ignorees))
+    R("    · ordre d'affichage tiré (clé « ordre-raisons|texte|i ») : numéro de fiche → rang")
+    for tid in JOUES:
+        R(f"      {nom_texte(tid):>3} : " + ", ".join(f"{i}→{r}" for i, r in detail_ordre[tid]))
     manque = [f"étape {n} non faite (son entrée manque)" for n, ok in zip((1, 2), etats) if not ok]
     if verdict["sources"] is not True:
         manque.append("Mêmes sources non comparé (étape 8)")
-    manque_c1[:] = manque
-    R("  Contrôle 1 : " + ("complet, huit étapes passées" if complet else
-                           "étapes passées : " + ", ".join(str(n) for n, ok in zip((1, 2), etats) if ok)
-                           + (", " if any(etats) else "") + "3 à 8 ; " + " ; ".join(manque)
-                           + " : le contrôle 1 n'est pas complet"))
-    # Vérification ajoutée : la graine
-    g_att = sha256_hex(("elenchos-essai|graine|" + COMMIT_GRAINE).encode())[:16]
-    verdict["graine"] = d["graine"] == g_att
-    R(f"  Hors étapes (ajout de C) : graine recalculée par la dérivation du §0 = {g_att} ; "
-      + ("identique à celle du fichier" if verdict["graine"] else f"DIFFÉRENTE de celle du fichier ({d['graine']})"))
-    if entrees_construction is not None:
-        # §8.8 : fichier d'entrées de la construction, hors du dossier de la page.
-        x = entrees_construction
-        h = sha256_hex(octets)
-        pub = None if empreinte_publiee is None else empreinte_publiee.replace(" ", "").replace("\n", "")
-        champs = ("version_page", "consultes_le", "empreinte", "empreinte_publiee_le", "empreinte_publiee_a")
-        manquants = [c for c in champs if c not in x]
-        ok = not manquants and x["empreinte"] == h and (pub is None or x["empreinte"] == pub)
-        verdict["entrees_construction"] = ok
-        R("  Hors étapes (ajout de C) : entrees-construction.json (§8.8) : "
-          + (f"champ(s) absent(s) : {', '.join(manquants)}" if manquants else
-             f"empreinte {x['empreinte']} " + ("= SHA-256 du fichier" if x["empreinte"] == h else "≠ SHA-256 du fichier")
-             + ("" if pub is None else (" = empreinte publiée" if x["empreinte"] == pub else " ≠ empreinte publiée"))
-             + f" ; version_page {x['version_page']} ; consultes_le {x['consultes_le']} ; empreinte publiée le "
-             f"{x['empreinte_publiee_le']} à {x['empreinte_publiee_a']} (ces quatre champs : recopiés, non vérifiables par C)"))
+    if scrutins_b is None:
+        manque.append("présentation B non vérifiée (liste non fournie)")
+    if candidat:
+        manque.append("fichier candidat (« provisoire ») : l'étape 4 exige « final » sur le fichier publié")
+    complet = not manque
+    verdict["controle1"] = True if complet else "partiel"
+    R("  Contrôle 1 : " + ("complet, huit étapes passées" if complet else "partiel : " + " ; ".join(manque)))
+    if commit_spec:
+        g = graine_essai2(commit_spec)
+        verdict["graine"] = g == d["graine"]
+        R(f"  Hors étapes (ajout de C) : graine recalculée (§0) sur E = {commit_spec} : {g} ; "
+          + ("identique à celle du fichier" if verdict["graine"] else f"DIFFÉRENTE de celle du fichier ({d['graine']})"))
+    else:
+        R("  Hors étapes (ajout de C) : graine non recalculée (empreinte E du commit de la spécification non fournie)")
     R("")
-
-    try:
-        prof = sources.lire_profils(srcs["profils"][1])
-    except sources.ErreurSource as x:
-        R(f"Lecture de profils.md : ÉCHEC — {x}")
-        verdict["controle2"] = verdict["controle3"] = verdict["controle4"] = False
-        return R.texte(), verdict
-    R(f"Nombre de réponses atypiques lu dans profils.md : {prof['nb_atypiques']}"
-      + ("" if nb_atypiques_rapport is None else
-         f" ; rapport de scellement : {nb_atypiques_rapport} — "
-         + ("égaux" if nb_atypiques_rapport == prof["nb_atypiques"] else "DIFFÉRENTS (échec)")))
-    if nb_atypiques_rapport is not None and nb_atypiques_rapport != prof["nb_atypiques"]:
-        verdict["nb_atypiques"] = False
-    longueurs = {p: len(d["reponses_atypiques"][p]) for p in PERSONNAGES}
-    R(f"Longueur des tableaux reponses_atypiques : {longueurs}")
+    R("Hors de portée d'un programme : la vérité des champs de `vote` (objet, issue, date, étape, suite), "
+      "l'exactitude du mandat et du groupe et leur moment, la justesse de chaque Forme d'élision et des "
+      "formes courtes de commission.")
     R("")
-
-    R("Contrôle 2 (profils)")
-    R("-" * 78)
-    e2, types = controle2(d, prof)
-    verdict["controle2"] = not e2
-    R("  " + ("passé" if not e2 else f"ÉCHEC ({len(e2)} différences)"))
-    for x in e2:
-        R(f"    - {x}")
-    R("  Tableau recalculé des réponses types (s = 1), en pôles :")
-    for p in PERSONNAGES:
-        R(f"    {p:<8} " + " | ".join(
-            f"{T} {('neutre' if types[p][T][0] == 'neutre' else types[p][T][0] + ', vers ' + POLES_COURTS[T][types[p][T][1]])}"
-            for T in TENSIONS))
-    R("  Laissé au Vérificateur : « aucune étiquette politique » (ne se vérifie pas par programme).")
-    R("")
-
-    R("Contrôle 3 (réponses)")
-    R("-" * 78)
-    e3, calc = controle3(d, prof)
-    verdict["controle3"] = not e3
-    R("  Condition d'application de la règle 2.2 (« pour » sert s ou aucun ; « contre » sert 1 \u2212 s ou aucun) : "
-      + ("tenue sur les 17 textes" if calc is not None or not e3 else "voir ci-dessous"))
-    R("  " + ("passé : les réponses des quatre personnages aux 17 textes, réponses atypiques et "
-              "cote_tire compris, sont égales au recalcul" if not e3 else f"ÉCHEC ({len(e3)} lignes)"))
-    for x in e3:
-        R(f"    - {x}" if not x.startswith("    ") else x)
-    if calc is not None:
-        atyp, det_proc, reps, cotes, details = calc
-        R("  Procédure des réponses atypiques (ordre des textes par t(\"ecart|prénom|n\"), étapes) :")
-        for p in PERSONNAGES:
-            R(f"    {p} : retenus {atyp[p]}")
-            for et in det_proc[p]["etapes"]:
-                ref = "; ".join(f"{n} {', '.join(w)}" for n, w in et["refuses"]) or "aucun refus"
-                R(f"      étape {et['etape']} (textes {et['plage'][0]} à {et['plage'][1]}) : retenu {et['retenu']} ({ref})")
-        if detail_complet:
-            R("  Détail du calcul de chaque réponse :")
-            for tid in TEXTES:
-                for p in PERSONNAGES:
-                    if tid in details[p]:
-                        r = reps[p][tid]
-                        R(f"   [{tid}] {p} : {LIBELLE_NIVEAU[r['niveau']]}, raison {r['raison']}"
-                          + (" (atypique)" if details[p][tid].get("atypique") else ""))
-                        for x in fmt_detail(p, tid, details[p][tid], d["textes"][tid]):
-                            R(x)
-    R("")
-
-    R("Contrôle 4 (absences)")
-    R("-" * 78)
-    e4 = controle4(d, prof)
-    verdict["controle4"] = not e4
-    R("  " + ("passé : absences égales à profils.md" if not e4 else f"ÉCHEC ({len(e4)} différences)"))
-    for x in e4:
-        R(f"    - {x}")
-    R("  Un absent ne répond pas (étape 5) ; qu'il ne devine pas, le moteur le garantit "
-      "(manche seulement si le texte du jour n'est pas dans ses absences).")
-    R("")
-
-    R("Annexe A du fichier caché")
-    R("-" * 78)
-    ea = annexe_a(d)
-    verdict["annexe_a"] = not ea
-    R("  " + ("passée : ordre des tensions, tensions d'entrée, sens, raisons par texte, répartition des "
-              "raisons « aucun » sur S et T" if not ea else f"ÉCHEC ({len(ea)} différences)"))
-    for x in ea:
-        R(f"    - {x}")
-    ca = compter_aucune(d)
-    R("  Mesure (sans échec) : réponses « aucune » des personnages dans le fichier :")
-    R(f"    entrée : {len(ca['entree'])} {ca['entree']}")
-    R(f"    textes devinés (1 à 13) : {len(ca['devines'])} {ca['devines']}")
-    R(f"    texte 14 : {len(ca['14'])} {ca['14']}")
-    tot = sum(len(v) for v in ca.values())
-    R(f"    total : {tot} (au plus 4 attendus)")
-    R("")
-    R("Hors de portée d'un programme (schéma, partie 4.1) : la vérité des trois champs de `vote`, "
-      "l'exactitude du mandat et du groupe et leur moment, la justesse de chaque Forme d'élision, "
-      "« aucune étiquette politique ».")
-    R("")
-    ok_tout = (verdict["controle1"] is True or verdict["controle1"] == "partiel") and \
-        verdict["controle2"] and verdict["controle3"] and verdict["controle4"] and \
-        verdict["annexe_a"] and verdict["graine"] and verdict.get("nb_atypiques", True) is not False \
-        and verdict["sources"] is not False and verdict.get("entrees_construction", True) is not False
+    ok_tout = verdict["controle1"] in (True, "partiel") and verdict["graine"] is not False \
+        and verdict["sources"] is not False
     R("Verdict : " + ("aucun défaut trouvé" if ok_tout else "DÉFAUT(S) TROUVÉ(S)")
-      + ("" if verdict["controle1"] is True else
-         " (contrôle 1 partiel : " + " ; ".join(manque_c1) + ")"))
+      + ("" if verdict["controle1"] is True else " (contrôle 1 partiel)"))
     return R.texte(), verdict

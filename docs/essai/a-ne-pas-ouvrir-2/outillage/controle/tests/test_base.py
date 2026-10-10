@@ -1,4 +1,5 @@
-"""Exemples de la spécification : forme canonique, tirage, typographie, affectation."""
+"""Exemples de la spécification : forme canonique, tirage, typographie, affectation
+(repris du premier essai ; tirage adapté au second)."""
 
 import json
 import unittest
@@ -54,17 +55,28 @@ class TestCanon(unittest.TestCase):
 
 
 class TestTirage(unittest.TestCase):
-    def test_vecteurs_candidat(self):
-        d = commun.candidat()
+    def test_vecteurs_fichier_de_test(self):
+        _, _, d = commun.fabrique()
         tg = Tirage(d["graine"])
+        cles = [v["cle"] for v in d["vecteurs_test"]]
+        self.assertEqual(cles, ["raison|Odile|E2|3", "hasard|Nassim|13|porteur", "ecart-hstar|1|Valentin"])
         for v in d["vecteurs_test"]:
             self.assertEqual(tg.chaine(v["cle"]), v["chaine"])
             self.assertEqual(tg.n(v["cle"]), v["n"])
 
-    def test_graine(self):
+    def test_graine_essai2(self):
         import hashlib
-        h = hashlib.sha256(b"elenchos-essai|graine|7f4d367278ecf07b01ebad883b7ec75cf7840820").hexdigest()
-        self.assertEqual(h[:16], "23e3ee6ccdc3fb38")
+        from ec.tirage import graine_essai2, graine_reglage
+        e = "0123456789abcdef0123456789abcdef01234567"
+        self.assertEqual(graine_essai2(e),
+                         hashlib.sha256(("elenchos-essai-2|graine|" + e).encode()).hexdigest()[:16])
+        self.assertEqual(graine_reglage("6479a9e7d2792f2a"),
+                         hashlib.sha256(b"elenchos-essai-2|reglage|6479a9e7d2792f2a").hexdigest()[:16])
+
+    def test_cle_negative_canonique(self):
+        # schéma 2, partie 1.1 : « -1 », « -10 », … , « -9 », « -90 », « 0 »
+        o = {str(j): 0 for j in (-1, -10, -9, -90, 0, -2)}
+        self.assertEqual(canon.canonique(o), '{"-1":0,"-10":0,"-2":0,"-9":0,"-90":0,"0":0}')
 
     def test_egalite_departagee_par_cle(self):
         class T(Tirage):
@@ -128,10 +140,6 @@ class TestAffectation(unittest.TestCase):
         self.assertIsNone(mediane([]))
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class TestTypoForme(unittest.TestCase):
     """§7.8, règles 4 et 5 (commit 2c66a93) : reconnues par la forme, espaces jugées
     sur la chaîne de départ, chiffres ASCII seulement."""
@@ -156,3 +164,7 @@ class TestTypoForme(unittest.TestCase):
                   "9 octobre 202", "19er mai 2024", "9  octobre 2024"):
             self.assertEqual(typo.regle5(s), s, s)
         self.assertEqual(typo.regle5("x1er mai 2024"), f"x1er{I}mai{I}2024")
+
+
+if __name__ == "__main__":
+    unittest.main()
