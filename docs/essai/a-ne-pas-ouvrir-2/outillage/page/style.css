@@ -1,0 +1,285 @@
+/* Page de l'essai : style unique (outillage d'essai, D-001 tenu).
+   Téléphone : univers La Tablée des maquettes finales (D-012, D-014).
+   Cadre : gris froid, police du système (simulation.md, §8.1).
+   Les polices embarquées sont insérées ici par la construction. */
+/*POLICES*/
+
+/* ---------------- Cadre (§8.1) ---------------- */
+:root {
+  --fond: #EEF0EE; --panneau: #FFFFFF; --filet: #C4C7C3; --texte: #1C1D1F; --second: #676A67; --accent: #23729C;
+  --police: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --chasse-fixe: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --zh: env(safe-area-inset-top, 0px); --zb: env(safe-area-inset-bottom, 0px);
+  --zg: env(safe-area-inset-left, 0px); --zd: env(safe-area-inset-right, 0px);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --fond: #141516; --panneau: #1D1E20; --filet: #3D3F41; --texte: #EBECE9; --second: #A3A6A2; --accent: #86C4E6; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; background: var(--fond); height: 100%; }
+body {
+  margin: 0; min-height: 100%; background: var(--fond); color: var(--texte);
+  font: 400 15px/1.45 var(--police); font-variant-numeric: tabular-nums;
+  overscroll-behavior: none;
+}
+[hidden] { display: none !important; }
+button { font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
+button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.titre-page:focus, pre.carnet:focus, .apres:focus { outline: none; }
+p { margin: 0; }
+strong, b { font-weight: 600; }
+
+/* Colonne : barre, milieu, bande (§8.1, disposition compacte par défaut) */
+.app {
+  display: flex; flex-direction: column; margin: 0 auto;
+  width: min(440px, calc(100vw - 2 * max(12px, var(--zg), var(--zd))));
+  height: 100vh; height: 100dvh;
+  padding-top: max(8px, calc(var(--zh) + 4px)); padding-bottom: max(12px, var(--zb));
+}
+.barre { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; min-height: 44px; flex: none; margin-bottom: 16px; }
+.barre-gauche { display: grid; min-width: 0; }
+.barre-jour { font-size: 14px; font-weight: 600; line-height: 1.3; }
+.barre-arret { font-size: 13px; color: var(--accent); text-decoration: underline; text-underline-offset: 2px; background: none; border: 0; padding: 0; text-align: left;
+  min-height: 44px; display: flex; align-items: center; cursor: pointer; justify-self: start; } /* zone de toucher de 44 px (§8.1) */
+.bouton-cadre {
+  font: 600 15px/1.2 var(--police); min-height: 44px; padding: 8px 16px; border-radius: 8px;
+  border: 1.5px solid var(--second); background: transparent; color: var(--texte); cursor: pointer;
+}
+.bouton-cadre.avant { border-color: var(--accent); color: var(--accent); }
+.bouton-cadre.desactive { border-color: var(--filet); color: var(--second); cursor: default; }
+.barre-qui { font-size: 14px; padding: 0 12px; flex: none; margin-left: 8px; }
+.milieu { flex: 1 1 0; min-height: 200px; display: flex; flex-direction: column; position: relative; }
+.telephone { flex: 1 1 auto; min-height: 0; display: flex; }
+.cadre-milieu { flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+.bande { flex: none; margin-top: 12px; display: grid; gap: 8px; position: sticky; bottom: 0; background: var(--fond); }
+.note { background: var(--panneau); border: 1px solid var(--filet); border-left: 3px solid var(--accent); border-radius: 8px; padding: 10px 12px; font-size: 15px; }
+.note .fort, .fort { font-weight: 600; }
+.note.confirmation { display: grid; gap: 6px; }
+.actions { display: flex; justify-content: flex-end; gap: 8px; min-width: 0; } /* min-width : la rangée ne force pas la largeur de la bande */
+.actions .bouton-cadre { flex: none; white-space: nowrap; }
+/* ne tiennent pas côte à côte (mesuré par le script) : toutes l'une sous l'autre, dans l'ordre du texte (§8.1) */
+.actions.empile { flex-direction: column; align-items: stretch; }
+.actions.empile .bouton-cadre { white-space: normal; }
+
+/* Planche : iPad tenu en hauteur, iPad 13 pouces (§8.1) */
+@media (min-width: 600px) and (min-height: 900px) {
+  /* hauteur de la fenêtre, comme en compacte : la bande garde sa hauteur réelle, le milieu (téléphone ou page du cadre)
+     prend la place qui reste, de 480 à 740 px ; la place en trop reste vide, en bas */
+  .app { width: 380px; padding-top: max(24px, calc(var(--zh) + 12px)); padding-bottom: max(24px, var(--zb)); }
+  .barre { margin-bottom: 24px; }
+  .milieu { flex: 1 1 0; min-height: 480px; max-height: 740px; }
+  .bande { margin-top: 24px; position: static; }
+}
+
+/* Écran couché (§8.1) : une vue remplace tout */
+.vue-couchee { display: none; }
+@media (max-height: 499px) and (orientation: landscape) {
+  .app { display: none; }
+  .vue-couchee { display: grid; }
+}
+
+/* Pages du cadre (§8.1) */
+.page-cadre { display: grid; gap: 12px; padding-bottom: 4px; }
+.titre-page { font-size: 17px; font-weight: 600; line-height: 1.3; margin: 0; }
+.panneau { background: var(--panneau); border: 1px solid var(--filet); border-radius: 8px; padding: 16px; display: grid; gap: 12px; }
+.panneau ul, .panneau ol { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; }
+.panneau h2 { font-size: 15px; font-weight: 600; margin: 0; }
+.choix { display: grid; gap: 8px; }
+.bouton-choix { font: 400 15px/1.3 var(--police); text-align: left; min-height: 44px; padding: 8px 12px; border-radius: 8px;
+  border: 1.5px solid var(--second); background: transparent; color: var(--texte); cursor: pointer; }
+.bouton-choix.retenu { border: 2px solid var(--accent); padding: 7.5px 11.5px; }
+.pied { margin-top: 24px; padding-top: 12px; border-top: 1px solid var(--filet); display: grid; gap: 6px; font-size: 13px; line-height: 1.45; color: var(--second); }
+pre.carnet, .code-brut { font: 400 14px/1.5 var(--chasse-fixe); background: var(--panneau); border: 1px solid var(--filet); border-radius: 8px;
+  padding: 12px; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; -webkit-user-select: text; user-select: text; }
+.code-brut.empreinte { white-space: pre; overflow-wrap: normal; }
+details.panneau > summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 600; }
+details.panneau > :not(summary) { margin: 10px 0 0; }
+.atypique { display: grid; gap: 2px; }
+.au-milieu { text-align: center; font-size: 13px; color: var(--second); }
+.ligne-f1 { display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "g d" "r r"; gap: 2px 8px; }
+.ligne-f1 .pole-g { grid-area: g; }
+.ligne-f1 .pole-d { grid-area: d; text-align: right; }
+.ligne-f1 .ronds { grid-area: r; display: flex; justify-content: space-between; }
+.rond-f1 { width: 44px; height: 44px; border: 0; background: none; color: var(--texte); font-size: 20px; cursor: pointer; padding: 0; }
+
+/* Vues seules : arrêts techniques, hors de l'icône, secours, couché (§8.1, §8.11, §8.13) */
+.vue-seule, .vue-couchee {
+  max-width: 34rem; margin: 0 auto; gap: 16px; align-content: start;
+  padding: max(24px, calc(var(--zh) + 12px)) max(16px, var(--zd)) max(40px, calc(var(--zb) + 24px)) max(16px, var(--zg));
+}
+.vue-seule { display: grid; }
+.vue-seule h1, .vue-couchee h1 { font-size: 21.6px; font-weight: 600; line-height: 1.25; margin: 0; }
+.vue-seule h1:focus { outline: none; }
+.vue-seule details > summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 600; }
+.vue-seule details > * + * { margin-top: 10px; }
+.vue-seule ol { padding-left: 1.3em; display: grid; gap: 8px; }
+.adresse { font: 400 14px/1.5 var(--chasse-fixe); overflow-wrap: anywhere; -webkit-user-select: all; user-select: all; }
+.repere { font-family: var(--chasse-fixe); }
+.petit { font-size: 13px; color: var(--second); }
+
+/* ---------------- Téléphone : La Tablée (maquettes finales) ---------------- */
+.tel-ecran {
+  --screen: #F2EEE8; --ink: #2A211C; --muted: #6B5F57; --line: rgba(42, 33, 28, 0.18); --fill: #FFFFFF; --hatch: #6B5F57;
+  --caramel: #8A5714; --honey: #E9B45A; --btn-bg: #2A211C; --btn-fg: #F2EEE8; --shadow: rgba(42, 33, 28, 0.09);
+  --ft: "Alegreya", Georgia, serif; --fb: "Alegreya Sans", "Trebuchet MS", system-ui, sans-serif;
+  font-family: var(--fb); font-size: 16px; line-height: 1.45; color: var(--ink); font-synthesis: none; font-variant-numeric: normal;
+  flex: 1 1 auto; min-height: 0; width: 100%; position: relative; overflow: hidden;
+  display: flex; flex-direction: column; background: var(--screen);
+  border: 2px solid var(--ink); border-radius: 20px; padding: var(--bord-haut) 0;
+  /* bord du haut, marge du haut du contenu, coin de la zone de la croix (depuis le bord intérieur du contour) : §8.1 */
+  --bord-haut: 8px; --corps-haut: 4px; --croix-haut: 8px; --croix-droite: 8px;
+}
+@media (prefers-color-scheme: dark) {
+  .tel-ecran { --screen: #1C1612; --ink: #F2ECE3; --muted: #B8ACA2; --line: rgba(242, 236, 227, 0.18); --fill: #29211B; --hatch: #B8ACA2;
+    --caramel: #E9B45A; --honey: rgba(233, 180, 90, 0.25); --btn-bg: #E9B45A; --btn-fg: #1C1612; --shadow: rgba(0, 0, 0, 0.4); }
+}
+.tel-ecran.soir { --screen: #1C1612; --ink: #F2ECE3; --muted: #B8ACA2; --line: rgba(242, 236, 227, 0.18); --fill: #29211B; --hatch: #B8ACA2;
+  --caramel: #E9B45A; --honey: rgba(233, 180, 90, 0.25); --btn-bg: #E9B45A; --btn-fg: #1C1612; --shadow: rgba(0, 0, 0, 0.4); }
+@media (min-width: 600px) and (min-height: 900px) {
+  .telephone { justify-content: center; }
+  /* l'écran commence au bord intérieur (10 px en haut, 8 px sur les côtés) ; la croix à 8 px de son haut et de son bord droit */
+  .tel-ecran { border-radius: 34px; padding: var(--bord-haut) 8px; --bord-haut: 10px; --croix-haut: 18px; --croix-droite: 16px; }
+}
+.tel-ecran button { color: var(--ink); }
+.corps { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; padding: var(--corps-haut) 14px 12px; display: flex; flex-direction: column; gap: 10px;
+  background:
+    linear-gradient(var(--screen) 30%, transparent) center top,
+    linear-gradient(transparent, var(--screen) 70%) center bottom,
+    radial-gradient(farthest-side at 50% 0, var(--shadow), transparent) center top,
+    radial-gradient(farthest-side at 50% 100%, var(--shadow), transparent) center bottom;
+  background-repeat: no-repeat; background-size: 100% 36px, 100% 36px, 100% 12px, 100% 12px; background-attachment: local, local, scroll, scroll; }
+/* dans l'écran qui défile, rien ne se comprime pour faire tenir le contenu : c'est l'écran qui défile (§8.1) */
+.corps > * { flex-shrink: 0; }
+.tel-ecran.soir .corps { background: radial-gradient(circle at 50% 42%, rgba(233, 180, 90, 0.38), transparent 60%); }
+.bas { padding: 8px 14px 4px; display: grid; gap: 8px; flex: none; }
+.btn1 { font: 700 16px/1.3 var(--fb); width: 100%; background: var(--btn-bg); color: var(--btn-fg) !important; border: 0; border-radius: 12px; padding: 12px; cursor: pointer;
+  text-align: center; text-decoration: none; display: block; }
+.btn1[aria-disabled="true"] { opacity: 0.4; cursor: default; }
+.btn1.reserve { visibility: hidden; }
+.btn2 { font: inherit; width: 100%; background: transparent; border: 1.5px solid var(--ink); border-radius: 12px; padding: 9px; cursor: pointer; text-align: center; }
+.link, .plain { font: inherit; background: none; border: 0; padding: 0; color: var(--ink); text-align: left; cursor: pointer; }
+.link { text-decoration: underline; text-underline-offset: 3px; align-self: flex-start; min-height: 32px; }
+.link.en-ligne { min-height: 0; display: inline; font-size: inherit; color: inherit; }
+a.link { display: inline-flex; align-items: center; }
+.tabbar { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); padding-top: 8px; margin-top: 2px; }
+.tab { font: inherit; background: none; border: 0; cursor: pointer; display: grid; justify-items: center; gap: 3px; font-size: 0.78rem; color: var(--muted) !important; min-height: 44px; }
+.tab::before { content: ""; width: 18px; height: 18px; border-radius: 50%; border: 3px double currentColor; }
+.tab.on { color: var(--ink) !important; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.hd { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.hd-titre, .hd .hd-gauche { font-family: var(--ft); font-weight: 700; font-size: 1.3rem; margin: 0; line-height: 1.25; }
+.hd .right { font-size: 0.9rem; text-decoration: underline; text-underline-offset: 3px; min-height: 32px; }
+.texte-systeme { font-family: system-ui, -apple-system, sans-serif; text-decoration: none; display: inline-block; font-variant-emoji: text; }
+.back { font-size: 0.9rem; align-self: flex-start; min-height: 32px; }
+.croix { position: absolute; top: var(--croix-haut); right: var(--croix-droite); width: 44px; height: 44px; display: grid; place-items: center; font: 400 1.4rem/1 var(--fb); background: none; border: 0; cursor: pointer; z-index: 2; }
+.band { background: transparent; border-top: 6px double var(--caramel); padding: 6px 0 0; color: var(--muted); font-size: 0.8rem; font-weight: 700; }
+.banner, .box, .guess { background: var(--fill); border: 0; border-top: 6px double var(--caramel); border-radius: 14px; box-shadow: 0 1px 2px var(--shadow), 0 6px 16px var(--shadow); }
+.banner { padding: 10px 12px; font-size: 0.9rem; }
+.label { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.ttl { font-family: var(--ft); font-weight: 700; font-size: 1.3rem; line-height: 1.25; margin: 0; text-wrap: balance; }
+.lines { display: grid; gap: 2px; font-size: 1rem; }
+.q { font-weight: 700; font-size: 1rem; }
+.small { font-size: 0.85rem; color: var(--muted); }
+.p { font-size: 1rem; }
+.p b { font-weight: 700; }
+.big { font-family: var(--ft); font-weight: 700; font-size: 1.8rem; line-height: 1.15; text-wrap: balance; }
+.huge { font-family: var(--ft); font-weight: 700; font-size: 3rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.rule { border: 0; border-top: 1px solid var(--line); margin: 2px 0; width: 100%; }
+.opts { display: grid; gap: 6px; }
+.opt { font: inherit; font-size: 1rem; text-align: left; background: var(--fill); border: 1px solid var(--line); border-radius: 12px; padding: 9px 10px; cursor: pointer; min-height: 44px; }
+.opt.on { background: var(--ink); color: var(--screen) !important; border-color: var(--ink); }
+.opt.gap { margin-top: 6px; }
+.box { padding: 10px; display: grid; gap: 8px; }
+.faces { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; }
+.faces.centre { justify-content: flex-start; }
+.face { font: inherit; background: none; border: 0; padding: 0; display: grid; justify-items: center; gap: 2px; font-size: 0.72rem; max-width: 64px; text-align: center; overflow-wrap: anywhere; }
+button.face { cursor: pointer; min-width: 44px; min-height: 44px; }
+.dot { width: 40px; height: 40px; border-radius: 50%; border: 4px double var(--ink); background: var(--fill); display: grid; place-items: center;
+  font-family: var(--ft); font-style: italic; font-weight: 500; }
+.face.L { max-width: 130px; }
+.face.L .dot { width: 64px; height: 64px; font-size: 1.7rem; }
+.face.S .dot { width: 34px; height: 34px; font-size: 0.85rem; }
+.face.on .dot { background: var(--ink); color: var(--screen); }
+.face.off { opacity: 0.35; cursor: default; }
+.face .cap { color: var(--muted); font-size: 0.68rem; line-height: 1.2; }
+.tel-ecran.soir .face.L .dot { background: #F2EEE8; color: #2A211C; border-color: #2A211C; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45); }
+.faceline { align-items: center; flex-wrap: nowrap; }
+.faceline .p { min-width: 0; }
+.guess { padding: 10px; display: grid; gap: 8px; }
+.guess .ans { font-size: 0.92rem; font-weight: 700; }
+.guess .why { font-style: italic; font-size: 0.85rem; }
+.guess .row { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.guess .faces { gap: 8px; }
+.guess .row > .link { min-height: 44px; display: flex; align-items: center; }
+.guess.passed .ans, .guess.passed .faces { opacity: 0.6; }
+.slider { display: grid; gap: 4px; }
+.poles { display: flex; justify-content: space-between; gap: 8px; font-size: 0.72rem; color: var(--muted); }
+.track { position: relative; height: 18px; }
+.track::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 1.5px solid var(--ink); }
+.haze { position: absolute; top: 4px; height: 10px; border-radius: 6px; background: linear-gradient(90deg, transparent, var(--honey) 22%, var(--caramel) 50%, var(--honey) 78%, transparent); }
+.haze.rev { height: 8px; top: 5px; background: repeating-linear-gradient(-45deg, var(--hatch) 0 1px, transparent 1px 4px);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent); mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent); }
+.steps { display: flex; gap: 14px; font-size: 0.82rem; color: var(--muted); }
+.steps .on { color: var(--ink); font-weight: 700; }
+.steps .strike { text-decoration: line-through; }
+.dots { display: flex; gap: 5px; justify-content: center; padding-top: 2px; min-height: 8px; flex: none; }
+/* révélations (§8.1) : centre des points (6 px) à la hauteur du centre de la croix ; seul grandit l'espace au-dessus */
+.a-croix .dots { padding-top: calc(var(--croix-haut) + 22px - var(--bord-haut) - var(--corps-haut) - 3px); }
+.dots i { width: 6px; height: 6px; border-radius: 50%; border: 1px solid var(--ink); }
+.dots i.on { background: var(--ink); }
+.field { display: grid; gap: 4px; font-size: 0.8rem; color: var(--muted); }
+.field .dessin, .champ { border: 1.5px solid var(--line); border-radius: 8px; padding: 9px 10px; color: var(--ink); font: 400 16px/1.3 var(--fb); background: var(--fill); width: 100%; }
+.code { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+.code div { aspect-ratio: 3 / 4; border: 1.5px solid var(--line); border-radius: 6px; display: grid; place-items: center; }
+.code .rempli::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ink); }
+.listrow { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; align-content: center; gap: 2px 10px;
+  border-bottom: 1px solid var(--line); padding: 7px 0; font: inherit; font-size: 0.88rem; width: 100%;
+  background: none; border-top: 0; border-left: 0; border-right: 0; text-align: left; }
+/* une ligne de liste prend la hauteur de son texte, 7 px au-dessus et au-dessous ; 44 px au moins quand elle se touche
+   (texte d'une ligne alors centré : align-content) */
+button.listrow { cursor: pointer; min-height: 44px; }
+/* deux colonnes : chacune part de la moitié de la ligne, sans dépasser sa largeur naturelle ni passer sous son plus long mot ;
+   la plus courte garde ainsi sa largeur naturelle si elle tient dans la moitié, l'autre prend le reste et passe à la ligne
+   entre deux mots ; si les deux plus longs mots ne tiennent pas côte à côte, la seconde colonne passe dessous */
+.listrow > * { flex: 1 0 0; min-width: auto; max-width: max-content; text-wrap: balance; } /* lignes équilibrées (§8.1) ; sans équilibrage, passage à la ligne ordinaire */
+.listrow > span:last-child { color: var(--muted); text-align: right; }
+.subtabs { display: flex; align-items: baseline; gap: 14px; font-size: 0.86rem; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+.subtabs .on { color: var(--ink); font-weight: 700; }
+.subtabs .plain { color: var(--muted) !important; font-size: inherit; min-height: 32px; }
+.toggle { display: flex; justify-content: space-between; align-items: center; font: inherit; font-size: 0.9rem; background: none; border: 0; padding: 0; width: 100%; min-height: 44px; cursor: pointer; text-align: left; }
+.toggle i { width: 38px; height: 22px; border-radius: 11px; border: 1.5px solid var(--ink); position: relative; flex: none; }
+.toggle i::after { content: ""; position: absolute; right: 2px; top: 2px; width: 15px; height: 15px; border-radius: 50%; background: var(--ink); }
+.chat-hd { font-family: var(--ft); font-weight: 700; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+.bubble { background: var(--fill); border-radius: 14px 14px 14px 4px; padding: 10px 12px; max-width: 88%; font-size: 0.92rem; }
+.preview { font: inherit; background: none; border: 1.5px solid var(--ink); border-radius: 12px; padding: 10px; max-width: 88%; font-size: 0.86rem; cursor: pointer; display: grid; gap: 2px; text-align: left; }
+.lock { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 30px 14px; gap: 6px; background: var(--fill); border-radius: 26px; }
+.lock .clock { font-size: 3.4rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.notif { margin-top: 26px; width: 100%; background: var(--screen); border-radius: 14px; padding: 10px 12px; display: grid; gap: 4px; cursor: pointer; text-align: left; font: inherit; border: 0; }
+.notif .meta { display: flex; gap: 8px; align-items: center; font-size: 0.74rem; color: var(--muted); }
+.notif .meta i { width: 18px; height: 18px; border-radius: 50%; border: 3px double var(--ink); font-family: var(--ft); font-style: italic; font-weight: 500; font-size: 0.7rem;
+  display: grid; place-items: center; color: var(--ink); }
+.sigle { white-space: nowrap; }
+.extraits { margin: 0; padding: 0; list-style: none; display: grid; gap: 2px; }
+.extraits a { min-height: 44px; }
+
+/* Feuille (2.2, « Relire ») */
+.feuille-fond { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; justify-content: flex-end; }
+.voile { position: absolute; inset: 0; background: rgba(28, 22, 18, 0.45); border: 0; padding: 0; cursor: pointer; }
+.feuille { position: relative; background: var(--screen); border-radius: 16px 16px 0 0; padding: 8px 14px 14px; display: flex; flex-direction: column; max-height: 85%; }
+/* le contenu défile au-dessus de la marge du bas : rien de touchable au ras du bord de l'écran (§8.1, 16 px avec la bande) */
+.feuille-defile { overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; display: grid; gap: 10px; min-height: 0; }
+.grab { width: 38px; height: 4px; border-radius: 2px; background: var(--line); margin: 0 auto 4px; }
+
+/* Révélation : carte fermée et rond « ? » (§7.1) */
+.apres { display: grid; gap: 10px; }
+.apres.cache { visibility: hidden; }
+.rond { width: 64px; height: 64px; perspective: 600px; }
+.rond-interieur { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 450ms ease; }
+.rond.bascule .rond-interieur, .rond.retourne .rond-interieur { transform: rotateX(180deg); }
+.rond.retourne .rond-interieur { transition: none; }
+.rond-face { position: absolute; inset: 0; border-radius: 50%; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: grid; place-items: center;
+  background: #F2EEE8; color: #2A211C; border: 4px double #2A211C; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45); padding: 0; }
+.tel-ecran .rond-face { color: #2A211C; } /* plus fort que « .tel-ecran button » (palette du soir) */
+.rond-recto { font: 700 1.7rem/1 var(--ft); cursor: pointer; min-width: 64px; min-height: 64px; }
+.rond-verso { transform: rotateX(180deg); font: italic 500 1.7rem/1 var(--ft); }
+@media (prefers-reduced-motion: reduce) { .rond-interieur { transition: none; } }

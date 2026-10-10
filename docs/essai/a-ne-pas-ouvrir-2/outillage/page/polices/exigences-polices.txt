@@ -1,0 +1,4 @@
+# Dépendances du programme reduire.py (PyPI, roues pour CPython 3.11, Linux x86-64).
+# Installation : pip install --require-hashes -r exigences-polices.txt
+fonttools==4.66.1 --hash=sha256:72299346b96b9244dabcc051b24e4653da4edfda6105544cfb10ce856a1afaac
+brotli==1.2.0 --hash=sha256:40d918bce2b427a0c4ba189df7a006ac0c7277c180aee4617d99e9ccaaf59e6a

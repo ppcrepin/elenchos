@@ -1,0 +1,41 @@
+# Outillage de l'essai (simulation.md, §9, contrôle 14 (g) et « Correctif » ; §8.8) : preuve de publication.
+# À placer dans .github/workflows/ (l'orchestrateur le range) ; le script lancé, harnais/preuve-publication.sh, est lu
+# sur main. Lancement manuel seulement, au moins dix minutes après la fin du déploiement Pages (cache de GitHub Pages).
+# Droits en lecture seule ; aucun secret : seul le jeton éphémère de la tâche, limité aux droits ci-dessous, sert à
+# l'API GitHub (l'API Pages l'exige) ; rien de téléversé, rien de poussé. Machine Linux, sans dépendance installée :
+# bash, curl, git, sha256sum et python3 de la machine.
+# Entrées : le commit de gh-pages attendu (SHA complet) et le SHA-256 attendu de essai/index.html (rapport de
+# construction). Le journal dit « juste » ou « FAUX » pour chaque point et finit par « preuve de publication : réussie »
+# ou « échouée » (la tâche est alors marquée en échec).
+name: Essai - preuve de publication
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: "Commit de gh-pages attendu (SHA complet, 40 caractères)"
+        required: true
+        type: string
+      sha256_page:
+        description: "SHA-256 attendu de essai/index.html (64 caractères, rapport de construction)"
+        required: true
+        type: string
+permissions:
+  contents: read
+  pages: read
+jobs:
+  preuve:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Preuve de publication
+        env:
+          DEPOT: ${{ github.repository }}
+          COMMIT: ${{ inputs.commit }}
+          ATTENDU: ${{ inputs.sha256_page }}
+          GH_TOKEN: ${{ github.token }}
+        run: bash docs/essai/a-ne-pas-ouvrir/outillage/page/harnais/preuve-publication.sh
