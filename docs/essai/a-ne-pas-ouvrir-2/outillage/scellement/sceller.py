@@ -394,6 +394,34 @@ def analyser_fiche(scrutin: str, bloc: list[str], ecarts: list[str]) -> dict:
             "legere": False}
 
 
+def section_schema(debut: str, fin: str) -> str:
+    texte = lire(F_SCHEMA)
+    exiger(texte.count(debut) == 1 and texte.count(fin) == 1, f"schéma : section {debut!r}")
+    return texte.split(debut, 1)[1].split(fin, 1)[0]
+
+
+def lire_tables_lot() -> dict:
+    """Schéma 2.10 (groupes), 2.10 bis (commissions), 2.11 (élision), remplis par Contenu le 10 octobre 2026."""
+    res = {}
+    g = lignes_tableau(section_schema("### 2.10 Groupes permis", "### 2.10 bis"),
+                       "| `groupe` | Chambre | Législature | Identifiant | Source |")
+    res["groupes"] = []
+    for c in g:
+        exiger(c[0].startswith("`") and c[0].endswith("`") and all(x for x in c), f"2.10 : ligne {c}")
+        res["groupes"].append({"groupe": c[0][1:-1], "chambre": c[1], "legislature": c[2], "identifiant": c[3]})
+    b = lignes_tableau(section_schema("### 2.10 bis", "### 2.11"), "| `libelle` | Identifiant | Source |")
+    res["commissions"] = [{"libelle": c[0][1:-1], "identifiant": c[1]} for c in b]
+    e = lignes_tableau(section_schema("### 2.11 Initiales et élision", "### 2.12"), "| `nom` | Initiale | Forme |")
+    accord = {"voyelle": "d'", "h muet": "d'", "h aspiré": "de", "son y": "de"}
+    res["elision"] = {}
+    for nom, ini, forme in e:
+        exiger(nom[0] == nom[-1] == "`" and forme[0] == forme[-1] == "`", f"2.11 : accents graves {nom}")
+        exiger(accord.get(ini) == forme[1:-1], f"2.11 : Forme et Initiale ne s'accordent pas pour {nom}")
+        exiger(nom[1:-1] not in res["elision"], f"2.11 : {nom} en double")
+        res["elision"][nom[1:-1]] = forme[1:-1]
+    return res
+
+
 def lire_elision_premier_essai() -> dict:
     texte = lire(F_SCHEMA1)
     return {n[1:-1]: f[1:-1] for n, _i, f in lignes_tableau(texte, "| `nom` | Initiale | Forme |")}
@@ -628,15 +656,21 @@ def verifier_tables_schema(cal: list[dict], sem: list[dict]) -> None:
 # ---------------------------------------------------------------------------
 
 class Histoire:
-    def __init__(self, tir: Tirage, TX: dict, reps: dict, profils: dict, absences: dict):
+    def __init__(self, tir: Tirage, TX: dict, reps: dict, profils: dict, absences: dict,
+                 facteur: int = 3, tir_porteur=None, seuils_stricts: bool = False):
         self.tir = tir
         self.TX = TX
         self.reps = reps
         self.profils = profils
         self.absences = {p: set(v) for p, v in absences.items()}
+        self.absences.setdefault("porteur", set())
+        self.facteur = facteur
+        self.tir_porteur = tir_porteur  # tirage propre à une partie de réglage (point 11)
+        self.seuils_stricts = seuils_stricts
+        self.vus_porteur: dict[str, list[str]] = {p: [] for p in PERSONNAGES}  # textes du porteur vus par g (règle 3.2)
         # Sommes cumulées par membre, tension et texte (ordre du calendrier).
         self.cum: dict[tuple[str, str], list[tuple[int, Fr, Fr]]] = {}
-        for p in PERSONNAGES:
+        for p in MEMBRES:
             for t in TENSIONS:
                 self.cum[(p, t)] = []
             sw = {t: Fr(0) for t in TENSIONS}
@@ -651,15 +685,40 @@ class Histoire:
                     swpi[tx["tension"]] += w * pi
                 self.cum[(p, tx["tension"])].append((jour_du_texte(x), sw[tx["tension"]], swpi[tx["tension"]]))
 
-    def curseur_jusqua(self, p: str, tension: str, jour_max: int) -> dict:
-        """Entrée et textes répondus jusqu'au jour `jour_max` inclus (poids normaux)."""
+    def curseur_jusqua(self, p: str, tension: str, jour_max: int, propres: bool = False) -> dict:
+        """Entrée et textes répondus jusqu'au jour `jour_max` inclus. Poids normaux, sauf `propres` pour le
+        porteur : W = facteur·w (fichier caché, point 6 : R3 sur ses cartes, portrait)."""
         sw, swpi = Fr(0), Fr(0)
         for j, a, b in self.cum[(p, tension)]:
             if j <= jour_max:
                 sw, swpi = a, b
             else:
                 break
+        if propres and p == "porteur":
+            sw, swpi = sw * self.facteur, swpi * self.facteur
         return curseur(sw, swpi)
+
+    def cote_porteur(self, g: str, j: int, tx: dict):
+        """Règle 3.2 (premier essai) avec le point 4 du fichier caché : le côté attendu du porteur vu par g,
+        sur les réponses du porteur que g a eues dans ses propres cartes, déjà révélées (textes répondus
+        jusqu'au jour j − 2), même tension, poids normaux."""
+        sw, swpi = Fr(0), Fr(0)
+        for t in self.vus_porteur[g]:
+            if jour_du_texte(t) > j - 2 or self.TX[t]["tension"] != tx["tension"]:
+                continue
+            w, pi = poids(self.reps[t]["porteur"], self.TX[t])
+            sw += w
+            if pi is not None:
+                swpi += w * pi
+        if sw == 0:
+            return "inconnu", {"c": Fr(1, 2), "somme_w": Fr(0)}
+        c = (2 + swpi) / (4 + sw)
+        a = c if tx["sens"] == 1 else 1 - c
+        if self.seuils_stricts:
+            cote = 1 if a > Fr(3, 5) else (-1 if a < Fr(2, 5) else 0)
+        else:
+            cote = 1 if a >= Fr(3, 5) else (-1 if a <= Fr(2, 5) else 0)
+        return cote, {"c": c, "somme_w": sw}
 
     def present(self, p: str, j: int) -> bool:
         t = texte_du_jour(j)
@@ -677,7 +736,7 @@ class Histoire:
             rep = self.reps[texte][X]
             v = VALEUR[rep["niveau"]]
             x = v if tx["sens"] == 1 else 1 - v
-            cu = self.curseur_jusqua(X, tx["tension"], j - 2)
+            cu = self.curseur_jusqua(X, tx["tension"], j - 2, propres=True)
             info[X] = {"c": cu["c"], "distance": abs(x - cu["c"]), "l": cu["l"], "net": cu["net"],
                        "niveau": rep["niveau"], "raison": rep["raison"], "rarete": None,
                        "somme_w": cu["somme_w"], "surprise": None, "x": x}
@@ -727,15 +786,30 @@ class Histoire:
                    "raison_devinee": None} for X in ordre]
         res["cartes"] = cartes
         if g == "porteur":
-            return res
-        # Règle 3 : le personnage devine.
-        exiger("porteur" not in candidats, "le porteur candidat dans l'histoire : hors du domaine de ce programme")
-        rangs = {c: i + 1 for i, c in enumerate(sorted(candidats, key=lambda c: tir.tri(f"devine|{g}|{j}|{c}")))}
-        cotes = {}
-        for c in candidats:
-            p = Fr(self.profils[c][tx["tension"]]["position"], 100)
-            a = p if tx["sens"] == 1 else 1 - p
-            cotes[c] = 1 if a >= Fr(3, 5) else (-1 if a <= Fr(2, 5) else 0)
+            if self.tir_porteur is None:
+                return res  # chiffres constants : les cartes seules
+            # Partie de réglage (point 11) : le joueur simulé devine par la règle 3, avec ses propres tirages.
+            tg = self.tir_porteur
+            rangs = {c: i + 1 for i, c in enumerate(sorted(candidats, key=lambda c: tg.tri(f"devine|porteur|{j}|{c}")))}
+            cotes = {}
+            for c in candidats:
+                cu = self.curseur_jusqua(c, tx["tension"], j - 2)
+                if cu["somme_w"] == 0:
+                    cotes[c] = "inconnu"
+                    continue
+                a = cu["c"] if tx["sens"] == 1 else 1 - cu["c"]
+                cotes[c] = 1 if a >= Fr(3, 5) else (-1 if a <= Fr(2, 5) else 0)
+        else:
+            # Règle 3 : le personnage devine.
+            rangs = {c: i + 1 for i, c in enumerate(sorted(candidats, key=lambda c: tir.tri(f"devine|{g}|{j}|{c}")))}
+            cotes = {}
+            for c in candidats:
+                if c == "porteur":
+                    cotes[c], res["curseur_porteur"] = self.cote_porteur(g, j, tx)
+                    continue
+                p = Fr(self.profils[c][tx["tension"]]["position"], 100)
+                a = p if tx["sens"] == 1 else 1 - p
+                cotes[c] = 1 if a >= Fr(3, 5) else (-1 if a <= Fr(2, 5) else 0)
 
         def score(sigma: int, c: str) -> int:
             e = cotes[c]
@@ -773,7 +847,8 @@ class Histoire:
                 choix = cons[0]["rang"]
             k["raison_devinee"] = choix if choix is not None else "aucune"
         redistribuer(cartes, info)
-        res.update({"cotes_attendus": cotes, "rangs": rangs, "total": total})
+        if g != "porteur":
+            res.update({"cotes_attendus": cotes, "rangs": rangs, "total": total})
         return res
 
 
@@ -1095,7 +1170,7 @@ def tirer_cases(tir: Tirage, p14: dict) -> tuple[dict, list[str], dict]:
     return cles, journal, autre
 
 
-def assembler_textes(tir: Tirage, cles: dict, fiches: dict, votes: dict, notes_elision: list) -> dict:
+def assembler_textes(tir: Tirage, cles: dict, fiches: dict, votes: dict, notes_elision: list, tables: dict) -> dict:
     table1 = lire_elision_premier_essai()
     textes = {}
     for cle in JOUEES:
@@ -1112,7 +1187,14 @@ def assembler_textes(tir: Tirage, cles: dict, fiches: dict, votes: dict, notes_e
         cons = []
         for rang, r in enumerate(ordre, 1):
             dep = dict(r["depute"])
-            dep["elision"] = elision_provisoire(dep["nom"], table1, notes_elision)
+            if tables["elision"]:
+                if dep["nom"][0] in INITIALES_CHOIX:
+                    exiger(dep["nom"] in tables["elision"], f"{cle} : {dep['nom']} absent du tableau 2.11")
+                    dep["elision"] = tables["elision"][dep["nom"]] == "d'"
+                else:
+                    dep["elision"] = False
+            else:
+                dep["elision"] = elision_provisoire(dep["nom"], table1, notes_elision)
             cons.append({"cote": r["cote"], "depute": dep, "pole": r["pole"], "rang": rang, "texte": r["texte"],
                          "_numero_fiche": r["numero_fiche"]})
         textes[cle] = {
@@ -1123,6 +1205,44 @@ def assembler_textes(tir: Tirage, cles: dict, fiches: dict, votes: dict, notes_e
             "_scrutin": s,
         }
     return textes
+
+
+def verifier_tables_lot(textes: dict, tables: dict, journal: list[str]) -> None:
+    """Schéma 2.10, 2.10 bis et 2.11 : règles d'ensemble (la comparaison à `amo` revient au contrôle)."""
+    couples = {(g["chambre"], g["groupe"]) for g in tables["groupes"]}
+    triples = {(g["groupe"], g["chambre"], g["legislature"]) for g in tables["groupes"]}
+    exiger(len(triples) == len(tables["groupes"]), "2.10 : ligne en double (nom, chambre, législature)")
+    ids = [g["identifiant"] for g in tables["groupes"]]
+    exiger(len(ids) == len(set(ids)), "2.10 : identifiant en double")
+    for g in tables["groupes"]:
+        verifier_groupe(g["groupe"], "2.10")
+        exiger(g["chambre"] in ("Assemblée", "Sénat"), f"2.10 : chambre {g['chambre']}")
+    employes = set()
+    libelles = set()
+    choix = set()
+    for cle, tx in textes.items():
+        a = tx["auteur"]
+        if a["type"] == "depute" and a["groupe"] is not None:
+            employes.add(("Assemblée", a["groupe"]))
+        elif a["type"] == "senateur":
+            employes.add(("Sénat", a["groupe"]))
+        elif a["type"] == "commission":
+            libelles.add(a["libelle"])
+        for c in tx["considerations"]:
+            if c["depute"]["groupe"] is not None:
+                employes.add(("Assemblée", c["depute"]["groupe"]))
+            if c["depute"]["nom"][0] in INITIALES_CHOIX:
+                choix.add(c["depute"]["nom"])
+    exiger(employes <= couples, f"2.10 : groupes absents du tableau : {sorted(employes - couples)}")
+    exiger(couples <= employes, f"2.10 : lignes sans emploi : {sorted(couples - employes)}")
+    exiger(libelles == {c["libelle"] for c in tables["commissions"]}, "2.10 bis : libellés ≠ auteurs commission du fichier")
+    if tables["elision"]:
+        exiger(choix == set(tables["elision"]), f"2.11 : ensembles différents : fichier seul {sorted(choix - set(tables['elision']))}, "
+                                                f"tableau seul {sorted(set(tables['elision']) - choix)}")
+    journal.append(f"Tableaux du lot : 2.10 ({len(tables['groupes'])} lignes = couples (chambre, groupe) employés), 2.10 bis "
+                   f"({len(tables['commissions'])} ligne(s) = auteurs commission), 2.11 ({len(tables['elision'])} noms = "
+                   f"noms de considérations à initiale qui demande un choix ; élisions lues au tableau). La comparaison à amo "
+                   f"n'est pas faite ici (contrôle 1).")
 
 
 def public(x):
@@ -1370,6 +1490,137 @@ def manches_porteur(H: Histoire, reps: dict, absences: dict) -> list[dict]:
 
 
 # ---------------------------------------------------------------------------
+# Réglage (fichier caché, point 11) : 200 parties d'un joueur simulé
+# ---------------------------------------------------------------------------
+
+class TirageReglage(Tirage):
+    """t_i(clé) : N tiré de SHA-256(g_R + "|" + i + "|" + clé) (premier essai, §9 bis)."""
+    def __init__(self, graine_reglage: str, i: int):
+        super().__init__(graine_reglage)
+        self.i = i
+
+    def n(self, cle: str) -> int:
+        v = self._n.get(cle)
+        if v is None:
+            exiger(cle.isascii() and " " not in cle, f"clé de tirage non ASCII ou avec espace : {cle!r}")
+            v = int(hashlib.sha256(f"{self.graine}|{self.i}|{cle}".encode("utf-8")).hexdigest()[:8], 16)
+            self._n[cle] = v
+        return v
+
+
+CRANS_ALPHA = ["1/6", "1/4", "1/3"]
+
+
+def regler(graine: str, tir: Tirage, TX: dict, reps: dict, profils: dict, absences: dict, alpha: Fr,
+           facteur: int, seuils_stricts: bool, n_parties: int = 200) -> tuple[list[str], dict]:
+    """Point 11. Rend le compte rendu et la décision {alpha, seuils_stricts, facteur}. Les parties ne
+    changent ni le fichier ni l'histoire : seules les réponses du joueur simulé sont ajoutées, en mémoire."""
+    g_r = sha(("elenchos-essai-2|reglage|" + graine).encode("utf-8"))[:16]
+    sim_j = sim_n = 0          # joueur simulé, ses quinze cartes
+    sim_sem = {14: [0, 0], 15: [0, 0], 0: [0, 0]}  # par semaine de révélation (0 : T13, hors semaine)
+    pers15_j = pers15_n = 0    # personnages sur les cartes du joueur simulé, semaine 15
+    pers14_j = pers14_n = 0
+    nets_somme, nets_n = 0, 0
+    nets_tous = 0
+    for i in range(1, n_parties + 1):
+        ti = TirageReglage(g_r, i)
+        prof = {}
+        for t in TENSIONS:
+            prof[t] = {"position": (101 * ti.n(f"position|{t}")) >> 32,
+                       "fermete": ["faible", "moyenne", "forte"][(3 * ti.n(f"fermete|{t}")) >> 32]}
+        rp = {}
+        for e in ENTREE:
+            niv = position_type(prof[TX[e]["tension"]], TX[e]["sens"])
+            rp[e] = {"niveau": niv, "raison": choisir_raison(ti, "porteur", e, prof[TX[e]["tension"]], niv, TX[e]["raisons"])}
+        atyp_prec = False
+        for n in range(1, 15):
+            t = str(n)
+            pr = prof[TX[t]["tension"]]
+            niv = position_type(pr, TX[t]["sens"])
+            atyp = False
+            if n <= 13 and not atyp_prec and ti.inf(f"ecart|porteur|{n}", alpha):
+                atyp = True
+                if niv >= 4:
+                    niv = 2
+                elif niv <= 2:
+                    niv = 4
+                else:
+                    niv = 4 if ti.inf(f"cote-ecart|porteur|{n}", Fr(1, 2)) else 2
+            atyp_prec = atyp
+            rp[t] = {"niveau": niv, "raison": choisir_raison(ti, "porteur", t, pr, niv, TX[t]["raisons"])}
+        reps_i = {t: dict(v) for t, v in reps.items()}
+        for t, r in rp.items():
+            reps_i[t]["porteur"] = r
+        profils_i = dict(profils)
+        H = Histoire(tir, TX, reps_i, profils_i, absences, facteur=facteur, tir_porteur=ti, seuils_stricts=seuils_stricts)
+        for j in range(1, 15):
+            for g in PERSONNAGES:
+                if not H.present(g, j):
+                    continue
+                m = H.manche(g, j, MEMBRES)
+                t = m["texte"]
+                for k in m["cartes"]:
+                    if k["auteur"] == "porteur":
+                        H.vus_porteur[g].append(t)
+                    if k["auteur_compte"] == "porteur":
+                        juste = reps_i[t].get(k["designe"]) == reps_i[t]["porteur"]
+                        w = semaine_du_jour(j + 1)
+                        if w == 15:
+                            pers15_n += 1
+                            pers15_j += juste
+                        elif w == 14:
+                            pers14_n += 1
+                            pers14_j += juste
+            if j in (1, 2, 3, 7, 14):
+                m = H.manche("porteur", j, MEMBRES)
+                t = m["texte"]
+                w = semaine_du_jour(j + 1) if j + 1 <= 14 else 0
+                for k in m["cartes"]:
+                    juste = reps_i[t].get(k["designe"]) == reps_i[t][k["auteur"]]
+                    sim_n += 1
+                    sim_j += juste
+                    sim_sem[w][0] += juste
+                    sim_sem[w][1] += 1
+        nets = sum(1 for t in TENSIONS if H.curseur_jusqua("porteur", t, 14, propres=True)["net"])
+        nets_tous += nets
+        if all(position_type(prof[t], 1) != 3 for t in TENSIONS):
+            nets_somme += nets
+            nets_n += 1
+    J = Fr(sim_j, sim_n)
+    P15 = Fr(pers15_j, pers15_n) if pers15_n else None
+    M = Fr(nets_somme, nets_n) if nets_n else None
+    a = CRANS_ALPHA.index(str(alpha))
+    nouvel_alpha = str(alpha)
+    if J > Fr(7, 10):
+        nouvel_alpha = CRANS_ALPHA[min(a + 1, 2)]
+    elif J < Fr(7, 20):
+        nouvel_alpha = CRANS_ALPHA[max(a - 1, 0)]
+    strict = bool(P15 is not None and P15 > Fr(3, 5))
+    if M is None:
+        nouveau_facteur = facteur
+    elif M < 1:
+        nouveau_facteur = 4
+    elif M > 3:
+        nouveau_facteur = 2
+    else:
+        nouveau_facteur = 3
+    L = [f"Graine de réglage g_R = {g_r} = 16 premiers chiffres hex de SHA-256(\"elenchos-essai-2|reglage|{graine}\") ; "
+         f"{n_parties} parties ; paramètres du candidat : alpha {alpha}, facteur {facteur}, seuils stricts "
+         f"{'oui' if seuils_stricts else 'non'}.",
+         f"Joueur simulé, ses quinze cartes (jumeaux comptés justes) : {sim_j} sur {sim_n} = {J} "
+         f"(semaine 14 : {sim_sem[14][0]}/{sim_sem[14][1]} ; semaine 15 : {sim_sem[15][0]}/{sim_sem[15][1]} ; "
+         f"T13 : {sim_sem[0][0]}/{sim_sem[0][1]}). Seuils : > 7/10 monte α, < 7/20 baisse α.",
+         f"Personnages sur les cartes du joueur simulé (auteur_compte), semaine 15 : {pers15_j} sur {pers15_n} = {P15} "
+         f"(semaine 14 : {pers14_j} sur {pers14_n}). Seuil : > 3/5 donne les seuils stricts.",
+         f"Curseurs nets du joueur simulé au jour 14 (fin du jour, T14 compris, facteur {facteur}) : moyenne {M} sur "
+         f"{nets_n} joueurs sans réponse type neutre ; {Fr(nets_tous, n_parties)} sur tous. 1 à 3 : facteur 3 ; < 1 : 4 ; > 3 : 2.",
+         f"Décision : alpha {nouvel_alpha} ; seuils stricts {'oui' if strict else 'non'} ; facteur {nouveau_facteur}."
+         + ("" if (nouvel_alpha, strict, nouveau_facteur) == (str(alpha), seuils_stricts, facteur)
+            else " Un paramètre change : refaire et recalibrer le candidat avec ces valeurs, sans rejouer le réglage.")]
+    return L, {"alpha": nouvel_alpha, "seuils_stricts": strict, "facteur": nouveau_facteur}
+
+
+# ---------------------------------------------------------------------------
 # Programme principal
 # ---------------------------------------------------------------------------
 
@@ -1391,8 +1642,12 @@ def principal(argv: list[str]) -> int:
     ap.add_argument("--sortie", default=str(SORTIE_DEFAUT))
     ap.add_argument("--jour", default=None)
     ap.add_argument("--rmax", type=int, default=200)
+    ap.add_argument("--reglage", type=int, default=0,
+                    help="nombre de parties du réglage (point 11 : 200) ; refusé sur un candidat provisoire")
     args = ap.parse_args(argv)
 
+    exiger(not args.reglage or args.statut == "final",
+           "le réglage ne se joue que sur le candidat final (brief du 10 octobre 2026)")
     jour = datetime.date.fromisoformat(args.jour) if args.jour else jour_paris()
     E = args.commit or commit_simulation()
     exiger(re.fullmatch(r"[0-9a-f]{40}", E) is not None, "commit : 40 chiffres hexadécimaux")
@@ -1420,7 +1675,9 @@ def principal(argv: list[str]) -> int:
                f"en-tête {etq} de la fiche {s} ≠ case tirée {attendu}")
         exiger(votes[s]["rang"] in (attendu, f"{fiches[s]['tension']}·"), f"votes.md : rang {votes[s]['rang']} pour {s}")
     notes_elision: list[str] = []
-    textes = assembler_textes(tir, cles, fiches, votes, notes_elision)
+    tables = lire_tables_lot()
+    textes = assembler_textes(tir, cles, fiches, votes, notes_elision, tables)
+    verifier_tables_lot(textes, tables, journal)
     s86 = next(s for s, f in fiches.items() if f["legere"])
     f86 = fiches[s86]
     exiger(votes[s86]["rang"] == "H86" and f86["tension"] == "P" and f86["sens"] == 0, "H86 : rang, tension ou sens")
@@ -1511,6 +1768,14 @@ def principal(argv: list[str]) -> int:
     rapport = rediger_rapport(args, E, graine, tir, r, echecs_par_r, journal, journal_cases, autre_lecture, cles,
                               textes, HT, obj, res, H, empreinte, o_resume, o_trace, ecarts, notes_elision, nom, jour)
     (sortie / ("rapport-" + nom.replace("fichier-scelle-", "").replace(".json", ".txt"))).write_text(rapport, encoding="utf-8")
+    if args.reglage:
+        exiger(args.statut == "final", "le réglage ne se joue que sur le candidat final (brief du 10 octobre 2026)")
+        lignes_r, decision = regler(graine, tir, TX, reps, profils, absences, alpha, args.facteur, args.seuils_stricts,
+                                    args.reglage)
+        texte_r = "Réglage (fichier caché, point 11)\n" + "\n".join("  " + x for x in lignes_r) + "\n"
+        (sortie / "reglage.txt").write_text(texte_r, encoding="utf-8")
+        rapport += "\n" + texte_r
+        (sortie / ("rapport-" + nom.replace("fichier-scelle-", "").replace(".json", ".txt"))).write_text(rapport, encoding="utf-8")
     detail = detail_porteur(H, obj)
     (sortie / "detail-manches-porteur.txt").write_text(detail, encoding="utf-8")
     sys.stdout.write(rapport)
@@ -1603,75 +1868,194 @@ def rediger_rapport(args, E, graine, tir, r, echecs_par_r, journal, journal_case
     for v in obj["vecteurs_test"]:
         L.append(f"  t(\"{v['cle']}\") : hex8 {v['hex8']} ; N {v['n']}")
     L.append("")
-    L.append("Chiffres constants (partie calculable ici ; le reste au candidat final) :")
-    L += ["  " + x for x in chiffres_constants(obj, res, H)]
+    L.append("Chiffres constants (fichier caché, point 13, définitions du 10 octobre 2026) :")
+    L += ["  " + x for x in chiffres_constants(obj, res, H, args.facteur)]
     L.append("")
     L.append("Écarts de forme relevés dans les sources (QUESTIONS.md) :")
     L += ["  - " + e for e in ecarts]
-    L.append("Élision (tableau 2.11 pas encore rempli : valeurs provisoires) :")
-    L += ["  - " + n for n in sorted(set(notes_elision))]
+    if notes_elision:
+        L.append("Élision (tableau 2.11 pas encore rempli : valeurs provisoires) :")
+        L += ["  - " + n for n in sorted(set(notes_elision))]
+    else:
+        L.append("Élision : lue au tableau 2.11 du schéma (mêmes valeurs que la règle provisoire du candidat 1 d'origine).")
     L.append("")
     L.append(f"SHA-256 du candidat : {empreinte}")
     return "\n".join(L) + "\n"
 
 
-def chiffres_constants(obj: dict, res: dict, H: Histoire) -> list[str]:
+def carte_txt(X: str, rep: dict) -> str:
+    return f"({X}, {rep['niveau']}, {rep['raison']})"
+
+
+def loi_manche(m: dict, rep: dict) -> dict[int, Fr]:
+    """Point 13, ligne 7 : loi du nombre de cartes justes d'une manche, affectations sans répétition
+    de k visages parmi les candidats, toutes également probables."""
+    k = len(m["ordre"])
+    cpt: dict[int, int] = {}
+    tot = 0
+    for perm in permutations(m["candidats"], k):
+        n = sum(1 for X, c in zip(m["ordre"], perm) if c in rep and rep[c] == rep[X])
+        cpt[n] = cpt.get(n, 0) + 1
+        tot += 1
+    return {n: Fr(v, tot) for n, v in cpt.items()}
+
+
+def chiffres_constants(obj: dict, res: dict, H: Histoire, facteur: int) -> list[str]:
+    """Fichier caché, point 13 (définitions du 10 octobre 2026), lignes 1 à 15."""
     out = []
     rep = obj["reponses"]
-    n_par_texte = {t: len(rep[t]) for t in TEXTES}
-    out.append("Réponses de personnages par texte : " + ", ".join(
-        f"{k} textes à {n}" for n, k in sorted({n: sum(1 for v in n_par_texte.values() if v == n) for n in set(n_par_texte.values())}.items())) + ".")
-    tot = sum(n_par_texte.values())
-    auc = [(t, p) for t in TEXTES for p, r in rep[t].items() if r["raison"] == "aucune"]
-    out.append(f"Raisons « aucune » chez les personnages : {len(auc)} sur {tot} réponses"
-               + (" (" + ", ".join(f"{p} {t}" for t, p in auc) + ")" if auc else "") + ".")
-    neutres = [t for t in TEXTES if all(r["niveau"] == 3 for r in rep[t].values())]
-    out.append(f"Cercle unanimement neutre : {len(neutres)} texte(s){' ' + str(neutres) if neutres else ''}.")
-    at = {p: [e["texte"] for e in obj["reponses_atypiques"][p]] for p in PERSONNAGES}
-    nh = sum(1 for p in PERSONNAGES for t in at[p] if t.startswith("H"))
-    nt = sum(1 for p in PERSONNAGES for t in at[p] if not t.startswith("H"))
-    rh = sum(len(rep[t]) for t in HIST)
-    rt = sum(len(rep[t]) for t in ESSAI_T[:-1])
-    out.append(f"Réponses atypiques : histoire {nh} sur {rh} ({Fr(nh, rh)}) ; essai T0–T13 {nt} sur {rt} ; "
-               + " ; ".join(f"{p} T: {[t for t in at[p] if not t.startswith('H')]}" for p in PERSONNAGES) + ".")
-    out.append("Absences (essai) : " + " ; ".join(f"{p} {[t for t in obj['absences'][p] if not t.startswith('H')]}" for p in PERSONNAGES)
-               + f" ; histoire : {sum(1 for p in PERSONNAGES for t in obj['absences'][p] if t.startswith('H'))}.")
-    lues = [c["revele"] for c in obj["calendrier"] if c["revelation_porteur"] == "lue"]
-    rej = [t for t in ENTREE + lues if obj["textes"][t]["vote"]["issue"] == "rejete"]
-    out.append(f"« Texte rejeté. » parmi les révélations lues, entrée comprise : {len(rej)} sur {len(ENTREE + lues)} ({rej}).")
-    pdc = {}
-    for t in lues:
-        pc = pas_de_cote(H, t)
-        if pc:
-            pdc[t] = pc
-    out.append(f"Pas de Côté des personnages sur les révélations lues : {pdc or 'aucun'}.")
-    pdc_h = {jj: e["revelation"]["pas_de_cote"] for jj, e in res["jours"].items() if e["revelation"] and e["revelation"]["pas_de_cote"]}
-    out.append(f"Pas de Côté des personnages dans l'histoire (jour : membres) : {pdc_h or 'aucun'}.")
+    atyp = {(e["texte"], p) for p in PERSONNAGES for e in obj["reponses_atypiques"][p]}
+    jours_p = (1, 2, 3, 7, 14)
+    manches = {j: H.manche("porteur", j, MEMBRES) for j in jours_p}
+    # 1. Cartes servies.
+    par = {j: len(manches[j]["ordre"]) for j in jours_p}
+    n_cartes = sum(par.values())
+    out.append("1. Cartes servies : " + ", ".join(f"jour {j} (T{manches[j]['texte']}) {par[j]}" for j in jours_p)
+               + f" ; total {n_cartes}.")
+    # 2. Réponses atypiques parmi ses cartes (auteur d'origine).
+    cartes = [(j, X) for j in jours_p for X in manches[j]["ordre"]]
+    n_at = sum(1 for j, X in cartes if (manches[j]["texte"], X) in atyp)
+    out.append(f"2. Réponses atypiques parmi ses cartes (auteur d'origine) : {n_at} sur {n_cartes} ({Fr(n_at, n_cartes)}) ; "
+               + ", ".join(f"T{manches[j]['texte']} {X}" for j, X in cartes if (manches[j]["texte"], X) in atyp) + ".")
+    # 3. Remplacements.
+    rempl = [(j, r) for j in jours_p for r in manches[j]["remplacements"]]
+    out.append(f"3. Remplacements de cartes identiques : {len(rempl)}"
+               + ("".join(f" ; jour {j}, place {r['place']}, écartée {carte_txt(r['ecartee'], rep[manches[j]['texte']][r['ecartee']])}, "
+                          f"mise à sa place {carte_txt(r['remplacante'], rep[manches[j]['texte']][r['remplacante']])}" for j, r in rempl))
+               + ".")
+    # 4. Cartes identiques servies ensemble.
+    m_id, c_id = 0, 0
+    for j in jours_p:
+        t = manches[j]["texte"]
+        o = manches[j]["ordre"]
+        ids = [X for X in o if any(Y != X and rep[t][Y] == rep[t][X] for Y in o)]
+        if ids:
+            m_id += 1
+            c_id += len(ids)
+    out.append(f"4. Cartes identiques servies ensemble : {m_id} manche(s), {c_id} carte(s).")
+    # 5. Égalités de classement.
+    out.append(f"5. Égalités de classement (somme des departages) : {sum(manches[j]['departages'] for j in jours_p)} ("
+               + ", ".join(f"jour {j} : {manches[j]['departages']}" for j in jours_p) + ").")
+    # 6. Jumeaux non servis.
+    couples, cartes_j = 0, 0
+    for j in jours_p:
+        t = manches[j]["texte"]
+        o = manches[j]["ordre"]
+        for X in o:
+            js = [Y for Y in PERSONNAGES if Y != X and Y not in o and Y in rep[t] and rep[t][Y] == rep[t][X]]
+            couples += len(js)
+            cartes_j += 1 if js else 0
+    out.append(f"6. Jumeaux non servis : {couples} couple(s) (carte, personnage), sur {cartes_j} carte(s).")
+    # 7. Justesse au hasard.
+    hs = []
+    for j in jours_p:
+        m = manches[j]
+        t = m["texte"]
+        for X in m["ordre"]:
+            h = Fr(sum(1 for c in m["candidats"] if c in rep[t] and rep[t][c] == rep[t][X]), len(m["candidats"]))
+            hs.append((j, X, h, (t, X) in atyp))
+    esp = sum(h for _j, _X, h, _a in hs)
+    ord_ = [(h) for _j, _X, h, a in hs if not a]
+    out.append(f"7. Justesse au hasard (D-024) : h par carte = " + ", ".join(f"T{manches[j]['texte']} {X} {h}" for j, X, h, _a in hs) + ".")
+    out.append(f"   Espérance : {esp} carte(s) juste(s) sur {n_cartes}, soit {esp / n_cartes} par carte ; hors réponses "
+               f"atypiques : {sum(ord_, Fr(0))} sur {len(ord_)}" + (f" ({sum(ord_, Fr(0)) / len(ord_)} par carte)" if ord_ else "")
+               + " ; par personnage (auteur d'origine) : " + ", ".join(
+                   f"{p} {sum((h for _j, X, h, _a in hs if X == p), Fr(0))} sur {sum(1 for _j, X, _h, _a in hs if X == p)}"
+                   for p in PERSONNAGES) + ".")
+    loi = {0: Fr(1)}
+    for j in jours_p:
+        lm = loi_manche(manches[j], rep[manches[j]["texte"]])
+        nv: dict[int, Fr] = {}
+        for a, pa in loi.items():
+            for b, pb in lm.items():
+                nv[a + b] = nv.get(a + b, Fr(0)) + pa * pb
+        loi = nv
+    exiger(sum(loi.values()) == 1 and sum(k * v for k, v in loi.items()) == esp, "loi au hasard : somme ou espérance")
+    cum = Fr(0)
+    lignes = []
+    for x in range(0, n_cartes + 1):
+        cum += loi.get(x, Fr(0))
+        lignes.append(f"{x} : P = {loi.get(x, Fr(0))}, P(≤ {x}) = {cum}")
+    out.append("   Loi exacte du nombre de cartes justes : " + " ; ".join(lignes) + ".")
+    # 8. Réponses par texte révélé.
+    n8 = {n: len(rep[str(n)]) for n in range(14)}
+    out.append("8. Réponses de personnages, T0 à T13 : " + ", ".join(f"T{n} {v}" for n, v in n8.items())
+               + f" ; plus petit {min(n8.values())}. Avec le porteur, T1 à T13 : "
+               + ", ".join(f"T{n} {n8[n] + 1}" for n in range(1, 14)) + f" ; plus petit {min(n8[n] + 1 for n in range(1, 14))}"
+               + " (seuil de l'avis du cercle : 3).")
+    # 9. « Texte rejeté. »
+    serie = ENTREE + [str(n) for n in range(14)]
+    rej = [t for t in serie if obj["textes"][t]["vote"]["issue"] == "rejete"]
+    out.append(f"9. « Texte rejeté. » parmi E1 à E3 et T0 à T13 : {len(rej)} (" + ", ".join(t if t.startswith('E') else 'T' + t for t in rej)
+               + f") ; T14 à part : {obj['textes']['14']['vote']['issue']}.")
+    # 10. Raisons « aucune ».
+    def aucunes(textes):
+        n = sum(1 for t in textes for r in rep[t].values() if r["raison"] == "aucune")
+        return f"{n} sur {sum(len(rep[t]) for t in textes)}"
+    aff = cach = depl = 0
+    for j in jours_p:
+        m = manches[j]
+        t = m["texte"]
+        for X in m["ordre"]:
+            if rep[t][X]["raison"] == "aucune":
+                if X == m["raison_cachee"]:
+                    cach += 1
+                else:
+                    aff += 1
+        if m["places"] and m["raison_cachee"] != m["places"][-1]:
+            depl += 1
+    out.append(f"10. Raisons « aucune » chez les personnages : entrée {aucunes(ENTREE)}, histoire {aucunes(HIST)}, essai "
+               f"{aucunes(ESSAI_T)} ; parmi les cartes du porteur : affichées {aff}, cachées {cach}, cartes à raison cachée "
+               f"déplacées (§4.4) {depl}.")
+    # 11. Cercle unanimement neutre.
+    neutres = [t for t in ESSAI_T if all(r["niveau"] == 3 for r in rep[t].values())]
+    out.append(f"11. Cercle unanimement neutre, T0 à T14 : {len(neutres)}" + (f" ({neutres})" if neutres else "") + ".")
+    # 12. État à l'arrivée.
+    nets = {p: "".join(t for t in TENSIONS if res["arrivee"][p][t]["net"]) for p in PERSONNAGES}
+    out.append("12. État à l'arrivée : curseurs nets " + ", ".join(f"{p} {nets[p]}" for p in PERSONNAGES)
+               + " ; tempéraments " + ", ".join(f"{p} {res['temperaments'][p]['temperaments']}" for p in PERSONNAGES)
+               + " ; titres : " + " | ".join(
+                   f"s{s['semaine']} Devin {s['devin']['titulaire']}, Mystère {s['mystere']['titulaire']}, Fidèles "
+                   f"{s['fidele']['titulaires']}, Sans-Faute {s['sans_faute']}" for s in res["semaines"])
+               + f" ; surprise de la semaine 13 : {res['semaines'][12]['surprise']['texte']}.")
+    # 13. Pas de Côté des personnages sur H90 et T0 à T13.
+    pdc = [(p, t) for t in ["H90"] + [str(n) for n in range(14)] for p in pas_de_cote(H, t)]
+    out.append("13. Pas de Côté des personnages (H90, T0 à T13) : "
+               + (", ".join(f"({p}, {t if t.startswith('H') else 'T' + t})" for p, t in pdc) if pdc else "aucun") + ".")
+    # 14. Inattendus du lot.
     types = {}
-    for k, tx in obj["textes"].items():
+    for k in JOUEES:
+        tx = obj["textes"][k]
         s = tx["sens"]
         ty = []
         for cote in ("pour", "contre"):
             pc = s if cote == "pour" else 1 - s
             r = [c for c in tx["considerations"] if c["cote"] == cote and c["pole"] != pc]
-            ty.append("aucun" if not r else ("pratique" if r[0]["pole"] == "aucun" else "croisé"))
+            ty.append("sans" if not r else ("pratique" if r[0]["pole"] == "aucun" else "croisé"))
         types[k] = "/".join(ty)
-    out.append("Inattendus par texte (pour/contre) : " + ", ".join(f"{k} {v}" for k, v in types.items()) + ".")
-    # Manches du porteur.
-    cartes = 0
-    atyp_c = 0
-    jum = 0
-    for j in (1, 2, 3, 7, 14):
-        m = H.manche("porteur", j, MEMBRES)
-        t = m["texte"]
-        for X in m["places"]:
-            cartes += 1
-            atyp_c += any(e["texte"] == t for e in obj["reponses_atypiques"][X])
-            jum += sum(1 for Y in PERSONNAGES if Y not in m["places"] and Y in rep[t] and rep[t][Y] == rep[t][X])
-    out.append(f"Manches du porteur (T0, T1, T2, T6, T13) : {cartes} cartes ; réponses atypiques parmi elles : {atyp_c} ; "
-               f"jumeaux non servis qu'il peut désigner : {jum}.")
+    combis: dict[str, int] = {}
+    for v in types.values():
+        combis[v] = combis.get(v, 0) + 1
+    out.append("14. Inattendus du lot (pour/contre) : " + ", ".join(f"{k if k.startswith('E') else 'T' + k} {v}" for k, v in types.items())
+               + " ; par combinaison : " + ", ".join(f"{k} {v}" for k, v in sorted(combis.items())) + ".")
+    # 15. Impossibilités.
+    mini = min(len(rep[manches[j]["texte"]]) for j in jours_p)
+    sem14 = sum(1 for j in jours_p if 2 <= j + 1 <= 7 and par[j] > 0)
+    sem15 = sum(1 for j in jours_p if 8 <= j + 1 <= 14 and par[j] > 0)
+    seuil = -(-10 // facteur)
+    lues = [c["revele"] for c in obj["calendrier"] if c["revelation_porteur"] == "lue" and c["revele"] not in ("0", "H90")]
+    possibles = []
+    for t in lues:
+        tens = obj["textes"][t]["tension"]
+        avant = [x for x in ENTREE + [str(n) for n in range(1, int(t))] if obj["textes"][x]["tension"] == tens]
+        if len(avant) >= seuil:
+            possibles.append(f"T{t} ({len(avant)} réponses {tens} avant)")
+    out.append(f"15. Impossibilités : (a) écran 5.12, plus petit nombre de réponses de personnages sur T0, T1, T2, T6, T13 : {mini} ; "
+               f"(b) Le Sans-Faute du porteur : jours où ses cartes sont révélées, semaine 14 : {sem14}, semaine 15 : {sem15} "
+               f"(5 exigés) ; (c) Le Pas de Côté du porteur (révélations lues de ses textes : "
+               + ", ".join("T" + t for t in lues) + f" ; au moins ⌈10/{facteur}⌉ = {seuil} réponses avant, entrée comprise) : "
+               + (", ".join(possibles) if possibles else "aucun") + ".")
     return out
-
 
 if __name__ == "__main__":
     try:

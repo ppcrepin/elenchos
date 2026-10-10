@@ -53,7 +53,9 @@ def durees_pour(j):
         et = c["etapes"] or {}
         return {"duree_deviner": 10 if et.get("deviner") else None,
                 "duree_entree": 10 if c["jour"] == 1 and et.get("entree") else None,
-                "duree_repondre": 10 if et.get("repondre") else None, "duree_seance": 60}
+                "duree_repondre": 10 if et.get("repondre") else None, "duree_seance": 60,
+                "sauts": [{"duree_page": 5, "duree_saut": 50, "durees_textes": [7] * x["textes_atteints"],
+                           "numero": x["numero"]} for x in c["sauts"]]}
     return {"copies": [cp(c) for c in j["copies"]],
             "format": "elenchos-essai-durees", "jours": jours, "partie": j["partie"]["id"],
             "sauts": [{"duree_page": 12, "duree_saut": 300, "durees_textes": [20] * s["textes_atteints"],

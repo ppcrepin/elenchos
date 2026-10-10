@@ -197,12 +197,14 @@ class Moteur:
             places[idx] = remplacante
             remplacements.append({"ecartee": ecartee, "place": idx + 1, "remplacante": remplacante})
         cachee = None
+        deplacee = False
         if places:
             cachee = places[-1]
             if reps[cachee]["raison"] == "aucune":
                 autres = [P for P in places if reps[P]["raison"] != "aucune"]
                 if autres:
                     cachee = max(autres, key=lambda P: rang_cl[P])
+                    deplacee = True
         ordre = tg.melanger(places, f"ordre|{g}|{j}|{{}}")
         cartes = [{"auteur": X, "auteur_compte": X, "cachee": X == cachee,
                    "designe": None, "raison_devinee": None,
@@ -213,7 +215,7 @@ class Moteur:
             "classement": classement, "departages": departages, "remplacements": remplacements,
             "places": places, "raison_cachee": cachee, "ordre": ordre, "cartes": cartes,
             "rangs": None, "cotes_attendus": None, "curseur_porteur": None, "total": None,
-            "_devineur": g, "_jour": j,
+            "_devineur": g, "_jour": j, "_cachee_deplacee": deplacee,
         }
 
     # ------------------------------------------------------------ devinettes (point 4)

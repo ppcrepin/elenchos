@@ -455,6 +455,10 @@ async function parcoursA(navigateur) {
     controle: (document.querySelector('details.controle') || {}).textContent || '', empreinte: window.ElenchosEssai.empreinte(),
     copies: window.ElenchosEssai.copies() }));
   assert.ok(dv.n >= 7, 'panneaux du dévoilement : ' + dv.n);
+  assert.ok(normaliser(dv.t).includes(normaliser("Le Pas de Côté ne vous était possible qu'à la révélation du jour 14, sur Sécurité ou Liberté individuelle")), 'Pas de Côté (facteur 3 : T12 seul)');
+  assert.ok(normaliser(dv.t).includes(normaliser('En tout, entrée et dernier jour compris, vous aviez 5 textes sur Sécurité')), 'comptes E1 à E3, T1 à T14');
+  assert.ok(normaliser(dv.t).includes(normaliser('Sur Tradition ou Changement, votre curseur ne pouvait pas devenir net.')), 'tension fermée');
+  assert.equal((dv.t.match(/Ses tempéraments au second dimanche/g) || []).length, 4);
   const trou = /.{0,60}(?:À ÉCRIRE|undefined|NaN|null|\[object|\{[a-zA-Z_]+\}).{0,60}/.exec(dv.t);
   assert.ok(!trou, 'trou dans le dévoilement : ' + (trou && trou[0]));
   assert.ok(dv.controle.replace(/\s+/g, '').includes(dv.empreinte) && dv.controle.includes('"graine"'), 'empreinte absente du panneau de contrôle');
@@ -519,6 +523,12 @@ async function parcoursB(navigateur) {
   await P.journalValide(false);
   await P.page.reload(); await P.page.waitForTimeout(100);
   await P.voit('Votre carnet à copier');
+  // Dévoilement après un arrêt : tout est montré ; tempéraments du second dimanche pour chacun (non atteint).
+  await P.toucher('voir-devoilement');
+  await P.voit('Le dévoilement');
+  const nTemp = await P.page.evaluate(() => Array.from(document.querySelectorAll('.panneau p')).filter((x) => /^Ses tempéraments au second dimanche/.test(x.textContent)).length);
+  assert.equal(nTemp, 4, 'tempéraments après un arrêt');
+  await P.capture('devoilement-apres-arret');
   noter('B : arrêt pendant le saut, carnet, reprise du parcours d\'arrêt au rechargement');
   await s.ctx.close();
   return { carnet };

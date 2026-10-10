@@ -365,11 +365,15 @@ class Rejeu:
 
     # ------------------------------------------------------------ sauts
 
-    def saut(self, i, s):
+    def saut(self, i, s, sources=None, ch=None):
+        """Mesures d'un saut ; `sources` : la liste `sauts` du fichier des durées (du jour,
+        ou d'une copie, partie 4.4)."""
+        if sources is None and self.durees is not None:
+            sources = self.durees["sauts"]
         src = None
-        if self.durees is not None:
-            src = next((x for x in self.durees["sauts"] if x.get("numero") == s["numero"]), None)
-        ch = f"/sauts/{i}/mesures"
+        if sources is not None:
+            src = next((x for x in sources if x.get("numero") == s["numero"]), None)
+        ch = ch or f"/sauts/{i}/mesures"
         dt = None
         if self.mode != "moteur":
             v = None if src is None else src.get("durees_textes")
@@ -446,6 +450,9 @@ class Rejeu:
         blocs = []
         sauts = {s["numero"]: s for s in (sauts_copie if sauts_copie is not None else sauts_tr)}
         sauts_final = {s["numero"]: s for s in sauts_tr}
+        mesures_copie = {}
+        if sauts_copie is not None:
+            mesures_copie = {x["numero"]: x["mesures"] for x in sauts_copie}
         for k in range(1, jusqua + 1):
             st = jours_tr[str(k)]
             t = self.cal[k]["type"]
@@ -458,9 +465,9 @@ class Rejeu:
             if t == "joue_puis_saut" and self.cal[k]["saut"] in sauts:
                 n = self.cal[k]["saut"]
                 sc = sauts[n]
-                sf = sauts_final.get(n, sc)
+                m = mesures_copie[n] if sauts_copie is not None else sauts_final[n]["mesures"]
                 annuler = (final[0] if (final and k == jusqua) else st["coups"])["annuler_saut"] or 0
-                blocs.append(cn.bloc_saut(n, sf["mesures"], annuler, sc["textes_atteints"]))
+                blocs.append(cn.bloc_saut(n, m, annuler, sc["textes_atteints"]))
             if self.cal[k]["nom_jour"] == "dimanche" and k in self.dimanches and t == "joue":
                 q = (final[0] if (final and k == jusqua) else st["coups"])["carnet"]
                 blocs.append(cn.bloc_semaine(1 if k == 7 else 2, self.dimanches[k], q))
@@ -492,8 +499,13 @@ class Rejeu:
                 src = srcs[i] if i < len(srcs) else None
                 m = en_trace(self.mesures(k, cp["coups"], cp["etapes"], src, f"/copies/{i}/mesures"))
                 ag = en_trace(self.agregats(k))
+                src_sauts = (src or {}).get("sauts") if src is not None else None
+                if self.mode == "interface" and src is not None and not isinstance(src_sauts, list):
+                    self.defauts.append((f"/copies/{i}/sauts", "fichier des durées : `sauts` absent de la copie"))
+                sauts_c = [dict(x, mesures=en_trace(self.saut(i, x, src_sauts or [], f"/copies/{i}/sauts/{n}/mesures"))["mesures"])
+                           for n, x in enumerate(cp["sauts"])]
                 texte = self.texte_carnet(jours, trace["sauts"], k, "copie", (cp["coups"], cp["versions"], m), ag,
-                                          cp["sauts"])
+                                          sauts_c)
                 trace["copies"].append({"coups": cp["coups"], "etapes": cp["etapes"], "jour": k, "mesures": m,
                                         "sauts": cp["sauts"], "texte": texte, "versions": cp["versions"]})
             if self.durees is not None and len(srcs) != len(self.j["copies"]):

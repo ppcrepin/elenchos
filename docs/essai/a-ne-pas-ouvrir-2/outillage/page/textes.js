@@ -538,7 +538,7 @@ var ElenchosTextes = (function (N) {
     commentLireTextes: function (cinq, titreH86) {
       return [
         "Chaque personnage a gardé le profil du premier essai. Pour chaque tension, une place de 0 à 100 : 0 pour la première valeur (Sécurité), 100 pour la seconde (Liberté individuelle) ; de 41 à 59, au milieu. Et une fermeté : plus elle était forte, plus ses réponses s'éloignaient de Neutre, jusqu'à « Très ».",
-        'Les réponses de chacun découlaient de son profil, sauf environ une sur ' + cinq + ", tirée au sort et donnée exprès contre ce profil pour que rien ne se devine à coup sûr : le côté opposé, sans « Très » (si le profil donnait Neutre, un côté tiré au sort). Quand ce côté allait contre sa valeur, il prenait l'argument inattendu de ce côté s'il y en avait un (au nom de sa valeur, ou pratique), sinon l'argument attendu. Jamais à deux textes qui se suivent (l'histoire d'avant votre arrivée et l'essai se comptent chacun à part, et les deux réponses imposées sur « " + titreH86 + " » font exception), jamais plus de deux personnages pour un même texte.",
+        'Les réponses de chacun découlaient de son profil, sauf environ une sur ' + cinq + ", tirée au sort et donnée exprès contre ce profil pour que rien ne se devine à coup sûr : le côté opposé, sans « Très » (si le profil donnait Neutre, un côté tiré au sort). Quand ce côté allait contre sa valeur, il prenait l'argument inattendu de ce côté s'il y en avait un (au nom de sa valeur, ou pratique), sinon l'argument attendu. Jamais deux textes de suite pour un même personnage, jamais plus de deux personnages pour un même texte. Deux exceptions : le compte repart de zéro à votre arrivée, et les deux réponses imposées sur « " + titreH86 + " » (panneau suivant).",
         "Chacun s'absentait parfois, par tirage : une chance sur quatorze à chaque texte, jamais deux fois en sept textes de suite (l'histoire et l'essai se comptent chacun à part), jamais plus d'un absent pour un même texte. Ce jour-là, ni réponse ni devinette.",
         "Aux trois textes d'entrée et au texte du dernier jour, personne ne répondait contre son profil ni ne s'absentait.",
         'Toutes les réponses des personnages ont été calculées par des règles fixes, écrites et scellées avant l\'essai, sans rien savoir des vôtres.',
@@ -559,8 +559,8 @@ var ElenchosTextes = (function (N) {
       return 'Votre portrait comptait chacune de vos réponses ' + trois + " fois ; le portrait de chaque personnage comptait chacune des siennes une fois ; et avec quatre tensions seulement, chacune revenait deux fois plus souvent que dans le jeu. Votre portrait avançait donc environ " + six + ' fois plus vite.';
     },
     pourVousCurseurs: function (nS, nP, nT, nL, seuil, fermees) {
-      return "Jusqu'au second dimanche, vous aviez " + nS + ' textes sur Sécurité ou Liberté individuelle, ' + nP + ' sur Précaution ou Innovation, ' + nT +
-        ' sur Tradition ou Changement et ' + nL + ' sur Local ou National, entrée comprise. Un curseur devenait net quand ses réponses pesaient au moins ' + seuil +
+      return "En tout, entrée et dernier jour compris, vous aviez " + nS + (nS >= 2 ? ' textes' : ' texte') + ' sur Sécurité ou Liberté individuelle, ' + nP + ' sur Précaution ou Innovation, ' + nT +
+        ' sur Tradition ou Changement et ' + nL + ' sur Local ou National. Un curseur devenait net quand ses réponses pesaient au moins ' + seuil +
         " : une réponse favorable ou défavorable avec un argument attendu pèse 1 ; avec un argument pratique ou aucune des quatre raisons, 1/2 ; avec un argument au nom de l'autre valeur, 0 ; Neutre, 0. Avec si peu de réponses, une seule qui pèse 0 pouvait suffire à l'empêcher." +
         (fermees ? ' Sur ' + fermees + ', votre curseur ne pouvait pas devenir net.' : '');
     },
@@ -568,8 +568,8 @@ var ElenchosTextes = (function (N) {
     motSeuil: { 2: '5', 3: '3 et 1/3', 4: '2 et 1/2' },
     pasDeCotePossible: function (jours) { return 'Le Pas de Côté ne vous était possible qu\'à la révélation ' + jours + ', et seulement si votre curseur y était déjà net.'; },
     pasDeCoteJour: function (j, tension) { return 'du jour ' + j + ', sur ' + tension; },
-    pasDeCoteJours: function (liste) { return 'de ces jours : ' + liste; },
-    pasDeCoteJourListe: function (j, tension) { return 'jour ' + j + ', sur ' + tension; },
+    /** liste : les jours n + 2, règle de liste du §8.12 (« 7 et 8 », « 7, 8 et 14 »). */
+    pasDeCoteJours: function (liste) { return 'des jours ' + liste + ', chacun sur la tension de son texte'; },
     pasDeCoteImpossible: 'Le Pas de Côté vous était impossible : aucun de vos curseurs ne pouvait être net assez tôt.',
     pourVousTitres: function (pts14, pts15) {
       return 'Les sauts vous ont fermé un titre et en ont presque fermé un autre. Vos cartes ne pouvaient être révélées que trois jours la première semaine et un jour la seconde ; celles des personnages, presque chaque jour. Le Sans-Faute demande des cartes révélées au moins cinq jours de la semaine : il vous était impossible. Le Devin va à qui marque le plus de points dans la semaine : vous pouviez en marquer au plus ' +

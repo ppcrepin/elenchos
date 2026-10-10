@@ -1461,24 +1461,20 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
     return l;
   }
   function panneauPourVous() {
-    var f = scelle.reglage.facteur, d14 = dernierDimanche();
+    var f = scelle.reglage.facteur;
     var compte = function (liste, code) { return liste.filter(function (x) { return texteDe(x).tension === code; }).length; };
-    var tous = textesPorteurAvant(d14);
+    var tous = textesPorteurAvant(cal.dernierJeu + 1); // E1 à E3 et T1 à T14
     var n = {}; ['S', 'P', 'T', 'L'].forEach(function (c) { n[c] = compte(tous, c); });
     var fermees = ['S', 'P', 'T', 'L'].filter(function (c) { return n[c] * f < 10; }).map(nomTension);
     var l = [h('h2', null, t(X.pourVousTitre)),
       h('p', null, t(X.pourVousFacteur(enLettres(f), enLettres(2 * f)))),
       h('p', null, t(X.pourVousCurseurs(n.S, n.P, n.T, n.L, X.motSeuil[f], fermees.length ? N.listeEt(fermees) : null)))];
-    // Le Pas de Côté : textes Tn (n ≤ 13) dont la tension compte déjà au moins 10/f textes avant lui.
-    var possibles = [];
-    for (var j = cal.premier; j < d14; j++) {
-      var tj = cal.ligne(j).repondu;
-      if (tj === null) { continue; }
-      if (compte(textesPorteurAvant(j), texteDe(tj).tension) * f >= 10) { possibles.push({ jour: j + 2, tension: nomTension(texteDe(tj).tension) }); }
-    }
+    // Le Pas de Côté : textes Tn, n parmi 5, 6, 12 et 13 (les seuls dont la révélation est lue après le jour 4),
+    // dont la tension compte déjà au moins 10/f textes avant lui (E1 à E3, T1 à T(n-1)).
+    var possibles = CR.pasDeCotePossibles(scelle, cal, f).map(function (n) { return { jour: n + 2, tension: nomTension(texteDe(cal.ligne(n).repondu).tension) }; });
     l.push(h('p', null, t(!possibles.length ? X.pasDeCoteImpossible : X.pasDeCotePossible(possibles.length === 1 ?
       X.pasDeCoteJour(possibles[0].jour, possibles[0].tension) :
-      X.pasDeCoteJours(possibles.map(function (x) { return X.pasDeCoteJourListe(x.jour, x.tension); }).join(' ; '))))));
+      X.pasDeCoteJours(N.listeEt(possibles.map(function (x) { return String(x.jour); })))))));
     // {pts14}, {pts15} : cartes servies au porteur dans ses manches révélées pendant chaque semaine de l'essai (plafond, sans les coups).
     var cs = M.cartesServies(scelle, cal, socle.arrivee());
     var pts = cal.semainesEssai.map(function (w) {
@@ -1490,6 +1486,11 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
     var supprimer = Object.keys(scelle.textes).filter(function (x) { return /^Supprimer/.test(scelle.textes[x].titre); });
     if (supprimer.length >= 2 && supprimer.every(function (x) { return scelle.textes[x].vote.issue === 'rejete'; })) { l.push(h('p', null, t(X.pourVousSupprimer))); }
     return h('section', { class: 'panneau' }, l);
+  }
+  var tempsD14 = null;
+  function temperamentsSecondDimanche() {
+    if (tempsD14 === null) { tempsD14 = CR.temperamentsAu(M, scelle, cal, socle.arrivee(), journalCourant(), dernierDimanche()); }
+    return tempsD14;
   }
   function panneauPersonnage(pp) {
     var f = scelle.personnages[pp], k = K();
@@ -1522,14 +1523,12 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
     var aH = scelle.reponses_atypiques[pp].filter(function (a) { return hist.indexOf(a.texte) >= 0; }).length;
     var mH = scelle.absences[pp].filter(function (x) { return hist.indexOf(x) >= 0; }).length;
     b.push(h('p', null, t(X.avantArrivee(aH, hist.length - mH, mH, hist.length))));
-    // Tempéraments au second dimanche, s'il a été atteint (après un arrêt plus tôt, le calcul n'existe pas).
+    // Tempéraments : toujours le calcul du second dimanche, même après un arrêt (devoilement.md, arbitrage du 10 octobre 2026) ;
+    // dimanche atteint : R ; sinon les règles du moteur, les réponses non données comptant comme absentes (CR.temperamentsAu).
     var d14 = dernierDimanche();
-    var dm = d14 <= k ? Rj(d14).dimanche : null;
-    if (dm) {
-      var temps = dm.temperaments[pp].temperaments;
-      if (!temps.length) { b.push(h('p', null, t(X.temperamentsAucun))); }
-      else { b.push(h('p', null, t(X.temperamentsTete))); X.ORDRE_TEMPERAMENTS.filter(function (c) { return temps.indexOf(c) >= 0; }).forEach(function (c) { b.push(h('p', null, t(X.temperamentsRegles[c]))); }); }
-    }
+    var temps = d14 <= k ? Rj(d14).dimanche.temperaments[pp].temperaments : temperamentsSecondDimanche()[pp];
+    if (!temps.length) { b.push(h('p', null, t(X.temperamentsAucun))); }
+    else { b.push(h('p', null, t(X.temperamentsTete))); X.ORDRE_TEMPERAMENTS.filter(function (c) { return temps.indexOf(c) >= 0; }).forEach(function (c) { b.push(h('p', null, t(X.temperamentsRegles[c]))); }); }
     return h('section', { class: 'panneau', 'aria-label': pp }, b);
   }
   function pageDevoilement() {

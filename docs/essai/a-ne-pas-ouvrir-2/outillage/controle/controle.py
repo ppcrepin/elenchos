@@ -14,6 +14,8 @@ Jalon 2 :
   durees           fichier des durées (version 2) tiré d'une trace de la page
   comparer-traces  trace de la page contre trace C (durées masquées)
   carnets          contrôle 13 ; variantes : contrôle 12 ; phrases : phrases attendues v2
+  constantes       chiffres constants (fichier caché 2, point 13)
+  devoilement      phrases attendues du dévoilement (devoilement.md), pour une partie
 
 Lancer depuis n'importe où : python3 -I controle.py <commande> --help
 """
@@ -281,7 +283,10 @@ def cmd_durees(a):
     from ec import canon
     t = _json(a.trace)
     cles = ("duree_deviner", "duree_entree", "duree_repondre", "duree_seance")
-    out = {"copies": [{k: c["mesures"][k] for k in cles} for c in t["copies"]],
+    if any(c["sauts"] for c in t["copies"]):
+        print("ATTENTION : une copie porte un saut ; ses durées ne sont pas dans la trace (partie 4.4) : "
+              "prendre le fichier des durées au point d'accès de la page (`durees()`).", file=sys.stderr)
+    out = {"copies": [dict({k: c["mesures"][k] for k in cles}, sauts=[]) for c in t["copies"]],
            "format": "elenchos-essai-durees", "jours": {}, "partie": t["partie"]["id"],
            "sauts": [{"duree_page": s["mesures"]["duree_page"], "duree_saut": s["mesures"]["duree_saut"],
                       "durees_textes": s["mesures"]["durees_textes"], "numero": s["numero"]} for s in t["sauts"]],
@@ -361,6 +366,29 @@ def cmd_phrases(a):
     from ec.phrases import phrases_attendues
     d, o = _scelle(a.scelle)
     b = canon.octets_canoniques(phrases_attendues(d, o))
+    if a.sortie:
+        Path(a.sortie).write_bytes(b)
+    else:
+        sys.stdout.write(b.decode("utf-8") + "\n")
+    return 0
+
+
+def cmd_constantes(a):
+    from ec.constantes import rapport
+    d, o = _scelle(a.scelle)
+    texte, _, js = rapport(d, o)
+    if a.json:
+        Path(a.json).write_bytes(js)
+    ecrire(texte, a.sortie)
+    return 0
+
+
+def cmd_devoilement(a):
+    from ec import canon
+    from ec.devoilement import phrases_devoilement
+    d, o = _scelle(a.scelle)
+    j = _json(a.journal) if a.journal else None
+    b = canon.octets_canoniques(phrases_devoilement(d, o, j, a.date_publication, a.heure_publication, a.nom_fichier))
     if a.sortie:
         Path(a.sortie).write_bytes(b)
     else:
@@ -457,6 +485,21 @@ def main(argv=None):
     c.add_argument("--scelle", required=True)
     c.add_argument("--sortie")
     c.set_defaults(f=cmd_phrases)
+
+    c = sp.add_parser("constantes", help="chiffres constants (fichier caché 2, point 13)")
+    c.add_argument("--scelle", required=True)
+    c.add_argument("--json", help="les chiffres en JSON canonique")
+    c.add_argument("--sortie")
+    c.set_defaults(f=cmd_constantes)
+
+    c = sp.add_parser("devoilement", help="phrases attendues du dévoilement (contrôle 11), pour une partie")
+    c.add_argument("--scelle", required=True)
+    c.add_argument("--journal", help="journal de la partie (manches ouvertes, réponses du porteur)")
+    c.add_argument("--date-publication", help="{date} de l'empreinte publiée, tel qu'affiché")
+    c.add_argument("--heure-publication", help="{heure} de l'empreinte publiée, tel qu'affiché")
+    c.add_argument("--nom-fichier", help="{fichier} : nom du fichier scellé, tel qu'affiché")
+    c.add_argument("--sortie")
+    c.set_defaults(f=cmd_devoilement)
 
     c = sp.add_parser("comparer", help="différences entre deux fichiers JSON")
     c.add_argument("a")

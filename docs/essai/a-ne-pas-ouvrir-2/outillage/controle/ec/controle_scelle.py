@@ -339,13 +339,14 @@ def verifier_commissions(d, commissions, amo_dossiers, info):
             try:
                 org = amo.lire_organe(amo_dossiers, ident)
             except amo.ErreurAmo as x:
-                info.append(f"commission {lib!r} : {ident} non lu ({x})")
+                info.append(f"commission {lib!r} : {ident} : amo inutilisable ({x}) : repli, forme seule vérifiée")
                 continue
-            off = org["libelle"] or ""
-            court = off[:1].lower() + off[1:]
-            info.append(f"commission {lib!r} : {ident} libelle {off!r} ({org['sha256']}  {org['chemin']}) : "
-                        + ("égal, majuscule initiale mise en minuscule" if court == lib else
-                           "DIFFÉRENT (information, voir QUESTIONS.md, Q-C2)"))
+            off = unicodedata.normalize("NFC", org["libelle"] or "")
+            court = (off[:1].lower() + off[1:]).replace("\u2019", "'")
+            info.append(f"commission {lib!r} : amo lu : {org['sha256']}  {org['chemin']} ({ident}, libelle {off!r})")
+            if court != lib:
+                e.append(f"partie 2.10 bis : {ident} : `libelle` {lib!r} ≠ libelle de l'organe {off!r} "
+                         "(première lettre en minuscule, U+2019 → U+0027)")
     return e
 
 
@@ -548,17 +549,21 @@ def etape8(d, fiches, votes, scrutins_b, cases=None):
     if scrutins_b is None:
         info.append("présentation B : liste non fournie, ligne 3 fixe non vérifiée (étape incomplète)")
     else:
-        par_scrutin = {f["_scrutin"]: t for t, f in fiches.items() if t in JOUES}
+        par_scrutin = {}
+        for t, f in fiches.items():
+            if t in JOUES:
+                par_scrutin.setdefault(f["_scrutin"], []).append(t)
         for n in scrutins_b:
-            tid = par_scrutin.get(n)
-            if tid is None:
-                e.append(f"présentation B : scrutin {n} absent des fiches des textes joués")
+            tids = par_scrutin.get(n, [])
+            if len(tids) != 1:
+                e.append(f"présentation B : le scrutin {n} désigne {len(tids)} fiches de texte joué (exactement une attendue)")
                 continue
+            tid = tids[0]
             for src, ls in (("fichier", d["textes"][tid]["lignes"]), ("fiche", fiches[tid]["lignes"])):
                 if ls[2] != PHRASE_B:
-                    e.append(f"/textes/{tid}/lignes/2 ({src}, présentation B, scrutin {n}) : {ls[2]!r} ≠ phrase fixe {PHRASE_B!r}")
-        info.append("présentation B : " + ", ".join(f"scrutin {n} = {nom_texte(par_scrutin[n])}"
-                                                   for n in scrutins_b if n in par_scrutin))
+                    e.append(f"/textes/{tid}/lignes/2 ({src}, présentation B, scrutin {n}) : ligne différente de la phrase fixe")
+        info.append("présentation B : " + ", ".join(f"scrutin {n} = {nom_texte(par_scrutin[n][0])}"
+                                                   for n in scrutins_b if len(par_scrutin.get(n, [])) == 1))
     # H86 : Titre, Tension, et sa ligne de votes.md
     fh = fiches["H86"]
     h = d["histoire"]["textes"]["H86"]

@@ -405,6 +405,18 @@ def valider(j, scelle, empreinte, confusables=None):
                      and t == "joue" and k > 1 and cal[k - 1]["type"] == "saute")
         if doit and o is None and not exception:
             D(4, f"/jours/{k}/ouverture", "ouverture attendue (jour joué, point de saut ou clôture)")
+        if exception:
+            # Règle 4 (schéma 2, partie 4.4) : état exact du jour de reprise atteint sans ouverture.
+            jk = jours[str(k)]
+            c = jk["coups"]
+            if jk["versions"] is not None:
+                D(4, f"/jours/{k}/versions", "jour de reprise sans ouverture : null attendu")
+            if mode == "interface" and jk["etapes"] != {"deviner": False, "entree": None, "repondre": False}:
+                D(4, f"/jours/{k}/etapes", "jour de reprise sans ouverture : {deviner: false, entree: null, repondre: false}")
+            if c["abandon"] is not False or c["relire"] or c["rouvrir"] or any(c["ouvert"][x] for x in CLES_OUVERT):
+                D(4, f"/jours/{k}/coups", "jour de reprise sans ouverture : abandon false, relire, rouvrir et ouvert à 0")
+            if any(v is not None for v in c["carnet"].values()):
+                D(4, f"/jours/{k}/coups/carnet", "jour de reprise sans ouverture : les quatre clés valent null")
         if not doit and o is not None:
             D(4, f"/jours/{k}/ouverture", "pas d'ouverture un jour sauté")
         if o is None:
@@ -544,6 +556,8 @@ def valider(j, scelle, empreinte, confusables=None):
             D(9, ch + "/rouvrir", "non nul seulement aux jours 2, 3, 7 et 14")
         if (c["annuler_saut"] is not None) != (t == "joue_puis_saut"):
             D(9, ch + "/annuler_saut", "n'existe qu'aux jours 4 et 8 (points de saut)")
+        if t == "joue_puis_saut" and any(c["ouvert"][x] for x in ("cercle", "moi", "proche")):
+            D(9, ch + "/ouvert", "point de saut : Le Cercle, Moi et l'écran d'un proche valent 0 (pas accessibles)")
         if t == "saute":
             if c["relire"] or c["rouvrir"] or any(c["ouvert"][x] for x in CLES_OUVERT):
                 D(9, ch, "jour sauté : relire, rouvrir et ouvert valent 0")

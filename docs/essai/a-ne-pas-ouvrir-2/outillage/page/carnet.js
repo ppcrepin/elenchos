@@ -264,7 +264,49 @@ var ElenchosCarnet = (function (N, J, X) {
     return { texte: t, mesures: R.jours[String(cp.jour)].mesures };
   }
 
-  return { texte: texte, texteCopie: texteCopie, duree: duree, moment: moment, VERDICTS: VERDICTS, PERSONNAGES: PERSONNAGES, ErreurCarnet: ErreurCarnet };
+  /**
+   * Tempéraments des personnages au jour d (dévoilement, panneau par personnage :
+   * « calcul du jour 14, même après un arrêt », devoilement.md, arbitrage du
+   * 10 octobre 2026). Les règles du moteur (M.regles.contexte,
+   * M.regles.calculerTemperaments) sur la lecture du porteur de M.calculer :
+   * une réponse que le porteur n'a pas donnée (jour non atteint) compte comme
+   * absente. Quand d est atteint, le résultat est celui de R.jours[d].dimanche
+   * (test-carnet.js le vérifie). -> { personnage: [codes] }
+   */
+  function temperamentsAu(M, scelle, cal, arrivee, journal, d) {
+    var Jj = journal.jours, P = cal.premier, K = P - 1;
+    while (Object.prototype.hasOwnProperty.call(Jj, String(K + 1))) { K++; }
+    var entreeJ = K >= P ? Jj[String(P)].coups.entree : null;
+    function reponsePorteur(t) {
+      if (cal.textesEntree.indexOf(t) >= 0) { return entreeJ && entreeJ[t] && entreeJ[t].reponse ? entreeJ[t].reponse : null; }
+      if (Object.prototype.hasOwnProperty.call(scelle.histoire.textes, t)) { return null; }
+      var j = cal.jourDeReponse(t);
+      if (j < P || j > K) { return null; }
+      return Jj[String(j)].coups.reponse || null;
+    }
+    var ctx = M.regles.contexte(scelle, cal, reponsePorteur, arrivee);
+    var r = {};
+    ctx.personnages.forEach(function (p) { r[p] = M.regles.calculerTemperaments(ctx, d, p).temperaments.slice(); });
+    return r;
+  }
+
+  /**
+   * Dévoilement, {Pas de Côté} (devoilement.md, règles de calcul) : les n parmi
+   * 5, 6, 12 et 13 dont la tension de Tn compte déjà, dans E1 à E3 et T1 à
+   * T(n-1), au moins 10/f textes. f : le facteur du porteur. -> [n] croissants
+   */
+  function pasDeCotePossibles(scelle, cal, f) {
+    var tension = function (x) { return scelle.textes[x].tension; };
+    return [5, 6, 12, 13].filter(function (n) {
+      var tn = cal.existe(n) ? cal.ligne(n).repondu : null;
+      if (tn === null) { return false; }
+      var avant = cal.textesEntree.slice();
+      for (var j = cal.premier; j < n; j++) { var x = cal.ligne(j).repondu; if (x !== null) { avant.push(x); } }
+      return avant.filter(function (x) { return tension(x) === tension(tn); }).length * f >= 10;
+    });
+  }
+
+  return { texte: texte, texteCopie: texteCopie, temperamentsAu: temperamentsAu, pasDeCotePossibles: pasDeCotePossibles, duree: duree, moment: moment, VERDICTS: VERDICTS, PERSONNAGES: PERSONNAGES, ErreurCarnet: ErreurCarnet };
 })(ElenchosNoyau, ElenchosJournal, ElenchosTextes);
 
 /*node-debut*/

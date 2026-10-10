@@ -151,3 +151,45 @@ test('Boutons touchés (§8.12) : seulement les jours avec Deviner, une fois l\'
   for (const titre of ['Jour 4 ', 'Jour 8 ', 'Clôture']) assert.ok(!bloc(titre).includes('Boutons touchés'), titre);
   assert.ok(t.includes('Boutons touchés'), 'présent ailleurs');
 });
+
+test('Dévoilement, {Pas de Côté} : n parmi 5, 6, 12, 13 ; facteurs 2, 3, 4 ; forme plurielle', () => {
+  const X = require('../textes.js');
+  // Partie de test : seul T12 (Sécurité ou Liberté individuelle) a assez de textes de sa tension avant lui.
+  assert.deepEqual(CR.pasDeCotePossibles(S, cal, 2), []);
+  assert.deepEqual(CR.pasDeCotePossibles(S, cal, 3), [12]);
+  assert.deepEqual(CR.pasDeCotePossibles(S, cal, 4), [12]);
+  // Jamais hors de 5, 6, 12, 13, même avec un facteur qui rendrait tout possible.
+  assert.deepEqual(CR.pasDeCotePossibles(S, cal, 10), [5, 6, 12, 13]);
+  // Deux jours : T13 passé sur la tension de T12.
+  const S2 = JSON.parse(JSON.stringify(S));
+  S2.textes['13'].tension = S2.textes['12'].tension;
+  const n2 = CR.pasDeCotePossibles(S2, cal, 4);
+  assert.deepEqual(n2, [12, 13]);
+  const phrase = X.pasDeCotePossible(X.pasDeCoteJours(N.listeEt(n2.map((n) => String(n + 2)))));
+  assert.ok(phrase.includes(' des jours 14 et 15, chacun sur la tension de son texte, '), phrase);
+});
+
+test('Dévoilement, tempéraments : calcul du jour 14, même après un arrêt (réponses non données = absentes)', () => {
+  const d14 = cal.semaine(cal.semainesEssai[cal.semainesEssai.length - 1]).dernier_jour;
+  const CODES = ['original', 'pont', 'mesure', 'tranche'];
+  // Partie entière : le calcul hors moteur est celui de R.
+  const pleine = PT.jouer(S, cal, { cartes: cartes });
+  const jp = E.journal(pleine, cal, EMPREINTE);
+  const R = M.calculer(S, cal, arrivee, jp);
+  const tp = CR.temperamentsAu(M, S, cal, arrivee, jp, d14);
+  Object.keys(tp).forEach((p) => assert.deepEqual(tp[p], R.jours[String(d14)].dimanche.temperaments[p].temperaments, p));
+  // Arrêt pendant le premier saut : le jour 14 n'est pas atteint, le calcul existe pour chacun.
+  const arrete = PT.jouer(S, cal, { cartes: cartes, arretA: { jour: 5, moment: 'rattrapage' } });
+  const ja = E.journal(arrete, cal, EMPREINTE);
+  assert.ok(!M.calculer(S, cal, arrivee, ja).jours[String(d14)], 'jour 14 non atteint');
+  const ta = CR.temperamentsAu(M, S, cal, arrivee, ja, d14);
+  assert.deepEqual(Object.keys(ta).sort(), Object.keys(S.personnages).sort());
+  Object.keys(ta).forEach((p) => assert.ok(ta[p].every((c) => CODES.includes(c)), p));
+  // Les réponses non données comptent comme absentes : le même calcul que si le porteur n'avait jamais répondu après l'arrêt,
+  // c'est-à-dire celui de la partie entière privée de ses réponses des jours 5 à 14.
+  const tronque = JSON.parse(JSON.stringify(jp));
+  Object.keys(tronque.jours).forEach((k) => { if (+k >= 5) { delete tronque.jours[k]; } });
+  tronque.fin = null;
+  assert.deepEqual(CR.temperamentsAu(M, S, cal, arrivee, tronque, d14), CR.temperamentsAu(M, S, cal, arrivee,
+    (() => { const x = JSON.parse(JSON.stringify(ja)); Object.keys(x.jours).forEach((k) => { if (+k >= 5) { delete x.jours[k]; } }); return x; })(), d14));
+});

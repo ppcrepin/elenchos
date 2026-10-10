@@ -111,7 +111,7 @@ def bloc_jour(j, type_jour, nom_jour, ouverture, versions, mesures, coups):
     L = ["Clôture" if cloture else f"Jour {j} · {nom_jour}"]
     local, _, _ = lire_instant(ouverture)
     L.append(f"Ouverture : {date_carnet(local)}, entre {local.hour}h00 et {local.hour}h59.")
-    if j > 1 and not point and mesures["jours_ecoules"] is not None:
+    if j > 1 and mesures["jours_ecoules"] is not None:
         L.append(f"Jours écoulés depuis l{A}ouverture précédente : {mesures['jours_ecoules']}.")
     L.append(f"Version de la page : {', puis '.join(str(v) for v in versions)}.")
     suite = []
