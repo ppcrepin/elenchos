@@ -225,10 +225,19 @@ def masquer_durees(texte):
     return RE_DUREE.sub("‹durée›", texte)
 
 
+def pseudo_present(texte, pseudo):
+    """Le pseudo comme mot entier : après NFC (la forme exigée du carnet), ni précédé ni
+    suivi d'un caractère de mot Unicode (`\\w` de `re`, lettres et chiffres de toutes
+    écritures). Un pseudo court retrouvé à l'intérieur d'un mot fixe (« Jour ») n'y est pas."""
+    t = unicodedata.normalize("NFC", texte)
+    p = unicodedata.normalize("NFC", pseudo)
+    return re.search(r"(?<!\w)" + re.escape(p) + r"(?!\w)", t) is not None
+
+
 def verifier_forme(texte, pseudo=None):
     """Règles de forme du §8.12 (premier essai, inchangées) ; contrôle 12."""
     e = []
-    if pseudo and pseudo in texte:
+    if pseudo and pseudo_present(texte, pseudo):
         e.append("le pseudo figure dans le carnet")
     if not texte.endswith("\n\nFin du carnet"):
         e.append("ne finit pas par une ligne vide puis « Fin du carnet » sans retour final")

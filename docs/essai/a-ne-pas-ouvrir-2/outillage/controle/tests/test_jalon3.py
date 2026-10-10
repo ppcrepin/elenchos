@@ -88,5 +88,34 @@ class TestListeB(unittest.TestCase):
         self.assertRegex(texte, r"présentation B : scrutin [0-9]+ = ")
 
 
+
+class TestPseudoDansLeCarnet(unittest.TestCase):
+    """Contrôle 12 : le pseudo est cherché comme mot entier, après NFC."""
+
+    PSEUDO = "Jo"
+    FAUX = "pseudo figure"
+
+    def defauts(self, texte, pseudo=None):
+        from ec.carnet import verifier_forme
+        return [x for x in verifier_forme(texte, pseudo or self.PSEUDO) if self.FAUX in x]
+
+    def test_pseudo_court_dans_des_mots_fixes(self):
+        texte = "Jour 1\nJournée abandonnée : non.\nBonjour.\n\nFin du carnet"
+        self.assertEqual(self.defauts(texte), [])
+
+    def test_pseudo_present_refuse(self):
+        for texte in ("Jour 1\nJo\n\nFin du carnet", "Jour 1\nSigné Jo.\n\nFin du carnet",
+                      "Jour 1\n(Jo) et « Jo »\n\nFin du carnet"):
+            self.assertEqual(len(self.defauts(texte)), 1, texte)
+
+    def test_normalisation_nfc(self):
+        import unicodedata
+        nfd = unicodedata.normalize("NFD", "Zoé")
+        self.assertEqual(len(self.defauts("Jour 1\nZoé.\n\nFin du carnet", nfd)), 1)
+        self.assertEqual(self.defauts("Jour 1\nZoéline.\n\nFin du carnet", nfd), [])
+
+    def test_pseudo_avec_tiret(self):
+        self.assertEqual(len(self.defauts("Jour 1\nTémoin-a-k.\n\nFin du carnet", "Témoin-a-k")), 1)
+
 if __name__ == "__main__":
     unittest.main()
