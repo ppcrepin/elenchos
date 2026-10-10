@@ -1,14 +1,21 @@
 # Page de l'essai : dépendances et commandes (lots 1 à 8)
 
-## Second essai : état au lot 1 (10 octobre 2026)
+## Second essai : état aux lots 1 et 2 (10 octobre 2026)
 
 Copie des sources du premier essai (`docs/essai/a-ne-pas-ouvrir/outillage/page/`, non touchées), plus le socle du second essai. Contrat entre socle, moteur et écrans : `INTERFACE.md`. Rien n'est téléchargé de plus.
 
-- Fichier scellé de test, inventé et `"provisoire"` : `python3 -I tests/scelle-test.py --personnages ../../../a-ne-pas-ouvrir/fichier-scelle.json --sortie tests/scelle-test.json` (même résultat octet pour octet ; `tests/entrees-test.json` porte son SHA-256).
+- Fichier scellé de test, inventé et `"provisoire"` : `python3 -I tests/scelle-test.py --personnages ../../../a-ne-pas-ouvrir/fichier-scelle.json --sortie tests/scelle-test.json` (même résultat octet pour octet ; `tests/entrees-test.json` porte son SHA-256). Depuis le lot 2, en deux passes avec `--resume` (ci-dessous).
 - Tests du lot 1 : `node --test tests/test-noyau.js tests/test-polices.js tests/test-calendrier.js tests/test-etat.js tests/test-memoire-socle.js` (variable `ELENCHOS_SCELLE` pour un autre fichier).
-- Non-régression du moteur copié, sur le fichier scellé du premier essai : `node --test tests/premier-essai/test-moteur.js` (à réécrire au lot 3).
+- Non-régression du moteur du premier essai (rangé au lot 2 dans `tests/premier-essai/moteur-premier-essai.js`), sur le fichier scellé du premier essai : `node --test tests/premier-essai/test-moteur.js`.
 - Construction (contrôle 5 mécanique ; un fichier provisoire ne donne que la version témoin) : `python3 -I construire.py --scelle tests/scelle-test.json --entrees tests/entrees-test.json --sortie DOSSIER`.
 - Le reste de ce document décrit le premier essai : harnais, contrôles et publication sont à reprendre aux lots 6 et 7.
+
+Lot 2 (histoire) : rien de téléchargé.
+- Moteur du second essai : `moteur.js` (`histoire`, `resume`, `regles`) ; le moteur du premier essai est rangé dans `tests/premier-essai/moteur-premier-essai.js` (non-régression).
+- Fichier scellé de test en deux passes, avec l'empreinte de son propre résumé : voir `INTERFACE.md`, partie 9 (`tests/resume-test.js`).
+- Tests du lot 2 : `node --test tests/test-histoire.js`.
+- Trace de l'histoire de la page (P) : `node tests/trace-histoire.js FICHIER_SCELLE SORTIE`.
+- Mesure de performance : `node tests/mesure-histoire.js [FICHIER_SCELLE] [RALENTI]`, avec `playwright-core` 1.56.1 et Chromium de l'environnement (`/opt/node-tools/node_modules/`, `/opt/pw-browsers/`), déjà présents ; chemin réglable par `ELENCHOS_PLAYWRIGHT`.
 
 ## Premier essai
 

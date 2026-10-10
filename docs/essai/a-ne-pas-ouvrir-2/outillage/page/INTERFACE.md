@@ -12,7 +12,8 @@
 | `etat.js` | état format 2 : transitions (un geste = une écriture), durées, journal tiré de l'état | A | fait, testé |
 | `memoire.js` | clés `partie-2` et `verif-2`, ancienne partie par la liste des clés, arrêts 2 et 3 | A | fait, testé |
 | `socle.js` | contexte, V1 à V6, départ, horloges, toucher compté, gestionnaire unique, point d'accès | A | fait, testé hors navigateur |
-| `moteur.js` | `histoire`, `resume`, `calculer` | A | **copie du premier essai, à remplacer aux lots 2 et 3** |
+| `moteur.js` | `histoire`, `resume` (lot 2, fait, testé) ; `calculer` (lot 3 : lève une erreur d'ici là) ; `regles` (les règles une à une) | A | lot 2 fait ; le moteur du premier essai est rangé dans `tests/premier-essai/moteur-premier-essai.js` |
+| `trace.js` | assemblage des traces (version témoin seulement) : `histoire(collecte, resume, sha, empreinte)`, `tracerHistoire(N, C, M, octets)` (lot 2) ; trace de partie v4 au lot 6 | A | trace de l'histoire faite |
 | `textes.js`, `interface.js`, `style.css`, `carnet.js` (à créer) | écrans, mots, formes, carnet | B | **copies du premier essai, à adapter aux lots 4 et 5** |
 | `construire.py` | construction | A et B | version 5, statut, sources ; table des lettres au lot 6 |
 
@@ -127,7 +128,15 @@ Pseudo : `ElenchosJournal.pseudoGardable(x, socle.confusables())` donne le refus
 
 ## 7. Le moteur (lots 2 et 3, instance A) : ce que les écrans recevront
 
-- `M.histoire(scelle, cal[, collecteur])` → l'état à l'arrivée, gelé, jamais écrit ; `M.resume(arrivee)` → le résumé de la partie 3.2 (V6).
+- `M.histoire(scelle, cal[, collecteur])` → l'état à l'arrivée (lot 2) ; le socle le gèle en profondeur après V6 ; il n'est jamais écrit. `M.resume(arrivee)` → le résumé de la partie 3.2 (V6). L'état à l'arrivée contient :
+  - `coupure` (la veille de l'arrivée) ;
+  - `curseurs[p][t]` : `{c, l, net, somme_w}` vus le jour de l'arrivée (entrée et textes répondus jusqu'au jour d'arrivée − 2), et `sommes[p][t]` : `{sw, swp}` (Σw, Σw·π), point de départ du lot 3 ;
+  - `manche_jour_0` : `{texte, manches}`, les manches complètes de la veille de l'arrivée (forme de la partie 4.3.4), dont la révélation tombe le jour de l'arrivée ;
+  - `titres` : une semaine par élément, de la première à la dernière semaine de l'histoire, avec les décomptes (forme de la partie 4.2, `semaines`) ;
+  - `temperaments[p]` : les décomptes et la liste du dernier dimanche de l'histoire (forme de la partie 4.3.8) ;
+  - `tirage`.
+  Pour les écrans (instance B) : titres passés = `arrivee.titres` (puis `R.titres` au lot 3) ; Le Cercle des jours 1 à 6 = la dernière semaine de `arrivee.titres` (titulaires, `surprise.texte`) et `arrivee.temperaments[p].temperaments` ; initiales sur les barres = `R.jours[j].curseurs_vus` (lot 3). Tout se lit en `N.Fraction` ; `pourDessiner()` pour un curseur.
+- Le `collecteur` (un objet vide passé par la version témoin) reçoit `jours`, `semaines`, `arrivee` : le détail de chaque jour de l'histoire, que `ElenchosTrace.histoire` met au format de la trace de l'histoire (partie 4.2) sans rien recalculer.
 - `R = M.calculer(scelle, cal, arrivee, journal)`, fonction pure. Les noms et les formes sont ceux de la trace de partie (partie 4.3), en fractions `N.Fraction` (`pourDessiner()` pour un curseur) :
   - `R.jours[j]` : `entree`, `manches`, `revelation` (avec `avis_cercle`, `jumeaux`, verdicts, `pas_de_cote`), `message`, `phrase_jour`, `dimanche`, `portrait` (avec `barre`), `curseurs_vus`, `cercle`, `surprises_proches`, `mesures` (sans les durées) ; en plus, pour les écrans :
     - `cartes_porteur` : la manche du porteur à servir les jours où `deviner_porteur` est vrai, **même avant l'ouverture de Deviner** (`designe` et `raison_devinee` lus dans le journal) ; son nombre de cartes sert à `E.ouvrirDeviner`, son `cachee` à la raison ;
@@ -144,6 +153,15 @@ Pseudo : `ElenchosJournal.pseudoGardable(x, socle.confusables())` donne le refus
 - **L1-4, arrêt entre la dernière réponse d'un rattrapage et « Aller au dimanche ».** Le dimanche est atteint (§0) mais n'a pas d'ouverture, les touchers comptant au saut. Appliqué : la règle 4 l'admet pour ce seul cas.
 - Les autres écarts (spécification, schéma) sont dans le rapport du lot 1 à l'orchestrateur, avec leurs remplacements proposés.
 
+## 8 bis. Écarts propres au lot 2
+
+- **Surprise de la dernière semaine de l'histoire.** Le moteur applique le point 9 du fichier caché : seuls les textes qui ont un titre sont candidats (donc H86 seul). Le critère c3 du calibrage (H86 l'emporte, tous les textes candidats) garantit le même résultat sur le fichier scellé ; la trace donne les décomptes de tous les textes de la semaine, pour que le contrôle vérifie c3. Sur le fichier de test, non calibré, les deux lectures diffèrent (H88 aurait la plus forte part d'erreurs) : c'est attendu.
+- **Les autres écarts** (spécification, schéma, fichier caché) sont dans le rapport du lot 2 à l'orchestrateur.
+
 ## 9. Tests
 
-`node --test tests/test-noyau.js tests/test-polices.js tests/test-calendrier.js tests/test-etat.js tests/test-memoire-socle.js` (fichier scellé de test, inventé, `"provisoire"` : `tests/scelle-test.json`). Le joueur scripté `tests/partie-test.js` montre l'enchaînement des transitions d'une partie entière ; l'instance B peut s'en servir de modèle pour ses gestes.
+`node --test tests/test-noyau.js tests/test-polices.js tests/test-calendrier.js tests/test-etat.js tests/test-memoire-socle.js tests/test-histoire.js` (fichier scellé de test, inventé, `"provisoire"` : `tests/scelle-test.json`).
+
+Fichier scellé de test, en deux passes (lot 2) : `python3 -I tests/scelle-test.py --personnages ../../../a-ne-pas-ouvrir/fichier-scelle.json --sortie /tmp/p1.json`, puis `node tests/resume-test.js /tmp/p1.json /tmp/resume.json`, puis `python3 -I tests/scelle-test.py … --resume /tmp/resume.json --sortie tests/scelle-test.json` ; mettre ensuite son SHA-256 dans `tests/entrees-test.json`. La page démarre alors sur ce fichier (V6 passe) ; c'est circulaire, et ne prouve rien de la concordance.
+
+Trace de l'histoire (auteur P, pour la comparaison à trois) : `node tests/trace-histoire.js FICHIER_SCELLE SORTIE`. Mesure de performance : `node tests/mesure-histoire.js [FICHIER_SCELLE] [RALENTI]` (Chromium sans tête, ralenti 4 fois par défaut). Le joueur scripté `tests/partie-test.js` montre l'enchaînement des transitions d'une partie entière ; l'instance B peut s'en servir de modèle pour ses gestes.

@@ -345,8 +345,10 @@ function specTemperaments(opts) {
   // 6 textes : Agathe seule favorable (5, « Très »), les autres 1, 2, 3 → seul de son côté, pas partagé.
   for (let i = 0; i < 6; i++) { ajouter(-57 + i, { Agathe: rep(5, 1), Nassim: rep(1, 3), Odile: rep(2, 3), Valentin: rep(3, 2) }); }
   // 14 textes (ou 13) : Agathe seule neutre, les autres 4, 2, 4 → partagé, seule au milieu.
-  const nb = o.moinsUn ? 13 : 14;
+  const nb = o.moinsUn ? 13 : (o.cinqPartages ? 5 : 14);
   for (let i = 0; i < nb; i++) { ajouter(-50 + i, { Agathe: rep(3, 2), Nassim: rep(4, 1), Odile: rep(2, 3), Valentin: rep(4, 1) }); }
+  // Variante : 9 textes de plus, tous favorables (ni partagés, ni seule de son côté).
+  if (o.cinqPartages) { for (let i = 0; i < 9; i++) { ajouter(-30 + i, { Agathe: rep(4, 1), Nassim: rep(4, 1), Odile: rep(4, 1), Valentin: rep(4, 1) }); } }
   // Hors du compte : un texte à deux réponses ; un texte révélé le jour −56 (hors fenêtre) ; un texte révélé après d.
   ajouter(-20, { Agathe: rep(5, 1), Nassim: rep(1, 3) });
   ajouter(-58, { Agathe: rep(5, 1), Nassim: rep(1, 3), Odile: rep(1, 3) });
@@ -362,6 +364,9 @@ test('Tempéraments : décomptes, seuils compris, fenêtre de 56 jours, ancienne
   // 19 réponses : aucun tempérament, décomptes écrits quand même.
   const t2 = R.calculerTemperaments(specTemperaments({ moinsUn: true }), 0, 'Agathe');
   assert.deepEqual([t2.reponses, t2.temperaments], [19, []]);
+  // Cinq textes partagés seulement (il en faut six), seule au milieu sur les cinq : pas de Pont.
+  const t4 = R.calculerTemperaments(specTemperaments({ cinqPartages: true }), 0, 'Agathe');
+  assert.deepEqual(t4, { neutres: 5, reponses: 20, seul_cote: 6, seul_milieu: 5, temperaments: ['original'], textes_partages: 5, tres: 6 });
   // Membre depuis 55 jours seulement : aucun.
   const t3 = R.calculerTemperaments(specTemperaments({ depuisAgathe: -55 }), 0, 'Agathe');
   assert.deepEqual([t3.reponses, t3.temperaments], [20, []]);
