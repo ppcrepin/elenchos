@@ -25,7 +25,7 @@ Remarques du rédacteur sur le lot :
 ### E3 · scrutin 3708 (17e législature)
 - Titre : Moins d'argent de l'État aux communes qui aident la corrida
 - Lignes :
-  1. Une commune qui aide la corrida recevrait autant d'argent de l'État en moins.
+  1. Une commune verrait l'argent de l'État baisser du montant de son aide à la corrida.
   2. Les dons aux associations de corrida ne réduiraient plus l'impôt sur le revenu.
   3. La corrida resterait permise là où elle est une tradition locale ininterrompue.
 - Vote : rejeté, 68 pour, 166 contre, 22 abstentions (13 novembre 2025) ; amendement n° I-2474 portant article additionnel après l'article 9 du projet de loi de finances pour 2026, en première lecture (CRSANR5L17S2026O1N048.txt:589-592 ; VTANR5L17V3708.json : 256 votants, 234 exprimés) ; `etape` = `aucune`.
@@ -54,6 +54,7 @@ Remarques du rédacteur sur le lot :
     - ligne 3 : I-2474.txt:59-61 (« lorsqu'une « tradition locale ininterrompue » peut être invoquée »), N048:550 (« la corrida n'est pas interdite en France ») et N048:542 (« une dérogation subsiste »).
   - Texte d'entrée lisible seul : il ne suppose rien du budget autour.
 - Doutes :
+  - **Titre et lignes revus par UX (10 octobre 2026)** pour la lisibilité, sens inchangé (`ux-titres-lignes2.md`) ; les comptes de caractères écrits plus haut peuvent dater d'avant : le contrôle 1 les refait.
   - Raison 1 (consigne du brief) : elle parle des régions qui ont arrêté la corrida, pas de la souffrance animale. Or la souffrance animale est l'argument principal du côté « pour » (N048:542-546, :564 ; exposé sommaire). Un joueur qui vote « pour » à cause d'elle n'a que « aucune » : à suivre dans la part de « aucune » (D-027).
   - Raison 1, les faits :
     - c'est l'oratrice qui dit « de nombreuses régions » et cite la Catalogne ;
@@ -76,11 +77,11 @@ Remarques du rédacteur sur le lot :
 
 ### T{case} · scrutin 2758 (16e législature)
 *{case} = 5 ou 13, fixé au tirage t("ordre-texte|T|i") du scellement. En-tête à compléter avant tout passage du programme de contrôle. Présentation A.*
-- Titre : Écriture inclusive interdite à l'école et dans les actes
+- Titre : École et actes officiels, écriture inclusive interdite
 - Lignes :
   1. L'écriture inclusive serait interdite à l'école et à l'université, sauf pour l'étudier.
-  2. Seraient visés le point médian, toutes et tous, et les mots communs aux deux genres.
-  3. Tout acte officiel ou contrat contenant un seul de ces signes serait nul.
+  2. Seraient visés le point médian, les mots communs aux deux genres, la forme toutes et tous.
+  3. Tout acte officiel ou contrat contenant une seule de ces formes serait sans valeur.
 - Vote : rejeté (présentation A, fichier caché point 14) ; le 12 octobre 2023, l'article unique, donc tout le texte, a été supprimé par l'adoption des amendements identiques de suppression nos 5, 6, 7 et 8 : 127 voix pour la suppression, 83 contre, 3 abstentions, 213 votants. En première lecture (CRSANR5L16S2024O1N018.txt:370-373 ; VTANR5L16V2758.json). L'auteur a ensuite retiré sa proposition (N018:375-379). La séance a porté sur le texte initial, faute de texte de commission (N018:218) ; `etape` = `aucune`.
 - Objet du vote : texte
 - Auteur : Roger Chudeau, député, Rassemblement National au dépôt (31 janvier 2023, ppl-777.txt:13 et :31 ; acteur PA794198, mandat de groupe PM800621 du 29 juin 2022 au 9 juin 2024, organe PO800520) ; CRSANR5L16S2024O1N017.txt:906.
@@ -107,6 +108,7 @@ Remarques du rédacteur sur le lot :
     - ligne 2 : ppl-777.txt:151-152 (« sous la forme de la double flexion, du point médian et du terme épicène ») et N018:79 (« toutes et tous ») ; « mots communs aux deux genres » rend « terme épicène » (arbitrage de forme) ;
     - ligne 3 : ppl-777.txt:156-160 (« comportant un ou plusieurs signes », « nuls de plein droit »).
 - Doutes :
+  - **Titre et lignes revus par UX (10 octobre 2026)** pour la lisibilité, sens inchangé (`ux-titres-lignes2.md`) ; les comptes de caractères écrits plus haut peuvent dater d'avant : le contrôle 1 les refait.
   - Présentation A : la mesure servie est l'interdiction. « Texte rejeté. » est exact (article unique supprimé, puis texte retiré). Le titre et les lignes n'ont aucune négation.
   - Objet `texte` : l'Assemblée n'a pas voté l'ensemble. Mais `article` ferait dire « C'était un article d'un texte plus long », ce qui est faux pour un article unique. `texte` est le moins inexact (preuve : N018:372-373, :379).
   - Raison 1 : c'est l'auteur du texte. À 18h, le même nom s'affiche deux fois, comme pour Alfandari au premier essai.
@@ -134,7 +136,7 @@ Remarques du rédacteur sur le lot :
 *{case} = 5 ou 13, fixé au tirage t("ordre-texte|T|i") du scellement. En-tête à compléter avant tout passage du programme de contrôle.*
 - Titre : Diplôme de professeur de danse étendu à d'autres danses
 - Lignes :
-  1. Réservé au classique, au jazz et au contemporain, il s'étendrait à d'autres danses.
+  1. Exigé pour le classique, le jazz et le contemporain, il s'étendrait à d'autres danses.
   2. Les danses concernées seraient choisies en concertation avec le monde de la danse.
   3. Pour les enseigner contre paiement, il faudrait ce diplôme ou une dispense.
 - Vote : adopté, 37 pour, 7 contre, 0 abstention (7 mars 2024) ; article 1er de la proposition de loi n° 1149, tel qu'amendé en séance (amendements nos 58, 24 et 44 sous-amendé par les nos 60, 56 et 61, adoptés : N140:208, :220, :293-299), en première lecture (CRSANR5L16S2024O1N140.txt:300-303 ; VTANR5L16V3449.json, 44 votants, 44 exprimés) ; texte entier adopté le même jour (scrutin 3456, 36 pour, 6 contre : N140:677-678 ; texte adopté n° 254, l16t0254 l. 1-27), le Sénat devant encore se prononcer ; `etape` = `navette`.
@@ -163,6 +165,7 @@ Remarques du rédacteur sur le lot :
     - ligne 2 : TA 254, V (l. 77-87 : « Les esthétiques concernées et les référentiels du diplôme d'État […] sont déterminés en concertation avec les organisations syndicales […], les acteurs régionaux, les associations des filières, les fédérations agréées, les pédagogues reconnus et les représentants des écoles privées ») ;
     - ligne 3 : premier alinéa de L. 362-1, maintenu (TA l. 38), cité en séance (N140:64 : « Nul ne peut enseigner la danse contre rétribution ou faire usage du titre de professeur de danse ou d'un titre équivalent s'il n'est muni […] du diplôme d'État ») et résumé par l'exposé (l16b1149 l. 137-139) ; dispense du 3° maintenue (TA l. 43-44 et IV l. 73-75 ; exposé l. 154-157).
 - Doutes :
+  - **Titre et lignes revus par UX (10 octobre 2026)** pour la lisibilité, sens inchangé (`ux-titres-lignes2.md`) ; les comptes de caractères écrits plus haut peuvent dater d'avant : le contrôle 1 les refait.
   - Titre et ligne 1 : « étendu » et « s'étendrait » remplacent « ouvert » et « s'ouvrirait », vocabulaire du camp « pour » (convention 6). « Étendre » est employé par les deux camps (N140:13, :27, :36).
   - Ligne 3 simplifie :
     - « ce diplôme ou une dispense » omet le certificat d'aptitude (2° de L. 362-1) et les équivalences de diplômes français ou étrangers (exposé l. 154-155) ;
@@ -186,7 +189,7 @@ Remarques du rédacteur sur le lot :
 
 ### Réserve T · scrutin 5242 (17e législature)
 *Non scellée (A.1). Réserve de dernier recours (arbitrage de l'orchestrateur : A.2 discutable).*
-- Titre : Supprimer la fidélité des devoirs entre époux
+- Titre : Supprimer la fidélité de la liste des devoirs entre époux
 - Lignes :
   1. Le code civil dit que les époux se doivent respect, fidélité, secours et assistance.
   2. Le mot fidélité serait supprimé de cette liste des devoirs du mariage.
@@ -215,6 +218,7 @@ Remarques du rédacteur sur le lot :
     - ligne 2 : N131:71 (« supprimer le mot « fidélité » à l'article 212 du code civil ») ;
     - ligne 3 : titre du scrutin et N131:93.
 - Doutes :
+  - **Titre et lignes revus par UX (10 octobre 2026)** pour la lisibilité, sens inchangé (`ux-titres-lignes2.md`) ; les comptes de caractères écrits plus haut peuvent dater d'avant : le contrôle 1 les refait.
   - A.2 : texte de mœurs dont le vote suit largement les groupes. Huit groupes n'ont aucune voix pour, LFI aucune voix contre ; seuls SOC (11/4/2) et EcoS (1/8) sont partagés. Arbitrage de l'orchestrateur : réserve de dernier recours seulement.
   - Fragilité de la raison 2 :
     - William défendait l'amendement mais s'est abstenu. Aucun orateur « pour » d'un autre groupe n'existe (seuls William, Abomangoli et Amiot parlent pour). Il est admis selon la convention 1 ; erreur de vote possible, sans mise au point au dossier.

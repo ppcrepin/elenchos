@@ -48,9 +48,13 @@ def curseur(classes, facteur=1):
 
 
 def ordre_moi(tensions_curseurs):
-    """§5.3 : nets, puis flous du plus étroit au plus large ; à égalité S, P, T, L."""
+    """Simulation-2, §5.3 : nets, du plus éloigné de 1/2 au plus proche, puis du plus grand Σ
+    au plus petit, puis S, P, T, L ; puis flous, du plus étroit au plus large, à égalité
+    S, P, T, L."""
     nets = [t for t in TENSIONS if tensions_curseurs[t]["net"]]
     flous = [t for t in TENSIONS if not tensions_curseurs[t]["net"]]
+    nets.sort(key=lambda t: (-abs(tensions_curseurs[t]["c"] - F(1, 2)), -tensions_curseurs[t]["somme_w"],
+                             TENSIONS.index(t)))
     flous.sort(key=lambda t: (tensions_curseurs[t]["l"], TENSIONS.index(t)))
     return nets + flous
 

@@ -28,7 +28,7 @@ Remarques du rédacteur sur le lot :
 - Lignes :
   1. Les enquêteurs pourraient activer à distance micro et caméra d'un téléphone, par exemple.
   2. Ce serait réservé aux affaires graves de crime organisé, trafic de drogue ou meurtre.
-  3. Faute d'autre moyen, un juge l'autoriserait pour un à six mois au plus selon le cas.
+  3. Faute d'autre moyen, un juge l'autoriserait pour un mois ou six mois au plus selon le cas.
 - Vote : adopté, 76 pour, 27 contre, 1 abstention (24 mars 2025) ; amendement no 5 et identiques rétablissant l'article 15 quater, en première lecture ; le Sénat devait encore voter le texte (dossier DLR5L17N50169 : AN1-DEBATS-DEC et CMP-DEPOT le 1er avril 2025) (CRSANR5L17S2025O1N143.txt:909 ; VTANR5L17V1161.json).
 - Objet du vote : amendement
 - Auteur : Michaël Taverne, député, Rassemblement National au dépôt ; premier signataire de l'amendement no 5 (an-web/am-1043-5.txt, l. 15 ; cosignataires du même groupe) et premier nommé par le titre du scrutin ; CRSANR5L17S2025O1N143.txt:884-885. Amendements identiques : no 635 Olivier Marleix (Droite Républicaine), no 770 Sébastien Huyghe (Ensemble pour la République), no 786 Éric Martineau (Les Démocrates), no 844 Éric Ciotti (Union des droites pour la République), no 908 Vincent Caure, rapporteur (Ensemble pour la République) (N143:884-888).
@@ -53,6 +53,7 @@ Remarques du rédacteur sur le lot :
     - ligne 2 : infractions des 1° à 6° et 11° à 12° de l'article 706-73, blanchiment et association de malfaiteurs (l. 47-57) ; le meurtre en bande organisée cité par le rapporteur (N143:889) ; trafic de stupéfiants (objet du texte, N143:895) ;
     - ligne 3 : impossibilité de poser le dispositif classique ou risque pour les agents (l. 57-60) ; autorisation d'un juge (l. 61-62) ; « quinze jours, renouvelable une fois » en enquête, « deux mois, renouvelable deux fois » en instruction (l. 68-70).
 - Doutes :
+  - **Titre et lignes revus par UX (10 octobre 2026)** pour la lisibilité, sens inchangé (`ux-titres-lignes2.md`) ; les comptes de caractères écrits plus haut peuvent dater d'avant : le contrôle 1 les refait.
   - L'auteur est aussi l'orateur de la raison 1 : seuls le Rassemblement National et Ensemble pour la République ont parlé « pour » l'article 15 quater.
   - Titre et ligne 1 : l'amendement vise tout « appareil électronique mobile » ; le téléphone est donné en exemple. Aucun type d'appareil n'est exclu, ce qui confirme la raison 3.
   - Ligne 3 : « un à six mois au plus » couvre un mois au plus en enquête (quinze jours renouvelables une fois) et six mois au plus en instruction.
@@ -63,11 +64,11 @@ Remarques du rédacteur sur le lot :
 - Statut : prête (raisons déjà vérifiées ; sources des lignes corrigées retrouvées par le Vérificateur, am-1043-5.txt l. 63, 68-69).
 
 ### T0 · scrutin 1262 (17e législature)
-- Titre : Courtes peines de prison sans aménagement d'office
+- Titre : Courtes peines de prison sans aménagement automatique
 - Lignes :
   1. Un juge pourrait de nouveau condamner à un mois de prison ferme, ou moins.
   2. Aménager une courte peine, sous bracelet électronique notamment, ne serait plus la règle.
-  3. L'aménagement serait possible jusqu'à deux ans, par exemple si le condamné travaille.
+  3. Une peine jusqu'à deux ans pourrait être aménagée, par exemple si le condamné travaille.
 - Vote : adopté, 63 pour, 42 contre, 2 abstentions (3 avril 2025) ; vote sur l'ensemble, en première lecture ; le Sénat devait encore voter (dossier DLR5L17N50631 : SN1-DEPOT le 3 avril 2025, SN1-DEBATS-DEC le 1er juillet 2025) (CRSANR5L17S2025O1N160.txt:987 ; VTANR5L17V1262.json).
 - Objet du vote : texte
 - Auteur : Loïc Kervran, député, Horizons & Indépendants au dépôt ; dossier DLR5L17N50631 (initiateur PA719052, AN1-DEPOT le 15 octobre 2024) ; CRSANR5L17S2025O1N159.txt:453.
@@ -94,6 +95,7 @@ Remarques du rédacteur sur le lot :
     - N160:386 (conditions de l'article 2) ;
     - N160:676 (article 3 rétabli).
 - Doutes :
+  - **Titre et lignes revus par UX (10 octobre 2026)** pour la lisibilité, sens inchangé (`ux-titres-lignes2.md`) ; les comptes de caractères écrits plus haut peuvent dater d'avant : le contrôle 1 les refait.
   - Remplacements :
     - Thiébault-Martinez (SOC, N160:54) est absente de la liste nominative ; elle est remplacée par Saulignac, du même groupe, qui porte le même argument.
     - Fayssat (UDR, vote vérifié « pour », N159:482) est écarté parce que l'organe UDR de 2025 (PO847173) n'a pour libellé que « UDR » (arbitrage de forme, point 6). Il est remplacé par Ray.
@@ -111,7 +113,7 @@ Remarques du rédacteur sur le lot :
 - Titre : Mineurs dès 13 ans sans réduction de peine automatique
 - Lignes :
   1. Un mineur de 13 ans ou plus risque en principe deux fois moins de prison qu'un adulte.
-  2. Cette réduction ne s'appliquerait plus d'office, mais seulement si le juge le décide.
+  2. Cette réduction ne serait plus automatique, c'est le juge qui déciderait.
   3. Il trancherait au cas par cas, selon l'acte et la personnalité du jeune.
 - Vote : rejeté, 27 pour, 81 contre, 7 abstentions (13 février 2025) ; amendement no 17 rétablissant l'article 5 (supprimé en commission), en première lecture (CRSANR5L17S2025O1N102.txt:138 ; VTANR5L17V795.json).
 - Objet du vote : amendement
@@ -136,6 +138,7 @@ Remarques du rédacteur sur le lot :
     - ligne 2 : suppression de « à titre exceptionnel et », et « n'y a pas lieu » devient « a lieu » d'appliquer l'atténuation (l. 29-31) : la réduction ne s'applique plus que si le tribunal le décide ;
     - ligne 3 : « compte tenu des circonstances de l'espèce et de la personnalité du mineur » (article L. 121-7 modifié) et exposé sommaire, l. 63-64.
 - Doutes :
+  - **Titre et lignes revus par UX (10 octobre 2026)** pour la lisibilité, sens inchangé (`ux-titres-lignes2.md`) ; les comptes de caractères écrits plus haut peuvent dater d'avant : le contrôle 1 les refait.
   - Raison 2 : l'annotation l'a lue pôle « aucun » (« aucun » chez un annotateur, 0 chez l'autre) ; elle devient l'inattendu pratique du côté « pour ». Texte inchangé, pas de nouvelle annotation.
   - Raison 3 : pôle 1 gardé à l'annotation (deux lectures sur trois). Si une lecture ultérieure la donnait pôle 0, le côté « contre » n'aurait plus d'attendue. Remplaçant prévu par Game design : 805.
   - Ligne 2 : le dispositif inverse le principe sans employer le mot « exception », qui était celui de l'autrice. La ligne dit donc ce que fait le texte.
@@ -153,7 +156,7 @@ Remarques du rédacteur sur le lot :
 - Titre : Supprimer les nouveaux usages de l'ADN dans les enquêtes
 - Lignes :
   1. L'ADN de crimes anciens ou en série pourrait être comparé à des bases privées étrangères.
-  2. Le fichier ADN s'étendrait à d'autres délits, et l'accès des policiers aux fichiers aussi.
+  2. Le fichier ADN viserait d'autres délits, et l'accès policier aux fichiers serait élargi.
   3. Cet amendement supprimerait tout l'article qui prévoit ces mesures.
 - Vote : rejeté, 41 pour, 80 contre, 0 abstention (1er juillet 2026) ; amendements identiques nos 25, 64, 175 et 233 de suppression de l'article 3 du projet de loi sur la justice criminelle et le respect des victimes, en première lecture (CRSANR5L17S2026E1N002.txt:126 ; VTANR5L17V7922.json).
 - Objet du vote : amendement
@@ -178,6 +181,7 @@ Remarques du rédacteur sur le lot :
   - Titre 56 car. ; lignes 89/90/67 car. ; raisons de 12/11/12/10 mots.
   - Sources des lignes : E1N002:86 et :88 (bases privées à l'étranger, surtout américaines ; Fnaeg élargi) ; :90 et :94 (habilitation générale à consulter des fichiers ; crimes anciens et sériels) ; :98 et :104 (ministre : inscription au Fnaeg ; crimes en série ou non élucidés).
 - Doutes :
+  - **Titre et lignes revus par UX (10 octobre 2026)** pour la lisibilité, sens inchangé (`ux-titres-lignes2.md`) ; les comptes de caractères écrits plus haut peuvent dater d'avant : le contrôle 1 les refait.
   - Présentation B : être favorable, c'est soutenir le retrait.
   - **Raison 4 remplacée.** La version réécrite de Bergantz (« Comparer l'ADN serait encadré et réservé aux enquêtes sans aucun suspect. », Les Démocrates, N002:94) a été lue pôle 0 à la seconde annotation, après « aucun » et 1 à la première. Elle est remplacée par Pouzyreff, annotée deux fois : côté « contre » sûr aux deux passages ; pôle 0 (3e passage) puis 1 (4e), hésitant. Arbitrage de l'orchestrateur : pôle 1 gardé (règle d'aveugle3 : une des deux lectures rejoint le rédacteur, soit deux sur trois). Si le pôle 0 était retenu, le repli ci-dessous s'applique.
   - Raison 4 : la phrase ne garde que le consentement. La suite de l'extrait (« participer à la recherche de criminels ») est laissée de côté, parce qu'elle tirerait la lecture vers le pôle 0. Le recueil du consentement est contesté en séance par Capdevielle (N002:140) et Taurinya (N002:143). C'est une affirmation de l'oratrice, invérifiable sans le texte de la commission.
@@ -238,7 +242,7 @@ Remarques du rédacteur sur le lot :
 - Titre : Supprimer les nouveaux contrôles près des frontières
 - Lignes :
   1. Des policiers spécialisés pourraient contrôler quelqu'un, quel que soit son comportement.
-  2. Ce serait possible contre les trafics, jusqu'à 40 km des frontières et côtes, en aéroport.
+  2. Ce serait permis contre les trafics, en aéroport et jusqu'à 40 km des frontières et côtes.
   3. Cet amendement supprimerait tout l'article qui prévoit ces mesures.
 - Vote : rejeté, 12 pour, 23 contre, 0 abstention (10 juillet 2026) ; amendements identiques nos 200, 228, 272, 462 et 468 de suppression de l'article 9 du projet de loi visant à offrir des réponses immédiates aux phénomènes troublant l'ordre public, en première lecture (CRSANR5L17S2026E1N012.txt:52 ; VTANR5L17V8167.json).
 - Objet du vote : amendement
@@ -265,6 +269,7 @@ Remarques du rédacteur sur le lot :
 
     Raison 4 confirmée par le texte : douze heures consécutives au plus dans un même lieu (l. 1223-1226).
 - Doutes :
+  - **Titre et lignes revus par UX (10 octobre 2026)** pour la lisibilité, sens inchangé (`ux-titres-lignes2.md`) ; les comptes de caractères écrits plus haut peuvent dater d'avant : le contrôle 1 les refait.
   - Présentation B : être favorable, c'est soutenir le retrait.
   - Lignes 1 et 2 corrigées : elles nomment désormais la finalité (trafics) et les services spécialisés, comme E1 le fait pour sa mesure.
   - La ligne 1 dit « contrôler » ; la visite des véhicules, la fouille des bagages et la palpation suivent les mêmes conditions (l. 1149-1151, 1187-1189, 1203-1207) et sont dites dans la raison 1.

@@ -19,7 +19,7 @@ Remarques du rédacteur sur le lot :
 - Titre : Pétrole et gaz outre-mer, rouvrir recherche et exploitation
 - Lignes :
   1. Depuis 2017, la loi interdit de chercher de nouveaux gisements de pétrole ou de gaz.
-  2. Elle serait levée dans les régions d'outre-mer, comme la Guyane, pas en métropole.
+  2. L'interdiction serait levée en Guyane et dans les autres régions d'outre-mer.
   3. La région pourrait y accorder des permis de chercher, puis d'exploiter, pétrole et gaz.
 - Vote : rejeté, 64 pour, 74 contre, 1 abstention (11 juin 2026), en première lecture ; étape : aucune ; suite : `texte_tombe` (CRSANR5L17S2026O1N268.txt:701-702 ; :708, « la proposition de loi est rejetée » ; dossier DLR5L17N53304, acte SN2-DEPOT L17-VD232693DIN : retour au Sénat).
 - Objet du vote : article
@@ -54,6 +54,7 @@ Remarques du rédacteur sur le lot :
     - Ligne 2 : texte no 2415, I, 1° (« ni dans les régions d'outre-mer lorsqu'elles exercent les compétences mentionnées à l'article L. 611-19 ») ; amendement no 22 adopté, Saint-Pierre-et-Miquelon retiré (N268:637-641) ; extensions à tout le territoire rejetées (N268:602, :692) ; Guyane : N268:447 et :453.
     - Ligne 3 : texte no 2415, II, 1° (permis exclusif de recherches, autorisation de prospections préalables, concession, « déposées auprès [...] d'une région d'outre-mer ») ; N268:453.
 - Doutes :
+  - **Titre et lignes revus par UX (10 octobre 2026)** pour la lisibilité, sens inchangé (`ux-titres-lignes2.md`) ; les comptes de caractères écrits plus haut peuvent dater d'avant : le contrôle 1 les refait.
   - **Objet du vote, précision.** Article 1er, amendé, article central.
   - **Suite.** `texte_tombe` ; phrase à 18h (UX) : « Avec lui, l'Assemblée a rejeté le texte entier. » Le dossier montre un retour au Sénat en deuxième lecture (SN2-DEPOT) : on n'écrit donc pas « tombé ».
   - **Titre.** L'ancien titre (« autoriser de nouveau les forages ») reprenait le mot des opposants (N268:447, :463). Le nouveau reprend « recherche » et « exploitation », les mots de l'intitulé officiel. Il évite aussi « lever l'interdiction », qui retire quelque chose sans commencer par « Supprimer » (arbitrage 3 de forme).
@@ -73,7 +74,7 @@ Remarques du rédacteur sur le lot :
 - Titre : Mines au fond des mers, demander une pause mondiale
 - Lignes :
   1. Le Gouvernement serait invité, sans y être obligé, à défendre une pause mondiale.
-  2. Il bloquerait les règles autorisant ces mines, tant que leurs dégâts restent possibles.
+  2. Il bloquerait les règles autorisant ces mines, tant qu'un doute existe sur leurs dégâts.
   3. En France aussi, la règle devrait évoluer pour les interdire, tant que ce doute dure.
 - Vote : adopté, 215 pour, 56 contre, 28 abstentions (17 janvier 2023), vote sur l'ensemble ; étape : aucune ; suite : `null` (CRSANR5L16S2023O1N119.txt:496-497).
 - Objet du vote : resolution
@@ -105,6 +106,7 @@ Remarques du rédacteur sur le lot :
     - Ligne 2 : dispositif (« que la France bloque l'adoption de toute réglementation pour l'exploitation minière des fonds marins par l'AIFM » ; « tant qu'il n'aura pas été démontré [...] que cette activité extractive peut être entreprise sans dégrader les écosystèmes marins »).
     - Ligne 3 : dispositif (« qu'en France une évolution du cadre réglementaire est souhaitable [...] pour interdire tout projet d'exploitation jusqu'à ce que le niveau de connaissance scientifique garantisse [...] »).
 - Doutes :
+  - **Titre et lignes revus par UX (10 octobre 2026)** pour la lisibilité, sens inchangé (`ux-titres-lignes2.md`) ; les comptes de caractères écrits plus haut peuvent dater d'avant : le contrôle 1 les refait.
   - **Objet du vote, précision.** Proposition de résolution, article 34-1 de la Constitution, article unique.
   - **Forme du vote.** Objet `resolution`, étape `aucune` (arbitrage 2 de forme). Phrase d'objet (UX) : « C'était une résolution, un texte qui invite le Gouvernement à agir, sans l'y obliger. » Gros titre inchangé (D-014).
   - **Raison 2 réécrite.** Le côté était retrouvé mais jugé fragile par les deux annotateurs. « Génie français » est retiré (il pouvait se lire comme de la fierté nationale), et l'opposition passé/avenir est mise en tête.
@@ -121,7 +123,7 @@ Remarques du rédacteur sur le lot :
 - Titre : Centres de données, faciliter leur construction
 - Lignes :
   1. Les grands centres de données stratégiques pourraient être déclarés d'intérêt national.
-  2. Ils pourraient alors déroger aux règles d'urbanisme locales pour s'installer.
+  2. Ils pourraient alors s'installer par exception aux règles locales d'urbanisme.
   3. L'État pourrait leur réserver à l'avance un raccordement au réseau électrique.
 - Vote : adopté, 105 pour, 97 contre, 0 abstention (28 mai 2025), en première lecture ; étape : navette ; suite : `null` (CRSANR5L17S2025O1N219.txt:502-503).
 - Objet du vote : article
@@ -149,6 +151,7 @@ Remarques du rédacteur sur le lot :
     - Ligne 2 : N180:159 ; N180:183 (amendements nos 835 et 1530 rejetés).
     - Ligne 3 : N219:481 et :499 (amendement no 2648 adopté ; il vise aussi des projets industriels, capacité réservée « dans des zones » : simplification acceptée par le vérificateur).
 - Doutes :
+  - **Titre et lignes revus par UX (10 octobre 2026)** pour la lisibilité, sens inchangé (`ux-titres-lignes2.md`) ; les comptes de caractères écrits plus haut peuvent dater d'avant : le contrôle 1 les refait.
   - **Objet du vote, précision.** Article 15, examen prioritaire, du projet de loi de simplification de la vie économique.
   - **Raison 1 réécrite (vérificateur).** « Refuser ces centres » déplaçait l'attaque : les opposants contestaient les dérogations (N180:134), pas les centres. « S'y opposer » renvoie au texte servi. L'écart de force avec les deux faits chiffrés du côté « contre » reste ; il n'y a rien de plus concret chez un groupe libre (Bouquin, RN, N180:509, est « aucun »).
   - **Annotation de la raison 1 (4e passage, Q02).** Côté retrouvé ; pôle 1 si la tension est P, « aucun » si elle est L (l'annotateur retient L, hésitant). Si elle est lue « aucun », le côté « pour » n'aurait plus d'attendue : texte à remplacer (A.7, point 6, dernière phrase). Tension P retenue (trois lectures sur quatre) : pôle 1.

@@ -14,11 +14,11 @@ Remarques du rédacteur sur le lot :
 - Groupes : écrits en toutes lettres (limite de 70 points de code). Moment retenu : la séance de l'extrait pour une raison, le dépôt pour l'auteur.
 
 ### T? · scrutin 3370 (16e législature)
-- Titre : Routes nationales aux régions, la gestion au quotidien
+- Titre : Régions gérant des routes nationales, pouvoirs élargis
 - Lignes :
   1. Depuis 2022, les régions volontaires peuvent gérer à l'essai des routes nationales.
   2. Ce texte permettrait aux agents de l'État sur ces routes de signer au nom de la région.
-  3. Sur ces routes, le président de région aurait les pouvoirs de police liés à leur gestion.
+  3. Sur ces routes, c'est le président de région qui réglementerait la circulation.
 - Vote : adopté, 64 pour, 55 contre, 1 abstention (14 février 2024) ; vote sur l'ensemble, en première lecture ; étape `navette` (CRSANR5L16S2024O1N123.txt:976-979 ; VTANR5L16V3370.json).
 - Objet du vote : texte
 - Auteur : David Valence, député, Renaissance au dépôt ; proposition de loi n° 1959 enregistrée le 5 décembre 2023 (l16b1959_proposition-loi.txt:8), présentée par David Valence, Sylvain Maillard et les membres du groupe Renaissance (l. 26) ; CRSANR5L16S2024O1N123.txt:690 ; PA721482, groupe PO800538, a voté pour à ce scrutin.
@@ -46,6 +46,7 @@ Remarques du rédacteur sur le lot :
     - ligne 3 : l16b1959_proposition-loi.txt:153-155 (« le président du conseil régional exerce les attributions prévues à l'article L. 4231-4 du code général des collectivités territoriales ») ; N123:694 (« pouvoirs de police »).
   - Groupe de Delautrette à la séance : PO830170 « Socialistes et apparentés » (depuis le 19 octobre 2023 ; le compte rendu imprime « SOC-A »). Le fichier du scrutin porte encore l'ancien organe, PO800496.
 - Doutes :
+  - **Titre et lignes revus par UX (10 octobre 2026)** pour la lisibilité, sens inchangé (`ux-titres-lignes2.md`) ; les comptes de caractères écrits plus haut peuvent dater d'avant : le contrôle 1 les refait. Titre et ligne 3 recadrés (arbitrage de l'orchestrateur) : « pouvoirs de police » se lisait comme des policiers ; la ligne dit la police de la circulation et laisse la gestion du domaine routier (article L. 4231-4).
   - Le texte voté est celui de la commission (n° 2077). Il n'est pas disponible localement. Aucun amendement de séance n'a été adopté (nos 2, 3 et 1 rejetés : N123:836, :912, :921). Les lignes 2 et 3 reposent donc sur la proposition n° 1959 et sur les orateurs.
   - Le délai des conventions, porté de 8 à 16 mois en commission, est tu.
   - Le texte voté est technique (délégations de signature), mais le débat porte sur le principe de la régionalisation. La ligne 1 donne ce principe ; les lignes 2 et 3 disent ce que change le texte.
@@ -68,8 +69,8 @@ Remarques du rédacteur sur le lot :
 - Titre : Énergies renouvelables, le préfet en dernier recours
 - Lignes :
   1. Les communes proposeraient les zones où accueillir en priorité des énergies renouvelables.
-  2. Si elles ne suffisent pas pour l'objectif de la région, on leur demanderait d'en ajouter.
-  3. À défaut, le préfet les désignerait lui-même, après un avis régional, dans les trois mois.
+  2. Si ces zones ne suffisent pas à la région, on demanderait aux communes d'en ajouter.
+  3. Sinon, le préfet les désignerait lui-même, après un avis régional, dans les trois mois.
 - Vote : rejeté, 32 pour, 68 contre, 11 abstentions (8 décembre 2022) ; amendement n° 2429 à l'article 3 du projet de loi relatif à l'accélération de la production d'énergies renouvelables, en première lecture ; sous-amendements 3149, 3151 et 3152 rejetés avant le vote (N090:796-803) ; étape `aucune` (CRSANR5L16S2023O1N090.txt:804-807 ; VTANR5L16V707.json).
 - Objet du vote : amendement
 - Auteur : Maxime Laisney, député, La France insoumise - Nouvelle Union Populaire écologique et sociale au dépôt ; premier signataire nommé par le titre du scrutin (« l'amendement n° 2429 de M. Laisney ») ; PA795516, groupe PO800490, a voté pour à ce scrutin ; défendu par Clémence Guetté (N090:547) ; aucun amendement identique.
@@ -95,6 +96,7 @@ Remarques du rédacteur sur le lot :
     - ligne 2 : N090:578 et :651 (second tour, zones complémentaires) ;
     - ligne 3 : texte de l'amendement lu en séance, N090:623 (« le référent préfectoral, dans un délai de trois mois et après avis du comité régional de l'énergie, identifie les zones complémentaires ») ; N090:626 (« l'autorité préfectorale ou le référent régional, peu importe »).
 - Doutes :
+  - **Titre et lignes revus par UX (10 octobre 2026)** pour la lisibilité, sens inchangé (`ux-titres-lignes2.md`) ; les comptes de caractères écrits plus haut peuvent dater d'avant : le contrôle 1 les refait.
   - Une seule forme, « le préfet », dans le titre, la ligne 3 et la raison 1. Elle rend « référent préfectoral », comme le fait tout le débat (N090:626). Dans la raison 1, « le préfet » remplace « il ».
   - La ligne 3 dit désormais l'avis régional (celui du comité régional de l'énergie). Elle tait le schéma régional pris en compte.
   - Raison 2 (croisée) : c'est une réassurance, que l'aveugle a pourtant rangée du bon côté. Repli si besoin, chez la même oratrice : « Sans ce recours, ça risque de traîner, et les projets n'avanceront pas. » (12 mots ; N090:588).
@@ -116,9 +118,9 @@ Remarques du rédacteur sur le lot :
 ### T? · scrutin 2484 (16e législature)
 - Titre : Grands projets industriels, l'État délivrerait les permis
 - Lignes :
-  1. Par décret, un grand projet industriel pourrait être déclaré d'intérêt national majeur.
+  1. Le Gouvernement pourrait déclarer un grand projet industriel d'intérêt national majeur.
   2. L'État adapterait les règles locales d'urbanisme et délivrerait lui-même les permis.
-  3. Le maire et l'intercommunalité auraient un veto au départ, pas une fois leur accord donné.
+  3. Le maire et l'intercommunalité pourraient refuser au départ, pas après avoir dit oui.
 - Vote : adopté, 94 pour, 15 contre, 7 abstentions (21 juillet 2023) ; article 9, amendé, du projet de loi relatif à l'industrie verte, en première lecture à l'Assemblée ; étape `navette` (CRSANR5L16S2023E1N027.txt:945-948 ; VTANR5L16V2484.json).
 - Objet du vote : article
 - Auteur : Gouvernement ; projet de loi relatif à l'industrie verte (CRSANR5L16S2023E1N018.txt:6 ; CRSANR5L16S2023E1N027.txt:690).
@@ -145,6 +147,7 @@ Remarques du rédacteur sur le lot :
     - ligne 2 : N027:687 (« procédure de mise en compatibilité ad hoc ; la délivrance des autorisations d'urbanisme par l'État ») et :675 ;
     - ligne 3 : N027:688 (veto « au tout début de la procédure » ; « Une fois qu'on a dit « oui », il faut avancer ») et :694 (maires et président de l'EPCI).
 - Doutes :
+  - **Titre et lignes revus par UX (10 octobre 2026)** pour la lisibilité, sens inchangé (`ux-titres-lignes2.md`) ; les comptes de caractères écrits plus haut peuvent dater d'avant : le contrôle 1 les refait.
   - Raison 1 : elle dit maintenant l'effet recherché (aller plus vite), pas seulement le mécanisme. « Les grands projets iraient plus vite » rend « accélérer les procédures de certains projets ».
   - Arguments « contre » non retenus : Dufour (N027:673, « malgré l'opposition de tous les élus locaux ») et Fournier (N027:678, « permettra à l'État de leur imposer sa volonté »). Le veto au départ était déjà dans le texte de la commission, et la mesure n'a pas changé. Le vrai motif : une raison « l'État impose » à côté d'une ligne « veto au départ » serait contradictoire pour le joueur.
   - Condition 8.2 : six amendements ont été adoptés sur l'article 9 en séance : 271 (N027:862, rédactionnel), 272 à 275 (simple inversion de « souveraineté nationale » et « transition écologique » ; am-1512-272 à 275) et 1628 du Gouvernement (alinéa 17, « en vue de leur instruction », rédactionnel ; am-1512-1628). Le veto au départ n'a pas changé ; la condition est tenue pour les raisons 2 et 3.
@@ -162,7 +165,7 @@ Remarques du rédacteur sur le lot :
 - Lignes :
   1. Une loi de 2015 oblige les communes à confier l'eau à leur communauté de communes en 2026.
   2. Le texte lèverait cette obligation, mais pas pour les communes qui l'ont déjà fait.
-  3. Cet amendement la rendrait aux communes si la moitié des conseils municipaux l'accepte.
+  3. Cet amendement leur rendrait l'eau, si la moitié des conseils municipaux l'accepte.
 - Vote : rejeté, 21 pour, 77 contre, 1 abstention (13 mars 2025) ; amendement n° 13 rectifié à l'article 1er de la proposition de loi visant à assouplir la gestion des compétences « eau » et « assainissement » (texte de la commission n° 1020), en première lecture à l'Assemblée ; étape `aucune` (CRSANR5L17S2025O1N129.txt:211-214 ; VTANR5L17V989.json).
 - Objet du vote : amendement
 - Auteur : René Pilato, député, La France insoumise - Nouveau Front Populaire au dépôt ; premier signataire (titre de VTANR5L17V989 ; am-1020-13.txt:16 ; CRSANR5L17S2025O1N129.txt:257) ; PA817211, n'a pas pris part au vote ; défendu par Gabriel Amard, cosignataire (N129:183-184) ; en discussion commune avec l'amendement no 4 (Sophie Pantel, Socialistes et apparentés), concurrent et non identique ; dossier DLR5L16N49927.
@@ -189,6 +192,7 @@ Remarques du rédacteur sur le lot :
     - ligne 2 : N129:93 (« met fin à l'obligation de transfert […] mais seulement pour les communes qui ne les ont pas encore transférées. Aucun retour en arrière n'est possible ») et am-1020-13.txt:199-205 (exposé sommaire) ;
     - ligne 3 : am-1020-13.txt:115-122 (XIII, restitution « après accord de la moitié au moins des conseils municipaux des communes membres ») et :130-131 (arrêté du représentant de l'État).
 - Doutes :
+  - **Titre et lignes revus par UX (10 octobre 2026)** pour la lisibilité, sens inchangé (`ux-titres-lignes2.md`) ; les comptes de caractères écrits plus haut peuvent dater d'avant : le contrôle 1 les refait.
   - Ligne 1 : l'échéance de 2026 est désormais dite. En mars 2025, l'obligation n'était pas encore en vigueur pour les communautés de communes.
   - La ligne 3 ne retient que la première voie du XIII. Elle tait la seconde (une ou plusieurs communes, avec l'accord de la communauté), le « à tout moment, en tout ou partie » et l'arrêté préfectoral.
   - L'amendement réécrit aussi l'article pour revenir à un transfert facultatif simple (I à III, version de juin 2023, l. 196-209). Les lignes ne le disent pas : le seul point de clivage du débat est la restitution.
