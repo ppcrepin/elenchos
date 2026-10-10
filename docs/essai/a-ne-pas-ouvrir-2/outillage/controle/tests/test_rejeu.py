@@ -255,5 +255,84 @@ class TestRejeu(unittest.TestCase):
         self.assertEqual(t["jours"]["2"]["mesures"]["duree_deviner"], 0)
 
 
+    # ---- spécification tranchée le 10 octobre 2026
+
+    def test_copie_avec_saut_durees(self):
+        # Q-K7 : `copies[i].sauts` du fichier des durées porte les durées du saut de la copie.
+        j = self.base()
+        cp = {"coups": copy.deepcopy(j["jours"]["7"]["coups"]), "etapes": dict(j["jours"]["7"]["etapes"]),
+              "jour": 7, "sauts": copy.deepcopy(j["sauts"][:1]), "versions": [1]}
+        j["copies"] = [cp]
+        jj = canon.lire_strict(canon.octets_canoniques(j))
+        du = durees_pour(jj)
+        t = Rejeu(self.d, self.octets, jj, du).trace()
+        c = t["copies"][0]["texte"]
+        self.assertIn("50 s", c)                    # duree_saut de la copie, pas celle du journal (5 min)
+        del du["copies"][0]["sauts"]
+        R = Rejeu(self.d, self.octets, jj, du)
+        R.trace()
+        self.assertIn(("/copies/0/sauts", "fichier des durées : `sauts` absent de la copie"), R.defauts)
+
+    def test_jours_ecoules_aux_points_de_saut(self):
+        t, _ = self.rejouer(self.base())
+        texte = t["carnet"]["texte"]
+        for k in (4, 8):
+            bloc = texte.split(f"Jour {k} ")[1].split("Jour ")[0]
+            self.assertIn("Jours écoulés depuis l", bloc, f"jour {k}")
+
+    def test_arrivee_egale_curseurs_vus_jour_1(self):
+        from ec.histoire import calculer_histoire
+        th, _, _, _ = calculer_histoire(self.d, self.octets)
+        t, _ = self.rejouer(self.base())
+        self.assertEqual(canon.canonique(th["arrivee"]["curseurs"]), canon.canonique(t["jours"]["1"]["curseurs_vus"]))
+
+    def test_barre_n_17_au_jour_14(self):
+        t, _ = self.rejouer(self.base())
+        self.assertEqual(t["jours"]["14"]["portrait"]["barre"]["n"], 17)
+        self.assertEqual(t["jours"]["1"]["portrait"]["barre"]["n"], 4)   # entrée + T1
+
+    def test_titres_par_membre_et_message(self):
+        t, _ = self.rejouer(self.base())
+        ordre = ["sans_faute", "devin", "mystere", "fidele"]
+        for k in range(1, 16):
+            ti = t["jours"][str(k)]["cercle"]["titres"]
+            self.assertEqual(sorted(ti), sorted(["Agathe", "Nassim", "Odile", "Valentin", "porteur"]))
+            for v in ti.values():
+                self.assertEqual(v, [x for x in ordre if x in v])
+        for k in ("7", "14"):
+            dim = t["jours"][k]["dimanche"]
+            attendu = bool(dim["sans_faute"] or dim["devin"]["titulaire"] or dim["mystere"]["titulaire"]
+                           or dim["fidele"]["titulaires"])
+            self.assertEqual(t["jours"][k]["message"]["titres"], attendu)
+        for k in ("2", "3", "4", "8"):
+            self.assertFalse(t["jours"][k]["message"]["titres"])
+
+    def test_surprise_membre_sans_reponse(self):
+        # Un membre qui n'a pas répondu compte comme une réponse différente.
+        _, R = self.rejouer(self.base())
+        p, tid = next((p, t) for p in ("Agathe", "Nassim", "Odile", "Valentin") for t in self.d["absences"][p]
+                      if t.isdigit())
+        carte = {"designe": p, "_niveau": 4, "_raison": 1}
+        self.assertFalse(R.mo.juste(carte, tid))
+
+    def test_agregats_hors_manche_0_et_seuil(self):
+        t, R = self.rejouer(self.base())
+        ee = sp = 0
+        for k in range(1, 15):
+            for g, m in t["jours"][str(k)]["manches"].items():
+                if g == "porteur":
+                    continue
+                for c in m["cartes"]:
+                    if c["auteur_compte"] == "porteur":
+                        sp += 1
+                    else:
+                        ee += 1
+        a = t["agregats"]
+        self.assertEqual(a["justesse_personnages_entre_eux"]["total"], ee)
+        self.assertEqual(a["justesse_personnages_sur_porteur"]["total"], sp)
+        # seuil : au jour 6, T0 à T4 révélés, dont 4 répondus par le porteur (T0 jamais) : pas de chiffre
+        self.assertIsNone(R.agregats(6)["justesse_personnages_entre_eux"])
+        self.assertIsNotNone(R.agregats(7)["justesse_personnages_entre_eux"])
+
 if __name__ == "__main__":
     unittest.main()

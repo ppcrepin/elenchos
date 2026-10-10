@@ -119,6 +119,44 @@ class TestJournal(unittest.TestCase):
         j7["coups"]["carnet"] = {"hesite": None, "moment": None, "moment_semaine": None, "saut_clair": None}
         self.assertEqual(self.regles(j), [])
 
+    def reprise_sans_ouverture(self):
+        j = tronquer(self.base(), 7)
+        j["arret"]["f2"] = "jamais"
+        j7 = j["jours"]["7"]
+        j7.update(ouverture=None, versions=None, attente=None,
+                  etapes={"deviner": False, "entree": None, "repondre": False})
+        j7["coups"].update(deviner=None, pendant_deviner=None, reponse=None)
+        j7["coups"]["carnet"] = {"hesite": None, "moment": None, "moment_semaine": None, "saut_clair": None}
+        return j
+
+    def test_regle4_etat_du_jour_de_reprise(self):
+        # Q-J3 : jour de reprise atteint sans ouverture, état exact (schéma 2, règle 4).
+        mutations = [
+            lambda c, x: x.update(versions=[1]),
+            lambda c, x: x.update(etapes={"deviner": True, "entree": None, "repondre": False}),
+            lambda c, x: x.update(etapes=None),
+            lambda c, x: c.update(abandon=True),
+            lambda c, x: c.update(relire=1),
+            lambda c, x: c.update(rouvrir=1),
+            lambda c, x: c["ouvert"].update(cercle=1),
+            lambda c, x: c["ouvert"].update(qui_est_qui=1),
+            lambda c, x: c["carnet"].update(moment="aucun"),
+        ]
+        for i, m in enumerate(mutations):
+            j = self.reprise_sans_ouverture()
+            m(j["jours"]["7"]["coups"], j["jours"]["7"])
+            d = self.regles(j)
+            self.assertTrue(any(r == 4 for r, _, _ in d), f"mutation {i} : règle 4 attendue ; {d}")
+
+    def test_regle9_point_de_saut_onglets(self):
+        # Aux jours 4 et 8, Le Cercle, Moi et l'écran d'un proche valent 0 ; Qui est qui reste permis.
+        for k in ("4", "8"):
+            for cle in ("cercle", "moi", "proche"):
+                self.refuse(lambda j: j["jours"][k]["coups"]["ouvert"].update({cle: 1}), 9)
+            j = self.base()
+            j["jours"][k]["coups"]["ouvert"]["qui_est_qui"] = 1
+            self.assertEqual(self.regles(j), [])
+
     def test_regle1_version(self):
         self.refuse(lambda j: j.update(version=3), 1)
 

@@ -11,16 +11,17 @@ Chaque point donne la citation, l'écart ou le manque, la lecture que C applique
 | Q-F1 | `i` de t("ordre-texte\|tension\|i") | — | **tranché** (fichier caché, point 14) ; vérifié |
 | Q-F2 | séparateurs après le groupe de l'auteur | — | **tranché** ; appliqué |
 | Q-G1 | libellé d'organe avec apostrophe courbe | — | **tranché** ; appliqué |
-| Q-G2 | commissions : comparaison à `amo` ? | Back-end | tranché : contrôle bloquant (schéma 2.10 bis, 7.2) |
-| Q-J1 | squelette du pseudo | UX, Front-end (confirmation) | lecture retenue par l'orchestrateur |
-| Q-J2 | `hesite` vide | UX, Back-end | `[]` refusé |
-| Q-J3 | jour de reprise sans ouverture : `etapes` et `abandon` | Back-end, Front-end | objet à faux, booléen |
-| Q-H1 | `arrivee.curseurs` de la trace de l'histoire | Back-end | comme le résumé (P, C et S concordent sur le candidat 1) |
+| Q-G2 | commissions : comparaison à `amo` ? | — | **tranché** ; appliqué (écart bloquant, repli « forme seule » dit au rapport) ; testé |
+| Q-J1 | squelette du pseudo | — | **confirmé** (UX) ; appliqué |
+| Q-J2 | `hesite` vide | — | **confirmé** ; `[]` refusé |
+| Q-J3 | jour de reprise sans ouverture | — | **tranché** (schéma 4.4, règle 4) ; état exact vérifié ; testé |
+| Q-H1 | `arrivee.curseurs` de la trace de l'histoire | — | **confirmé** ; égal à `jours.1.curseurs_vus` (testé) |
 | Q-R1, Q-R2 | règles cachées | — | **tranchés** (fichier caché) |
-| Q-B1 | forme de la liste des textes en présentation B | orchestrateur | numéros de scrutin |
-| Q-T1 à Q-T11 | trace de partie, version 4 (jalon 2) | Back-end, Front-end | lectures ci-dessous |
-| Q-K1 à Q-K10 | carnet du second essai (jalon 2) | UX, Back-end | lectures ci-dessous |
-| Q-P1, Q-P2 | phrases attendues, version 2 (jalon 2) | UX, Back-end | lectures ci-dessous |
+| Q-B1 | forme de la liste des textes en présentation B | — | **tranché** : numéros de scrutin, garde « exactement une fiche de texte joué », clé au rapport ; testé |
+| Q-T1 à Q-T11 | trace de partie, version 4 (jalon 2) | — | **confirmés** ; appliqués |
+| Q-K1 à Q-K10 | carnet du second essai (jalon 2) | — | **confirmés** ou corrigés ; appliqués (Q-K7 : `copies[i].sauts`) |
+| Q-P1, Q-P2 | phrases attendues, version 2 (jalon 2) | — | **confirmés** |
+| Q-D1 à Q-D3 | dévoilement (jalon 3) | UX | lectures ci-dessous |
 
 ## Fiches (partie 5.1, étape 8)
 
@@ -157,3 +158,17 @@ Ces lectures sont celles de `ec/rejeu.py`. Elles seront éprouvées par la compa
   - **Réponse (10 octobre 2026, UX)** : confirmé, avec la forme du député non inscrit et la résolution en 1.6 : ajout au §7.10, puce « Résolution » (`simulation-2.md`). Sur les écrans de chaque texte, UX note que T3, T4 et T7 à T11 ne s'affichent qu'en 5.4 (leurs révélations ne sont jamais lues), T14 en 5.4 seulement, T0 en 2.7d et 2.7e seulement (UX-2 clos) ; cette précision ne s'applique que si la liste dit où une phrase doit apparaître, pas seulement où elle est permise.
 - **Q-P2. `interdites_avant_revelation`.** La date, la phrase d'étape, la phrase {suite}, le gros titre, les « Proposé par … » et les noms ; la phrase {objet} n'y est pas (elle ne dit rien du résultat).
 
+
+## Jalon 3 : spécification tranchée le 10 octobre 2026
+
+Appliqué dans C : Q-G2 (écart de libellé bloquant, étape 8 du contrôle 1), Q-B1 (garde et clé au rapport), Q-J3 (règle 4 : état exact du jour de reprise sans ouverture), règle 9 (aux jours 4 et 8, `ouvert.cercle`, `ouvert.moi`, `ouvert.proche` à 0), Q-K7 (`copies[i].sauts` du fichier des durées, défaut s'il manque), « Jours écoulés » aux jours 4 et 8 (Q-K1), `message.titres`, `titres.<membre>`, `agregats`, `surprises_proches`, `reference`, `barre.n`, `arrivee.curseurs` ; chiffres constants (fichier caché, point 13, commande `constantes`) ; phrases du dévoilement (`devoilement.md`, commande `devoilement`). Arbitrage de l'orchestrateur appliqué : tempéraments du dévoilement = calcul du jour 14, même après un arrêt, réponses non données = absentes ; « , entrée comprise » retiré (commit `36d5afb`).
+
+- **Q-D1. Titre du panneau 7.** Citation : « **1. Ouverture** (sans titre) » puis « **7. Fin** », sans « (sans titre) ». Écart : seul le panneau 1 est dit sans titre ; « Fin » peut se lire comme un titre affiché ou comme une étiquette de rédaction. Lecture de C : pas de titre (`"titre": null`), comme le panneau 1 : « Fin » nomme le panneau dans le document, la page n'écrit pas « Fin » au-dessus d'une phrase de clôture. Remplacement proposé : « **7. Fin** (sans titre) ».
+- **Q-D2. {date}, {heure} et {fichier} du panneau 6.** Citation : « … publiée dans la conversation le {date} à {heure} … » ; « Fichier scellé : » {fichier}. Manque : ni la source ni le format (« 2 novembre 2026 », « 18 h 05 » ?) ne sont écrits. Lecture de C : trois paramètres (`--date-publication`, `--heure-publication`, `--nom-fichier`), écrits tels que fournis ; la phrase passe par les règles 1 à 6 du §7.8, le nom du fichier non. Sans paramètre, C laisse le gabarit « {date} » et le contrôle 11 ne peut pas conclure sur ces deux blocs. Remplacement proposé : dire où la page les lit (constantes de la page publiée ?) et leur format.
+- **Q-D3. Forme des blocs.** Le document ne dit pas comment découper un panneau. Lecture de C : un bloc par paragraphe « … » du gabarit ; au panneau 6, chaque libellé et chaque valeur sont des blocs distincts (9 blocs) ; au panneau 5, chaque ligne de la liste est un bloc, et les deux phrases « Son profil donnait Neutre. » et « Vous l'aviez à deviner le jour {n+1}. » sont un seul bloc, séparées par une espace (« sur une même ligne »). La comparaison du contrôle 11 peut se faire sur le texte joint si la page découpe autrement.
+
+Constat sur la page (pas une question de spécification) : le journal témoin de `outillage/page/tests/trace-partie.js --temoin` (candidat 1) a `jours.4.coups.ouvert.moi` = 1 et `jours.8.coups.ouvert.moi` = 1. C le refuse (schéma 4.4, règle 9 : « Aux jours 4 et 8, `ouvert.cercle`, `ouvert.moi` et `ouvert.proche` valent 0 »). Après remise de ces deux valeurs à 0, P et C ne diffèrent que sur ces quatre chemins (`coups` et `mesures`).
+
+---
+
+*Réponses de l'orchestrateur (10 octobre 2026) à Q-D1 à Q-D3* : les trois lectures de C sont retenues et écrites dans `devoilement.md` (« **7. Fin** (sans titre) » ; règles de {date}, {heure}, {empreinte}, {graine}, {fichier}, d'après les entrées de construction de la page ; règle des blocs).

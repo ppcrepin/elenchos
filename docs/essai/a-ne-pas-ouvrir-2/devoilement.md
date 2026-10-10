@@ -55,7 +55,7 @@
 **6. Pour le contrôle** (partie repliée)
 « Empreinte du fichier scellé : » {empreinte} / « Si vous le voulez, comparez-la, ligne par ligne, avec celle publiée dans la conversation le {date} à {heure} : elles doivent être identiques. Si un seul caractère diffère, dites-le dans la conversation. » / « Graine : » {graine} / « Tirage retenu pour l'histoire : » {r} / « Fichier scellé : » {fichier}
 
-**7. Fin**
+**7. Fin** (sans titre)
 « Les règles et le lot du second essai sont dans « a-ne-pas-ouvrir-2 » : vous pouvez maintenant l'ouvrir. » / « Si votre carnet est bien dans la conversation, vous pouvez tout effacer. »
 
 ## Règles de calcul
@@ -67,7 +67,10 @@
 - {Pas de Côté} : textes Tn, n parmi 5, 6, 12 et 13 (les seuls dont la révélation est lue après le jour 4), dont la tension compte avant Tn, dans E1 à E3 et T1 à T(n−1), au moins 10/f textes. S'il y en a : « Le Pas de Côté ne vous était possible qu'à la révélation {du jour n+2, sur {Pôle 0} ou {Pôle 1} | des jours {liste des n+2, règle de liste du §8.12}, chacun sur la tension de son texte}, et seulement si votre curseur y était déjà net. » Sinon : « Le Pas de Côté vous était impossible : aucun de vos curseurs ne pouvait être net assez tôt. »
 - {pts14}, {pts15} : nombre de cartes servies au porteur dans ses manches révélées en semaine 14 (manches des jours 1, 2, 3) et en semaine 15 (jour 7), en lettres ; c'est un plafond, qui ne dépend pas des coups.
 - Phrase « Supprimer » : affichée seulement si au moins deux textes servis (E1 à E3, T0 à T14) ont un titre qui commence par « Supprimer » et que tous ont un vote de rejet.
-- {titre H86} : `histoire.textes.H86.fiche.titre`. {r} : `histoire.tirage`.
+- {titre H86} : `histoire.textes.H86.fiche.titre`. {r} : `histoire.tirage`, en chiffres.
+- {date} : l'entrée de construction `empreinte_publiee_le` (AAAA-MM-JJ), écrite « {j} {mois} {aaaa} », « 1er » pour le premier du mois (§7.9). {heure} : l'entrée `empreinte_publiee_a` (HH:MM), écrite « {h}h{mm} » (« 7h40 »).
+- {empreinte} : les 64 caractères en quatre lignes de quatre groupes de quatre, séparés par une espace. {graine} : telle quelle. {fichier} : le texte du fichier scellé, tel quel.
+- Blocs, pour le contrôle 11 : un bloc par paragraphe ; au panneau 6, chaque libellé et chaque valeur forment un bloc ; « Son profil donnait Neutre. » et « Vous l'aviez à deviner le jour {n+1}. » partagent un bloc, séparés par une espace.
 - {lecture} : « au milieu » si 41 ≤ p ≤ 59, sinon le pôle du côté de p ; {p} : `position` ; {fermeté} : « faible », « moyenne » ou « forte ». Pôles : Sécurité, Liberté individuelle ; Précaution, Innovation ; Tradition, Changement ; Local, National.
 - Réponses contre son profil pendant l'essai : éléments de `reponses_atypiques.<personnage>` dont le texte est entre T0 et T13 ; {n} : numéro du texte ; position et raison lues dans `reponses`.
 - « Son profil donnait Neutre. » : si `cote_tire` n'est pas nul.
