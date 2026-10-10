@@ -1,4 +1,6 @@
-/* Tests du noyau (lot 2). Lancer : node --test tests/
+/* Tests du noyau. Second essai, lot 1 : repris du premier essai, sur le
+ * fichier scellé de test (tests/scelle-test.json, inventé, "provisoire"),
+ * plus modulo et squelette. Lancer : voir DEPENDANCES.md.
  * Oracles : node:crypto (SHA-256, base64) et Intl (heure de Paris), dans
  * les tests seulement ; la page n'emploie ni l'un ni l'autre. */
 'use strict';
@@ -9,7 +11,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const N = require('../noyau.js');
 
-const SCELLE = process.env.ELENCHOS_SCELLE || path.join(__dirname, '../../../fichier-scelle.json');
+const SCELLE = process.env.ELENCHOS_SCELLE || path.join(__dirname, 'scelle-test.json');
 const NB = N.NBSP, FI = N.FINE;
 
 function octetsDeterministes(n, graine) {
@@ -32,9 +34,21 @@ test('SHA-256 : égal à node:crypto sur 0 à 1100 octets', () => {
   }
 });
 
-test('Graine : dérivée du commit de la spécification (§0)', () => {
+test('Graine du premier essai : dérivée du commit de sa spécification (non-régression du SHA-256)', () => {
   const h = N.sha256(N.utf8Encoder('elenchos-essai|graine|7f4d367278ecf07b01ebad883b7ec75cf7840820'));
   assert.equal(h.slice(0, 16), '23e3ee6ccdc3fb38');
+});
+
+test('Graine du second essai : préfixe « elenchos-essai-2|graine| » (simulation-2.md, §0), égale à node:crypto', () => {
+  for (const E of ['0'.repeat(40), 'f49cfd1' + '0'.repeat(33), '765a64f0123456789abcdef0123456789abcdef0']) {
+    const chaine = 'elenchos-essai-2|graine|' + E;
+    assert.equal(N.sha256(N.utf8Encoder(chaine)).slice(0, 16), crypto.createHash('sha256').update(chaine, 'utf8').digest('hex').slice(0, 16));
+  }
+  // Le fichier de test dérive d'une empreinte de commit fictive, jamais d'un vrai commit.
+  const d = JSON.parse(fs.readFileSync(SCELLE, 'utf8'));
+  if (d.statut === 'provisoire' && path.basename(SCELLE) === 'scelle-test.json') {
+    assert.equal(d.graine, N.sha256(N.utf8Encoder('elenchos-essai-2|graine|' + '0'.repeat(40))).slice(0, 16));
+  }
 });
 
 test('Fichier candidat : octets, base64, UTF-8, JSON canonique, vecteurs de test', () => {
@@ -50,10 +64,11 @@ test('Fichier candidat : octets, base64, UTF-8, JSON canonique, vecteurs de test
   const d = JSON.parse(texte);
   assert.equal(N.jsonCanonique(d), texte, 'le fichier est déjà en forme canonique');
   assert.equal(d.format, 'elenchos-essai-scelle');
-  assert.equal(d.version, 4);
+  assert.equal(d.version, 5);
+  assert.ok(d.statut === 'provisoire' || d.statut === 'final');
   const tir = N.creerTirage(d.graine);
   assert.equal(d.vecteurs_test.length, 3);
-  assert.deepEqual(d.vecteurs_test.map(v => v.cle), ['raison|Odile|E2|3', 'hasard|Nassim|12|porteur', 'surprise-semaine|2|11']);
+  assert.deepEqual(d.vecteurs_test.map(v => v.cle), ['raison|Odile|E2|3', 'hasard|Nassim|13|porteur', 'ecart-hstar|1|Valentin']);
   for (const v of d.vecteurs_test) {
     const t = tir.t(v.cle);
     assert.equal(t.chaine, v.chaine);
@@ -291,4 +306,29 @@ test('Typographie : règles 4 et 5 par la forme, suites qui se chevauchent (§7.
   assert.equal(v('le 9 octobre 2024 2 h 05'), 'le 9⍽octobre⍽2024⍽2⍽h⍽05');
   assert.equal(N.typographier13('Il a 12 000 euros ? Oui : « x »').replace(/ /g, '⍽').replace(/ /g, 'ʼ'), 'Il a 12 000 eurosʼ? Oui⍽: «⍽x⍽»');
   assert.deepEqual(['1 h 05', '2 h 05'].map(s => T(s)), ['1 h 05', '2 h 05']);
+});
+
+test('Modulo : reste mathématique des jours négatifs (schéma du second essai, partie 1.1)', () => {
+  assert.equal(N.modulo(-5, 4), 3);
+  assert.equal(N.modulo(-1, 7), 6);
+  assert.equal(N.modulo(-90 + 6, 4), 0);
+  assert.equal(N.modulo(0, 7), 0);
+  assert.equal(N.modulo(13, 7), 6);
+  for (let x = -200; x <= 200; x++) { for (const m of [4, 7]) { const r = N.modulo(x, m); assert.ok(r >= 0 && r < m && (x - r) % m === 0); } }
+  assert.throws(() => N.modulo(1.5, 4));
+  assert.throws(() => N.modulo(3, 0));
+});
+
+test('Squelette d’un pseudo (§8.8, E7) : accents, casse, lettres imitées par la table', () => {
+  const table = { '\u0430': 'a', '\u0435': 'e', '\u043e': 'o', '\u0456': 'i', '\u0455': 's', '\u0391': 'a', '\u03bf': 'o' };
+  assert.equal(N.squelette('Agathe'), 'agathe');
+  assert.equal(N.squelette('ÀGÄTHÉ'), 'agathe');
+  assert.equal(N.squelette('O\u0301dile'), 'odile');            // accent combinant
+  assert.equal(N.squelette('\u0410gath\u0435', table), 'agathe'); // А et е cyrilliques (А minuscule après toLowerCase)
+  assert.equal(N.squelette('N\u0430\u0455\u0455im', table), 'nassim');
+  assert.equal(N.squelette('\u039fdile', table), 'odile');        // Ο grec majuscule, ramené par la minuscule
+  assert.notEqual(N.squelette('\u0410gathe'), 'agathe');           // sans table, l'imitation passe : la table est nécessaire
+  assert.equal(N.squelette('Témoin-b-4821-k'), 'temoin-b-4821-k');
+  assert.equal(N.squelette(''), '');
+  assert.throws(() => N.squelette(3));
 });

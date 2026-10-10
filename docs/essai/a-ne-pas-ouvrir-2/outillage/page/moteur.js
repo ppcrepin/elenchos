@@ -1,5 +1,13 @@
 /* Moteur de la page de l'essai (outillage d'essai, D-001 tenu).
  *
+ * SECOND ESSAI, ÉTAT AU LOT 1 : copie du moteur du premier essai, pas encore
+ * adaptée (lots 2 et 3, instance A). Elle lit encore le fichier scellé en
+ * version 4 et le journal en version 3 ; elle sert de base aux lots 2 et 3,
+ * qui la remplacent par histoire(scelle, cal), resume(arrivee) et
+ * calculer(scelle, cal, arrivee, journal) (contrat : INTERFACE.md).
+ * Seul changement du lot 1 : le nombre de raisons est lu dans les données.
+ * La validité du journal version 4 est dans journal.js.
+ *
  * Fonctions pures : elles reçoivent le fichier scellé (objet lu), le
  * journal des entrées (schema.md, partie 3.12 : coups, ouvertures,
  * versions, écrans affichés, heures lues pour « En attendant ») et, pour
@@ -151,7 +159,7 @@ var ElenchosMoteur = (function (N) {
   /** Raison devinée sur la carte à raison cachée (règles §3.5). */
   function raisonDevinee(texte, sigma, e) {
     var liste = [];
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < texte.considerations.length; i++) { // nombre de raisons lu dans les données (D-034)
       var cons = texte.considerations[i];
       if (sigma === 0 || (sigma > 0 && cons.cote === 'pour') || (sigma < 0 && cons.cote === 'contre')) { liste.push(cons); }
     }
