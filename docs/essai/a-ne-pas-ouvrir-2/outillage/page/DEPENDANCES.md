@@ -14,7 +14,7 @@ Lot 2 (histoire) : rien de téléchargé.
 - Moteur du second essai : `moteur.js` (`histoire`, `resume`, `regles`) ; le moteur du premier essai est rangé dans `tests/premier-essai/moteur-premier-essai.js` (non-régression).
 - Fichier scellé de test en deux passes, avec l'empreinte de son propre résumé : voir `INTERFACE.md`, partie 9 (`tests/resume-test.js`).
 - Tests du lot 2 : `node --test tests/test-histoire.js`.
-- Trace de l'histoire de la page (P) : `node tests/trace-histoire.js FICHIER_SCELLE SORTIE`.
+- Trace de l'histoire de la page (P) : `node tests/trace-histoire.js FICHIER_SCELLE SORTIE` ; comparaison à trois (P, C, S), octet pour octet, avec les premiers chemins qui diffèrent : `node tests/comparer-histoire.js P=… C=… S=…`.
 - Mesure de performance : `node tests/mesure-histoire.js [FICHIER_SCELLE] [RALENTI]`, avec `playwright-core` 1.56.1 et Chromium de l'environnement (`/opt/node-tools/node_modules/`, `/opt/pw-browsers/`), déjà présents ; chemin réglable par `ELENCHOS_PLAYWRIGHT`.
 
 ## Premier essai
