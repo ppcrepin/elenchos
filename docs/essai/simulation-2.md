@@ -79,7 +79,7 @@ Un texte répondu le jour j est deviné le jour j + 1 et révélé le jour j + 2
   5. Écran verrouillé du jour 7, avec le message de 18h du dimanche.
   
   Mots et formes : UX (§7.4, §8.1 ter) [renvoi].
-- **« Annuler »** ramène au téléphone, sur 2.7f. Ces jours-là, la révélation n'a pas d'onglets et le jour n'a pas d'Aujourd'hui : Le Cercle et Moi ne sont pas accessibles. La seule suite possible reste « Avancer au dimanche ». Les jours 4 et 8 n'offrent jamais de Deviner : les manches de T3 et de T7 ne sont jamais ouvertes.
+- **« Annuler »** ramène au téléphone, sur 2.7f. Tant que le saut n'est pas confirmé, la révélation n'a pas d'onglets et le jour n'a pas d'Aujourd'hui : Le Cercle et Moi ne sont pas accessibles. La seule suite possible reste « Avancer au dimanche ». Pendant le rattrapage, les onglets sont actifs (§7.4). Les jours 4 et 8 n'offrent jamais de Deviner : les manches de T3 et de T7 ne sont jamais ouvertes.
 - **Rattrapage.**
   - C'est l'écran Répondre du produit, un texte à la fois. La phrase du jour s'affiche après chaque réponse (règle 18).
   - Une réponse est exigée pour chaque texte (UX). « Arrêter l'essai » reste possible.
@@ -459,7 +459,7 @@ Le parcours de `simulation.md` §7.2, avec Valentin à la place d'Agathe et D-03
     - rien d'autre : ni compte à rebours, ni « Déjà joué aujourd'hui ». Le jour passe d'un coup ; une heure n'y voudrait rien dire.
   - **Pas de barre** dans ces écrans (§7.15).
   - Le porteur ne peut pas laisser un texte sans réponse : comme à l'entrée, le repère « texte k sur n » appelle une réponse. Pour en sortir : « Arrêter l'essai ».
-  - Les onglets restent actifs : Le Cercle et Moi montrent l'état du jour du texte affiché.
+  - Les onglets sont actifs pendant le rattrapage (ils ne le sont pas avant le saut, §0) : Le Cercle et Moi montrent l'état du jour du texte affiché.
 - **Après le dernier texte** : « Aller au dimanche » (bande, §8.1 ter [renvoi]) ouvre 3.1, l'écran verrouillé du dimanche.
 
 ### 7.5 Les dimanches (jours 7 et 14) et la clôture
@@ -1246,36 +1246,9 @@ Dessous : « Pour tout le reste, vos mots dans la conversation, sans parler de v
 - F1 : les profils sont connus depuis le premier dévoilement.
 - « Passer de Deviner à Répondre » (dans ma version de travail) : D-022 a renvoyé la clarté de la journée à la bêta, la journée n'a pas changé, et le porteur a déjà répondu au premier bilan. Une question de moins.
 
-### 8.6 Dévoilement (Game design ; textes : voir la note)
+### 8.6 Dévoilement (Game design et UX ; textes : `a-ne-pas-ouvrir-2/devoilement.md`)
 
-**Dévoilement** (textes d'UX, sur le modèle de `devoilement.md`, rangés dans `a-ne-pas-ouvrir-2/`)
-1. **Ouverture**, sans rien sur F1.
-2. **Comment lire.**
-   - La place sur 100 et la fermeté, comme au premier essai.
-   - la part et la forme des réponses données exprès contre le profil (texte au fichier caché, avec la règle qu'il dévoile).
-   - Les absences.
-   - « Jour {n} » : le texte répondu le jour n, deviné le jour n + 1, révélé le jour n + 2.
-3. **L'histoire du cercle.**
-   - « Les treize semaines d'avant votre arrivée ont été calculées avec les mêmes règles, sur des textes sans titre (une tension, un sens), sauf « {titre de H86} ». »
-   - « Le calcul a été refait jusqu'à remplir des critères écrits d'avance : curseurs nets, tempéraments, surprise de la semaine, titres variés. Tirage retenu : {r}. »
-   - Puis : « Votre portrait comptait vos réponses {trois} fois. » ({trois} suit le facteur, §5.9).
-   - Pourquoi Le Devin et Le Sans-Faute étaient hors de portée : trois manches, puis une, contre sept.
-4. **Un panneau par personnage** :
-   - sa phrase fixe ;
-   - ses quatre lignes, avec la place sur 100 et la fermeté ;
-   - « Réponses contre son profil pendant l'essai : », texte par texte (T0 à T13), avec « Vous l'aviez à deviner le jour {n+1} ({jour}). » quand c'est vrai ;
-   - « Avant votre arrivée : {a} réponses contre son profil sur {b}. » ;
-   - ses jours sans jouer pendant l'essai, puis leur nombre avant ;
-   - ses tempéraments au jour 14, chacun avec sa règle en mots.
-5. **Pour le contrôle** : empreinte, graine, numéro r, fichier scellé.
-6. **Fin** : « Les règles et le lot du second essai sont dans « a-ne-pas-ouvrir-2 » : vous pouvez maintenant l'ouvrir. ».
-
-**Ajout d'UX**
-
-- **Dévoilement** : textes de Game design sur le modèle de `devoilement.md`. Pour UX :
-  - « Si vous le voulez, comparez-la… » devant l'empreinte ;
-
-*[Assembleur : les deux autres points d'UX (« Vous l'aviez à deviner le jour {k} ({jour}). » ; la phrase finale sur « a-ne-pas-ouvrir-2 ») sont ceux de Game design ci-dessus. Game design attribue les textes du dévoilement à UX, UX à Game design : les phrases citées ici sont de Game design ; le texte complet, sur le modèle de `devoilement.md`, est à écrire par UX avant le lot 5, sur ces phrases (arbitrage de l'orchestrateur : UX avait écrit les textes du premier dévoilement avec Game design).]*
+**Dévoilement** : les textes complets sont dans `a-ne-pas-ouvrir-2/devoilement.md` (UX et Game design, 10 octobre 2026) ; en cas d'écart, ce fichier l'emporte sur le plan du §8.6. Ordre des panneaux : 1. Ouverture ; 2. Comment lire ; 3. Avant votre arrivée ; 4. Ce que l'essai changeait pour vous ; 5. Un panneau par personnage ; 6. Pour le contrôle ; 7. Fin.
 
 ### 8.8 Ce que la page garde, et où (Front-end ; écart au premier essai)
 
@@ -2221,7 +2194,7 @@ Son désaccord avec Front-end sur la forme du graphique (escalier contre rangée
 - l'annexe C (UX) ;
 - la confirmation de Juridique sur le premier message (§8.2 B), les lignes nouvelles du carnet (§8.12 : « Entrée », « Compte », « Pendant Deviner », bloc de saut) et la note « Qui, durée, droits » (§8.9) : donnée le 9 octobre 2026, sous la condition du contrôle 12 ;
 - le schéma de Back-end, nouvelle version (annexe B, V6, trace étendue), avant le lot 1 ;
-- le texte complet du dévoilement (UX, sur les phrases de Game design du §8.6) et la ligne sous « {Prénom} décroche Le Pas de Côté. » (Game design), avant le lot 5 ;
+- le texte complet du dévoilement (`a-ne-pas-ouvrir-2/devoilement.md`) et la ligne sous « {Prénom} décroche Le Pas de Côté. » (§7.22) : reçus le 10 octobre 2026 ;
 - les formes de la Direction artistique : graphique, barre, ligne de règle, frise, page du saut, boutons de 1.8. [Assembleur : la Direction artistique a donné les trois premières (§7.23) ; la frise est décrite par UX (§8.1 ter) ; la page du saut et les boutons de 1.8 n'ont pas encore de forme.]
 
 **Ce qui raccourcit le chemin critique : un fichier candidat en deux temps.**
@@ -2294,11 +2267,11 @@ Tout de suite, en plus, si le repli sur une histoire scellée devient nécessair
 **Textes qui manquent**
 - La forme des trois boutons de 1.8 et celle de la page du saut (Direction artistique ; Front-end les demande avant le lot 1).
 - Le moyen pour deux ronds qui se chevauchent dans Le Cercle (Direction artistique et Front-end, §7.16).
-- La ligne sous « {Prénom} décroche Le Pas de Côté. » (Game design ; §7.22 et annexe C).
-- Le texte complet du dévoilement : Game design l'attribue à UX, UX à Game design (§8.6).
-- Le repère de l'arrêt V6 (UX, §8.11 ; demandé par Front-end, §8.8).
-- La phrase de la page d'effacement quand les deux parties sont là (UX ; demandée par Front-end, §8.8 et §8.2).
-- L'affichage des amendements identiques d'autres groupes (UX ; Contenu, A.7, point 4).
+- La ligne sous « {Prénom} décroche Le Pas de Côté. » (Game design ; §7.22 et annexe C). Clos le 10 octobre 2026 (§7.22).
+- Le texte complet du dévoilement : clos le 10 octobre 2026 (`a-ne-pas-ouvrir-2/devoilement.md`).
+- Le repère de l'arrêt V6 (UX, §8.11 ; demandé par Front-end, §8.8). Clos le 10 octobre 2026 (§8.9).
+- La phrase de la page d'effacement quand les deux parties sont là (UX ; demandée par Front-end, §8.8 et §8.2). Clos le 10 octobre 2026 (§8.2 A).
+- L'affichage des amendements identiques d'autres groupes (UX ; Contenu, A.7, point 4). Clos le 10 octobre 2026 (§7.11).
 - Le champ « argument inattendu » du fichier scellé, à fixer au schéma (Front-end, annexe B ; Contenu, A.7, point 5 : pas de champ).
 
 **Écarts non arbitrés**

@@ -796,6 +796,7 @@ Aucune autre clé.
    - `rouvrir` n'est non nul qu'aux jours 2, 3, 7 et 14.
    - `annuler_saut` n'existe qu'aux jours 4 et 8.
    - Aux jours sautés, `relire`, `rouvrir` et les quatre entiers de `ouvert` valent 0 ; `annuler_saut`, `abandon` et `pendant_deviner` valent `null`.
+   - Aux jours 4 et 8, `ouvert.cercle`, `ouvert.moi` et `ouvert.proche` valent 0 : avant la confirmation du saut, ni Le Cercle ni Moi ne sont accessibles (`simulation-2.md`, §0).
 10. **Carnet.**
     - `moment` n'existe qu'aux jours joués, parmi les choix de la liste du jour. En mode `interface`, « Deviner » suppose `etapes.deviner`, « Donner mon avis » et « Ma phrase du jour » supposent `etapes.repondre` ; les autres choix ne sont pas filtrés (les écrans qui les montrent, 3.3a et 3.3e, ne sont pas dans `etapes`). Il ne dépend jamais de `reponse`.
     - `saut_clair` n'existe qu'au jour 7. `hesite` et `moment_semaine` n'existent qu'aux jours 7 et 14.
