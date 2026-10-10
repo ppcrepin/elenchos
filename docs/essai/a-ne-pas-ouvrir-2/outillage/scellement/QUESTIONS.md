@@ -86,3 +86,42 @@ Les points 1 à 4 touchent des tirages : la page (P) et le contrôle (C) doivent
 ## 13. Ligne Auteur sans « au dépôt » (fiches S)
 
 - Les fiches S écrivent « - Auteur : Michaël Taverne, député, Rassemblement National ; premier signataire … » ; les fiches P, T et L écrivent « … {groupe} au dépôt … ». Le schéma 5.1 lit le groupe « jusqu'au séparateur » et dit qu'« un groupe est suivi de « au dépôt » sans virgule ». Les deux formes se lisent sans ambiguïté ; à confirmer que la première est admise, sinon ajouter « au dépôt » dans les six fiches S.
+
+---
+
+*Mise à jour du 10 octobre 2026 (S), après la spécification de construction (point 13 du fichier caché réécrit, tableaux 2.10 à 2.11 remplis).*
+
+- **Points 5, 6 et 8 : levés par les fiches et le schéma du jour.** Les lignes « Objet du vote » ne portent plus que le mot, la fiche H86 a « - Titre : » et une ligne Tension nue, les marques « (nouvelle, à annoter) » sont parties. `sceller.py` lit maintenant 2.11 pour l'élision : mêmes valeurs que la règle provisoire, mêmes octets. Il vérifie les règles d'ensemble de 2.10 et 2.10 bis, sans `amo`, qui revient au contrôle 1. **Reste du point 7 :** les en-têtes provisoires (« Case S », « Case P », « T{case} », « T? »), à écrire après le tirage de la graine finale.
+
+## 14. Point 13, ligne 15 (c) : la liste entre parenthèses omet T1 et T2
+
+- **Citation.** « Ce sont les textes dont la révélation est lue dans une partie menée à la clôture (T5, T6, T12, T13), d'une tension où le porteur a, avant eux, au moins ⌈10 / facteur⌉ réponses ».
+- **Écart.** Les révélations de T1 (jour 3) et de T2 (jour 4) sont lues aussi (calendrier, `revelation_porteur` = `lue`). Le résultat ne change pas : avant T1, aucune réponse L ; avant T2, une réponse P. Seul T12 passe le seuil de 4.
+- **Lecture retenue.** La règle, pas la parenthèse. `sceller.py` écrit la liste T1, T2, T5, T6, T12, T13.
+- **Remplacement proposé** : « (T1, T2, T5, T6, T12, T13) ».
+
+## 15. Réglage (point 11) : trois lectures, à confirmer avant le candidat final
+
+- **(a) « curseurs nets au jour 14 ».** Lecture retenue : le portrait en fin de jour 14, T14 compris (17 réponses, facteur appliqué). C'est l'état du `portrait` d'un jour (S1, 3.3 : « état en fin de séance »). L'autre lecture, à l'ouverture du dimanche (16 réponses, celle de la phrase de la semaine), peut donner une autre moyenne. Remplacement proposé : « moyenne des curseurs nets du portrait en fin de jour 14 (T14 compris) ».
+- **(b) Ce que les personnages savent du joueur simulé (règle 3.2).** Ce sont les cartes dont il est l'**auteur d'origine** dans leurs manches déjà révélées : les cartes identiques redistribuées portent la même réponse, donc la lecture ne change rien. En revanche, la justesse des personnages sur ses cartes (seuils stricts) se compte, comme au premier essai, sur les cartes dont `auteur_compte` est le joueur simulé.
+- **(c) Justesse du joueur simulé.** Elle se compte sur ses quinze cartes, T13 compris (point 11 : « sur ses quinze cartes »), jumeaux comptés justes. Le rapport donne aussi le détail : semaine 14, semaine 15, T13.
+- **(d) Qui le joue.** Au premier essai, c'était le programme de contrôle. Il est maintenant prêt dans `sceller.py` (`--reglage 200`), refusé sur un candidat provisoire. À dire s'il doit aussi être joué par C : le point 11 ne le dit pas.
+- **(e) Bord des crans.** Si α vaut déjà 1/3 et que la justesse dépasse 7/10, ou s'il vaut 1/6 et qu'elle est sous 7/20, le programme garde le cran extrême et le rapport le dit. Le fichier caché ne prévoit pas ce cas.
+
+## 16. Candidat 1 relancé : la trace change d'un seul champ
+
+- Relancé avec `--commit bd09827`. Le résumé est identique (`1dd912ed…0fcc`), et r = 16 ne change pas.
+- La trace a un autre SHA-256 (`e1d6d9b1…2a1a`), mais son seul écart est `empreinte_scelle`. En remettant l'ancienne empreinte du fichier (`f3b8819e…87c3`) à sa place, on retrouve exactement `2efde8ab…4c2c`.
+- Le fichier scellé a changé (`bf6e1568…eb7e`) parce que les fiches ont changé depuis le premier passage : titres et lignes revus par UX, marques retirées. Les tensions, sens et pôles de E1 à E3 et de T0, seuls à entrer dans l'histoire, n'ont pas bougé.
+- **Conséquence pour la comparaison à trois.** Les traces de P et de C sur l'ancien fichier gardent l'ancienne `empreinte_scelle`. Pour comparer à nouveau octet pour octet, les trois auteurs doivent écrire la trace sur le même fichier, `bf6e1568…`.
+
+---
+
+*Réponses de l'orchestrateur (10 octobre 2026).*
+
+- **14.** Remplacement appliqué au fichier caché, point 13, ligne 15 (c) : « (T1, T2, T5, T6, T12, T13) ».
+- **15 a.** Lecture retenue ; fichier caché, point 11, « Facteur » : « moyenne des curseurs nets du portrait en fin de jour 14 (T14 compris) ».
+- **15 b, c.** Lectures retenues telles quelles.
+- **15 d.** Le réglage est joué par S seul (`--reglage 200`), au candidat final. Ce n'est pas un chiffre du fichier : ses valeurs (α, seuils, facteur) sont écrites au fichier scellé, que le contrôle vérifie. Le contrôle ne le rejoue pas ; le rapport de scellement le dit.
+- **15 e.** Lecture retenue : le cran extrême est gardé et le rapport le signale.
+- **16.** Les trois traces de l'histoire seront refaites sur le même fichier (`bf6e1568…eb7e`) pour la comparaison à trois, puis sur le fichier final.

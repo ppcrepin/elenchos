@@ -120,7 +120,7 @@ Au-delà de r = 200 : défaut, renvoyé à GD. Les raisons de l'échec de chaque
   - Le côté attendu d'un personnage vient du centre de son curseur vu (≥ 3/5, ≤ 2/5, entre les deux) ; il tente toujours la raison cachée (règle 3.5) ; jumeaux comptés.
 - **Réglage de α**, une fois : justesse du joueur simulé sur ses quinze cartes, cumulée sur les 200 parties. Strictement au-dessus de 7/10 : α monte d'un cran. Strictement sous 7/20 : α baisse d'un cran. Ce sont les seuils du premier essai ; ma v2 écrivait 2/5.
 - **Seuils stricts** : comme au premier essai, sur les cartes du joueur simulé en semaine 15.
-- **Facteur** : moyenne des curseurs nets au jour 14, chez les joueurs simulés dont la réponse type n'est neutre sur aucune tension.
+- **Facteur** : moyenne des curseurs nets du portrait en fin de jour 14 (T14 compris), chez les joueurs simulés dont la réponse type n'est neutre sur aucune tension.
   - De 1 à 3 inclus : facteur 3.
   - Moins de 1 : facteur 4.
   - Plus de 3 : facteur 2.
@@ -168,7 +168,7 @@ Partie témoin ajoutée : un Pas de Côté du porteur sur T12 (S), révélé au 
 15. **Impossibilités** :
     - (a) l'écran 5.12 : le plus petit nombre de réponses de personnages sur T0, T1, T2, T6 et T13 ;
     - (b) Le Sans-Faute du porteur : le nombre de jours où ses cartes sont révélées, semaine par semaine (3, puis 1, contre 5 exigés) ;
-    - (c) Le Pas de Côté du porteur : les textes où il est possible. Ce sont les textes dont la révélation est lue dans une partie menée à la clôture (T5, T6, T12, T13), d'une tension où le porteur a, avant eux, au moins ⌈10 / facteur⌉ réponses, entrée comprise. Avec le facteur 3 et l'ordre retenu, seul T12 l'est.
+    - (c) Le Pas de Côté du porteur : les textes où il est possible. Ce sont les textes dont la révélation est lue dans une partie menée à la clôture (T1, T2, T5, T6, T12, T13), d'une tension où le porteur a, avant eux, au moins ⌈10 / facteur⌉ réponses, entrée comprise. Avec le facteur 3 et l'ordre retenu, seul T12 l'est.
 
 **14. Annexe A cachée (ordre, sens, lot)** *(mise à jour du 9 octobre 2026, composition du lot)*
 - **Ordre retenu.** Le stock, 16e législature comprise, ne donne que trois textes T : le repli à trois textes T devient l'ordre retenu. L'ordre à quatre textes T et l'ancien repli (cinquième réponse sur L) sont abandonnés : L n'a pas six textes qui passent les conventions.

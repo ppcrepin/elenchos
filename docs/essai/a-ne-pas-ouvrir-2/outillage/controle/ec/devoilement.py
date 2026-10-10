@@ -98,7 +98,7 @@ def phrases_devoilement(d, octets, journal=None, date_pub=None, heure_pub=None, 
     fermees = [T for T in TENSIONS if n[T] * f < 10]
     b2 = (f"En tout, entrée et dernier jour compris, vous aviez {n['S']} textes sur Sécurité ou Liberté individuelle, "
           f"{n['P']} sur Précaution ou Innovation, {n['T']} sur Tradition ou Changement et {n['L']} sur Local ou "
-          f"National, entrée comprise. Un curseur devenait net quand ses réponses pesaient au moins {seuil} : une "
+          f"National. Un curseur devenait net quand ses réponses pesaient au moins {seuil} : une "
           "réponse favorable ou défavorable avec un argument attendu pèse 1 ; avec un argument pratique ou aucune "
           "des quatre raisons, 1/2 ; avec un argument au nom de l'autre valeur, 0 ; Neutre, 0. Avec si peu de "
           "réponses, une seule qui pèse 0 pouvait suffire à l'empêcher.")

@@ -1,5 +1,5 @@
 CANDIDAT 1 (PROVISOIRE) — NE PAS PUBLIER CETTE EMPREINTE — second essai Elenchos, rapport du programme de scellement (S)
-Programme : docs/essai/a-ne-pas-ouvrir-2/outillage/scellement/sceller.py  (SHA-256 a85f7b5ac6f0b6580f072c91f5e894a637de7c89c483456e3f6b7f62db467150)
+Programme : docs/essai/a-ne-pas-ouvrir-2/outillage/scellement/sceller.py  (SHA-256 589aef71642d3e7b0d2f008fef95b031ca53f0c169175b9318ded2b2a29b77dc)
 Fichier : fichier-scelle-candidat-1.json ; 72280 octets ; SHA-256 bf6e1568a61d768a7fed3791dd32b2d3aa5d554c0018510ca480fdfb18bceb7e
 Statut : provisoire
 Graine PROVISOIRE : 6479a9e7d2792f2a = 16 premiers chiffres hex de SHA-256("elenchos-essai-2|graine|bd098271689e1cf2c4492ec5ebc1add1e1453d76")

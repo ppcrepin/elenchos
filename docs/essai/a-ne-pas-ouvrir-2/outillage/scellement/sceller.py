@@ -1595,6 +1595,7 @@ def regler(graine: str, tir: Tirage, TX: dict, reps: dict, profils: dict, absenc
         nouvel_alpha = CRANS_ALPHA[min(a + 1, 2)]
     elif J < Fr(7, 20):
         nouvel_alpha = CRANS_ALPHA[max(a - 1, 0)]
+    bord = (J > Fr(7, 10) and a == 2) or (J < Fr(7, 20) and a == 0)
     strict = bool(P15 is not None and P15 > Fr(3, 5))
     if M is None:
         nouveau_facteur = facteur
@@ -1615,6 +1616,7 @@ def regler(graine: str, tir: Tirage, TX: dict, reps: dict, profils: dict, absenc
          f"Curseurs nets du joueur simulé au jour 14 (fin du jour, T14 compris, facteur {facteur}) : moyenne {M} sur "
          f"{nets_n} joueurs sans réponse type neutre ; {Fr(nets_tous, n_parties)} sur tous. 1 à 3 : facteur 3 ; < 1 : 4 ; > 3 : 2.",
          f"Décision : alpha {nouvel_alpha} ; seuils stricts {'oui' if strict else 'non'} ; facteur {nouveau_facteur}."
+         + (" ATTENTION : α devrait changer mais est déjà au cran extrême (cas non prévu, QUESTIONS 15 e)." if bord else "")
          + ("" if (nouvel_alpha, strict, nouveau_facteur) == (str(alpha), seuils_stricts, facteur)
             else " Un paramètre change : refaire et recalibrer le candidat avec ces valeurs, sans rejouer le réglage.")]
     return L, {"alpha": nouvel_alpha, "seuils_stricts": strict, "facteur": nouveau_facteur}
