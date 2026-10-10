@@ -123,6 +123,11 @@ test('V6 avec le vrai moteur (lot 2) : l\'histoire du fichier de test passe ; un
   assert.ok(Object.isFrozen(arr) && Object.isFrozen(arr.titres[0].devin.points) && Object.isFrozen(arr.curseurs.Agathe.S.c));
   assert.throws(() => { 'use strict'; arr.titres[0].devin.titulaire = 'Odile'; });
   assert.ok(!x.st.m.get('elenchos-essai:partie-2').includes('elenchos-essai-resume-histoire'));
+  // Lot 3 : les résultats du moteur sur la partie neuve (jour d'arrivée, rien de joué) ; les cartes à servir existent déjà.
+  const R = x.socle.resultats();
+  assert.equal(R.K, cal.premier);
+  assert.ok(R.jours[String(cal.premier)].cartes_porteur.cartes.length >= 2);
+  assert.equal(R.jours[String(cal.premier)].entree, null); // 1.2 pas encore affiché
   // Une seule réponse de l'histoire changée (niveau d'un personnage présent au premier texte) : V6.
   const autre = JSON.parse(JSON.stringify(base));
   const h = Object.keys(autre.histoire.textes).filter(t => autre.histoire.textes[t].jour === cal.semaines[0].premier_jour)[0];

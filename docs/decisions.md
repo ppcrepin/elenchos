@@ -307,6 +307,10 @@ Le porteur, en donnant son « on continue » après un point d'étape (une limit
 - **Méthode** : un agent coupé est repris là où il s'est arrêté plutôt que relancé à neuf ; briefs courts ; lectures ciblées.
 L'orchestrateur le dit à chaque point d'étape où le choix d'un modèle change ce qui est vérifié. Limite assumée : un vérificateur moins capable rate davantage ; la double barrière (Cohérence puis Vérificateur sur Fable) reste en place pour tout livrable.
 
+### D-037 — Lot du second essai gardé malgré des sujets cités en cours de route · Décidé (10 octobre 2026)
+
+Pendant la préparation, des points d'étape de l'orchestrateur ont cité, par erreur, les sujets de plusieurs textes du lot caché et le résultat de certains votes, contre la règle qui les réserve au fichier caché. L'orchestrateur l'a dit franchement et proposé de les remplacer. **Décision du porteur : ne pas réparer, on garde le lot tel quel** (« je n'ai pas lu de toute façon les textes, donc c'est pas grave »). Limite assumée, à rappeler au bilan : le porteur a pu entrevoir des sujets ou des résultats avant de jouer. Règle de travail renforcée : dans les messages au porteur, un texte du lot n'est jamais désigné par son sujet ni par son résultat, seulement par une étiquette neutre (sa tension, son rang dans le calendrier), jusqu'au dévoilement.
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.

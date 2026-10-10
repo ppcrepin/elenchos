@@ -222,6 +222,28 @@ for (const [nom, fichier] of Object.entries(FICHIERS)) {
         assert.ok(R.jours[String(d)].portrait.tensions[t].somme_w.egal(s.sw.fois(scelle.reglage.facteur)), 'facteur ' + t + ' ' + d);
       });
     }
+    // Côté attendu du porteur vu par un personnage (fichier caché, point 4) : ses seules cartes vues dans les manches
+    // de ce personnage déjà révélées, même tension, poids normaux.
+    let vus = 0;
+    for (const l of cal.jours) {
+      const ms = R.jours[String(l.jour)].manches;
+      if (!ms) { continue; }
+      Object.entries(ms).forEach(([g, m]) => {
+        if (g === 'porteur' || !m.candidats.includes('porteur')) { return; }
+        const tx = scelle.textes[m.texte];
+        let s = R_.sommesVides();
+        for (let d = cal.premier; d <= l.jour - 1; d++) {
+          const mg = R.jours[String(d)] && R.jours[String(d)].manches && R.jours[String(d)].manches[g];
+          if (mg && mg.places.includes('porteur') && scelle.textes[mg.texte].tension === tx.tension) { s = R_.ajouter(s, R_.classer(scelle.textes[mg.texte], reponseP(mg.texte)), 1); }
+        }
+        const cu = R_.curseur(s);
+        assert.ok(cu.somme_w.egal(m.curseur_porteur.somme_w) && cu.c.egal(m.curseur_porteur.c), 'curseur du porteur vu par ' + g + ' le jour ' + l.jour);
+        const al = tx.sens === 1 ? cu.c : F(1).moins(cu.c);
+        assert.equal(m.cotes_attendus.porteur, cu.somme_w.estZero() ? 'inconnu' : R_.coteAttendu(al, scelle.reglage.seuils_stricts));
+        if (!cu.somme_w.estZero()) { vus++; }
+      });
+    }
+    assert.ok(vus > 0, 'au moins un côté attendu du porteur connu');
     // Graine de l'état à l'arrivée : avant elle, les sommes se retrouvent en retirant les réponses (Pas de Côté du jour 1).
     for (let d = cal.premier - 6; d <= cal.premier + 2; d++) {
       PERSOS.forEach(p => M.TENSIONS.forEach(t => {
@@ -305,9 +327,16 @@ for (const [nom, fichier] of Object.entries(FICHIERS)) {
       const penche = avant.c.moins(F(1, 2)).abs().supEgal(F(1, 5));
       assert.equal(rv.revelation.pas_de_cote.includes('porteur'), net && penche);
     }
+    // Dans l'ordre retenu (fichier caché, point 14 ; les deux fichiers le suivent) : le curseur S est net après T9,
+    // et le Pas de Côté du porteur tombe à la révélation de T12, au second dimanche.
+    assert.ok(net && rv && rv.revelation.pas_de_cote.includes('porteur'));
+    const dDernierDim = cal.semaine(cal.semainesEssai[cal.semainesEssai.length - 1]).dernier_jour;
+    assert.equal(R.jours[String(dDernierDim)].dimanche.phrase_semaine.cas, 'nette');
     // Barre pleine dès le premier jour où S est net, même avant le nombre de réponses du fichier.
     const premierNet = cal.jours.find(l => R.jours[String(l.jour)].portrait.tensions.S.net);
-    if (premierNet) { assert.equal(R.jours[String(premierNet.jour)].portrait.barre.pleine, true); }
+    assert.ok(premierNet);
+    assert.equal(R.jours[String(premierNet.jour)].portrait.barre.pleine, true);
+    assert.ok(R.jours[String(premierNet.jour)].portrait.barre.n < scelle.reglage.barre);
     // Phrase « nette » au premier dimanche où S est nette à la lecture (veille du dimanche) et ne l'était pas avant.
     const dims = cal.semainesEssai.map(n => cal.semaine(n).dernier_jour);
     dims.forEach((d, i) => {

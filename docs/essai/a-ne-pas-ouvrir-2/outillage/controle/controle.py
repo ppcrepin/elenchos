@@ -6,11 +6,14 @@ Jalon 1 :
   histoire         trace C de l'histoire (version 1) et résumé (version 1), à partir
                    du fichier scellé seul ; V6 ; comparaison aux traces P et S
   journal          validité d'un journal version 4 (schéma 2, partie 4.4)
-  controles-2-4    contrôles 2, 3 (calibrage refait de r = 1 au r scellé) et 4
   comparer         différences entre deux fichiers JSON (JSON Pointer)
 
-Les contrôles 2 à 14, les phrases attendues et le rejeu des parties viennent au
-jalon suivant (modules de `ec/a_adapter/`, copiés du premier essai, pas encore adaptés).
+Jalon 2 :
+  controles-2-4    contrôles 2, 3 (calibrage refait de r = 1 au r scellé) et 4
+  rejouer          trace C (version 4) d'une partie, carnet et copies
+  durees           fichier des durées (version 2) tiré d'une trace de la page
+  comparer-traces  trace de la page contre trace C (durées masquées)
+  carnets          contrôle 13 ; variantes : contrôle 12 ; phrases : phrases attendues v2
 
 Lancer depuis n'importe où : python3 -I controle.py <commande> --help
 """
@@ -206,6 +209,165 @@ def cmd_controles234(a):
     return 0 if all(verdict.values()) else 1
 
 
+def _scelle(chemin):
+    from ec import canon
+    o = Path(chemin).read_bytes()
+    ok, d, msg = canon.est_canonique(o)
+    if not ok:
+        raise SystemExit(f"fichier scellé hors forme canonique : {msg}")
+    if d.get("format") != "elenchos-essai-scelle" or d.get("version") != 5:
+        raise SystemExit("fichier scellé : format ou version inattendus (version 5 attendue)")
+    return d, o
+
+
+def _json(chemin):
+    from ec import canon
+    o = Path(chemin).read_bytes()
+    ok, d, msg = canon.est_canonique(o)
+    if not ok:
+        raise SystemExit(f"{chemin} : hors forme canonique : {msg}")
+    return d
+
+
+def rejouer_fichiers(scelle, journal, durees=None, confusables=None):
+    from ec.journal import valider
+    from ec.rejeu import Rejeu
+    from ec.trace_schema import valider_trace
+    from ec.tirage import sha256_hex
+    d, o = _scelle(scelle)
+    j = _json(journal)
+    defauts, _ = valider(j, d, sha256_hex(o), Path(confusables).read_bytes() if confusables else None)
+    if defauts:
+        return None, [f"journal invalide, règle {r} : {ch or '/'} : {m}" for r, ch, m in defauts]
+    du = None
+    if durees:
+        du = _json(durees)
+        if du.get("format") != "elenchos-essai-durees" or du.get("version") != 2:
+            return None, ["fichier des durées : format ou version inattendus (version 2 attendue)"]
+        if du.get("partie") != j["partie"]["id"]:
+            return None, ["fichier des durées : partie différente de celle du journal"]
+    R = Rejeu(d, o, j, du)
+    t = R.trace()
+    out = [f"durée : {ch} : {m}" for ch, m in R.defauts]
+    out += [f"trace C hors schéma : {e}" for e in valider_trace(t)]
+    return t, out
+
+
+def cmd_rejouer(a):
+    from ec import canon
+    t, defauts = rejouer_fichiers(a.scelle, a.journal, a.durees, a.confusables)
+    for x in defauts:
+        print("DÉFAUT : " + x, file=sys.stderr)
+    if t is None:
+        return 1
+    o = canon.octets_canoniques(t)
+    if a.sortie:
+        Path(a.sortie).write_bytes(o)
+    else:
+        sys.stdout.write(o.decode("utf-8") + "\n")
+    if a.textes and t["carnet"] is not None:
+        from ec.carnet import masquer_durees
+        dd = Path(a.textes)
+        dd.mkdir(parents=True, exist_ok=True)
+        for nom, x in [("carnet", t["carnet"]["texte"])] + [(f"copie-{i}", c["texte"]) for i, c in enumerate(t["copies"])]:
+            (dd / f"{nom}.txt").write_text(x, encoding="utf-8")
+            (dd / f"{nom}-durees-masquees.txt").write_text(masquer_durees(x), encoding="utf-8")
+    return 1 if defauts else 0
+
+
+def cmd_durees(a):
+    """Fichier des durées, version 2, tiré d'une trace de la page (seules clés lues :
+    les durées, partie 4.4)."""
+    from ec import canon
+    t = _json(a.trace)
+    cles = ("duree_deviner", "duree_entree", "duree_repondre", "duree_seance")
+    out = {"copies": [{k: c["mesures"][k] for k in cles} for c in t["copies"]],
+           "format": "elenchos-essai-durees", "jours": {}, "partie": t["partie"]["id"],
+           "sauts": [{"duree_page": s["mesures"]["duree_page"], "duree_saut": s["mesures"]["duree_saut"],
+                      "durees_textes": s["mesures"]["durees_textes"], "numero": s["numero"]} for s in t["sauts"]],
+           "version": 2}
+    for k, x in t["jours"].items():
+        m = x["mesures"]
+        out["jours"][k] = {c: (None if m is None else m[c]) for c in cles}
+    o = canon.octets_canoniques(out)
+    if a.sortie:
+        Path(a.sortie).write_bytes(o)
+    else:
+        sys.stdout.write(o.decode("utf-8") + "\n")
+    return 0
+
+
+def cmd_comparer_traces(a):
+    from ec import canon
+    from ec.comparer import differences
+    from ec.rejeu import masquer
+    from ec.trace_schema import valider_trace
+    tp, tc = _json(a.trace_page), _json(a.trace_c)
+    code = 0
+    for nom, t in (("page", tp), ("C", tc)):
+        e = valider_trace(t)
+        if e:
+            code = 1
+            print(f"trace de {nom} hors schéma ({len(e)}) :")
+            for x in e[:200]:
+                print(f"  {x}")
+    a_, b_ = canon.octets_canoniques(masquer(tp)), canon.octets_canoniques(masquer(tc))
+    if a_ == b_:
+        print("traces identiques octet pour octet (valeur des durées masquée)")
+        return code
+    diffs = differences(masquer(tp), masquer(tc))
+    print(f"{len(diffs)} différence(s) (chemin : page | C) :")
+    for p, x, y in diffs[:a.max_diff]:
+        print(f"  {p} : {json.dumps(x, ensure_ascii=False)[:200]} | {json.dumps(y, ensure_ascii=False)[:200]}")
+    return 1
+
+
+def cmd_carnets(a):
+    from ec.carnet import masquer_durees
+    tc = _json(a.trace_c)
+    textes_c = [("carnet final", tc["carnet"]["texte"] if tc["carnet"] else "")] + \
+        [(f"copie {i}", c["texte"]) for i, c in enumerate(tc["copies"])]
+    textes_p = [("carnet final", Path(a.carnet).read_text(encoding="utf-8"))] + \
+        [(f"copie {i}", Path(p).read_text(encoding="utf-8")) for i, p in enumerate(a.copie or [])]
+    code = 0
+    if len(textes_p) != len(textes_c):
+        print(f"{len(textes_p) - 1} copie(s) de la page, {len(textes_c) - 1} dans la trace C")
+        code = 1
+    for (nom, tp), (_, tcx) in zip(textes_p, textes_c):
+        x, y = masquer_durees(tp).split("\n"), masquer_durees(tcx).split("\n")
+        diffs = [(i + 1, x[i] if i < len(x) else "‹absente›", y[i] if i < len(y) else "‹absente›")
+                 for i in range(max(len(x), len(y))) if (x[i] if i < len(x) else None) != (y[i] if i < len(y) else None)]
+        print(f"{nom} : " + ("identique (durées masquées)" if not diffs else f"{len(diffs)} ligne(s) différente(s)"))
+        for n, u, v in diffs:
+            print(f"  ligne {n} : page {u!r}\n            C    {v!r}")
+        code |= 1 if diffs else 0
+    return code
+
+
+def cmd_variantes(a):
+    from ec.variantes import comparer_variantes
+    traces = [_json(p) for p in a.traces]
+    d = comparer_variantes(traces)
+    if not d:
+        print(f"{len(traces)} variantes : blocs de jour et de saut, mesures identiques ; gabarit tenu ; pseudo absent")
+        return 0
+    for x in d:
+        print(x)
+    return 1
+
+
+def cmd_phrases(a):
+    from ec import canon
+    from ec.phrases import phrases_attendues
+    d, o = _scelle(a.scelle)
+    b = canon.octets_canoniques(phrases_attendues(d, o))
+    if a.sortie:
+        Path(a.sortie).write_bytes(b)
+    else:
+        sys.stdout.write(b.decode("utf-8") + "\n")
+    return 0
+
+
 def cmd_comparer(a):
     from ec.comparer import comparer_octets
     same, diffs = comparer_octets(Path(a.a).read_bytes(), Path(a.b).read_bytes())
@@ -260,6 +422,41 @@ def main(argv=None):
     c.add_argument("--profils", default=str(RACINE / "docs" / "essai" / "a-ne-pas-ouvrir" / "profils.md"))
     c.add_argument("--sortie")
     c.set_defaults(f=cmd_controles234)
+
+    c = sp.add_parser("rejouer", help="trace C (version 4) d'une partie, à partir du journal")
+    c.add_argument("journal")
+    c.add_argument("--scelle", required=True)
+    c.add_argument("--durees", help="fichier des durées, version 2 (mode interface)")
+    c.add_argument("--confusables", help="confusables.txt (règle 6 du journal)")
+    c.add_argument("--sortie", help="trace C (JSON canonique)")
+    c.add_argument("--textes", help="dossier : carnet final et copies, tels quels et durées masquées")
+    c.set_defaults(f=cmd_rejouer)
+
+    c = sp.add_parser("durees", help="fichier des durées (v2) tiré d'une trace de la page")
+    c.add_argument("trace")
+    c.add_argument("--sortie")
+    c.set_defaults(f=cmd_durees)
+
+    c = sp.add_parser("comparer-traces", help="trace de la page contre trace C (valeurs des durées masquées)")
+    c.add_argument("trace_page")
+    c.add_argument("trace_c")
+    c.add_argument("--max-diff", type=int, default=200)
+    c.set_defaults(f=cmd_comparer_traces)
+
+    c = sp.add_parser("carnets", help="contrôle 13 : carnets de la version du porteur contre trace C")
+    c.add_argument("trace_c")
+    c.add_argument("--carnet", required=True)
+    c.add_argument("--copie", action="append")
+    c.set_defaults(f=cmd_carnets)
+
+    c = sp.add_parser("variantes", help="contrôle 12 : traces C des variantes d'une même partie")
+    c.add_argument("traces", nargs="+")
+    c.set_defaults(f=cmd_variantes)
+
+    c = sp.add_parser("phrases", help="phrases attendues, version 2 (contrôle 11)")
+    c.add_argument("--scelle", required=True)
+    c.add_argument("--sortie")
+    c.set_defaults(f=cmd_phrases)
 
     c = sp.add_parser("comparer", help="différences entre deux fichiers JSON")
     c.add_argument("a")

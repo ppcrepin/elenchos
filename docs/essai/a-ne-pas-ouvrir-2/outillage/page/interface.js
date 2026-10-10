@@ -1,34 +1,50 @@
-/* Interface de la page de l'essai (outillage d'essai, D-001 tenu).
+/* Écrans de la page du second essai : téléphone et cadre (outillage d'essai, D-001 tenu ;
+ * lots 4 et 5, instance B).
  *
- * SECOND ESSAI, ÉTAT AU LOT 1 : copie des écrans du premier essai, pas encore
- * adaptée (lots 4 et 5, instance B). Elle ne marche pas avec le socle du
- * second essai. Ce qu'elle faisait elle-même et que fait désormais socle.js,
- * à retirer d'ici : contexte, vérifications V1 à V5, mémoire, horloges,
- * toucher compté, gestionnaire des touchers, point d'accès, démarrage. Le
- * contrat entre socle, moteur et écrans est dans INTERFACE.md.
+ * Contrat avec le socle et le moteur : INTERFACE.md. Le socle fait le contexte,
+ * les vérifications V1 à V6, la mémoire, les horloges, le toucher compté et le
+ * gestionnaire unique des touchers ; il appelle ici `rendre`, `arret`, `hors`,
+ * `ancienne` et les actions (`data-action`). Chaque geste passe par
+ * socle.geste : une transition d'etat.js (ou un simple changement de vue), une
+ * écriture. Les écrans ne lisent jamais l'heure eux-mêmes (socle.lireParis,
+ * socle.instantDuSaut), n'accèdent jamais à la mémoire du navigateur et n'écrivent aucun
+ * nombre du calendrier : tout se lit dans `cal`.
  *
- * Téléphone (§7), cadre (§8.1 à §8.10), mémoire et durées (§8.4, §8.8),
- * arrêts techniques (§8.11), écrans hors de l'icône (§8.13).
- * Rendu par createElement et textContent seulement ; positions des
- * curseurs par le style de l'élément ; un seul gestionnaire de touchers.
- * Le moteur (moteur.js) calcule tout ce qui est compté ; l'interface ne
- * lit l'heure qu'au premier toucher d'une séance et à chaque affichage
- * d'« En attendant » (§9).
+ * Téléphone (simulation-2.md, §7), cadre (§8), formes de la Direction
+ * artistique (§7.23 ; frise : §8.1 ter). Rendu par createElement et
+ * textContent seulement ; positions par le style de l'élément (CSSOM).
  *
- * Constantes posées par la construction, avant ce fichier :
- *   ENTREES = {version_page, consultes_le, empreinte_publiee_le, empreinte_publiee_a}
- *   SCELLE_B64 : le fichier scellé en base64 (repère du contrôle 1, étape 2).
+ * Renvois : « §n » = simulation-2.md ; « S1 §n » = simulation.md.
  */
 'use strict';
 
-var ElenchosInterface = (function (N, M, X) {
-  var F = N.Fraction;
+var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
   var VERSION = ENTREES.version_page;
-  var PERSOS = M.PERSONNAGES;
-  var CLE = 'elenchos-essai:partie';
-  var CLE_VERIF = 'elenchos-essai:verif';
-  var PREFIXE = 'elenchos-essai:';
-  var FORMAT_ETAT = 1;
+  var PORTEUR = 'porteur';
+
+  var socle = null, cal = null, scelle = null;
+  var racine = null, barreEl = null, bandeEl = null, milieuTel = null, milieuCadre = null, vueCouchee = null;
+  var pageAffichee = null;
+  /** Choix pas encore validés (position, raison, pseudo en cours de frappe) : jamais gardés (S1 §7.1, §8.8). */
+  var temp = {};
+  /** État passager de la bande : note du moment, confirmation, message de copie. */
+  var bande = { note: null, confirmation: false, ancienneConfirmation: false, messageCopie: null, passage: false };
+  /** Lecture de l'heure pour 2.5 : refaite à chaque nouvel affichage (S1 §7.5). */
+  var lecture = null, relireHeure = true;
+  /** Copies du carnet faites pendant ce chargement (version témoin, partie 4.3.11). */
+  var copiesDuChargement = [];
+  var ancienneInfo = null;
+  /** La note passagère à ôter quand le toucher en cours aura fait son geste. */
+  var noteAEffacer = null;
+
+  /* ================================================================== */
+  /* Contexte d'affichage (lecture seule du navigateur)                 */
+  /* ================================================================== */
+
+  var ua = navigator.userAgent;
+  var points = navigator.maxTouchPoints || 0;
+  var ipadBureau = /Macintosh/.test(ua) && points > 1;
+  var appareil = (/iPad/.test(ua) || ipadBureau) ? 'iPad' : 'iPhone';
 
   /* ================================================================== */
   /* Outils du DOM                                                      */
@@ -56,317 +72,233 @@ var ElenchosInterface = (function (N, M, X) {
     e.appendChild(c);
   }
   function vider(e) { while (e.firstChild) { e.removeChild(e.firstChild); } }
+  function donnees(e, params) { if (params) { Object.keys(params).forEach(function (k) { e.setAttribute('data-' + k, params[k]); }); } return e; }
 
-  /** Typographie d'affichage (§7.8, règles 1 à 6). */
+  /** Typographie d'affichage (S1 §7.8, règles 1 à 6). */
   function t(s) { return N.typographier(s); }
-  /** Gabarit avec « {pseudo} » : règles appliquées avant d'insérer le pseudo. */
-  var MARQUE = '\ue000';
+  /** Gabarit avec « {pseudo} » : règles appliquées avant d'insérer le pseudo (S1 §7.8). */
+  var MARQUE = '';
   function tp(gabarit) { return N.typographier(gabarit.split('{pseudo}').join(MARQUE)).split(MARQUE).join(pseudo()); }
+  function frac(x) { return x instanceof N.Fraction ? x : N.Fraction(String(x)); }
 
   /* ================================================================== */
-  /* Contexte (page-test v2 : même code, même ordre, §8.8)              */
+  /* Lectures de l'état et du moteur                                    */
   /* ================================================================== */
 
-  var ua = navigator.userAgent;
-  var points = navigator.maxTouchPoints || 0;
-  var tactile = points > 0;
-  var ipadBureau = /Macintosh/.test(ua) && points > 1;
-  var estIOS = /iPhone|iPad|iPod/.test(ua) || ipadBureau;
-  var appareil = (/iPad/.test(ua) || ipadBureau) ? 'iPad' : 'iPhone';
-  var dansCadre; try { dansCadre = window.self !== window.top; } catch (e) { dansCadre = true; }
-  var standalone = window.navigator.standalone === true ||
-    (window.matchMedia ? window.matchMedia('(display-mode: standalone)').matches : false);
-  var autreNavigateur = /CriOS|FxiOS|EdgiOS|OPiOS|OPT\/|YaBrowser|GSA\//.test(ua);
-
-  /* ================================================================== */
-  /* Données scellées et vérifications V1 à V5 (§0, §8.11)              */
-  /* ================================================================== */
-
-  var scelle = null, octetsScelle = null, texteScelle = null, empreinte = null;
-
-  /** Rend 0 si tout va bien, sinon le numéro de la vérification ratée. */
-  function verifier() {
-    try { if (!N.autotestSha256()) { return 1; } } catch (e) { return 1; }
-    try { octetsScelle = N.base64Decoder(SCELLE_B64); } catch (e) { return 2; }
-    try { empreinte = N.sha256(octetsScelle); if (!/^[0-9a-f]{64}$/.test(empreinte)) { return 3; } } catch (e) { return 3; }
-    try {
-      texteScelle = N.utf8Decoder(octetsScelle);
-      scelle = JSON.parse(texteScelle);
-      if (!scelle || scelle.format !== 'elenchos-essai-scelle' || scelle.version !== 4) { return 4; }
-      if (N.jsonCanonique(scelle) !== texteScelle) { return 4; }
-    } catch (e) { return 4; }
-    try {
-      var tir = N.creerTirage(scelle.graine);
-      var cles = ['raison|Odile|E2|3', 'hasard|Nassim|12|porteur', 'surprise-semaine|2|11'];
-      if (!Array.isArray(scelle.vecteurs_test) || scelle.vecteurs_test.length !== 3) { return 5; }
-      for (var i = 0; i < 3; i++) {
-        var v = scelle.vecteurs_test[i], r = tir.t(cles[i]);
-        if (v.cle !== cles[i] || v.chaine !== r.chaine || v.hex8 !== r.hex8 || v.n !== r.n) { return 5; }
-      }
-    } catch (e) { return 5; }
-    return 0;
-  }
-
-  /* ================================================================== */
-  /* Mémoire (§8.8)                                                     */
-  /* ================================================================== */
-
-  var etat = null;          // l'état gardé
-  var efface = false;       // après « Tout effacer », plus rien ne s'écrit
-  var arretTechnique = false;
-
-  function lireBrut() { return window.localStorage.getItem(CLE); }
-
-  /** L'état gardé, ou null s'il n'y en a pas ; lève une erreur s'il est illisible. */
-  function lireEtat() {
-    var brut = lireBrut();
-    if (brut === null) { return null; }
-    var o = JSON.parse(brut);
-    if (!o || typeof o !== 'object' || o.format !== FORMAT_ETAT || !Number.isSafeInteger(o.ecritures) || !Array.isArray(o.seances) || !o.seances.length ||
-      o.seances.length > 16 || !o.vue || !o.vue.tel || typeof o.vue.tel.ecran !== 'string' || !Array.isArray(o.vue.tel.pile)) { throw new Error('état illisible'); }
-    o.seances.forEach(function (s, k) {
-      if (!s || s.k !== k || !s.coups || typeof s.coups !== 'object' || !s.pp || !s.rev || !Array.isArray(s.versions)) { throw new Error('état illisible'); }
-    });
-    return o;
-  }
-
-  function memoireMarche() {
-    try {
-      var jeton = 'v' + VERSION + '-' + Date.now();
-      window.localStorage.setItem(CLE_VERIF, jeton);
-      var ok = window.localStorage.getItem(CLE_VERIF) === jeton;
-      window.localStorage.removeItem(CLE_VERIF);
-      return ok && window.localStorage.getItem(CLE_VERIF) === null;
-    } catch (e) { return false; }
-  }
-
-  /** Écrit l'état d'un bloc, après avoir vérifié que personne d'autre ne l'a changé (arrêt 3). */
-  function ecrire() {
-    if (efface || arretTechnique) { return; }
-    var garde;
-    try { garde = lireEtat(); } catch (e) { garde = undefined; }
-    var compteur = garde ? garde.ecritures : (garde === null ? 0 : -1);
-    if (compteur !== etat.ecritures) { arreter3(); return; }
-    // Le temps de premier plan écoulé jusqu'ici entre dans l'état écrit : après un arrêt
-    // brutal, seul manque le temps écoulé depuis la dernière écriture (§8.8).
-    if (visibleDepuis !== null) {
-      var maintenant = performance.now();
-      seanceCourante().pp.total += Math.max(0, maintenant - visibleDepuis);
-      visibleDepuis = maintenant;
-    }
-    etat.ecritures += 1;
-    try { window.localStorage.setItem(CLE, JSON.stringify(etat)); }
-    catch (e) { etat.ecritures -= 1; arreter2(); }
-  }
-
-  /** Retire une à une les clés « elenchos-essai: », et elles seules (§8.9). */
-  function toutEffacer() {
-    var cles = [];
-    for (var i = 0; i < window.localStorage.length; i++) {
-      var c = window.localStorage.key(i);
-      if (c !== null && c.indexOf(PREFIXE) === 0) { cles.push(c); }
-    }
-    cles.forEach(function (c) { window.localStorage.removeItem(c); });
-    efface = true;
-  }
-
-  /* ================================================================== */
-  /* Horloges : heure de Paris (lue à des moments fixés) et premier plan */
-  /* ================================================================== */
-
-  /** Seul accès à l'heure du téléphone (§9) : au premier toucher d'une
-   *  séance et à chaque affichage d'« En attendant ». */
-  function lireHeure() { return N.paris(Date.now()); }
-
-  var visibleDepuis = null; // instant (performance.now) depuis lequel la page est visible
-  function estVisible() { return document.visibilityState !== 'hidden'; }
-  /** Temps de premier plan de la séance en cours, en ms (§8.4, §8.8). */
-  function ppMaintenant() {
-    var s = seanceCourante();
-    var en = visibleDepuis !== null ? performance.now() - visibleDepuis : 0;
-    return s.pp.total + Math.max(0, en);
-  }
-  function ppArreter() {
-    if (visibleDepuis === null || !etat) { return; }
-    var s = seanceCourante();
-    s.pp.total += Math.max(0, performance.now() - visibleDepuis);
-    visibleDepuis = null;
-  }
-  function ppReprendre() { if (visibleDepuis === null) { visibleDepuis = performance.now(); } }
-
-  /* ================================================================== */
-  /* État de la partie                                                  */
-  /* ================================================================== */
-
-  function coupsVides(k) {
-    return { carnet: { q1: null, q2: null, q3: null }, consentement: null, deviner: null,
-      entree: k === 0 ? { E1: { reponse: null, pari: null }, E2: { reponse: null, pari: null }, E3: { reponse: null, pari: null } } : null,
-      pseudo: null, relire: 0, reponse: null };
-  }
-
-  function nouvelleSeance(k) {
-    return {
-      k: k, ouverture: null, versions: [], etapes: k >= 1 && k <= 14 ? { deviner: false, repondre: false } : null,
-      coups: coupsVides(k),
-      pp: { total: 0, ouverture: null, dernier: null, devDebut: null, devDernier: null, repDebut: null, repFin: null, repContinuer: null, fige: null },
-      rev: { i: 0, ret: [], fin: false },
-      entreeFinie: false
-    };
-  }
-
-  function nouvelEtat() {
-    return {
-      format: FORMAT_ETAT, ecritures: 0, seances: [nouvelleSeance(0)],
-      vue: { tel: { ecran: '1.1', pile: [] }, cadre: { page: 'message0' } },
-      arret: null, fin: null, parcours: null
-    };
-  }
-
-  function seanceCourante() { return etat.seances[etat.seances.length - 1]; }
-  function K() { return etat.seances.length - 1; }
-  function pseudo() { return etat.seances[0].coups.pseudo || ''; }
-
-  /** Le journal des entrées (schema.md, partie 3.12) tiré de l'état. */
-  function journal() {
-    return {
-      partie: { id: 'porteur', mode: 'interface', graine: null },
-      seances: etat.seances.map(function (s) {
-        return { k: s.k, ouverture: s.ouverture, versions: s.versions.slice(), etapes: s.etapes, coups: s.coups, attente: null };
-      }),
-      copies: [], arret: etat.arret ? sansEtape(etat.arret) : null, fin: etat.fin ? sansEtape(etat.fin) : null
-    };
-  }
-  function sansEtape(o) { var c = {}; Object.keys(o).forEach(function (k) { if (k !== 'etape') { c[k] = o[k]; } }); return c; }
-
-  var resultatsCache = null, resultatsCle = null;
-  /** Résultats du moteur pour l'état présent (recalculés à chaque changement). */
-  function R() {
-    var cle = etat.ecritures + '|' + JSON.stringify(etat.seances.map(function (s) { return [s.ouverture, s.coups]; }));
-    if (cle !== resultatsCle) { resultatsCache = M.calculer(scelle, journal()); resultatsCle = cle; }
-    return resultatsCache;
-  }
-
-  /** Durées d'une séance, en secondes tronquées (§8.4, §8.12). */
-  function dureesSeance(s, maintenant) {
-    var p = s.pp;
-    var fin = function (x) { return Math.floor(Math.max(0, x) / 1000); };
-    var dernier = p.fige !== null ? p.fige : (p.dernier !== null ? p.dernier : p.ouverture);
-    var d = { k: s.k, duree_seance: p.ouverture === null ? 0 : fin(dernier - p.ouverture), duree_deviner: null, duree_repondre: null };
-    if (s.etapes && s.etapes.deviner) { d.duree_deviner = fin(p.devDernier - p.devDebut); }
-    if (s.etapes && s.etapes.repondre) {
-      var finRep = p.repFin !== null ? p.repFin : (p.repContinuer !== null ? p.repContinuer : (p.fige !== null ? p.fige : maintenant));
-      d.duree_repondre = fin(finRep - p.repDebut);
-    }
-    return d;
-  }
-
-  /* ================================================================== */
-  /* Le jour : où en est la séance                                      */
-  /* ================================================================== */
-
-  function texteDuJour(k) { return scelle.textes[String(k)]; }
-  function jourDeSeance(k) { return X.JOURS_SEANCE[k]; }
-  function mancheDuJour() { var r = R().seances[K()]; return r.manches ? r.manches.porteur : null; }
-  function aDesCartes() { var m = mancheDuJour(); return !!(m && m.cartes.length); }
-  function mancheValidee(s) { return !Array.isArray(s.coups.deviner) || s.coups.deviner.every(function (d) { return d.designe !== null; }); }
-
-  function journeeFinie() {
-    var s = seanceCourante();
-    if (s.k === 0) { return s.entreeFinie; }
-    if (s.k >= 1 && s.k <= 14) { return mancheValidee(s) && s.coups.reponse !== null; }
-    return false;
-  }
-
-  /** L'écran que montre l'onglet « Aujourd'hui » (§7.1, calendrier §0). */
-  function ecranDuJour() {
-    var s = seanceCourante(), k = s.k;
-    if (k >= 3 && !s.rev.fin) { return s.rev.i === 0 && !s.rev.commencee && k <= 14 ? 'verrou' : 'revelation'; }
-    if (k >= 2 && k <= 14 && aDesCartes() && !mancheValidee(s)) { return 'deviner'; }
-    if (s.coups.reponse === null) { return 'repondre'; }
-    return 'attente';
-  }
-
-  /* ================================================================== */
-  /* Séquence de la révélation (§7.1, §6 point 8)                       */
-  /* ================================================================== */
-
-  function sequenceRevelation(k) {
-    var r = R().seances[k];
-    var manche = R().seances[k - 1].manches.porteur;
-    var seq = [];
-    manche.cartes.forEach(function (c, i) { seq.push({ type: 'carte', i: i }); });
-    seq.push({ type: 'vote' }, { type: 'auteurs' });
-    var d = r.dimanche;
-    if (d) {
-      if (d.sans_faute.length) { seq.push({ type: 'badge' }); }
-      if (d.devin.titulaire) { seq.push({ type: 'devin' }); }
-      if (d.mystere.titulaire) { seq.push({ type: 'mystere' }); }
-      if (d.fidele.titulaires.length) { seq.push({ type: 'fidele' }); }
-      if (d.surprise.texte) { seq.push({ type: 'surprise' }); }
-      seq.push({ type: 'phrase' });
-    }
-    if (k <= 14) { seq.push({ type: 'fin' }); }
-    return seq;
-  }
-
-  /* ================================================================== */
-  /* Pièces de texte (§4.5, §4.6, §7.6, §7.9, §7.10)                    */
-  /* ================================================================== */
-
-  function nomMembre(m) { return m === 'porteur' ? pseudo() : m; }
-  function initiale(m) {
-    if (m !== 'porteur') { return m.charAt(0); }
-    var c = Array.from(pseudo())[0] || '';
-    return c.toUpperCase();
-  }
+  function etat() { return socle.etat(); }
+  function R() { return socle.resultats(); }
+  function Rj(j) { return R().jours[String(j)]; }
+  function K() { return E.K(etat()); }
+  function jourE(e, j) { return e.jours[String(j)]; }
+  function personnages() { return cal.membres.filter(function (m) { return m !== PORTEUR; }); }
+  function pseudo() { var c = etat() ? jourE(etat(), cal.premier).coups.pseudo : null; return c || ''; }
+  function nomMembre(m) { return m === PORTEUR ? pseudo() : m; }
+  function nomOuMarque(m) { return m === PORTEUR ? '{pseudo}' : m; }
   function position(niveau) { return X.POSITIONS[niveau - 1]; }
-  function consideration(texte, raison) { return texte.considerations[raison - 1]; }
-  /** « Défavorable · « Ça coûte trop cher. » » (carte, fin de ligne) */
-  function ligneCarte(texte, rep, cachee) {
-    if (cachee) { return X.carteLigne(position(rep.niveau), X.carteRaisonCachee); }
-    if (rep.raison === 'aucune') { return X.carteLigne(position(rep.niveau), X.aucuneDesQuatreRaisons); }
-    return X.carteLigne(position(rep.niveau), X.raisonFinLigne(consideration(texte, rep.raison).texte));
+  function texteDe(n) { return scelle.textes[n]; }
+  function consideration(tx, rang) { return tx.considerations.filter(function (c) { return c.rang === rang; })[0]; }
+  function raisonEnLigne(tx, raison) { return raison === 'aucune' ? X.aucuneDesQuatreRaisons : X.raisonFinLigne(consideration(tx, raison).texte); }
+  function titreDe(n) {
+    if (Object.prototype.hasOwnProperty.call(scelle.textes, n)) { return scelle.textes[n].titre; }
+    var hx = scelle.histoire.textes[n];
+    return hx && hx.fiche ? hx.fiche.titre : '';
   }
-  function dateVote(texte) { return N.dateLongue(texte.vote.date); }
-  /** Phrase de l'étape, ou rien (§7.9). */
-  function etapeVote(texte) { return X.etape[texte.vote.etape]; }
-  function joindre(a, b) { return b ? a + ' ' + b : a; }
+  /** La réponse du porteur au texte n, ou null. */
+  function reponsePorteur(n) {
+    var e = etat();
+    if (cal.textesEntree.indexOf(n) >= 0) { var x = jourE(e, cal.premier).coups.entree[n]; return x ? x.reponse : null; }
+    var d = cal.jourDeReponse(n);
+    var dd = jourE(e, d);
+    return dd ? dd.coups.reponse : null;
+  }
+  /** Nom du jour qui vient k jours après le jour j (S1 §7.1 : la table des jours continue après la clôture). */
+  function nomJourApres(j, k) { var i = N.JOURS.indexOf(cal.ligne(j).nom_jour); return N.JOURS[(i + k) % 7]; }
+  function nomJour(j) { return cal.ligne(j).nom_jour; }
+  function confusables() { return socle.confusables(); }
+  function facteurEnLettres() { return X.nombresEnLettres[2 * scelle.reglage.facteur] || String(2 * scelle.reglage.facteur); }
 
-  function proposePar(texte, ecran) {
-    var a = texte.auteur;
-    if (a.type === 'gouvernement') { return X.proposeParGouvernement; }
-    var mandat = a.type === 'depute' ? N.mandatDepute(a.feminin) : N.mandatSenateur(a.feminin);
-    if (ecran === '5.4' && a.type === 'depute') { return 'Proposé par ' + a.nom + ', ' + a.groupe + '.'; }
-    return 'Proposé par ' + a.nom + ', ' + mandat + ', ' + a.groupe + '.';
+  /** La vue gardée, ou la vue de départ tant que rien n'a été écrit (§8.2). */
+  function vueDe(e) {
+    if (!e.vue.tel) { return { tel: { ecran: '1.1', pile: [] }, cadre: { page: 'message0' } }; }
+    return e.vue;
   }
-  function taRaison(texte, raison) {
-    var c = consideration(texte, raison);
-    return 'Ta raison, ' + X.raisonDansPhrase(c.texte) + ', était l\'argument ' + N.deDepute(c.depute) + ', ' +
-      N.mandatDepute(c.depute.feminin) + ', ' + c.depute.groupe + '.';
+  function vue() { return vueDe(etat()); }
+  function initVue(e) { if (!e.vue.tel) { e.vue.tel = { ecran: '1.1', pile: [] }; e.vue.cadre = { page: 'message0' }; } }
+
+  /** Le jour dont le téléphone montre l'état : pendant un saut, celui du texte affiché (§7.4). */
+  function jourAffiche() {
+    var e = etat();
+    var r = E.rattrapage(e, cal);
+    if (!r) { return K(); }
+    var v = vue().tel;
+    if (v.jour !== undefined && v.jour !== null) { return v.jour; }
+    return r.rang > r.repondus ? r.jour : cal.saut(r.numero).jours[r.repondus - 1];
   }
 
-  /** Groupe de l'auteur, d'un seul tenant au trait d'union (§7.10). */
-  function avecSigles(chaine, sigles) {
-    // Le texte est rendu en morceaux : chaque sigle à trait d'union dans un élément insécable.
+  /* ================================================================== */
+  /* Gestes                                                             */
+  /* ================================================================== */
+
+  /** Un geste : la fonction reçoit la copie de l'état et l'horloge ; une écriture (socle.geste). */
+  function geste(fn) {
+    return socle.geste(function (e, hh) {
+      initVue(e);
+      var r = fn(e, hh);
+      // Durée de Deviner : jusqu'au dernier toucher fait pendant qu'il est affiché (S1 §8.4).
+      var k = E.K(e), d = jourE(e, k);
+      if (!E.sautEnCours(e) && e.vue.tel.ecran === 'deviner' && !e.vue.cadre && d.coups.deviner && !d.coups.deviner.validee) {
+        E.marquer(e, k, 'devDernier', hh, true);
+      }
+      return r;
+    });
+  }
+
+  /** Affiche un écran du téléphone dans la copie e, avec ses effets (étapes vues, débuts de durées). */
+  function aller(e, hh, ecran, params, empiler) {
+    var v = e.vue.tel;
+    var pile = empiler === true ? v.pile.concat([copieVue(v)]) : (empiler === false ? [] : v.pile);
+    var nv = { ecran: ecran, pile: pile };
+    if (params) { Object.keys(params).forEach(function (k) { nv[k] = params[k]; }); }
+    e.vue.tel = nv;
+    effets(e, hh);
+  }
+  function copieVue(v) { var c = {}; Object.keys(v).forEach(function (k) { if (k !== 'pile') { c[k] = v[k]; } }); return c; }
+
+  function effets(e, hh) {
+    var v = e.vue.tel, k = E.K(e), d = jourE(e, k);
+    if (v.ecran === '1.2') { E.afficherEntree(e, cal, hh); }
+    if (v.ecran === 'deviner' && d.coups.deviner === null) { E.ouvrirDeviner(e, cal, k, Rj(k).cartes_porteur.cartes.length, hh); }
+    if (v.ecran === 'repondre' && cal.estJoue(k)) { E.afficherRepondre(e, cal, k, hh); }
+    if (v.ecran === 'attente') { relireHeure = true; }
+    if (v.ecran === 'revelation') { marquerRevelation(e, k); }
+  }
+
+  /** L'écran qu'ouvre l'onglet « Aujourd'hui » (§7.3, §7.4). */
+  function ecranDuJour(e) {
+    var k = E.K(e), d = jourE(e, k);
+    var r = E.rattrapage(e, cal);
+    if (r) {
+      if (r.rang > r.repondus) { return { ecran: 'ratt-position', jour: r.jour }; }
+      return { ecran: 'ratt-attente', jour: cal.saut(r.numero).jours[r.repondus - 1] };
+    }
+    var rev = d.page.rev || {};
+    if (cal.estCloture(k)) { return { ecran: 'revelation' }; }
+    if (Rj(k).message && !rev.commencee) { return { ecran: 'verrou' }; }
+    if (rev.ouverte) { return { ecran: 'revelation' }; }
+    if (cal.ligne(k).deviner_porteur && !(d.coups.deviner && d.coups.deviner.validee)) { return { ecran: 'deviner' }; }
+    if (d.coups.reponse === null) { return { ecran: 'repondre' }; }
+    return { ecran: 'attente' };
+  }
+  function allerAuJour(e, hh) { var x = ecranDuJour(e); var p = {}; if (x.jour !== undefined) { p.jour = x.jour; } aller(e, hh, x.ecran, p, false); }
+
+  /* ================================================================== */
+  /* Pièces de texte : vote (E4), auteurs (E5), pseudo et rond (E7)     */
+  /* ================================================================== */
+
+  function dateVote(tx) { return N.dateLongue(tx.vote.date); }
+  /** {objet} {étape-texte} {suite} pour un article, un amendement ou une résolution (§7.10). */
+  function suiteObjet(tx) {
+    var v = tx.vote;
+    return X.joindre([X.objet[v.objet], X.etapeTexte[v.etape], v.suite ? X.suite[v.suite] : '']);
+  }
+  /** Ligne datée de 2.7d (§7.10). */
+  function ligneVote27d(tx) {
+    var v = tx.vote;
+    if (v.objet === 'motion') { return X.leDateMotion(dateVote(tx)); }
+    if (v.objet === 'texte') { return X.joindre([X.leDate(dateVote(tx)), X.etape[v.etape]]); }
+    return X.joindre([X.leDate(dateVote(tx)), suiteObjet(tx)]);
+  }
+  /** Ligne du vote de 5.4 (§7.10). */
+  function ligneVote54(tx) {
+    var v = tx.vote;
+    if (v.objet === 'motion') { return X.voteFicheMotion(dateVote(tx)); }
+    var tete = X.voteFiche(X.issueParticipe[v.issue], dateVote(tx));
+    return v.objet === 'texte' ? X.joindre([tete, X.etape[v.etape]]) : X.joindre([tete, suiteObjet(tx)]);
+  }
+  /** Ligne du vote de 1.6 (§7.10). */
+  function ligneVote16(tx) {
+    var v = tx.vote;
+    if (v.objet === 'motion') { return X.voteEntreeMotion(dateVote(tx)); }
+    var tete = X.voteEntree(X.issueParticipe[v.issue], dateVote(tx));
+    return v.objet === 'texte' ? X.joindre([tete, X.etape[v.etape]]) : X.joindre([tete, suiteObjet(tx)]);
+  }
+
+  /** « {nom}, {mandat}, {groupe} » ou « {nom}, {député} sans groupe » (§7.11, gabarit validé de D-014). */
+  function elu(a, sansMandat) {
+    var mandat = a.type === 'senateur' ? N.mandatSenateur(a.feminin) : N.mandatDepute(a.feminin);
+    if (a.groupe === null) { return { nom: a.nom, suite: X.sansGroupe(mandat), groupe: null }; }
+    return { nom: a.nom, suite: sansMandat ? a.groupe : mandat + ', ' + a.groupe, groupe: a.groupe };
+  }
+  function proposePar(tx, ecran) {
+    var a = tx.auteur;
+    if (a.type === 'gouvernement') { return { texte: X.proposeParGouvernement, noms: [], groupes: [] }; }
+    if (a.type === 'commission') { return { texte: X.proposeParCommission(a.libelle), noms: [], groupes: [] }; }
+    var x = elu(a, ecran === '5.4' && a.type === 'depute');
+    return { texte: X.proposePar(x.nom, x.suite), noms: [x.nom], groupes: x.groupe ? [x.groupe] : [] };
+  }
+  function taRaison(tx, raison) {
+    var c = consideration(tx, raison);
+    var x = elu(c.depute, false);
+    return { texte: X.taRaison(X.raisonDansPhrase(c.texte), N.deDepute(c.depute), x.suite), noms: [c.depute.nom], groupes: x.groupe ? [x.groupe] : [] };
+  }
+
+  /**
+   * Coupures (§7.11) : jamais dans un nom de personne ; un nom de groupe passe à la
+   * ligne à ses espaces seulement, jamais à un trait d'union, et une ligne ne
+   * commence jamais par « - ». Rend des morceaux de texte et des éléments insécables.
+   */
+  function insecables(chaine, noms, groupes) {
+    var proteges = [];
+    noms.forEach(function (n) { proteges.push(t(n)); });
+    groupes.forEach(function (g) {
+      var mots = t(g).split(' ');
+      for (var i = 0; i < mots.length; i++) {
+        if (mots[i] === '-' && i > 0) { proteges.push(mots[i - 1] + ' -'); }
+        else if (mots[i].indexOf('-') > 0) { proteges.push(mots[i]); }
+      }
+    });
     var morceaux = [chaine];
-    sigles.forEach(function (sg) {
-      if (sg.indexOf('-') < 0) { return; }
+    proteges.sort(function (a, b) { return b.length - a.length; }).forEach(function (p) {
       var suite = [];
       morceaux.forEach(function (m) {
         if (typeof m !== 'string') { suite.push(m); return; }
-        var parts = m.split(sg);
-        parts.forEach(function (p, i) { if (i > 0) { suite.push(h('span', { class: 'sigle' }, sg)); } if (p) { suite.push(p); } });
+        var parts = m.split(p);
+        parts.forEach(function (x, i) { if (i > 0) { suite.push(h('span', { class: 'insecable' }, p)); } if (x) { suite.push(x); } });
       });
       morceaux = suite;
     });
     return morceaux;
   }
-  function siglesTexte(texte) {
-    var s = [];
-    if (texte.auteur.groupe) { s.push(texte.auteur.groupe); }
-    texte.considerations.forEach(function (c) { s.push(c.depute.groupe); });
-    return s;
+  function phraseElus(o) { return insecables(t(o.texte), o.noms, o.groupes); }
+
+  var RE_INVISIBLES = /[\p{Cc}\p{Cf}\p{Cs}]/gu;
+  /** Mise en forme du pseudo à la saisie (S1 §7.2). */
+  function formaterPseudo(s) {
+    s = s.normalize('NFC').replace(RE_INVISIBLES, '').replace(/\s/gu, ' ').replace(/ {2,}/g, ' ');
+    return s.replace(/^ +| +$/g, '').normalize('NFC');
   }
+  /** Motif du refus (§7.19) : null si le pseudo est gardable. */
+  function motifRefus(f) {
+    if (!f) { return 'vide'; }
+    if (J.pseudoGardable(f, confusables())) { return null; }
+    var sq = N.squelette(f, confusables());
+    if (personnages().some(function (p) { return N.squelette(p, confusables()) === sq; })) { return 'prenom'; }
+    if (Array.from(f).length === 1 && personnages().some(function (p) { return N.squelette(p.charAt(0), confusables()) === sq; })) { return 'rond'; }
+    return 'autre';
+  }
+  /** Rond du porteur (E7, §7.19) : une lettre, ou deux si la première est l'initiale d'un personnage. */
+  function rondPorteur() {
+    var c = Array.from(pseudo());
+    if (!c.length) { return ''; }
+    var premier = c[0].toUpperCase();
+    var sq = N.squelette(c[0], confusables());
+    if (personnages().some(function (p) { return N.squelette(p.charAt(0), confusables()) === sq; })) {
+      var suivant = c.slice(1).filter(function (x) { return x !== ' '; })[0] || '';
+      return premier + suivant;
+    }
+    return premier;
+  }
+  function initiale(m) { return m === PORTEUR ? rondPorteur() : m.charAt(0); }
 
   /* ================================================================== */
   /* Blocs du téléphone (vocabulaire des maquettes finales)             */
@@ -384,39 +316,33 @@ var ElenchosInterface = (function (N, M, X) {
   function big(s) { return h('div', { class: 'big' }, s); }
   function rule() { return h('hr', { class: 'rule' }); }
   function back(s, action) { return h('button', { type: 'button', class: 'plain back', action: action }, t('← ' + s)); }
-  function lien(s, action, params) {
-    var a = h('button', { type: 'button', class: 'link', action: action }, s);
-    if (params) { Object.keys(params).forEach(function (k) { a.setAttribute('data-' + k, params[k]); }); }
-    return a;
-  }
+  function lien(s, action, params) { return donnees(h('button', { type: 'button', class: 'link', action: action }, s), params); }
   function absent(s) { return lien(s, 'absent'); }
   function dot(lettre, taille, nom, legende, etatFace, action, params, aria) {
     var tag = action ? 'button' : 'div';
     var e = h(tag, { type: action ? 'button' : null, class: 'face ' + (taille || '') + ' ' + (etatFace || ''), action: action,
-      'aria-pressed': etatFace === 'on' && action === 'visage' ? 'true' : (action === 'visage' ? 'false' : null),
+      'aria-pressed': action === 'visage' ? (etatFace === 'on' ? 'true' : 'false') : null,
       'aria-disabled': etatFace === 'off' ? 'true' : null, 'aria-label': aria || null },
     h('span', { class: 'dot', 'aria-hidden': aria ? 'true' : null }, lettre),
     nom ? h('span', { class: 'nom' }, nom) : null,
     legende ? (Array.isArray(legende) ? legende.map(function (l) { return h('span', { class: 'cap' }, l); }) : h('span', { class: 'cap' }, legende)) : null);
-    if (params) { Object.keys(params).forEach(function (k) { e.setAttribute('data-' + k, params[k]); }); }
-    return e;
+    return donnees(e, params);
   }
-  function faces(arr) { return h('div', { class: 'faces' }, arr); }
-  function opts(liste, choisi, action, extraGap) {
-    return h('div', { class: 'opts', role: 'group' }, liste.map(function (x, i) {
+  function faces(arr, classe) { return h('div', { class: 'faces' + (classe ? ' ' + classe : '') }, arr); }
+  function opts(liste, choisi, action) {
+    return h('div', { class: 'opts', role: 'group' }, liste.map(function (x) {
       var v = x.valeur;
       return h('button', { type: 'button', class: 'opt' + (choisi === v ? ' on' : '') + (x.gap ? ' gap' : ''), action: action,
         'data-valeur': String(v), 'aria-pressed': choisi === v ? 'true' : 'false' }, t(x.libelle));
     }));
   }
-  function positions(choisie, action) {
-    return opts(X.POSITIONS.map(function (l, i) { return { valeur: i + 1, libelle: l }; }), choisie, action);
-  }
-  function raisons(texte, choisie, action) {
-    var l = texte.considerations.map(function (c) { return { valeur: c.rang, libelle: X.raisonFinLigne(c.texte) }; });
+  function positions(choisie, action) { return opts(X.POSITIONS.map(function (l, i) { return { valeur: i + 1, libelle: l }; }), choisie, action); }
+  function raisons(tx, choisie, action) {
+    var l = tx.considerations.map(function (c) { return { valeur: c.rang, libelle: X.raisonFinLigne(c.texte) }; });
     l.push({ valeur: 'aucune', libelle: X.aucuneRaison, gap: true });
     return opts(l, choisie, action);
   }
+  function lireValeur(b) { var v = b.getAttribute('data-valeur'); return v === 'aucune' ? 'aucune' : +v; }
   function steps(etats) {
     var noms = [X.etapeDeviner, X.etapeRepondre];
     var e = h('div', { class: 'steps' });
@@ -429,44 +355,55 @@ var ElenchosInterface = (function (N, M, X) {
   }
   function hd(gauche, droite) { return h('div', { class: 'hd' }, gauche, droite || null); }
   function hdTitre(s) { return h('h2', { class: 'hd-titre' }, s); }
+  function hdJour(j) { return hd(hdTitre(t(X.aujourdhui(nomJour(j))))); }
 
-  /** Curseur flou (§5.3) : zone de largeur ℓ centrée sur c, rognée au bord, jamais décalée. */
-  function zone(c, l, rev) {
-    var cc = c.pourDessiner(), ll = l.pourDessiner();
+  /* ---- Curseurs (S1 §5.3 ; maquettes 4.1, 4.3, 5.11) ---- */
+
+  function indexT8(code) { for (var i = 0; i < 8; i++) { if (X.T8[i].code === code) { return i; } } return -1; }
+  function poles(i) { return h('div', { class: 'poles' }, h('span', null, t(X.T8[i].poles[0])), h('span', null, t(X.T8[i].poles[1]))); }
+  var ECARTE = { c: N.Fraction(1, 2), l: N.Fraction('0.95'), net: false };
+  /** Curseur flou : zone de largeur ℓ centrée sur c, rognée au bord, jamais décalée. */
+  function zone(cur, rev) {
+    var cc = frac(cur.c).pourDessiner(), ll = frac(cur.l).pourDessiner();
     var g = Math.max(0, cc - ll / 2), d = Math.min(1, cc + ll / 2);
     var e = h('span', { class: 'haze' + (rev ? ' rev' : '') });
     e.style.left = (g * 100) + '%';
     e.style.width = ((d - g) * 100) + '%';
     return e;
   }
-  function poles(i) { return h('div', { class: 'poles' }, h('span', null, t(X.T8[i].poles[0])), h('span', null, t(X.T8[i].poles[1]))); }
-  var ECARTE = { c: F(1, 2), l: F('0.95') };
-  function slider(i, cur) { return h('div', { class: 'slider', role: 'img', 'aria-label': t(X.T8[i].poles[0] + ' ou ' + X.T8[i].poles[1]) }, poles(i), h('div', { class: 'track' }, zone(cur.c, cur.l))); }
-  function overlay(i, moi, lui) {
-    return h('div', { class: 'slider', role: 'img', 'aria-label': t(X.T8[i].poles[0] + ' ou ' + X.T8[i].poles[1]) }, poles(i), h('div', { class: 'track' }, zone(moi.c, moi.l), zone(lui.c, lui.l, true)));
+  /** Curseur net : un point (§7.15 ; maquette 4.1) ; creux pour le proche (4.3). */
+  function pt(cur, creux) {
+    var e = h('span', { class: 'pt' + (creux ? ' hollow' : '') });
+    e.style.left = (frac(cur.c).pourDessiner() * 100) + '%';
+    return e;
   }
-  function indexT8(code) { for (var i = 0; i < 8; i++) { if (X.T8[i].code === code) { return i; } } return -1; }
+  function marque(cur, rev) { return cur.net ? pt(cur, rev) : zone(cur, rev); }
+  function ariaCurseur(i) { return t(X.T8[i].poles[0] + ' ou ' + X.T8[i].poles[1]); }
+  function slider(i, cur) { return h('div', { class: 'slider', role: 'img', 'aria-label': ariaCurseur(i) }, poles(i), h('div', { class: 'track' }, marque(cur))); }
+  /** Lecture d'un curseur en mots (§7.16) : « vers {pôle} », « au milieu », « encore flou ». */
+  function lectureCurseur(code, cur) {
+    if (!cur || !cur.net) { return X.encoreFlouMin; }
+    var c = frac(cur.c);
+    if (c.inf(N.Fraction(2, 5))) { return X.versPole(X.POLES_PHRASE[code][0]); }
+    if (c.sup(N.Fraction(3, 5))) { return X.versPole(X.POLES_PHRASE[code][1]); }
+    return X.auMilieu;
+  }
 
   /* ================================================================== */
   /* Écrans du téléphone                                                */
   /* ================================================================== */
 
-  var temp = {}; // choix pas encore validés (jamais gardés : §7.1, §8.8)
-
   function ecranTel(corps, bas, options) {
     options = options || {};
     var e = h('section', { class: 'tel-ecran' + (options.soir ? ' soir' : '') + (options.croix ? ' a-croix' : ''), 'aria-label': options.aria || null });
-    var c = h('div', { class: 'corps' }, corps);
-    e.appendChild(c);
+    e.appendChild(h('div', { class: 'corps' }, corps));
     if (bas && bas.length) { e.appendChild(h('div', { class: 'bas' }, bas)); }
-    if (options.croix) { e.appendChild(h('button', { type: 'button', class: 'croix', action: 'absent', 'aria-label': 'Fermer' }, '×')); }
+    if (options.croix) { e.appendChild(h('button', { type: 'button', class: 'croix', action: 'croix', 'aria-label': t(X.fermer) }, '×')); }
     if (options.feuille) { e.appendChild(options.feuille); }
     return e;
   }
   function btn1(s, action, actif, params) {
-    var b = h('button', { type: 'button', class: 'btn1', action: action, 'aria-disabled': actif === false ? 'true' : null }, t(s));
-    if (params) { Object.keys(params).forEach(function (k) { b.setAttribute('data-' + k, params[k]); }); }
-    return b;
+    return donnees(h('button', { type: 'button', class: 'btn1', action: action, 'aria-disabled': actif === false ? 'true' : null }, t(s)), params);
   }
   function tabbar(actif) {
     var onglets = [[X.ongletAujourdhui, 'onglet-jour'], [X.ongletCercle, 'onglet-cercle'], [X.ongletMoi, 'onglet-moi']];
@@ -475,22 +412,23 @@ var ElenchosInterface = (function (N, M, X) {
     }));
   }
 
-  /* ---- Entrée ---- */
+  /* ---- Entrée (§7.2) ---- */
+
+  function nEntree() { return cal.textesEntree.length; }
+  function rangEntree(E1) { return cal.textesEntree.indexOf(E1) + 1; }
 
   function e11() {
+    var inv = cal.invitant;
     return ecranTel([
-      h('div', { class: 'chat-hd' }, t('← ' + X.chatTitre)),
+      h('div', { class: 'chat-hd' }, t('← ' + X.chatTitre(inv))),
       h('div', { class: 'bubble' }, t(X.chatBulle)),
-      h('button', { type: 'button', class: 'preview', action: 'apercu' }, h('b', null, t(X.chatApercuTitre)), h('span', null, t(X.chatApercu)))
-    ], null, { aria: 'Message d’Agathe' });
+      h('button', { type: 'button', class: 'preview', action: 'apercu' }, h('b', null, t(X.chatApercuTitre)), h('span', null, t(X.chatApercu(inv))))
+    ], null, { aria: t(X.chatAria(inv)) });
   }
-
-  function numeroE(E) { return +E.charAt(1); }
-
-  function e12(E) {
-    var tx = scelle.textes[E];
+  function e12(En) {
+    var tx = texteDe(En);
     return ecranTel([
-      band(t(X.bandeDefi(numeroE(E)))), small(t(X.consigneDefi)), label(t(X.etiquetteTexte)), ttl(t(tx.titre)),
+      band(t(X.bandeDefi(cal.invitant, rangEntree(En), nEntree()))), small(t(X.consigneDefi(cal.invitant))), label(t(X.etiquetteTexte)), ttl(t(tx.titre)),
       lignes(tx.lignes.map(t)), q(t(X.tonAvis)), positions(temp.position || null, 'entree-position')
     ], [btn1(X.suivant, 'entree-suivant', !!temp.position)]);
   }
@@ -500,154 +438,124 @@ var ElenchosInterface = (function (N, M, X) {
       lien(t(X.quiDureeDroits), 'droits')
     ], [btn1(X.jAccepte, 'consentement-accepter')]);
   }
-  function e14(E) {
-    var tx = scelle.textes[E];
+  function e14(En) {
+    var tx = texteDe(En);
     return ecranTel([
-      back(X.changerPosition, 'entree-changer'), band(t(X.bandeDefi(numeroE(E)))),
+      back(X.changerPosition, 'entree-changer'), band(t(X.bandeDefi(cal.invitant, rangEntree(En), nEntree()))),
       small(t(X.rappelAvis(tx.titre, position(temp.position)))), q(t(X.questionRaison)),
       raisons(tx, temp.raison === undefined ? null : temp.raison, 'entree-raison'), small(t(X.definitive))
     ], [btn1(X.valider, 'entree-valider-raison', temp.raison !== undefined && temp.raison !== null)]);
   }
-  function e15(E) {
-    var tx = scelle.textes[E];
+  function e15(En) {
+    var tx = texteDe(En), inv = cal.invitant;
     return ecranTel([
-      band(t(X.bandeDefi(numeroE(E)))), faces([dot('A', 'L', 'Agathe')]), big(t(X.etSaReponse)), small(t(tx.titre)),
+      band(t(X.bandeDefi(inv, rangEntree(En), nEntree()))), faces([dot(initiale(inv), 'L', inv)]), big(t(X.etSaReponse(inv))), small(t(tx.titre)),
       positions(temp.pari || null, 'entree-pari')
     ], [btn1(X.voirSaReponse, 'entree-voir', !!temp.pari)]);
   }
-  function e16(E) {
-    var tx = scelle.textes[E];
-    var c = etat.seances[0].coups.entree[E];
-    var inv = R().seances[0].entree.textes[E];
-    var invRep = inv.inviteuse;
-    var raisonInv = invRep.raison === 'aucune' ? X.aucuneDesQuatreRaisons : X.raisonFinLigne(consideration(tx, invRep.raison).texte);
-    var voteLigne = (tx.vote.issue === 'sans_vote_ensemble') ? joindre("L'Assemblée : texte ni adopté ni rejeté.", X.articleUnique(dateVote(tx)))
-      : joindre("L'Assemblée : texte " + (tx.vote.issue === 'adopte' ? 'adopté' : 'rejeté') + ' le ' + dateVote(tx) + '.', etapeVote(tx));
-    var voteT = t(voteLigne);
-    var tete = t("L'Assemblée :");
-    var sigles = siglesTexte(tx);
-    var suite = numeroE(E) < 3 ? X.texteSuivant : X.suivant; // Q-F8
+  function e16(En) {
+    var tx = texteDe(En), inv = cal.invitant;
+    var c = jourE(etat(), cal.premier).coups.entree[En];
+    var x = Rj(cal.premier).entree.textes[En];
+    var o = proposePar(tx, '1.6');
+    var tete = t(X.lAssembleeTete);
+    var vote = t(ligneVote16(tx));
+    var dernier = rangEntree(En) === nEntree();
     return ecranTel([
-      band(t(X.bandeTexte(numeroE(E)))),
-      big(t(inv.juste ? X.tuConnais : X.caAlors)),
+      band(t(X.bandeTexte(rangEntree(En), nEntree()))),
+      big(t(x.juste ? X.tuConnais : X.caAlors)),
       p(t(X.tonPari(position(c.pari)))),
-      h('div', { class: 'faces faceline' }, h('div', { class: 'face' }, h('span', { class: 'dot', 'aria-hidden': 'true' }, 'A')),
-        h('div', { class: 'p' }, h('b', null, t(X.ligneInviteuse(position(invRep.niveau)))), h('br'), t(raisonInv))),
+      h('div', { class: 'faces faceline' }, h('div', { class: 'face' }, h('span', { class: 'dot', 'aria-hidden': 'true' }, initiale(inv))),
+        h('div', { class: 'p' }, h('b', null, t(X.ligneInvitant(inv, position(x.invitant.niveau)))), h('br'), t(raisonEnLigne(tx, x.invitant.raison)))),
       rule(),
-      h('div', { class: 'p' }, h('b', null, tete), avecSigles(voteT.slice(tete.length), [])),
-      h('div', { class: 'p' }, avecSigles(t(proposePar(tx, '1.6')), sigles)),
-      c.reponse.raison === 'aucune' ? null : h('div', { class: 'p' }, avecSigles(t(taRaison(tx, c.reponse.raison)), sigles))
-    ], [btn1(suite, 'entree-texte-suivant')]);
+      h('div', { class: 'p' }, h('b', null, tete), vote.slice(tete.length)),
+      h('div', { class: 'p' }, phraseElus(o)),
+      c.reponse.raison === 'aucune' ? null : h('div', { class: 'p' }, phraseElus(taRaison(tx, c.reponse.raison)))
+    ], [btn1(dernier ? X.suivant : X.texteSuivant, 'entree-texte-suivant')]);
+  }
+  /** Tensions des textes d'entrée, dans leur ordre, sans doublon (§7.2, 1.7). */
+  function tensionsEntree() {
+    var l = [];
+    cal.textesEntree.forEach(function (En) { var c = texteDe(En).tension; if (l.indexOf(c) < 0) { l.push(c); } });
+    return l;
   }
   function e17() {
-    var n = R().seances[0].entree.justes;
-    var portrait = R().seances[0].portrait.tensions;
+    var x = Rj(cal.premier).entree, n = x.justes, total = nEntree(), inv = cal.invitant;
+    var portrait = Rj(cal.premier).portrait.tensions;
     return ecranTel([
-      n >= 2 ? h('div', { class: 'huge' }, t(X.bilanGrand(n))) : big(t(X.bilanSurprises(3 - n))),
-      n >= 2 ? p(t(X.bilanLigne(n))) : null,
+      n >= 2 ? h('div', { class: 'huge' }, t(X.bilanGrand(n, total))) : big(t(X.bilanSurprises(inv, total - n))),
+      n >= 2 ? p(t(X.bilanLigne(inv, n, total))) : null,
       rule(), label(t(X.portraitCommence)),
-      ['S', 'P', 'L'].map(function (code) { return slider(indexT8(code), portrait[code]); }),
+      tensionsEntree().map(function (code) { return slider(indexT8(code), portrait[code]); }),
       small(t(X.chaqueReponseLes))
     ], [btn1(X.creerCompte, 'creer-compte')]);
   }
+  function pseudoSaisi() { return formaterPseudo(temp.saisie || ''); }
   function e18() {
-    var champ = h('input', { class: 'champ', id: 'champ-pseudo', type: 'text', autocomplete: 'off', autocorrect: 'off', spellcheck: 'false',
+    var champ = h('input', { class: 'champ', id: 'champ-pseudo', type: 'text', autocomplete: 'off', autocorrect: 'off', autocapitalize: 'off', spellcheck: 'false',
       'aria-label': t(X.champPseudo), name: 'pseudo-essai' });
     champ.value = temp.saisie || '';
-    var valide = pseudoValide(temp.saisie || '');
+    var ok = motifRefus(pseudoSaisi()) === null;
+    function voie(libelle, action) {
+      return h('button', { type: 'button', class: 'btn2 voie', action: action, 'aria-disabled': ok ? null : 'true' }, t(libelle));
+    }
     return ecranTel([
-      p(t(X.compteTexte)),
+      p(t(X.compteTexte(cal.invitant))),
       h('label', { class: 'field', for: 'champ-pseudo' }, t(X.champPseudo), champ),
-      h('div', { class: 'field' }, t(X.champEmail), h('div', { class: 'dessin' }, X.emailDessine))
-    ], [btn1(X.recevoirCode, 'recevoir-code', valide)]);
+      h('div', { class: 'voies' }, voie(X.continuerApple, 'compte-apple'), voie(X.continuerGoogle, 'compte-google'), voie(X.recevoirCodeEmail, 'compte-email'))
+    ], null);
+  }
+  function e18b() {
+    return ecranTel([
+      back(X.retourCompte, 'compte-retour'),
+      h('div', { class: 'field' }, t(X.champEmail), h('div', { class: 'dessin' }, X.emailDessine)),
+      small(t(X.recevrasCode))
+    ], [btn1(X.recevoirCode, 'recevoir-code')]);
   }
   function e19() {
     return ecranTel([
       p(t(X.codeEnvoye)),
       h('div', { class: 'code', 'aria-hidden': 'true' }, [1, 2, 3, 4, 5, 6].map(function () { return h('div', { class: 'rempli' }); })),
-      absent(t(X.renvoyerCode)), lien(t(X.plusTard), 'code-valider')
+      absent(t(X.renvoyerCode)), lien(t(X.plusTard), 'code-plus-tard')
     ], [btn1(X.valider, 'code-valider')]);
-  }
-
-  /* ---- Pseudo (§7.2, Q-F7) ---- */
-
-  var RE_INVISIBLES = /[\p{Cc}\p{Cf}\p{Cs}]/gu;
-  function formaterPseudo(s) {
-    s = s.normalize('NFC').replace(RE_INVISIBLES, '').replace(/\s/gu, ' ').replace(/ {2,}/g, ' ');
-    s = s.replace(/^ +| +$/g, '');
-    return s.normalize('NFC');
-  }
-  function estPrenom(s) { return PERSOS.some(function (p) { return p.toLowerCase() === s.toLowerCase(); }); }
-  function pseudoValide(saisie) {
-    var f = formaterPseudo(saisie);
-    var n = Array.from(f).length;
-    return n >= 1 && n <= 20 && !estPrenom(f);
   }
 
   /* ---- Aujourd'hui ---- */
 
-  function hdJour() { return hd(hdTitre(t(X.aujourdhui(jourDeSeance(K()))))); }
-
-  function eRepondre() {
-    var k = K(), tx = texteDuJour(k);
-    var corps = [];
-    if (k === 1) {
-      corps.push(hdJour(), steps(['off', 'on']), band(t(X.rejoint)), banner(t(X.rienPourLinstant)));
-    } else if (!aDesCartes()) {
-      corps.push(hdJour(), steps(['strike', 'on']), banner(t(X.rienAujourdhui)));
-    } else {
-      corps.push(steps(['done', 'on']));
-    }
-    corps.push(label(t(X.etiquetteTexte)), ttl(t(tx.titre)), lignes(tx.lignes.map(t)), q(t(X.tonAvis)), positions(temp.position || null, 'jour-position'));
-    return ecranTel(corps, [btn1(X.suivant, 'jour-suivant-raison', !!temp.position), tabbar(0)]);
-  }
-  function eRaison() {
-    var k = K(), tx = texteDuJour(k);
-    return ecranTel([
-      back(X.changerPosition, 'jour-changer'), small(t(X.rappelAvis(tx.titre, position(temp.position)))),
-      q(t(X.questionRaison)), raisons(tx, temp.raison === undefined ? null : temp.raison, 'jour-raison'), small(t(X.definitive))
-    ], [btn1(X.valider, 'jour-valider-raison', temp.raison !== undefined && temp.raison !== null), tabbar(0)]);
-  }
-
-  var derniereLecture = null;
-  function eAttente() {
-    var k = K(), r = R().seances[k];
-    var lu = derniereLecture;
-    var m = lu.minutesDuJour;
-    var reste = 1440 - ((m - 1080 + 1440) % 1440);
-    var hh = Math.floor(reste / 60), mm = N.deux(reste % 60);
-    var visages = M.visagesDejaJoue(scelle, k, lu.hhmm);
-    return ecranTel([
-      hdJour(),
-      h('div', { class: 'box' }, label(t(X.phraseDuJour)), p(r.phrase_jour.phrase), lien(t(X.voirPortrait), 'voir-portrait')),
-      big(t(k === 1 ? X.nouveauTexteDans(hh, mm) : X.revelationDans(hh, mm))),
-      visages.length ? small(t(X.dejaJoue)) : null,
-      visages.length ? faces(visages.map(function (v) { return dot(v.charAt(0), 'S', v); })) : null
-    ], [tabbar(0)]);
+  /** « Reprendre la révélation » / « Revoir la révélation » (E3, §7.18). */
+  function ligneRouvrir() {
+    var k = K();
+    if (!cal.estJoue(k) || cal.ligne(k).revelation_porteur !== 'lue' || !revelationPresente(k)) { return null; }
+    var rev = jourE(etat(), k).page.rev;
+    if (!rev || !rev.commencee || rev.ouverte) { return null; }
+    var fini = rev.max >= sequenceRevelation(k).length - 1;
+    return h('button', { type: 'button', class: 'rouvrir', action: 'rouvrir' }, h('span', null, t(fini ? X.revoirRevelation : X.reprendreRevelation)), h('span', { 'aria-hidden': 'true' }, '›'));
   }
 
   function eDeviner() {
-    var k = K(), m = mancheDuJour();
-    var tx = texteDuJour(k - 1);
-    if (!temp.choix) { temp.choix = m.cartes.map(function () { return { designe: null, raison: null }; }); }
-    var ch = temp.choix;
+    var k = K(), mp = Rj(k).cartes_porteur;
+    var tx = texteDe(cal.texteDevine(k));
+    var dv = jourE(etat(), k).coups.deviner;
+    var ch = dv.cartes;
     var poses = ch.map(function (c) { return c.designe; });
-    var cartes = m.cartes.map(function (c, i) {
-      var rep = m.possibles[c.auteur];
+    var raisonsAvant = temp.raisonsAvant || {};
+    var cartes = mp.cartes.map(function (c, i) {
+      var rep = mp.possibles[c.auteur];
       var choix = ch[i];
       var passee = choix.designe === 'passe';
-      var lignesCarte = [h('div', { class: 'ans' }, t(ligneCarte(tx, rep, c.cachee)))];
-      if (c.cachee && choix.raison !== null && !passee) {
-        lignesCarte.push(h('div', { class: 'why' }, choix.raison === 'aucune' ? t(X.taDevinetteAucune)
-          : t(X.taDevinette(X.raisonFinLigne(consideration(tx, choix.raison).texte)))));
+      var raison = choix.raison !== null ? choix.raison : (raisonsAvant[i] !== undefined ? raisonsAvant[i] : null);
+      var lignesCarte = [h('div', { class: 'ans' }, t(c.cachee ? X.carteLigne(position(rep.niveau), X.carteRaisonCachee) :
+        X.carteLigne(position(rep.niveau), raisonEnLigne(tx, rep.raison))))];
+      if (c.cachee && raison !== null && !passee) {
+        lignesCarte.push(h('div', { class: 'why' }, raison === 'aucune' ? t(X.taDevinetteAucune) : t(X.taDevinette(X.raisonFinLigne(consideration(tx, raison).texte)))));
       }
       if (c.cachee && !passee) { lignesCarte.push(h('button', { type: 'button', class: 'btn2', action: 'devine-pourquoi', 'data-carte': i }, t(X.devineAussi))); }
-      var visages = PERSOS.map(function (pp) {
-        var surCette = choix.designe === pp;
-        var ailleurs = !surCette && poses.indexOf(pp) >= 0;
-        return dot(pp.charAt(0), 'S', pp, null, surCette ? 'on' : (ailleurs ? 'off' : ''), 'visage', { carte: i, membre: pp }, pp);
+      var visages = personnages().map(function (m) {
+        var surCette = choix.designe === m;
+        var ailleurs = !surCette && poses.indexOf(m) >= 0;
+        return dot(initiale(m), 'S', m, null, surCette ? 'on' : (ailleurs ? 'off' : ''), 'visage', { carte: i, membre: m }, m);
       });
-      return h('div', { class: 'guess' + (passee ? ' passed' : ''), role: 'group', 'aria-label': 'Réponse ' + (i + 1) },
+      return h('div', { class: 'guess' + (passee ? ' passed' : ''), role: 'group', 'aria-label': t(X.reponseNumero(i + 1)) },
         lignesCarte,
         h('div', { class: 'row' }, faces(visages), h('button', { type: 'button', class: 'link', action: 'passer', 'data-carte': i,
           'aria-pressed': passee ? 'true' : 'false' }, t(passee ? X.passee : X.passer))));
@@ -655,12 +563,16 @@ var ElenchosInterface = (function (N, M, X) {
     var pret = ch.every(function (c) { return c.designe !== null; });
     var feuille = null;
     if (temp.feuille === 'relire') { feuille = feuilleRelire(tx); }
-    else if (temp.feuille !== undefined && temp.feuille !== null) { feuille = feuilleRaison(tx, temp.feuille); }
-    return ecranTel([
-      hdJour(), steps(['on', 'off']), label(t(X.CERCLE)),
+    else if (temp.feuille !== undefined && temp.feuille !== null) { feuille = feuilleRaison(tx, temp.feuille, raisonsAvant); }
+    var corps = [hdJour(k), ligneRouvrir(), steps(['on', 'off'])];
+    if (cal.estArrivee(k)) { corps.push(band(t(X.rejoint(cal.nomCercle)))); }
+    corps.push(label(t(cal.nomCercle)),
       h('div', { class: 'small' }, t(X.hier(tx.titre) + ' · '), h('button', { type: 'button', class: 'link en-ligne', action: 'relire' }, t(X.relire))),
-      q(t(X.aQui)), cartes
-    ], [btn1(X.valider, 'deviner-valider', pret), tabbar(0)], { feuille: feuille });
+      q(t(X.aQui)));
+    // La ligne de règle (§7.12, §7.23 A) : sous la question, reliée aux cartes comme description.
+    corps.push(h('div', { class: 'small regle', id: 'regle-deviner' }, t(X.regleDeviner)));
+    corps.push(h('div', { class: 'cartes', role: 'group', 'aria-describedby': 'regle-deviner' }, cartes));
+    return ecranTel(corps, [btn1(X.valider, 'deviner-valider', pret), tabbar(0)], { feuille: feuille });
   }
   function feuille(contenu) {
     return h('div', { class: 'feuille-fond' },
@@ -668,8 +580,10 @@ var ElenchosInterface = (function (N, M, X) {
       h('div', { class: 'feuille', role: 'dialog', 'aria-modal': 'true' }, h('div', { class: 'grab', 'aria-hidden': 'true' }),
         h('div', { class: 'feuille-defile' }, contenu)));
   }
-  function feuilleRaison(tx, i) {
-    var choisie = temp.raisonFeuille !== undefined ? temp.raisonFeuille : temp.choix[i].raison;
+  function feuilleRaison(tx, i, raisonsAvant) {
+    var dv = jourE(etat(), K()).coups.deviner;
+    var actuelle = dv.cartes[i].raison !== null ? dv.cartes[i].raison : (raisonsAvant[i] !== undefined ? raisonsAvant[i] : null);
+    var choisie = temp.raisonFeuille !== undefined ? temp.raisonFeuille : actuelle;
     return feuille([ttl(t(X.feuillePourquoi)), raisons(tx, choisie, 'feuille-raison'),
       btn1(X.choisir, 'feuille-choisir', choisie !== null && choisie !== undefined)]);
   }
@@ -677,182 +591,356 @@ var ElenchosInterface = (function (N, M, X) {
     return feuille([label(t(X.etiquetteTexte)), ttl(t(tx.titre)), lignes(tx.lignes.map(t)), back(X.retour, 'feuille-fermer')]);
   }
 
-  /* ---- Message de 18h et révélation ---- */
+  function eRepondre() {
+    var k = K(), tx = texteDe(cal.ligne(k).repondu);
+    var corps = [ligneRouvrir(), steps(['done', 'on']), label(t(X.etiquetteTexte)), ttl(t(tx.titre)), lignes(tx.lignes.map(t)), q(t(X.tonAvis)),
+      positions(temp.position || null, 'jour-position')];
+    return ecranTel(corps, [btn1(X.suivant, 'jour-suivant-raison', !!temp.position), tabbar(0)]);
+  }
+  function eRaison(rattrapage) {
+    var j = rattrapage ? jourAffiche() : K();
+    var tx = texteDe(cal.ligne(j).repondu);
+    return ecranTel([
+      back(X.changerPosition, rattrapage ? 'ratt-changer' : 'jour-changer'), small(t(X.rappelAvis(tx.titre, position(temp.position)))),
+      q(t(X.questionRaison)), raisons(tx, temp.raison === undefined ? null : temp.raison, rattrapage ? 'ratt-raison' : 'jour-raison'), small(t(X.definitive))
+    ], [btn1(X.valider, rattrapage ? 'ratt-valider' : 'jour-valider-raison', temp.raison !== undefined && temp.raison !== null), tabbar(0)]);
+  }
 
+  function lireEnAttendant() {
+    if (relireHeure || lecture === null) { lecture = socle.lireParis(); relireHeure = false; }
+    return lecture;
+  }
+  function eAttente() {
+    var k = K(), r = Rj(k);
+    var lu = lireEnAttendant();
+    var reste = 1440 - ((lu.minutesDuJour - 1080 + 1440) % 1440);
+    var hh = Math.floor(reste / 60), mm = N.deux(reste % 60);
+    var visages = M.visagesDejaJoue(scelle, cal, k, lu.hhmm);
+    return ecranTel([
+      hdJour(k), ligneRouvrir(),
+      h('div', { class: 'box' }, label(t(X.phraseDuJour)), p(r.phrase_jour.phrase), lien(t(X.voirPortrait), 'voir-portrait')),
+      big(t(r.compte_a_rebours === 'revelation' ? X.revelationDans(hh, mm) : X.nouveauTexteDans(hh, mm))),
+      visages.length ? small(t(X.dejaJoue)) : null,
+      visages.length ? faces(visages.map(function (v) { return dot(initiale(v), 'S', v); })) : null
+    ], [tabbar(0)]);
+  }
+
+  /* ---- Rattrapage (§7.4) ---- */
+
+  function eRattPosition() {
+    var j = jourAffiche(), tx = texteDe(cal.ligne(j).repondu);
+    return ecranTel([
+      hdJour(j), steps(['off', 'on']), label(t(X.etiquetteTexte)), ttl(t(tx.titre)), lignes(tx.lignes.map(t)), q(t(X.tonAvis)),
+      positions(temp.position || null, 'ratt-position')
+    ], [btn1(X.suivant, 'ratt-suivant-raison', !!temp.position), tabbar(0)]);
+  }
+  /** 2.5 réduit (§7.4) : le jour, la phrase du jour, rien d'autre. */
+  function eRattAttente() {
+    var j = jourAffiche();
+    return ecranTel([
+      hdJour(j),
+      h('div', { class: 'box' }, label(t(X.phraseDuJour)), p(Rj(j).phrase_jour.phrase), lien(t(X.voirPortrait), 'voir-portrait'))
+    ], [tabbar(0)]);
+  }
+
+  /* ---- Message de 18h et révélation (§7.17, §7.18, §7.5) ---- */
+
+  function texteMessage(m) {
+    var s = m.forme === 'cartes' ? X.message18hCartes : (m.forme === 'vote' ? X.message18hVote : X.message18hQuestion);
+    return m.titres ? s + ' ' + X.message18hTitres : s;
+  }
   function eVerrou() {
     var k = K();
     return ecranTel([h('div', { class: 'lock' },
-      h('div', { class: 'small' }, t(jourDeSeance(k))),
+      h('div', { class: 'small' }, t(nomJour(k))),
       h('div', { class: 'clock' }, X.horlogeVerrou),
       h('button', { type: 'button', class: 'notif', action: 'notification' },
         h('span', { class: 'meta' }, h('i', { 'aria-hidden': 'true' }, X.notifIcone), t(X.notifMeta)),
-        h('span', null, t(k === 7 || k === 14 ? X.message18hDimanche : X.message18h))))], null, { aria: 'Écran verrouillé' });
+        h('span', null, t(texteMessage(Rj(k).message)))))], null, { aria: t(X.ecranVerrouille) });
+  }
+
+  /** La révélation du jour j existe-t-elle pour le porteur (vote ou cartes, ou titres) ? */
+  function revelationPresente(j) {
+    if (cal.estCloture(j)) { return true; }
+    var m = Rj(j).message;
+    if (!m) { return false; }
+    return sequenceRevelation(j).some(function (x) { return x.type !== 'fin'; });
+  }
+
+  /** La séquence de la révélation du jour j (§7.5 ; maquettes 2.7a à 3.3e). */
+  function sequenceRevelation(j) {
+    var r = Rj(j), rev = r.revelation, m = r.message;
+    var seq = [];
+    var dv = rev && rev.devineurs ? rev.devineurs[PORTEUR] : null;
+    var manche = dv ? Rj(j - 1).manches[PORTEUR] : null;
+    if (manche) { manche.cartes.forEach(function (c, i) { seq.push({ type: 'carte', i: i }); }); }
+    var voteVisible = m ? m.forme !== 'question' : true;
+    if (rev && voteVisible) {
+      seq.push({ type: 'vote' }, { type: 'auteurs' });
+      if (rev.pas_de_cote && rev.pas_de_cote.length) { seq.push({ type: 'pas_de_cote' }); }
+    }
+    var d = r.dimanche;
+    if (d) {
+      if (d.sans_faute.length) { seq.push({ type: 'sans_faute' }); }
+      if (d.devin.titulaire) { seq.push({ type: 'devin' }); }
+      if (d.mystere.titulaire) { seq.push({ type: 'mystere' }); }
+      if (d.fidele.titulaires.length) { seq.push({ type: 'fidele' }); }
+      if (d.surprise.texte) { seq.push({ type: 'surprise' }); }
+      seq.push({ type: 'phrase' });
+    }
+    if (!cal.estCloture(j)) { seq.push({ type: 'fin' }); }
+    return seq;
+  }
+  function revDe(e, j) {
+    var pg = jourE(e, j).page;
+    if (!pg.rev) { pg.rev = { commencee: false, ouverte: false, i: 0, max: -1, ret: [], fin: false }; }
+    return pg.rev;
+  }
+  function marquerRevelation(e, j) {
+    var rv = revDe(e, j);
+    var seq = sequenceRevelation(j);
+    if (rv.i > seq.length - 1) { rv.i = seq.length - 1; }
+    rv.max = Math.max(rv.max, rv.i);
+    if (seq[rv.i] && seq[rv.i].type === 'fin') { rv.fin = true; }
   }
 
   function eRevelation() {
-    var s = seanceCourante(), k = s.k;
+    var k = K(), rv = jourE(etat(), k).page.rev;
     var seq = sequenceRevelation(k);
-    var i = Math.min(s.rev.i, seq.length - 1);
+    var i = Math.min(rv.i, seq.length - 1);
     var el = seq[i];
     var dots = h('div', { class: 'dots', 'aria-hidden': 'true' }, seq.map(function (x, j) { return h('i', { class: j <= i ? 'on' : '' }); }));
-    var r = R().seances[k];
-    var n = String(k - 2), tx = scelle.textes[n];
-    var sigles = siglesTexte(tx);
+    var r = Rj(k), n = r.revelation ? r.revelation.texte : null, tx = n !== null && scelle.textes[n] ? scelle.textes[n] : null;
     var corps = [dots], bas = [];
-    var suivant = btn1(X.suivant, 'rev-suivant');
+    var dernier = i === seq.length - 1;
+    var suivant = btn1(X.suivant, dernier ? 'rev-fin-cloture' : 'rev-suivant');
     if (el.type === 'carte') {
-      var manche = R().seances[k - 1].manches.porteur;
+      var manche = Rj(k - 1).manches[PORTEUR];
       var c = manche.cartes[el.i];
       var rep = manche.possibles[c.auteur];
-      var verdict = r.revelation.devineurs.porteur.verdicts[el.i];
-      var retournee = !!s.rev.ret[el.i];
+      var dv = r.revelation.devineurs[PORTEUR];
+      var verdict = dv.verdicts[el.i];
+      var retournee = !!rv.ret[el.i];
       var pari;
       if (verdict === 'passe') { pari = X.tuAvaisPasse; }
-      else if (c.cachee && c.raison_devinee === 'aucune') { pari = X.tonPariAucune(c.designe); }
-      else if (c.cachee && c.raison_devinee !== null) { pari = X.tonPariRaison(c.designe, X.raisonDansPhrase(consideration(tx, c.raison_devinee).texte)); }
-      else { pari = X.tonPariPrenom(c.designe); }
+      else if (c.cachee && c.raison_devinee === 'aucune') { pari = X.tonPariAucune(nomMembre(c.designe)); }
+      else if (c.cachee && c.raison_devinee !== null) { pari = X.tonPariRaison(nomMembre(c.designe), X.raisonDansPhrase(consideration(tx, c.raison_devinee).texte)); }
+      else { pari = X.tonPariPrenom(nomMembre(c.designe)); }
       var apres = [];
+      var auteur = nomMembre(c.auteur_compte);
       if (verdict === 'juste_et_raison') { apres.push(big(t(X.tuConnaisRaisons))); }
       else if (verdict === 'juste') { apres.push(big(t(X.tuConnais))); }
-      else if (verdict === 'faux') { apres.push(big(t(X.cEtait(c.auteur_compte))), p(t(X.caAlors))); }
-      else { apres.push(big(t(X.cEtait(c.auteur_compte)))); }
-      if (c.cachee && verdict !== 'juste_et_raison') {
+      else if (verdict === 'jumeau_et_raison') { apres.push(big(t(X.tuConnaisRaisons)), p(t(X.jumeau(auteur, nomMembre(c.designe))))); }
+      else if (verdict === 'jumeau') { apres.push(big(t(X.tuConnais)), p(t(X.jumeau(auteur, nomMembre(c.designe))))); }
+      else if (verdict === 'faux') { apres.push(big(t(X.cEtait(auteur))), p(t(X.caAlors))); }
+      else { apres.push(big(t(X.cEtait(auteur)))); }
+      if (c.cachee && verdict !== 'juste_et_raison' && verdict !== 'jumeau_et_raison') {
         apres.push(small(t(rep.raison === 'aucune' ? X.saRaisonAucune : X.saRaison(X.raisonFinLigne(consideration(tx, rep.raison).texte)))));
       }
-      if (el.i === manche.cartes.length - 1) {
-        var dv = r.revelation.devineurs.porteur;
-        apres.push(rule(), small(t(X.points(dv.points, dv.points_semaine))));
-      }
+      if (el.i === manche.cartes.length - 1) { apres.push(rule(), small(t(X.points(dv.points, dv.points_semaine)))); }
       var rond = h('div', { class: 'rond' + (retournee ? ' retourne' : '') },
         h('div', { class: 'rond-interieur' },
           h('button', { type: 'button', class: 'rond-face rond-recto', action: retournee ? null : 'retourner', 'aria-label': retournee ? null : t(X.retournerCarte),
             'aria-hidden': retournee ? 'true' : null, tabindex: retournee ? '-1' : null }, '?'),
           h('div', { class: 'rond-face rond-verso', 'aria-hidden': retournee ? null : 'true' }, initiale(c.auteur_compte))));
-      corps.push(band(t(X.bandeRevelation(tx.titre))), h('div', { class: 'p' }, h('b', null, t(ligneCarte(tx, rep, c.cachee)))),
+      corps.push(band(t(X.bandeRevelation(cal.nomCercle, tx.titre))), h('div', { class: 'p' }, h('b', null, t(c.cachee ?
+        X.carteLigne(position(rep.niveau), X.carteRaisonCachee) : X.carteLigne(position(rep.niveau), raisonEnLigne(tx, rep.raison))))),
         small(t(pari)), h('div', { class: 'faces centre' }, h('div', { class: 'face L' }, rond)),
         h('div', { class: 'apres' + (retournee ? '' : ' cache'), 'aria-hidden': retournee ? null : 'true', 'aria-live': 'polite' }, apres));
       if (!retournee) { suivant.classList.add('reserve'); suivant.setAttribute('aria-hidden', 'true'); suivant.setAttribute('tabindex', '-1'); suivant.removeAttribute('data-action'); }
     } else if (el.type === 'vote') {
-      corps.push(band(t(tx.titre)), q(t(X.etLAssemblee)), big(t(X.issue[tx.vote.issue])),
-        p(t(tx.vote.issue === 'sans_vote_ensemble' ? X.articleUnique(dateVote(tx)) : joindre('Le ' + dateVote(tx) + '.', etapeVote(tx)))));
+      corps.push(band(t(tx.titre)), q(t(X.etLAssemblee)), big(t(X.issue[tx.vote.issue])), p(t(ligneVote27d(tx))));
+      if (r.revelation.avis_cercle) { corps.push(avisCercle(r.revelation.avis_cercle)); }
     } else if (el.type === 'auteurs') {
-      var maRep = etat.seances[+n].coups.reponse;
-      corps.push(band(t(tx.titre)), h('div', { class: 'p' }, avecSigles(t(proposePar(tx, '2.7e')), sigles)));
-      if (maRep && maRep.raison !== 'aucune') { corps.push(rule(), h('div', { class: 'p' }, avecSigles(t(taRaison(tx, maRep.raison)), sigles))); }
-    } else if (el.type === 'badge') {
-      var sf = r.dimanche.sans_faute;
-      corps.push(label(t(X.badgeRare)), faces(sf.map(function (m) { return dot(initiale(m), 'L'); })),
-        big(tp(X.sansFaute(N.listeEt(sf.map(function (m) { return m === 'porteur' ? '{pseudo}' : m; })), sf.length > 1))),
-        p(t(X.sansFauteLigne)));
+      corps.push(band(t(tx.titre)), h('div', { class: 'p' }, phraseElus(proposePar(tx, '2.7e'))));
+      var maRep = reponsePorteur(n);
+      if (maRep && maRep.raison !== 'aucune') { corps.push(rule(), h('div', { class: 'p' }, phraseElus(taRaison(tx, maRep.raison)))); }
+    } else if (el.type === 'pas_de_cote' || el.type === 'sans_faute') {
+      var liste = el.type === 'pas_de_cote' ? r.revelation.pas_de_cote : r.dimanche.sans_faute;
+      var noms = N.listeEt(liste.map(nomOuMarque));
+      corps.push(label(t(X.badgeRare)), faces(liste.map(function (m) { return dot(initiale(m), 'L'); })),
+        big(tp(el.type === 'pas_de_cote' ? X.pasDeCote(noms, liste.length > 1) : X.sansFaute(noms, liste.length > 1))),
+        p(t(el.type === 'pas_de_cote' ? X.pasDeCoteLigne : X.sansFauteLigne)));
     } else if (el.type === 'devin' || el.type === 'mystere') {
       var tit = r.dimanche[el.type].titulaire;
-      var nomT = tit === 'porteur' ? '{pseudo}' : tit;
-      corps.push(label(t(X.titresDeLaSemaine)), faces([dot(initiale(tit), 'L')]),
-        big(tp(el.type === 'devin' ? X.devin(nomT) : X.mystere(nomT))), p(t(el.type === 'devin' ? X.devinLigne : X.mystereLigne)));
+      corps.push(label(t(X.titresDeLaSemaine(cal.nomCercle))), faces([dot(initiale(tit), 'L')]),
+        big(tp(el.type === 'devin' ? X.devin(nomOuMarque(tit)) : X.mystere(nomOuMarque(tit)))), p(t(el.type === 'devin' ? X.devinLigne : X.mystereLigne)));
     } else if (el.type === 'fidele') {
       var fs = r.dimanche.fidele.titulaires;
-      corps.push(label(t(X.titresDeLaSemaine)), faces(fs.map(function (m) { return dot(initiale(m), 'L', nomMembre(m)); })),
-        big(tp(X.fidele(N.listeEt(fs.map(function (m) { return m === 'porteur' ? '{pseudo}' : m; }))))),
-        p(t(X.fideleLigne(r.dimanche.semaine, fs.length > 1))));
+      corps.push(label(t(X.titresDeLaSemaine(cal.nomCercle))), faces(fs.map(function (m) { return dot(initiale(m), 'L', nomMembre(m)); })),
+        big(tp(X.fidele(N.listeEt(fs.map(nomOuMarque))))), p(t(X.fideleLigne(fs.length > 1))));
     } else if (el.type === 'surprise') {
-      var ts = scelle.textes[r.dimanche.surprise.texte];
-      corps.push(label(t(X.surpriseSemaine)), big(t(ts.titre)), p(t(X.surpriseLigne)), lien(t(X.voirLeTexte), 'fiche', { texte: r.dimanche.surprise.texte }));
+      var st = r.dimanche.surprise.texte;
+      corps.push(label(t(X.surpriseSemaine)), big(t(titreDe(st))), p(t(X.surpriseLigne)),
+        scelle.textes[st] ? lien(t(X.voirLeTexte), 'fiche', { texte: st }) : null);
     } else if (el.type === 'phrase') {
       var ps = r.dimanche.phrase_semaine;
       corps.push(label(t(X.pourToiSemaine)), big(ps.phrase));
-      if (ps.tension) { corps.push(slider(indexT8(ps.tension), R().seances[k - 1].portrait.tensions[ps.tension])); }
+      if (ps.tension) { corps.push(slider(indexT8(ps.tension), Rj(k - 1).portrait.tensions[ps.tension])); }
     } else if (el.type === 'fin') {
-      corps.push(big(t(X.maintenantQuestion)), lien(t(X.texteEtSources), 'fiche', { texte: n }));
+      corps.push(big(t(X.maintenantQuestion)), n !== null && tx ? lien(t(X.texteEtSources), 'fiche', { texte: n }) : null);
       suivant = btn1(X.jouer, 'rev-jouer');
     }
     bas.push(suivant);
-    return ecranTel(corps, bas, { soir: true, croix: true, aria: 'Révélation' });
+    return ecranTel(corps, bas, { soir: true, croix: true, aria: t(X.revelationAria) });
   }
 
-  /* ---- Le Cercle ---- */
+  /* ---- L'avis du cercle (§7.14 ; forme : §7.23 B) ---- */
 
-  /** Titres de la dernière semaine tombée, par membre (§7.1 : 4.2, 4.3). */
-  function titresSemaine() {
-    var k = K(), d = null;
-    if (k >= 14) { d = R().seances[14].dimanche; } else if (k >= 7) { d = R().seances[7].dimanche; }
-    var t2 = {};
-    M.MEMBRES.forEach(function (m) { t2[m] = []; });
-    if (!d) { return { titres: t2, dimanche: null }; }
-    if (d.devin.titulaire) { t2[d.devin.titulaire].push('Le Devin'); }
-    if (d.mystere.titulaire) { t2[d.mystere.titulaire].push('Le Mystère'); }
-    d.fidele.titulaires.forEach(function (m) { t2[m].push('Le Fidèle'); });
-    return { titres: t2, dimanche: d };
+  function partEnMots(c, total) {
+    if (c === 0) { return X.avisPart.aucune; }
+    if (c === total) { return X.avisPart.toutes; }
+    if (2 * c === total) { return X.avisPart.moitie; }
+    if (2 * c > total) { return X.avisPart.plupart; }
+    if (4 * c < total) { return X.avisPart.peu; }
+    return X.avisPart.partie;
   }
-  function membresTous() { return PERSOS.concat(['porteur']); }
-  /** « Encore flou : » suivi de tous les membres, séparés par des virgules seules (§5.4 ; maquettes 1.15, 4.2, 5.9). */
-  function encoreFlou() { return tp(X.encoreFlou(PERSOS.concat(['{pseudo}']).join(', '))); }
+  function avisCercle(a) {
+    var total = a.comptes.reduce(function (s, x) { return s + x; }, 0);
+    var cumul = 0;
+    var rangs = X.POSITIONS.map(function (lib, i) {
+      var c = a.comptes[i];
+      var g = cumul;
+      cumul += c;
+      var milieu = a.milieu.indexOf(i + 1) >= 0;
+      var piste = h('span', { class: 'piste' });
+      if (c > 0) {
+        var b = h('i', { class: 'part' });
+        // Fractions exactes ; une frontière commune à deux barres tombe au même endroit (§7.23 B).
+        b.style.left = (100 * g / total) + '%';
+        b.style.width = (100 * c / total) + '%';
+        piste.appendChild(b);
+      }
+      // Le libellé et son double en gras, invisible, dans la même case : la colonne prend la largeur
+      // du plus large libellé composé en gras, quel que soit celui qui l'est (§7.23 B).
+      var etiquette = h('span', { class: 'lib' + (c === 0 ? ' vide' : '') + (milieu ? ' mediane' : '') }, h('span', null, t(lib)), h('span', { class: 'fantome' }, t(lib)));
+      // Rangée explicite : le fil occupe la colonne des barres sur les cinq rangées.
+      etiquette.style.gridRow = String(i + 1); piste.style.gridRow = String(i + 1);
+      etiquette.style.gridColumn = '1'; piste.style.gridColumn = '2';
+      return [etiquette, piste];
+    });
+    var milieu = a.milieu.length === 2 ? X.avisMilieuEntre(position(a.milieu[0]).toLowerCase(), position(a.milieu[1]).toLowerCase()) : position(a.milieu[0]).toLowerCase();
+    var aria = t(X.avisAria(a.comptes.map(function (c) { return partEnMots(c, total); }), milieu));
+    // La légende du fil est la sixième rangée de la même grille : elle se centre sous le fil (§7.14).
+    var graphe = h('div', { class: 'escalier', role: 'img', 'aria-label': aria },
+      rangs, h('span', { class: 'fil-zone', 'aria-hidden': 'true' }, h('i', { class: 'fil' })),
+      h('span', { class: 'legende-milieu', 'aria-hidden': 'true' }, t(X.milieuDesReponses)));
+    // Les libellés dessinés ne sont pas lus une seconde fois : l'image a son nom.
+    Array.prototype.forEach.call(graphe.querySelectorAll('.lib'), function (x) { x.setAttribute('aria-hidden', 'true'); });
+    return h('div', { class: 'box avis' }, h('div', { class: 'ttl' }, t(X.avisLigne[a.ligne])), graphe);
+  }
+
+  /* ---- Le Cercle (4.2, §7.16), l'écran d'un proche (4.3) ---- */
+
+  function titresLibelles(codes) { return X.ORDRE_TITRES.filter(function (c) { return codes.indexOf(c) >= 0; }).map(function (c) { return X.TITRES[c]; }); }
+  function temperamentsLibelles(codes) { return X.ORDRE_TEMPERAMENTS.filter(function (c) { return codes.indexOf(c) >= 0; }).map(function (c) { return X.TEMPERAMENTS[c]; }); }
+
+  /** Les curseurs que le porteur voit le jour j : les siens (accélérés), et ceux des personnages. */
+  function curseurDe(j, m, code) { return m === PORTEUR ? Rj(j).portrait.tensions[code] : Rj(j).curseurs_vus[m][code]; }
+  /** Son rond est-il posé sur au moins une barre du Cercle (note du portrait accéléré, §7.15) ? */
+  function rondPorteurPose(j) { return ['S', 'P', 'T', 'L'].some(function (c) { return Rj(j).portrait.tensions[c].net; }); }
+
+  /** Deux ronds dont les centres sont plus proches que cette part de la barre se chevauchent (rond de 24 px, barre d'environ 270 px). */
+  var CHEVAUCHEMENT = 0.09;
+  function barreCercle(j, i) {
+    var code = X.T8[i].code;
+    var membres = cal.membres;
+    var nets = [], flous = [];
+    membres.forEach(function (m) {
+      var cur = code ? curseurDe(j, m, code) : null;
+      if (cur && cur.net) { nets.push({ m: m, c: frac(cur.c).pourDessiner(), cur: cur }); } else { flous.push(m); }
+    });
+    var track = h('div', { class: 'track barre-cercle' });
+    // Deux ronds trop proches : l'un passe au-dessus du fil, l'autre dessous ; l'ordre de gauche à droite est gardé (§7.16).
+    var tries = nets.slice().sort(function (a, b) { return a.c - b.c; });
+    var niveaux = [];
+    tries.forEach(function (x, k) {
+      if (k > 0 && x.c - tries[k - 1].c < CHEVAUCHEMENT) {
+        if (!niveaux[k - 1]) { niveaux[k - 1] = 'haut'; }
+        niveaux[k] = niveaux[k - 1] === 'haut' ? 'bas' : 'haut';
+      } else { niveaux[k] = ''; }
+    });
+    tries.forEach(function (x, k) {
+      var e = h('span', { class: 'ini' + (niveaux[k] ? ' ' + niveaux[k] : '') }, initiale(x.m));
+      e.style.left = (x.c * 100) + '%';
+      track.appendChild(e);
+    });
+    if (niveaux.some(function (x) { return x; })) { track.classList.add('etagee'); }
+    var entre = code ? X.POLES_PHRASE[code][2] : X.T8[i].poles[0] + ' et ' + X.T8[i].poles[1];
+    var aria = X.barreCercleAria(entre, nets.map(function (x) { return nomMembre(x.m) + ', ' + lectureCurseur(code, x.cur); }), flous.map(nomMembre));
+    return h('div', { class: 'slider', role: 'img', 'aria-label': t(aria) }, h('div', { class: 'poles', 'aria-hidden': 'true' }, h('span', null, t(X.T8[i].poles[0])), h('span', null, t(X.T8[i].poles[1]))),
+      track, flous.length ? h('div', { class: 'small', 'aria-hidden': 'true' }, tp(X.encoreFlou(flous.map(nomOuMarque).join(', ')))) : null);
+  }
 
   function eCercle() {
-    var ts = titresSemaine();
-    var visages = membresTous().map(function (m) {
-      var legende = ts.titres[m].map(t);
-      if (m === 'porteur') { return dot(initiale(m), '', pseudo(), legende); }
-      return dot(m.charAt(0), '', m, legende, '', 'proche', { membre: m }, [m].concat(legende).join(', '));
+    var j = jourAffiche(), r = Rj(j);
+    var visages = cal.membres.map(function (m) {
+      var legende = titresLibelles(r.cercle.titres[m] || []).concat(m === PORTEUR ? [] : temperamentsLibelles(r.cercle.temperaments[m] || [])).map(t);
+      if (m === PORTEUR) { return dot(initiale(m), '', pseudo(), legende, '', 'mon-visage', null, [pseudo()].concat(legende).join(', ')); }
+      return dot(initiale(m), '', m, legende, '', 'proche', { membre: m }, [m].concat(legende).join(', '));
     });
-    var corps = [hd(h('button', { type: 'button', class: 'plain hd-gauche', action: 'absent' }, t(X.cercleTete)),
+    var corps = [hd(h('button', { type: 'button', class: 'plain hd-gauche', action: 'absent' }, t(X.cercleTete(cal.nomCercle))),
       h('button', { type: 'button', class: 'plain right', action: 'absent' }, t(X.inviter))), faces(visages)];
-    if (ts.dimanche && ts.dimanche.surprise.texte) {
-      corps.push(h('div', { class: 'box' }, h('div', { class: 'p' }, h('b', null, t(X.surpriseEncadre)), ' ' + t(scelle.textes[ts.dimanche.surprise.texte].titre))));
+    if (r.cercle.surprise) {
+      // L'encadré n'ouvre rien (§7.16).
+      corps.push(h('div', { class: 'box' }, h('div', { class: 'p' }, h('b', null, t(X.surpriseEncadre)), ' ' + t(titreDe(r.cercle.surprise)))));
     }
     corps.push(label(t(X.ouChacun)));
-    for (var i = 0; i < 8; i++) {
-      corps.push(h('div', { class: 'slider' }, poles(i), h('div', { class: 'track' }), small(encoreFlou())));
-    }
+    for (var i = 0; i < 8; i++) { corps.push(barreCercle(j, i)); }
     corps.push(lien(t(X.titresPassesLien), 'titres-passes'));
     return ecranTel(corps, [tabbar(1)]);
   }
 
   function eProche(m) {
-    var k = K(), r = R().seances[k];
-    var ts = titresSemaine();
-    var tit = ts.titres[m];
-    var corps = [back(X.leCercle, 'retour'), faces([dot(m.charAt(0), 'L', m, tit.length ? t(X.titreCetteSemaine(N.listeEt(tit))) : null)]),
+    var j = jourAffiche(), r = Rj(j);
+    var tit = titresLibelles(r.cercle.titres[m] || []);
+    var corps = [back(X.leCercle, 'retour'), faces([dot(initiale(m), 'L', m, tit.length ? t(X.titreCetteSemaine(N.listeEt(tit))) : null)]),
       small(t('● ' + X.legendeToi) + '   ' + t('◎ ' + m))];
-    for (var i = 0; i < 8; i++) {
+    // D'abord les tensions où vous êtes nets tous les deux, puis les autres, chaque groupe dans l'ordre fixe (maquette 4.3).
+    var ordre = [0, 1, 2, 3, 4, 5, 6, 7];
+    var deuxNets = function (i) { var c = X.T8[i].code; return !!c && curseurDe(j, PORTEUR, c).net && curseurDe(j, m, c).net; };
+    ordre.filter(deuxNets).concat(ordre.filter(function (i) { return !deuxNets(i); })).forEach(function (i) {
       var code = X.T8[i].code;
-      if (code) { corps.push(overlay(i, r.portrait.tensions[code], r.curseurs_vus[m][code])); }
-      else { corps.push(overlay(i, ECARTE, ECARTE)); }
-    }
-    var sur = r.surprises_proches[m];
+      var moi = code ? curseurDe(j, PORTEUR, code) : ECARTE, lui = code ? curseurDe(j, m, code) : ECARTE;
+      var aria = X.superpositionAria(ariaCurseur(i), lectureCurseur(code, moi), m, lectureCurseur(code, lui));
+      corps.push(h('div', { class: 'slider', role: 'img', 'aria-label': t(aria) }, poles(i), h('div', { class: 'track' }, marque(moi), marque(lui, true))));
+    });
+    var sur = r.surprises_proches[m] || [];
     if (sur.length) {
       corps.push(label(t(X.sesSurprises)));
       var montrees = temp.voirTout === m ? sur : sur.slice(0, 2);
       montrees.forEach(function (n) {
-        var manche = R().seances[+n + 1].manches.porteur;
+        var manche = Rj(cal.jourDeReponse(n) + 1).manches[PORTEUR];
         var c = manche.cartes.filter(function (x) { return x.auteur_compte === m; })[0];
         var rep = manche.possibles[c.auteur];
-        var tx = scelle.textes[n];
-        var raison = rep.raison === 'aucune' ? X.aucuneDesQuatreRaisons : X.raisonFinLigne(consideration(tx, rep.raison).texte);
+        var tx = texteDe(n);
         corps.push(h('button', { type: 'button', class: 'listrow', action: 'fiche', 'data-texte': n },
-          h('span', null, t(X.surpriseLigneTexte(tx.titre, position(rep.niveau), raison))), h('span', null, t(X.tuPensais(c.designe)))));
+          h('span', null, t(X.surpriseLigneTexte(tx.titre, position(rep.niveau), raisonEnLigne(tx, rep.raison)))), h('span', null, t(X.tuPensais(nomMembre(c.designe))))));
       });
       if (sur.length > 2 && temp.voirTout !== m) { corps.push(lien(t(X.voirTout), 'voir-tout', { membre: m })); }
     }
     return ecranTel(corps, [tabbar(1)]);
   }
 
-  function semainesTombees() { var k = K(), l = []; if (k >= 14) { l.push(2); } if (k >= 7) { l.push(1); } return l; }
-
+  /** Titres de chaque semaine tombée (5.5, 5.2) : R.titres, forme de calculerTitres. */
+  function semainesTombees() { return (R().titres || []).slice(); }
+  function titulairesDe(w) {
+    return { sans_faute: w.sans_faute || [], devin: w.devin && w.devin.titulaire ? [w.devin.titulaire] : [],
+      mystere: w.mystere && w.mystere.titulaire ? [w.mystere.titulaire] : [], fidele: w.fidele ? w.fidele.titulaires : [] };
+  }
   function eTitresPasses() {
     var corps = [back(X.leCercle, 'retour'), ttl(t(X.titresPassesTitre))];
-    var sem = semainesTombees();
-    if (!sem.length) { corps.push(p(t(X.pasDeTitreAvant))); }
-    sem.forEach(function (w) {
-      var d = R().seances[w === 1 ? 7 : 14].dimanche;
-      var nom = function (m) { return m === 'porteur' ? '{pseudo}' : m; };
-      corps.push(h('div', { class: 'listrow' }, h('span', null, t(X.semaine(w))),
-        h('span', null, tp(X.titresPassesLigne(d.devin.titulaire ? nom(d.devin.titulaire) : null, d.mystere.titulaire ? nom(d.mystere.titulaire) : null,
-          d.fidele.titulaires.length ? d.fidele.titulaires.map(nom).join(', ') : null)))));
+    semainesTombees().reverse().forEach(function (w) {
+      var tt = titulairesDe(w);
+      var parts = X.ORDRE_TITRES.filter(function (c) { return tt[c].length; }).map(function (c) {
+        return X.TITRES_COURTS[c] + ' : ' + tt[c].map(nomOuMarque).join(', ');
+      });
+      corps.push(h('div', { class: 'listrow' }, h('span', null, t(X.semaine(w.semaine))), h('span', null, tp(parts.join(' · ')))));
     });
     return ecranTel(corps, [tabbar(1)]);
   }
 
-  /* ---- Moi ---- */
+  /* ---- Moi (4.1, 5.11, 5.2, 5.3), fiche (5.4), réglages (5.7) ---- */
 
   function enteteMoi(courant) {
     var cibles = ['moi-portrait', 'moi-titres', 'moi-historique'];
@@ -861,67 +949,110 @@ var ElenchosInterface = (function (N, M, X) {
         return i === courant ? h('span', { class: 'on', 'aria-current': 'page' }, t(o)) : h('button', { type: 'button', class: 'plain', action: cibles[i] }, t(o));
       }))];
   }
-  function ordreMoi() {
-    var r = R().seances[K()];
-    return r.portrait.ordre_moi.map(function (c) { return { i: indexT8(c), cur: r.portrait.tensions[c] }; })
-      .concat(X.ECARTEES.map(function (i) { return { i: i, cur: ECARTE }; }));
+  /** La barre du portrait (§7.15 ; forme §7.23 C). */
+  function barrePortrait(j) {
+    var b = Rj(j).portrait.barre;
+    var longueur = frac(b.longueur).pourDessiner();
+    var avant = vue().barreVue !== undefined ? vue().barreVue : null;
+    // Arrondi au quart inférieur (§7.15), sur la fraction exacte.
+    var quart = Math.min(3, Math.floor(Number(frac(b.longueur).fois(4).n / frac(b.longueur).fois(4).d)));
+    var valeur = b.pleine ? X.barreValeurs[5] : (b.n === 0 ? X.barreValeurs[0] : X.barreValeurs[1 + quart]);
+    var fait = h('i', { class: 'fait' });
+    var depart = avant === null ? longueur : Math.min(avant, longueur);
+    fait.style.width = (depart * 100) + '%';
+    var chemin = h('span', { class: 'chemin' }, fait);
+    var e = h('div', { class: 'box barre-portrait' }, label(t(X.barreEtiquette)),
+      h('div', { class: 'barre-zone', role: 'img', 'aria-label': t(X.barreAria(valeur)) }, chemin, h('i', { class: 'borne' })));
+    if (depart < longueur) { animerBarre(fait, longueur); }
+    return { el: e, longueur: longueur, pleine: b.pleine };
+  }
+  function animerBarre(fait, longueur) {
+    var reduire = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduire) { fait.style.width = (longueur * 100) + '%'; return; }
+    window.setTimeout(function () { fait.classList.add('avance'); fait.style.width = (longueur * 100) + '%'; }, 150);
   }
   function eMoiPortrait() {
-    return ecranTel(enteteMoi(0).concat(ordreMoi().map(function (x) { return slider(x.i, x.cur); }), [small(t(X.portraitPasForme))]), [tabbar(2)]);
+    var j = jourAffiche(), r = Rj(j);
+    var bp = barrePortrait(j);
+    var tensions = r.portrait.tensions, ordre = r.portrait.ordre_moi;
+    var nets = ordre.filter(function (c) { return tensions[c].net; }), flous = ordre.filter(function (c) { return !tensions[c].net; });
+    var corps = enteteMoi(0).concat([bp.el]);
+    if (nets.length) {
+      // 4.1 : les curseurs nets, sans intitulé ; « Encore flous », les flous, puis les tensions écartées ; pas de phrase en bas.
+      nets.forEach(function (c) { corps.push(slider(indexT8(c), tensions[c])); });
+      corps.push(label(t(X.encoreFlous)));
+      flous.forEach(function (c) { corps.push(slider(indexT8(c), tensions[c])); });
+      X.ECARTEES.forEach(function (i) { corps.push(slider(i, ECARTE)); });
+    } else {
+      // 5.11 : les huit curseurs, puis la phrase validée.
+      ordre.forEach(function (c) { corps.push(slider(indexT8(c), tensions[c])); });
+      X.ECARTEES.forEach(function (i) { corps.push(slider(i, ECARTE)); });
+      corps.push(small(t(X.portraitPasForme)));
+    }
+    return ecranTel(corps, [tabbar(2)]);
   }
   function eMoiTitres() {
     var corps = enteteMoi(1);
-    var sem = semainesTombees(), lignesT = [];
-    sem.forEach(function (w) {
-      var d = R().seances[w === 1 ? 7 : 14].dimanche, l = [];
-      if (d.devin.titulaire === 'porteur') { l.push('Le Devin'); }
-      if (d.mystere.titulaire === 'porteur') { l.push('Le Mystère'); }
-      if (d.fidele.titulaires.indexOf('porteur') >= 0) { l.push('Le Fidèle'); }
-      if (l.length) { lignesT.push(h('div', { class: 'listrow' }, h('span', null, t(X.semaine(w))), h('span', null, t(X.titresMoi(l.join(', ')))))); }
+    var essai = semainesTombees().filter(function (w) { return cal.semainesEssai.indexOf(w.semaine) >= 0; });
+    var lignesT = [];
+    essai.slice().reverse().forEach(function (w) {
+      var tt = titulairesDe(w);
+      var l = X.ORDRE_TITRES.filter(function (c) { return tt[c].indexOf(PORTEUR) >= 0; }).map(function (c) { return X.TITRES[c]; });
+      if (l.length) { lignesT.push(h('div', { class: 'listrow' }, h('span', null, t(X.semaine(w.semaine))), h('span', null, t(X.titresMoi(l.join(', '), cal.nomCercle))))); }
     });
     if (lignesT.length) { corps = corps.concat(lignesT); }
-    else { corps.push(p(t(sem.length ? X.pasDeTitreApres : X.pasDeTitreAvant))); }
+    else { corps.push(p(t(essai.length ? X.pasDeTitreApres : X.pasDeTitreAvant))); }
     return ecranTel(corps, [tabbar(2)]);
   }
   function eMoiHistorique() {
-    var corps = enteteMoi(2), k = K();
-    for (var n = Math.min(k, 14); n >= 1; n--) {
-      var rep = etat.seances[n].coups.reponse;
-      if (!rep) { continue; }
-      var revele = n + 2 <= k && n <= 13;
-      var droite = revele ? position(rep.niveau) : X.historiqueRevele(position(rep.niveau), jourDeSeance(n + 2));
-      corps.push(h('button', { type: 'button', class: 'listrow', action: 'fiche', 'data-texte': String(n) },
-        h('span', null, t(X.historiqueGauche(jourDeSeance(n), scelle.textes[String(n)].titre))), h('span', null, t(droite))));
+    var corps = enteteMoi(2), e = etat(), k = K();
+    for (var j = Math.min(k, cal.dernierJeu); j >= cal.premier; j--) {
+      var d = jourE(e, j);
+      if (!d || !d.coups.reponse) { continue; }
+      var n = cal.ligne(j).repondu;
+      var revele = j + 2 <= k;
+      var droite = revele ? position(d.coups.reponse.niveau) : X.historiqueRevele(position(d.coups.reponse.niveau), nomJourApres(j, 2));
+      corps.push(h('button', { type: 'button', class: 'listrow', action: 'fiche', 'data-texte': n },
+        h('span', null, t(X.historiqueGauche(nomJour(j), texteDe(n).titre))), h('span', null, t(droite))));
     }
+    // Les textes d'entrée, en bas, le plus ancien en bas (E6, §7.1).
+    cal.textesEntree.slice().reverse().forEach(function (En) {
+      var rep = reponsePorteur(En);
+      if (!rep) { return; }
+      corps.push(h('button', { type: 'button', class: 'listrow', action: 'fiche', 'data-texte': En },
+        h('span', null, t(X.historiqueEntree(texteDe(En).titre))), h('span', null, t(position(rep.niveau)))));
+    });
     return ecranTel(corps, [tabbar(2)]);
   }
 
+  /** Le texte n est-il révélé au porteur à ce point de la partie ? */
+  function estRevele(n) {
+    if (cal.textesEntree.indexOf(n) >= 0) { return true; }
+    return cal.jourDeReponse(n) + 2 <= K();
+  }
   function eFiche(n, options) {
     options = options || {};
-    var tx = scelle.textes[n], k = K();
-    var revele = options.texte14 || (+n + 2 <= k && +n <= 13);
-    var sigles = siglesTexte(tx);
-    var rep = etat.seances[+n] ? etat.seances[+n].coups.reponse : null;
-    var corps = [back(X.retour, options.texte14 ? 'absent' : 'retour'), ttl(t(tx.titre))];
-    if (revele && !options.texte14) { corps.push(small(t(X.revele(jourDeSeance(+n + 2))))); }
+    var tx = texteDe(n);
+    var entree = cal.textesEntree.indexOf(n) >= 0;
+    var revele = options.dernier || estRevele(n);
+    var j = entree ? null : cal.jourDeReponse(n);
+    var rep = reponsePorteur(n);
+    var corps = [back(X.retour, options.dernier ? 'absent' : 'retour'), ttl(t(tx.titre))];
+    if (revele && !options.dernier && !entree) { corps.push(small(t(X.revele(nomJourApres(j, 2))))); }
     corps.push(lignes(tx.lignes.map(t)));
-    if (rep) {
-      var raison = rep.raison === 'aucune' ? X.aucuneDesQuatreRaisons : X.raisonFinLigne(consideration(tx, rep.raison).texte);
-      corps.push(h('div', { class: 'p' }, h('b', null, t(X.taReponse)), ' ' + t(position(rep.niveau) + ' · ' + raison)));
-    }
+    if (rep) { corps.push(h('div', { class: 'p' }, h('b', null, t(X.taReponse)), ' ' + t(position(rep.niveau) + ' · ' + raisonEnLigne(tx, rep.raison)))); }
     if (!revele) {
-      corps.push(p(t(X.voteEtAuteurs(jourDeSeance(+n + 2)))));
+      corps.push(p(t(X.voteEtAuteurs(nomJourApres(j, 2)))));
       return ecranTel(corps, [tabbar(ongletCourant())]);
     }
-    var voteLigne = tx.vote.issue === 'sans_vote_ensemble' ? joindre('Vote : ni adopté ni rejeté.', X.articleUnique(dateVote(tx)))
-      : joindre('Vote : ' + (tx.vote.issue === 'adopte' ? 'adopté' : 'rejeté') + ' le ' + dateVote(tx) + '.', etapeVote(tx));
-    var vt = t(voteLigne);
-    corps.push(h('div', { class: 'p' }, h('b', null, t(X.vote)), avecSigles(vt.slice(t(X.vote).length), [])));
-    corps.push(h('div', { class: 'p' }, avecSigles(t(proposePar(tx, '5.4')), sigles)));
+    var vt = t(ligneVote54(tx)), tete = t(X.voteTete);
+    corps.push(h('div', { class: 'p' }, h('b', null, tete), vt.slice(tete.length)));
+    corps.push(h('div', { class: 'p' }, phraseElus(proposePar(tx, '5.4'))));
     corps.push(label(t(X.quatreRaisons)));
     tx.considerations.forEach(function (c) {
+      var dep = c.depute;
       corps.push(h('div', { class: 'listrow' }, h('span', null, t(X.raisonFinLigne(c.texte))),
-        h('span', null, avecSigles(t(c.depute.nom + ', ' + c.depute.groupe), [c.depute.groupe]))));
+        h('span', null, h('span', { class: 'insecable' }, t(dep.nom)), h('br'), insecables(t(dep.groupe === null ? X.sansGroupeListe : dep.groupe), [], dep.groupe ? [dep.groupe] : []))));
     });
     if (tx.sources.length === 1) {
       corps.push(h('a', { class: 'link', href: tx.sources[0], target: '_blank', rel: 'noopener noreferrer' }, t(X.sources)));
@@ -932,32 +1063,31 @@ var ElenchosInterface = (function (N, M, X) {
       })));
     }
     var bas = [h('a', { class: 'btn1', href: tx.lien_scrutin, target: '_blank', rel: 'noopener noreferrer' }, t(X.voirScrutin))];
-    if (!options.texte14) { bas.push(tabbar(ongletCourant())); }
+    if (!options.dernier) { bas.push(tabbar(ongletCourant())); }
     return ecranTel(corps, bas);
   }
-
   function eReglages() {
+    var c = jourE(etat(), cal.premier).coups.compte;
     return ecranTel([
       back(X.moi, 'retour'), ttl(t(X.reglagesTitre)),
       label(t(X.compte)), h('div', { class: 'listrow' }, h('span', null, t(X.champPseudo)), h('span', null, pseudo())),
-      h('div', { class: 'listrow' }, h('span', null, t(X.champEmail)), h('span', null, X.emailDessine)),
-      label(t(X.cercles)), h('div', { class: 'listrow' }, h('span', null, t(X.CERCLE)), h('button', { type: 'button', class: 'plain', action: 'absent' }, t(X.cerclesActions))),
+      h('div', { class: 'listrow' }, h('span', null, t(X.connexion)), h('span', null, c ? X.connexionValeur[c] : '')),
+      label(t(X.cercles)), h('div', { class: 'listrow' }, h('span', null, t(cal.nomCercle)), h('button', { type: 'button', class: 'plain', action: 'absent' }, t(X.cerclesActions))),
       label(t(X.message18hTitre)), h('button', { type: 'button', class: 'toggle', action: 'absent', role: 'switch', 'aria-checked': 'true' }, h('span', null, t(X.recevoirMessage)), h('i', { 'aria-hidden': 'true' })),
       label(t(X.tesDonnees)), lien(t(X.quiDureeDroits), 'droits'), rule(), lien(t(X.toutEffacer), 'effacer')
     ], [tabbar(2)]);
   }
 
   function ongletCourant() {
-    var pile = etat.vue.tel.pile;
-    var base = pile.length ? pile[0].ecran : etat.vue.tel.ecran;
+    var v = vue().tel;
+    var base = v.pile.length ? v.pile[0].ecran : v.ecran;
     if (/^(cercle|proche|titres-passes)$/.test(base)) { return 1; }
     if (/^(moi-|reglages)/.test(base)) { return 2; }
     return 0;
   }
 
-  /** L'écran du téléphone que désigne la vue gardée. */
   function rendreTelephone() {
-    var v = etat.vue.tel, e = v.ecran;
+    var v = vue().tel, e = v.ecran;
     switch (e) {
       case '1.1': return e11();
       case '1.2': return e12(v.E);
@@ -967,11 +1097,15 @@ var ElenchosInterface = (function (N, M, X) {
       case '1.6': return e16(v.E);
       case '1.7': return e17();
       case '1.8': return e18();
+      case '1.8b': return e18b();
       case '1.9': return e19();
-      case 'repondre': return eRepondre();
-      case 'raison': return eRaison();
-      case 'attente': return eAttente();
       case 'deviner': return eDeviner();
+      case 'repondre': return eRepondre();
+      case 'raison': return eRaison(false);
+      case 'attente': return eAttente();
+      case 'ratt-position': return eRattPosition();
+      case 'ratt-raison': return eRaison(true);
+      case 'ratt-attente': return eRattAttente();
       case 'verrou': return eVerrou();
       case 'revelation': return eRevelation();
       case 'cercle': return eCercle();
@@ -980,72 +1114,161 @@ var ElenchosInterface = (function (N, M, X) {
       case 'moi-portrait': return eMoiPortrait();
       case 'moi-titres': return eMoiTitres();
       case 'moi-historique': return eMoiHistorique();
-      case 'fiche': return eFiche(v.texte, { texte14: v.texte14 });
+      case 'fiche': return eFiche(v.texte, { dernier: v.dernier });
       case 'reglages': return eReglages();
     }
     throw new Error('écran inconnu : ' + e);
   }
 
   /* ================================================================== */
-  /* Le cadre : barre, bande, pages (§8.1 à §8.10)                      */
+  /* Le cadre : barre, bande, pages (§8)                                */
   /* ================================================================== */
 
-  var bande = { note: null, confirmation: false, passage: false, messageCopie: null };
-
-  function libelleJour() {
-    if (etat.arret) { return X.barreArret(etat.arret.k); }
-    var k = K();
-    if (k === 0) { return X.barreEntree; }
-    if (k === 15) { return X.barreCloture; }
-    return X.barreJour(k, jourDeSeance(k));
+  function momentArret() { var e = etat(); return CR.moment(cal, E.journal(e, cal, socle.empreinte()), E.K(e)); }
+  function libelleBarre() {
+    var e = etat();
+    if (!e) { return X.barreDebut; }
+    var v = vue(), c = v.cadre;
+    if (e.arret || v.arretEnCours) {
+      var m = momentArret();
+      return m.quoi === 'entree' ? X.barreArretEntree : (m.quoi === 'saut' ? X.barreArretSaut(m.n) : X.barreArretJour(m.k));
+    }
+    if (c && (c.page === 'message0' || c.page === 'arrivee')) { return X.barreDebut; }
+    if (c && c.page === 'saut') { return X.barreSaut(cal.sautDuJour(K()).numero); }
+    var r = E.rattrapage(e, cal);
+    if (r) { return X.barreRattrapage(r.numero, r.rang, r.total); }
+    if (cal.estCloture(K())) { return X.barreCloture; }
+    return X.barreJour(K(), nomJour(K()));
   }
-
   function rendreBarre() {
-    var pageCadre = !!etat.vue.cadre;
-    var k = K();
-    var gauche = h('div', { class: 'barre-gauche' }, h('div', { class: 'barre-jour' }, t(libelleJour())));
-    if (!pageCadre && !etat.arret && k <= 14) { gauche.appendChild(h('button', { type: 'button', class: 'barre-arret', action: 'arreter' }, t(X.arreterLEssai))); }
-    var droite = (!pageCadre && !etat.arret) ? h('button', { type: 'button', class: 'bouton-cadre barre-qui', action: 'qui-est-qui' }, t(X.quiEstQuiBouton)) : null;
+    var e = etat();
+    var v = e ? vue() : null;
+    var pageCadre = !e || !!v.cadre;
+    var gauche = h('div', { class: 'barre-gauche' }, h('div', { class: 'barre-jour' }, t(libelleBarre())));
+    var enJeu = e && !pageCadre && !e.arret && !e.fin && !v.arretEnCours;
+    if (enJeu && K() <= cal.dernierJeu) { gauche.appendChild(h('button', { type: 'button', class: 'barre-arret', action: 'arreter' }, t(X.arreterLEssai))); }
+    var droite = enJeu ? h('button', { type: 'button', class: 'bouton-cadre barre-qui', action: 'qui-est-qui' }, t(X.quiEstQuiBouton)) : null;
     return h('header', { class: 'barre' }, gauche, droite);
   }
 
+  /** Les écrans qui montrent un curseur du porteur (§7.15, signalement). */
+  function montreCurseurPorteur() {
+    var v = vue().tel, e = v.ecran;
+    if (e === '1.7' || e === 'moi-portrait' || e === 'proche') { return true; }
+    if (e === 'cercle') { return rondPorteurPose(jourAffiche()); }
+    if (e === 'revelation') {
+      var k = K(), seq = sequenceRevelation(k), el = seq[Math.min(jourE(etat(), k).page.rev.i, seq.length - 1)];
+      return el.type === 'phrase' && !!Rj(k).dimanche.phrase_semaine.tension;
+    }
+    return false;
+  }
   function noteDurable() {
-    if (etat.vue.cadre) { return null; }
-    var e = etat.vue.tel.ecran;
-    if (e === '1.8') { return estPrenom(formaterPseudo(temp.saisie || '')) && formaterPseudo(temp.saisie || '') ? X.notePrenom : X.noteCompte(appareil); }
-    if (K() === 1 && journeeFinie()) { return X.note18h; }
-    if (etat.vue.tel.texte14) { return X.noteTexte14; }
+    var e = etat(), v = vue();
+    if (v.cadre) { return null; }
+    var ec = v.tel.ecran;
+    if (ec === '1.8' || ec === '1.8b' || ec === '1.9') {
+      var mot = ec === '1.8' ? motifRefus(pseudoSaisi()) : null;
+      if (mot === 'prenom') { return X.notePrenom; }
+      if (mot === 'rond') { return X.noteRond; }
+      return X.noteCompte(appareil);
+    }
+    if (v.noteSaut && (ec === 'verrou' || (ec === 'revelation' && elementCourant().type === 'carte') || (ec === 'revelation' && elementCourant().type === 'vote'))) {
+      return X.noteApresSaut(X.nombresEnLettres[v.noteSaut.jours] || String(v.noteSaut.jours));
+    }
+    if (ec === 'fiche' && v.tel.dernier) { return X.noteDernierTexte; }
+    if (montreCurseurPorteur()) { return X.noteAccelere(facteurEnLettres()); }
+    if (cal.estArrivee(K()) && E.journeeFinie(e, cal, K())) { return X.note18h; }
     return null;
   }
+  function elementCourant() { var k = K(), seq = sequenceRevelation(k); return seq[Math.min(jourE(etat(), k).page.rev.i, seq.length - 1)]; }
 
   function bouton(libelle, action, options) {
     options = options || {};
     return h('button', { type: 'button', class: 'bouton-cadre' + (options.avant ? ' avant' : '') + (options.desactive ? ' desactive' : ''), action: options.desactive ? null : action,
-      'aria-disabled': options.desactive ? 'true' : null }, t(libelle));
+      'aria-disabled': options.desactive ? 'true' : null, 'aria-label': options.aria || null }, t(libelle));
+  }
+  function lienCadre(libelle, action) { return h('button', { type: 'button', class: 'lien-cadre', action: action }, t(libelle)); }
+
+  /** Phrase de perte de « Abandonner cette journée » (§8.1 bis). */
+  function phrasePerte() {
+    var e = etat(), k = K(), d = jourE(e, k);
+    var l = [];
+    if (revelationPresente(k)) {
+      var seq = sequenceRevelation(k), rv = d.page.rev || { max: -1 };
+      if (rv.max < seq.length - 1) {
+        var iTitres = -1, iPhrase = -1;
+        seq.forEach(function (x, i) {
+          if (iTitres < 0 && ['sans_faute', 'devin', 'mystere', 'fidele', 'surprise'].indexOf(x.type) >= 0) { iTitres = i; }
+          if (x.type === 'phrase') { iPhrase = i; }
+        });
+        if (Rj(k).dimanche && iTitres >= 0 && rv.max < iTitres) { l.push(X.perteRevelationTitres); }
+        else if (Rj(k).dimanche && iPhrase >= 0 && rv.max < iPhrase) { l.push(X.perteRevelationPhrase); }
+        else { l.push(X.perteRevelation); }
+      }
+    }
+    var dv = d.coups.deviner;
+    if (cal.ligne(k).deviner_porteur && dv === null) { l.push(X.perteDevinerJamais); }
+    else if (dv && !dv.validee) {
+      var n = dv.cartes.length;
+      var sans = dv.cartes.filter(function (c) { return personnages().indexOf(c.designe) < 0; }).length;
+      if (sans === n) { l.push(X.perteAucunVisage(n)); }
+      else if (sans > 0) { l.push(X.perteCertainsVisages(sans)); }
+      else { l.push(X.perteTousVisages); }
+    } else {
+      l.push(temp.position && temp.jour === k ? X.perteReponsePosition : X.perteReponse);
+    }
+    return l.join(' ');
   }
 
   function rendreBande() {
     var e = h('div', { class: 'bande' });
-    var cadre = etat.vue.cadre;
-    var actions = [];
-    var note = null;
+    var et = etat();
+    if (!et) {
+      // Page de la partie du premier essai (§8.2 A), avant tout état.
+      if (bande.ancienneConfirmation) {
+        e.appendChild(h('div', { class: 'note confirmation', role: 'alertdialog', 'aria-live': 'assertive' },
+          h('p', { class: 'fort' }, t(X.ancienneConfirmationTitre)), h('p', null, t(X.ancienneConfirmation)),
+          h('div', { class: 'actions' }, bouton(X.annuler, 'ancienne-annuler', { avant: true }), bouton(X.effacer, 'ancienne-confirmer'))));
+      } else {
+        e.appendChild(h('div', { class: 'actions' }, bouton(ancienneInfo && ancienneInfo.deuxParties ? X.effacerEtReprendre : X.effacerEtCommencer, 'ancienne-effacer', { avant: true })));
+      }
+      return e;
+    }
+    var v = vue(), cadre = v.cadre, actions = [], note = null;
     if (cadre) {
       if (bande.messageCopie && cadre.page === 'export') { note = bande.messageCopie; }
       actions = actionsPage(cadre);
     } else {
       note = bande.note || noteDurable();
       var k = K();
-      if (etat.vue.tel.texte14) { actions = [bouton(X.continuer, 'cloture-apres-14', { avant: true })]; }
-      else if (bande.confirmation) {
-        var s = seanceCourante();
-        var confirmation = h('div', { class: 'note confirmation', role: 'alertdialog', 'aria-live': 'assertive' },
-          h('p', { class: 'fort' }, t(X.confirmationQuestion(!mancheValidee(s) || (k >= 2 && aDesCartes() && !mancheValidee(s))))),
-          h('p', null, t(X.confirmationPhrase)),
-          h('div', { class: 'actions' }, bouton(X.annuler, 'confirmation-annuler'), bouton(X.ouiContinuer, 'confirmation-continuer')));
-        e.appendChild(confirmation);
+      var r = E.rattrapage(et, cal);
+      if (r) {
+        if (r.termine) { actions = [bouton(X.allerAuDimanche, 'aller-au-dimanche', { avant: true })]; }
+        else {
+          var pret = r.rang === r.repondus;
+          actions = [bouton(X.texteSuivantCadre, 'texte-suivant', { avant: pret, desactive: !pret, aria: pret ? null : t(X.texteSuivantIndisponible) })];
+        }
+      } else if (et.arret || et.fin || v.arretEnCours) {
+        actions = [];
+      } else if (v.tel.ecran === 'fiche' && v.tel.dernier) {
+        actions = [bouton(X.continuer, 'cloture-apres-dernier', { avant: true })];
+      } else if (cal.estPointDeSaut(k)) {
+        var rv = jourE(et, k).page.rev;
+        if (rv && rv.fin) { actions = [bouton(X.avancerAuDimanche, 'ouvrir-saut', { avant: true })]; }
+      } else if (cal.estJoue(k) && !(cal.estArrivee(k) && jourE(et, k).coups.compte === null)) {
+        if (bande.confirmation) {
+          e.appendChild(h('div', { class: 'note confirmation', role: 'alertdialog', 'aria-live': 'assertive' },
+            h('p', { class: 'fort' }, t(X.abandonnerQuestion)), h('p', null, t(phrasePerte())), h('p', null, t(X.abandonnerDefinitif)),
+            h('div', { class: 'actions' }, bouton(X.abandonner, 'abandon-confirmer'), bouton(X.annuler, 'abandon-annuler', { avant: true }))));
+          return e;
+        }
+        var finie = E.journeeFinie(et, cal, k);
+        var rangee = h('div', { class: 'actions rangee-jour' });
+        if (!finie) { rangee.appendChild(lienCadre(X.abandonnerJournee, 'abandonner')); }
+        rangee.appendChild(bouton(X.jourSuivant, 'jour-suivant', { avant: finie, desactive: !finie, aria: finie ? null : t(X.jourSuivantIndisponible) }));
+        if (note) { e.appendChild(h('div', { class: 'note', role: 'status' }, t(note))); }
+        e.appendChild(rangee);
         return e;
-      } else if (k >= 1 && k <= 14 && !etat.arret) {
-        actions = [bouton(X.jourSuivant, 'jour-suivant', { avant: journeeFinie() })];
       }
     }
     if (note) { e.appendChild(h('div', { class: 'note', role: 'status' }, t(note))); }
@@ -1058,110 +1281,31 @@ var ElenchosInterface = (function (N, M, X) {
   }
   function panneau() { return h('div', { class: 'panneau' }, Array.prototype.slice.call(arguments)); }
   function titrePage(s) { return h('h1', { class: 'titre-page', tabindex: '-1' }, s); }
-
   function choix(liste, choisi, action, extra) {
     return h('div', { class: 'choix', role: 'group' }, liste.map(function (x) {
-      var on = choisi === x.code;
+      var on = Array.isArray(choisi) ? choisi.indexOf(x.code) >= 0 : choisi === x.code;
       var b = h('button', { type: 'button', class: 'bouton-choix' + (on ? ' retenu' : ''), action: action, 'data-valeur': x.code, 'aria-pressed': on ? 'true' : 'false' },
         on ? h('span', { class: 'coche', 'aria-hidden': 'true' }, '✓ ') : null, t(x.libelle));
-      if (extra) { Object.keys(extra).forEach(function (k) { b.setAttribute('data-' + k, extra[k]); }); }
-      return b;
+      return donnees(b, extra);
     }));
   }
-  function libelles(ordre, table) { return ordre.map(function (c) { return { code: c, libelle: table[c] }; }); }
-
-  function pageCarnet(cadre) {
-    var s = seanceCourante(), k = s.k, c = s.coups.carnet;
-    var r = R().seances[k];
-    var faux = k === 0 ? ['E1', 'E2', 'E3'].filter(function (e) { return r.entree.textes[e].juste === false; }).length
-      : (r.mesures.revelation_verdicts ? r.mesures.revelation_verdicts.filter(function (v) { return v === 'faux'; }).length : 0);
-    var contenu = [titrePage(t(X.carnetTitre))];
-    if (faux >= 1) {
-      var o1 = X.ordreQ1.filter(function (x) { return x !== 'les_deux' || faux >= 2; });
-      contenu.push(panneau(h('p', { class: 'fort' }, t(X.q1)), choix(libelles(o1, X.choixQ1), c.q1, 'carnet-q', { q: 'q1' })));
-    }
-    if (k !== 15 && (k === 0 || (s.etapes && s.etapes.repondre))) {
-      contenu.push(panneau(h('p', { class: 'fort' }, t(k === 0 ? X.q2Entree : X.q2(texteDuJour(k).titre))), choix(libelles(X.ordreQ2, X.choixQ2), c.q2, 'carnet-q', { q: 'q2' })));
-    }
-    if (k !== 15) {
-      var o3 = M.choixQ3(k, s.etapes);
-      contenu.push(panneau(h('p', { class: 'fort' }, t(X.q3)), choix(libelles(o3, X.choixQ3), c.q3, 'carnet-q', { q: 'q3' })));
-    }
-    contenu.push(pied(true));
-    return contenu;
+  function libelles(codes, table) {
+    return codes.map(function (c) { var v = table[c]; return { code: c, libelle: typeof v === 'function' ? v(cal.invitant) : v }; });
   }
 
-  function pageMessage0() {
-    var m = X.message0(appareil);
-    return [panneau(h('h1', { class: 'titre-page', tabindex: '-1' }, t(m[0])), h('p', null, t(m[1])), h('ul', null, m[2].map(function (x) { return h('li', null, t(x)); }))), pied(true)];
-  }
-  function pageQuiEstQui() {
-    var cartes = PERSOS.map(function (pp) {
-      var f = scelle.personnages[pp];
-      return panneau(h('p', null, h('strong', null, pp), t(X.ficheTete('', f.age, f.metier, f.ville).slice(0))),
-        h('p', null, t(f.ligne_de_vie + ' ' + X.ficheHeure(N.heureEcrite(f.heure_de_jeu)) + (pp === scelle.cercle.inviteuse ? ' ' + X.ficheInviteuse : ''))));
-    });
-    return [titrePage(t(X.quiEstQuiTitre)), h('p', null, t(X.quiEstQuiEntete))].concat(cartes, [pied(true)]);
-  }
-  function pageDroits() {
-    return [titrePage(t(X.droitsTitre)), panneau(X.droits(appareil).map(function (x) { return h('p', null, t(x)); })), pied(true)];
-  }
-  function pageArretConfirmation() {
-    return [titrePage(t(X.arretConfirmationTitre)), h('p', null, t(X.arretConfirmation)), pied(true)];
-  }
-  function pageArretQuestions() {
-    var a = etat.arret;
-    var contenu = [titrePage(t(X.arretTete(a.k))), panneau(h('p', { class: 'fort' }, t(X.arretRaison)), choix(libelles(X.ordreArret, X.choixArret), a.raison, 'arret-raison'))];
-    if (a.k >= 3) { contenu.push(panneau(h('p', { class: 'fort' }, t(X.f2Arret)), choix(libelles(X.ordreF2, X.choixF2), a.f2, 'f2'))); }
-    contenu.push(pied(true));
-    return contenu;
-  }
-  function grilleF1(f1) {
-    return PERSOS.map(function (pp) {
-      var lignesF = ['S', 'P', 'T', 'L'].map(function (code) {
-        var poleL = X.T8[indexT8(code)].poles;
-        var v = f1 ? f1[pp][code] : null;
-        var rond = function (val, aria) {
-          var on = v === val;
-          return h('button', { type: 'button', class: 'rond-f1' + (on ? ' on' : ''), action: 'f1', 'data-membre': pp, 'data-tension': code, 'data-valeur': val,
-            role: 'radio', 'aria-checked': on ? 'true' : 'false', 'aria-label': t(pp + ' : ' + aria) }, on ? '●' : '○');
-        };
-        return h('div', { class: 'ligne-f1', role: 'radiogroup', 'aria-label': t(pp + ' : ' + poleL[0] + ' ou ' + poleL[1]) },
-          h('span', { class: 'pole-g' }, t(poleL[0])), h('span', { class: 'pole-d' }, t(poleL[1])),
-          h('span', { class: 'ronds' }, rond('pole0', poleL[0]), rond('milieu', X.auMilieu), rond('pole1', poleL[1])));
-      });
-      return panneau(h('p', { class: 'fort' }, pp), h('div', { class: 'au-milieu', 'aria-hidden': 'true' }, t(X.auMilieu)), lignesF);
-    });
-  }
-  function pageF1(enTete, f1) {
-    return [titrePage(t(enTete[0]))].concat(enTete.slice(1).map(function (x) { return h('p', null, t(x)); }), grilleF1(f1), [pied(true)]);
-  }
-  function pageClotureF2() {
-    return [titrePage(t(X.clotureTete)), panneau(h('p', { class: 'fort' }, t(X.f2Fin)), choix(libelles(X.ordreF2, X.choixF2), etat.fin.f2, 'f2')), pied(true)];
-  }
-  function pageExport(cadre) {
-    var texte = texteCarnetExport(cadre);
-    return [titrePage(t(X.exportTitre)), h('pre', { class: 'carnet', id: 'zone-carnet', tabindex: '-1', 'aria-label': 'Carnet de l’essai Elenchos' }, texte), pied(true)];
-  }
-  function pageEffacer(cadre) {
-    var apres = cadre.apres;
-    return [titrePage(t(X.effacerTitre)), h('p', null, t(apres ? X.effacerApres : X.effacerPendant)), pied(true)];
-  }
-
-  function actionsPage(cadre) {
-    switch (cadre.page) {
+  function actionsPage(c) {
+    switch (c.page) {
       case 'message0': return [bouton(X.continuer, 'message0-continuer', { avant: true })];
+      case 'arrivee': return [bouton(X.commencer, 'commencer', { avant: true })];
       case 'quiestqui': case 'droits': return [bouton(X.fermer, 'fermer-page')];
-      case 'carnet':
-        if (K() === 15) { return [bouton(X.continuer, 'cloture-apres-q1', { avant: true })]; }
-        return [bouton(X.annuler, 'carnet-annuler'), bouton(X.allerJourSuivant, 'aller-jour-suivant', { avant: true, desactive: bande.passage })];
+      case 'carnet': return [bouton(X.annuler, 'carnet-annuler'), bouton(X.allerJourSuivant, 'aller-jour-suivant', { avant: true, desactive: bande.passage })];
+      case 'saut': return [bouton(X.annuler, 'saut-annuler'), bouton(X.avancerAuDimanche, 'saut-confirmer', { avant: true })];
       case 'arret-confirmation': return [bouton(X.annuler, 'fermer-page'), bouton(X.arreterLEssai, 'arret-confirmer')];
       case 'arret-questions': return [bouton(X.continuer, 'arret-continuer', { avant: true })];
-      case 'arret-f1': return [bouton(X.continuer, 'f1-continuer', { avant: true }), bouton(X.sauterQuestion, 'f1-sauter')];
-      case 'cloture-f2': return [bouton(X.continuer, 'cloture-f2-continuer', { avant: true })];
-      case 'cloture-f1': return [bouton(X.continuer, 'f1-continuer', { avant: true })];
+      case 'cloture-questions': return [bouton(X.continuer, 'cloture-continuer', { avant: true })];
       case 'export':
-        if (cadre.copie) { return [bouton(X.copierCarnet, 'copier-carnet', { avant: true }), bouton(X.fermer, 'export-fermer')]; }
+        if (c.mode === 'jour') { return [bouton(X.copierCarnet, 'copier-carnet', { avant: true }), bouton(X.allerJourSuivant, 'aller-jour-suivant', { desactive: bande.passage })]; }
+        if (c.mode === 'dabord') { return [bouton(X.copierCarnet, 'copier-carnet', { avant: true }), bouton(X.fermer, 'export-fermer')]; }
         return [bouton(X.copierCarnet, 'copier-carnet', { avant: true }), bouton(X.voirDevoilement, 'voir-devoilement')];
       case 'devoilement': return [bouton(X.toutEffacer, 'effacer')];
       case 'effacer': return [bouton(X.annuler, 'fermer-page', { avant: true }), bouton(X.copierCarnetDabord, 'copier-dabord'), bouton(X.toutEffacer, 'effacer-confirmer')];
@@ -1169,19 +1313,200 @@ var ElenchosInterface = (function (N, M, X) {
     return [];
   }
 
+  /* ---- Pages du début (§8.2) ---- */
+
+  function pageAncienne() {
+    return [titrePage(t(X.ancienneTitre)), panneau(h('p', null, t(ancienneInfo && ancienneInfo.deuxParties ? X.ancienneTexteDeux(appareil) : X.ancienneTexte(appareil)))), pied(true)];
+  }
+  function pageMessage0() {
+    var m = X.message0(appareil);
+    return [panneau(h('h1', { class: 'titre-page', tabindex: '-1' }, t(m[0])), h('p', null, t(m[1])), h('ul', null, m[2].map(function (x) { return h('li', null, t(x)); }))), pied(true)];
+  }
+  function pageArrivee() {
+    return [titrePage(t(X.arriveeTitre(cal.nomCercle))),
+      panneau(h('p', null, t(X.arriveePanneau1(personnages(), cal.invitant)))),
+      panneau(h('h2', null, t(X.arriveeProgrammeTitre)), h('ul', null, X.arriveeProgramme.map(function (x) { return h('li', null, t(x)); })), h('p', null, t(X.arriveeDuree))),
+      panneau(h('h2', null, t(X.arriveePortraitTitre)), h('p', null, t(X.arriveePortrait(facteurEnLettres())))),
+      h('p', null, t(X.arriveeFin)), pied(true)];
+  }
+  function pageQuiEstQui() {
+    var cartes = personnages().map(function (pp) {
+      var f = scelle.personnages[pp];
+      return panneau(h('p', null, h('strong', null, pp), t(X.ficheTete(f.age, f.metier, f.ville))),
+        h('p', null, t(f.ligne_de_vie + ' ' + X.ficheHeure(N.heureEcrite(f.heure_de_jeu)) + (pp === cal.invitant ? ' ' + X.ficheInvitant : ''))));
+    });
+    return [titrePage(t(X.quiEstQuiTitre)), h('p', null, t(X.quiEstQuiEntete))].concat(cartes, [pied(true)]);
+  }
+  function pageDroits() { return [titrePage(t(X.droitsTitre)), panneau(X.droits(appareil).map(function (x) { return h('p', null, t(x)); })), pied(true)]; }
+
+  /* ---- Page du saut et sa frise (§8.1 ter) ---- */
+
+  function frise(numero) {
+    var cs = cal.saut(numero);
+    var semaines = cal.semainesEssai.filter(function (w) { return cal.semaine(w).premier_jour <= cs.reprise; });
+    var grille = h('div', { class: 'frise-grille' + (semaines.length > 1 ? ' deux' : '') });
+    if (semaines.length > 1) { grille.appendChild(h('span')); }
+    X.friseInitiales.forEach(function (x) { grille.appendChild(h('span', { class: 'frise-tete' }, x)); });
+    semaines.forEach(function (w) {
+      if (semaines.length > 1) { grille.appendChild(h('span', { class: 'frise-semaine' }, t(X.friseSemaine(cal.rangEssai(w))))); }
+      var sem = cal.semaine(w);
+      for (var d = sem.premier_jour; d <= sem.dernier_jour; d++) {
+        // Un jour joué (abandonné compris) : ● ; un jour où l'on répond seulement : ○ ; le dimanche de reprise : ● (§8.1 ter).
+        var repond = cal.estPointDeSaut(d) ? (cal.sautDuJour(d).numero <= numero) : cal.estSaute(d);
+        grille.appendChild(h('span', { class: 'frise-jour' }, repond ? '○' : '●'));
+      }
+    });
+    var derniere = cal.semaine(semaines[semaines.length - 1]);
+    var col = cs.reprise - derniere.premier_jour;
+    var fleche = h('div', { class: 'frise-grille fleche' + (semaines.length > 1 ? ' deux' : '') });
+    if (semaines.length > 1) { fleche.appendChild(h('span')); }
+    for (var i = 0; i < 7; i++) { fleche.appendChild(h('span', { class: 'frise-jour' }, i === col ? '↑' : '')); }
+    return h('div', { class: 'frise', role: 'img', 'aria-label': t(numero === 1 ? X.friseAria1 : X.friseAria2) },
+      grille, fleche, h('div', { class: 'frise-reprise' }, t(X.friseReprise)),
+      h('div', { class: 'frise-legende' }, h('span', null, t('● ' + X.friseLegendeJoue)), h('span', null, t('○ ' + X.friseLegendeRepond))));
+  }
+  function pageSaut() {
+    var numero = cal.sautDuJour(K()).numero;
+    var tx = numero === 1 ? X.sautTexte1 : X.sautTexte2;
+    return [titrePage(t(X.sautTitre)), panneau(frise(numero)),
+      panneau(h('p', null, t(tx.tete)), h('ul', null, tx.puces.map(function (x) { return h('li', null, t(x)); })), h('p', null, t(tx.fin))), pied(true)];
+  }
+
+  /* ---- Carnet du jour (§8.3) ---- */
+
+  function pageCarnet(c) {
+    var e = etat(), j = c.jour, d = jourE(e, j), q2 = d.coups.carnet;
+    var contenu = [titrePage(t(X.carnetTitre))];
+    var dimanche = cal.estDimanche(j);
+    var codes = J.choixMoment(cal, j, d.etapes);
+    contenu.push(panneau(h('p', { class: 'fort' }, t(dimanche ? X.momentPrefereDimanche : X.momentPrefere)),
+      choix(libelles(codes, X.choixMoment), q2.moment, 'carnet-q', { q: 'moment' })));
+    if (dimanche) {
+      if (cal.sauts.length && j === cal.sauts[0].reprise) {
+        contenu.push(panneau(h('p', { class: 'fort' }, t(X.questionSautClair)), choix(libelles(J.CODES.saut_clair, X.choixSautClair), q2.saut_clair, 'carnet-q', { q: 'saut_clair' })));
+      }
+      contenu.push(panneau(h('p', { class: 'fort' }, t(X.questionHesite)), h('p', { class: 'petit' }, t(X.questionHesiteSous)),
+        choix(libelles(J.CODES.hesite, X.choixHesite), q2.hesite || [], 'carnet-hesite')));
+      contenu.push(panneau(h('p', { class: 'fort' }, t(X.questionMomentSemaine)), choix(libelles(J.CODES.moment_semaine, X.choixMomentSemaine), q2.moment_semaine, 'carnet-q', { q: 'moment_semaine' })));
+    }
+    contenu.push(pied(true));
+    return contenu;
+  }
+
+  /* ---- Arrêt (§8.10), clôture (§8.5), export (S1 §8.7) ---- */
+
+  function pageArretConfirmation() { return [titrePage(t(X.arretConfirmationTitre)), h('p', null, t(X.arretConfirmation)), pied(true)]; }
+  function teteArret() {
+    var m = momentArret();
+    return m.quoi === 'entree' ? X.arretTeteEntree : (m.quoi === 'saut' ? X.arretTeteSaut(m.n) : X.arretTeteJour(m.k));
+  }
+  function pageArretQuestions(c) {
+    var contenu = [titrePage(t(teteArret())), panneau(h('p', { class: 'fort' }, t(X.arretRaison)), choix(libelles(J.CODES.arret, X.choixArret), c.raison, 'arret-raison'))];
+    if (K() >= J.JOUR_F2) { contenu.push(panneau(h('p', { class: 'fort' }, t(X.f2Arret)), choix(libelles(J.CODES.f2, X.choixF2), c.f2, 'arret-f2'))); }
+    contenu.push(pied(true));
+    return contenu;
+  }
+  function pageClotureQuestions(c) {
+    var codes = c.codes || {};
+    var contenu = [titrePage(t(X.clotureTete))];
+    X.questionsFin.forEach(function (x) {
+      var table = x.cle === 'f2' ? X.choixF2 : X.choixFin[x.cle];
+      contenu.push(panneau(h('p', { class: 'fort' }, t(x.q)), choix(libelles(J.CODES[x.cle], table), codes[x.cle] || null, 'fin-choix', { cle: x.cle })));
+    });
+    contenu.push(h('p', null, t(X.clotureApres)), pied(true));
+    return contenu;
+  }
+  function pageExport(c) {
+    var texte = c.texte || texteCarnetFinal();
+    return [titrePage(t(X.exportTitre)), h('pre', { class: 'carnet', id: 'zone-carnet', tabindex: '-1', 'aria-label': t(X.carnetAria) }, texte), pied(true)];
+  }
+  function pageEffacer(c) { return [titrePage(t(X.effacerTitre)), h('p', null, t(c.apres ? X.effacerApres : X.effacerPendant)), pied(true)]; }
+
+  /** Carnet final (fin ou arrêt), recalculé sur l'état gardé (§8.12). */
+  function texteCarnetFinal() {
+    var e = etat();
+    var j = E.journal(e, cal, socle.empreinte());
+    return CR.texte(scelle, cal, j, R(), E.fichierDurees(e, cal, socle.horloge()), { type: e.fin ? 'fin' : 'arret' });
+  }
+  /** Copie en cours d'essai (§8.12) : le carnet figé à ce toucher. Rend {texte, copie de la trace}. */
+  function faireCopie() {
+    var e = etat(), k = E.K(e);
+    var j = E.journal(e, cal, socle.empreinte());
+    var D = E.fichierDurees(e, cal, socle.horloge());
+    var texte = CR.texte(scelle, cal, j, R(), D, { type: 'copie' });
+    var d = j.jours[String(k)];
+    var cp = { coups: d.coups, etapes: d.etapes, jour: k, mesures: R().jours[String(k)].mesures,
+      sauts: j.sauts.map(function (s) { return { coups: s.coups, textes_atteints: s.textes_atteints }; }), texte: texte, versions: d.versions };
+    copiesDuChargement.push(JSON.parse(JSON.stringify(cp, function (cle, val) { return val instanceof N.Fraction ? val.toString() : val; })));
+    return texte;
+  }
+
+  /* ---- Dévoilement (§8.6) ---- */
+
+  function pageDevoilement() {
+    var contenu = [titrePage(t(X.devoilementTitre))];
+    contenu.push(panneau(h('p', null, t(X.devoilementOuverture))));
+    contenu.push(panneau(h('h2', null, t(X.commentLire)), h('p', null, t(X.commentLirePlace)), h('p', null, t(X.commentLireContreProfil)),
+      h('p', null, t(X.commentLireAbsences)), h('p', null, t(X.commentLireJour))));
+    var h86 = Object.keys(scelle.histoire.textes).filter(function (x) { return scelle.histoire.textes[x].fiche; })[0];
+    contenu.push(panneau(h('h2', null, t(X.histoireTitre)), h('p', null, t(X.histoireTextes(h86 ? titreDe(h86) : ''))),
+      h('p', null, t(X.histoireTirage(String(scelle.histoire.tirage)))), h('p', null, t(X.histoireFacteur(X.nombresEnLettres[scelle.reglage.facteur]))),
+      h('p', null, t(X.histoireHorsDePortee))));
+    var k = K();
+    personnages().forEach(function (pp) {
+      var f = scelle.personnages[pp];
+      var b = [h('h2', null, t(pp + ', ' + f.age + ' ans · ' + f.metier + ', ' + f.ville)), h('p', null, t(X.phraseProfil[pp] || X.A_ECRIRE))];
+      ['S', 'P', 'T', 'L'].forEach(function (code) {
+        var pl = X.T8[indexT8(code)].poles, pr = f.profil[code];
+        var lecture = pr.position >= 41 && pr.position <= 59 ? X.auMilieuProfil : (pr.position < 41 ? pl[0] : pl[1]);
+        b.push(h('p', null, t(X.ligneProfil(pl[0], pl[1], lecture, pr.position, pr.fermete))));
+      });
+      b.push(h('p', { class: 'fort' }, t(X.reponsesContre)));
+      scelle.reponses_atypiques[pp].filter(function (a) { return Object.prototype.hasOwnProperty.call(scelle.textes, a.texte) && cal.textesEntree.indexOf(a.texte) < 0; })
+        .forEach(function (a) {
+          var tx = texteDe(a.texte), rep = scelle.reponses[a.texte][pp], jr = cal.jourDeReponse(a.texte);
+          var extra = [];
+          if (a.cote_tire !== null) { extra.push(X.profilNeutre); }
+          var jd = jr + 1;
+          if (jd <= k && cal.existe(jd) && Rj(jd).manches && Rj(jd).manches[PORTEUR] &&
+              Rj(jd).manches[PORTEUR].cartes.some(function (c) { return c.auteur === pp; })) { extra.push(X.aDeviner(jd, nomJour(jd))); }
+          b.push(h('div', { class: 'atypique' }, h('p', null, t(X.jourTitre(jr, tx.titre))), h('p', null, t(position(rep.niveau) + ' · ' + raisonEnLigne(tx, rep.raison))),
+            extra.length ? h('p', null, t(extra.join(' '))) : null));
+        });
+      var avantH = Object.keys(scelle.histoire.textes);
+      var atypH = scelle.reponses_atypiques[pp].filter(function (a) { return avantH.indexOf(a.texte) >= 0; }).length;
+      var repH = avantH.filter(function (x) { return scelle.reponses[x] && Object.prototype.hasOwnProperty.call(scelle.reponses[x], pp); }).length;
+      b.push(h('p', null, t(X.avantArrivee(atypH, repH))));
+      var abs = scelle.absences[pp].filter(function (x) { return Object.prototype.hasOwnProperty.call(scelle.textes, x); }).map(function (x) { return String(cal.jourDeReponse(x)); });
+      b.push(h('p', null, t(abs.length ? X.joursSansJouer(N.listeEt(abs)) : X.joursSansJouerAucun)));
+      b.push(h('p', null, t(X.joursSansJouerAvant)), h('p', null, t(X.temperamentsJour14)));
+      contenu.push(h('section', { class: 'panneau', 'aria-label': pp }, b));
+    });
+    var groupes = socle.empreinte().match(/.{4}/g);
+    var lignesEmp = [0, 1, 2, 3].map(function (i) { return groupes.slice(4 * i, 4 * i + 4).join(' '); }).join('\n');
+    contenu.push(h('details', { class: 'panneau controle' }, h('summary', null, t(X.pourLeControle)),
+      h('p', null, t(X.empreinteDe)), h('pre', { class: 'code-brut empreinte' }, lignesEmp),
+      h('p', null, t(X.comparez(N.dateLongue(ENTREES.empreinte_publiee_le), N.heureEcrite(ENTREES.empreinte_publiee_a)))),
+      h('p', null, t(X.graine)), h('pre', { class: 'code-brut' }, scelle.graine),
+      h('p', null, t(X.tirage)), h('pre', { class: 'code-brut' }, String(scelle.histoire.tirage)),
+      h('p', null, t(X.fichierScelle)), h('pre', { class: 'code-brut scelle' }, N.utf8Decoder(N.base64Decoder(SCELLE_B64)))));
+    contenu.push(panneau(h('p', null, t(X.devoilementFin)), h('p', null, t(X.effacerInvite))));
+    contenu.push(pied(true));
+    return contenu;
+  }
+
   function rendrePageCadre() {
-    var c = etat.vue.cadre;
-    var contenu;
+    var c = vue().cadre, contenu;
     switch (c.page) {
       case 'message0': contenu = pageMessage0(); break;
+      case 'arrivee': contenu = pageArrivee(); break;
       case 'quiestqui': contenu = pageQuiEstQui(); break;
       case 'droits': contenu = pageDroits(); break;
+      case 'saut': contenu = pageSaut(); break;
       case 'carnet': contenu = pageCarnet(c); break;
       case 'arret-confirmation': contenu = pageArretConfirmation(); break;
-      case 'arret-questions': contenu = pageArretQuestions(); break;
-      case 'arret-f1': contenu = pageF1(X.f1Arret, etat.arret.f1); break;
-      case 'cloture-f2': contenu = pageClotureF2(); break;
-      case 'cloture-f1': contenu = pageF1(X.f1Fin, etat.fin.f1); break;
+      case 'arret-questions': contenu = pageArretQuestions(c); break;
+      case 'cloture-questions': contenu = pageClotureQuestions(c); break;
       case 'export': contenu = pageExport(c); break;
       case 'devoilement': contenu = pageDevoilement(); break;
       case 'effacer': contenu = pageEffacer(c); break;
@@ -1190,196 +1515,87 @@ var ElenchosInterface = (function (N, M, X) {
     return h('div', { class: 'page-cadre', role: 'region' }, contenu);
   }
 
-  /* ---- Carnet exporté (§8.7, §8.12) ---- */
-
-  function dureesToutes(maintenant) { return etat.seances.map(function (s) { return dureesSeance(s, maintenant); }); }
-
-  function texteCarnetExport(cadre) {
-    if (cadre.copie) { return cadre.copie.texte; }
-    var j = journal();
-    var statut = etat.fin ? { type: 'fin' } : { type: 'arret' };
-    return M.carnet(scelle, j, R(), dureesToutes(null), statut);
-  }
-
-  /* ---- Dévoilement (devoilement.md) ---- */
-
-  function pageDevoilement() {
-    var f1 = etat.fin ? etat.fin.f1 : (etat.arret ? etat.arret.f1 : null);
-    var corrige = M.corrigeF1(scelle);
-    var contenu = [titrePage(t(X.devoilementTitre))];
-    var ouv = [h('p', null, t(X.devoilementOuverture))];
-    if (f1) { ouv.push(h('p', null, t(X.devoilementF1(M.casesJustes(f1, corrige))))); }
-    contenu.push(panneau(ouv));
-    var nb = scelle.reponses_atypiques.Agathe.length;
-    contenu.push(panneau(h('h2', { class: 'fort' }, t(X.commentLire)), h('p', null, t(X.commentLire1)), h('p', null, t(X.commentLire2(X.nombresEnLettres[nb]))), h('p', null, t(X.commentLire3))));
-    PERSOS.forEach(function (pp) {
-      var f = scelle.personnages[pp];
-      var bloc2 = [h('h2', { class: 'fort' }, t(pp + ', ' + f.age + ' ans · ' + f.metier + ', ' + f.ville)), h('p', null, t(X.phraseProfil[pp]))];
-      ['S', 'P', 'T', 'L'].forEach(function (code) {
-        var pl = X.T8[indexT8(code)].poles, pr = f.profil[code];
-        var lecture = corrige[pp][code] === 'milieu' ? X.auMilieuMin : (corrige[pp][code] === 'pole1' ? pl[1] : pl[0]);
-        var ligne = X.ligneProfil(pl[0], pl[1], lecture, pr.position, pr.fermete);
-        if (f1) {
-          var v = f1[pp][code];
-          var vous = v === null ? X.vousPasDeChoix : (v === corrige[pp][code] ? X.vousJuste : X.vousChoix(v === 'milieu' ? X.auMilieuMin : (v === 'pole1' ? pl[1] : pl[0])));
-          ligne += ' ' + vous;
-        }
-        bloc2.push(h('p', null, t(ligne)));
-      });
-      bloc2.push(h('p', { class: 'fort' }, t(X.reponsesContre)));
-      scelle.reponses_atypiques[pp].forEach(function (a) {
-        var tx = scelle.textes[a.texte], rep = scelle.reponses[a.texte][pp];
-        var raison = rep.raison === 'aucune' ? X.aucuneDesQuatreRaisons : X.raisonFinLigne(consideration(tx, rep.raison).texte);
-        var extra = [];
-        if (a.cote_tire !== null) { extra.push(X.profilNeutre); }
-        var sn = +a.texte + 1;
-        if (sn <= K() && sn <= 14) {
-          var mp = R().seances[sn].manches && R().seances[sn].manches.porteur;
-          if (mp && mp.places.indexOf(pp) >= 0) { extra.push(X.aDeviner(sn)); }
-        }
-        bloc2.push(h('div', { class: 'atypique' }, h('p', null, t(X.jourTitre(a.texte, tx.titre))), h('p', null, t(position(rep.niveau) + ' · ' + raison)),
-          extra.length ? h('p', null, t(extra.join(' '))) : null));
-      });
-      var abs = scelle.absences[pp];
-      bloc2.push(h('p', null, t(abs.length ? X.joursSansJouer(N.listeEt(abs)) : X.joursSansJouerAucun)));
-      contenu.push(h('section', { class: 'panneau', 'aria-label': pp }, bloc2));
-    });
-    var groupes = empreinte.match(/.{4}/g);
-    var lignesEmp = [0, 1, 2, 3].map(function (i) { return groupes.slice(4 * i, 4 * i + 4).join(' '); }).join('\n');
-    contenu.push(h('details', { class: 'panneau controle' }, h('summary', null, t(X.pourLeControle)),
-      h('p', null, t(X.empreinteDe)), h('pre', { class: 'code-brut empreinte' }, lignesEmp),
-      h('p', null, t(X.comparez(N.dateLongue(ENTREES.empreinte_publiee_le), N.heureEcrite(ENTREES.empreinte_publiee_a)))),
-      h('p', null, t(X.graine)), h('pre', { class: 'code-brut' }, scelle.graine),
-      h('p', null, t(X.fichierScelle)), h('pre', { class: 'code-brut scelle' }, texteScelle)));
-    contenu.push(panneau(h('p', null, t(X.devoilementFin)), h('p', null, t(X.effacerInvite))));
-    contenu.push(pied(true));
-    return contenu;
-  }
-
   /* ================================================================== */
-  /* Vues seules : arrêts techniques, écrans hors de l'icône, couché    */
+  /* Vues seules : arrêts techniques, écrans hors de l'icône            */
   /* ================================================================== */
-
-  var racine = null, vueSeule = null, vueCouchee = null;
 
   function montrerVueSeule(contenu, avecPied) {
     var secours = document.getElementById('vue-secours');
     if (secours) { secours.hidden = true; }
     if (racine) { racine.hidden = true; }
-    vueSeule = document.getElementById('vue-seule') || document.body.appendChild(h('main', { id: 'vue-seule', class: 'vue-seule' }));
-    vider(vueSeule);
-    ajouter(vueSeule, contenu);
-    if (avecPied) { vueSeule.appendChild(pied(false)); }
-    vueSeule.hidden = false;
+    var vs = document.getElementById('vue-seule') || document.body.appendChild(h('main', { id: 'vue-seule', class: 'vue-seule' }));
+    vider(vs);
+    ajouter(vs, contenu);
+    if (avecPied) { vs.appendChild(pied(false)); }
+    vs.hidden = false;
   }
 
-  function arreter1(v) {
-    arretTechnique = true;
-    var lisible = false;
-    try { lisible = lireEtat() !== null; } catch (e) { lisible = false; }
-    // M1 (partie gardée illisible) : « Cette page n'a rien effacé. », puis la consigne qui fait garder l'icône (§8.11)
-    var m1 = v === 'M1';
-    var consigne = m1 ? X.arretVerifRepereM1 : X.arretVerifRepere;
-    montrerVueSeule([h('h1', null, t(X.arretVerifTitre)), h('p', null, t(X.arretVerif)),
-      m1 ? h('p', null, t(X.arretVerifRienEfface)) : (lisible ? h('p', null, t(X.arretVerifGardee(appareil))) : null),
-      h('p', null, t(consigne[0].replace(/ $/, '')), ' ', h('strong', { class: 'repere' }, v), t(consigne[1]))]);
+  /** Arrêts du §8.11 (S1) ; repères V1 à V6 et M1 (§8.9 du second essai). */
+  function arret(n, repere, info) {
+    if (n === 1) {
+      var m1 = repere === 'M1';
+      var consigne = m1 ? X.arretVerifRepereM1 : X.arretVerifRepere;
+      montrerVueSeule([h('h1', null, t(X.arretVerifTitre)), h('p', null, t(X.arretVerif)),
+        m1 ? h('p', null, t(X.arretVerifRienEfface)) : (info && info.partieLisible ? h('p', null, t(X.arretVerifGardee(appareil))) : null),
+        h('p', null, t(consigne[0].replace(/ $/, '')), ' ', h('strong', { class: 'repere' }, repere), t(consigne[1]))]);
+    } else if (n === 2) {
+      montrerVueSeule([h('h1', null, t(X.arretStockageTitre)), h('p', null, t(X.arretStockage(appareil)))]);
+    } else {
+      montrerVueSeule([h('h1', null, t(X.arretDoubleTitre)), h('p', null, t(X.arretDouble)),
+        h('button', { type: 'button', class: 'bouton-cadre avant', action: 'recharger' }, t(X.reprendreIci)), h('p', { class: 'petit' }, t(X.arretDoublePetit))]);
+      brancherHors();
+    }
   }
-  function arreter2() {
-    arretTechnique = true;
-    montrerVueSeule([h('h1', null, t(X.arretStockageTitre)), h('p', null, t(X.arretStockage(appareil)))]);
-  }
-  function arreter3() {
-    arretTechnique = true;
-    montrerVueSeule([h('h1', null, t(X.arretDoubleTitre)), h('p', null, t(X.arretDouble)),
-      h('button', { type: 'button', class: 'bouton-cadre avant', action: 'recharger' }, t(X.reprendreIci)), h('p', { class: 'petit' }, t(X.arretDoublePetit))]);
-  }
-
-  /* ---- Écrans hors de l'icône (§8.13) : règles 1 à 3 du §7.8 ---- */
 
   function t3(s) { return N.typographier13(s); }
   function blocAdresse() { return h('p', { class: 'adresse' }, X.adresse); }
-
-  function diagnostic() {
+  function diagnostic(type) {
+    var standalone = window.navigator.standalone === true || (window.matchMedia ? window.matchMedia('(display-mode: standalone)').matches : false);
+    var dansCadre; try { dansCadre = window.self !== window.top; } catch (x) { dansCadre = true; }
     return ['Diagnostic de l’essai', 'Version de la page : ' + VERSION, 'Résultat : essai non lancé, page ouverte dans un onglet',
       'Site : ' + location.origin, 'Page : ' + (dansCadre ? 'dans un cadre' : 'seule'),
       'Ouverte depuis : ' + (standalone ? 'l’icône de l’écran d’accueil' : 'un onglet du navigateur'),
-      'Écran tactile : ' + (tactile ? 'oui' : 'non'), 'Navigateur : ' + ua, '', 'Fin du diagnostic'].join('\n');
+      'Écran tactile : ' + (points > 0 ? 'oui' : 'non'), 'Navigateur : ' + ua, '', 'Fin du diagnostic'].join('\n');
   }
-
-  function ecranHors(type) {
+  /** Écrans hors de l'icône (S1 §8.13, inchangés). */
+  function hors(type) {
     var c = [];
     if (type === 'ailleurs') {
       c.push(h('h1', null, t3(X.ailleursTitre)), h('p', null, t3(X.ailleursDessous)), h('p', null, t3(X.ailleursAdresse)), blocAdresse());
     } else {
       c.push(h('h1', null, t3(X.ongletTitre)), h('p', null, t3(type === 'onglet' ? X.ongletDessous : X.autreDessous)), h('div', { class: 'panneau' }, h('p', null, t3(X.pourYAller))));
       var plie = [h('summary', null, t3(X.pasDIcone)), h('p', null, t3(X.dejaCommence))];
-      if (type === 'onglet') {
-        plie.push(h('p', null, t3(X.pasEncore)), h('ol', null, X.etapesAjout.map(function (x) { return h('li', null, t3(x)); })), h('p', null, t3(X.pasDeSurEcran)));
-      } else {
-        plie.push(h('p', null, t3(X.pasEncoreAutre)));
-      }
+      if (type === 'onglet') { plie.push(h('p', null, t3(X.pasEncore)), h('ol', null, X.etapesAjout.map(function (x) { return h('li', null, t3(x)); })), h('p', null, t3(X.pasDeSurEcran))); }
+      else { plie.push(h('p', null, t3(X.pasEncoreAutre))); }
       plie.push(blocAdresse(), h('button', { type: 'button', class: 'bouton-cadre', action: 'copier-adresse' }, t3(X.copierAdresse)), h('p', { class: 'note message-copie', role: 'status', hidden: true }));
       c.push(h('details', { class: 'panneau' }, plie));
       if (type === 'onglet') {
         c.push(h('details', { class: 'panneau' }, h('summary', null, t3(X.iconeOnglet)), h('p', null, t3(X.iconeOngletTexte)),
-          h('pre', { class: 'code-brut', id: 'diagnostic' }, diagnostic()),
+          h('pre', { class: 'code-brut', id: 'diagnostic' }, diagnostic(type)),
           h('button', { type: 'button', class: 'bouton-cadre', action: 'copier-lignes' }, t3(X.copierLignes)), h('p', { class: 'note message-copie', role: 'status', hidden: true })));
       }
     }
     montrerVueSeule(c, true);
+    brancherHors();
+  }
+  var horsBranche = false;
+  /** Hors de l'icône et à l'arrêt 3, le socle n'a pas branché son gestionnaire : un seul ici, pour ces boutons. */
+  function brancherHors() {
+    if (horsBranche) { return; }
+    horsBranche = true;
+    document.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-action]') : null;
+      if (!b) { return; }
+      var a = b.getAttribute('data-action');
+      if (a === 'copier-adresse' || a === 'copier-lignes' || a === 'recharger') { ev.preventDefault(); ev.stopImmediatePropagation(); A[a](b); }
+    }, true);
   }
 
   /* ================================================================== */
   /* Rendu                                                              */
   /* ================================================================== */
 
-  var milieuTel = null, milieuCadre = null, barreEl = null, bandeEl = null;
-  var pageAffichee = null; // page du cadre à l'écran (pour garder ou remettre son défilement)
-  function cleDePage(c) { return c.page + (c.copie ? ':copie' : '') + (c.apres ? ':apres' : ''); }
-
-  function rendre(options) {
-    options = options || {};
-    if (arretTechnique || efface) { return; }
-    var nouvelleBarre = rendreBarre();
-    racine.replaceChild(nouvelleBarre, barreEl); barreEl = nouvelleBarre;
-    if (etat.vue.cadre) {
-      var memePage = pageAffichee === cleDePage(etat.vue.cadre);
-      var defileCadre = memePage ? milieuCadre.scrollTop : 0;
-      vider(milieuCadre);
-      milieuCadre.appendChild(rendrePageCadre());
-      milieuCadre.hidden = false;
-      milieuTel.hidden = true;
-      milieuCadre.scrollTop = defileCadre; // une autre page commence en haut ; la même garde sa place
-      pageAffichee = cleDePage(etat.vue.cadre);
-      if (options.focus !== false) { var ti = milieuCadre.querySelector('.titre-page, #zone-carnet'); if (ti) { try { ti.focus({ preventScroll: true }); } catch (e) { ti.focus(); } } }
-    } else {
-      pageAffichee = null;
-      milieuCadre.hidden = true;
-      milieuTel.hidden = false;
-      if (options.telephone !== false) {
-        var defile = options.garderDefilement ? (milieuTel.querySelector('.corps') || {}).scrollTop : 0;
-        vider(milieuTel);
-        milieuTel.appendChild(rendreTelephone());
-        if (defile) { milieuTel.querySelector('.corps').scrollTop = defile; }
-      }
-    }
-    var nouvelleBande = rendreBande();
-    racine.replaceChild(nouvelleBande, bandeEl); bandeEl = nouvelleBande;
-    empilerActions();
-  }
-
-  /** Rangées d'action de la bande (§8.1) : côte à côte si elles tiennent, sinon toutes l'une sous l'autre, dans l'ordre du texte (jamais 2 + 1). */
-  function empilerActions() {
-    if (!bandeEl) { return; }
-    Array.prototype.forEach.call(bandeEl.querySelectorAll('.actions'), function (a) {
-      a.classList.remove('empile');
-      var boutons = a.children, largeur = 0;
-      if (boutons.length < 2) { return; }
-      for (var i = 0; i < boutons.length; i++) { largeur += boutons[i].getBoundingClientRect().width; }
-      largeur += (parseFloat(getComputedStyle(a).columnGap) || 0) * (boutons.length - 1);
-      if (largeur > a.clientWidth + 0.5) { a.classList.add('empile'); }
-    });
-  }
+  function cleDePage(c) { return c.page + (c.mode ? ':' + c.mode : '') + (c.jour ? ':' + c.jour : ''); }
 
   function construireRacine() {
     var secours = document.getElementById('vue-secours');
@@ -1394,497 +1610,560 @@ var ElenchosInterface = (function (N, M, X) {
     vueCouchee = h('main', { class: 'vue-couchee', 'aria-hidden': 'false' }, h('h1', null, t(X.coucheTitre(appareil))), h('p', null, t(X.couche)));
     document.body.appendChild(vueCouchee);
     if (secours) { secours.hidden = true; }
+    document.addEventListener('input', surSaisie);
+    // Après le gestionnaire du socle (inscrit avant) : la note passagère part, sauf si le geste en a posé une autre.
+    document.addEventListener('click', function () {
+      if (noteAEffacer !== null && bande.note === noteAEffacer) { bande.note = null; if (etat() && !socle.efface()) { rendreBandeSeule(); } }
+      noteAEffacer = null;
+    });
+    window.addEventListener('resize', empilerActions);
+  }
+
+  function rendre(options) {
+    options = options || {};
+    if (socle.efface()) { return; }
+    if (!racine) { construireRacine(); }
+    var nb = rendreBarre(); racine.replaceChild(nb, barreEl); barreEl = nb;
+    var e = etat();
+    var cadre = e ? vue().cadre : { page: 'ancienne' };
+    if (cadre) {
+      var cle = cleDePage(cadre);
+      var meme = pageAffichee === cle;
+      var defile = meme ? milieuCadre.scrollTop : 0;
+      vider(milieuCadre);
+      milieuCadre.appendChild(e ? rendrePageCadre() : h('div', { class: 'page-cadre', role: 'region' }, pageAncienne()));
+      milieuCadre.hidden = false; milieuTel.hidden = true;
+      milieuCadre.scrollTop = defile;
+      pageAffichee = cle;
+      if (options.focus !== false && !meme) { var ti = milieuCadre.querySelector('.titre-page, #zone-carnet'); if (ti) { try { ti.focus({ preventScroll: true }); } catch (x) { ti.focus(); } } }
+    } else {
+      pageAffichee = null;
+      milieuCadre.hidden = true; milieuTel.hidden = false;
+      if (options.telephone !== false) {
+        var corps = milieuTel.querySelector('.corps');
+        var defileTel = options.garderDefilement && corps ? corps.scrollTop : 0;
+        vider(milieuTel);
+        milieuTel.appendChild(rendreTelephone());
+        if (defileTel) { milieuTel.querySelector('.corps').scrollTop = defileTel; }
+        apresRenduTelephone();
+      }
+    }
+    rendreBandeSeule();
+  }
+  function rendreBandeSeule() { var nb = rendreBande(); racine.replaceChild(nb, bandeEl); bandeEl = nb; empilerActions(); }
+
+  /** Effets d'un affichage qui ne s'écrivent qu'à part : dernier n de la barre, note de la barre pleine (§7.15). */
+  function apresRenduTelephone() {
+    var v = vue();
+    if (v.tel.ecran !== 'moi-portrait') { return; }
+    var b = Rj(jourAffiche()).portrait.barre;
+    var longueur = frac(b.longueur).pourDessiner();
+    var noteUneFois = b.pleine && !v.barrePleineVue;
+    if (v.barreVue !== longueur || noteUneFois) {
+      geste(function (e) { e.vue.barreVue = longueur; if (noteUneFois) { e.vue.barrePleineVue = true; } });
+      if (noteUneFois) { bande.note = X.noteBarrePleine; }
+    }
+  }
+
+  /** Rangées d'action de la bande (S1 §8.1) : côte à côte si elles tiennent, sinon l'une sous l'autre. */
+  function empilerActions() {
+    if (!bandeEl) { return; }
+    Array.prototype.forEach.call(bandeEl.querySelectorAll('.actions'), function (a) {
+      a.classList.remove('empile');
+      var boutons = a.children, largeur = 0;
+      if (boutons.length < 2) { return; }
+      for (var i = 0; i < boutons.length; i++) { largeur += boutons[i].getBoundingClientRect().width; }
+      largeur += (parseFloat(getComputedStyle(a).columnGap) || 0) * (boutons.length - 1);
+      if (largeur > a.clientWidth + 0.5) { a.classList.add('empile'); }
+    });
+  }
+
+  /** Saisie du pseudo (1.8) : le bouton et la note suivent, sans redessiner le champ. */
+  function surSaisie(ev) {
+    if (!ev.target || ev.target.id !== 'champ-pseudo') { return; }
+    var avant = temp.saisie || '';
+    var v = ev.target.value;
+    if (Array.from(formaterPseudo(v)).length > 20) { ev.target.value = avant; return; }
+    temp.saisie = v;
+    var ok = motifRefus(formaterPseudo(v)) === null;
+    Array.prototype.forEach.call(milieuTel.querySelectorAll('.voie'), function (b) { if (ok) { b.removeAttribute('aria-disabled'); } else { b.setAttribute('aria-disabled', 'true'); } });
+    rendreBandeSeule();
+  }
+
+  /** À l'ouverture : on ne rouvre jamais sur une décision (S1 §8.1) ; les choix non validés sont perdus. */
+  function normaliserAuChargement() {
+    var e = etat();
+    if (!e || !e.vue.tel) { return; }
+    var v = e.vue, tel = v.tel, c = v.cadre;
+    if (tel.ecran === '1.3' || tel.ecran === '1.4') { v.tel = { ecran: '1.2', E: tel.E, pile: [] }; }
+    if ((tel.ecran === '1.8b' || tel.ecran === '1.9') && !tel.pseudo) { v.tel = { ecran: '1.8', pile: [] }; }
+    if (tel.ecran === 'raison') { v.tel = { ecran: 'repondre', pile: [] }; }
+    if (tel.ecran === 'ratt-raison') { v.tel = { ecran: 'ratt-position', jour: tel.jour, pile: [] }; }
+    if (c && c.page === 'saut') { v.cadre = null; }
+    if (c && c.page === 'carnet' && c.abandon) { v.cadre = null; }
+    if (c && c.page === 'export' && c.mode === 'dabord') { v.cadre = c.retour && c.retour.sous ? c.retour.sous : null; }
+    if (c && c.page === 'effacer') { v.cadre = c.sous || null; }
+    if (c && c.page === 'arret-confirmation') { v.cadre = null; }
+    if (c && (c.page === 'quiestqui' || c.page === 'droits')) { v.cadre = c.sous || null; }
+    temp = {};
   }
 
   /* ================================================================== */
-  /* Navigation et coups                                                */
+  /* Actions                                                            */
   /* ================================================================== */
-
-  /** Affiche un écran du téléphone, avec ses effets (étapes vues, durées, lecture de l'heure). */
-  function allerA(ecran, params, empiler) {
-    var v = etat.vue.tel;
-    if (empiler) { v.pile.push(copieVue(v)); }
-    else if (empiler === false) { v.pile = []; }
-    var nv = { ecran: ecran, pile: v.pile };
-    if (params) { Object.keys(params).forEach(function (k) { nv[k] = params[k]; }); }
-    etat.vue.tel = nv;
-    effetsAffichage();
-  }
-  function copieVue(v) { var c = {}; Object.keys(v).forEach(function (k) { if (k !== 'pile') { c[k] = v[k]; } }); return c; }
-
-  function effetsAffichage() {
-    var s = seanceCourante(), e = etat.vue.tel.ecran;
-    if (etat.vue.cadre) { return; }
-    if (e === 'deviner' && s.etapes && !s.etapes.deviner && aDesCartes()) {
-      s.etapes.deviner = true; s.pp.devDebut = ppMaintenant(); s.pp.devDernier = s.pp.devDebut;
-    }
-    if (e === 'repondre' && s.etapes && !s.etapes.repondre) {
-      s.etapes.repondre = true; s.pp.repDebut = ppMaintenant();
-    }
-    if (e === 'attente') { lireEnAttendant(); }
-  }
-
-  var lectures = []; // relevées pour le point d'accès (bloc témoin), jamais gardées (§8.8)
-  function lireEnAttendant() {
-    derniereLecture = lireHeure();
-    var k = K();
-    var visages = M.visagesDejaJoue(scelle, k, derniereLecture.hhmm);
-    var detail = { seance: k, heure: derniereLecture.hhmm, visages: visages.slice() };
-    lectures.push(detail);
-    try { window.dispatchEvent(new CustomEvent('elenchos-essai:lecture', { detail: JSON.parse(JSON.stringify(detail)) })); } catch (e) { /* rien */ }
-  }
-
-  function allerAuJour(empiler) { allerA(ecranDuJour(), null, empiler === undefined ? false : empiler); }
-
-  /* ---- Toucher compté (§0, §8.4) ---- */
-
-  function couche() { return window.matchMedia && window.matchMedia('(max-height: 499px) and (orientation: landscape)').matches; }
-
-  function toucherCompte(cible) {
-    if (!etat || efface || arretTechnique) { return; }
-    if (couche()) { return; }
-    var s = seanceCourante();
-    var pp = ppMaintenant();
-    if (s.pp.fige !== null) { return; }
-    if (s.ouverture === null) {
-      s.ouverture = lireHeure().instant;
-      s.pp.ouverture = pp;
-    }
-    if (s.versions.length === 0 || s.versions[s.versions.length - 1] !== VERSION) { s.versions.push(VERSION); }
-    s.pp.dernier = pp;
-    var action = cible && cible.closest && cible.closest('[data-action]') ? cible.closest('[data-action]').getAttribute('data-action') : null;
-    if (!etat.vue.cadre && etat.vue.tel.ecran === 'deviner' && s.pp.devDebut !== null && !mancheValidee(s)) { s.pp.devDernier = pp; }
-    if (action === 'confirmation-continuer') {
-      if (s.etapes && s.etapes.repondre && s.coups.reponse === null) { s.pp.repContinuer = pp; }
-    }
-    ecrire();
-  }
-
-  /* ---- Actions ---- */
 
   var A = {};
+  function apres(options) { rendre(options); }
 
-  A['absent'] = function () { bande.note = X.pasDansLEssai; rendre({ telephone: false }); };
-  A['qui-est-qui'] = function () { etat.vue.cadre = { page: 'quiestqui' }; ecrire(); rendre(); };
-  A['droits'] = function () { etat.vue.cadre = { page: 'droits' }; ecrire(); rendre(); };
-  A['fermer-page'] = function () { etat.vue.cadre = etat.vue.cadreSous || null; delete etat.vue.cadreSous; ecrire(); rendreRetourTelephone(); };
+  A['absent'] = function () { bande.note = X.pasDansLEssai; rendreBandeSeule(); };
   A['recharger'] = function () { location.reload(); };
 
-  function rendreRetourTelephone() {
-    if (!etat.vue.cadre && etat.vue.tel.ecran === 'attente') { effetsAffichage(); rendre(); return; }
-    rendre({ telephone: milieuTel.firstChild ? false : true });
-  }
+  /* Pages du début (§8.2) */
+  A['ancienne-effacer'] = function () { bande.ancienneConfirmation = true; rendreBandeSeule(); };
+  A['ancienne-annuler'] = function () { bande.ancienneConfirmation = false; rendreBandeSeule(); };
+  A['ancienne-confirmer'] = function () { bande.ancienneConfirmation = false; socle.effacerAncienne(); };
+  A['message0-continuer'] = function () { geste(function (e) { e.vue.cadre = { page: 'arrivee' }; }); apres(); };
+  A['commencer'] = function () { geste(function (e) { e.vue.cadre = null; e.vue.tel = { ecran: '1.1', pile: [] }; }); apres(); };
 
-  A['message0-continuer'] = function () { etat.vue.cadre = { page: 'quiestqui' }; ecrire(); rendre(); };
+  /* Pages qu'on ferme (fiche, droits) */
+  A['qui-est-qui'] = function () { geste(function (e) { E.compter(e, cal, 'qui_est_qui', devinerEnCours(e)); e.vue.cadre = { page: 'quiestqui', sous: e.vue.cadre || null }; }); apres(); };
+  A['droits'] = function () { geste(function (e) { e.vue.cadre = { page: 'droits', sous: e.vue.cadre || null }; }); apres(); };
+  A['fermer-page'] = function () { geste(function (e) { var c = e.vue.cadre; e.vue.cadre = c && c.sous ? c.sous : null; }); apres({ telephone: true, garderDefilement: true }); };
 
-  /* Entrée */
-  function texteEntreeCourant() {
-    var e = etat.seances[0].coups.entree;
-    if (!e.E1.pari) { return 'E1'; } if (!e.E2.pari) { return 'E2'; } return 'E3';
-  }
-  A['apercu'] = function () { temp = {}; allerA('1.2', { E: texteEntreeCourant() }); ecrire(); rendre(); };
+  /* Entrée (§7.2) */
+  A['apercu'] = function () { temp = {}; geste(function (e, hh) { aller(e, hh, '1.2', { E: E.texteEntreeCourant(e, cal) }); }); apres(); };
   A['entree-position'] = function (b) {
     temp.position = +b.getAttribute('data-valeur');
-    if (etat.seances[0].coups.consentement !== true) { allerA('1.3', { E: etat.vue.tel.E }); ecrire(); }
-    rendre();
+    if (jourE(etat(), cal.premier).coups.consentement !== true) { geste(function (e, hh) { aller(e, hh, '1.3', { E: e.vue.tel.E }); }); }
+    apres({ garderDefilement: true });
   };
-  A['consentement-retour'] = function () { temp.position = null; allerA('1.2', { E: etat.vue.tel.E }); ecrire(); rendre(); };
-  A['consentement-accepter'] = function () { etat.seances[0].coups.consentement = true; allerA('1.2', { E: etat.vue.tel.E }); ecrire(); rendre(); };
-  A['entree-suivant'] = function () { if (!temp.position) { return; } temp.raison = null; allerA('1.4', { E: etat.vue.tel.E }); ecrire(); rendre(); };
-  A['entree-changer'] = function () { allerA('1.2', { E: etat.vue.tel.E }); ecrire(); rendre(); };
-  A['entree-raison'] = function (b) { var v = b.getAttribute('data-valeur'); temp.raison = v === 'aucune' ? 'aucune' : +v; rendre({ garderDefilement: true }); };
+  A['consentement-retour'] = function () { temp.position = null; geste(function (e, hh) { aller(e, hh, '1.2', { E: e.vue.tel.E }); }); apres(); };
+  A['consentement-accepter'] = function () { geste(function (e, hh) { E.consentir(e, cal); aller(e, hh, '1.2', { E: e.vue.tel.E }); }); apres(); };
+  A['entree-suivant'] = function () { if (!temp.position) { return; } temp.raison = null; geste(function (e, hh) { aller(e, hh, '1.4', { E: e.vue.tel.E }); }); apres(); };
+  A['entree-changer'] = function () { geste(function (e, hh) { aller(e, hh, '1.2', { E: e.vue.tel.E }); }); apres(); };
+  A['entree-raison'] = function (b) { temp.raison = lireValeur(b); apres({ garderDefilement: true }); };
   A['entree-valider-raison'] = function () {
     if (temp.raison === null || temp.raison === undefined) { return; }
-    var E = etat.vue.tel.E;
-    etat.seances[0].coups.entree[E].reponse = { niveau: temp.position, raison: temp.raison };
-    temp = {}; allerA('1.5', { E: E }); ecrire(); rendre();
+    var rep = { niveau: temp.position, raison: temp.raison };
+    geste(function (e, hh) { var En = e.vue.tel.E; E.repondreEntree(e, cal, scelle, En, rep); aller(e, hh, '1.5', { E: En }); });
+    temp = {}; apres();
   };
-  A['entree-pari'] = function (b) { temp.pari = +b.getAttribute('data-valeur'); rendre({ garderDefilement: true }); };
+  A['entree-pari'] = function (b) { temp.pari = +b.getAttribute('data-valeur'); apres({ garderDefilement: true }); };
   A['entree-voir'] = function () {
     if (!temp.pari) { return; }
-    var E = etat.vue.tel.E;
-    etat.seances[0].coups.entree[E].pari = temp.pari;
-    temp = {}; allerA('1.6', { E: E }); ecrire(); rendre();
+    var pari = temp.pari;
+    geste(function (e, hh) { var En = e.vue.tel.E; E.parierEntree(e, cal, En, pari); aller(e, hh, '1.6', { E: En }); });
+    temp = {}; apres();
   };
   A['entree-texte-suivant'] = function () {
-    var E = etat.vue.tel.E;
     temp = {};
-    if (E === 'E3') { allerA('1.7'); } else { allerA('1.2', { E: E === 'E1' ? 'E2' : 'E3' }); }
-    ecrire(); rendre();
+    geste(function (e, hh) { var suivant = E.texteEntreeCourant(e, cal); if (suivant === null) { aller(e, hh, '1.7'); } else { aller(e, hh, '1.2', { E: suivant }); } });
+    apres();
   };
-  A['creer-compte'] = function () { temp = { saisie: '' }; allerA('1.8'); ecrire(); rendre(); };
-  A['recevoir-code'] = function () {
-    if (!pseudoValide(temp.saisie || '')) { return; }
-    etat.seances[0].coups.pseudo = formaterPseudo(temp.saisie);
-    temp = {}; allerA('1.9'); ecrire(); rendre();
-  };
-  A['code-valider'] = function () {
-    etat.seances[0].entreeFinie = true;
-    etat.vue.cadre = { page: 'carnet' };
-    ecrire(); rendre();
-  };
-
-  /* Jour */
-  A['jour-position'] = function (b) { temp.position = +b.getAttribute('data-valeur'); rendre({ garderDefilement: true }); };
-  A['jour-suivant-raison'] = function () { if (!temp.position) { return; } temp.raison = null; allerA('raison'); ecrire(); rendre(); };
-  A['jour-changer'] = function () { allerA('repondre'); ecrire(); rendre(); };
-  A['jour-raison'] = function (b) { var v = b.getAttribute('data-valeur'); temp.raison = v === 'aucune' ? 'aucune' : +v; rendre({ garderDefilement: true }); };
-  A['jour-valider-raison'] = function () {
-    if (temp.raison === null || temp.raison === undefined) { return; }
-    var s = seanceCourante();
-    s.coups.reponse = { niveau: temp.position, raison: temp.raison };
-    if (s.pp.repFin === null) { s.pp.repFin = ppMaintenant(); }
-    temp = {}; allerA('attente', null, false); ecrire(); rendre();
-  };
-
-  /* Deviner (§7.1, gestes) */
-  A['visage'] = function (b) {
-    var i = +b.getAttribute('data-carte'), m = b.getAttribute('data-membre');
-    var ch = temp.choix;
-    if (ch.some(function (c, j) { return j !== i && c.designe === m; })) { return; } // grisé : ne réagit pas
-    if (ch[i].designe === m) { ch[i].designe = null; }
-    else { ch[i].designe = m; }
-    rendre({ garderDefilement: true });
-  };
-  A['passer'] = function (b) {
-    var i = +b.getAttribute('data-carte'), c = temp.choix[i];
-    if (c.designe === 'passe') { c.designe = null; }
-    else { c.designe = 'passe'; c.raison = null; }
-    rendre({ garderDefilement: true });
-  };
-  A['devine-pourquoi'] = function (b) { temp.feuille = +b.getAttribute('data-carte'); delete temp.raisonFeuille; rendre({ garderDefilement: true }); };
-  A['feuille-raison'] = function (b) { var v = b.getAttribute('data-valeur'); temp.raisonFeuille = v === 'aucune' ? 'aucune' : +v; rendre({ garderDefilement: true }); };
-  A['feuille-choisir'] = function () {
-    if (temp.raisonFeuille === undefined || temp.raisonFeuille === null) { return; }
-    temp.choix[temp.feuille].raison = temp.raisonFeuille;
-    temp.feuille = null; delete temp.raisonFeuille; rendre({ garderDefilement: true });
-  };
-  A['feuille-fermer'] = function () { temp.feuille = null; delete temp.raisonFeuille; rendre({ garderDefilement: true }); };
-  A['relire'] = function () { var s = seanceCourante(); s.coups.relire += 1; temp.feuille = 'relire'; ecrire(); rendre({ garderDefilement: true }); };
-  A['deviner-valider'] = function () {
-    var ch = temp.choix;
-    if (!ch.every(function (c) { return c.designe !== null; })) { return; }
-    var m = mancheDuJour(), s = seanceCourante();
-    s.coups.deviner = ch.map(function (c, i) {
-      return { designe: c.designe, raison: m.cartes[i].cachee && c.designe !== 'passe' ? c.raison : null };
+  A['creer-compte'] = function () { temp = { saisie: '' }; geste(function (e, hh) { aller(e, hh, '1.8'); }); apres(); };
+  function terminerCompte(voie, pseudoGarde) {
+    geste(function (e, hh) {
+      E.terminerCompte(e, cal, pseudoGarde, voie, hh, confusables());
+      aller(e, hh, 'deviner', null, false);
     });
     temp = {};
-    allerA('repondre', null, false); ecrire(); rendre();
+  }
+  A['compte-apple'] = function () { var f = pseudoSaisi(); if (motifRefus(f) !== null) { return; } terminerCompte('apple', f); bande.note = X.noteApple; apres(); };
+  A['compte-google'] = function () { var f = pseudoSaisi(); if (motifRefus(f) !== null) { return; } terminerCompte('google', f); bande.note = X.noteGoogle; apres(); };
+  A['compte-email'] = function () {
+    var f = pseudoSaisi(); if (motifRefus(f) !== null) { return; }
+    geste(function (e, hh) { aller(e, hh, '1.8b', { pseudo: f }); }); apres();
+  };
+  A['compte-retour'] = function () { var f = vue().tel.pseudo || ''; geste(function (e, hh) { aller(e, hh, '1.8'); }); temp = { saisie: f }; apres(); };
+  A['recevoir-code'] = function () { var f = vue().tel.pseudo; geste(function (e, hh) { aller(e, hh, '1.9', { pseudo: f }); }); apres(); };
+  A['code-valider'] = function () { terminerCompte('email_valider', vue().tel.pseudo); apres(); };
+  A['code-plus-tard'] = function () { terminerCompte('email_plus_tard', vue().tel.pseudo); apres(); };
+
+  /* Aujourd'hui : Deviner (S1 §7.1, gestes ; R10 : chaque visage s'écrit dès qu'il est posé) */
+  function devinerEnCours(e) { var d = jourE(e, E.K(e)); return !E.sautEnCours(e) && !!d.coups.deviner && !d.coups.deviner.validee; }
+  function carteCachee(i) { return Rj(K()).cartes_porteur.cartes[i].cachee; }
+  A['visage'] = function (b) {
+    var i = +b.getAttribute('data-carte'), m = b.getAttribute('data-membre');
+    var ch = jourE(etat(), K()).coups.deviner.cartes;
+    if (ch.some(function (c, x) { return x !== i && c.designe === m; })) { return; } // grisé : ne réagit pas
+    var avant = temp.raisonsAvant && temp.raisonsAvant[i] !== undefined ? temp.raisonsAvant[i] : null;
+    geste(function (e, hh) {
+      var k = E.K(e);
+      if (ch[i].designe === m) { E.poserCarte(e, k, i, null, hh); }
+      else {
+        E.poserCarte(e, k, i, m, hh);
+        if (carteCachee(i) && avant !== null && jourE(e, k).coups.deviner.cartes[i].raison === null) { E.poserRaison(e, scelle, cal, k, i, avant, hh); }
+      }
+    });
+    if (temp.raisonsAvant) { delete temp.raisonsAvant[i]; }
+    apres({ garderDefilement: true });
+  };
+  A['passer'] = function (b) {
+    var i = +b.getAttribute('data-carte');
+    var c = jourE(etat(), K()).coups.deviner.cartes[i];
+    geste(function (e, hh) { E.poserCarte(e, E.K(e), i, c.designe === 'passe' ? null : 'passe', hh); });
+    if (temp.raisonsAvant) { delete temp.raisonsAvant[i]; }
+    apres({ garderDefilement: true });
+  };
+  A['devine-pourquoi'] = function (b) { temp.feuille = +b.getAttribute('data-carte'); delete temp.raisonFeuille; apres({ garderDefilement: true }); };
+  A['feuille-raison'] = function (b) { temp.raisonFeuille = lireValeur(b); apres({ garderDefilement: true }); };
+  A['feuille-choisir'] = function () {
+    if (temp.raisonFeuille === undefined || temp.raisonFeuille === null) { return; }
+    var i = temp.feuille, r = temp.raisonFeuille;
+    var c = jourE(etat(), K()).coups.deviner.cartes[i];
+    if (personnages().indexOf(c.designe) >= 0) { geste(function (e, hh) { E.poserRaison(e, scelle, cal, E.K(e), i, r, hh); }); }
+    else { temp.raisonsAvant = temp.raisonsAvant || {}; temp.raisonsAvant[i] = r; }
+    temp.feuille = null; delete temp.raisonFeuille; apres({ garderDefilement: true });
+  };
+  A['feuille-fermer'] = function () { temp.feuille = null; delete temp.raisonFeuille; apres({ garderDefilement: true }); };
+  A['relire'] = function () { geste(function (e) { E.compter(e, cal, 'relire'); }); temp.feuille = 'relire'; apres({ garderDefilement: true }); };
+  A['deviner-valider'] = function () {
+    if (!jourE(etat(), K()).coups.deviner.cartes.every(function (c) { return c.designe !== null; })) { return; }
+    geste(function (e, hh) { E.validerDeviner(e, E.K(e), hh); aller(e, hh, 'repondre', null, false); });
+    temp = {}; apres();
   };
 
-  /* Message de 18h et révélation */
-  A['notification'] = function () { var s = seanceCourante(); s.rev.commencee = true; allerA('revelation', null, false); ecrire(); rendre(); };
+  /* Aujourd'hui : Répondre */
+  A['jour-position'] = function (b) { temp.position = +b.getAttribute('data-valeur'); temp.jour = K(); apres({ garderDefilement: true }); };
+  A['jour-suivant-raison'] = function () { if (!temp.position) { return; } temp.raison = null; geste(function (e, hh) { aller(e, hh, 'raison'); }); apres(); };
+  A['jour-changer'] = function () { geste(function (e, hh) { aller(e, hh, 'repondre'); }); apres(); };
+  A['jour-raison'] = function (b) { temp.raison = lireValeur(b); apres({ garderDefilement: true }); };
+  A['jour-valider-raison'] = function () {
+    if (temp.raison === null || temp.raison === undefined) { return; }
+    var rep = { niveau: temp.position, raison: temp.raison };
+    geste(function (e, hh) { E.repondre(e, scelle, cal, E.K(e), rep, hh); aller(e, hh, 'attente', null, false); });
+    temp = {}; apres();
+  };
+
+  /* Rattrapage (§7.4, §8.1 ter) */
+  A['ratt-position'] = function (b) { temp.position = +b.getAttribute('data-valeur'); apres({ garderDefilement: true }); };
+  A['ratt-suivant-raison'] = function () { if (!temp.position) { return; } temp.raison = null; geste(function (e, hh) { aller(e, hh, 'ratt-raison', { jour: e.vue.tel.jour }); }); apres(); };
+  A['ratt-changer'] = function () { geste(function (e, hh) { aller(e, hh, 'ratt-position', { jour: e.vue.tel.jour }); }); apres(); };
+  A['ratt-raison'] = function (b) { temp.raison = lireValeur(b); apres({ garderDefilement: true }); };
+  A['ratt-valider'] = function () {
+    if (temp.raison === null || temp.raison === undefined) { return; }
+    var rep = { niveau: temp.position, raison: temp.raison };
+    geste(function (e, hh) {
+      var r = E.rattrapage(e, cal);
+      var j = r.jour;
+      E.repondre(e, scelle, cal, j, rep, hh);
+      aller(e, hh, 'ratt-attente', { jour: j }, false);
+    });
+    temp = {}; apres();
+  };
+  A['texte-suivant'] = function () {
+    geste(function (e, hh) { E.afficherTexteRattrapage(e, cal, hh); var r = E.rattrapage(e, cal); aller(e, hh, 'ratt-position', { jour: r.jour }, false); });
+    temp = {}; apres();
+  };
+  A['aller-au-dimanche'] = function () {
+    geste(function (e, hh) {
+      var r = E.rattrapage(e, cal);
+      E.finirSaut(e, cal, hh);
+      e.vue.noteSaut = { jour: r.reprise, jours: cal.saut(r.numero).jours.length };
+      aller(e, hh, 'verrou', null, false);
+    });
+    temp = {}; apres();
+  };
+
+  /* Message de 18h et révélation (§7.17, §7.18) */
+  A['notification'] = function () {
+    var k = K(), m = Rj(k).message;
+    geste(function (e, hh) {
+      var rv = revDe(e, k);
+      rv.commencee = true;
+      if (cal.estPointDeSaut(k) && m.forme === 'question') {
+        // Rien à révéler : le toucher ouvre la page du saut (§7.4).
+        rv.ouverte = true; rv.i = 0; aller(e, hh, 'revelation', null, false);
+        E.ouvrirPageSaut(e, cal, hh); e.vue.cadre = { page: 'saut' };
+        return;
+      }
+      if (m.forme === 'question') { rv.ouverte = false; allerAuJour(e, hh); return; }
+      rv.ouverte = true; rv.i = 0; aller(e, hh, 'revelation', null, false);
+    });
+    apres();
+  };
   A['retourner'] = function () {
-    var s = seanceCourante(); var seq = sequenceRevelation(s.k); var el = seq[s.rev.i];
-    if (el.type !== 'carte') { return; }
-    s.rev.ret[el.i] = true; ecrire();
+    var k = K(), rv = jourE(etat(), k).page.rev, seq = sequenceRevelation(k), el = seq[rv.i];
+    if (!el || el.type !== 'carte') { return; }
+    geste(function (e) { revDe(e, k).ret[el.i] = true; });
     var reduire = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var rond = milieuTel.querySelector('.rond');
     if (rond && !reduire) {
       rond.classList.add('bascule');
-      window.setTimeout(function () { rendre({ garderDefilement: true }); var b = milieuTel.querySelector('.apres'); if (b) { b.setAttribute('tabindex', '-1'); } }, 450);
-    } else { rendre({ garderDefilement: true }); }
+      window.setTimeout(function () { apres({ garderDefilement: true }); var b2 = milieuTel.querySelector('.apres'); if (b2) { b2.setAttribute('tabindex', '-1'); } }, 450);
+    } else { apres({ garderDefilement: true }); }
   };
   A['rev-suivant'] = function () {
-    var s = seanceCourante(); var seq = sequenceRevelation(s.k);
-    if (s.rev.i < seq.length - 1) { s.rev.i += 1; ecrire(); rendre(); return; }
-    // dernière carte de la clôture (§7.4) : question 1, puis fiche du texte 14
-    s.rev.fin = true; ecrire(); apresRevelationCloture();
+    var k = K();
+    geste(function (e, hh) {
+      var rv = revDe(e, k), seq = sequenceRevelation(k);
+      if (seq[rv.i] && seq[rv.i].type === 'vote' && e.vue.noteSaut) { delete e.vue.noteSaut; }
+      if (rv.i < seq.length - 1) { rv.i += 1; }
+      aller(e, hh, 'revelation', null, false);
+    });
+    apres();
   };
-  A['rev-jouer'] = function () { var s = seanceCourante(); s.rev.fin = true; temp = {}; allerAuJour(false); ecrire(); rendre(); };
+  /** Dernière carte de la révélation de clôture : la fiche du dernier texte (§7.5, point 2). */
+  A['rev-fin-cloture'] = function () {
+    var k = K();
+    if (!cal.estCloture(k)) { A['rev-suivant'](); return; }
+    geste(function (e, hh) { var rv = revDe(e, k); rv.ouverte = false; if (e.vue.noteSaut) { delete e.vue.noteSaut; } aller(e, hh, 'fiche', { texte: cal.ligne(cal.dernierJeu).repondu, dernier: true }, false); });
+    apres();
+  };
+  A['rev-jouer'] = function () {
+    var k = K();
+    if (cal.estPointDeSaut(k)) { A['ouvrir-saut'](); return; }
+    geste(function (e, hh) { revDe(e, k).ouverte = false; allerAuJour(e, hh); });
+    temp = {}; apres();
+  };
+  A['croix'] = function () {
+    var k = K();
+    if (cal.estPointDeSaut(k) || cal.estCloture(k)) { A['absent'](); return; }
+    geste(function (e, hh) {
+      var rv = revDe(e, k);
+      if (e.vue.noteSaut && sequenceRevelation(k)[rv.i] && ['carte', 'vote'].indexOf(sequenceRevelation(k)[rv.i].type) >= 0) { delete e.vue.noteSaut; }
+      rv.ouverte = false; allerAuJour(e, hh);
+    });
+    apres();
+  };
+  A['rouvrir'] = function () {
+    var k = K();
+    geste(function (e, hh) {
+      E.compter(e, cal, 'rouvrir');
+      var rv = revDe(e, k);
+      var fini = rv.max >= sequenceRevelation(k).length - 1;
+      if (fini) { rv.i = 0; }
+      rv.ouverte = true; aller(e, hh, 'revelation', null, false);
+    });
+    apres();
+  };
 
-  /* Onglets et fiches */
-  A['onglet-jour'] = function () { temp.voirTout = null; allerAuJour(false); ecrire(); rendre(); };
-  A['onglet-cercle'] = function () { allerA('cercle', null, false); ecrire(); rendre(); };
-  A['onglet-moi'] = function () { allerA('moi-portrait', null, false); ecrire(); rendre(); };
-  A['moi-portrait'] = A['onglet-moi'];
-  A['moi-titres'] = function () { allerA('moi-titres', null, false); ecrire(); rendre(); };
-  A['moi-historique'] = function () { allerA('moi-historique', null, false); ecrire(); rendre(); };
+  /* Onglets, fiches, Le Cercle, Moi */
+  A['onglet-jour'] = function () { temp.voirTout = null; geste(function (e, hh) { allerAuJour(e, hh); }); apres(); };
+  A['onglet-cercle'] = function () { geste(function (e, hh) { var dv = devinerEnCours(e); E.compter(e, cal, 'cercle', dv); aller(e, hh, 'cercle', { jour: e.vue.tel.jour }, false); }); apres(); };
+  function ouvrirMoi(e, hh, sous) { E.compter(e, cal, 'moi', devinerEnCours(e)); aller(e, hh, sous || 'moi-portrait', { jour: e.vue.tel.jour }, false); }
+  A['onglet-moi'] = function () { geste(function (e, hh) { ouvrirMoi(e, hh); }); apres(); };
   A['voir-portrait'] = A['onglet-moi'];
-  A['reglages'] = function () { allerA('reglages', null, true); ecrire(); rendre(); };
-  A['proche'] = function (b) { allerA('proche', { membre: b.getAttribute('data-membre') }, true); ecrire(); rendre(); };
-  A['voir-tout'] = function (b) { temp.voirTout = b.getAttribute('data-membre'); rendre({ garderDefilement: true }); };
-  A['titres-passes'] = function () { allerA('titres-passes', null, true); ecrire(); rendre(); };
-  A['fiche'] = function (b) { allerA('fiche', { texte: b.getAttribute('data-texte') }, true); ecrire(); rendre(); };
+  A['mon-visage'] = A['onglet-moi'];
+  A['moi-portrait'] = function () { geste(function (e, hh) { aller(e, hh, 'moi-portrait', { jour: e.vue.tel.jour }, false); }); apres(); };
+  A['moi-titres'] = function () { geste(function (e, hh) { aller(e, hh, 'moi-titres', { jour: e.vue.tel.jour }, false); }); apres(); };
+  A['moi-historique'] = function () { geste(function (e, hh) { aller(e, hh, 'moi-historique', { jour: e.vue.tel.jour }, false); }); apres(); };
+  A['reglages'] = function () { geste(function (e, hh) { aller(e, hh, 'reglages', { jour: e.vue.tel.jour }, true); }); apres(); };
+  A['proche'] = function (b) {
+    var m = b.getAttribute('data-membre');
+    geste(function (e, hh) { E.compter(e, cal, 'proche', devinerEnCours(e)); aller(e, hh, 'proche', { membre: m, jour: e.vue.tel.jour }, true); });
+    apres();
+  };
+  A['voir-tout'] = function (b) { temp.voirTout = b.getAttribute('data-membre'); apres({ garderDefilement: true }); };
+  A['titres-passes'] = function () { geste(function (e, hh) { aller(e, hh, 'titres-passes', { jour: e.vue.tel.jour }, true); }); apres(); };
+  A['fiche'] = function (b) { var n = b.getAttribute('data-texte'); geste(function (e, hh) { aller(e, hh, 'fiche', { texte: n, jour: e.vue.tel.jour }, true); }); apres(); };
   A['retour'] = function () {
-    var v = etat.vue.tel;
-    if (!v.pile.length) { allerAuJour(false); }
-    else { var prec = v.pile.pop(); var pile = v.pile; etat.vue.tel = prec; etat.vue.tel.pile = pile; effetsAffichage(); }
-    ecrire(); rendre();
+    geste(function (e, hh) {
+      var v = e.vue.tel;
+      if (!v.pile.length) { allerAuJour(e, hh); return; }
+      var prec = v.pile[v.pile.length - 1], pile = v.pile.slice(0, -1);
+      e.vue.tel = prec; e.vue.tel.pile = pile; effets(e, hh);
+    });
+    apres();
   };
 
-  /* Jour suivant (§8.2, §8.3) */
+  /* « Jour suivant », « Abandonner cette journée » (§8.1, §8.1 bis), carnet du jour (§8.3) */
   A['jour-suivant'] = function () {
-    if (journeeFinie()) { etat.vue.cadre = { page: 'carnet' }; ecrire(); rendre(); return; }
-    bande.confirmation = true; rendre({ telephone: false });
+    bande.confirmation = false;
+    if (!E.journeeFinie(etat(), cal, K())) { return; }
+    geste(function (e) { e.vue.cadre = { page: 'carnet', jour: E.K(e), abandon: false }; });
+    apres();
   };
-  A['confirmation-annuler'] = function () { bande.confirmation = false; rendre({ telephone: false }); };
-  A['confirmation-continuer'] = function () { bande.confirmation = false; etat.vue.cadre = { page: 'carnet' }; ecrire(); rendre(); };
+  A['abandonner'] = function () { bande.confirmation = true; rendreBandeSeule(); };
+  A['abandon-annuler'] = function () { bande.confirmation = false; rendreBandeSeule(); };
+  A['abandon-confirmer'] = function () {
+    bande.confirmation = false;
+    geste(function (e, hh) {
+      var k = E.K(e), d = jourE(e, k);
+      // Durée de Répondre : jusqu'à ce toucher, à défaut de raison validée (S1 §8.12).
+      if (d.etapes && d.etapes.repondre && d.coups.reponse === null) { E.marquer(e, k, 'repContinuer', hh, true); }
+      e.vue.cadre = { page: 'carnet', jour: k, abandon: true };
+    });
+    apres();
+  };
   A['carnet-q'] = function (b) {
-    var s = seanceCourante();
-    s.coups.carnet[b.getAttribute('data-q')] = b.getAttribute('data-valeur');
-    ecrire(); rendre({ focus: false });
+    var champ = b.getAttribute('data-q'), v = b.getAttribute('data-valeur');
+    geste(function (e) { E.repondreCarnet(e, cal, e.vue.cadre.jour, champ, v); });
+    apres({ focus: false });
   };
-  A['carnet-annuler'] = function () {
-    etat.vue.cadre = null; ecrire();
-    if (K() === 0) { allerA('1.9'); ecrire(); rendre(); return; }
-    rendreRetourTelephone();
+  A['carnet-hesite'] = function (b) {
+    var v = b.getAttribute('data-valeur');
+    geste(function (e) {
+      var j = e.vue.cadre.jour, l = (jourE(e, j).coups.carnet.hesite || []).slice();
+      if (l.indexOf(v) >= 0) { l = l.filter(function (x) { return x !== v; }); }
+      else if (v === 'nulle_part') { l = ['nulle_part']; }
+      else { l = l.filter(function (x) { return x !== 'nulle_part'; }).concat([v]); }
+      l = J.CODES.hesite.filter(function (x) { return l.indexOf(x) >= 0; });
+      E.repondreCarnet(e, cal, j, 'hesite', l.length ? l : null);
+    });
+    apres({ focus: false });
   };
+  A['carnet-annuler'] = function () { geste(function (e) { e.vue.cadre = null; }); apres({ garderDefilement: true }); };
   A['aller-jour-suivant'] = function () {
     if (bande.passage) { return; }
-    bande.passage = true;
-    rendre({ telephone: false, focus: false });
-    var k = K();
-    var s = nouvelleSeance(k + 1);
-    ppArreter();
-    etat.seances.push(s);
-    visibleDepuis = estVisible() ? performance.now() : null;
-    etat.vue.cadre = null;
-    temp = {};
-    if (k + 1 >= 2 && k + 1 <= 14) {
-      var c = R().seances[k + 1].manches.porteur.cartes.length;
-      s.coups.deviner = []; for (var i = 0; i < c; i++) { s.coups.deviner.push({ designe: null, raison: null }); }
+    var c = vue().cadre, k = K();
+    // Après le carnet du premier dimanche : le carnet à copier (§8.3).
+    if (c.page === 'carnet' && cal.sauts.length && k === cal.sauts[0].reprise) {
+      var texte = faireCopie();
+      geste(function (e) { e.vue.cadre = { page: 'export', mode: 'jour', jour: k, abandon: c.abandon, texte: texte }; });
+      bande.messageCopie = null; apres(); return;
     }
-    if (k + 1 === 15) { s.rev.commencee = true; }
-    allerAuJour(false);
-    ecrire();
-    bande.passage = false;
-    rendre();
+    bande.passage = true;
+    rendreBandeSeule();
+    var abandon = !!c.abandon;
+    geste(function (e) {
+      var suivant = E.allerAuJourSuivant(e, cal, abandon);
+      e.vue.cadre = null;
+      // Le moteur n'a pas encore calculé le nouveau jour : l'écran se choisit sans lui. Un jour joué ou un
+      // point de saut s'ouvre sur le message de 18h (§7.3, §7.4) ; la clôture, sur la révélation (§7.5).
+      if (cal.estCloture(suivant)) { var rv = revDe(e, suivant); rv.commencee = true; rv.ouverte = true; e.vue.tel = { ecran: 'revelation', pile: [] }; }
+      else { e.vue.tel = { ecran: 'verrou', pile: [] }; }
+    });
+    temp = {}; bande.passage = false; bande.messageCopie = null;
+    apres();
   };
 
-  /* Clôture (§7.4) */
-  function apresRevelationCloture() {
-    var r = R().seances[15];
-    var faux = r.mesures.revelation_verdicts.filter(function (v) { return v === 'faux'; }).length;
-    if (faux >= 1) { etat.vue.cadre = { page: 'carnet' }; }
-    else { ficheTexte14(); }
-    ecrire(); rendre();
-  }
-  function ficheTexte14() { etat.vue.cadre = null; allerA('fiche', { texte: '14', texte14: true }, false); }
-  A['cloture-apres-q1'] = function () { ficheTexte14(); ecrire(); rendre(); };
-  A['cloture-apres-14'] = function () {
-    etat.fin = { f2: null, f1: null, etape: 'f2' };
-    etat.vue.tel = { ecran: 'fiche', texte: '14', texte14: true, pile: [] };
-    etat.vue.cadre = { page: 'cloture-f2' };
-    ecrire(); rendre();
+  /* Le saut (§8.1 ter) */
+  A['ouvrir-saut'] = function () { geste(function (e, hh) { E.ouvrirPageSaut(e, cal, hh); e.vue.cadre = { page: 'saut' }; }); apres(); };
+  A['saut-annuler'] = function () { geste(function (e) { E.annulerSaut(e, cal); e.vue.cadre = null; }); apres(); };
+  A['saut-confirmer'] = function () {
+    geste(function (e, hh) {
+      E.confirmerSaut(e, cal, socle.instantDuSaut(), hh);
+      e.vue.cadre = null;
+      var r = E.rattrapage(e, cal);
+      aller(e, hh, 'ratt-position', { jour: r.jour }, false);
+    });
+    temp = {}; apres();
   };
-  A['cloture-f2-continuer'] = function () {
-    etat.fin.etape = 'f1';
-    if (!etat.fin.f1) { etat.fin.f1 = f1Vide(); }
-    etat.vue.cadre = { page: 'cloture-f1' }; ecrire(); rendre();
+
+  /* Clôture (§7.5, §8.5) */
+  A['cloture-apres-dernier'] = function () { geste(function (e) { e.vue.cadre = { page: 'cloture-questions', codes: {} }; }); apres(); };
+  A['fin-choix'] = function (b) {
+    var cle = b.getAttribute('data-cle'), v = b.getAttribute('data-valeur');
+    geste(function (e) { var c = e.vue.cadre; c.codes = c.codes || {}; c.codes[cle] = v; });
+    apres({ focus: false });
+  };
+  A['cloture-continuer'] = function () {
+    var codes = vue().cadre.codes || {};
+    geste(function (e, hh) { E.marquer(e, E.K(e), 'fige', hh); E.finir(e, cal, codes); e.vue.cadre = { page: 'export', mode: 'final' }; });
+    bande.messageCopie = null; apres();
   };
 
   /* Arrêter l'essai (§8.10) */
-  A['arreter'] = function () { etat.vue.cadre = { page: 'arret-confirmation' }; ecrire(); rendre(); };
+  A['arreter'] = function () { geste(function (e) { e.vue.cadre = { page: 'arret-confirmation' }; }); apres(); };
   A['arret-confirmer'] = function () {
-    var s = seanceCourante();
-    s.pp.fige = ppMaintenant();
-    etat.arret = { k: K(), raison: null, f2: null, f1: null, etape: 'questions' };
-    etat.vue.cadre = { page: 'arret-questions' };
-    ecrire(); rendre();
+    geste(function (e, hh) {
+      var k = E.K(e);
+      if (cal.aUneOuverture(k)) { E.marquer(e, k, 'fige', hh); }
+      e.vue.arretEnCours = true;
+      e.vue.cadre = { page: 'arret-questions', raison: null, f2: null };
+    });
+    apres();
   };
-  A['arret-raison'] = function (b) { etat.arret.raison = b.getAttribute('data-valeur'); ecrire(); rendre({ focus: false }); };
-  A['f2'] = function (b) { var o = etat.arret || etat.fin; o.f2 = b.getAttribute('data-valeur'); ecrire(); rendre({ focus: false }); };
+  A['arret-raison'] = function (b) { var v = b.getAttribute('data-valeur'); geste(function (e) { e.vue.cadre.raison = v; }); apres({ focus: false }); };
+  A['arret-f2'] = function (b) { var v = b.getAttribute('data-valeur'); geste(function (e) { e.vue.cadre.f2 = v; }); apres({ focus: false }); };
   A['arret-continuer'] = function () {
-    if (etat.arret.k >= 3) { etat.arret.etape = 'f1'; if (!etat.arret.f1) { etat.arret.f1 = f1Vide(); } etat.vue.cadre = { page: 'arret-f1' }; }
-    else { etat.arret.etape = 'export'; etat.vue.cadre = { page: 'export' }; }
-    ecrire(); rendre();
+    var c = vue().cadre;
+    geste(function (e) {
+      E.arreter(e, cal, c.raison || null, E.K(e) >= J.JOUR_F2 ? (c.f2 || null) : null);
+      delete e.vue.arretEnCours;
+      e.vue.cadre = { page: 'export', mode: 'final' };
+    });
+    bande.messageCopie = null; apres();
   };
-  function f1Vide() { var o = {}; PERSOS.forEach(function (pp) { o[pp] = { S: null, P: null, T: null, L: null }; }); return o; }
-  A['f1'] = function (b) {
-    var o = etat.arret || etat.fin;
-    if (!o.f1) { o.f1 = f1Vide(); }
-    o.f1[b.getAttribute('data-membre')][b.getAttribute('data-tension')] = b.getAttribute('data-valeur');
-    ecrire(); rendre({ focus: false });
-  };
-  A['f1-sauter'] = function () { etat.arret.f1 = null; etat.arret.etape = 'export'; etat.vue.cadre = { page: 'export' }; ecrire(); rendre(); };
-  A['f1-continuer'] = function () {
-    var o = etat.arret || etat.fin;
-    if (etat.fin) { seanceCourante().pp.fige = ppMaintenant(); }
-    o.etape = 'export'; etat.vue.cadre = { page: 'export' }; ecrire(); rendre();
-  };
-  A['voir-devoilement'] = function () {
-    var o = etat.arret || etat.fin; o.etape = 'devoilement';
-    bande.messageCopie = null; etat.vue.cadre = { page: 'devoilement' }; ecrire(); rendre();
-  };
+  A['voir-devoilement'] = function () { bande.messageCopie = null; geste(function (e) { e.vue.cadre = { page: 'devoilement' }; }); apres(); };
 
-  /* Export : copie dans le geste (§8.7) */
+  /* Export : copie dans le geste (S1 §8.7) */
   function copierTexte(texte, zone, reussite, echec) {
     function seconde() {
       try {
         var r = document.createRange(); r.selectNodeContents(zone);
         var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
         if (document.execCommand && document.execCommand('copy')) { reussite(); return; }
-      } catch (e) { /* suite */ }
-      try { var r2 = document.createRange(); r2.selectNodeContents(zone); var s2 = window.getSelection(); s2.removeAllRanges(); s2.addRange(r2); } catch (e) { /* rien */ }
+      } catch (x) { /* suite */ }
+      try { var r2 = document.createRange(); r2.selectNodeContents(zone); var s2 = window.getSelection(); s2.removeAllRanges(); s2.addRange(r2); } catch (x) { /* rien */ }
       echec();
     }
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(texte).then(reussite, seconde); }
       else { seconde(); }
-    } catch (e) { seconde(); }
+    } catch (x) { seconde(); }
   }
   A['copier-carnet'] = function () {
     var zone = document.getElementById('zone-carnet');
-    var texte = zone.textContent;
-    copierTexte(texte, zone, function () { bande.messageCopie = X.carnetCopie; rendreBandeSeule(); },
+    copierTexte(zone.textContent, zone, function () { bande.messageCopie = X.carnetCopie; rendreBandeSeule(); },
       function () { bande.messageCopie = X.copieEchec; rendreBandeSeule(); });
   };
-  function rendreBandeSeule() { var nb = rendreBande(); racine.replaceChild(nb, bandeEl); bandeEl = nb; empilerActions(); }
+  A['export-fermer'] = function () { bande.messageCopie = null; geste(function (e) { e.vue.cadre = e.vue.cadre.retour; }); apres(); };
 
-  /* Tout effacer (§8.9) */
+  /* Tout effacer (S1 §8.9) */
   A['effacer'] = function () {
-    var apres = !!((etat.arret && (etat.arret.etape === 'devoilement')) || (etat.fin && etat.fin.etape === 'devoilement'));
-    etat.vue.cadreSous = etat.vue.cadre;
-    etat.vue.cadre = { page: 'effacer', apres: apres };
-    ecrire(); rendre();
+    var e0 = etat();
+    var apresDevoilement = !!(e0.fin || e0.arret);
+    geste(function (e) { e.vue.cadre = { page: 'effacer', apres: apresDevoilement, sous: e.vue.cadre || null }; });
+    apres();
   };
-  var copiesDuChargement = [];
   A['copier-dabord'] = function () {
-    var apres = etat.vue.cadre.apres;
-    var cadreRetour = { page: 'effacer', apres: apres };
-    if (apres) { etat.vue.cadre = { page: 'export', copie: { texte: texteCarnetExport({}) }, retour: cadreRetour }; ecrire(); rendre(); return; }
-    var s = seanceCourante();
-    var D = dureesToutes(null);
-    var dc = dureesSeance(s, ppMaintenant());
-    var c = { k: s.k, coups: JSON.parse(JSON.stringify(s.coups)), versions: s.versions.slice(), etapes: s.etapes ? { deviner: s.etapes.deviner, repondre: s.etapes.repondre } : null };
-    var cp = M.copie(scelle, journal(), c, D, dc);
-    copiesDuChargement.push(JSON.parse(JSON.stringify(cp)));
-    etat.vue.cadre = { page: 'export', copie: { texte: cp.texte }, retour: cadreRetour };
-    ecrire(); rendre();
+    var c = vue().cadre;
+    var texte = c.apres ? texteCarnetFinal() : faireCopie();
+    geste(function (e) { e.vue.cadre = { page: 'export', mode: 'dabord', texte: texte, retour: c }; });
+    bande.messageCopie = null; apres();
   };
-  A['export-fermer'] = function () { bande.messageCopie = null; etat.vue.cadre = etat.vue.cadre.retour; ecrire(); rendre(); };
   A['effacer-confirmer'] = function () {
-    toutEffacer();
+    socle.toutEffacer();
     var titre = h('h1', { tabindex: '-1' }, t(X.efface));
     montrerVueSeule([titre]);
-    try { titre.focus({ preventScroll: true }); } catch (e) { titre.focus(); }
+    try { titre.focus({ preventScroll: true }); } catch (x) { titre.focus(); }
   };
 
   /* Écrans hors de l'icône : copies */
   function messageCopie(b, texte) { var m = b.parentNode.querySelector('.message-copie'); if (m) { m.textContent = t3(texte); m.hidden = false; } }
-  A['copier-adresse'] = function (b) {
-    var zone = b.parentNode.querySelector('.adresse');
-    copierTexte(X.adresse, zone, function () { messageCopie(b, X.adresseCopiee); }, function () { messageCopie(b, X.adresseEchec); });
+  A['copier-adresse'] = function (b) { copierTexte(X.adresse, b.parentNode.querySelector('.adresse'), function () { messageCopie(b, X.adresseCopiee); }, function () { messageCopie(b, X.adresseEchec); }); };
+  A['copier-lignes'] = function (b) { var z = document.getElementById('diagnostic'); copierTexte(z.textContent, z, function () { messageCopie(b, X.lignesCopiees); }, function () { messageCopie(b, X.lignesEchec); }); };
+
+  /* ================================================================== */
+  /* Branchement au socle                                               */
+  /* ================================================================== */
+
+  var ecrans = {
+    rendre: function () { normaliserAuChargement(); relireHeure = true; rendre(); },
+    arret: arret,
+    hors: function (type) { hors(type); },
+    ancienne: function (info) { ancienneInfo = info; rendre(); },
+    actions: A,
+    /**
+     * Une note passagère part au toucher suivant (S1 §8.1). Elle part après le geste, au « click » :
+     * l'ôter dès le « pointerdown » ferait bouger le téléphone sous le doigt (la bande raccourcit), et
+     * le toucher tomberait à côté de sa cible.
+     */
+    avantToucher: function (ev) {
+      var cible = ev.target && ev.target.closest ? ev.target.closest('[data-action]') : null;
+      noteAEffacer = bande.note && !(cible && cible.getAttribute('data-action') === 'absent') ? bande.note : null;
+    },
+    revenu: function () { if (etat() && !vue().cadre && vue().tel.ecran === 'attente') { relireHeure = true; rendre(); } },
+    carnet: function () { var e = etat(); return e && (e.fin || e.arret) ? texteCarnetFinal() : null; },
+    copies: function () { return JSON.parse(JSON.stringify(copiesDuChargement)); }
   };
-  A['copier-lignes'] = function (b) {
-    var zone = document.getElementById('diagnostic');
-    copierTexte(zone.textContent, zone, function () { messageCopie(b, X.lignesCopiees); }, function () { messageCopie(b, X.lignesEchec); });
-  };
-
-  /* ================================================================== */
-  /* Événements : un seul gestionnaire de touchers                      */
-  /* ================================================================== */
-
-  function brancher() {
-    document.addEventListener('pointerdown', function (ev) {
-      if (bande.note && ev.target && !(ev.target.closest && ev.target.closest('[data-action="absent"]'))) { bande.note = null; if (racine && !arretTechnique) { rendreBandeSeule(); } }
-      toucherCompte(ev.target);
-    }, true);
-    document.addEventListener('keydown', function (ev) { toucherCompte(ev.target); }, true);
-    document.addEventListener('click', function (ev) {
-      var b = ev.target.closest ? ev.target.closest('[data-action]') : null;
-      if (!b) { return; }
-      if (b.getAttribute('aria-disabled') === 'true') { return; }
-      var a = b.getAttribute('data-action');
-      if (A[a]) { ev.preventDefault(); A[a](b); }
-    });
-    document.addEventListener('input', function (ev) {
-      if (ev.target && ev.target.id === 'champ-pseudo') {
-        var avant = temp.saisie || '';
-        var v = ev.target.value;
-        if (Array.from(formaterPseudo(v)).length > 20) { ev.target.value = avant; return; }
-        temp.saisie = v;
-        var bt = milieuTel.querySelector('[data-action="recevoir-code"]');
-        if (bt) { if (pseudoValide(v)) { bt.removeAttribute('aria-disabled'); } else { bt.setAttribute('aria-disabled', 'true'); } }
-        rendreBandeSeule();
-      }
-    });
-    document.addEventListener('visibilitychange', function () {
-      if (!etat || efface || arretTechnique) { return; }
-      if (document.visibilityState === 'hidden') { ppArreter(); ecrire(); return; }
-      revenir();
-    });
-    window.addEventListener('pageshow', function (ev) { if (ev.persisted && etat && !efface && !arretTechnique) { revenir(); } });
-    // fenêtre redimensionnée, écran tourné puis redressé : la rangée d'action se remesure (rien d'écrit, §8.1)
-    window.addEventListener('resize', empilerActions);
-  }
-
-  /** Retour au premier plan : relire l'état gardé avant tout toucher (§8.8). */
-  function revenir() {
-    var garde;
-    try { garde = lireEtat(); } catch (e) { garde = undefined; }
-    if (!garde || garde.ecritures !== etat.ecritures) { location.reload(); return; }
-    ppReprendre();
-    if (!etat.vue.cadre && etat.vue.tel.ecran === 'attente') { effetsAffichage(); rendre(); }
-  }
-
-  /* ================================================================== */
-  /* Point d'accès en lecture (§9, « Une seule source »)                */
-  /* ================================================================== */
-
-  function pointDAcces() {
-    window.ElenchosEssai = Object.freeze({
-      version: VERSION,
-      empreinte: function () { return empreinte; },
-      etat: function () { return etat ? JSON.parse(JSON.stringify(etat)) : null; },
-      journal: function () { return etat ? JSON.parse(JSON.stringify(journal())) : null; },
-      resultats: function () { return etat ? R() : null; },
-      durees: function () { return etat ? dureesToutes(ppMaintenant()) : null; },
-      carnet: function () { return etat && (etat.fin || etat.arret) ? M.carnet(scelle, journal(), R(), dureesToutes(null), etat.fin ? { type: 'fin' } : { type: 'arret' }) : null; },
-      copies: function () { return JSON.parse(JSON.stringify(copiesDuChargement)); },
-      lectures: function () { return JSON.parse(JSON.stringify(lectures)); },
-      /** Le moteur de la page sur un journal donné (rejeu en mode moteur, §9) : calcul pur, rien n'est écrit. */
-      calculer: function (j) { return scelle ? M.calculer(scelle, j) : null; }
-    });
-  }
-
-  /* ================================================================== */
-  /* Démarrage                                                          */
-  /* ================================================================== */
-
-  /** À la réouverture, une vue gardée peut demander un choix perdu (§8.1, §8.8) : on revient à l'étape. */
-  function normaliserVue() {
-    var v = etat.vue.tel;
-    if (v.ecran === '1.3' || v.ecran === '1.4') { etat.vue.tel = { ecran: '1.2', E: v.E, pile: [] }; }
-    if (v.ecran === '1.8') { etat.vue.tel = { ecran: '1.8', pile: [] }; }
-    if (v.ecran === 'raison') { etat.vue.tel = { ecran: 'repondre', pile: [] }; }
-    if (etat.vue.cadre && etat.vue.cadre.page === 'carnet' && !journeeFinie() && K() >= 1 && K() <= 14) { etat.vue.cadre = null; }
-    if (etat.vue.cadre && etat.vue.cadre.page === 'export' && etat.vue.cadre.copie && etat.vue.cadre.retour) { etat.vue.cadre = etat.vue.cadre.retour; }
-    if (etat.vue.cadre && etat.vue.cadre.page === 'effacer') { etat.vue.cadre = etat.vue.cadreSous || null; delete etat.vue.cadreSous; }
-    if (etat.vue.cadre && etat.vue.cadre.page === 'arret-confirmation') { etat.vue.cadre = null; }
-    temp = {};
-  }
 
   function demarrer() {
-    pointDAcces();
-    if (dansCadre || !estIOS) { ecranHors('ailleurs'); brancherHors(); return; }
-    if (!standalone && autreNavigateur) { ecranHors('autre'); brancherHors(); return; }
-    if (!standalone) { ecranHors('onglet'); brancherHors(); return; }
-    var v = verifier();
-    if (v !== 0) { brancherHors(); arreter1('V' + v); return; }
-    if (!memoireMarche()) { arreter2(); return; }
-    var garde;
-    // Partie gardée illisible : arrêt 1, repère M1 ; rien n'est réécrit ni effacé, l'entrée ne commence pas (§8.11)
-    try { garde = lireEtat(); } catch (e) { brancherHors(); arreter1('M1'); return; }
-    try { if (navigator.storage && navigator.storage.persist) { navigator.storage.persist().then(function () {}, function () {}); } } catch (e) { /* rien */ }
-    etat = garde || nouvelEtat();
-    construireRacine();
-    if (estVisible()) { visibleDepuis = performance.now(); }
-    normaliserVue();
-    brancher();
-    if (!garde) { ecrire(); }
-    if (!etat.vue.cadre && etat.vue.tel.ecran === 'attente') { effetsAffichage(); }
-    rendre();
-  }
-  function brancherHors() {
-    document.addEventListener('click', function (ev) {
-      var b = ev.target.closest ? ev.target.closest('[data-action]') : null;
-      if (b && A[b.getAttribute('data-action')]) { ev.preventDefault(); A[b.getAttribute('data-action')](b); }
+    socle = S.creer({
+      window: window, document: document, performance: performance,
+      maintenantMs: function () { return Date.now(); },
+      version: ENTREES.version_page, scelleB64: SCELLE_B64, confusables: CONFUSABLES
     });
+    // Le calendrier et le fichier ne sont lus qu'après V1 à V5 : les écrans les prennent au premier rendu.
+    var rendreSocle = ecrans.rendre, ancienneSocle = ecrans.ancienne;
+    ecrans.rendre = function () { cal = socle.cal(); scelle = socle.scelle(); rendreSocle(); };
+    ecrans.ancienne = function (info) { cal = socle.cal(); scelle = socle.scelle(); ancienneSocle(info); };
+    return socle.demarrer(ecrans);
   }
 
   return { demarrer: demarrer };
-})(ElenchosNoyau, ElenchosMoteur, ElenchosTextes);
+})(ElenchosNoyau, ElenchosTextes, ElenchosEtat, ElenchosJournal, ElenchosCarnet, ElenchosMoteur, ElenchosSocle);
 
 ElenchosInterface.demarrer();

@@ -1,6 +1,6 @@
 # Page de l'essai : dépendances et commandes (lots 1 à 8)
 
-## Second essai : état aux lots 1 et 2 (10 octobre 2026)
+## Second essai : état aux lots 1 à 3 (10 octobre 2026)
 
 Copie des sources du premier essai (`docs/essai/a-ne-pas-ouvrir/outillage/page/`, non touchées), plus le socle du second essai. Contrat entre socle, moteur et écrans : `INTERFACE.md`. Rien n'est téléchargé de plus.
 
@@ -16,6 +16,12 @@ Lot 2 (histoire) : rien de téléchargé.
 - Tests du lot 2 : `node --test tests/test-histoire.js`.
 - Trace de l'histoire de la page (P) : `node tests/trace-histoire.js FICHIER_SCELLE SORTIE` ; comparaison à trois (P, C, S), octet pour octet, avec les premiers chemins qui diffèrent : `node tests/comparer-histoire.js P=… C=… S=…`.
 - Mesure de performance : `node tests/mesure-histoire.js [FICHIER_SCELLE] [RALENTI]`, avec `playwright-core` 1.56.1 et Chromium de l'environnement (`/opt/node-tools/node_modules/`, `/opt/pw-browsers/`), déjà présents ; chemin réglable par `ELENCHOS_PLAYWRIGHT`.
+
+Lot 3 (moteur du porteur) : rien de téléchargé.
+- `moteur.js` : `calculer`, `cartesServies` ; `trace.js` : `partie` (trace de partie v4).
+- Tests : `node --test tests/test-calculer.js` (fichier de test, et candidat 1 du scellement s'il est présent ; `ELENCHOS_CANDIDAT` pour un autre).
+- Trace de partie de la page : `node tests/trace-partie.js FICHIER_SCELLE JOURNAL SORTIE [DUREES]`.
+- Mesure : `node tests/mesure-histoire.js` mesure aussi `calculer` (partie complète) à chaque geste.
 
 ## Premier essai
 

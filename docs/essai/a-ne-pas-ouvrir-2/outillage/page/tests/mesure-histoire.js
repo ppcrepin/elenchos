@@ -9,7 +9,10 @@
  * la page (noyau, calendrier, moteur), fichier embarqué en base64. On mesure,
  * dans une même tâche : décodage base64, empreinte, lecture du JSON, table du
  * calendrier, histoire(), résumé canonique et son SHA-256 (V6). Premier
- * calcul après chargement (froid), puis dix de plus (chaud). Rien n'est publié. */
+ * calcul après chargement (froid), puis dix de plus (chaud). Rien n'est publié.
+ * Lot 3 : puis calculer() sur la partie témoin la plus longue (partie complète
+ * jouée par tests/partie-test.js, deux sauts), comme à chaque geste (§8.8 :
+ * au plus 100 ms par geste). */
 'use strict';
 const fs = require('node:fs');
 const path = require('node:path');
@@ -22,7 +25,14 @@ const pw = require(process.env.ELENCHOS_PLAYWRIGHT || '/opt/node-tools/node_modu
 
 function sansNode(s) { return s.replace(/\/\*node-debut\*\/[\s\S]*?\/\*node-fin\*\//g, ''); }
 const sources = ['noyau.js', 'calendrier.js', 'moteur.js'].map(n => sansNode(fs.readFileSync(path.join(ICI, n), 'utf8'))).join('\n');
-const b64 = N.base64Encoder(new Uint8Array(fs.readFileSync(scelleChemin)));
+const octetsScelle = new Uint8Array(fs.readFileSync(scelleChemin));
+const b64 = N.base64Encoder(octetsScelle);
+// Le journal de la partie la plus longue, joué dans Node par les transitions d'etat.js.
+const journal = (function () {
+  const C = require('../calendrier.js'), M = require('../moteur.js'), E = require('../etat.js'), PT = require('./partie-test.js');
+  const s = JSON.parse(N.utf8Decoder(octetsScelle)), cal = C.lire(s), arr = M.histoire(s, cal);
+  return E.journal(PT.jouer(s, cal, { cartes: M.cartesServies(s, cal, arr) }), cal, N.sha256(octetsScelle));
+})();
 const page = '<!doctype html><meta charset="utf-8"><title>mesure</title><script>var SCELLE_B64 = "' + b64 + '";\n' + sources + '\n' +
   'function chargerHistoire() {' +
   '  var N = ElenchosNoyau, t0 = performance.now();' +
@@ -33,7 +43,14 @@ const page = '<!doctype html><meta charset="utf-8"><title>mesure</title><script>
   '  var t2 = performance.now();' +
   '  var sha = N.sha256(N.utf8Encoder(N.jsonCanonique(ElenchosMoteur.resume(arr))));' +
   '  var t3 = performance.now();' +
+  '  ARRIVEE = { scelle: scelle, cal: cal, arr: arr };' +
   '  return { avant: t1 - t0, histoire: t2 - t1, v6: t3 - t2, total: t3 - t0, ok: sha === scelle.histoire.resume_sha256 };' +
+  '}' +
+  'var ARRIVEE = null, JOURNAL = ' + JSON.stringify(journal) + ';' +
+  'function geste() {' +
+  '  var t0 = performance.now(); var j = JSON.parse(JSON.stringify(JOURNAL));' +
+  '  var R = ElenchosMoteur.calculer(ARRIVEE.scelle, ARRIVEE.cal, ARRIVEE.arr, j);' +
+  '  return { ms: performance.now() - t0, K: R.K };' +
   '}</script>';
 
 (async () => {
@@ -46,6 +63,9 @@ const page = '<!doctype html><meta charset="utf-8"><title>mesure</title><script>
   const froid = await p.evaluate(() => chargerHistoire());
   const chauds = [];
   for (let i = 0; i < 10; i++) { chauds.push(await p.evaluate(() => chargerHistoire())); }
+  const gFroid = await p.evaluate(() => geste());
+  const gestes = [];
+  for (let i = 0; i < 10; i++) { gestes.push((await p.evaluate(() => geste())).ms); }
   const version = navigateur.version();
   await navigateur.close();
   const r = x => x.toFixed(0) + ' ms';
@@ -54,4 +74,7 @@ const page = '<!doctype html><meta charset="utf-8"><title>mesure</title><script>
   console.log('froid : décodage+empreinte+JSON+calendrier ' + r(froid.avant) + ' ; histoire() ' + r(froid.histoire) + ' ; résumé+SHA-256 ' + r(froid.v6) + ' ; total ' + r(froid.total) + ' ; V6 ' + (froid.ok ? 'passe' : 'ÉCHOUE'));
   console.log('chaud (médiane de 10) : histoire() ' + r(med('histoire')) + ' ; total ' + r(med('total')) + ' ; max total ' + r(Math.max(...chauds.map(c => c.total))));
   console.log('budget du §8.8 (calcul de l\'histoire au chargement) : 1000 ms → ' + (froid.total <= 1000 ? 'tenu' : 'DÉPASSÉ'));
+  gestes.sort((a, b) => a - b);
+  console.log('geste (calculer, partie complète, jour ' + gFroid.K + ') : premier ' + r(gFroid.ms) + ' ; médiane de 10 ' + r((gestes[4] + gestes[5]) / 2) + ' ; max ' + r(gestes[9]));
+  console.log('budget du §8.8 (chaque geste) : 100 ms → ' + (gestes[9] <= 100 && gFroid.ms <= 100 ? 'tenu' : 'DÉPASSÉ'));
 })().catch(e => { console.error(e); process.exit(1); });

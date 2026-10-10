@@ -1,11 +1,18 @@
-/* Textes de la page de l'essai (outillage d'essai, D-001 tenu).
+/* Textes de la page du second essai (outillage d'essai, D-001 tenu ; lots 4 et 5, instance B).
  *
  * Tous les textes affichés, en typographie simple : apostrophe droite,
- * espaces ordinaires. L'affichage applique les règles du §7.8
- * (noyau.typographier), puis insère le pseudo. Sources, citées texte par
- * texte : maquettes finales (écran n.n, D-014), simulation.md (§n),
- * a-ne-pas-ouvrir/devoilement.md, annexe C. Front-end n'invente aucun
- * mot : un texte manquant est une question (QUESTIONS.md).
+ * espaces ordinaires. L'affichage applique les règles du §7.8 de
+ * simulation.md (noyau.typographier), puis insère le pseudo. Sources, citées
+ * bloc par bloc : maquettes finales (écran n.n, D-014), simulation.md
+ * (« S1 §n »), simulation-2.md (« §n ») et son annexe C. Front-end n'invente
+ * aucun mot : un texte qui manque est marqué A_ECRIRE, et la construction
+ * refuse d'écrire la version du porteur tant qu'il en reste un (construire.py).
+ *
+ * Les gabarits ne portent ni prénom de personnage ni nombre du calendrier :
+ * l'invitant, le cercle, les jours et les semaines sont passés par
+ * l'interface, qui les lit dans le fichier scellé. Exceptions, recopiées
+ * telles qu'UX les a écrites : la page d'arrivée et la page du saut (§8.2,
+ * §8.1 ter), qui nomment les jours de la semaine.
  */
 'use strict';
 
@@ -14,6 +21,9 @@ if (typeof module !== 'undefined' && module.exports) { var ElenchosNoyau = requi
 /*node-fin*/
 
 var ElenchosTextes = (function (N) {
+
+  /** Marque d'un texte qui manque encore (§8.6, §7.22) : la version du porteur ne se construit pas avec. */
+  var A_ECRIRE = '[À ÉCRIRE]';
 
   var POSITIONS = ['Très défavorable', 'Défavorable', 'Neutre', 'Favorable', 'Très favorable'];
   /** Les huit tensions dans l'ordre fixe des maquettes, avec leur code d'essai. */
@@ -27,34 +37,47 @@ var ElenchosTextes = (function (N) {
     { code: null, poles: ['État', 'Marché'] },
     { code: 'L', poles: ['Local', 'National'] }
   ];
-  /** Ordre fixe des quatre tensions écartées, dans Moi (§5.3). */
+  /** Ordre fixe des quatre tensions écartées (S1 §5.3). */
   var ECARTEES = [1, 2, 5, 6];
-  /** Jour de la séance n (§7.1, « 5.3 et 5.4, jours ») ; la table continue après 14. */
-  var JOURS_SEANCE = [null, 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche',
-    'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche', 'lundi', 'mardi'];
-  var CERCLE = 'Amis';
+  /** Pôles dans les phrases (S1 §5.5, E2) : pôle 0, pôle 1, après « Entre ». */
+  var POLES_PHRASE = {
+    S: ['la sécurité', 'la liberté', 'sécurité et liberté'],
+    P: ['la précaution', "l'innovation", 'précaution et innovation'],
+    T: ['la tradition', 'le changement', 'tradition et changement'],
+    L: ['la décision locale', 'la décision nationale', 'local et national']
+  };
 
   function majuscule(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-
-  /** La raison en fin de ligne : guillemets, ponctuation gardée (§4.6). */
+  /** La raison en fin de ligne : guillemets, ponctuation gardée (S1 §4.6). */
   function raisonFinLigne(texte) { return '« ' + texte + ' »'; }
-  /** La raison dans une phrase : perd son point final ; « ? » et « ! » restent (§4.6). */
+  /** La raison dans une phrase : perd son point final ; « ? » et « ! » restent (S1 §4.6). */
   function raisonDansPhrase(texte) {
     var t = texte.charAt(texte.length - 1) === '.' ? texte.slice(0, -1) : texte;
     return '« ' + t + ' »';
   }
+  function joindre(morceaux) { return morceaux.filter(function (x) { return x; }).join(' '); }
+
+  var TITRES = { sans_faute: 'Le Sans-Faute', devin: 'Le Devin', mystere: 'Le Mystère', fidele: 'Le Fidèle' };
+  var TITRES_COURTS = { sans_faute: 'Sans-Faute', devin: 'Devin', mystere: 'Mystère', fidele: 'Fidèle' };
+  var ORDRE_TITRES = ['sans_faute', 'devin', 'mystere', 'fidele'];
+  var TEMPERAMENTS = { original: "L'Original", pont: 'Le Pont', mesure: 'Le Mesuré', tranche: 'Le Tranché' };
+  var ORDRE_TEMPERAMENTS = ['original', 'pont', 'mesure', 'tranche'];
 
   var T = {
-    POSITIONS: POSITIONS, T8: T8, ECARTEES: ECARTEES, JOURS_SEANCE: JOURS_SEANCE, CERCLE: CERCLE,
-    majuscule: majuscule, raisonFinLigne: raisonFinLigne, raisonDansPhrase: raisonDansPhrase,
+    A_ECRIRE: A_ECRIRE,
+    POSITIONS: POSITIONS, T8: T8, ECARTEES: ECARTEES, POLES_PHRASE: POLES_PHRASE,
+    TITRES: TITRES, TITRES_COURTS: TITRES_COURTS, ORDRE_TITRES: ORDRE_TITRES,
+    TEMPERAMENTS: TEMPERAMENTS, ORDRE_TEMPERAMENTS: ORDRE_TEMPERAMENTS,
+    majuscule: majuscule, raisonFinLigne: raisonFinLigne, raisonDansPhrase: raisonDansPhrase, joindre: joindre,
 
-    /* ---------------- Téléphone : entrée (1.1 à 1.9) ---------------- */
-    chatTitre: 'Agathe', // 1.1, « ← Thomas » devient le prénom de l'inviteuse
+    /* ---------------- Téléphone : entrée (1.1 à 1.9 ; §7.2) ---------------- */
+    chatTitre: function (inv) { return inv; },
     chatBulle: "Tu crois me connaître ? J'ai répondu à 3 vraies questions de l'Assemblée. Devine ce que j'ai dit, 2 minutes.",
     chatApercuTitre: 'Elenchos',
-    chatApercu: 'Agathe te lance un défi',
-    bandeDefi: function (i) { return 'Défi ' + N.dePrenom('Agathe') + ' · Texte ' + i + ' sur 3'; },
-    consigneDefi: "Réponds, puis devine ce qu'a dit Agathe.",
+    chatApercu: function (inv) { return inv + ' te lance un défi'; },
+    chatAria: function (inv) { return 'Message ' + N.dePrenom(inv); },
+    bandeDefi: function (inv, i, n) { return 'Défi ' + N.dePrenom(inv) + ' · Texte ' + i + ' sur ' + n; },
+    consigneDefi: function (inv) { return "Réponds, puis devine ce qu'a dit " + inv + '.'; },
     etiquetteTexte: "Un vrai texte de l'Assemblée nationale · auteur masqué",
     tonAvis: 'Ton avis ?',
     suivant: 'Suivant',
@@ -69,27 +92,35 @@ var ElenchosTextes = (function (N) {
     aucuneRaison: 'Aucune de ces raisons',
     definitive: 'Ta réponse sera définitive.',
     valider: 'Valider',
-    etSaReponse: 'Et Agathe ? Sa réponse ?',
+    etSaReponse: function (inv) { return 'Et ' + inv + ' ? Sa réponse ?'; },
     voirSaReponse: 'Voir sa réponse',
-    bandeTexte: function (i) { return 'Texte ' + i + ' sur 3'; },
+    bandeTexte: function (i, n) { return 'Texte ' + i + ' sur ' + n; },
     caAlors: 'Ça alors !',
     tuConnais: 'Tu connais ton monde.',
     tuConnaisRaisons: 'Tu connais ton monde, et ses raisons.',
     tonPari: function (position) { return 'Ton pari : ' + position + '.'; },
-    ligneInviteuse: function (position) { return 'Agathe : ' + position; },
+    ligneInvitant: function (inv, position) { return inv + ' : ' + position; },
     aucuneDesQuatreRaisons: 'aucune des quatre raisons',
     texteSuivant: 'Texte suivant',
-    bilanGrand: function (n) { return n + ' sur 3'; },
-    bilanLigne: function (n) { return 'Tu as trouvé ' + n + ' réponses ' + N.dePrenom('Agathe') + ' sur 3.'; },
-    bilanSurprises: function (n) { return 'Agathe a réussi à te surprendre ' + (n === 3 ? 'trois' : 'deux') + ' fois.'; },
+    bilanGrand: function (n, total) { return n + ' sur ' + total; },
+    bilanLigne: function (inv, n, total) { return 'Tu as trouvé ' + n + ' réponses ' + N.dePrenom(inv) + ' sur ' + total + '.'; },
+    bilanSurprises: function (inv, n) { return inv + ' a réussi à te surprendre ' + (n === 3 ? 'trois' : 'deux') + ' fois.'; },
     portraitCommence: 'Ton portrait commence',
     chaqueReponseLes: 'Chaque réponse les précise.',
     creerCompte: 'Créer mon compte',
-    compteTexte: 'Pour ' + N.quePrenom('Agathe') + " sache que c'était toi, et retrouver tes réponses demain : un pseudo, ton e-mail.",
+    // 1.8 selon D-035 (§7.2, annexe C point 1) : la fin « : un pseudo, ton e-mail. » est retirée.
+    compteTexte: function (inv) { return 'Pour ' + N.quePrenom(inv) + " sache que c'était toi, et retrouver tes réponses demain."; },
     champPseudo: 'Pseudo',
+    continuerApple: 'Continuer avec Apple',
+    continuerGoogle: 'Continuer avec Google',
+    recevoirCodeEmail: 'Recevoir un code par e-mail',
+    // 1.8b (§7.2, annexe C point 2)
     champEmail: 'E-mail',
     emailDessine: 'toi@exemple.fr',
+    recevrasCode: 'Tu recevras un code à six chiffres.',
     recevoirCode: 'Recevoir mon code',
+    retourCompte: 'Retour',
+    // 1.9
     codeEnvoye: 'Code envoyé à toi@exemple.fr',
     renvoyerCode: 'Renvoyer le code',
     plusTard: 'Plus tard',
@@ -98,18 +129,20 @@ var ElenchosTextes = (function (N) {
     ongletAujourdhui: "Aujourd'hui", ongletCercle: 'Le Cercle', ongletMoi: 'Moi',
     aujourdhui: function (jour) { return "Aujourd'hui · " + jour; },
     etapeDeviner: 'Deviner', etapeRepondre: 'Répondre',
-    rejoint: 'Tu as rejoint ' + CERCLE + '.',
-    rienPourLinstant: "Rien à deviner pour l'instant. Réponds : à 18h, ton cercle pourra te deviner.",
+    rejoint: function (cercle) { return 'Tu as rejoint ' + cercle + '.'; },
     rienAujourdhui: "Rien à deviner aujourd'hui.",
     hier: function (titre) { return 'Hier : ' + titre; },
     relire: 'Relire',
     aQui: 'À qui sont ces réponses ?',
+    // §7.12, D-024 (produit.md §5)
+    regleDeviner: 'Un proche par réponse, chacun une fois. Si deux ont donné la même, l\'un ou l\'autre est juste.',
     carteRaisonCachee: 'raison cachée',
     carteLigne: function (position, raison) { return position + ' · ' + raison; },
     taDevinette: function (raison) { return 'Ta devinette : ' + raison; },
     taDevinetteAucune: 'Ta devinette : aucune des quatre.',
     devineAussi: 'Devine aussi pourquoi',
     passer: 'Passer', passee: 'Passée',
+    reponseNumero: function (i) { return 'Réponse ' + i; },
     feuillePourquoi: "Pourquoi, d'après toi ?",
     choisir: 'Choisir',
     retour: 'Retour',
@@ -118,19 +151,29 @@ var ElenchosTextes = (function (N) {
     revelationDans: function (h, mm) { return 'Révélation dans ' + h + ' h ' + mm; },
     nouveauTexteDans: function (h, mm) { return 'Nouveau texte dans ' + h + ' h ' + mm; },
     dejaJoue: "Déjà joué aujourd'hui :",
+    // E3 (§7.18 ; annexe C, point 11.6)
+    reprendreRevelation: 'Reprendre la révélation',
+    revoirRevelation: 'Revoir la révélation',
 
-    /* ---------------- Message de 18h et révélation ---------------- */
-    message18h: "18h. Qui avait dit quoi ? La révélation d'hier t'attend, et la question d'aujourd'hui.",
-    message18hDimanche: "18h. Qui avait dit quoi ? La révélation d'hier t'attend, et la question d'aujourd'hui. Ce soir, aussi : les titres de la semaine.",
+    /* ---------------- Message de 18h et révélation (§7.17, E1) ---------------- */
+    message18hCartes: "18h. Qui avait dit quoi ? La révélation d'hier t'attend, et la question d'aujourd'hui.",
+    message18hVote: "18h. Le vote de l'Assemblée t'attend, et la question d'aujourd'hui.",
+    message18hQuestion: "18h. La question d'aujourd'hui t'attend.",
+    message18hTitres: 'Ce soir, aussi : les titres de la semaine.',
     notifMeta: 'Elenchos · maintenant',
     notifIcone: 'E',
     horlogeVerrou: '18:00',
-    bandeRevelation: function (titre) { return CERCLE + ' · ' + titre; },
+    ecranVerrouille: 'Écran verrouillé',
+    revelationAria: 'Révélation',
+    fermer: 'Fermer',
+    bandeRevelation: function (cercle, titre) { return cercle + ' · ' + titre; },
     tonPariPrenom: function (prenom) { return 'Ton pari : ' + prenom + '.'; },
     tonPariRaison: function (prenom, raisonPhrase) { return 'Ton pari : ' + prenom + ', parce que ' + raisonPhrase + '.'; },
     tonPariAucune: function (prenom) { return 'Ton pari : ' + prenom + ', aucune des quatre raisons.'; },
     tuAvaisPasse: 'Tu avais passé.',
     cEtait: function (prenom) { return "C'était " + prenom + '.'; },
+    // D-024 (§7.13 ; annexe C, point 11.2)
+    jumeau: function (auteur, designe) { return "C'était " + auteur + '. ' + designe + ' avait répondu la même chose.'; },
     saRaison: function (raison) { return 'Sa raison : ' + raison; },
     saRaisonAucune: 'Sa raison : aucune des quatre.',
     retournerCarte: 'Retourner la carte',
@@ -138,33 +181,70 @@ var ElenchosTextes = (function (N) {
       return N.accordNombre(n, 'point', 'points') + " aujourd'hui" + (m === null ? '' : ' · ' + m + ' cette semaine');
     },
     etLAssemblee: "Et l'Assemblée ?",
-    issue: { adopte: 'Texte adopté.', rejete: 'Texte rejeté.', sans_vote_ensemble: 'Texte ni adopté ni rejeté.' },
+    issue: { adopte: 'Texte adopté.', rejete: 'Texte rejeté.' },
+    issueParticipe: { adopte: 'adopté', rejete: 'rejeté' },
+
+    /* Vote (S1 §7.9 ; §7.10, E4 ; conventions du 10 octobre 2026) */
     etape: { navette: 'Le Sénat devait encore voter.', definitif: "C'était le vote définitif du Parlement.", aucune: '' },
-    articleUnique: function (date) { return 'Le ' + date + ", son article unique a été adopté, mais la séance a pris fin à minuit sans vote sur l'ensemble du texte."; },
-    fermer: 'Fermer',
+    objet: {
+      texte: '',
+      article: "C'était un article d'un texte plus long.",
+      amendement: "C'était un amendement, une modification d'un texte en discussion.",
+      resolution: "C'était une résolution, un texte qui invite le Gouvernement à agir, sans l'y obliger."
+    },
+    etapeTexte: { navette: 'Le Sénat devait encore voter ce texte.', aucune: '' },
+    suite: { texte_tombe: "Avec lui, l'Assemblée a rejeté le texte entier.", texte_retire: 'Le jour même, le texte entier a été retiré.' },
+    avantArticles: ', avant même l\'examen de ses articles.',
+    leDate: function (date) { return 'Le ' + date + '.'; },
+    leDateMotion: function (date) { return 'Le ' + date + ", avant même l'examen de ses articles."; },
+    voteFiche: function (participe, date) { return 'Vote : ' + participe + ' le ' + date + '.'; },
+    voteFicheMotion: function (date) { return 'Vote : rejeté le ' + date + ", avant même l'examen de ses articles."; },
+    voteEntree: function (participe, date) { return "L'Assemblée : texte " + participe + ' le ' + date + '.'; },
+    voteEntreeMotion: function (date) { return "L'Assemblée : texte rejeté le " + date + ", avant même l'examen de ses articles."; },
+    lAssembleeTete: "L'Assemblée :",
+    voteTete: 'Vote :',
+
+    /* Auteurs (S1 §7.10 ; §7.11, E5) */
+    proposeParGouvernement: 'Proposé par le Gouvernement.',
+    proposeParCommission: function (libelle) { return 'Proposé par la ' + libelle + '.'; },
+    proposePar: function (nom, suite) { return 'Proposé par ' + nom + ', ' + suite + '.'; },
+    sansGroupe: function (mandat) { return mandat + ' sans groupe'; },
+    sansGroupeListe: 'sans groupe',
+    taRaison: function (raisonPhrase, deNom, suite) { return 'Ta raison, ' + raisonPhrase + ", était l'argument " + deNom + ', ' + suite + '.'; },
+
+    /* Avis du cercle (§7.14, D-025 ; forme §7.23 B) */
+    avisLigne: { adopte: "Ton cercle, lui, l'aurait adopté.", rejete: "Ton cercle, lui, l'aurait rejeté.", partage: 'Ton cercle, lui, était partagé.' },
+    milieuDesReponses: 'Milieu des réponses',
+    avisAria: function (parts, milieu) {
+      return 'Réponses du cercle, de très défavorable à très favorable : ' + parts.map(function (x, i) { return POSITIONS[i].toLowerCase() + ', ' + x; }).join(' ; ') +
+        '. Milieu des réponses : ' + milieu + '.';
+    },
+    avisMilieuEntre: function (a, b) { return 'entre ' + a + ' et ' + b; },
+    avisPart: { aucune: 'aucune', peu: 'peu', partie: 'une partie', moitie: 'la moitié', plupart: 'la plupart', toutes: 'toutes' },
+
     maintenantQuestion: "Et maintenant, la question d'aujourd'hui.",
     texteEtSources: 'Le texte et ses sources',
     jouer: 'Jouer',
     badgeRare: 'Badge rare',
     sansFaute: function (noms, pluriel) { return noms + (pluriel ? ' décrochent' : ' décroche') + ' Le Sans-Faute.'; },
     sansFauteLigne: 'Sept jours sans erreur, sans rien passer.',
-    titresDeLaSemaine: 'Les titres de la semaine · ' + CERCLE,
+    // §7.22 : « {Prénom} décroche Le Pas de Côté. » ; la ligne de dessous n'est pas encore écrite (Game design).
+    pasDeCote: function (noms, pluriel) { return noms + (pluriel ? ' décrochent' : ' décroche') + ' Le Pas de Côté.'; },
+    pasDeCoteLigne: A_ECRIRE,
+    titresDeLaSemaine: function (cercle) { return 'Les titres de la semaine · ' + cercle; },
     devin: function (nom) { return 'Le Devin : ' + nom; },
     devinLigne: 'a le mieux deviné les autres cette semaine',
     mystere: function (nom) { return 'Le Mystère : ' + nom; },
     mystereLigne: 'le plus difficile à deviner cette semaine',
     fidele: function (noms) { return 'Le Fidèle : ' + noms; },
-    fideleLigne: function (semaine, pluriel) {
-      return semaine === 1 ? (pluriel ? 'ont répondu chaque jour' : 'a répondu chaque jour')
-        : (pluriel ? 'ont répondu les sept jours' : 'a répondu les sept jours');
-    },
+    fideleLigne: function (pluriel) { return pluriel ? 'ont répondu les sept jours' : 'a répondu les sept jours'; },
     surpriseSemaine: 'La surprise de la semaine',
     surpriseLigne: 'le texte qui a le plus trompé le cercle',
     voirLeTexte: 'Voir le texte',
     pourToiSemaine: 'Pour toi, cette semaine',
 
     /* ---------------- Le Cercle, Moi, fiches ---------------- */
-    cercleTete: CERCLE + ' ▾',
+    cercleTete: function (cercle) { return cercle + ' ▾'; },
     inviter: '+ Inviter',
     ouChacun: 'Où chacun se place',
     encoreFlou: function (noms) { return 'Encore flou : ' + noms; },
@@ -182,60 +262,117 @@ var ElenchosTextes = (function (N) {
     reglagesNom: 'Réglages',
     sousOnglets: ['Portrait', 'Titres', 'Historique'],
     portraitPasForme: 'Chaque réponse le précise. Il faut environ trois mois pour les premiers curseurs nets.',
+    encoreFlous: 'Encore flous',
+    // Barre du portrait (§7.15, D-026 ; annexe C point 5)
+    barreEtiquette: 'Vers tes premiers curseurs nets',
+    barreAria: function (valeur) { return 'Barre du portrait, vers tes premiers curseurs nets : ' + valeur + '.'; },
+    barreValeurs: ['pas encore commencée', "moins d'un quart du chemin", 'un quart du chemin', 'la moitié du chemin', 'trois quarts du chemin', 'pleine'],
     semaine: function (n) { return 'Semaine ' + n; },
-    titresMoi: function (titres) { return titres + ' · ' + CERCLE; },
+    titresMoi: function (titres, cercle) { return titres + ' · ' + cercle; },
     pasDeTitreAvant: 'Pas encore de titre. Les titres tombent le dimanche, à 18h.',
     pasDeTitreApres: 'Pas encore de titre. Les prochains tombent dimanche, à 18h.',
     historiqueGauche: function (jour, titre) { return majuscule(jour) + ' · ' + titre; },
+    historiqueEntree: function (titre) { return 'Pour commencer · ' + titre; },
     historiqueRevele: function (position, jour) { return position + ' · révélé ' + jour + ' à 18h'; },
     revele: function (jour) { return 'révélé ' + jour; },
     voteEtAuteurs: function (jour) { return 'Le vote et les auteurs : ' + jour + ' à 18h'; },
     taReponse: 'Ta réponse :',
-    vote: 'Vote :',
     quatreRaisons: 'Les quatre raisons',
     sources: 'Sources : extraits des débats',
     extrait: function (i) { return 'Extrait ' + i; },
     voirScrutin: "Voir le scrutin sur le site de l'Assemblée",
     titresPassesTitre: 'Titres des semaines passées',
-    titresPassesLigne: function (devin, mystere, fideles) {
-      var parts = [];
-      if (devin) { parts.push('Devin : ' + devin); }
-      if (mystere) { parts.push('Mystère : ' + mystere); }
-      if (fideles) { parts.push('Fidèle : ' + fideles); }
-      return parts.join(' · ');
-    },
     reglagesTitre: 'Réglages',
     compte: 'Compte',
+    connexion: 'Connexion',
+    connexionValeur: { apple: 'Apple', google: 'Google', email_valider: 'toi@exemple.fr', email_plus_tard: 'toi@exemple.fr' },
     cercles: 'Cercles',
     cerclesActions: 'Changer · Créer · Quitter',
     message18hTitre: 'Message de 18h',
     recevoirMessage: 'Recevoir le message de 18h',
     tesDonnees: 'Tes données',
     toutEffacer: 'Tout effacer',
-
-    /* ---------------- Phrases de l'Assemblée (§7.9, §7.10) ---------------- */
-    proposeParGouvernement: 'Proposé par le Gouvernement.',
+    // Lecteur d'écran (§7.16)
+    barreCercleAria: function (entre, nets, flous) {
+      var l = ['Entre ' + entre + '.'];
+      if (nets.length) { l.push('Nets : ' + nets.join(' ; ') + '.'); }
+      if (flous.length) { l.push('Encore flous : ' + flous.join(', ') + '.'); }
+      return l.join(' ');
+    },
+    versPole: function (pole) { return 'vers ' + pole; },
+    auMilieu: 'au milieu',
+    encoreFlouMin: 'encore flou',
+    superpositionAria: function (tension, toi, prenom, lui) { return tension + ' : toi, ' + toi + ' ; ' + prenom + ', ' + lui + '.'; },
 
     /* ---------------- Cadre (en « vous ») ---------------- */
-    barreEntree: 'Entrée',
-    barreJour: function (k, jour) { return 'Jour ' + k + ' sur 14 · ' + jour; },
+    barreDebut: 'Début',
+    barreJour: function (k, jour) { return 'Jour ' + k + ' · ' + jour; },
+    barreSaut: function (n) { return n === 1 ? 'Premier saut' : 'Second saut'; },
+    barreRattrapage: function (n, k, total) { return (n === 1 ? 'Premier saut' : 'Second saut') + ' · texte ' + k + ' sur ' + total; },
     barreCloture: 'Clôture',
-    barreArret: function (k) { return k === 0 ? "Essai arrêté à l'entrée" : 'Essai arrêté au jour ' + k; },
+    barreArretJour: function (k) { return 'Essai arrêté au jour ' + k; },
+    barreArretEntree: "Essai arrêté pendant l'entrée",
+    barreArretSaut: function (n) { return 'Essai arrêté pendant le ' + (n === 1 ? 'premier' : 'second') + ' saut'; },
     arreterLEssai: "Arrêter l'essai",
     quiEstQuiBouton: 'Qui est qui ?',
     jourSuivant: 'Jour suivant',
+    jourSuivantIndisponible: 'Jour suivant, indisponible tant que la journée n\'est pas finie',
+    abandonnerJournee: 'Abandonner cette journée',
+    abandonnerQuestion: 'Abandonner cette journée ?',
+    abandonnerDefinitif: 'Vous ne pourrez pas y revenir.',
+    abandonner: 'Abandonner',
+    avancerAuDimanche: 'Avancer au dimanche',
+    texteSuivantCadre: 'Texte suivant',
+    texteSuivantIndisponible: 'Texte suivant, indisponible tant que vous n\'avez pas répondu',
+    allerAuDimanche: 'Aller au dimanche',
     continuer: 'Continuer',
     annuler: 'Annuler',
     pasDansLEssai: "Pas dans l'essai.",
-    noteCompte: function (appareil) { return 'Compte simulé : choisissez juste un pseudo. Il reste dans votre ' + appareil + ' ; aucun e-mail n\'est demandé ni envoyé.'; },
-    notePrenom: "Ce pseudo est le prénom d'un personnage : choisissez-en un autre.",
+
+    // Phrases de perte (§8.1 bis)
+    perteRevelation: 'La révélation s\'arrêtera là.',
+    perteRevelationTitres: 'La révélation s\'arrêtera là, sans les titres ni votre phrase de la semaine.',
+    perteRevelationPhrase: 'La révélation s\'arrêtera là, sans votre phrase de la semaine.',
+    perteDevinerJamais: "Vous ne devinerez pas les réponses d'hier, et vous ne répondrez pas au texte du jour.",
+    perteAucunVisage: function (n) {
+      var sujet = n === 1 ? 'Votre carte comptera' : (n === 2 ? 'Vos deux cartes compteront' : 'Vos trois cartes compteront');
+      return sujet + ' comme ' + (n === 1 ? 'passée' : 'passées') + ', et vous ne répondrez pas au texte du jour.';
+    },
+    perteCertainsVisages: function (n) {
+      return 'Les visages déjà posés comptent comme si vous aviez validé ; ' + (n === 1 ? 'la carte sans visage comptera comme passée' : 'les deux cartes sans visage compteront comme passées') +
+        '. Vous ne répondrez pas au texte du jour.';
+    },
+    perteTousVisages: 'Les visages déjà posés comptent comme si vous aviez validé. Vous ne répondrez pas au texte du jour.',
+    perteReponse: 'Vous ne répondrez pas au texte du jour.',
+    perteReponsePosition: 'Vous ne répondrez pas au texte du jour : une position sans raison ne compte pas.',
+
+    // Notes de la bande
+    noteCompte: function (appareil) { return 'Compte simulé : choisissez un pseudo, puis l\'un des trois boutons. Rien ne se connecte et rien n\'est envoyé, ni à Apple, ni à Google, ni par e-mail. Le pseudo reste dans votre ' + appareil + '.'; },
+    notePrenom: 'Ce pseudo ressemble trop au prénom d\'un personnage : choisissez-en un autre.',
+    noteRond: 'Ce pseudo donnerait le même rond qu\'un personnage : ajoutez une lettre.',
+    noteApple: 'Dans le jeu, Apple vous demanderait ici de partager votre adresse e-mail ou de la masquer, puis de confirmer avec Face ID, Touch ID ou votre code. Dans l\'essai, rien ne s\'est connecté.',
+    noteGoogle: 'Dans le jeu, Google vous demanderait ici de choisir votre compte ; seul un compte personnel serait accepté, pas celui d\'un employeur ou d\'une école. Dans l\'essai, rien ne s\'est connecté.',
     note18h: "Dans l'essai, pas besoin d'attendre 18h : passez au jour suivant quand vous voulez.",
-    noteTexte14: "Le texte du jour 14 ne sera pas deviné : l'essai s'arrête avant. Voici quand même son vote et ses auteurs.",
-    confirmationQuestion: function (deviner) { return deviner ? 'Passer au jour suivant sans finir de deviner ni répondre ?' : 'Passer au jour suivant sans répondre ?'; },
-    confirmationPhrase: "Une fois au jour suivant, ce que vous n'avez pas fait aujourd'hui restera ainsi : vous ne pourrez pas y revenir.",
-    ouiContinuer: 'Oui, continuer',
+    noteAccelere: function (fois) { return "Dans l'essai, votre portrait avance environ " + fois + ' fois plus vite que dans le jeu.'; },
+    noteBarrePleine: "Votre barre est pleine. Ce qu'elle annoncera au bout, dans le jeu, n'est pas encore décidé : ici, elle reste pleine.",
+    noteApresSaut: function (jours) { return 'Vous avez avancé de ' + jours + ' jours. Comme vous n\'avez rien deviné pendant le saut, la révélation de ce soir commence au vote.'; },
+    noteDernierTexte: "Le texte de dimanche ne sera pas deviné : l'essai s'arrête avant. Voici quand même son vote et ses auteurs.",
+    nombresEnLettres: { 1: 'un', 2: 'deux', 3: 'trois', 4: 'quatre', 5: 'cinq', 6: 'six', 7: 'sept', 8: 'huit', 9: 'neuf', 10: 'dix', 12: 'douze' },
+
     allerJourSuivant: 'Aller au jour suivant',
 
+    // Page A (§8.2), partie du premier essai
+    ancienneTitre: 'La partie du premier essai est encore là',
+    ancienneTexte: function (appareil) { return 'Votre ' + appareil + " garde encore vos réponses du premier essai. Elles ne servent plus, et l'essai ne garde qu'une partie à la fois : la page les efface avant de commencer. Votre carnet du premier essai, déjà dans la conversation, n'est pas touché."; },
+    // Cas rare des deux parties : proposition de Juridique (§8.2, note de l'assembleur), mots pas encore confirmés par UX.
+    ancienneTexteDeux: function (appareil) { return 'Votre ' + appareil + " garde encore vos réponses du premier essai. Elles ne servent plus : la page les efface. Votre partie en cours n'est pas touchée. Votre carnet du premier essai, déjà dans la conversation, n'est pas touché."; },
+    effacerEtCommencer: 'Effacer et commencer',
+    effacerEtReprendre: 'Effacer et reprendre',
+    ancienneConfirmationTitre: 'Effacer la partie du premier essai ?',
+    ancienneConfirmation: "C'est définitif.",
+    effacer: 'Effacer',
+
+    // Page B (§8.2), texte de Juridique revalidé le 9 octobre 2026
     message0: function (appareil) {
       return [
         'Vos réponses restent dans votre ' + appareil + '.',
@@ -244,19 +381,46 @@ var ElenchosTextes = (function (N) {
           "Jouez toujours depuis l'icône « Essai » : c'est elle qui garde votre avancement. Ne la supprimez pas avant la fin de l'essai : cela pourrait tout effacer.",
           "Ne laissez personne d'autre ouvrir l'icône « Essai ».",
           'Si un jour la page repart du début alors que vous aviez commencé, ne rejouez pas : dites-le dans la conversation.',
-          "Dans la conversation, parlez du jeu, pas de vos réponses ni de ce que le jeu en dit (vos phrases, votre portrait). Une capture d'écran reste dans vos photos, même après « Tout effacer » : avant d'en envoyer une, vérifiez qu'on n'y voit rien de tout cela."
+          "Dans la conversation, parlez du jeu, pas de vos réponses ni de ce que le jeu en dit : vos phrases, votre portrait, votre place dans Le Cercle et sur l'écran d'un proche, l'avis du cercle.",
+          "Avant d'envoyer une capture d'écran, vérifiez qu'on n'y voit rien de tout cela, ni votre Historique. L'équipe connaît les réponses des personnages : une capture de l'avis du cercle suffirait à retrouver la vôtre. Et une capture reste dans vos photos, même après « Tout effacer »."
         ]
       ];
     },
+
+    // Page C (§8.2), page d'arrivée
+    arriveeTitre: function (cercle) { return 'Le cercle ' + cercle + ' joue depuis trois mois'; },
+    arriveePanneau1: function (persos, inv) {
+      return N.listeEt(persos) + ', les personnages du premier essai, y jouent ensemble. ' + inv + ' vous lance un défi : vous y entrez comme un nouveau venu. Vous ne verrez pas leurs révélations passées, seulement ce qu\'elles ont laissé : les titres, les tempéraments, la place de chacun sur les tensions.';
+    },
+    arriveeProgrammeTitre: 'Le programme',
+    arriveeProgramme: [
+      'Lundi, mardi, mercredi : vous jouez.',
+      'Un saut vous mène au dimanche : vous répondez d\'affilée aux textes des jours sautés, sans deviner.',
+      'Dimanche : vous jouez, avec les titres de la semaine.',
+      'Un second saut, de la même façon, vous mène au dimanche suivant.',
+      "Second dimanche : vous jouez, puis l'essai se termine."
+    ],
+    arriveeDuree: 'Vingt à vingt-cinq minutes en tout, en une ou plusieurs fois.',
+    arriveePortraitTitre: 'Votre portrait va plus vite',
+    arriveePortrait: function (fois) {
+      return 'Dans le jeu, les premiers curseurs nets viennent vers trois mois. Ici, votre portrait avance environ ' + fois +
+        ' fois plus vite : au second dimanche, il ressemblera à celui de trois mois de jeu. Mais il ne repose que sur vos réponses de l\'essai : une seule peut le faire basculer.';
+    },
+    arriveeFin: "Comme la première fois, n'ouvrez pas le dossier « a-ne-pas-ouvrir-2 » du dépôt avant la fin. La fiche des personnages reste à portée, par le bouton « Qui est qui ? ».",
+    commencer: 'Commencer',
+
+    // Fiche « Qui est qui » (S1 §8.2, en-tête inchangé ; §8.2)
     quiEstQuiTitre: "Qui est qui · fiche d'essai.",
     quiEstQuiEntete: "Hors application. Dans le vrai jeu, il n'y a pas de fiche : vos proches, vous les connaissez déjà. Ces quatre personnes sont inventées.",
-    ficheTete: function (prenom, age, metier, ville) { return prenom + ', ' + age + ' ans · ' + metier + ', ' + ville + '.'; },
+    ficheTete: function (age, metier, ville) { return ', ' + age + ' ans · ' + metier + ', ' + ville + '.'; },
     ficheHeure: function (heure) { return "Joue d'habitude vers " + heure + '.'; },
-    ficheInviteuse: "C'est elle qui vous invite.",
+    ficheInvitant: "C'est lui qui vous invite.",
+
+    // « Qui, durée, droits » (S1 §8.9 ; phrase ajoutée au §8.9 du second essai)
     droitsTitre: "Version d'essai. La vraie page sera écrite avant le lancement et relue par un avocat.",
     droits: function (appareil) {
       return [
-        "Qui voit vos réponses : vous seulement, si personne d'autre n'ouvre l'icône « Essai ». Elles restent dans votre " + appareil + " : c'est l'icône « Essai » qui les garde. La page n'envoie rien, pas même à l'équipe. GitHub, qui héberge la page, voit l'adresse internet de votre connexion quand vous l'ouvrez, jamais vos réponses.",
+        "Qui voit vos réponses : vous seulement, si personne d'autre n'ouvre l'icône « Essai ». Elles restent dans votre " + appareil + " : c'est l'icône « Essai » qui les garde. La page n'envoie rien, pas même à l'équipe. GitHub, qui héberge la page, voit l'adresse internet de votre connexion quand vous l'ouvrez, jamais vos réponses. Les boutons Apple et Google de l'écran du compte sont dessinés : ils ne se connectent à rien, et la page n'envoie rien à Apple ni à Google.",
         "Durée : jusqu'à ce que vous les effaciez. Elles peuvent aussi se perdre, par exemple si vous supprimez l'icône « Essai ».",
         'Droits : « Tout effacer » (dans Moi, la roue dentée) les efface, quand vous voulez.'
       ];
@@ -266,58 +430,118 @@ var ElenchosTextes = (function (N) {
       return "Source des textes, votes, auteurs et arguments : Assemblée nationale, data.assemblee-nationale.fr (Licence Ouverte) et assemblee-nationale.fr ; consultés le " + date + ". Résumés et raisons réécrits par l'équipe de l'essai ; l'Assemblée n'y est pas associée.";
     },
 
-    carnetTitre: 'Votre carnet du jour',
-    q1: 'Vos erreurs à la révélation :',
-    q2: function (titre) { return '« ' + titre + ' » et ses quatre raisons :'; },
-    q2Entree: 'Les trois textes et leurs raisons :',
-    q3: 'Votre moment préféré :',
-    choixQ1: { aurais_pu: "J'aurais pu trouver", ne_pouvais_pas: 'Je ne pouvais pas trouver', les_deux: 'Les deux' },
-    choixQ2: { premier_coup: 'Compris du premier coup', en_relisant: 'Compris en relisant', pas_tout: 'Pas tout compris' },
-    choixQ3: { revelation: 'La révélation', titres: 'Les titres', phrase_semaine: 'Ma phrase de la semaine', deviner: 'Deviner',
-      donner_avis: 'Donner mon avis', phrase_jour: 'Ma phrase du jour', aucun: 'Aucun' },
-    ordreQ1: ['aurais_pu', 'ne_pouvais_pas', 'les_deux'],
-    ordreQ2: ['premier_coup', 'en_relisant', 'pas_tout'],
+    // Page du saut (§8.1 ter)
+    sautTitre: 'Avancer au dimanche',
+    friseLegendeJoue: 'vous jouez',
+    friseLegendeRepond: 'vous répondez seulement',
+    friseReprise: 'vous reprenez ici',
+    friseInitiales: ['L', 'M', 'M', 'J', 'V', 'S', 'D'],
+    friseSemaine: function (n) { return 'Semaine ' + n; },
+    friseAria1: 'Lundi, mardi et mercredi : vous avez joué. Jeudi, vendredi et samedi : vous répondez seulement. Dimanche : vous reprenez ici.',
+    friseAria2: 'Semaine 1 : vous avez joué lundi, mardi, mercredi et dimanche ; jeudi, vendredi et samedi, vous avez répondu seulement. Semaine 2 : du lundi au samedi, vous répondez seulement. Dimanche : vous reprenez ici.',
+    sautTexte1: {
+      tete: 'Jeudi, vendredi et samedi :',
+      puces: [
+        'Agathe, Nassim, Odile et Valentin jouent comme chaque jour.',
+        'Vous répondez d\'affilée aux trois textes de ces jours-là, sans deviner. Environ une minute.',
+        'Ces réponses comptent comme les autres, pour votre portrait comme pour Le Fidèle.',
+        'Les révélations de vendredi et de samedi ont lieu sans vous. Leurs votes et leurs auteurs seront dans votre Historique.'
+      ],
+      fin: 'Dimanche à 18h : la révélation, puis les titres de la semaine.'
+    },
+    sautTexte2: {
+      tete: 'Du lundi au samedi :',
+      puces: [
+        'Agathe, Nassim, Odile et Valentin jouent comme chaque jour.',
+        'Vous répondez d\'affilée aux six textes de ces jours-là, sans deviner. Environ deux minutes.',
+        'Ces réponses comptent comme les autres, pour votre portrait comme pour Le Fidèle.',
+        'Les révélations de mardi à samedi ont lieu sans vous. Leurs votes et leurs auteurs seront dans votre Historique.'
+      ],
+      fin: 'Dimanche à 18h : la révélation, puis les titres de la semaine. C\'est le dernier jour de jeu.'
+    },
 
+    // Carnet du jour (§8.3)
+    carnetTitre: 'Votre carnet du jour',
+    momentPrefere: 'Votre moment préféré :',
+    momentPrefereDimanche: "Aujourd'hui, votre moment préféré :",
+    choixMoment: { defi: function (inv) { return 'Le défi ' + N.dePrenom(inv); }, revelation: 'La révélation', titres: 'Les titres', phrase_semaine: 'Ma phrase de la semaine',
+      deviner: 'Deviner', donner_avis: 'Donner mon avis', phrase_jour: 'Ma phrase du jour', aucun: 'Aucun' },
+    questionSautClair: 'Ce que le jeu a fait pendant le saut, c\'était clair ?',
+    choixSautClair: { non: 'Non', en_partie: 'En partie', oui: 'Oui' },
+    questionHesite: 'Cette semaine, où avez-vous hésité ?',
+    questionHesiteSous: 'Sur ce qu\'il fallait faire ou comprendre. Plusieurs choix possibles ; pour « Ailleurs », dites où dans la conversation.',
+    choixHesite: { deviner: 'Deviner', repondre: 'Répondre', revelation: 'La révélation', avis_cercle: "L'avis du cercle", titres: 'Les titres', cercle: 'Le Cercle',
+      portrait: 'Mon portrait', saut: 'Le saut', ailleurs: 'Ailleurs', nulle_part: 'Nulle part' },
+    questionMomentSemaine: 'Cette semaine, votre moment préféré :',
+    choixMomentSemaine: { revelation: 'La révélation', avis_cercle: "L'avis du cercle", titres: 'Les titres', phrase_semaine: 'Ma phrase de la semaine', deviner: 'Deviner',
+      donner_avis: 'Donner mon avis', phrase_jour: 'Ma phrase du jour', cercle: 'Le Cercle', portrait: 'Mon portrait', aucun: 'Aucun' },
+
+    // Arrêter l'essai (S1 §8.10 ; §8.10)
     arretConfirmationTitre: "Arrêter l'essai ?",
     arretConfirmation: "Ensuite : quelques questions, votre carnet à copier, puis le dévoilement. C'est définitif : l'essai ne pourra pas reprendre.",
-    arretTete: function (k) { return k === 0 ? "Essai arrêté à l'entrée." : 'Essai arrêté au jour ' + k + '.'; },
+    arretTeteJour: function (k) { return 'Essai arrêté au jour ' + k + '.'; },
+    arretTeteEntree: "Essai arrêté pendant l'entrée.",
+    arretTeteSaut: function (n) { return 'Essai arrêté pendant le ' + (n === 1 ? 'premier' : 'second') + ' saut.'; },
     arretRaison: 'Vous arrêtez surtout parce que :',
     choixArret: { pas_amuse: "Je ne m'amuse pas", pas_compris: 'Je ne comprends pas tout', pas_le_temps: "Je n'ai pas le temps",
       vu_assez: "J'ai vu ce que je voulais voir", autre: 'Autre raison' },
-    ordreArret: ['pas_amuse', 'pas_compris', 'pas_le_temps', 'vu_assez', 'autre'],
     f2Arret: "Jusqu'ici, deviner était :",
-    f2Fin: 'Au fil des deux semaines, deviner était :',
     choixF2: { de_plus_en_plus: 'De plus en plus amusant', toujours_autant: 'Toujours aussi amusant',
       de_moins_en_moins: 'De moins en moins amusant', jamais: 'Jamais amusant' },
-    ordreF2: ['de_plus_en_plus', 'toujours_autant', 'de_moins_en_moins', 'jamais'],
-    f1Arret: ['Facultatif, environ une minute.', 'Où placez-vous chacun ?', "D'après ce que vous avez vu. Même si vous hésitez, choisissez."],
-    f1Fin: ['Où placez-vous chacun ?', "D'après ces deux semaines. Même si vous hésitez, choisissez."],
-    auMilieu: 'Au milieu',
-    sauterQuestion: 'Sauter cette question',
-    clotureTete: "L'essai est fini. Deux questions, votre carnet à copier, puis le dévoilement.",
 
+    // Fin d'essai (§8.5)
+    clotureTete: "L'essai est fini. Quelques questions, votre carnet à copier, puis le dévoilement.",
+    questionsFin: [
+      { cle: 'f2', q: "Au fil de l'essai, deviner était :" },
+      { cle: 'servi', q: 'Ce qui vous a le plus servi pour deviner :' },
+      { cle: 'regle', q: 'Dans Deviner, la règle écrite sous « À qui sont ces réponses ? » vous a paru :' },
+      { cle: 'avis', q: "L'avis du cercle, à la révélation :" },
+      { cle: 'raisons', q: 'Les quatre raisons, au moment de répondre, vous ont paru :' },
+      { cle: 'portrait', q: 'Votre portrait, au second dimanche :' },
+      { cle: 'barre', q: 'La barre du portrait :' },
+      { cle: 'suspense', q: 'Avec des textes rejetés, « Et l\'Assemblée ? » était :' }
+    ],
+    choixFin: {
+      servi: { souvenir: 'Le souvenir du premier essai', defi: function (inv) { return 'Le défi ' + N.dePrenom(inv); }, revelations: 'Les révélations', cercle: "Le Cercle ou l'écran d'un proche", rien: 'Rien de précis' },
+      regle: { pas_claire: 'Pas claire', claire_etrange: 'Claire, mais étrange', claire: 'Claire', pas_lue: "Je ne l'ai pas lue" },
+      avis: { sans_apprendre: "Je le lisais sans qu'il m'apprenne grand-chose", apprenait: "Il m'apprenait quelque chose sur le cercle", pas_lu: 'Je ne le lisais pas' },
+      raisons: { pas_plus: "Pas plus nuancées qu'au premier essai", un_peu: 'Un peu plus nuancées', nettement: 'Nettement plus nuancées' },
+      portrait: { ressemblait_pas: 'Il ne me ressemblait pas', un_peu: 'Il me ressemblait un peu', ressemblait: 'Il me ressemblait', pas_regarde: "Je ne l'ai pas regardé" },
+      barre: { pas_remarquee: "Je ne l'ai pas remarquée", sans_savoir: 'Remarquée, sans savoir ce qu\'elle mesurait', comprise: 'Remarquée et comprise' },
+      suspense: { sans: 'Sans suspense', un_peu: 'Avec un peu de suspense', vrai: 'Avec un vrai suspense' }
+    },
+    clotureApres: 'Pour tout le reste, vos mots dans la conversation, sans parler de vos réponses.',
+
+    // Export (S1 §8.7)
     exportTitre: 'Votre carnet à copier',
+    carnetAria: 'Carnet du second essai Elenchos',
     copierCarnet: 'Copier mon carnet',
     copierCarnetDabord: "Copier mon carnet d'abord",
     carnetCopie: 'Carnet copié : collez-le dans la conversation.',
     copieEchec: "La copie automatique n'a pas fonctionné. Sélectionnez tout le texte du carnet, jusqu'à « Fin du carnet », copiez-le, puis collez-le dans la conversation.",
     voirDevoilement: 'Voir le dévoilement',
 
+    // Tout effacer (S1 §8.9)
     effacerTitre: 'Tout effacer ?',
     effacerPendant: "La page effacera vos réponses, votre carnet et votre avancement. C'est définitif. Si vous recommencez, vous connaîtrez déjà les réponses des personnages : l'essai ne vaudra plus comme test.",
     effacerApres: 'La page effacera vos réponses et votre carnet. C\'est définitif.',
     effacerInvite: 'Une fois votre carnet copié, vous pouvez tout effacer.',
     efface: 'La page a tout effacé.',
 
-    /* Dévoilement (a-ne-pas-ouvrir/devoilement.md) */
+    /* Dévoilement (§8.6). Le texte complet est à écrire par UX, sur les phrases de Game design ci-dessous
+       (arbitrage de l'orchestrateur) ; les passages qui dépendent du fichier caché sont à fournir par qui peut le lire. */
     devoilementTitre: 'Le dévoilement',
-    devoilementOuverture: "Voici ce que la page vous cachait : le profil de chaque personnage, ses réponses données exprès contre ce profil et ses jours sans jouer. Tout en bas, « Pour le contrôle » : l'empreinte à comparer avec celle publiée dans la conversation.",
-    devoilementF1: function (x) { return 'Où vous placiez chacun : ' + N.accordNombre(x, 'case juste', 'cases justes') + ' sur 16. Au hasard, environ 5.'; },
+    devoilementOuverture: A_ECRIRE,
     commentLire: 'Comment lire',
-    commentLire1: "Chaque personnage avait un profil fixé avant l'essai. Pour chaque tension, une place de 0 à 100 : 0 pour la première valeur (Sécurité), 100 pour la seconde (Liberté individuelle) ; de 41 à 59, au milieu. Et une fermeté : plus elle était forte, plus ses réponses s'éloignaient de Neutre, jusqu'à « Très ».",
-    commentLire2: function (nombre) { return 'Les réponses de chacun découlaient de son profil, sauf ' + nombre + " par personnage, données exprès contre ce profil pour que rien ne se devine à coup sûr. Toutes ont été calculées par des règles fixes, écrites et scellées avant l'essai, sans rien savoir des vôtres."; },
-    commentLire3: '« Jour 5 » : le texte auquel vous avez répondu le jour 5, deviné le jour 6, révélé le jour 7. Un jour sans jouer : ni réponse, ni devinette.',
-    nombresEnLettres: { 2: 'deux', 3: 'trois', 4: 'quatre' },
+    commentLirePlace: A_ECRIRE,
+    commentLireContreProfil: A_ECRIRE,
+    commentLireAbsences: A_ECRIRE,
+    commentLireJour: '« Jour {n} » : le texte répondu le jour n, deviné le jour n + 1, révélé le jour n + 2.',
+    histoireTitre: A_ECRIRE,
+    histoireTextes: function (titre) { return 'Les treize semaines d\'avant votre arrivée ont été calculées avec les mêmes règles, sur des textes sans titre (une tension, un sens), sauf « ' + titre + ' ».'; },
+    histoireTirage: function (r) { return 'Le calcul a été refait jusqu\'à remplir des critères écrits d\'avance : curseurs nets, tempéraments, surprise de la semaine, titres variés. Tirage retenu : ' + r + '.'; },
+    histoireFacteur: function (fois) { return 'Votre portrait comptait vos réponses ' + fois + ' fois.'; },
+    histoireHorsDePortee: A_ECRIRE,
     phraseProfil: {
       Agathe: 'Faite pour ressembler à Nassim, sauf entre local et national.',
       Nassim: 'Fait pour ressembler à Agathe, sauf entre local et national.',
@@ -325,29 +549,29 @@ var ElenchosTextes = (function (N) {
       Valentin: 'Des valeurs que sa vie ne laisse pas deviner.'
     },
     ligneProfil: function (p0, p1, lecture, p, fermete) { return p0 + ' ou ' + p1 + ' : ' + lecture + ' (' + p + ' sur 100, fermeté ' + fermete + ').'; },
-    auMilieuMin: 'au milieu',
-    vousJuste: 'Vous : juste.',
-    vousChoix: function (choix) { return 'Vous : ' + choix + '.'; },
-    vousPasDeChoix: 'Vous : pas de choix.',
-    reponsesContre: 'Réponses contre son profil :',
+    auMilieuProfil: 'au milieu',
+    reponsesContre: "Réponses contre son profil pendant l'essai :",
     jourTitre: function (n, titre) { return 'Jour ' + n + ' · ' + titre; },
     profilNeutre: 'Son profil donnait Neutre.',
-    aDeviner: function (n) { return "Vous l'aviez à deviner le jour " + n + '.'; },
-    joursSansJouer: function (liste) { return 'Jours sans jouer : ' + liste + '.'; },
-    joursSansJouerAucun: 'Jours sans jouer : aucun.',
+    aDeviner: function (n, jour) { return "Vous l'aviez à deviner le jour " + n + ' (' + jour + ').'; },
+    avantArrivee: function (a, b) { return 'Avant votre arrivée : ' + a + ' réponses contre son profil sur ' + b + '.'; },
+    joursSansJouer: function (liste) { return "Jours sans jouer pendant l'essai : " + liste + '.'; },
+    joursSansJouerAucun: "Jours sans jouer pendant l'essai : aucun.",
+    joursSansJouerAvant: A_ECRIRE,
+    temperamentsJour14: A_ECRIRE,
     pourLeControle: 'Pour le contrôle',
     graine: 'Graine :',
+    tirage: 'Numéro de tirage :',
     fichierScelle: 'Fichier scellé :',
     empreinteDe: 'Empreinte du fichier scellé :',
-    comparez: function (date, heure) { return 'Comparez-la, ligne par ligne, avec celle publiée dans la conversation le ' + date + ' à ' + heure + ' : elles doivent être identiques. Si un seul caractère diffère, dites-le dans la conversation.'; },
-    devoilementFin: "Les règles complètes, les profils et les textes sont dans le dossier « a-ne-pas-ouvrir » du dépôt : vous pouvez maintenant l'ouvrir.",
+    comparez: function (date, heure) { return 'Si vous le voulez, comparez-la, ligne par ligne, avec celle publiée dans la conversation le ' + date + ' à ' + heure + ' : elles doivent être identiques. Si un seul caractère diffère, dites-le dans la conversation.'; },
+    devoilementFin: 'Les règles et le lot du second essai sont dans « a-ne-pas-ouvrir-2 » : vous pouvez maintenant l\'ouvrir.',
 
-    /* Arrêts techniques (§8.11) */
+    /* Arrêts techniques (S1 §8.11 ; §8.9 du second essai : repère V6, « V1 à V6 ») */
     arretVerifTitre: "La page s'est arrêtée par précaution.",
     arretVerif: "À chaque ouverture, elle vérifie ses données et ses calculs. Cette fois, une vérification n'a pas donné le bon résultat : plutôt que de vous faire jouer sur un calcul peut-être faux, elle préfère s'arrêter.",
     arretVerifGardee: function (appareil) { return "Rien n'est effacé : ce que vous avez déjà joué reste dans votre " + appareil + '.'; },
     arretVerifRepere: ['Dites-le dans la conversation, avec ce repère : ', '. On vous dira quand rouvrir la page.'],
-    // M1, partie gardée illisible (§8.11, commit 413abb0)
     arretVerifRienEfface: "Cette page n'a rien effacé.",
     arretVerifRepereM1: ["Gardez l'icône « Essai » et dites-le dans la conversation, avec ce repère : ", '. On vous dira quand rouvrir la page.'],
     arretStockageTitre: 'La page ne peut pas garder vos réponses.',
@@ -357,11 +581,11 @@ var ElenchosTextes = (function (N) {
     reprendreIci: 'Reprendre ici',
     arretDoublePetit: 'Vous retrouverez la partie telle qu\'elle a été gardée en dernier.',
 
-    /* Écran couché (§8.1) */
+    /* Écran couché (S1 §8.1) */
     coucheTitre: function (appareil) { return 'Tenez votre ' + appareil + ' en hauteur.'; },
     couche: 'En largeur, le téléphone de l\'essai ne tient pas dans l\'écran. Rien n\'est perdu : redressez l\'écran, et vous reprendrez où vous en étiez.',
 
-    /* Écrans hors de l'icône (§8.13) */
+    /* Écrans hors de l'icône (S1 §8.13, inchangés) */
     adresse: 'https://ppcrepin.github.io/elenchos/essai/',
     ongletTitre: "Ouvrez plutôt l'icône « Essai »",
     ongletDessous: "L'essai se joue depuis l'icône « Essai » de votre écran d'accueil : c'est elle qui garde votre avancement. Ici, dans Safari, la page ne lance pas l'essai et n'enregistre rien.",

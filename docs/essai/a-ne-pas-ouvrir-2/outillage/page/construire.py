@@ -34,7 +34,7 @@ import sys
 import unicodedata
 
 ICI = os.path.dirname(os.path.abspath(__file__))
-SOURCES_SCRIPT = ["noyau.js", "calendrier.js", "journal.js", "etat.js", "memoire.js", "moteur.js", "textes.js", "socle.js", "interface.js"]
+SOURCES_SCRIPT = ["noyau.js", "calendrier.js", "journal.js", "etat.js", "memoire.js", "moteur.js", "textes.js", "carnet.js", "socle.js", "interface.js"]
 VERSION_SCELLE = 5
 SOURCES_TEMOIN = ["trace.js", "temoin.js"]
 REPERE = "/*elenchos-scelle*/"
@@ -209,6 +209,11 @@ def main():
     if scelle.get("statut") not in ("provisoire", "final"):
         echec("fichier scellé : statut inattendu")
     provisoire = scelle["statut"] == "provisoire"
+    # Lots 4 et 5 : un texte encore à écrire (marque A_ECRIRE de textes.js) n'atteint jamais la version du porteur.
+    textes_js = lire_utf8(os.path.join(ICI, "textes.js"))
+    a_ecrire = re.findall(r"([A-Za-z_]+)\s*:\s*A_ECRIRE\b", textes_js)
+    if a_ecrire and not provisoire:
+        echec("textes encore à écrire (textes.js, A_ECRIRE) : " + ", ".join(a_ecrire))
 
     # Polices : empreintes versionnées, couverture des caractères affichés.
     dossier_polices = os.path.join(ICI, "polices")

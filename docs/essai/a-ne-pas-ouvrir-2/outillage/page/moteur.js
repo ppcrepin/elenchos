@@ -114,6 +114,15 @@ var ElenchosMoteur = (function (N) {
   /* Contexte : fichier scellé, calendrier, réponses                     */
   /* ------------------------------------------------------------------ */
 
+  /* Le tirage d'une graine, gardé d'un calcul à l'autre : t(clé) ne dépend que de
+   * la graine et de la clé, et chaque geste refait le calcul (§8.8, budget de
+   * 100 ms par geste). Un cache, pas un état : le résultat est le même sans lui. */
+  var tirages = Object.create(null);
+  function tirageDe(graine) {
+    if (!tirages[graine]) { tirages[graine] = N.creerTirage(graine); }
+    return tirages[graine];
+  }
+
   /**
    * reponsePorteur(t) : la réponse du porteur au texte t, ou null (lot 3 :
    * lue dans le journal). Dans l'histoire, le porteur n'a pas de réponse.
@@ -124,7 +133,7 @@ var ElenchosMoteur = (function (N) {
   function contexte(scelle, cal, reponsePorteur, arrivee) {
     exiger(scelle && scelle.format === 'elenchos-essai-scelle' && scelle.version === 5, 'fichier scellé : format ou version inattendus');
     exiger(cal && typeof cal.texteRepondu === 'function', 'calendrier absent');
-    var tir = N.creerTirage(scelle.graine);
+    var tir = tirageDe(scelle.graine);
     var membres = cal.membres.slice();
     var personnages = membres.filter(function (m) { return m !== PORTEUR; });
     var entree = cal.textesEntree.slice();

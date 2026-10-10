@@ -12,8 +12,8 @@
 | `etat.js` | état format 2 : transitions (un geste = une écriture), durées, journal tiré de l'état | A | fait, testé |
 | `memoire.js` | clés `partie-2` et `verif-2`, ancienne partie par la liste des clés, arrêts 2 et 3 | A | fait, testé |
 | `socle.js` | contexte, V1 à V6, départ, horloges, toucher compté, gestionnaire unique, point d'accès | A | fait, testé hors navigateur |
-| `moteur.js` | `histoire`, `resume` (lot 2, fait, testé) ; `calculer` (lot 3 : lève une erreur d'ici là) ; `regles` (les règles une à une) | A | lot 2 fait ; le moteur du premier essai est rangé dans `tests/premier-essai/moteur-premier-essai.js` |
-| `trace.js` | assemblage des traces (version témoin seulement) : `histoire(collecte, resume, sha, empreinte)`, `tracerHistoire(N, C, M, octets)` (lot 2) ; trace de partie v4 au lot 6 | A | trace de l'histoire faite |
+| `moteur.js` | `histoire`, `resume` (lot 2) ; `calculer`, `cartesServies`, `visagesDejaJoue` (lot 3) ; `regles` (les règles une à une) | A | lots 2 et 3 faits, testés ; le moteur du premier essai est rangé dans `tests/premier-essai/moteur-premier-essai.js` |
+| `trace.js` | assemblage des traces (version témoin seulement) : `histoire(collecte, resume, sha, empreinte)`, `tracerHistoire(N, C, M, octets)` (lot 2) ; `partie(journal, R, durees, carnet, copies, empreinte, resumeSha)` (lot 3) | A | traces de l'histoire et de partie faites ; branchement dans la version témoin au lot 6 |
 | `textes.js`, `interface.js`, `style.css`, `carnet.js` (à créer) | écrans, mots, formes, carnet | B | **copies du premier essai, à adapter aux lots 4 et 5** |
 | `construire.py` | construction | A et B | version 5, statut, sources ; table des lettres au lot 6 |
 
@@ -137,14 +137,17 @@ Pseudo : `ElenchosJournal.pseudoGardable(x, socle.confusables())` donne le refus
   - `tirage`.
   Pour les écrans (instance B) : titres passés = `arrivee.titres` (puis `R.titres` au lot 3) ; Le Cercle des jours 1 à 6 = la dernière semaine de `arrivee.titres` (titulaires, `surprise.texte`) et `arrivee.temperaments[p].temperaments` ; initiales sur les barres = `R.jours[j].curseurs_vus` (lot 3). Tout se lit en `N.Fraction` ; `pourDessiner()` pour un curseur.
 - Le `collecteur` (un objet vide passé par la version témoin) reçoit `jours`, `semaines`, `arrivee` : le détail de chaque jour de l'histoire, que `ElenchosTrace.histoire` met au format de la trace de l'histoire (partie 4.2) sans rien recalculer.
-- `R = M.calculer(scelle, cal, arrivee, journal)`, fonction pure. Les noms et les formes sont ceux de la trace de partie (partie 4.3), en fractions `N.Fraction` (`pourDessiner()` pour un curseur) :
+- `R = M.calculer(scelle, cal, arrivee, journal)` (lot 3), fonction pure ; elle ne modifie ni le journal ni l'état à l'arrivée. `R.K` : le dernier jour atteint. Les noms et les formes sont ceux de la trace de partie (partie 4.3), en fractions `N.Fraction` (`pourDessiner()` pour un curseur) :
   - `R.jours[j]` : `entree`, `manches`, `revelation` (avec `avis_cercle`, `jumeaux`, verdicts, `pas_de_cote`), `message`, `phrase_jour`, `dimanche`, `portrait` (avec `barre`), `curseurs_vus`, `cercle`, `surprises_proches`, `mesures` (sans les durées) ; en plus, pour les écrans :
     - `cartes_porteur` : la manche du porteur à servir les jours où `deviner_porteur` est vrai, **même avant l'ouverture de Deviner** (`designe` et `raison_devinee` lus dans le journal) ; son nombre de cartes sert à `E.ouvrirDeviner`, son `cachee` à la raison ;
-    - `compte_a_rebours` : `'revelation'` ou `'nouveau_texte'` (libellé de 2.5, §7.6) ;
+    - `compte_a_rebours` : `'revelation'` ou `'nouveau_texte'` (libellé de 2.5, §7.6), aux jours joués ; `null` ailleurs ;
+    - présence (partie 4.3.2) : `manches` jours 1 à 14 (le porteur n'y a une clé que si Deviner s'est affiché ; `cartes_porteur` existe dès que `deviner_porteur` est vrai) ; `revelation` chaque jour (au jour 1, le texte abstrait de la veille, sans `avis_cercle`) ; `message` aux jours joués sauf l'arrivée et aux points de saut ; `phrase_jour` si le porteur a répondu ; `dimanche` aux dimanches de l'essai ; `mesures` aux jours qui ont une ouverture ; `entree` le jour d'arrivée dès que 1.2 s'est affiché (`etapes.entree`).
+    - pour les écrans : 2.7d lit `revelation.avis_cercle` (`comptes`, `milieu`, `ligne`) ; la ligne du jumeau (§7.13) se lit dans `revelation.devineurs.porteur.jumeaux` et dans `manches.porteur.cartes[i].designe` ; Le Pas de Côté dans `revelation.pas_de_cote` ; 3.3a à 3.3e dans `dimanche` (`phrase_semaine.cas` vaut `nette` pour la phrase validée) ; Moi dans `portrait` (`ordre_moi`, `barre.longueur`, `barre.pleine`) ; Le Cercle dans `cercle` et `curseurs_vus` ; « Ses surprises » dans `surprises_proches` ; 2.6 dans `message`.
   - `R.sauts[i]` : mesures du saut, sans les durées ;
   - `R.titres` : les titres de chaque semaine tombée (1 à 13 depuis l'histoire, puis 14 et 15), pour les titres passés ;
   - `R.agregats`.
-- `M.visagesDejaJoue(scelle, cal, j, hhmm)` pour 2.5, comme au premier essai.
+- `M.visagesDejaJoue(scelle, cal, j, hhmm)` pour 2.5, comme au premier essai (aussi dans `R.jours[j].attente`).
+- `M.cartesServies(scelle, cal, arrivee)` → `j → {n, cachee}` : les cartes du porteur ne dépendent que du fichier, jamais de ses coups. C'est l'option `cartes` de `ElenchosJournal.valider` (règle 7) ; le nombre est le même que `R.jours[j].cartes_porteur.cartes.length`.
 - Les durées viennent d'`E.dureesJour` et `E.dureesSaut` ; le carnet (§8.12) est une fonction pure de l'instance B (`carnet.js`), sur le journal, `R` et les durées, pour que la version témoin et le contrôle 13 la rejouent.
 
 ## 8. Écarts propres au lot 1 (rapportés à l'orchestrateur)
@@ -164,4 +167,4 @@ Pseudo : `ElenchosJournal.pseudoGardable(x, socle.confusables())` donne le refus
 
 Fichier scellé de test, en deux passes (lot 2) : `python3 -I tests/scelle-test.py --personnages ../../../a-ne-pas-ouvrir/fichier-scelle.json --sortie /tmp/p1.json`, puis `node tests/resume-test.js /tmp/p1.json /tmp/resume.json`, puis `python3 -I tests/scelle-test.py … --resume /tmp/resume.json --sortie tests/scelle-test.json` ; mettre ensuite son SHA-256 dans `tests/entrees-test.json`. La page démarre alors sur ce fichier (V6 passe) ; c'est circulaire, et ne prouve rien de la concordance.
 
-Trace de l'histoire (auteur P, pour la comparaison à trois) : `node tests/trace-histoire.js FICHIER_SCELLE SORTIE`, puis `node tests/comparer-histoire.js P=… C=… S=…`. Mesure de performance : `node tests/mesure-histoire.js [FICHIER_SCELLE] [RALENTI]` (Chromium sans tête, ralenti 4 fois par défaut). Le joueur scripté `tests/partie-test.js` montre l'enchaînement des transitions d'une partie entière ; l'instance B peut s'en servir de modèle pour ses gestes.
+Trace de l'histoire (auteur P, pour la comparaison à trois) : `node tests/trace-histoire.js FICHIER_SCELLE SORTIE`, puis `node tests/comparer-histoire.js P=… C=… S=…`. Trace de partie v4 (P, dans Node) : `node tests/trace-partie.js FICHIER_SCELLE JOURNAL SORTIE [DUREES]`, ou `--temoin SORTIE_JOURNAL SORTIE` pour la partie complète du joueur scripté (mode moteur). Tests du lot 3 : `node --test tests/test-calculer.js` (fichier de test et candidat 1). Mesure de performance : `node tests/mesure-histoire.js [FICHIER_SCELLE] [RALENTI]` (Chromium sans tête, ralenti 4 fois par défaut). Le joueur scripté `tests/partie-test.js` montre l'enchaînement des transitions d'une partie entière ; l'instance B peut s'en servir de modèle pour ses gestes.
