@@ -309,6 +309,28 @@ En-tête exact :
 
 | `groupe` | Chambre | Législature | Identifiant | Source |
 |---|---|---|---|---|
+| `Démocrate (MoDem et Indépendants)` | Assemblée | 16 | PO800484 | libelle de PO800484 ; « Mme Géraldine Bannier (DEM) », CRSANR5L16S2024O1N018, l. 235 (DEM : code, pas le nom) |
+| `Écologiste - NUPES` | Assemblée | 16 | PO800526 | libelle de PO800526 ; « M. Charles Fournier (ECOLO) », CRSANR5L16S2023E1N027, l. 704 (ECOLO : code, pas le nom) ; auteur de 840 (Nicolas Thierry) au dépôt |
+| `Gauche démocrate et républicaine - NUPES` | Assemblée | 16 | PO800502 | libelle de PO800502 ; « M. Édouard Bénard (GDR-NUPES) », CRSANR5L16S2024O1N123, l. 717 |
+| `Horizons et apparentés` | Assemblée | 16 | PO800514 | libelle de PO800514 ; « M. Jérémie Patrier-Leitus (HOR) », CRSANR5L16S2024O1N018, l. 35 |
+| `La France insoumise - Nouvelle Union Populaire écologique et sociale` | Assemblée | 16 | PO800490 | libelle de PO800490 ; « Mme Clémence Guetté (LFI-NUPES) », CRSANR5L16S2023O1N090, l. 554 ; auteur de 707 (Maxime Laisney) au dépôt |
+| `Les Républicains` | Assemblée | 16 | PO800508 | libelle de PO800508 ; « M. Thibault Bazin (LR) », CRSANR5L16S2024O1N123, l. 825 |
+| `Libertés, Indépendants, Outre-mer et Territoires` | Assemblée | 16 | PO800532 | libelle de PO800532 ; « M. Michel Castellani (LIOT) », CRSANR5L16S2023O1N119, l. 409 |
+| `Rassemblement National` | Assemblée | 16 | PO800520 | libelle de PO800520 ; « M. Pierre Meurin (RN) », CRSANR5L16S2024O1N123, l. 957 |
+| `Renaissance` | Assemblée | 16 | PO800538 | libelle de PO800538 ; « Mme Barbara Pompili (RE) », CRSANR5L16S2023O1N090, l. 733 ; auteur de 3370 (David Valence) au dépôt |
+| `Socialistes et apparentés` | Assemblée | 16 | PO830170 | libelle de PO830170 ; « M. Stéphane Delautrette (SOC-A) », CRSANR5L16S2024O1N123, l. 711 (SOC-A : code, pas le nom) ; organe ouvert le 19 octobre 2023, en vigueur le 14 février 2024 |
+| `Droite Républicaine` | Assemblée | 17 | PO845425 | libelle de PO845425 ; « M. Nicolas Ray (DR) », CRSANR5L17S2025O1N160, l. 974 |
+| `Écologiste et Social` | Assemblée | 17 | PO845439 | libelle de PO845439 ; « Mme Sandra Regol (ECOS) », CRSANR5L17S2025O1N143, l. 899 (ECOS : code, pas le nom) |
+| `Ensemble pour la République` | Assemblée | 17 | PO845407 | libelle de PO845407 ; « M. Sébastien Huyghe (EPR) », CRSANR5L17S2025O1N143, l. 887 |
+| `Gauche Démocrate et Républicaine` | Assemblée | 17 | PO845514 | libelle de PO845514 ; « Mme Elsa Faucillon (GDR) », CRSANR5L17S2026E1N002, l. 86 |
+| `Horizons & Indépendants` | Assemblée | 17 | PO845470 | libelle de PO845470 ; « M. Laurent Marcangeli (HOR) », CRSANR5L17S2026E1N002, l. 119 |
+| `La France insoumise - Nouveau Front Populaire` | Assemblée | 17 | PO845413 | libelle de PO845413 ; « Mme Gabrielle Cathala (LFI-NFP) », CRSANR5L17S2025O1N143, l. 877 |
+| `Les Démocrates` | Assemblée | 17 | PO845454 | libelle de PO845454 ; « M. Marc Fesneau (DEM) », CRSANR5L17S2025O1N129, l. 205 (DEM : code, pas le nom) |
+| `Libertés, Indépendants, Outre-mer et Territoires` | Assemblée | 17 | PO845485 | libelle de PO845485 ; « M. Charles de Courson (LIOT) », CRSANR5L17S2026O1N048, l. 570 |
+| `Rassemblement National` | Assemblée | 17 | PO845401 | libelle de PO845401 ; « M. Michaël Taverne (RN) », CRSANR5L17S2025O1N143, l. 885 |
+| `Socialistes et apparentés` | Assemblée | 17 | PO845419 | libelle de PO845419 ; « M. Hervé Saulignac (SOC) », CRSANR5L17S2025O1N160, l. 409 |
+| `Union des droites pour la République` | Assemblée | 17 | PO872880 | libelle de PO872880 ; « M. Matthieu Bloch (UDDPLR) », CRSANR5L17S2026O1N268, l. 459 (UDDPLR : code, pas le nom) ; organe ouvert le 5 septembre 2025, en vigueur le 11 juin 2026 |
+| `Rassemblement des démocrates, progressistes et indépendants` | Sénat | — | PO732421 | libelle de PO732421 ; auteur de E2 (Georges Patient) au dépôt, 3 décembre 2025 ; organe du Sénat (codeType GROUPESENAT), en vigueur depuis le 28 juin 2017 ; libelleAbrege « RDPI », libelleAbrev « LREMP » (codes, pas le nom) |
 
 - **`groupe`** : le nom officiel en toutes lettres, avec la casse de l'institution (`libelle` de l'organe dans l'open data), entre accents graves. Par exemple `Écologiste et Social` ou `Libertés, Indépendants, Outre-mer et Territoires`.
 - **Chambre, Législature, Identifiant, Source** : comme dans S1. La Source donne le `libelle` de l'organe et une ligne de compte rendu quand elle existe.
@@ -334,7 +356,7 @@ En-tête exact :
   - **repli**, si la copie locale d'`amo` n'est pas utilisable : la liste des codes interdits de S1, plus `LREMP`, `RDPI` et `UDR`, plus tous les `libelleAbrege` des organes du lot ; un `groupe` égal à l'un de ces codes est refusé ;
   - un nom officiel qui contient un sigle dans son libellé (par exemple « Écologiste - NUPES ») passe : la règle vise un sigle à la place du nom, pas un sigle qui fait partie du nom officiel.
 
-**Lignes : à remplir par Contenu**, sur le lot final.
+**Lignes** remplies par Contenu le 10 octobre 2026 sur le lot final (22 lignes : 10 en 16e législature, 11 en 17e, 1 au Sénat), dans le tableau ci-dessus. Chaque `libelle` et chaque identifiant ont été relus dans la copie locale d'`amo`, et l'organe est celui dont l'élu était membre à la date de la règle du moment. La réserve T (scrutin 5242) n'ajoute aucune ligne.
 
 ### 2.10 bis Commissions permises (nouveau)
 
@@ -342,17 +364,37 @@ En-tête exact :
 
 | `libelle` | Identifiant | Source |
 |---|---|---|
+| `commission spéciale sur la simplification de la vie économique` | PO849474 | Commission spéciale chargée d’examiner le projet de loi de simplification de la vie économique (94 points de code une fois la première lettre en minuscule, donc forme courte) ; forme courte rédigée par Contenu, relue par UX |
 
 - **`libelle`** : le libellé court, entre accents graves, avec une minuscule au début et commençant par « commission ». Par exemple `commission des affaires sociales`.
 - Caractères : ceux de la partie 2.10, sans « & » ni parenthèses. 80 points de code au plus.
 - **Forme courte d'une commission spéciale.** Si le libellé officiel, une fois mis en minuscule au début, dépasse 80 points de code, le `libelle` s'écrit « commission spéciale sur {intitulé court du projet} ». La colonne Source donne alors le libellé officiel de l'organe, suivi de « forme courte rédigée par Contenu, relue par UX ». Pour une telle ligne, le contrôle ne vérifie que la forme (règles ci-dessus) ; la fidélité de la forme courte relève des deux relectures. (Arbitrage de l'orchestrateur, 10 octobre 2026 : pour l'article ajouté en commission spéciale, la commission plutôt que le premier signataire de l'amendement de commission, introuvable dans les données locales ; Game design préférait le signataire.)
 - Chaque `auteur.libelle` du fichier figure au tableau, et chaque ligne sert au moins une fois.
 
-**Lignes : à remplir par Contenu.**
+**Lignes** remplies par Contenu le 10 octobre 2026 sur le lot final (1 ligne, pour le texte 2190), dans le tableau ci-dessus.
 
 ### 2.11 Initiales et élision
 
 S1, partie 2.8, s'applique tel quel aux `depute` des considérations. Le tableau est vidé, puis rempli de nouveau par Contenu sur le lot final, et relu par UX. L'en-tête et les règles de lecture sont inchangés.
+
+Lignes remplies par Contenu le 10 octobre 2026 sur le lot final (14 noms, 15 citations ; Anne Stambach-Terrenoir est citée deux fois, aux textes 6770 et 3708). Les auteurs ne figurent pas au tableau : seul un `depute` de considération peut suivre « de ». Les deux « H » sont muets, et « Yannick » se dit avec le son y (« de Yannick Monnet »).
+
+| `nom` | Initiale | Forme |
+|---|---|---|
+| `Alexandra Martin` | voyelle | `d'` |
+| `Alma Dufour` | voyelle | `d'` |
+| `Amélia Lakrafi` | voyelle | `d'` |
+| `Anne Stambach-Terrenoir` | voyelle | `d'` |
+| `Aude Luquet` | voyelle | `d'` |
+| `Édouard Bénard` | voyelle | `d'` |
+| `Élisa Martin` | voyelle | `d'` |
+| `Elsa Faucillon` | voyelle | `d'` |
+| `Emmanuel Maquet` | voyelle | `d'` |
+| `Hervé de Lépinau` | h muet | `d'` |
+| `Hervé Saulignac` | h muet | `d'` |
+| `Isabelle Périgault` | voyelle | `d'` |
+| `Olga Givernet` | voyelle | `d'` |
+| `Yannick Monnet` | son y | `de` |
 
 ### 2.12 Exemples (valeurs inventées, sauf le calendrier)
 
