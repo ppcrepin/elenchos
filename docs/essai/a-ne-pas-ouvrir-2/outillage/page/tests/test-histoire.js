@@ -278,44 +278,54 @@ test('Titres : Le Sans-Faute (R7), Le Devin, Le Mystère (jumeau jamais une erre
     });
     revelations[d] = { texte: 'X' + (d - 2), devineurs: dv };
   }
-  // Agathe : 5 jours, tout juste → Sans-Faute. Nassim : tout juste, mais des cartes 4 jours seulement → non.
-  // Odile : 5 jours, une passe le jour 5 → non. Points : Agathe 10, Odile 10 (passe exclue), Nassim 8.
+  // Agathe : 5 jours de cartes. Nassim : des cartes 4 jours seulement (pas le jour 7). Odile : une passe le jour 5.
+  // Odile trouve chaque jour la raison cachée (raison_trouvee), les autres jamais.
   for (let d = 3; d <= 7; d++) {
     const p = {
       Agathe: [carte('Nassim', 'Nassim', true), carte('Odile', 'Odile', true)],
       Odile: d === 5 ? [carte('Agathe', 'passe', false), carte('Nassim', 'Nassim', true)] : [carte('Agathe', 'Agathe', true), carte('Nassim', 'Nassim', true)]
     };
-    if (d !== 6) { p.Nassim = [carte('Agathe', 'Agathe', true), carte('Odile', 'Odile', true)]; }
+    if (d !== 7) { p.Nassim = [carte('Agathe', 'Agathe', true), carte('Odile', 'Odile', true)]; }
     jour(d, p);
   }
-  // Une attribution au jumeau (Odile désigne Agathe sur la carte de Nassim, même réponse) : juste, jamais une erreur.
+  // Jour 7 : Odile désigne Agathe sur la carte de Nassim ; même réponse (4, 1) : juste (jumeau), jamais une erreur.
   manches[6].Odile.cartes[1] = { auteur: 'Nassim', auteur_compte: 'Nassim', designe: 'Agathe' };
-  // Le jour 4, texte X2 (sans titre) : des erreurs. Le jour 6, texte X4 (avec titre, seul candidat avec erreur… mais X4 n'a pas de titre).
+  // Jour 4 (texte X2, qui a un titre) : Agathe se trompe sur la carte de Nassim.
   manches[3].Agathe.cartes[0] = { auteur: 'Nassim', auteur_compte: 'Nassim', designe: 'Odile' };
   revelations[4].devineurs.Agathe.justes[0] = false; revelations[4].devineurs.Agathe.points -= 1;
+  // Jour 6 (texte X4, sans titre) : Nassim se trompe sur la carte d'Agathe.
   manches[5].Nassim.cartes[0] = { auteur: 'Agathe', auteur_compte: 'Agathe', designe: 'Odile' };
   revelations[6].devineurs.Nassim.justes[0] = false; revelations[6].devineurs.Nassim.points -= 1;
-  const w = R.calculerTitres(ctx, 1, revelations, manches);
-  assert.deepEqual(w.sans_faute, []); // Agathe a une erreur le jour 4 désormais
-  assert.deepEqual(w.devin.points, { Agathe: 9, Nassim: 7, Odile: 10, Valentin: 0 });
-  assert.deepEqual([w.devin.titulaire, w.devin.departage], ['Odile', 'aucun']);
-  // Le Fidèle : Valentin, membre depuis le jour 3, a manqué X5 → non ; les autres ont tout.
-  assert.deepEqual(w.fidele.titulaires, ['Agathe', 'Nassim', 'Odile']);
-  // Mystère : Nassim, 2 erreurs ? non : la seule erreur sur Nassim est le jour 4 ; Agathe : une erreur le jour 6.
-  assert.equal(w.mystere.erreurs.Nassim, 1);
-  assert.equal(w.mystere.erreurs.Agathe, 1);
-  // Surprise : X2 a une erreur mais un titre ; X4 n'a pas de titre et ne peut pas l'être.
-  assert.equal(w.surprise.erreurs.X4, 1);
-  assert.equal(w.surprise.texte, 'X2');
-  assert.equal(w.surprise.attributions.X2, 6);
 
-  // Sans erreur ni passe : Agathe, 5 jours, obtient Le Sans-Faute ; égalité de points départagée par les raisons trouvées (Odile).
+  const w = R.calculerTitres(ctx, 1, revelations, manches);
+  // Sans-Faute : Agathe a une erreur, Nassim n'a que 4 jours de cartes, Odile a passé → personne.
+  assert.deepEqual(w.sans_faute, []);
+  // Points : Agathe 10 − 1 = 9 ; Nassim 4 × 2 − 1 = 7 ; Odile 4 × 2 + 1 = 9 (passe : 0) ; Valentin 0.
+  // Égalité Agathe – Odile, départagée par les raisons trouvées (Odile 5, Agathe 0).
+  assert.deepEqual(w.devin.points, { Agathe: 9, Nassim: 7, Odile: 9, Valentin: 0 });
+  assert.deepEqual([w.devin.titulaire, w.devin.departage], ['Odile', 'raisons']);
+  // Le Fidèle : Valentin, membre depuis le jour 3, a manqué X5 (répondu le jour 5) → non.
+  assert.deepEqual(w.fidele.titulaires, ['Agathe', 'Nassim', 'Odile']);
+  // Le Mystère : Nassim 1 erreur sur 10 tentatives ; Agathe 1 sur 8 (passe exclue) ; Odile 0 sur 9 → Agathe.
+  assert.deepEqual([w.mystere.tentatives, w.mystere.erreurs], [{ Agathe: 8, Nassim: 10, Odile: 9, Valentin: 0 }, { Agathe: 1, Nassim: 1, Odile: 0, Valentin: 0 }]);
+  assert.deepEqual([w.mystere.titulaire, w.mystere.departage], ['Agathe', 'aucun']);
+  // La surprise : X2 (titre, 1 erreur sur 6) ; X4 (1 sur 6) n'a pas de titre et ne peut pas l'être.
+  assert.deepEqual(w.surprise.attributions, { X1: 6, X2: 6, X3: 5, X4: 6, X5: 4 });
+  assert.deepEqual(w.surprise.erreurs, { X1: 0, X2: 1, X3: 0, X4: 1, X5: 0 });
+  assert.deepEqual([w.surprise.texte, w.surprise.departage], ['X2', 'aucun']);
+
+  // Plus d'erreur pour Agathe : Le Sans-Faute (5 jours, tout juste) et Le Devin seule en tête (10).
   manches[3].Agathe.cartes[0] = { auteur: 'Nassim', auteur_compte: 'Nassim', designe: 'Nassim' };
   revelations[4].devineurs.Agathe.justes[0] = true; revelations[4].devineurs.Agathe.points += 1;
+  // Plus d'erreur pour Nassim non plus : tout juste, mais des cartes 4 jours seulement → toujours pas de Sans-Faute.
+  manches[5].Nassim.cartes[0] = { auteur: 'Agathe', auteur_compte: 'Agathe', designe: 'Agathe' };
+  revelations[6].devineurs.Nassim.justes[0] = true; revelations[6].devineurs.Nassim.points += 1;
   const w2 = R.calculerTitres(ctx, 1, revelations, manches);
   assert.deepEqual(w2.sans_faute, ['Agathe']);
-  assert.deepEqual([w2.devin.titulaire, w2.devin.departage], ['Odile', 'raisons']);
-  // Sans aucune raison trouvée : tirage t("devin|1|…") entre Agathe et Odile.
+  assert.deepEqual([w2.devin.titulaire, w2.devin.departage], ['Agathe', 'aucun']);
+  assert.equal(w2.surprise.texte, null); // X2 n'a plus d'erreur ; X4 n'a pas de titre
+  // Égalité de points sans raison trouvée : tirage t("devin|1|…").
+  revelations[5].devineurs.Odile.points = 2;
   Object.values(revelations).forEach(r => { Object.values(r.devineurs).forEach(x => { x.raison_trouvee = false; }); });
   const w3 = R.calculerTitres(ctx, 1, revelations, manches);
   assert.deepEqual([w3.devin.titulaire, w3.devin.departage], [ctx.tir.plusPetit(['Agathe', 'Odile'], 'devin|1|'), 'tirage']);
@@ -355,9 +365,10 @@ test('Tempéraments : décomptes, seuils compris, fenêtre de 56 jours, ancienne
   // Membre depuis 55 jours seulement : aucun.
   const t3 = R.calculerTemperaments(specTemperaments({ depuisAgathe: -55 }), 0, 'Agathe');
   assert.deepEqual([t3.reponses, t3.temperaments], [20, []]);
-  // Nassim : 20 réponses ; « Très » sur 6 (1) ; seul de son côté jamais (Odile est défavorable avec lui ; Agathe et Valentin favorables).
+  // Nassim : 20 réponses ; « Très » sur 6 ; jamais seul de son côté (Odile défavorable avec lui, puis Valentin favorable avec lui) ;
+  // les 20 textes sont partagés pour lui (les autres y ont au moins un favorable et un défavorable).
   const n = R.calculerTemperaments(specTemperaments(), 0, 'Nassim');
-  assert.deepEqual(n, { neutres: 0, reponses: 20, seul_cote: 0, seul_milieu: 0, temperaments: [], textes_partages: 6, tres: 6 });
+  assert.deepEqual(n, { neutres: 0, reponses: 20, seul_cote: 0, seul_milieu: 0, temperaments: [], textes_partages: 20, tres: 6 });
 });
 
 /* ------------------------------------------------------------------ */
