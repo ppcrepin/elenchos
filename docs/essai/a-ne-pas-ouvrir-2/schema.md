@@ -50,7 +50,8 @@ Inchangée (S1, partie 1.1). Deux pièges de plus :
 | jour | entier | de −90 à 15. Comme clé d'objet : écriture décimale, signe « - » (U+002D) devant un jour négatif, sans zéro initial ; le jour 0 s'écrit « 0 », jamais « -0 ». |
 | tempérament | chaîne | `"original"`, `"pont"`, `"mesure"`, `"tranche"` |
 | titre | chaîne | `"sans_faute"`, `"devin"`, `"mystere"`, `"fidele"` |
-| objet du vote | chaîne | `"texte"`, `"article"`, `"amendement"`, `"motion"` |
+| objet du vote | chaîne | `"texte"`, `"article"`, `"amendement"`, `"motion"`, `"resolution"` |
+| suite du texte | chaîne ou `null` | `null`, `"texte_tombe"`, `"texte_retire"` (partie 2.5) |
 
 Les types fraction, heure, instant, date, hex16, hex64, personnage, membre, tension, niveau, raison et côté sont inchangés.
 
@@ -177,14 +178,15 @@ Le jour où un texte H est répondu est lu dans `histoire.textes.Hi.jour` (parti
 - 60 points de code au plus, en NFC.
 - Sans « : » (E8).
 
-**`vote`** : quatre clés, `{"date", "etape", "issue", "objet"}`.
+**`vote`** : cinq clés, `{"date", "etape", "issue", "objet", "suite"}`.
 
 | Clé | Valeurs | Sens |
 |---|---|---|
-| `objet` | `"texte"`, `"article"`, `"amendement"`, `"motion"` | ce sur quoi porte le scrutin (E4 ; §7.10). `"motion"` désigne une motion de rejet adoptée : le texte est rejeté avant l'examen de ses articles. |
+| `objet` | `"texte"`, `"article"`, `"amendement"`, `"motion"`, `"resolution"` | ce sur quoi porte le scrutin (E4 ; §7.10). `"motion"` désigne une motion de rejet adoptée : le texte est rejeté avant l'examen de ses articles. `"resolution"` désigne une proposition de résolution (article 34-1 de la Constitution) : un texte qui invite le Gouvernement à agir, sans l'y obliger. |
 | `issue` | `"adopte"`, `"rejete"` | le sort de l'objet ; pour `"motion"`, celui du texte. `"sans_vote_ensemble"` (S1) disparaît : un article voté seul s'écrit `objet: "article"`. |
-| `etape` | `"navette"`, `"definitif"`, `"aucune"` | la phrase d'étape, comme dans S1 (§7.10 pour les mots) |
+| `etape` | `"navette"`, `"definitif"`, `"aucune"` | la phrase d'étape, comme dans S1 (§7.10 pour les mots). Elle dit seulement la navette. |
 | `date` | date | inchangé |
+| `suite` | `null`, `"texte_tombe"`, `"texte_retire"` | un fait du jour même du scrutin qui change le sort du texte entier (§7.10) : `"texte_tombe"`, le rejet de cet article a fait tomber tout le texte ; `"texte_retire"`, le texte entier a été retiré le jour même. `null` dans tous les autres cas. Relevé deux fois, avec sa preuve, dans `votes.md` (partie 5.1, étape 8). |
 
 Combinaisons permises (contrôle 1, étape 5) :
 
@@ -195,6 +197,17 @@ Combinaisons permises (contrôle 1, étape 5) :
 | `"article"`, `"amendement"` | `"adopte"` | `"navette"` ou `"aucune"` (jamais `"definitif"`, arbitrage du §7.10) |
 | `"article"`, `"amendement"` | `"rejete"` | `"aucune"` |
 | `"motion"` | `"rejete"` | `"aucune"` (§7.10 n'affiche aucune phrase d'étape) |
+| `"resolution"` | `"adopte"` ou `"rejete"` | `"aucune"` (une résolution n'a pas de suite) |
+
+Le gros titre d'une résolution reste « Texte adopté. » ou « Texte rejeté. » (D-014).
+
+Combinaisons permises pour `suite` (contrôle 1, étape 5) :
+
+| `suite` | `objet` | `issue` |
+|---|---|---|
+| `"texte_tombe"` | `"article"` seulement | `"rejete"` seulement |
+| `"texte_retire"` | `"article"` ou `"amendement"` | `"adopte"` ou `"rejete"` |
+| `null` | tous | toutes |
 
 **`auteur`** : quatre formes.
 
@@ -205,7 +218,7 @@ Combinaisons permises (contrôle 1, étape 5) :
 | `{"type": "gouvernement"}` | 1 | « Proposé par le Gouvernement. » |
 | `{"type": "commission", "libelle"}` | 2 | « Proposé par la {libelle}. » ; `libelle` est pris dans la partie 2.10 bis |
 
-Pour un amendement, l'auteur est le premier signataire, avec son mandat et son groupe au dépôt (A.7, point 4).
+Pour un amendement, l'auteur est le premier signataire, avec son mandat et son groupe au dépôt (A.7, point 4). Pour un texte déposé par plusieurs personnes, l'auteur est la première personne nommée dans le texte déposé (§7.11) : `auteur` reste un seul objet.
 
 **`considerations[i].depute`** : `{"elision", "feminin", "groupe", "nom"}`, comme dans S1. `groupe` est une chaîne de la partie 2.10, ou `null` pour un non-inscrit (« sans groupe », §7.11).
 
@@ -300,19 +313,26 @@ En-tête exact :
 - **`groupe`** : le nom officiel en toutes lettres, avec la casse de l'institution (`libelle` de l'organe dans l'open data), entre accents graves. Par exemple `Écologiste et Social` ou `Libertés, Indépendants, Outre-mer et Territoires`.
 - **Chambre, Législature, Identifiant, Source** : comme dans S1. La Source donne le `libelle` de l'organe et une ligne de compte rendu quand elle existe.
 
+**Règle du moment** (§7.11 ; A.7, point 2) : fait foi le `libelle` de l'organe dont l'élu était membre à la date retenue, le dépôt pour l'auteur, la séance pour une raison. Si ce libellé n'est qu'un sigle, l'élu n'est pas retenu : pour une raison, on prend un autre orateur ; pour l'auteur, le texte passe en réserve. On ne prend jamais le libellé d'un autre organe, même successeur et même s'il désigne le même groupe : dire que deux organes sont « le même groupe » demanderait un jugement, et la règle doit rester mécanique (identifiant et date).
+
 **Règles d'écriture du `groupe`** (vérifiées par le contrôle) :
 - caractères permis : les lettres de S1, les chiffres de 0 à 9, l'espace U+0020, le trait d'union U+002D, la virgule, « & », l'apostrophe droite U+0027 et les parenthèses ;
 - pas d'espace au bord, ni d'espace double ;
 - chaque virgule est suivie d'une espace et précédée d'une lettre ;
 - un trait d'union est soit entre deux lettres ou chiffres (« Outre-mer »), soit entre deux espaces (« La France insoumise - Nouveau Front Populaire ») ;
 - les parenthèses sont équilibrées ;
-- 60 points de code au plus.
+- 70 points de code au plus (60 jusqu'au 10 octobre 2026 : la limite est un garde-fou contre une erreur de copie, pas une règle d'affichage, et elle ne doit pas guider le choix des orateurs ; le libellé officiel reste entier, jamais abrégé).
 
 **Règles d'ensemble** :
 - une ligne par nom, chambre et législature ;
 - un identifiant n'apparaît qu'une fois dans le tableau ;
 - chaque couple (chambre, nom) du tableau sert au moins une fois dans le fichier ;
-- un nom n'est jamais un sigle ni un code interne : on garde la liste des codes interdits de S1, et Contenu y ajoute les sigles qu'il relève.
+- un nom n'est jamais un sigle ni un code interne. Le contrôle 1 le vérifie sur la source, et non plus par une seule liste de codes :
+  - pour chaque Identifiant, il lit le fichier de l'organe dans les données ouvertes (`amo`), et note au rapport son chemin et son SHA-256 ;
+  - il vérifie que `groupe` est égal au `libelle` de l'organe, en NFC, à l'identique ;
+  - il refuse un `libelle` égal au `libelleAbrege` ou au `libelleAbrev` du même organe (un organe dont le libellé n'est qu'un sigle ne fournit donc aucun groupe) ;
+  - **repli**, si la copie locale d'`amo` n'est pas utilisable : la liste des codes interdits de S1, plus `LREMP`, `RDPI` et `UDR`, plus tous les `libelleAbrege` des organes du lot ; un `groupe` égal à l'un de ces codes est refusé ;
+  - un nom officiel qui contient un sigle dans son libellé (par exemple « Écologiste - NUPES ») passe : la règle vise un sigle à la place du nom, pas un sigle qui fait partie du nom officiel.
 
 **Lignes : à remplir par Contenu**, sur le lot final.
 
@@ -325,6 +345,7 @@ En-tête exact :
 
 - **`libelle`** : le libellé court, entre accents graves, avec une minuscule au début et commençant par « commission ». Par exemple `commission des affaires sociales`.
 - Caractères : ceux de la partie 2.10, sans « & » ni parenthèses. 80 points de code au plus.
+- **Forme courte d'une commission spéciale.** Si le libellé officiel, une fois mis en minuscule au début, dépasse 80 points de code, le `libelle` s'écrit « commission spéciale sur {intitulé court du projet} ». La colonne Source donne alors le libellé officiel de l'organe, suivi de « forme courte rédigée par Contenu, relue par UX ». Pour une telle ligne, le contrôle ne vérifie que la forme (règles ci-dessus) ; la fidélité de la forme courte relève des deux relectures.
 - Chaque `auteur.libelle` du fichier figure au tableau, et chaque ligne sert au moins une fois.
 
 **Lignes : à remplir par Contenu.**
@@ -343,9 +364,11 @@ Un texte de l'histoire. Les valeurs sont inventées. Ce texte a une inattendue p
 
 `"H7":{"fiche":null,"jour":-84,"raisons":[{"cote":"contre","pole":0,"rang":1},{"cote":"pour","pole":"aucun","rang":2},{"cote":"pour","pole":1,"rang":3},{"cote":"contre","pole":"aucun","rang":4}],"sens":1,"tension":"T"}`
 
-Un vote d'amendement rejeté, puis un auteur commission, puis un auteur non inscrit :
+Un vote d'amendement rejeté, un vote d'article rejeté qui a fait tomber le texte entier, puis un auteur commission, puis un auteur non inscrit :
 
-`"vote":{"date":"2025-02-13","etape":"aucune","issue":"rejete","objet":"amendement"}`
+`"vote":{"date":"2025-02-13","etape":"aucune","issue":"rejete","objet":"amendement","suite":null}`
+
+`"vote":{"date":"2025-03-20","etape":"aucune","issue":"rejete","objet":"article","suite":"texte_tombe"}`
 
 `"auteur":{"libelle":"commission des affaires sociales","type":"commission"}`
 
@@ -767,7 +790,7 @@ Aucune autre clé.
   - chaque `jour` vaut i − 91 ;
   - tension, sens et raisons suivent le fichier caché, point 2 bis, refait à partir de la graine ;
   - seul H86 a une `fiche`, et H86 est un texte P de sens 0.
-- **Votes** : les combinaisons de la partie 2.5 sont respectées.
+- **Votes** : les deux tables de combinaisons de la partie 2.5 sont respectées, celle de `objet`, `issue` et `etape`, et celle de `suite`.
 - **D-028** :
   - entre 6 et 12 textes rejetés sur les 18 ;
   - au moins un rejeté parmi E1 à E3 ;
@@ -790,12 +813,22 @@ On retire `cercle.inviteuse` et on ajoute `cercle.invitant`.
 
 **Étape 8, fidélité aux fiches.** Les fiches du second lot sont dans `a-ne-pas-ouvrir-2/textes/`. La liste des fichiers et leurs SHA-256 sont passés en paramètre par l'orchestrateur, comme dans S1.
 - **En-tête de fiche** : `### {T0 … T14 | E1 … E3 | H86} · scrutin {n} ({l}e législature)`. « T{n} » donne la clé « {n} ».
-- **Nouvelle ligne** : `- Objet du vote : {texte | article | amendement | motion}`.
+  - **Le tirage des cases est écrit avant le contrôle.** Le tirage t("ordre-texte|tension|i") (fichier caché, point 14) ne dépend que de la graine. L'orchestrateur le calcule avant le contrôle, et avant que les SHA-256 des fiches soient notés, puis écrit le vrai T{n} dans chaque en-tête. Un en-tête provisoire (« Case S », « T? »…) ne passe pas.
+  - **Rien après la parenthèse.** Les suffixes (« · présentation B », « · fiche légère ») passent dans les Doutes de la fiche.
+  - **En-têtes stricts.** Le lecteur de S1 saute sans rien dire un en-tête qu'il ne reconnaît pas. Le lecteur v2 refuse tout en-tête `### ` qui contient ` · scrutin ` sans correspondre exactement à la forme ci-dessus, sauf ceux qui commencent par `### Réserve ` ou `### (écartée)`.
+- **Nouvelle ligne** : `- Objet du vote : {texte | article | amendement | motion | resolution}`. Elle figure, ligne à part, dans chaque fiche de texte joué : l'objet écrit dans la ligne « Vote » n'est pas lu.
 - **Auteur commission** : `- Auteur : Commission : {libelle}`, suivi de ` ;` ou de `.`, puis du reste de la ligne.
+- **Auteur Gouvernement** : `- Auteur : Gouvernement ; …` (et non « Proposé par le Gouvernement (… »).
 - **Auteur non inscrit** : `{groupe}` vaut le littéral `sans groupe`, qui donne `null`. Même règle dans les lignes de raisons.
-- **Groupes** : ils peuvent contenir des virgules. On lit {nom} jusqu'à la première « , », puis {mandat} parmi ses quatre valeurs, puis {groupe} jusqu'au séparateur.
+- **Groupes** : ils peuvent contenir des virgules. On lit {nom} jusqu'à la première « , », puis {mandat} parmi ses quatre valeurs, puis {groupe} jusqu'au séparateur. Un groupe est suivi de « au dépôt » sans virgule (`… indépendants au dépôt (…)`) : une virgule avant « au dépôt » ferait lire un groupe faux.
+- **Point final** : là où le lecteur de S1 attend « . » suivi d'une espace, le lecteur v2 admet aussi un point en fin de ligne.
+- **Lignes** (contrôlées sur le fichier et sur les fiches) :
+  - chaque élément de `lignes` fait au plus 90 points de code, en NFC (A.7) ;
+  - pour les textes en présentation B (fichier caché, point 14), dont la liste est passée en paramètre par l'orchestrateur, la ligne 3 est égale, à l'identique, à la phrase fixe de A.7 : « Cet amendement supprimerait tout l'article qui prévoit ces mesures. »
 - **H86** : seules les lignes `Titre` et `Tension` sont lues, plus sa ligne de `votes.md`.
-- **`votes.md`** : en-tête « | Rang | Scrutin | `objet` | `issue` | `date` | `etape` | Preuve principale | ». Une ligne par texte joué et une pour H86.
+- **`votes.md`** : en-tête « | Rang | Scrutin | `objet` | `issue` | `date` | `etape` | `suite` | Preuve principale | ». Une ligne par texte joué et une pour H86.
+  - La colonne `objet` admet `resolution`.
+  - La colonne `suite` vaut `null`, `texte_tombe` ou `texte_retire`, relevée deux fois comme les autres colonnes. Quand elle n'est pas `null`, la Preuve principale cite aussi la ligne du compte rendu qui établit le fait.
 
 Comme dans S1, ces formes de lignes ne sont pas le format. Leur forme ne change pas sans relecture par l'auteur du contrôle.
 
@@ -835,7 +868,10 @@ C'est la forme de S1, partie 4.5, sur les 18 textes, avec ces changements :
 - **`vote`** :
   - « 1.6 » pour E1 à E3, avec {objet} et {étape-texte} (§7.10) ;
   - « 2.7d » pour T0 à T13 ;
-  - « 5.4 » pour les textes que l'Historique montre (partie 8, point UX-2).
+  - « 5.4 » pour les textes que l'Historique montre (partie 8, point UX-2) ;
+  - **{objet}** a une phrase de plus, pour `resolution` : « C'était une résolution, un texte qui invite le Gouvernement à agir, sans l'y obliger. » ;
+  - **{suite}** suit {objet} {étape-texte}, en 1.6, 2.7d et 5.4 : « Le texte entier est tombé avec lui. » pour `texte_tombe` ; « Le jour même, le texte entier a été retiré. » pour `texte_retire` ; rien pour `null` ;
+  - la phrase {suite}, quand elle existe, entre dans `interdites_avant_revelation`, comme la phrase d'étape (jamais avant 18h).
 - **`auteur`** : les quatre formes (§7.11), dont « Proposé par la {libelle}. » et « {nom}, {député | députée} sans groupe ».
 - **`arguments`** : « … de {nom}, {mandat}, {groupe}. », ou « …, {mandat} sans groupe. » ; élision selon la partie 2.11.
 - **Nouveau, `surprise_arrivee`** : la chaîne « Surprise de la semaine : {titre de H86} », attendue en 4.2 du jour 1 au jour 6.
@@ -843,7 +879,7 @@ C'est la forme de S1, partie 4.5, sur les 18 textes, avec ces changements :
 ## 6. Versions, historique, repli
 
 - **Historique** :
-  - fichier scellé, version 5 (9 octobre 2026) : tout ce qui est décrit en partie 2 ;
+  - fichier scellé, version 5 (9 octobre 2026) : tout ce qui est décrit en partie 2. Complétée le 10 octobre 2026 sans changer de numéro, ce qui suppose qu'aucun candidat n'ait encore été produit : objet `resolution`, champ `vote.suite`, limite de `groupe` à 70, vérification des groupes contre `amo`, forme courte des commissions spéciales, règles de lecture des fiches (partie 5.1, étape 8) ;
   - trace version 4 et journal version 4 : partie 4.3 ;
   - nouveaux formats : la trace de l'histoire (version 1) et le résumé (version 1) ;
   - fichier des durées, version 2 ; phrases attendues, version 2.
@@ -866,7 +902,8 @@ C'est la forme de S1, partie 4.5, sur les 18 textes, avec ces changements :
    - Ensuite, V6.
    - `calculer` part du jour 1, révélation de H90 comprise, et lit la manche du jour 0 dans l'état.
 3. **Lecture des champs nouveaux** :
-   - `vote.objet` et ses combinaisons ;
+   - `vote.objet` et ses combinaisons, `resolution` comprise ;
+   - `vote.suite` : une phrase sous {objet} {étape-texte} en 1.6, 2.7d et 5.4, jamais avant 18h (§7.10) ;
    - `auteur` de type commission ;
    - `groupe` à `null` : sans groupe ;
    - groupes en toutes lettres, avec la règle de coupure : jamais au trait d'union d'un mot, jamais de ligne qui commence par « - ».
@@ -885,8 +922,10 @@ C'est la forme de S1, partie 4.5, sur les 18 textes, avec ces changements :
 2. **Contrôle 1** : les étapes de la partie 5.1.
    - Tables exigées.
    - D-028, D-034, E8.
-   - Groupes et commissions.
-   - Fidélité aux fiches du second lot, H86 comprise.
+   - Groupes et commissions : chaque `groupe` comparé au `libelle` de son organe dans `amo` (chemin et SHA-256 au rapport), ou, en repli, à la liste de codes de la partie 2.10.
+   - Combinaisons de `suite`.
+   - Lignes de 90 points de code au plus ; ligne 3 fixe des textes en présentation B (liste en paramètre).
+   - Fidélité aux fiches du second lot, H86 comprise, avec les en-têtes stricts (partie 5.1, étape 8).
 3. **Contrôles 2 à 4** : la partie 5.2.
    - Comparaison des personnages au premier fichier.
    - Calibrage refait, de r = 1 jusqu'au r scellé.
