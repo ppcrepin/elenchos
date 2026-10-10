@@ -328,7 +328,7 @@ var ElenchosEtat = (function (N, J) {
    * « Avancer au dimanche » : le départ du saut, en une écriture. Le premier
    * texte du rattrapage s'affiche aussitôt (textes_atteints = 1). Le bloc du
    * jour s'arrête à l'ouverture de la page confirmée (proposition de
-   * Front-end, voir INTERFACE.md, écart E-3).
+   * Front-end, voir INTERFACE.md, écart L1-3).
    */
   function confirmerSaut(etat, cal, instant, horloge) {
     var k = K(etat), d = jour(etat, k);

@@ -152,8 +152,11 @@ var ElenchosJournal = (function (N) {
       if (cles(d) !== CLES_JOUR.join(',')) { err(1, ch, 'clés du jour'); return e; }
       if (cles(d.coups) !== CLES_COUPS.join(',')) { err(1, ch + '/coups', 'clés des coups'); return e; }
       var doit = cal.aUneOuverture(j);
+      // Écart L1-4 (INTERFACE.md) : le jour de reprise est atteint à la dernière réponse du rattrapage (§0),
+      // mais les touchers comptent au saut jusqu'à « Aller au dimanche » ; un arrêt entre les deux le laisse sans ouverture.
+      var repriseSansOuverture = j === K && arret !== null && arret.jour === K && cal.sautQuiReprend(j) !== null;
       if (!doit && d.ouverture !== null) { err(4, ch + '/ouverture', 'jour sauté : nulle attendue'); }
-      if (doit && d.ouverture === null && !(o.enCours && j === K)) { err(4, ch + '/ouverture', 'absente'); }
+      if (doit && d.ouverture === null && !(o.enCours && j === K) && !repriseSansOuverture) { err(4, ch + '/ouverture', 'absente'); }
       if (d.ouverture !== null) {
         try {
           var ms = N.lireInstant(d.ouverture);

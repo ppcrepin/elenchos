@@ -1,5 +1,17 @@
 # Page de l'essai : dépendances et commandes (lots 1 à 8)
 
+## Second essai : état au lot 1 (10 octobre 2026)
+
+Copie des sources du premier essai (`docs/essai/a-ne-pas-ouvrir/outillage/page/`, non touchées), plus le socle du second essai. Contrat entre socle, moteur et écrans : `INTERFACE.md`. Rien n'est téléchargé de plus.
+
+- Fichier scellé de test, inventé et `"provisoire"` : `python3 -I tests/scelle-test.py --personnages ../../../a-ne-pas-ouvrir/fichier-scelle.json --sortie tests/scelle-test.json` (même résultat octet pour octet ; `tests/entrees-test.json` porte son SHA-256).
+- Tests du lot 1 : `node --test tests/test-noyau.js tests/test-polices.js tests/test-calendrier.js tests/test-etat.js tests/test-memoire-socle.js` (variable `ELENCHOS_SCELLE` pour un autre fichier).
+- Non-régression du moteur copié, sur le fichier scellé du premier essai : `node --test tests/premier-essai/test-moteur.js` (à réécrire au lot 3).
+- Construction (contrôle 5 mécanique ; un fichier provisoire ne donne que la version témoin) : `python3 -I construire.py --scelle tests/scelle-test.json --entrees tests/entrees-test.json --sortie DOSSIER`.
+- Le reste de ce document décrit le premier essai : harnais, contrôles et publication sont à reprendre aux lots 6 et 7.
+
+## Premier essai
+
 Outillage d'essai (D-001 tenu ; `simulation.md`, « Décisions touchées »). Écrit par Front-end le 6 octobre 2026.
 
 ## Téléchargé

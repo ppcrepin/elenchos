@@ -105,6 +105,17 @@ test('Arrêts : pendant l\'entrée, au jour 2, pendant un saut (F2 dès le jour 
   assert.equal(js.arret.jour, 6);
   assert.equal(js.sauts[0].textes_atteints, 2);
   assert.ok(E.sautEnCours(saut), 'arrêté pendant le premier saut');
+  // Arrêt après la dernière réponse du rattrapage, avant « Aller au dimanche » : le dimanche est atteint, sans ouverture.
+  const finSaut = P.jouer(scelle, cal, { arretA: { jour: 7, moment: 'avant-aller-au-dimanche', raison: 'vu_assez', f2: 'jamais' } });
+  assert.deepEqual(ecarts(finSaut), []);
+  const jf = journalDe(finSaut);
+  assert.equal(jf.arret.jour, 7);
+  assert.equal(jf.jours[7].ouverture, null);
+  assert.ok(E.sautEnCours(finSaut));
+  // Sans arrêt, un dimanche sans ouverture reste une faute (règle 4).
+  const jfaute = journalDe(P.jouer(scelle, cal, {}));
+  jfaute.jours[7].ouverture = null; jfaute.jours[7].versions = null;
+  assert.ok(regles(J.valider(scelle, cal, jfaute, opts())).includes(4));
 });
 
 test('Partie en cours : chaque état intermédiaire relu est valide (option enCours)', () => {

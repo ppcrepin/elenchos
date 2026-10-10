@@ -104,7 +104,10 @@ function jouer(scelle, cal, options) {
     E.compter(etat, cal, 'qui_est_qui');
     for (;;) {
       const r = E.rattrapage(etat, cal);
-      if (r.termine) { break; }
+      if (r.termine) {
+        if (arret(r.reprise, 'avant-aller-au-dimanche')) { return arreter(); }
+        break;
+      }
       if (r.rang === r.repondus) { E.afficherTexteRattrapage(etat, cal, hz.pp()); continue; }
       toucher();
       E.repondre(etat, scelle, cal, r.jour, reponseType(scelle, r.texte, r.jour + 1), hz.pp());
