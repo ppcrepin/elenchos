@@ -144,14 +144,14 @@ Partie témoin ajoutée : un Pas de Côté du porteur sur T12 (S), révélé au 
 **13. Chiffres constants** (rapport de scellement). Ils ne dépendent pas des coups du porteur. Sauf mention, ils portent sur ses cinq manches (jours 1, 2, 3, 7 et 14 ; textes T0, T1, T2, T6 et T13), dans une partie menée à la clôture, chaque manche ouverte et chaque révélation lue. Ses cartes sont celles que sert le point 5 : elles ne dépendent que du fichier scellé. Les chiffres sont calculés par le programme de scellement et par le programme de contrôle, sans que l'un voie le code de l'autre ; une différence est un défaut. Les fractions sont exactes et irréductibles. « Même réponse » veut dire même niveau et même raison, « aucune » comprise (D-024).
 1. **Cartes servies** au porteur : par manche, puis le total.
 2. **Réponses atypiques parmi ses cartes** : cartes dont (auteur d'origine, texte) figure dans `reponses_atypiques`, sur toutes ses cartes. L'auteur d'origine, jamais `auteur_compte`, qui dépend des visages posés (redistribution, §4.3 du premier essai, étape 4).
-3. **Remplacements** de cartes identiques (§4.3 du premier essai, étape 3) : leur nombre, puis pour chacun le jour, la place, la carte écartée et la carte mise à sa place.
+3. **Remplacements** de cartes identiques (§4.3 du premier essai, étape 3) : leur nombre, puis pour chacun le jour, la place, la carte écartée et la carte mise à sa place. Une carte s'écrit (auteur d'origine, niveau, raison ou « aucune »).
 4. **Cartes identiques servies ensemble** : nombre de manches, nombre de cartes.
 5. **Égalités de classement** : la somme des `departages` de ses cinq manches.
 6. **Jumeaux non servis** : pour chaque carte, les personnages autres que son auteur d'origine qui ont donné la même réponse au texte et ne sont l'auteur d'origine d'aucune carte de la manche. On donne le nombre de couples (carte, personnage) et le nombre de cartes qui en ont au moins un.
 7. **Justesse au hasard (D-024)** : pour chaque carte, h = (nombre de `candidats` de la manche qui ont donné la même réponse au texte) / (nombre de `candidats`).
    - **Espérance** : la somme des h. C'est le nombre moyen de cartes justes d'un joueur qui pose un visage au hasard sur chaque carte, chaque visage au plus une fois, sans jamais passer. On la donne en tout, rapportée au nombre de cartes, puis sur les cartes qui ne sont pas des réponses atypiques, puis par personnage (cartes dont il est l'auteur d'origine).
    - **Loi** : dans chaque manche, les k cartes reçoivent l'une des affectations sans répétition de k visages parmi les candidats, toutes également probables ; les manches sont indépendantes. On donne la probabilité exacte de chaque nombre de cartes justes, de 0 au total, et la chance d'en avoir x ou moins.
-8. **Réponses par texte révélé** : pour chaque texte de T0 à T13, le nombre de personnages qui y ont répondu, puis le plus petit de ces nombres. La réponse du porteur s'y ajoute quand il a répondu. Le seuil de l'avis du cercle est de trois réponses.
+8. **Réponses par texte révélé** : pour chaque texte de T0 à T13, le nombre de personnages qui y ont répondu, puis ce nombre plus un pour T1 à T13 (la réponse du porteur, dans une partie menée à la clôture) ; puis le plus petit de chaque série. Le seuil de l'avis du cercle est de trois réponses.
 9. **« Texte rejeté. »** : parmi E1 à E3 et T0 à T13, les textes dont le vote est un rejet, en nombre et en liste. T14 est donné à part (sa fiche le montre à la clôture).
 10. **Raisons « aucune »** :
     - chez les personnages : sur leurs réponses, en trois comptes (entrée E1 à E3 ; histoire H1 à H90 ; essai T0 à T14) ;
@@ -168,7 +168,7 @@ Partie témoin ajoutée : un Pas de Côté du porteur sur T12 (S), révélé au 
 15. **Impossibilités** :
     - (a) l'écran 5.12 : le plus petit nombre de réponses de personnages sur T0, T1, T2, T6 et T13 ;
     - (b) Le Sans-Faute du porteur : le nombre de jours où ses cartes sont révélées, semaine par semaine (3, puis 1, contre 5 exigés) ;
-    - (c) Le Pas de Côté du porteur : les textes où il est possible. Ce sont les textes révélés au plus tard le jour 15 d'une tension où le porteur a, avant eux, au moins ⌈10 / facteur⌉ réponses, entrée comprise. Avec le facteur 3 et l'ordre retenu, seul T12 l'est.
+    - (c) Le Pas de Côté du porteur : les textes où il est possible. Ce sont les textes dont la révélation est lue dans une partie menée à la clôture (T5, T6, T12, T13), d'une tension où le porteur a, avant eux, au moins ⌈10 / facteur⌉ réponses, entrée comprise. Avec le facteur 3 et l'ordre retenu, seul T12 l'est.
 
 **14. Annexe A cachée (ordre, sens, lot)** *(mise à jour du 9 octobre 2026, composition du lot)*
 - **Ordre retenu.** Le stock, 16e législature comprise, ne donne que trois textes T : le repli à trois textes T devient l'ordre retenu. L'ordre à quatre textes T et l'ancien repli (cinquième réponse sur L) sont abandonnés : L n'a pas six textes qui passent les conventions.

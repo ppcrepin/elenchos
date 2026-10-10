@@ -14,7 +14,7 @@
 
 **2. Comment lire**
 « Chaque personnage a gardé le profil du premier essai. Pour chaque tension, une place de 0 à 100 : 0 pour la première valeur (Sécurité), 100 pour la seconde (Liberté individuelle) ; de 41 à 59, au milieu. Et une fermeté : plus elle était forte, plus ses réponses s'éloignaient de Neutre, jusqu'à « Très ». »
-« Les réponses de chacun découlaient de son profil, sauf environ une sur {cinq}, tirée au sort et donnée exprès contre ce profil pour que rien ne se devine à coup sûr : le côté opposé, sans « Très » (si le profil donnait Neutre, un côté tiré au sort). Quand ce côté allait contre sa valeur, il prenait l'argument inattendu de ce côté s'il y en avait un (au nom de sa valeur, ou pratique), sinon l'argument attendu. Jamais à deux textes qui se suivent (l'histoire d'avant votre arrivée et l'essai se comptent chacun à part, et les deux réponses imposées sur « {titre H86} » font exception), jamais plus de deux personnages pour un même texte. »
+« Les réponses de chacun découlaient de son profil, sauf environ une sur {cinq}, tirée au sort et donnée exprès contre ce profil pour que rien ne se devine à coup sûr : le côté opposé, sans « Très » (si le profil donnait Neutre, un côté tiré au sort). Quand ce côté allait contre sa valeur, il prenait l'argument inattendu de ce côté s'il y en avait un (au nom de sa valeur, ou pratique), sinon l'argument attendu. Jamais deux textes de suite pour un même personnage, jamais plus de deux personnages pour un même texte. Deux exceptions : le compte repart de zéro à votre arrivée, et les deux réponses imposées sur « {titre H86} » (panneau suivant). »
 « Chacun s'absentait parfois, par tirage : une chance sur quatorze à chaque texte, jamais deux fois en sept textes de suite (l'histoire et l'essai se comptent chacun à part), jamais plus d'un absent pour un même texte. Ce jour-là, ni réponse ni devinette. »
 « Aux trois textes d'entrée et au texte du dernier jour, personne ne répondait contre son profil ni ne s'absentait. »
 « Toutes les réponses des personnages ont été calculées par des règles fixes, écrites et scellées avant l'essai, sans rien savoir des vôtres. »
@@ -26,7 +26,7 @@
 
 **4. Ce que l'essai changeait pour vous**
 « Votre portrait comptait chacune de vos réponses {trois} fois ; le portrait de chaque personnage comptait chacune des siennes une fois ; et avec quatre tensions seulement, chacune revenait deux fois plus souvent que dans le jeu. Votre portrait avançait donc environ {six} fois plus vite. »
-« Jusqu'au second dimanche, vous aviez {nS} textes sur Sécurité ou Liberté individuelle, {nP} sur Précaution ou Innovation, {nT} sur Tradition ou Changement et {nL} sur Local ou National, entrée comprise. Un curseur devenait net quand ses réponses pesaient au moins {seuil} : une réponse favorable ou défavorable avec un argument attendu pèse 1 ; avec un argument pratique ou aucune des quatre raisons, 1/2 ; avec un argument au nom de l'autre valeur, 0 ; Neutre, 0. Avec si peu de réponses, une seule qui pèse 0 pouvait suffire à l'empêcher.[ Sur {tensions fermées}, votre curseur ne pouvait pas devenir net.] »
+« En tout, entrée et dernier jour compris, vous aviez {nS} textes sur Sécurité ou Liberté individuelle, {nP} sur Précaution ou Innovation, {nT} sur Tradition ou Changement et {nL} sur Local ou National, entrée comprise. Un curseur devenait net quand ses réponses pesaient au moins {seuil} : une réponse favorable ou défavorable avec un argument attendu pèse 1 ; avec un argument pratique ou aucune des quatre raisons, 1/2 ; avec un argument au nom de l'autre valeur, 0 ; Neutre, 0. Avec si peu de réponses, une seule qui pèse 0 pouvait suffire à l'empêcher.[ Sur {tensions fermées}, votre curseur ne pouvait pas devenir net.] »
 « {Pas de Côté} »
 « Les sauts vous ont fermé un titre et en ont presque fermé un autre. Vos cartes ne pouvaient être révélées que trois jours la première semaine et un jour la seconde ; celles des personnages, presque chaque jour. Le Sans-Faute demande des cartes révélées au moins cinq jours de la semaine : il vous était impossible. Le Devin va à qui marque le plus de points dans la semaine : vous pouviez en marquer au plus {pts14} la première semaine et {pts15} la seconde, quand un personnage pouvait en marquer jusqu'à trois par jour. »
 [« Tous les textes dont le titre commençait par « Supprimer » ont été rejetés : ce premier mot laissait deviner le vote. »]
@@ -62,9 +62,9 @@
 - {cinq} : mot de 1/α + 1, α = `reglage.alpha` : 1/6 « sept », 1/4 « cinq », 1/3 « quatre ». Jamais α.
 - {trois} et {six} : f = `reglage.facteur` ; f = 2 « deux » et « quatre » ; 3 « trois » et « six » ; 4 « quatre » et « huit ».
 - {seuil} : 10/f ; f = 2 « 5 », 3 « 3 et 1/3 », 4 « 2 et 1/2 ».
-- {nS}, {nP}, {nT}, {nL} : nombre de textes de chaque tension parmi E1 à E3 et T1 à T13 (calendrier scellé), en chiffres.
-- {tensions fermées} : les tensions où ce nombre est strictement inférieur à 10/f, par leur nom « {Pôle 0} ou {Pôle 1} », jointes par « et » ; la phrase entre crochets disparaît s'il n'y en a pas.
-- {Pas de Côté} : textes Tn, n ≤ 13, dont la tension compte avant Tn, dans E1 à E3 et T1 à T(n−1), au moins 10/f textes. S'il y en a : « Le Pas de Côté ne vous était possible qu'à la révélation {du jour n+2, sur {Pôle 0} ou {Pôle 1} | de ces jours : …}, et seulement si votre curseur y était déjà net. » Sinon : « Le Pas de Côté vous était impossible : aucun de vos curseurs ne pouvait être net assez tôt. »
+- {nS}, {nP}, {nT}, {nL} : nombre de textes de chaque tension parmi E1 à E3 et T1 à T14 (calendrier scellé), en chiffres.
+- {tensions fermées} : les tensions où ce nombre est strictement inférieur à 10/f, par leur nom « {Pôle 0} ou {Pôle 1} », selon la règle de liste du §8.12 ; la phrase entre crochets disparaît s'il n'y en a pas.
+- {Pas de Côté} : textes Tn, n parmi 5, 6, 12 et 13 (les seuls dont la révélation est lue après le jour 4), dont la tension compte avant Tn, dans E1 à E3 et T1 à T(n−1), au moins 10/f textes. S'il y en a : « Le Pas de Côté ne vous était possible qu'à la révélation {du jour n+2, sur {Pôle 0} ou {Pôle 1} | des jours {liste des n+2, règle de liste du §8.12}, chacun sur la tension de son texte}, et seulement si votre curseur y était déjà net. » Sinon : « Le Pas de Côté vous était impossible : aucun de vos curseurs ne pouvait être net assez tôt. »
 - {pts14}, {pts15} : nombre de cartes servies au porteur dans ses manches révélées en semaine 14 (manches des jours 1, 2, 3) et en semaine 15 (jour 7), en lettres ; c'est un plafond, qui ne dépend pas des coups.
 - Phrase « Supprimer » : affichée seulement si au moins deux textes servis (E1 à E3, T0 à T14) ont un titre qui commence par « Supprimer » et que tous ont un vote de rejet.
 - {titre H86} : `histoire.textes.H86.fiche.titre`. {r} : `histoire.tirage`.
@@ -74,7 +74,7 @@
 - « Vous l'aviez à deviner le jour {n+1}. » : si la réponse de ce personnage (auteur d'origine) est une carte servie dans la manche du porteur du jour n + 1, et que cette manche a été ouverte (`coups.deviner` non nul au jour n + 1).
 - Jours sans jouer pendant l'essai : n des textes T0 à T13 dans `absences.<personnage>`, règle de liste du §8.12 (« 3 et 10 »).
 - {a} : éléments de `reponses_atypiques.<personnage>` dont le texte est entre H1 et H90, les deux imposés sur H86 compris. {m} : textes H1 à H90 dans `absences.<personnage>`. {b} = 90 − {m}.
-- Tempéraments : calcul du jour 14 (§6, point 8 ; fichier caché, point 7).
+- Tempéraments : calcul du jour 14 (§6, point 8 ; fichier caché, point 7), même après un arrêt : les réponses que le porteur n'a pas données comptent comme absentes (arbitrage de l'orchestrateur, 10 octobre 2026 : la phrase dit « au second dimanche » et tout est montré après un arrêt).
 - Accords : 0 et 1 au singulier.
 
 ## Règles d'affichage
