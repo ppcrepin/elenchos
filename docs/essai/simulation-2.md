@@ -295,10 +295,10 @@ Le §6 du premier essai s'applique, avec ces changements :
    - Le produit ne dit rien du nouveau venu arrivé en cours de semaine (constat pour l'étape 6).
 5. **La surprise de la semaine** : passes exclues, au moins quatre attributions dont une fausse. Un jumeau n'est jamais faux.
    - Dans l'essai, seul un texte qui a un titre peut être la surprise. H90 en est exclu en semaine 14.
-   - En semaine 13, H86 l'est par le calcul ordinaire (calibrage).
-6. **Le Sans-Faute (R7)** : aucune erreur ni passe les jours où le membre a des cartes, et des cartes au moins cinq jours de la semaine. La raison cachée n'est pas exigée.
+   - En semaine 13, H86 l'est. Le calibrage vérifie en plus qu'il l'emporterait si tous les textes de la semaine étaient candidats, comme dans le jeu.
+6. **Le Sans-Faute (R7)** : aucune erreur ni passe sur ses cartes révélées dans la semaine, et des cartes révélées au moins cinq jours de cette semaine. Une carte compte le jour de sa révélation, comme pour les points (tableau « Les deux semaines de l'essai », §0). Un jumeau désigné n'est pas une erreur (D-024). La raison cachée n'est pas exigée.
    - Il est possible pour les personnages, chaque semaine, histoire comprise.
-   - Il est impossible pour le porteur : il a des cartes trois jours en semaine 14 et un jour en semaine 15.
+   - Il est impossible pour le porteur : ses cartes sont révélées trois jours en semaine 14 (jours 2, 3 et 4) et un jour en semaine 15 (jour 8).
    - Il est annoncé avant les titres, puis vit comme un titre (UX §7.20 [renvoi]).
 7. **Le Pas de Côté (R11 ; seuil : convention d'essai)**
    - Une réponse du jour qui fait nettement passer une valeur avant l'autre (arbitrage net, §5.1), à l'opposé du curseur de son auteur sur cette tension, tel qu'il était juste avant cette réponse : toutes ses réponses précédentes, entrée comprise, avec ses propres poids.

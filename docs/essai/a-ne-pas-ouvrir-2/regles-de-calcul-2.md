@@ -100,12 +100,12 @@ Attendu à l'arrivée (critère c2) :
 **9. Titres** : comme au §6 du premier essai, pour chaque semaine de 1 à 15.
 - Clés t("devin|w|prénom"), t("mystere|w|prénom"), t("surprise-semaine|w|n").
 - La semaine 1 compte six textes répondus.
-- Surprise : seuls les textes qui ont un titre peuvent l'être. En semaines 1 à 12, il n'y en a donc pas ; elle n'est montrée nulle part.
+- Surprise : seuls les textes qui ont un titre peuvent l'être. En semaines 1 à 12, il n'y en a donc pas ; elle n'est montrée nulle part. En semaine 13, seul H86 a un titre : il est la surprise s'il a au moins quatre attributions dont une fausse, passes exclues ; sinon la semaine n'en a pas. Le critère c3 (point 10) est plus exigeant : sur le fichier retenu, H86 l'emporte aussi quand tous les textes révélés en semaine 13 sont candidats. Les deux calculs donnent donc H86.
 
 **10. Calibrage de l'histoire.** Pour r = 1, 2, … jusqu'à 200, on calcule l'histoire, puis l'état au jour 1 (curseurs vus : entrée et H1 à H90). On retient le premier r qui remplit tous les critères :
 - (c1) curseurs nets exactement : Agathe S, P, L ; Nassim S, P, L ; Odile S, P, T, L ; Valentin P, T, L ;
 - (c2) tempéraments au jour 0 : exactement ceux du tableau du point 7 ;
-- (c3) H86 est la surprise de la semaine 13 par le calcul ordinaire, tous les textes révélés cette semaine-là étant candidats, départages compris ;
+- (c3) H86 est la surprise de la semaine 13 par le calcul du §6 du premier essai, tous les textes révélés cette semaine-là étant candidats, titrés ou non (et non les seuls textes titrés du point 9), départages compris ;
 - (c4) Le Devin a au moins trois titulaires différents sur les semaines 1 à 13, Le Mystère aussi ; au moins six de ces semaines ont trois Fidèles ou moins ;
 - (c5) chaque curseur net à l'arrivée est du côté de son profil et penche clairement (|c − 1/2| ≥ 1/5).
 

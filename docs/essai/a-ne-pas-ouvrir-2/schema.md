@@ -421,7 +421,7 @@ Le résumé contient **tout ce que `calculer` reprend de l'histoire**. Les répo
   - une clé par personnage présent au jour 0 ;
   - ses cartes dans l'ordre d'affichage, sous la forme `{"auteur", "auteur_compte", "cachee", "designe", "raison_devinee"}` (partie 4.3.4).
 - **`temperaments`** : une clé par personnage. Un tableau, éventuellement vide, dans l'ordre d'affichage (L'Original, Le Pont, Le Mesuré, Le Tranché), calculé au jour 0 (§6, point 8).
-- **`titres`** : 13 objets, des semaines 1 à 13, dans l'ordre. Chacun vaut `{"devin": personnage ou null, "fidele": [personnages], "mystere": personnage ou null, "sans_faute": [personnages], "semaine": 1 à 13, "surprise": texte ou null}`. La surprise vaut `null` des semaines 1 à 12 (fichier caché, point 9), et la semaine 13 porte « H86 » (calibrage, critère c3).
+- **`titres`** : 13 objets, des semaines 1 à 13, dans l'ordre. Chacun vaut `{"devin": personnage ou null, "fidele": [personnages], "mystere": personnage ou null, "sans_faute": [personnages], "semaine": 1 à 13, "surprise": texte ou null}`. La surprise suit le fichier caché, point 9 : seuls les textes qui ont un titre sont candidats. Elle vaut donc `null` des semaines 1 à 12, et « H86 » en semaine 13 sur le fichier retenu (critère c3).
 
 ### 3.3 Encodage et empreinte
 
@@ -477,7 +477,7 @@ Exemple tronqué, valeurs inventées :
 | `version` | entier | `1` |
 | `empreinte_scelle` | hex64 | SHA-256 du fichier scellé |
 | `jours` | objet, clés « -90 » à « 0 » | une entrée par jour (ci-dessous) |
-| `semaines` | tableau de 13 objets | les titres des semaines 1 à 13, avec leurs décomptes : la forme de S1, partie 3.9, sans `phrase_semaine` ni `pas_de_cote` ; `sans_faute` suit R7 (§6, point 6), chaque semaine. Les clés `points`, `raisons`, `tentatives` et `erreurs` portent les quatre personnages. |
+| `semaines` | tableau de 13 objets | les titres des semaines 1 à 13, avec leurs décomptes : la forme de S1, partie 3.9, sans `phrase_semaine` ni `pas_de_cote` ; `sans_faute` suit R7 (§6, point 6), chaque semaine. Dans `surprise`, `attributions` et `erreurs` portent tous les textes révélés dans la semaine, titrés ou non, pour que le contrôle vérifie le critère c3. Les clés `points`, `raisons`, `tentatives` et `erreurs` portent les quatre personnages. |
 | `arrivee` | objet | `{"curseurs", "resume", "resume_sha256", "temperaments"}` |
 
 **`jours.<j>`** vaut `{"manches", "repondu", "revelation"}`.
