@@ -261,7 +261,18 @@ async function saut(P, numero, total, options) {
   await P.voit(numero === 1 ? 'Premier saut' : 'Second saut');
   await P.voit(numero === 1 ? 'Jeudi, vendredi et samedi' : 'Du lundi au samedi');
   await P.capture('saut' + numero);
-  if (numero === 1) { await P.toucher('saut-annuler'); await P.voit("Et maintenant, la question d'aujourd'hui."); await P.toucher('ouvrir-saut'); }
+  if (numero === 1) {
+    await P.toucher('saut-annuler'); await P.voit("Et maintenant, la question d'aujourd'hui.");
+    // §0 : tant que le saut n'est pas confirmé, ni Le Cercle ni Moi (2.7f, puis la fiche du texte).
+    assert.ok(!(await P.existe('onglet-cercle')) && !(await P.existe('onglet-moi')), 'onglets au jour 4 avant confirmation');
+    if (await P.existe('fiche')) {
+      await P.toucher('fiche');
+      assert.ok(!(await P.existe('onglet-cercle')) && !(await P.existe('onglet-moi')), 'onglets sur la fiche au jour 4');
+      await P.toucher('retour');
+      await P.voit("Et maintenant, la question d'aujourd'hui.");
+    }
+    await P.toucher('ouvrir-saut');
+  }
   await P.toucher('saut-confirmer');
   for (let k = 1; k <= total; k++) {
     await P.voit((numero === 1 ? 'Premier' : 'Second') + ' saut · texte ' + k + ' sur ' + total);

@@ -407,7 +407,10 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
   function btn1(s, action, actif, params) {
     return donnees(h('button', { type: 'button', class: 'btn1', action: action, 'aria-disabled': actif === false ? 'true' : null }, t(s)), params);
   }
+  /** Jours 4 et 8, saut pas encore confirmé (§0, « Annuler ») : ni Le Cercle ni Moi ; pendant le rattrapage, les onglets sont actifs (§7.4). */
+  function ongletsFermes() { var e = etat(); return cal.estPointDeSaut(K()) && !E.sautEnCours(e) && !e.arret && !e.fin; }
   function tabbar(actif) {
+    if (ongletsFermes()) { return null; }
     var onglets = [[X.ongletAujourdhui, 'onglet-jour'], [X.ongletCercle, 'onglet-cercle'], [X.ongletMoi, 'onglet-moi']];
     return h('nav', { class: 'tabbar', 'aria-label': 'Onglets' }, onglets.map(function (o, i) {
       return h('button', { type: 'button', class: 'tab' + (i === actif ? ' on' : ''), action: o[1], 'aria-current': i === actif ? 'page' : null }, t(o[0]));
@@ -1530,10 +1533,10 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
     return h('section', { class: 'panneau', 'aria-label': pp }, b);
   }
   function pageDevoilement() {
+    var h86 = 'H86'; // devoilement.md : {titre H86} = histoire.textes.H86.fiche.titre
     var contenu = [titrePage(t(X.devoilementTitre)), panneau(h('p', null, t(X.devoilementOuverture)))];
-    contenu.push(h('section', { class: 'panneau' }, [h('h2', null, t(X.commentLire))].concat(X.commentLireTextes(X.motAlpha[scelle.reglage.alpha]).map(function (x) { return h('p', null, t(x)); }))));
-    var h86 = Object.keys(scelle.histoire.textes).filter(function (x) { return scelle.histoire.textes[x].fiche; })[0];
-    contenu.push(h('section', { class: 'panneau' }, [h('h2', null, t(X.avantTitre))].concat(X.avantTextes(h86 ? titreDe(h86) : '', String(scelle.histoire.tirage)).map(function (x) { return h('p', null, t(x)); }))));
+    contenu.push(h('section', { class: 'panneau' }, [h('h2', null, t(X.commentLire))].concat(X.commentLireTextes(X.motAlpha[scelle.reglage.alpha], titreDe(h86)).map(function (x) { return h('p', null, t(x)); }))));
+    contenu.push(h('section', { class: 'panneau' }, [h('h2', null, t(X.avantTitre))].concat(X.avantTextes(titreDe(h86), String(scelle.histoire.tirage)).map(function (x) { return h('p', null, t(x)); }))));
     contenu.push(panneauPourVous());
     personnages().forEach(function (pp) { contenu.push(panneauPersonnage(pp)); });
     var groupes = socle.empreinte().match(/.{4}/g);
@@ -1994,9 +1997,9 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
 
   /* Onglets, fiches, Le Cercle, Moi */
   A['onglet-jour'] = function () { temp.voirTout = null; geste(function (e, hh) { allerAuJour(e, hh); }); apres(); };
-  A['onglet-cercle'] = function () { geste(function (e, hh) { var dv = devinerEnCours(e); E.compter(e, cal, 'cercle', dv); aller(e, hh, 'cercle', { jour: e.vue.tel.jour }, false); }); apres(); };
+  A['onglet-cercle'] = function () { if (ongletsFermes()) { return; } geste(function (e, hh) { var dv = devinerEnCours(e); E.compter(e, cal, 'cercle', dv); aller(e, hh, 'cercle', { jour: e.vue.tel.jour }, false); }); apres(); };
   function ouvrirMoi(e, hh, sous) { E.compter(e, cal, 'moi', devinerEnCours(e)); aller(e, hh, sous || 'moi-portrait', { jour: e.vue.tel.jour }, false); }
-  A['onglet-moi'] = function () { geste(function (e, hh) { ouvrirMoi(e, hh); }); apres(); };
+  A['onglet-moi'] = function () { if (ongletsFermes()) { return; } geste(function (e, hh) { ouvrirMoi(e, hh); }); apres(); };
   A['voir-portrait'] = A['onglet-moi'];
   A['mon-visage'] = A['onglet-moi'];
   A['moi-portrait'] = function () { geste(function (e, hh) { aller(e, hh, 'moi-portrait', { jour: e.vue.tel.jour }, false); }); apres(); };
