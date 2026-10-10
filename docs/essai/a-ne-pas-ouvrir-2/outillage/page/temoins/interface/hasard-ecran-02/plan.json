@@ -1,0 +1,16 @@
+{
+ "appareil": "se",
+ "sombre": false,
+ "graine": 1001,
+ "pseudo": "Anaïs",
+ "pPasser": 0.08022108238656074,
+ "pRaison": 0.11109626526013017,
+ "pRelire": 0.09986830875277519,
+ "pVisite": 0.39417061186395586,
+ "pVisiteDeviner": 0.2927888187579811,
+ "pChanger": 0.05983874017838389,
+ "annulerSaut": {
+  "1": true,
+  "2": false
+ }
+}

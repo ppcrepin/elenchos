@@ -135,7 +135,8 @@ async function relever(page) {
       tel: tel && !tel.closest('[hidden]') ? tel.innerText : null,
       cadreTexte: txt('.cadre-milieu'), barre: txt('#app > header'), bande: (function () { const a = document.querySelector('#app'); return a && a.lastElementChild ? a.lastElementChild.innerText : null; })(),
       seule: txt('#vue-seule'), secours: txt('#vue-secours'),
-      escaliers: Array.from(document.querySelectorAll('.escalier')).filter((x) => !x.closest('[hidden]')).map((x) => ({ texte: x.innerText, aria: x.getAttribute('aria-label'), html: x.outerHTML.length })),
+      escaliers: Array.from(document.querySelectorAll('.escalier')).filter((x) => !x.closest('[hidden]')).map((x) => ({ texte: x.innerText, aria: x.getAttribute('aria-label'), html: x.outerHTML })),
+      vueTel: e && e.vue && e.vue.tel ? JSON.parse(JSON.stringify(e.vue.tel, (cle, v) => (cle === 'pile' ? undefined : v))) : null,
       barresPortrait: Array.from(document.querySelectorAll('.barre-zone')).filter((x) => !x.closest('[hidden]')).length,
       frise: !!document.querySelector('.frise'),
       blocs
@@ -151,6 +152,67 @@ async function journalValide(s, enCours) {
   return { journal: j, erreurs: e };
 }
 
+
+/**
+ * Contrôle 11, coupures automatiques de ligne à l'écran (à 320 px) : aucune juste avant « ? », « ! », « : », « ; »,
+ * « » », « · » ou « % », ni juste après un chiffre ; un nom ne se coupe jamais à un trait d'union ; aucune ligne
+ * ne commence par « - ». Une fin de bloc ou un retour à la ligne voulu (<br>) n'est pas une coupure. Hors zone du
+ * carnet, empreinte, graine et fichier scellé (pre).
+ */
+async function coupures(page, groupes) {
+  return page.evaluate((groupes) => {
+    const AVANT = '?!:;»·%';
+    const res = [];
+    const racines = [document.querySelector('#app'), document.querySelector('#vue-seule')].filter((x) => x && !x.hidden);
+    const bloc = (el) => { let x = el; while (x && x !== document.body) { const d = getComputedStyle(x).display; if (d !== 'inline' && d !== 'inline-block' && d !== 'contents') { return x; } x = x.parentElement; } return document.body; };
+    const exclu = (el) => !!(el.closest('[hidden]') || el.closest('pre') || el.closest('#zone-carnet') || el.closest('[aria-hidden="true"]'));
+    racines.forEach((r) => {
+      const blocs = new Set();
+      const tw = document.createTreeWalker(r, NodeFilter.SHOW_TEXT);
+      for (let n = tw.nextNode(); n; n = tw.nextNode()) { if (n.textContent.trim() && !exclu(n.parentElement)) { blocs.add(bloc(n.parentElement)); } }
+      blocs.forEach((B) => {
+        const cs = getComputedStyle(B); if (cs.visibility === 'hidden' || cs.display === 'none') { return; }
+        let prev = null, prevTop = null, prevH = 0, brut = '';
+        const w = document.createTreeWalker(B, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT);
+        for (let n = w.nextNode(); n; n = w.nextNode()) {
+          if (n.nodeType === 1) {
+            if (n.tagName === 'BR') { prev = null; prevTop = null; }
+            else if (n !== B && bloc(n) === n) { prev = null; prevTop = null; }
+            continue;
+          }
+          if (exclu(n.parentElement) || bloc(n.parentElement) !== B) { continue; }
+          const t = n.textContent;
+          const rg = document.createRange();
+          for (let i = 0; i < t.length; i++) {
+            const c = t[i];
+            const insecable = c === ' ' || c === ' ';
+            if (c === '\n') { prev = null; prevTop = null; brut = ''; continue; }
+            if (/\s/.test(c) && !insecable) { brut += c; continue; }
+            rg.setStart(n, i); rg.setEnd(n, i + 1);
+            const rects = rg.getClientRects();
+            if (!rects.length) { brut += c; continue; }
+            const rc = rects[0];
+            if (rc.width === 0 && rc.height === 0) { brut += c; continue; }
+            if (prevTop !== null && rc.top > prevTop + Math.max(4, prevH * 0.5)) {
+              const p = prev;
+              let motif = null;
+              if (AVANT.indexOf(c) >= 0) { motif = 'coupure avant « ' + c + ' »'; }
+              else if (/[0-9]/.test(p)) { motif = 'coupure après un chiffre'; }
+              else if (/[-‐‑]$/.test(brut) && groupes.some((g) => g.indexOf(brut.slice(-6) + t.slice(i, i + 4)) >= 0)) { motif = 'nom de groupe coupé à un trait d\'union'; }
+              else if (c === '-') { motif = 'ligne qui commence par « - »'; }
+              if (motif) { res.push({ motif, contexte: (B.innerText || '').replace(/\s+/g, ' ').slice(0, 160), car: c }); }
+            }
+            if (!insecable) { prev = c; }
+            brut += c;
+            prevTop = rc.top; prevH = rc.height;
+          }
+        }
+      });
+    });
+    return res;
+  }, groupes || []);
+}
+
 function normaliser(x) { return String(x).replace(/[  ]/g, ' ').replace(/’/g, "'"); }
 
-module.exports = { PW, ADRESSE, PERSONNAGES, APPAREILS, lireConstruction, hasard, lancer, ouvrir, actions, grouper, toucher, etat, relever, journalValide, normaliser };
+module.exports = { PW, ADRESSE, PERSONNAGES, APPAREILS, lireConstruction, hasard, lancer, ouvrir, actions, grouper, toucher, etat, relever, journalValide, normaliser, coupures };

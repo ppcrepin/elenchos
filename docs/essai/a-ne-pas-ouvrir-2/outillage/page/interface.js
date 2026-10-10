@@ -674,7 +674,17 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
   }
 
   /** La séquence de la révélation du jour j (§7.5 ; maquettes 2.7a à 3.3e). */
+  /**
+   * La suite des écrans de la révélation du jour j ne dépend que des jours d'avant (cartes de la veille, vote, titres
+   * de la semaine) : calculée une fois par jour et par chargement, elle épargne un calcul des résultats par geste
+   * (contrôle 14 j, budget de 100 ms).
+   */
+  var sequences = {};
   function sequenceRevelation(j) {
+    if (!sequences[j]) { sequences[j] = calculerSequence(j); }
+    return sequences[j];
+  }
+  function calculerSequence(j) {
     var r = Rj(j), rev = r.revelation, m = r.message;
     var seq = [];
     var dv = rev && rev.devineurs ? rev.devineurs[PORTEUR] : null;
@@ -1531,7 +1541,14 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
     else { b.push(h('p', null, t(X.temperamentsTete))); X.ORDRE_TEMPERAMENTS.filter(function (c) { return temps.indexOf(c) >= 0; }).forEach(function (c) { b.push(h('p', null, t(X.temperamentsRegles[c]))); }); }
     return h('section', { class: 'panneau', 'aria-label': pp }, b);
   }
+  /** Le dévoilement ne change plus une fois la partie close : construit une fois par chargement (contrôle 14 j, budget par geste). */
+  var devoilementConstruit = null;
   function pageDevoilement() {
+    if (devoilementConstruit) { return devoilementConstruit; }
+    devoilementConstruit = construireDevoilement();
+    return devoilementConstruit;
+  }
+  function construireDevoilement() {
     var h86 = 'H86'; // devoilement.md : {titre H86} = histoire.textes.H86.fiche.titre
     var contenu = [titrePage(t(X.devoilementTitre)), panneau(h('p', null, t(X.devoilementOuverture)))];
     contenu.push(h('section', { class: 'panneau' }, [h('h2', null, t(X.commentLire))].concat(X.commentLireTextes(X.motAlpha[scelle.reglage.alpha], titreDe(h86)).map(function (x) { return h('p', null, t(x)); }))));
@@ -1563,7 +1580,12 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
       case 'arret-confirmation': contenu = pageArretConfirmation(); break;
       case 'arret-questions': contenu = pageArretQuestions(); break;
       case 'cloture-questions': contenu = pageClotureQuestions(c); break;
-      case 'export': contenu = pageExport(c); break;
+      case 'export':
+        contenu = pageExport(c);
+        // Partie close : le dévoilement se prépare dès que la page du carnet est affichée, hors de tout geste
+        // (sinon son premier affichage dépasse le budget de 100 ms par geste, contrôle 14 j).
+        if (!devoilementConstruit && (etat().fin || etat().arret)) { setTimeout(function () { try { pageDevoilement(); } catch (x) { devoilementConstruit = null; } }, 0); }
+        break;
       case 'devoilement': contenu = pageDevoilement(); break;
       case 'effacer': contenu = pageEffacer(c); break;
       default: throw new Error('page inconnue : ' + c.page);
@@ -1837,7 +1859,13 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
 
   /* Aujourd'hui : Deviner (S1 §7.1, gestes ; R10 : chaque visage s'écrit dès qu'il est posé) */
   function devinerEnCours(e) { var d = jourE(e, E.K(e)); return !E.sautEnCours(e) && !!d.coups.deviner && !d.coups.deviner.validee; }
-  function carteCachee(i) { return Rj(K()).cartes_porteur.cartes[i].cachee; }
+  // La carte à raison cachée ne dépend pas du porteur (M.cartesServies) : lue sans recalculer les résultats (contrôle 14 j).
+  var cartesDuPorteur = null;
+  function carteCachee(i) {
+    if (!cartesDuPorteur) { cartesDuPorteur = M.cartesServies(scelle, cal, socle.arrivee()); }
+    var cs = cartesDuPorteur(K());
+    return cs ? cs.cachee === i : Rj(K()).cartes_porteur.cartes[i].cachee;
+  }
   A['visage'] = function (b) {
     var i = +b.getAttribute('data-carte'), m = b.getAttribute('data-membre');
     var ch = jourE(etat(), K()).coups.deviner.cartes;
@@ -2128,7 +2156,8 @@ var ElenchosInterface = (function (N, X, E, J, CR, M, S) {
     geste(function (e) { e.vue.cadre = { page: 'export', mode: 'final' }; });
     bande.messageCopie = null; apres();
   };
-  A['voir-devoilement'] = function () { bande.messageCopie = null; geste(function (e) { e.vue.cadre = { page: 'devoilement' }; }); apres(); };
+  // Le dévoilement est construit avant l'écriture du geste, sur les résultats encore en cache (contrôle 14 j).
+  A['voir-devoilement'] = function () { bande.messageCopie = null; pageDevoilement(); geste(function (e) { e.vue.cadre = { page: 'devoilement' }; }); apres(); };
 
   /* Export : copie dans le geste (S1 §8.7) */
   function copierTexte(texte, zone, reussite, echec) {

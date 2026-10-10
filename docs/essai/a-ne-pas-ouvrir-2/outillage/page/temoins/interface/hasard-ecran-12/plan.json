@@ -1,0 +1,15 @@
+{
+ "appareil": "ipad",
+ "sombre": false,
+ "graine": 1011,
+ "pseudo": "Hugo",
+ "pPasser": 0.20197779333684593,
+ "pRaison": 0.9078112815041095,
+ "pRelire": 0.24310242841020224,
+ "pVisite": 0.16989885424263776,
+ "pVisiteDeviner": 0.12723282140213996,
+ "pChanger": 0.02438403693959117,
+ "croix": {
+  "2": true
+ }
+}

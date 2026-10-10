@@ -1,0 +1,16 @@
+{
+ "appareil": "se",
+ "sombre": true,
+ "graine": 1004,
+ "pseudo": "Paul",
+ "pPasser": 0.08259471876081079,
+ "pRaison": 0.4669609593693167,
+ "pRelire": 0.19078144726809113,
+ "pVisite": 0.33296093344688416,
+ "pVisiteDeviner": 0.0037880305666476485,
+ "pChanger": 0.05575093431398273,
+ "annulerSaut": {
+  "1": false,
+  "2": true
+ }
+}

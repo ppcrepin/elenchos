@@ -1,0 +1,68 @@
+[
+ {
+  "n": 1,
+  "a": "message0-continuer",
+  "d": {},
+  "k": 1,
+  "ecran": null,
+  "cadre": null
+ },
+ {
+  "n": 2,
+  "a": "commencer",
+  "d": {},
+  "k": 1,
+  "ecran": "1.1",
+  "cadre": "arrivee"
+ },
+ {
+  "n": 3,
+  "a": "apercu",
+  "d": {},
+  "k": 1,
+  "ecran": "1.1",
+  "cadre": null
+ },
+ {
+  "n": 4,
+  "a": "arreter",
+  "d": {},
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": null
+ },
+ {
+  "n": 5,
+  "a": "arret-confirmer",
+  "d": {},
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": "arret-confirmation"
+ },
+ {
+  "n": 6,
+  "a": "arret-raison",
+  "d": {
+   "valeur": "vu_assez"
+  },
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": "arret-questions"
+ },
+ {
+  "n": 7,
+  "a": "arret-continuer",
+  "d": {},
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": "arret-questions"
+ },
+ {
+  "n": 8,
+  "a": "voir-devoilement",
+  "d": {},
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": "export"
+ }
+]

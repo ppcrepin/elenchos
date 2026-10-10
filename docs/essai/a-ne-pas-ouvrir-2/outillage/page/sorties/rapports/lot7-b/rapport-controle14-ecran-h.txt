@@ -1,0 +1,103 @@
+Contrôle 14 à l'écran (b, d, h, i, j), Chromium (Playwright 1.56.1)
+Construction : /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/frontend-b-lot7/construction-courante/temoin/index.html (SHA-256 e021a0da4192423bf89a5ba0b36a826fb397e5a1557bf8ef2645341220a86c03)
+Page du premier essai : /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/frontend-b-premier/construction/porteur/index.html (SHA-256 734d0079df6ab6ae6cd8a16811b4f2bfb5b7bcd56a58bb4c70ab29ccd9a2e72a)
+
+(h) mise en page
+(h) passé iphone15 clair · arrivee
+(h) passé iphone15 clair · 1.8
+(h) passé iphone15 clair · ligne-de-regle
+(h) passé iphone15 clair · cercle
+(h) passé iphone15 clair · proche
+(h) passé iphone15 clair · barre
+(h) passé iphone15 clair · titres-passes
+(h) passé iphone15 clair · carnet-du-jour
+(h) passé iphone15 clair · graphique
+(h) passé iphone15 clair · page-du-saut-1
+(h) passé iphone15 clair · rattrapage
+(h) passé iphone15 clair · rattrapage-2.5
+(h) passé iphone15 clair · page-du-saut-2
+(h) passé iphone15 clair · deux-lettres
+(h) passé iphone15 clair · devoilement
+(h) passé iphone15 clair : écrans capturés 15/15
+(h) passé iphone15 sombre · arrivee
+(h) passé iphone15 sombre · 1.8
+(h) passé iphone15 sombre · ligne-de-regle
+(h) passé iphone15 sombre · cercle
+(h) passé iphone15 sombre · proche
+(h) passé iphone15 sombre · barre
+(h) passé iphone15 sombre · titres-passes
+(h) passé iphone15 sombre · carnet-du-jour
+(h) passé iphone15 sombre · graphique
+(h) passé iphone15 sombre · page-du-saut-1
+(h) passé iphone15 sombre · rattrapage
+(h) passé iphone15 sombre · rattrapage-2.5
+(h) passé iphone15 sombre · page-du-saut-2
+(h) passé iphone15 sombre · deux-lettres
+(h) passé iphone15 sombre · devoilement
+(h) passé iphone15 sombre : écrans capturés 15/15
+(h) passé se clair · arrivee
+(h) passé se clair · 1.8
+(h) passé se clair · ligne-de-regle
+(h) passé se clair · cercle
+(h) passé se clair · proche
+(h) passé se clair · barre
+(h) passé se clair · titres-passes
+(h) passé se clair · carnet-du-jour
+(h) passé se clair · graphique
+(h) passé se clair · page-du-saut-1
+(h) passé se clair · rattrapage
+(h) passé se clair · rattrapage-2.5
+(h) passé se clair · page-du-saut-2
+(h) passé se clair · deux-lettres
+(h) passé se clair · devoilement
+(h) passé se clair : écrans capturés 15/15
+(h) passé se sombre · arrivee
+(h) passé se sombre · 1.8
+(h) passé se sombre · ligne-de-regle
+(h) passé se sombre · cercle
+(h) passé se sombre · proche
+(h) passé se sombre · barre
+(h) passé se sombre · titres-passes
+(h) passé se sombre · carnet-du-jour
+(h) passé se sombre · graphique
+(h) passé se sombre · page-du-saut-1
+(h) passé se sombre · rattrapage
+(h) passé se sombre · rattrapage-2.5
+(h) passé se sombre · page-du-saut-2
+(h) passé se sombre · deux-lettres
+(h) passé se sombre · devoilement
+(h) passé se sombre : écrans capturés 15/15
+(h) passé ipad clair · arrivee
+(h) passé ipad clair · 1.8
+(h) passé ipad clair · ligne-de-regle
+(h) passé ipad clair · cercle
+(h) passé ipad clair · proche
+(h) passé ipad clair · barre
+(h) passé ipad clair · titres-passes
+(h) passé ipad clair · carnet-du-jour
+(h) passé ipad clair · graphique
+(h) passé ipad clair · page-du-saut-1
+(h) passé ipad clair · rattrapage
+(h) passé ipad clair · rattrapage-2.5
+(h) passé ipad clair · page-du-saut-2
+(h) passé ipad clair · deux-lettres
+(h) passé ipad clair · devoilement
+(h) passé ipad clair : écrans capturés 15/15
+(h) passé ipad sombre · arrivee
+(h) passé ipad sombre · 1.8
+(h) passé ipad sombre · ligne-de-regle
+(h) passé ipad sombre · cercle
+(h) passé ipad sombre · proche
+(h) passé ipad sombre · barre
+(h) passé ipad sombre · titres-passes
+(h) passé ipad sombre · carnet-du-jour
+(h) passé ipad sombre · graphique
+(h) passé ipad sombre · page-du-saut-1
+(h) passé ipad sombre · rattrapage
+(h) passé ipad sombre · rattrapage-2.5
+(h) passé ipad sombre · page-du-saut-2
+(h) passé ipad sombre · deux-lettres
+(h) passé ipad sombre · devoilement
+(h) passé ipad sombre : écrans capturés 15/15
+
+RÉSULTAT : aucun écart

@@ -1,0 +1,1619 @@
+[
+ {
+  "n": 1,
+  "a": "message0-continuer",
+  "d": {},
+  "k": 1,
+  "ecran": null,
+  "cadre": null
+ },
+ {
+  "n": 2,
+  "a": "commencer",
+  "d": {},
+  "k": 1,
+  "ecran": "1.1",
+  "cadre": "arrivee"
+ },
+ {
+  "n": 3,
+  "a": "apercu",
+  "d": {},
+  "k": 1,
+  "ecran": "1.1",
+  "cadre": null
+ },
+ {
+  "n": 4,
+  "a": "entree-position",
+  "d": {
+   "valeur": "1"
+  },
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": null
+ },
+ {
+  "n": 5,
+  "a": "consentement-accepter",
+  "d": {},
+  "k": 1,
+  "ecran": "1.3",
+  "cadre": null
+ },
+ {
+  "n": 6,
+  "a": "entree-suivant",
+  "d": {},
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": null
+ },
+ {
+  "n": 7,
+  "a": "entree-raison",
+  "d": {
+   "valeur": "2"
+  },
+  "k": 1,
+  "ecran": "1.4",
+  "cadre": null
+ },
+ {
+  "n": 8,
+  "a": "entree-valider-raison",
+  "d": {},
+  "k": 1,
+  "ecran": "1.4",
+  "cadre": null
+ },
+ {
+  "n": 9,
+  "a": "entree-pari",
+  "d": {
+   "valeur": "5"
+  },
+  "k": 1,
+  "ecran": "1.5",
+  "cadre": null
+ },
+ {
+  "n": 10,
+  "a": "entree-voir",
+  "d": {},
+  "k": 1,
+  "ecran": "1.5",
+  "cadre": null
+ },
+ {
+  "n": 11,
+  "a": "entree-texte-suivant",
+  "d": {},
+  "k": 1,
+  "ecran": "1.6",
+  "cadre": null
+ },
+ {
+  "n": 12,
+  "a": "entree-position",
+  "d": {
+   "valeur": "4"
+  },
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": null
+ },
+ {
+  "n": 13,
+  "a": "entree-suivant",
+  "d": {},
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": null
+ },
+ {
+  "n": 14,
+  "a": "entree-raison",
+  "d": {
+   "valeur": "2"
+  },
+  "k": 1,
+  "ecran": "1.4",
+  "cadre": null
+ },
+ {
+  "n": 15,
+  "a": "entree-valider-raison",
+  "d": {},
+  "k": 1,
+  "ecran": "1.4",
+  "cadre": null
+ },
+ {
+  "n": 16,
+  "a": "entree-pari",
+  "d": {
+   "valeur": "3"
+  },
+  "k": 1,
+  "ecran": "1.5",
+  "cadre": null
+ },
+ {
+  "n": 17,
+  "a": "entree-voir",
+  "d": {},
+  "k": 1,
+  "ecran": "1.5",
+  "cadre": null
+ },
+ {
+  "n": 18,
+  "a": "entree-texte-suivant",
+  "d": {},
+  "k": 1,
+  "ecran": "1.6",
+  "cadre": null
+ },
+ {
+  "n": 19,
+  "a": "entree-position",
+  "d": {
+   "valeur": "4"
+  },
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": null
+ },
+ {
+  "n": 20,
+  "a": "entree-suivant",
+  "d": {},
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": null
+ },
+ {
+  "n": 21,
+  "a": "entree-raison",
+  "d": {
+   "valeur": "1"
+  },
+  "k": 1,
+  "ecran": "1.4",
+  "cadre": null
+ },
+ {
+  "n": 22,
+  "a": "entree-valider-raison",
+  "d": {},
+  "k": 1,
+  "ecran": "1.4",
+  "cadre": null
+ },
+ {
+  "n": 23,
+  "a": "entree-pari",
+  "d": {
+   "valeur": "3"
+  },
+  "k": 1,
+  "ecran": "1.5",
+  "cadre": null
+ },
+ {
+  "n": 24,
+  "a": "entree-voir",
+  "d": {},
+  "k": 1,
+  "ecran": "1.5",
+  "cadre": null
+ },
+ {
+  "n": 25,
+  "a": "entree-texte-suivant",
+  "d": {},
+  "k": 1,
+  "ecran": "1.6",
+  "cadre": null
+ },
+ {
+  "n": 26,
+  "a": "creer-compte",
+  "d": {},
+  "k": 1,
+  "ecran": "1.7",
+  "cadre": null
+ },
+ {
+  "n": 27,
+  "special": "pseudo",
+  "valeur": "Zoé"
+ },
+ {
+  "n": 28,
+  "a": "compte-google",
+  "d": {},
+  "k": 1,
+  "ecran": "1.8",
+  "cadre": null
+ },
+ {
+  "n": 29,
+  "a": "relire",
+  "d": {},
+  "k": 1,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 30,
+  "a": "feuille-fermer",
+  "d": {},
+  "k": 1,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 31,
+  "a": "visage",
+  "d": {
+   "carte": "0",
+   "membre": "Odile"
+  },
+  "k": 1,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 32,
+  "a": "visage",
+  "d": {
+   "carte": "1",
+   "membre": "Nassim"
+  },
+  "k": 1,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 33,
+  "a": "visage",
+  "d": {
+   "carte": "2",
+   "membre": "Agathe"
+  },
+  "k": 1,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 34,
+  "a": "devine-pourquoi",
+  "d": {
+   "carte": "0"
+  },
+  "k": 1,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 35,
+  "a": "feuille-raison",
+  "d": {
+   "valeur": "4"
+  },
+  "k": 1,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 36,
+  "a": "feuille-choisir",
+  "d": {},
+  "k": 1,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 37,
+  "a": "deviner-valider",
+  "d": {},
+  "k": 1,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 38,
+  "a": "jour-position",
+  "d": {
+   "valeur": "4"
+  },
+  "k": 1,
+  "ecran": "repondre",
+  "cadre": null
+ },
+ {
+  "n": 39,
+  "a": "jour-suivant-raison",
+  "d": {},
+  "k": 1,
+  "ecran": "repondre",
+  "cadre": null
+ },
+ {
+  "n": 40,
+  "a": "jour-raison",
+  "d": {
+   "valeur": "4"
+  },
+  "k": 1,
+  "ecran": "raison",
+  "cadre": null
+ },
+ {
+  "n": 41,
+  "a": "jour-valider-raison",
+  "d": {},
+  "k": 1,
+  "ecran": "raison",
+  "cadre": null
+ },
+ {
+  "n": 42,
+  "a": "jour-suivant",
+  "d": {},
+  "k": 1,
+  "ecran": "attente",
+  "cadre": null
+ },
+ {
+  "n": 43,
+  "a": "carnet-q",
+  "d": {
+   "valeur": "aucun",
+   "q": "moment"
+  },
+  "k": 1,
+  "ecran": "attente",
+  "cadre": "carnet"
+ },
+ {
+  "n": 44,
+  "a": "aller-jour-suivant",
+  "d": {},
+  "k": 1,
+  "ecran": "attente",
+  "cadre": "carnet"
+ },
+ {
+  "n": 45,
+  "a": "notification",
+  "d": {},
+  "k": 2,
+  "ecran": "verrou",
+  "cadre": null
+ },
+ {
+  "n": 46,
+  "a": "retourner",
+  "d": {},
+  "k": 2,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 47,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 2,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 48,
+  "a": "retourner",
+  "d": {},
+  "k": 2,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 49,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 2,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 50,
+  "a": "retourner",
+  "d": {},
+  "k": 2,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 51,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 2,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 52,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 2,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 53,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 2,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 54,
+  "a": "rev-jouer",
+  "d": {},
+  "k": 2,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 55,
+  "a": "visage",
+  "d": {
+   "carte": "0",
+   "membre": "Valentin"
+  },
+  "k": 2,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 56,
+  "a": "visage",
+  "d": {
+   "carte": "1",
+   "membre": "Odile"
+  },
+  "k": 2,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 57,
+  "a": "visage",
+  "d": {
+   "carte": "2",
+   "membre": "Agathe"
+  },
+  "k": 2,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 58,
+  "a": "devine-pourquoi",
+  "d": {
+   "carte": "1"
+  },
+  "k": 2,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 59,
+  "a": "feuille-raison",
+  "d": {
+   "valeur": "2"
+  },
+  "k": 2,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 60,
+  "a": "feuille-choisir",
+  "d": {},
+  "k": 2,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 61,
+  "a": "deviner-valider",
+  "d": {},
+  "k": 2,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 62,
+  "a": "jour-position",
+  "d": {
+   "valeur": "3"
+  },
+  "k": 2,
+  "ecran": "repondre",
+  "cadre": null
+ },
+ {
+  "n": 63,
+  "a": "jour-suivant-raison",
+  "d": {},
+  "k": 2,
+  "ecran": "repondre",
+  "cadre": null
+ },
+ {
+  "n": 64,
+  "a": "jour-raison",
+  "d": {
+   "valeur": "3"
+  },
+  "k": 2,
+  "ecran": "raison",
+  "cadre": null
+ },
+ {
+  "n": 65,
+  "a": "jour-valider-raison",
+  "d": {},
+  "k": 2,
+  "ecran": "raison",
+  "cadre": null
+ },
+ {
+  "n": 66,
+  "a": "jour-suivant",
+  "d": {},
+  "k": 2,
+  "ecran": "attente",
+  "cadre": null
+ },
+ {
+  "n": 67,
+  "a": "carnet-q",
+  "d": {
+   "valeur": "aucun",
+   "q": "moment"
+  },
+  "k": 2,
+  "ecran": "attente",
+  "cadre": "carnet"
+ },
+ {
+  "n": 68,
+  "a": "aller-jour-suivant",
+  "d": {},
+  "k": 2,
+  "ecran": "attente",
+  "cadre": "carnet"
+ },
+ {
+  "n": 69,
+  "a": "notification",
+  "d": {},
+  "k": 3,
+  "ecran": "verrou",
+  "cadre": null
+ },
+ {
+  "n": 70,
+  "a": "retourner",
+  "d": {},
+  "k": 3,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 71,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 3,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 72,
+  "a": "retourner",
+  "d": {},
+  "k": 3,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 73,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 3,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 74,
+  "a": "retourner",
+  "d": {},
+  "k": 3,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 75,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 3,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 76,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 3,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 77,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 3,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 78,
+  "a": "rev-jouer",
+  "d": {},
+  "k": 3,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 79,
+  "a": "visage",
+  "d": {
+   "carte": "0",
+   "membre": "Agathe"
+  },
+  "k": 3,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 80,
+  "a": "visage",
+  "d": {
+   "carte": "1",
+   "membre": "Nassim"
+  },
+  "k": 3,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 81,
+  "a": "visage",
+  "d": {
+   "carte": "2",
+   "membre": "Valentin"
+  },
+  "k": 3,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 82,
+  "a": "devine-pourquoi",
+  "d": {
+   "carte": "2"
+  },
+  "k": 3,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 83,
+  "a": "feuille-raison",
+  "d": {
+   "valeur": "3"
+  },
+  "k": 3,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 84,
+  "a": "feuille-choisir",
+  "d": {},
+  "k": 3,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 85,
+  "a": "deviner-valider",
+  "d": {},
+  "k": 3,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 86,
+  "a": "jour-position",
+  "d": {
+   "valeur": "3"
+  },
+  "k": 3,
+  "ecran": "repondre",
+  "cadre": null
+ },
+ {
+  "n": 87,
+  "a": "jour-suivant-raison",
+  "d": {},
+  "k": 3,
+  "ecran": "repondre",
+  "cadre": null
+ },
+ {
+  "n": 88,
+  "a": "jour-raison",
+  "d": {
+   "valeur": "1"
+  },
+  "k": 3,
+  "ecran": "raison",
+  "cadre": null
+ },
+ {
+  "n": 89,
+  "a": "jour-valider-raison",
+  "d": {},
+  "k": 3,
+  "ecran": "raison",
+  "cadre": null
+ },
+ {
+  "n": 90,
+  "a": "jour-suivant",
+  "d": {},
+  "k": 3,
+  "ecran": "attente",
+  "cadre": null
+ },
+ {
+  "n": 91,
+  "a": "carnet-q",
+  "d": {
+   "valeur": "phrase_jour",
+   "q": "moment"
+  },
+  "k": 3,
+  "ecran": "attente",
+  "cadre": "carnet"
+ },
+ {
+  "n": 92,
+  "a": "aller-jour-suivant",
+  "d": {},
+  "k": 3,
+  "ecran": "attente",
+  "cadre": "carnet"
+ },
+ {
+  "n": 93,
+  "a": "notification",
+  "d": {},
+  "k": 4,
+  "ecran": "verrou",
+  "cadre": null
+ },
+ {
+  "n": 94,
+  "a": "retourner",
+  "d": {},
+  "k": 4,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 95,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 4,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 96,
+  "a": "retourner",
+  "d": {},
+  "k": 4,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 97,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 4,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 98,
+  "a": "retourner",
+  "d": {},
+  "k": 4,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 99,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 4,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 100,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 4,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 101,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 4,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 102,
+  "a": "rev-jouer",
+  "d": {},
+  "k": 4,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 103,
+  "a": "saut-annuler",
+  "d": {},
+  "k": 4,
+  "ecran": "revelation",
+  "cadre": "saut"
+ },
+ {
+  "n": 104,
+  "a": "rev-jouer",
+  "d": {},
+  "k": 4,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 105,
+  "a": "saut-confirmer",
+  "d": {},
+  "k": 4,
+  "ecran": "revelation",
+  "cadre": "saut"
+ },
+ {
+  "n": 106,
+  "a": "ratt-position",
+  "d": {
+   "valeur": "3"
+  },
+  "k": 4,
+  "ecran": "ratt-position",
+  "cadre": null
+ },
+ {
+  "n": 107,
+  "a": "ratt-suivant-raison",
+  "d": {},
+  "k": 4,
+  "ecran": "ratt-position",
+  "cadre": null
+ },
+ {
+  "n": 108,
+  "a": "ratt-raison",
+  "d": {
+   "valeur": "4"
+  },
+  "k": 4,
+  "ecran": "ratt-raison",
+  "cadre": null
+ },
+ {
+  "n": 109,
+  "a": "ratt-valider",
+  "d": {},
+  "k": 4,
+  "ecran": "ratt-raison",
+  "cadre": null
+ },
+ {
+  "n": 110,
+  "a": "texte-suivant",
+  "d": {},
+  "k": 5,
+  "ecran": "ratt-attente",
+  "cadre": null
+ },
+ {
+  "n": 111,
+  "a": "ratt-position",
+  "d": {
+   "valeur": "1"
+  },
+  "k": 5,
+  "ecran": "ratt-position",
+  "cadre": null
+ },
+ {
+  "n": 112,
+  "a": "ratt-suivant-raison",
+  "d": {},
+  "k": 5,
+  "ecran": "ratt-position",
+  "cadre": null
+ },
+ {
+  "n": 113,
+  "a": "ratt-raison",
+  "d": {
+   "valeur": "4"
+  },
+  "k": 5,
+  "ecran": "ratt-raison",
+  "cadre": null
+ },
+ {
+  "n": 114,
+  "a": "ratt-valider",
+  "d": {},
+  "k": 5,
+  "ecran": "ratt-raison",
+  "cadre": null
+ },
+ {
+  "n": 115,
+  "a": "texte-suivant",
+  "d": {},
+  "k": 6,
+  "ecran": "ratt-attente",
+  "cadre": null
+ },
+ {
+  "n": 116,
+  "a": "ratt-position",
+  "d": {
+   "valeur": "4"
+  },
+  "k": 6,
+  "ecran": "ratt-position",
+  "cadre": null
+ },
+ {
+  "n": 117,
+  "a": "ratt-suivant-raison",
+  "d": {},
+  "k": 6,
+  "ecran": "ratt-position",
+  "cadre": null
+ },
+ {
+  "n": 118,
+  "a": "ratt-raison",
+  "d": {
+   "valeur": "1"
+  },
+  "k": 6,
+  "ecran": "ratt-raison",
+  "cadre": null
+ },
+ {
+  "n": 119,
+  "a": "ratt-valider",
+  "d": {},
+  "k": 6,
+  "ecran": "ratt-raison",
+  "cadre": null
+ },
+ {
+  "n": 120,
+  "a": "aller-au-dimanche",
+  "d": {},
+  "k": 7,
+  "ecran": "ratt-attente",
+  "cadre": null
+ },
+ {
+  "n": 121,
+  "a": "notification",
+  "d": {},
+  "k": 7,
+  "ecran": "verrou",
+  "cadre": null
+ },
+ {
+  "n": 122,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 7,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 123,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 7,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 124,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 7,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 125,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 7,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 126,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 7,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 127,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 7,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 128,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 7,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 129,
+  "a": "rev-jouer",
+  "d": {},
+  "k": 7,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 130,
+  "a": "visage",
+  "d": {
+   "carte": "0",
+   "membre": "Nassim"
+  },
+  "k": 7,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 131,
+  "a": "passer",
+  "d": {
+   "carte": "1"
+  },
+  "k": 7,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 132,
+  "a": "visage",
+  "d": {
+   "carte": "2",
+   "membre": "Agathe"
+  },
+  "k": 7,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 133,
+  "a": "relire",
+  "d": {},
+  "k": 7,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 134,
+  "a": "feuille-fermer",
+  "d": {},
+  "k": 7,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 135,
+  "a": "devine-pourquoi",
+  "d": {
+   "carte": "0"
+  },
+  "k": 7,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 136,
+  "a": "feuille-raison",
+  "d": {
+   "valeur": "2"
+  },
+  "k": 7,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 137,
+  "a": "feuille-choisir",
+  "d": {},
+  "k": 7,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 138,
+  "a": "deviner-valider",
+  "d": {},
+  "k": 7,
+  "ecran": "deviner",
+  "cadre": null
+ },
+ {
+  "n": 139,
+  "a": "jour-position",
+  "d": {
+   "valeur": "2"
+  },
+  "k": 7,
+  "ecran": "repondre",
+  "cadre": null
+ },
+ {
+  "n": 140,
+  "a": "jour-suivant-raison",
+  "d": {},
+  "k": 7,
+  "ecran": "repondre",
+  "cadre": null
+ },
+ {
+  "n": 141,
+  "a": "jour-raison",
+  "d": {
+   "valeur": "4"
+  },
+  "k": 7,
+  "ecran": "raison",
+  "cadre": null
+ },
+ {
+  "n": 142,
+  "a": "jour-valider-raison",
+  "d": {},
+  "k": 7,
+  "ecran": "raison",
+  "cadre": null
+ },
+ {
+  "n": 143,
+  "a": "jour-suivant",
+  "d": {},
+  "k": 7,
+  "ecran": "attente",
+  "cadre": null
+ },
+ {
+  "n": 144,
+  "a": "carnet-q",
+  "d": {
+   "valeur": "revelation",
+   "q": "moment"
+  },
+  "k": 7,
+  "ecran": "attente",
+  "cadre": "carnet"
+ },
+ {
+  "n": 145,
+  "a": "carnet-q",
+  "d": {
+   "valeur": "oui",
+   "q": "saut_clair"
+  },
+  "k": 7,
+  "ecran": "attente",
+  "cadre": "carnet"
+ },
+ {
+  "n": 146,
+  "a": "aller-jour-suivant",
+  "d": {},
+  "k": 7,
+  "ecran": "attente",
+  "cadre": "carnet"
+ },
+ {
+  "n": 147,
+  "a": "aller-jour-suivant",
+  "d": {},
+  "k": 7,
+  "ecran": "attente",
+  "cadre": "export"
+ },
+ {
+  "n": 148,
+  "a": "notification",
+  "d": {},
+  "k": 8,
+  "ecran": "verrou",
+  "cadre": null
+ },
+ {
+  "n": 149,
+  "a": "retourner",
+  "d": {},
+  "k": 8,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 150,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 8,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 151,
+  "a": "retourner",
+  "d": {},
+  "k": 8,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 152,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 8,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 153,
+  "a": "retourner",
+  "d": {},
+  "k": 8,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 154,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 8,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 155,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 8,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 156,
+  "a": "rev-suivant",
+  "d": {},
+  "k": 8,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 157,
+  "a": "rev-jouer",
+  "d": {},
+  "k": 8,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 158,
+  "a": "saut-annuler",
+  "d": {},
+  "k": 8,
+  "ecran": "revelation",
+  "cadre": "saut"
+ },
+ {
+  "n": 159,
+  "a": "rev-jouer",
+  "d": {},
+  "k": 8,
+  "ecran": "revelation",
+  "cadre": null
+ },
+ {
+  "n": 160,
+  "a": "saut-confirmer",
+  "d": {},
+  "k": 8,
+  "ecran": "revelation",
+  "cadre": "saut"
+ },
+ {
+  "n": 161,
+  "a": "ratt-position",
+  "d": {
+   "valeur": "3"
+  },
+  "k": 8,
+  "ecran": "ratt-position",
+  "cadre": null
+ },
+ {
+  "n": 162,
+  "a": "ratt-suivant-raison",
+  "d": {},
+  "k": 8,
+  "ecran": "ratt-position",
+  "cadre": null
+ },
+ {
+  "n": 163,
+  "a": "ratt-raison",
+  "d": {
+   "valeur": "2"
+  },
+  "k": 8,
+  "ecran": "ratt-raison",
+  "cadre": null
+ },
+ {
+  "n": 164,
+  "a": "ratt-valider",
+  "d": {},
+  "k": 8,
+  "ecran": "ratt-raison",
+  "cadre": null
+ },
+ {
+  "n": 165,
+  "a": "texte-suivant",
+  "d": {},
+  "k": 9,
+  "ecran": "ratt-attente",
+  "cadre": null
+ },
+ {
+  "n": 166,
+  "a": "ratt-position",
+  "d": {
+   "valeur": "5"
+  },
+  "k": 9,
+  "ecran": "ratt-position",
+  "cadre": null
+ },
+ {
+  "n": 167,
+  "a": "ratt-suivant-raison",
+  "d": {},
+  "k": 9,
+  "ecran": "ratt-position",
+  "cadre": null
+ },
+ {
+  "n": 168,
+  "a": "ratt-raison",
+  "d": {
+   "valeur": "2"
+  },
+  "k": 9,
+  "ecran": "ratt-raison",
+  "cadre": null
+ },
+ {
+  "n": 169,
+  "a": "ratt-valider",
+  "d": {},
+  "k": 9,
+  "ecran": "ratt-raison",
+  "cadre": null
+ },
+ {
+  "n": 170,
+  "a": "texte-suivant",
+  "d": {},
+  "k": 10,
+  "ecran": "ratt-attente",
+  "cadre": null
+ },
+ {
+  "n": 171,
+  "a": "ratt-position",
+  "d": {
+   "valeur": "2"
+  },
+  "k": 10,
+  "ecran": "ratt-position",
+  "cadre": null
+ },
+ {
+  "n": 172,
+  "a": "ratt-suivant-raison",
+  "d": {},
+  "k": 10,
+  "ecran": "ratt-position",
+  "cadre": null
+ },
+ {
+  "n": 173,
+  "a": "ratt-raison",
+  "d": {
+   "valeur": "2"
+  },
+  "k": 10,
+  "ecran": "ratt-raison",
+  "cadre": null
+ },
+ {
+  "n": 174,
+  "a": "ratt-valider",
+  "d": {},
+  "k": 10,
+  "ecran": "ratt-raison",
+  "cadre": null
+ },
+ {
+  "n": 175,
+  "a": "texte-suivant",
+  "d": {},
+  "k": 11,
+  "ecran": "ratt-attente",
+  "cadre": null
+ },
+ {
+  "n": 176,
+  "a": "ratt-position",
+  "d": {
+   "valeur": "3"
+  },
+  "k": 11,
+  "ecran": "ratt-position",
+  "cadre": null
+ },
+ {
+  "n": 177,
+  "a": "ratt-suivant-raison",
+  "d": {},
+  "k": 11,
+  "ecran": "ratt-position",
+  "cadre": null
+ },
+ {
+  "n": 178,
+  "a": "ratt-raison",
+  "d": {
+   "valeur": "1"
+  },
+  "k": 11,
+  "ecran": "ratt-raison",
+  "cadre": null
+ },
+ {
+  "n": 179,
+  "a": "ratt-valider",
+  "d": {},
+  "k": 11,
+  "ecran": "ratt-raison",
+  "cadre": null
+ },
+ {
+  "n": 180,
+  "a": "texte-suivant",
+  "d": {},
+  "k": 12,
+  "ecran": "ratt-attente",
+  "cadre": null
+ },
+ {
+  "n": 181,
+  "a": "arreter",
+  "d": {},
+  "k": 12,
+  "ecran": "ratt-position",
+  "cadre": null
+ },
+ {
+  "n": 182,
+  "a": "arret-confirmer",
+  "d": {},
+  "k": 12,
+  "ecran": "ratt-position",
+  "cadre": "arret-confirmation"
+ },
+ {
+  "n": 183,
+  "a": "arret-raison",
+  "d": {
+   "valeur": "pas_amuse"
+  },
+  "k": 12,
+  "ecran": "ratt-position",
+  "cadre": "arret-questions"
+ },
+ {
+  "n": 184,
+  "a": "arret-f2",
+  "d": {
+   "valeur": "jamais"
+  },
+  "k": 12,
+  "ecran": "ratt-position",
+  "cadre": "arret-questions"
+ },
+ {
+  "n": 185,
+  "a": "arret-continuer",
+  "d": {},
+  "k": 12,
+  "ecran": "ratt-position",
+  "cadre": "arret-questions"
+ },
+ {
+  "n": 186,
+  "a": "voir-devoilement",
+  "d": {},
+  "k": 12,
+  "ecran": "ratt-position",
+  "cadre": "export"
+ }
+]

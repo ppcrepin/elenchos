@@ -1,0 +1,28 @@
+{
+ "appareil": "iphone15",
+ "sombre": false,
+ "delta_ms": 3000,
+ "pause_ms": 600000,
+ "graine": 700,
+ "pseudo": "Zoé",
+ "voie": "apple",
+ "horloge": true,
+ "annulerSaut": {
+  "1": true
+ },
+ "fermetures": [
+  {
+   "saut": 1,
+   "ecran": "ratt-raison",
+   "rang": 2,
+   "ms": 600000
+  },
+  {
+   "saut": 2,
+   "ecran": "ratt-position",
+   "rang": 4,
+   "ms": 600000
+  }
+ ],
+ "pause": "horloge de l'outil : +3 s avant chaque geste"
+}

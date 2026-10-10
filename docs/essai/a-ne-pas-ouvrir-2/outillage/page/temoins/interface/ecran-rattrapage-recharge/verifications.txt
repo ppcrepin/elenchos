@@ -1,0 +1,4 @@
+passé journal valide (règles 1 à 15)
+passé aucune erreur de script, aucune requête sortante
+passé partie menée au dévoilement (devoilement)
+passé après chaque rechargement, le rattrapage reprend sur un texte du saut (saut · texte 2 sur 3 ; saut · texte 4 sur 6 ; saut · texte 5 sur 6)

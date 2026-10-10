@@ -1,0 +1,25 @@
+{
+ "appareil": "iphone15",
+ "sombre": false,
+ "graine": 1009,
+ "pseudo": "Nina",
+ "pPasser": 0.1888989012921229,
+ "pRaison": 0.4125610855408013,
+ "pRelire": 0.12758773234672843,
+ "pVisite": 0.42600542698055505,
+ "pVisiteDeviner": 0.08952537816949188,
+ "pChanger": 0.06250997041352094,
+ "croix": {
+  "2": true
+ },
+ "annulerSaut": {
+  "1": false,
+  "2": true
+ },
+ "recharges": [
+  {
+   "jour": 7,
+   "ecran": "repondre"
+  }
+ ]
+}

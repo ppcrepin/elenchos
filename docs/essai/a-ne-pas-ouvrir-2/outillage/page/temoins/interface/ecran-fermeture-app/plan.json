@@ -1,0 +1,17 @@
+{
+ "appareil": "se",
+ "sombre": true,
+ "graine": 18,
+ "fermetures": [
+  {
+   "saut": 1,
+   "ecran": "ratt-position",
+   "rang": 2
+  },
+  {
+   "saut": 2,
+   "ecran": "ratt-raison",
+   "rang": 3
+  }
+ ]
+}

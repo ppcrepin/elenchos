@@ -1,0 +1,26 @@
+{
+ "appareil": "iphone15",
+ "sombre": true,
+ "graine": 1006,
+ "pseudo": "Agnès",
+ "pPasser": 0.06615901412442327,
+ "pRaison": 0.9328019982203841,
+ "pRelire": 0.2898226616671309,
+ "pVisite": 0.5290131726767867,
+ "pVisiteDeviner": 0.2895807281602174,
+ "pChanger": 0.01955173525493592,
+ "croix": {
+  "3": true
+ },
+ "revoir": {
+  "3": true
+ },
+ "annulerSaut": {
+  "1": false,
+  "2": false
+ },
+ "arret": {
+  "jour": 7,
+  "moment": "revelation"
+ }
+}

@@ -228,7 +228,7 @@ var ElenchosTextes = (function (N) {
     badgeRare: 'Badge rare',
     sansFaute: function (noms, pluriel) { return noms + (pluriel ? ' décrochent' : ' décroche') + ' Le Sans-Faute.'; },
     sansFauteLigne: 'Sept jours sans erreur, sans rien passer.',
-    // §7.22 : « {Prénom} décroche Le Pas de Côté. » ; la ligne de dessous n'est pas encore écrite (Game design).
+    // §7.22 : « {Prénom} décroche Le Pas de Côté. », puis sa ligne (pasDeCoteLigne).
     pasDeCote: function (noms, pluriel) { return noms + (pluriel ? ' décrochent' : ' décroche') + ' Le Pas de Côté.'; },
     // Ligne de Game design (§7.22, annexe C point 10) : un titulaire, ou plusieurs sur une seule carte.
     pasDeCoteLigne: function (pluriel) { return pluriel ? "Des réponses à l'opposé de ce que disaient leurs portraits." : "Une réponse à l'opposé de ce que disait son portrait."; },

@@ -1,0 +1,1195 @@
+arret-j1-compte · -|-	Avant d’envoyer une capture d’écran, vérifiez qu’on n’y voit rien de tout cela, ni votre Historique. L’équipe connaît les réponses des personnages : une capture de l’avis du cercle suffirait à retrouver la vôtre. Et une capture reste dans vos photos, même après « Tout effacer ».
+arret-j1-compte · -|-	Continuer
+arret-j1-compte · -|-	Dans la conversation, parlez du jeu, pas de vos réponses ni de ce que le jeu en dit : vos phrases, votre portrait, votre place dans Le Cercle et sur l’écran d’un proche, l’avis du cercle.
+arret-j1-compte · -|-	Début
+arret-j1-compte · -|-	Jouez toujours depuis l’icône « Essai » : c’est elle qui garde votre avancement. Ne la supprimez pas avant la fin de l’essai : cela pourrait tout effacer.
+arret-j1-compte · -|-	La page n’envoie rien, pas même à l’équipe. Pour que personne d’autre ne les voie, et pour ne pas les perdre :
+arret-j1-compte · -|-	Ne laissez personne d’autre ouvrir l’icône « Essai ».
+arret-j1-compte · -|-	Page d’essai non commerciale, hébergée par GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.
+arret-j1-compte · -|-	Si un jour la page repart du début alors que vous aviez commencé, ne rejouez pas : dites-le dans la conversation.
+arret-j1-compte · -|-	Source des textes, votes, auteurs et arguments : Assemblée nationale, data.assemblee-nationale.fr (Licence Ouverte) et assemblee-nationale.fr ; consultés le 9 octobre 2026. Résumés et raisons réécrits par l’équipe de l’essai ; l’Assemblée n’y est pas associée.
+arret-j1-compte · -|-	Vos réponses restent dans votre iPhone.
+arret-j1-compte · -|1.1	Arrêter l’essai
+arret-j1-compte · -|1.1	Elenchos
+arret-j1-compte · -|1.1	Jour 1 · lundi
+arret-j1-compte · -|1.1	Qui est qui ?
+arret-j1-compte · -|1.1	Tu crois me connaître ? J’ai répondu à 3 vraies questions de l’Assemblée. Devine ce que j’ai dit, 2 minutes.
+arret-j1-compte · -|1.1	Valentin te lance un défi
+arret-j1-compte · -|1.1	← Valentin
+arret-j1-compte · -|1.2	Appareils mobiles activés à distance pour écouter et filmer
+arret-j1-compte · -|1.2	Ce serait réservé aux affaires graves de crime organisé, trafic de drogue ou meurtre.
+arret-j1-compte · -|1.2	Depuis 2017, la loi interdit de chercher de nouveaux gisements de pétrole ou de gaz.
+arret-j1-compte · -|1.2	Défavorable
+arret-j1-compte · -|1.2	Défi de Valentin · Texte 1 sur 3
+arret-j1-compte · -|1.2	Défi de Valentin · Texte 2 sur 3
+arret-j1-compte · -|1.2	Défi de Valentin · Texte 3 sur 3
+arret-j1-compte · -|1.2	Faute d’autre moyen, un juge l’autoriserait pour un mois ou six mois au plus selon le cas.
+arret-j1-compte · -|1.2	Favorable
+arret-j1-compte · -|1.2	La corrida resterait permise là où elle est une tradition locale ininterrompue.
+arret-j1-compte · -|1.2	La région pourrait y accorder des permis de chercher, puis d’exploiter, pétrole et gaz.
+arret-j1-compte · -|1.2	Les dons aux associations de corrida ne réduiraient plus l’impôt sur le revenu.
+arret-j1-compte · -|1.2	Les enquêteurs pourraient activer à distance micro et caméra d’un téléphone, par exemple.
+arret-j1-compte · -|1.2	L’interdiction serait levée en Guyane et dans les autres régions d’outre-mer.
+arret-j1-compte · -|1.2	Moins d’argent de l’État aux communes qui aident la corrida
+arret-j1-compte · -|1.2	Neutre
+arret-j1-compte · -|1.2	Pétrole et gaz outre-mer, rouvrir recherche et exploitation
+arret-j1-compte · -|1.2	Réponds, puis devine ce qu’a dit Valentin.
+arret-j1-compte · -|1.2	Suivant
+arret-j1-compte · -|1.2	Ton avis ?
+arret-j1-compte · -|1.2	Très défavorable
+arret-j1-compte · -|1.2	Très favorable
+arret-j1-compte · -|1.2	UN VRAI TEXTE DE L’ASSEMBLÉE NATIONALE · AUTEUR MASQUÉ
+arret-j1-compte · -|1.2	Une commune verrait l’argent de l’État baisser du montant de son aide à la corrida.
+arret-j1-compte · -|1.3	Avant ta première réponse
+arret-j1-compte · -|1.3	J’accepte
+arret-j1-compte · -|1.3	Qui, durée, droits
+arret-j1-compte · -|1.3	Tes réponses révèlent tes opinions politiques. Elles servent au jeu : tes proches te devinent, ton portrait se dessine. Seul ton cercle les voit, elles ne sont jamais vendues. Tu peux tout effacer, quand tu veux. 15 ans et plus.
+arret-j1-compte · -|1.3	← Retour au texte
+arret-j1-compte · -|1.4	Appareils mobiles activés à distance pour écouter et filmer · Ton avis : Neutre
+arret-j1-compte · -|1.4	Aucune de ces raisons
+arret-j1-compte · -|1.4	Moins d’argent de l’État aux communes qui aident la corrida · Ton avis : Défavorable
+arret-j1-compte · -|1.4	Pétrole et gaz outre-mer, rouvrir recherche et exploitation · Ton avis : Défavorable
+arret-j1-compte · -|1.4	Qu’est-ce qui a le plus pesé ?
+arret-j1-compte · -|1.4	Ta réponse sera définitive.
+arret-j1-compte · -|1.4	Valider
+arret-j1-compte · -|1.4	« C’est contraire à la Constitution, qui laisse les communes gérer leurs affaires. »
+arret-j1-compte · -|1.4	« Des régions de corrida, comme la Catalogne, y ont déjà mis fin. »
+arret-j1-compte · -|1.4	« Face à des criminels qui séquestrent et tuent, il faut ces moyens. »
+arret-j1-compte · -|1.4	« La nature guyanaise subirait des dégâts graves et irréversibles. »
+arret-j1-compte · -|1.4	« Le Conseil constitutionnel a déjà censuré une mesure presque identique. »
+arret-j1-compte · -|1.4	« Mieux vaudrait consacrer cet argent public à des choses plus utiles. »
+arret-j1-compte · -|1.4	« Mieux vaut prendre le risque de décider que subir sans fin l’inaction. »
+arret-j1-compte · -|1.4	« Misons sur les technologies d’avenir, pas sur un modèle du passé. »
+arret-j1-compte · -|1.4	« Même des appareils de santé ou intimes pourraient être activés à distance. »
+arret-j1-compte · -|1.4	« Respectons ceux qui souhaitent préserver cette coutume, même sans l’aimer. »
+arret-j1-compte · -|1.4	« Seul ce qui sert l’enquête serait retranscrit, pas la vie privée. »
+arret-j1-compte · -|1.4	« S’interdire de forer et importer de loin n’aide en rien le climat. »
+arret-j1-compte · -|1.4	← Changer ma position
+arret-j1-compte · -|1.5	Et Valentin ? Sa réponse ?
+arret-j1-compte · -|1.5	V
+arret-j1-compte · -|1.5	Valentin
+arret-j1-compte · -|1.5	Voir sa réponse
+arret-j1-compte · -|1.6	Aymeric Caron
+arret-j1-compte · -|1.6	Charles de Courson
+arret-j1-compte · -|1.6	Gabrielle Cathala
+arret-j1-compte · -|1.6	Georges Patient
+arret-j1-compte · -|1.6	L’Assemblée :
+arret-j1-compte · -|1.6	L’Assemblée : texte adopté le 24 mars 2025. C’était un amendement, une modification d’un texte en discussion. Le Sénat devait encore voter ce texte.
+arret-j1-compte · -|1.6	L’Assemblée : texte rejeté le 11 juin 2026. C’était un article d’un texte plus long. Avec lui, l’Assemblée a rejeté le texte entier.
+arret-j1-compte · -|1.6	L’Assemblée : texte rejeté le 13 novembre 2025. C’était un amendement, une modification d’un texte en discussion.
+arret-j1-compte · -|1.6	Matthieu Bloch
+arret-j1-compte · -|1.6	Michaël Taverne
+arret-j1-compte · -|1.6	Outre-mer
+arret-j1-compte · -|1.6	Proposé par Aymeric Caron, député, La France insoumise - Nouveau Front Populaire.
+arret-j1-compte · -|1.6	Proposé par Georges Patient, sénateur, Rassemblement des démocrates, progressistes et indépendants.
+arret-j1-compte · -|1.6	Proposé par Michaël Taverne, député, Rassemblement National.
+arret-j1-compte · -|1.6	Ta raison, « C’est contraire à la Constitution, qui laisse les communes gérer leurs affaires », était l’argument de Charles de Courson, député, Libertés, Indépendants, Outre-mer et Territoires.
+arret-j1-compte · -|1.6	Ta raison, « Le Conseil constitutionnel a déjà censuré une mesure presque identique », était l’argument de Gabrielle Cathala, députée, La France insoumise - Nouveau Front Populaire.
+arret-j1-compte · -|1.6	Ta raison, « S’interdire de forer et importer de loin n’aide en rien le climat », était l’argument de Matthieu Bloch, député, Union des droites pour la République.
+arret-j1-compte · -|1.6	Texte 1 sur 3
+arret-j1-compte · -|1.6	Texte 2 sur 3
+arret-j1-compte · -|1.6	Texte 3 sur 3
+arret-j1-compte · -|1.6	Texte suivant
+arret-j1-compte · -|1.6	Ton pari : Favorable.
+arret-j1-compte · -|1.6	Ton pari : Neutre.
+arret-j1-compte · -|1.6	Valentin : Défavorable
+arret-j1-compte · -|1.6	Valentin : Défavorable ⏎ « La nature guyanaise subirait des dégâts graves et irréversibles. »
+arret-j1-compte · -|1.6	Valentin : Défavorable ⏎ « Respectons ceux qui souhaitent préserver cette coutume, même sans l’aimer. »
+arret-j1-compte · -|1.6	Valentin : Neutre
+arret-j1-compte · -|1.6	Valentin : Neutre ⏎ « Le Conseil constitutionnel a déjà censuré une mesure presque identique. »
+arret-j1-compte · -|1.6	insoumise -
+arret-j1-compte · -|1.6	Ça alors !
+arret-j1-compte · -|1.7	Changement
+arret-j1-compte · -|1.7	Chaque réponse les précise.
+arret-j1-compte · -|1.7	Créer mon compte
+arret-j1-compte · -|1.7	Dans l’essai, votre portrait avance environ six fois plus vite que dans le jeu.
+arret-j1-compte · -|1.7	Innovation
+arret-j1-compte · -|1.7	Liberté individuelle
+arret-j1-compte · -|1.7	Précaution
+arret-j1-compte · -|1.7	Sécurité
+arret-j1-compte · -|1.7	TON PORTRAIT COMMENCE
+arret-j1-compte · -|1.7	Tradition
+arret-j1-compte · -|1.7	Valentin a réussi à te surprendre trois fois.
+arret-j1-compte · -|1.8	Compte simulé : choisissez un pseudo, puis l’un des trois boutons. Rien ne se connecte et rien n’est envoyé, ni à Apple, ni à Google, ni par e-mail. Le pseudo reste dans votre iPhone.
+arret-j1-compte · -|1.8	Continuer avec Apple
+arret-j1-compte · -|1.8	Continuer avec Google
+arret-j1-compte · -|1.8	Pour que Valentin sache que c’était toi, et retrouver tes réponses demain.
+arret-j1-compte · -|1.8	Pseudo
+arret-j1-compte · -|1.8	Recevoir un code par e-mail
+arret-j1-compte · arret-confirmation|1.8	Annuler
+arret-j1-compte · arret-confirmation|1.8	Arrêter l’essai ?
+arret-j1-compte · arret-confirmation|1.8	Ensuite : quelques questions, votre carnet à copier, puis le dévoilement. C’est définitif : l’essai ne pourra pas reprendre.
+arret-j1-compte · arret-questions|1.8	Autre raison
+arret-j1-compte · arret-questions|1.8	Essai arrêté pendant l’entrée
+arret-j1-compte · arret-questions|1.8	Essai arrêté pendant l’entrée.
+arret-j1-compte · arret-questions|1.8	Je ne comprends pas tout
+arret-j1-compte · arret-questions|1.8	Je ne m’amuse pas
+arret-j1-compte · arret-questions|1.8	Je n’ai pas le temps
+arret-j1-compte · arret-questions|1.8	J’ai vu ce que je voulais voir
+arret-j1-compte · arret-questions|1.8	Vous arrêtez surtout parce que :
+arret-j1-compte · arret-questions|1.8	✓
+arret-j1-compte · arret-questions|1.8	✓ J’ai vu ce que je voulais voir
+arret-j1-compte · arrivee|1.1	Agathe, Nassim, Odile et Valentin, les personnages du premier essai, y jouent ensemble. Valentin vous lance un défi : vous y entrez comme un nouveau venu. Vous ne verrez pas leurs révélations passées, seulement ce qu’elles ont laissé : les titres, les tempéraments, la place de chacun sur les tensions.
+arret-j1-compte · arrivee|1.1	Comme la première fois, n’ouvrez pas le dossier « a-ne-pas-ouvrir-2 » du dépôt avant la fin. La fiche des personnages reste à portée, par le bouton « Qui est qui ? ».
+arret-j1-compte · arrivee|1.1	Commencer
+arret-j1-compte · arrivee|1.1	Dans le jeu, les premiers curseurs nets viennent vers trois mois. Ici, votre portrait avance environ six fois plus vite : au second dimanche, il ressemblera à celui de trois mois de jeu. Mais il ne repose que sur vos réponses de l’essai : une seule peut le faire basculer.
+arret-j1-compte · arrivee|1.1	Dimanche : vous jouez, avec les titres de la semaine.
+arret-j1-compte · arrivee|1.1	Le cercle Amis joue depuis trois mois
+arret-j1-compte · arrivee|1.1	Le programme
+arret-j1-compte · arrivee|1.1	Lundi, mardi, mercredi : vous jouez.
+arret-j1-compte · arrivee|1.1	Second dimanche : vous jouez, puis l’essai se termine.
+arret-j1-compte · arrivee|1.1	Un saut vous mène au dimanche : vous répondez d’affilée aux textes des jours sautés, sans deviner.
+arret-j1-compte · arrivee|1.1	Un second saut, de la même façon, vous mène au dimanche suivant.
+arret-j1-compte · arrivee|1.1	Vingt à vingt-cinq minutes en tout, en une ou plusieurs fois.
+arret-j1-compte · arrivee|1.1	Votre portrait va plus vite
+arret-j1-compte · devoilement|1.8	
+arret-j1-compte · devoilement|1.8	Agathe, 46 ans · sage-femme, Rennes
+arret-j1-compte · devoilement|1.8	Aux trois textes d’entrée et au texte du dernier jour, personne ne répondait contre son profil ni ne s’absentait.
+arret-j1-compte · devoilement|1.8	Avant votre arrivée
+arret-j1-compte · devoilement|1.8	Avant votre arrivée : 12 réponses contre son profil sur 84, et 6 jours sans jouer sur 90.
+arret-j1-compte · devoilement|1.8	Avant votre arrivée : 15 réponses contre son profil sur 89, et 1 jour sans jouer sur 90.
+arret-j1-compte · devoilement|1.8	Avant votre arrivée : 18 réponses contre son profil sur 83, et 7 jours sans jouer sur 90.
+arret-j1-compte · devoilement|1.8	Avant votre arrivée : 19 réponses contre son profil sur 88, et 2 jours sans jouer sur 90.
+arret-j1-compte · devoilement|1.8	Ce que l’essai changeait pour vous
+arret-j1-compte · devoilement|1.8	Chacun s’absentait parfois, par tirage : une chance sur quatorze à chaque texte, jamais deux fois en sept textes de suite (l’histoire et l’essai se comptent chacun à part), jamais plus d’un absent pour un même texte. Ce jour-là, ni réponse ni devinette.
+arret-j1-compte · devoilement|1.8	Chaque personnage a gardé le profil du premier essai. Pour chaque tension, une place de 0 à 100 : 0 pour la première valeur (Sécurité), 100 pour la seconde (Liberté individuelle) ; de 41 à 59, au milieu. Et une fermeté : plus elle était forte, plus ses réponses s’éloignaient de Neutre, jusqu’à « Très ».
+arret-j1-compte · devoilement|1.8	Comment lire
+arret-j1-compte · devoilement|1.8	Des valeurs que sa vie ne laisse pas deviner.
+arret-j1-compte · devoilement|1.8	Défavorable · « Qui dit crispation dit procès, et les projets ralentiraient au lieu d’accélérer. »
+arret-j1-compte · devoilement|1.8	Défavorable · « Reprendre l’eau aurait un coût, de nouvelles études après celles du transfert. »
+arret-j1-compte · devoilement|1.8	En tout, entrée et dernier jour compris, vous aviez 5 textes sur Sécurité ou Liberté individuelle, 5 sur Précaution ou Innovation, 3 sur Tradition ou Changement et 4 sur Local ou National. Un curseur devenait net quand ses réponses pesaient au moins 3 et 1/3 : une réponse favorable ou défavorable avec un argument attendu pèse 1 ; avec un argument pratique ou aucune des quatre raisons, 1/2 ; avec un argument au nom de l’autre valeur, 0 ; Neutre, 0. Avec si peu de réponses, une seule qui pèse 0 pouvait suffire à l’empêcher. Sur Tradition ou Changement, votre curseur ne pouvait pas devenir net.
+arret-j1-compte · devoilement|1.8	Fait pour ressembler à Agathe, sauf entre local et national.
+arret-j1-compte · devoilement|1.8	Faite pour ressembler à Nassim, sauf entre local et national.
+arret-j1-compte · devoilement|1.8	Favorable · « Ce texte est le plus sûr moyen de bien gérer ces routes. »
+arret-j1-compte · devoilement|1.8	Favorable · « Des ruraux auraient plus de mal à aller se soigner en ville. »
+arret-j1-compte · devoilement|1.8	Favorable · « Inventons les solutions de demain plutôt que refaire les erreurs du passé. »
+arret-j1-compte · devoilement|1.8	Favorable · « L’article vise surtout à laisser l’État ignorer les décisions de justice. »
+arret-j1-compte · devoilement|1.8	Favorable · « Ne pouvant donner un mois, les juges donnent deux mois de prison. »
+arret-j1-compte · devoilement|1.8	Favorable · « Qui peut conduire un scooter peut comprendre ses actes et en répondre. »
+arret-j1-compte · devoilement|1.8	Favorable · « Transférée, l’eau a parfois fini au privé, avec des prix qui explosent. »
+arret-j1-compte · devoilement|1.8	Jour 0 · Courtes peines de prison sans aménagement automatique
+arret-j1-compte · devoilement|1.8	Jour 10 · Supprimer l’article facilitant les réserves d’eau agricoles
+arret-j1-compte · devoilement|1.8	Jour 11 · Régions gérant des routes nationales, pouvoirs élargis
+arret-j1-compte · devoilement|1.8	Jour 2 · Mines au fond des mers, demander une pause mondiale
+arret-j1-compte · devoilement|1.8	Jour 3 · Supprimer les zones à faibles émissions
+arret-j1-compte · devoilement|1.8	Jour 4 · Énergies renouvelables, le préfet en dernier recours
+arret-j1-compte · devoilement|1.8	Jour 6 · Mineurs dès 13 ans sans réduction de peine automatique
+arret-j1-compte · devoilement|1.8	Jour 8 · Eau, les communes pourraient la reprendre
+arret-j1-compte · devoilement|1.8	Jours sans jouer pendant l’essai : 1 et 9.
+arret-j1-compte · devoilement|1.8	Jours sans jouer pendant l’essai : 3.
+arret-j1-compte · devoilement|1.8	Jours sans jouer pendant l’essai : 5.
+arret-j1-compte · devoilement|1.8	Jours sans jouer pendant l’essai : aucun.
+arret-j1-compte · devoilement|1.8	Le Pas de Côté ne vous était possible qu’à la révélation du jour 14, sur Sécurité ou Liberté individuelle, et seulement si votre curseur y était déjà net.
+arret-j1-compte · devoilement|1.8	Le Pont : quand les autres se partageaient entre favorable et défavorable, seul à répondre Neutre, sur au moins 1 de ces textes sur 8 (et au moins 6 textes ainsi partagés).
+arret-j1-compte · devoilement|1.8	Le Tranché : « Très favorable » ou « Très défavorable » sur au moins 1 de ses réponses sur 2.
+arret-j1-compte · devoilement|1.8	Le dévoilement
+arret-j1-compte · devoilement|1.8	Les règles et le lot du second essai sont dans « a-ne-pas-ouvrir-2 » : vous pouvez maintenant l’ouvrir.
+arret-j1-compte · devoilement|1.8	Les réponses de chacun découlaient de son profil, sauf environ une sur cinq, tirée au sort et donnée exprès contre ce profil pour que rien ne se devine à coup sûr : le côté opposé, sans « Très » (si le profil donnait Neutre, un côté tiré au sort). Quand ce côté allait contre sa valeur, il prenait l’argument inattendu de ce côté s’il y en avait un (au nom de sa valeur, ou pratique), sinon l’argument attendu. Jamais deux textes de suite pour un même personnage, jamais plus de deux personnages pour un même texte. Deux exceptions : le compte repart de zéro à votre arrivée, et les deux réponses imposées sur « Vaisselle en plastique interdite dans les cantines d’enfants » (panneau suivant).
+arret-j1-compte · devoilement|1.8	Les sauts vous ont fermé un titre et en ont presque fermé un autre. Vos cartes ne pouvaient être révélées que trois jours la première semaine et un jour la seconde ; celles des personnages, presque chaque jour. Le Sans-Faute demande des cartes révélées au moins cinq jours de la semaine : il vous était impossible. Le Devin va à qui marque le plus de points dans la semaine : vous pouviez en marquer au plus neuf la première semaine et trois la seconde, quand un personnage pouvait en marquer jusqu’à trois par jour.
+arret-j1-compte · devoilement|1.8	Les treize semaines d’avant votre arrivée ont été calculées avec les mêmes règles, sur des textes sans titre ni mots : pour chacun, seulement une tension, la valeur qu’il faisait passer devant l’autre, et quatre raisons réduites à leur côté et à la valeur qu’elles servaient. Une seule exception : « Vaisselle en plastique interdite dans les cantines d’enfants », la surprise de la semaine que vous avez vue en arrivant. Sur ce texte, deux personnages ont répondu exprès contre leur profil, pour qu’il devienne cette surprise.
+arret-j1-compte · devoilement|1.8	Local ou National : Local (15 sur 100, fermeté forte).
+arret-j1-compte · devoilement|1.8	Local ou National : Local (25 sur 100, fermeté moyenne).
+arret-j1-compte · devoilement|1.8	Local ou National : National (70 sur 100, fermeté faible).
+arret-j1-compte · devoilement|1.8	Local ou National : National (75 sur 100, fermeté moyenne).
+arret-j1-compte · devoilement|1.8	L’Original : seul de son côté, favorable ou défavorable, sur au moins 3 de ses réponses sur 10.
+arret-j1-compte · devoilement|1.8	Nassim, 33 ans · électricien à son compte, Clermont-Ferrand
+arret-j1-compte · devoilement|1.8	Odile, 69 ans · pharmacienne retraitée, Ribérac (Dordogne)
+arret-j1-compte · devoilement|1.8	Pour le contrôle
+arret-j1-compte · devoilement|1.8	Pour ressembler à un cercle de trois mois, cette histoire devait remplir des conditions écrites avant l’essai : des curseurs nets pour chacun, des tempéraments, cette surprise de la semaine, des titres variés. Le calcul a été refait, tirage après tirage, jusqu’au premier qui les remplissait. Tirage retenu : 1.
+arret-j1-compte · devoilement|1.8	Précaution ou Innovation : Innovation (66 sur 100, fermeté moyenne).
+arret-j1-compte · devoilement|1.8	Précaution ou Innovation : Innovation (68 sur 100, fermeté moyenne).
+arret-j1-compte · devoilement|1.8	Précaution ou Innovation : Précaution (12 sur 100, fermeté forte).
+arret-j1-compte · devoilement|1.8	Précaution ou Innovation : Précaution (25 sur 100, fermeté moyenne).
+arret-j1-compte · devoilement|1.8	Réponses contre son profil pendant l’essai :
+arret-j1-compte · devoilement|1.8	Réponses contre son profil pendant l’essai : aucune.
+arret-j1-compte · devoilement|1.8	Ses tempéraments au second dimanche, sur les huit semaines précédentes :
+arret-j1-compte · devoilement|1.8	Ses tempéraments au second dimanche : aucun.
+arret-j1-compte · devoilement|1.8	Si votre carnet est bien dans la conversation, vous pouvez tout effacer.
+arret-j1-compte · devoilement|1.8	Sécurité ou Liberté individuelle : Liberté individuelle (65 sur 100, fermeté moyenne).
+arret-j1-compte · devoilement|1.8	Sécurité ou Liberté individuelle : Liberté individuelle (82 sur 100, fermeté moyenne).
+arret-j1-compte · devoilement|1.8	Sécurité ou Liberté individuelle : Sécurité (10 sur 100, fermeté forte).
+arret-j1-compte · devoilement|1.8	Sécurité ou Liberté individuelle : au milieu (45 sur 100, fermeté faible).
+arret-j1-compte · devoilement|1.8	Tout effacer
+arret-j1-compte · devoilement|1.8	Toutes les réponses des personnages ont été calculées par des règles fixes, écrites et scellées avant l’essai, sans rien savoir des vôtres.
+arret-j1-compte · devoilement|1.8	Tradition ou Changement : Changement (85 sur 100, fermeté forte).
+arret-j1-compte · devoilement|1.8	Tradition ou Changement : Tradition (30 sur 100, fermeté moyenne).
+arret-j1-compte · devoilement|1.8	Tradition ou Changement : au milieu (55 sur 100, fermeté moyenne).
+arret-j1-compte · devoilement|1.8	Tradition ou Changement : au milieu (58 sur 100, fermeté faible).
+arret-j1-compte · devoilement|1.8	Tranchée : loin du milieu et fermeté forte, sur les quatre tensions.
+arret-j1-compte · devoilement|1.8	Valentin, 24 ans · développeur dans une jeune entreprise, Lyon
+arret-j1-compte · devoilement|1.8	Voici ce que la page vous cachait : comment l’histoire du cercle a été calculée, le profil de chaque personnage, ses réponses données exprès contre ce profil et ses jours sans jouer. Tout en bas, « Pour le contrôle » : l’empreinte à comparer avec celle publiée dans la conversation.
+arret-j1-compte · devoilement|1.8	Votre portrait comptait chacune de vos réponses trois fois ; le portrait de chaque personnage comptait chacune des siennes une fois ; et avec quatre tensions seulement, chacune revenait deux fois plus souvent que dans le jeu. Votre portrait avançait donc environ six fois plus vite.
+arret-j1-compte · devoilement|1.8	« Jour 2 » : le texte répondu le jour 2, deviné le jour 3, révélé le jour 4. « Jour 0 » : la veille de votre arrivée.
+arret-j1-compte · export|1.8	Copier mon carnet
+arret-j1-compte · export|1.8	Voir le dévoilement
+arret-j1-compte · export|1.8	Votre carnet à copier
+arret-j1-deviner · -|-	Vos réponses restent dans votre iPad.
+arret-j1-deviner · -|1.4	Appareils mobiles activés à distance pour écouter et filmer · Ton avis : Favorable
+arret-j1-deviner · -|1.4	Moins d’argent de l’État aux communes qui aident la corrida · Ton avis : Très favorable
+arret-j1-deviner · -|1.4	Pétrole et gaz outre-mer, rouvrir recherche et exploitation · Ton avis : Favorable
+arret-j1-deviner · -|1.6	Karim Benbrahim
+arret-j1-deviner · -|1.6	Sandra Regol
+arret-j1-deviner · -|1.6	Ta raison, « Face à des criminels qui séquestrent et tuent, il faut ces moyens », était l’argument de Michaël Taverne, député, Rassemblement National.
+arret-j1-deviner · -|1.6	Ta raison, « La nature guyanaise subirait des dégâts graves et irréversibles », était l’argument de Karim Benbrahim, député, Socialistes et apparentés.
+arret-j1-deviner · -|1.6	Ta raison, « Mieux vaudrait consacrer cet argent public à des choses plus utiles », était l’argument de Sandra Regol, députée, Écologiste et Social.
+arret-j1-deviner · -|1.6	Ton pari : Très défavorable.
+arret-j1-deviner · -|1.6	Tu connais ton monde.
+arret-j1-deviner · -|1.7	2 sur 3
+arret-j1-deviner · -|1.7	Tu as trouvé 2 réponses de Valentin sur 3.
+arret-j1-deviner · -|1.8	Compte simulé : choisissez un pseudo, puis l’un des trois boutons. Rien ne se connecte et rien n’est envoyé, ni à Apple, ni à Google, ni par e-mail. Le pseudo reste dans votre iPad.
+arret-j1-deviner · -|deviner	A
+arret-j1-deviner · -|deviner	AMIS
+arret-j1-deviner · -|deviner	Abandonner cette journée
+arret-j1-deviner · -|deviner	Agathe
+arret-j1-deviner · -|deviner	Aujourd’hui
+arret-j1-deviner · -|deviner	Aujourd’hui · lundi
+arret-j1-deviner · -|deviner	Dans le jeu, Apple vous demanderait ici de partager votre adresse e-mail ou de la masquer, puis de confirmer avec Face ID, Touch ID ou votre code. Dans l’essai, rien ne s’est connecté.
+arret-j1-deviner · -|deviner	Devine aussi pourquoi
+arret-j1-deviner · -|deviner	Deviner ●
+arret-j1-deviner · -|deviner	Hier : Courtes peines de prison sans aménagement automatique · Relire
+arret-j1-deviner · -|deviner	Jour suivant
+arret-j1-deviner · -|deviner	Le Cercle
+arret-j1-deviner · -|deviner	Moi
+arret-j1-deviner · -|deviner	N
+arret-j1-deviner · -|deviner	Nassim
+arret-j1-deviner · -|deviner	Neutre · aucune des quatre raisons
+arret-j1-deviner · -|deviner	O
+arret-j1-deviner · -|deviner	Odile
+arret-j1-deviner · -|deviner	Passer
+arret-j1-deviner · -|deviner	Relire
+arret-j1-deviner · -|deviner	Répondre ○
+arret-j1-deviner · -|deviner	Très favorable · raison cachée
+arret-j1-deviner · -|deviner	Tu as rejoint Amis.
+arret-j1-deviner · -|deviner	Un proche par réponse, chacun une fois. Si deux ont donné la même, l’un ou l’autre est juste.
+arret-j1-deviner · -|deviner	·
+arret-j1-deviner · -|deviner	À qui sont ces réponses ?
+arret-j1-deviner · arret-questions|deviner	Essai arrêté au jour 1
+arret-j1-deviner · arret-questions|deviner	Essai arrêté au jour 1.
+arret-j1-deviner · arret-questions|deviner	✓ Autre raison
+arret-j1-deviner · devoilement|deviner	Vous l’aviez à deviner le jour 1.
+arret-j14-attente · -|1.4	Appareils mobiles activés à distance pour écouter et filmer · Ton avis : Très favorable
+arret-j14-attente · -|1.6	Olga Givernet
+arret-j14-attente · -|1.6	Sébastien Huyghe
+arret-j14-attente · -|1.6	Ta raison, « Misons sur les technologies d’avenir, pas sur un modèle du passé », était l’argument d’Olga Givernet, députée, Ensemble pour la République.
+arret-j14-attente · -|1.6	Ta raison, « Seul ce qui sert l’enquête serait retranscrit, pas la vie privée », était l’argument de Sébastien Huyghe, député, Ensemble pour la République.
+arret-j14-attente · -|1.8b	E-mail ⏎ toi@exemple.fr
+arret-j14-attente · -|1.8b	Recevoir mon code
+arret-j14-attente · -|1.8b	Tu recevras un code à six chiffres.
+arret-j14-attente · -|1.8b	toi@exemple.fr
+arret-j14-attente · -|1.8b	← Retour
+arret-j14-attente · -|1.9	Code envoyé à toi@exemple.fr
+arret-j14-attente · -|1.9	Plus tard
+arret-j14-attente · -|1.9	Renvoyer le code
+arret-j14-attente · -|attente	Aujourd’hui, tu as donné du poids à la sécurité comme à la liberté.
+arret-j14-attente · -|attente	Aujourd’hui, tu as fait passer la précaution avant l’innovation.
+arret-j14-attente · -|attente	Aujourd’hui, tu as penché vers la décision locale.
+arret-j14-attente · -|attente	Aujourd’hui, tu as penché vers la précaution.
+arret-j14-attente · -|attente	Aujourd’hui, tu as penché vers l’innovation.
+arret-j14-attente · -|attente	Dans l’essai, pas besoin d’attendre 18h : passez au jour suivant quand vous voulez.
+arret-j14-attente · -|attente	Révélation dans 19 h 49
+arret-j14-attente · -|attente	TA PHRASE DU JOUR
+arret-j14-attente · -|attente	Voir mon portrait
+arret-j14-attente · -|cercle	+ Inviter
+arret-j14-attente · -|cercle	Amis ▾
+arret-j14-attente · -|cercle	Encore flou : Agathe, Nassim, Odile, Valentin, Zoé
+arret-j14-attente · -|cercle	Encore flou : Agathe, Nassim, Zoé
+arret-j14-attente · -|cercle	Encore flou : Valentin, Zoé
+arret-j14-attente · -|cercle	Encore flou : Zoé
+arret-j14-attente · -|cercle	Le Devin
+arret-j14-attente · -|cercle	Le Fidèle
+arret-j14-attente · -|cercle	Le Mystère
+arret-j14-attente · -|cercle	Le Pont
+arret-j14-attente · -|cercle	Le Tranché
+arret-j14-attente · -|cercle	Local
+arret-j14-attente · -|cercle	L’Original
+arret-j14-attente · -|cercle	Marché
+arret-j14-attente · -|cercle	Mérite
+arret-j14-attente · -|cercle	National
+arret-j14-attente · -|cercle	Ouverture
+arret-j14-attente · -|cercle	OÙ CHACUN SE PLACE
+arret-j14-attente · -|cercle	Responsabilité individuelle
+arret-j14-attente · -|cercle	Solidarité collective
+arret-j14-attente · -|cercle	Souveraineté
+arret-j14-attente · -|cercle	Surprise de la semaine :
+arret-j14-attente · -|cercle	Surprise de la semaine : Vaisselle en plastique interdite dans les cantines d’enfants
+arret-j14-attente · -|cercle	Titres des semaines passées →
+arret-j14-attente · -|cercle	Z
+arret-j14-attente · -|cercle	Zoé
+arret-j14-attente · -|cercle	Égalité
+arret-j14-attente · -|cercle	État
+arret-j14-attente · -|deviner	Aménager une courte peine, sous bracelet électronique notamment, ne serait plus la règle.
+arret-j14-attente · -|deviner	Aujourd’hui · dimanche
+arret-j14-attente · -|deviner	Aujourd’hui · mardi
+arret-j14-attente · -|deviner	Aujourd’hui · mercredi
+arret-j14-attente · -|deviner	Choisir
+arret-j14-attente · -|deviner	Courtes peines de prison sans aménagement automatique
+arret-j14-attente · -|deviner	Défavorable · « Le hip-hop vit hors de tout cadre, laissons-le continuer ainsi. »
+arret-j14-attente · -|deviner	Défavorable · « Si la mairie change d’avis, le projet devrait pouvoir être abandonné. »
+arret-j14-attente · -|deviner	Favorable · raison cachée
+arret-j14-attente · -|deviner	Favorable · « L’État prendrait la main, et les grands projets iraient plus vite. »
+arret-j14-attente · -|deviner	Hier : Diplôme de professeur de danse étendu à d’autres danses · Relire
+arret-j14-attente · -|deviner	Hier : Grands projets industriels, l’État délivrerait les permis · Relire
+arret-j14-attente · -|deviner	Hier : Mines au fond des mers, demander une pause mondiale · Relire
+arret-j14-attente · -|deviner	Hier : Mineurs dès 13 ans sans réduction de peine automatique · Relire
+arret-j14-attente · -|deviner	Neutre · raison cachée
+arret-j14-attente · -|deviner	Passée
+arret-j14-attente · -|deviner	Pourquoi, d’après toi ?
+arret-j14-attente · -|deviner	Revoir la révélation
+arret-j14-attente · -|deviner	Ta devinette : « Inventons les solutions de demain plutôt que refaire les erreurs du passé. »
+arret-j14-attente · -|deviner	Ta devinette : « Qui peut conduire un scooter peut comprendre ses actes et en répondre. »
+arret-j14-attente · -|deviner	Très favorable · « Des trafiquants se servent de jeunes parce que leurs peines sont réduites. »
+arret-j14-attente · -|deviner	Très favorable · « On ne sait rien des effets d’une exploitation, n’agissons pas à l’aveugle. »
+arret-j14-attente · -|deviner	Très favorable · « Valorisons les danses nouvelles, comme le hip-hop, avec la reconnaissance de l’État. »
+arret-j14-attente · -|deviner	Un juge pourrait de nouveau condamner à un mois de prison ferme, ou moins.
+arret-j14-attente · -|deviner	Une peine jusqu’à deux ans pourrait être aménagée, par exemple si le condamné travaille.
+arret-j14-attente · -|deviner	›
+arret-j14-attente · -|moi-portrait	Chaque réponse le précise. Il faut environ trois mois pour les premiers curseurs nets.
+arret-j14-attente · -|moi-portrait	Historique
+arret-j14-attente · -|moi-portrait	Portrait
+arret-j14-attente · -|moi-portrait	Titres
+arret-j14-attente · -|moi-portrait	VERS TES PREMIERS CURSEURS NETS
+arret-j14-attente · -|moi-portrait	⚙
+arret-j14-attente · -|moi-titres	Pas encore de titre. Les titres tombent le dimanche, à 18h.
+arret-j14-attente · -|proche	Courtes peines de prison sans aménagement automatique : Favorable, « Ne pouvant donner un mois, les juges donnent deux mois de prison. »
+arret-j14-attente · -|proche	Grands projets industriels, l’État délivrerait les permis : Défavorable, « Si la mairie change d’avis, le projet devrait pouvoir être abandonné. »
+arret-j14-attente · -|proche	Le Devin, Le Mystère et Le Fidèle cette semaine
+arret-j14-attente · -|proche	SES SURPRISES
+arret-j14-attente · -|proche	Tu pensais à Agathe
+arret-j14-attente · -|proche	Tu pensais à Valentin
+arret-j14-attente · -|proche	← Le Cercle
+arret-j14-attente · -|proche	● Toi ◎ Agathe
+arret-j14-attente · -|proche	● Toi ◎ Nassim
+arret-j14-attente · -|raison	Centres de données, faciliter leur construction · Ton avis : Très favorable
+arret-j14-attente · -|raison	Grands projets industriels, l’État délivrerait les permis · Ton avis : Très défavorable
+arret-j14-attente · -|raison	Mines au fond des mers, demander une pause mondiale · Ton avis : Favorable
+arret-j14-attente · -|raison	Supprimer les zones à faibles émissions · Ton avis : Défavorable
+arret-j14-attente · -|raison	Supprimer l’article sur les pesticides près de l’eau potable · Ton avis : Défavorable
+arret-j14-attente · -|raison	« Avec ce veto au départ, on n’installe pas d’usine contre les élus. »
+arret-j14-attente · -|raison	« Ces centres consomment énormément d’eau, alors que nos réserves diminuent. »
+arret-j14-attente · -|raison	« Des ruraux auraient plus de mal à aller se soigner en ville. »
+arret-j14-attente · -|raison	« En Italie ou à Bruxelles, ces zones fonctionnent, mieux vaut les améliorer. »
+arret-j14-attente · -|raison	« Interdire sans financer la recherche de produits de remplacement est une hérésie. »
+arret-j14-attente · -|raison	« Inventons les solutions de demain plutôt que refaire les erreurs du passé. »
+arret-j14-attente · -|raison	« Les enfants des quartiers les plus pollués souffrent souvent d’asthme. »
+arret-j14-attente · -|raison	« L’État prendrait la main, et les grands projets iraient plus vite. »
+arret-j14-attente · -|raison	« On interdit d’avance et en bloc, sans évaluer d’abord les effets. »
+arret-j14-attente · -|raison	« On ne peut pas interdire aux artisans d’entrer dans les grandes villes. »
+arret-j14-attente · -|raison	« On ne sait rien des effets d’une exploitation, n’agissons pas à l’aveugle. »
+arret-j14-attente · -|raison	« Pas de centres en France, pas de souveraineté française sur ces centres. »
+arret-j14-attente · -|raison	« Plutôt qu’une pause, explorons vite pour savoir si l’on peut exploiter. »
+arret-j14-attente · -|raison	« Près de vingt millions de personnes ont bu une eau hors normes. »
+arret-j14-attente · -|raison	« Renoncer chez nous, c’est déplacer l’exploitation ailleurs, en pire pour l’environnement. »
+arret-j14-attente · -|raison	« Sans définition de l’industrie verte, c’est un chèque en blanc. »
+arret-j14-attente · -|raison	« Si la mairie change d’avis, le projet devrait pouvoir être abandonné. »
+arret-j14-attente · -|raison	« S’y opposer, c’est avoir vingt ou trente ans de retard. »
+arret-j14-attente · -|raison	« Traiter l’eau coûte plus cher qu’aider les agriculteurs à changer de pratiques. »
+arret-j14-attente · -|raison	« Un emploi pour dix mille mètres carrés, c’est très peu d’emplois. »
+arret-j14-attente · -|ratt-attente	Aller au dimanche
+arret-j14-attente · -|ratt-attente	Aujourd’hui, tu as donné du poids à la décision locale comme à la décision nationale.
+arret-j14-attente · -|ratt-attente	Aujourd’hui, tu as fait passer la tradition avant le changement.
+arret-j14-attente · -|ratt-attente	Aujourd’hui, tu as penché vers la décision nationale.
+arret-j14-attente · -|ratt-attente	Aujourd’hui, tu n’as penché ni vers la précaution ni vers l’innovation.
+arret-j14-attente · -|ratt-attente	Aujourd’hui, tu n’as penché ni vers la sécurité ni vers la liberté.
+arret-j14-attente · -|ratt-attente	Aujourd’hui, tu n’as penché ni vers la tradition ni vers le changement.
+arret-j14-attente · -|ratt-position	Aujourd’hui · jeudi
+arret-j14-attente · -|ratt-position	Aujourd’hui · samedi
+arret-j14-attente · -|ratt-position	Aujourd’hui · vendredi
+arret-j14-attente · -|ratt-position	Ce serait permis contre les trafics, en aéroport et jusqu’à 40 km des frontières et côtes.
+arret-j14-attente · -|ratt-position	Ce texte permettrait aux agents de l’État sur ces routes de signer au nom de la région.
+arret-j14-attente · -|ratt-position	Cet amendement leur rendrait l’eau, si la moitié des conseils municipaux l’accepte.
+arret-j14-attente · -|ratt-position	Cet amendement supprimerait tout l’article qui prévoit ces mesures.
+arret-j14-attente · -|ratt-position	Cet article faciliterait les réserves d’eau pour irriguer et allégerait leurs procédures.
+arret-j14-attente · -|ratt-position	Cette réduction ne serait plus automatique, c’est le juge qui déciderait.
+arret-j14-attente · -|ratt-position	Depuis 2022, les régions volontaires peuvent gérer à l’essai des routes nationales.
+arret-j14-attente · -|ratt-position	Des policiers spécialisés pourraient contrôler quelqu’un, quel que soit son comportement.
+arret-j14-attente · -|ratt-position	Deviner ○
+arret-j14-attente · -|ratt-position	Diplôme de professeur de danse étendu à d’autres danses
+arret-j14-attente · -|ratt-position	Eau, les communes pourraient la reprendre
+arret-j14-attente · -|ratt-position	Exigé pour le classique, le jazz et le contemporain, il s’étendrait à d’autres danses.
+arret-j14-attente · -|ratt-position	Il trancherait au cas par cas, selon l’acte et la personnalité du jeune.
+arret-j14-attente · -|ratt-position	Le fichier ADN viserait d’autres délits, et l’accès policier aux fichiers serait élargi.
+arret-j14-attente · -|ratt-position	Le texte lèverait cette obligation, mais pas pour les communes qui l’ont déjà fait.
+arret-j14-attente · -|ratt-position	Les communes proposeraient les zones où accueillir en priorité des énergies renouvelables.
+arret-j14-attente · -|ratt-position	Les danses concernées seraient choisies en concertation avec le monde de la danse.
+arret-j14-attente · -|ratt-position	L’ADN de crimes anciens ou en série pourrait être comparé à des bases privées étrangères.
+arret-j14-attente · -|ratt-position	L’écriture inclusive serait interdite à l’école et à l’université, sauf pour l’étudier.
+arret-j14-attente · -|ratt-position	Mineurs dès 13 ans sans réduction de peine automatique
+arret-j14-attente · -|ratt-position	Pour les enseigner contre paiement, il faudrait ce diplôme ou une dispense.
+arret-j14-attente · -|ratt-position	Premier saut · texte 1 sur 3
+arret-j14-attente · -|ratt-position	Premier saut · texte 2 sur 3
+arret-j14-attente · -|ratt-position	Premier saut · texte 3 sur 3
+arret-j14-attente · -|ratt-position	Régions gérant des routes nationales, pouvoirs élargis
+arret-j14-attente · -|ratt-position	Second saut · texte 1 sur 6
+arret-j14-attente · -|ratt-position	Second saut · texte 2 sur 6
+arret-j14-attente · -|ratt-position	Second saut · texte 3 sur 6
+arret-j14-attente · -|ratt-position	Second saut · texte 4 sur 6
+arret-j14-attente · -|ratt-position	Second saut · texte 5 sur 6
+arret-j14-attente · -|ratt-position	Second saut · texte 6 sur 6
+arret-j14-attente · -|ratt-position	Seraient visés le point médian, les mots communs aux deux genres, la forme toutes et tous.
+arret-j14-attente · -|ratt-position	Si ces zones ne suffisent pas à la région, on demanderait aux communes d’en ajouter.
+arret-j14-attente · -|ratt-position	Si un juge annulait un droit de pomper, l’État pourrait laisser pomper jusqu’à deux ans.
+arret-j14-attente · -|ratt-position	Sinon, le préfet les désignerait lui-même, après un avis régional, dans les trois mois.
+arret-j14-attente · -|ratt-position	Supprimer les nouveaux contrôles près des frontières
+arret-j14-attente · -|ratt-position	Supprimer les nouveaux usages de l’ADN dans les enquêtes
+arret-j14-attente · -|ratt-position	Supprimer l’article facilitant les réserves d’eau agricoles
+arret-j14-attente · -|ratt-position	Sur ces routes, c’est le président de région qui réglementerait la circulation.
+arret-j14-attente · -|ratt-position	Tout acte officiel ou contrat contenant une seule de ces formes serait sans valeur.
+arret-j14-attente · -|ratt-position	Un mineur de 13 ans ou plus risque en principe deux fois moins de prison qu’un adulte.
+arret-j14-attente · -|ratt-position	Une loi de 2015 oblige les communes à confier l’eau à leur communauté de communes en 2026.
+arret-j14-attente · -|ratt-position	École et actes officiels, écriture inclusive interdite
+arret-j14-attente · -|ratt-position	Énergies renouvelables, le préfet en dernier recours
+arret-j14-attente · -|ratt-raison	Diplôme de professeur de danse étendu à d’autres danses · Ton avis : Neutre
+arret-j14-attente · -|ratt-raison	Eau, les communes pourraient la reprendre · Ton avis : Très favorable
+arret-j14-attente · -|ratt-raison	Mineurs dès 13 ans sans réduction de peine automatique · Ton avis : Très favorable
+arret-j14-attente · -|ratt-raison	Régions gérant des routes nationales, pouvoirs élargis · Ton avis : Défavorable
+arret-j14-attente · -|ratt-raison	Supprimer les nouveaux contrôles près des frontières · Ton avis : Neutre
+arret-j14-attente · -|ratt-raison	Supprimer les nouveaux usages de l’ADN dans les enquêtes · Ton avis : Très défavorable
+arret-j14-attente · -|ratt-raison	Supprimer l’article facilitant les réserves d’eau agricoles · Ton avis : Neutre
+arret-j14-attente · -|ratt-raison	« Allonger les peines de prison des jeunes fait augmenter la récidive. »
+arret-j14-attente · -|ratt-raison	« Au vu du nombre d’affaires qu’on pourrait résoudre, cela paraît disproportionné. »
+arret-j14-attente · -|ratt-raison	« Ce serait cantonné à 40 km des frontières et à douze heures. »
+arret-j14-attente · -|ratt-raison	« Ce texte est le plus sûr moyen de bien gérer ces routes. »
+arret-j14-attente · -|ratt-raison	« Ces outils permettent de neutraliser des tueurs en série et des pédocriminels. »
+arret-j14-attente · -|ratt-raison	« Ces retenues d’eau servent d’abord à lutter contre les incendies. »
+arret-j14-attente · -|ratt-raison	« Chassés de Rotterdam puis d’Anvers, les trafiquants arrivent au Havre. »
+arret-j14-attente · -|ratt-raison	« Conçu au plus près du terrain, le réseau répondrait mieux aux besoins. »
+arret-j14-attente · -|ratt-raison	« C’est l’usage, contrôlé par l’Académie, qui fait la langue, pas une loi. »
+arret-j14-attente · -|ratt-raison	« Des cours parfois dangereux, souvent d’enfants, donnés sans diplôme, ça pose problème. »
+arret-j14-attente · -|ratt-raison	« Des péages risquent d’arriver sur les dernières routes encore gratuites. »
+arret-j14-attente · -|ratt-raison	« Des trafiquants se servent de jeunes parce que leurs peines sont réduites. »
+arret-j14-attente · -|ratt-raison	« Laissons les communes choisir démocratiquement de reprendre ou non leur eau. »
+arret-j14-attente · -|ratt-raison	« Le hip-hop vit hors de tout cadre, laissons-le continuer ainsi. »
+arret-j14-attente · -|ratt-raison	« Le hip-hop évolue sans cesse, un carcan académique pourrait brider sa créativité. »
+arret-j14-attente · -|ratt-raison	« Le point médian complique la lecture des dyslexiques et des personnes handicapées. »
+arret-j14-attente · -|ratt-raison	« Le préfet doit avoir le dernier mot, sinon personne ne tranchera. »
+arret-j14-attente · -|ratt-raison	« Le stockage de l’eau doit progresser, c’est le cœur de l’urgence agricole. »
+arret-j14-attente · -|ratt-raison	« Les bases utilisées recueillent le consentement éclairé de leurs utilisateurs. »
+arret-j14-attente · -|ratt-raison	« Les collectivités gardent la main, ce recours ne sert qu’en cas d’échec. »
+arret-j14-attente · -|ratt-raison	« Les maires en ont assez des injonctions du préfet sur leur territoire. »
+arret-j14-attente · -|ratt-raison	« L’article vise surtout à laisser l’État ignorer les décisions de justice. »
+arret-j14-attente · -|ratt-raison	« L’eau appartient à tous, il faut une stratégie cohérente pour le pays. »
+arret-j14-attente · -|ratt-raison	« L’État se désengage, au détriment d’un réseau unique et de l’égalité territoriale. »
+arret-j14-attente · -|ratt-raison	« Notre langue est un héritage, que nous devons conserver et transmettre. »
+arret-j14-attente · -|ratt-raison	« On pourrait être contrôlé et fouillé sans avoir rien fait de suspect. »
+arret-j14-attente · -|ratt-raison	« Pour lutter contre les trafics, mieux vaut renforcer les douanes, plus efficaces. »
+arret-j14-attente · -|ratt-raison	« Qui dit crispation dit procès, et les projets ralentiraient au lieu d’accélérer. »
+arret-j14-attente · -|ratt-raison	« Qui peut conduire un scooter peut comprendre ses actes et en répondre. »
+arret-j14-attente · -|ratt-raison	« Reprendre l’eau aurait un coût, de nouvelles études après celles du transfert. »
+arret-j14-attente · -|ratt-raison	« Selon les chercheurs, ces réserves aggraveront les risques de sécheresse et d’inondation. »
+arret-j14-attente · -|ratt-raison	« Transférée, l’eau a parfois fini au privé, avec des prix qui explosent. »
+arret-j14-attente · -|ratt-raison	« Un cousin pourrait être impliqué dans une enquête sans avoir jamais consenti. »
+arret-j14-attente · -|ratt-raison	« Un mineur qui commet un délit n’a pas le discernement d’un adulte. »
+arret-j14-attente · -|ratt-raison	« Une langue doit se réinventer, car une langue figée meurt. »
+arret-j14-attente · -|ratt-raison	« Valorisons les danses nouvelles, comme le hip-hop, avec la reconnaissance de l’État. »
+arret-j14-attente · -|ratt-raison	École et actes officiels, écriture inclusive interdite · Ton avis : Favorable
+arret-j14-attente · -|ratt-raison	Énergies renouvelables, le préfet en dernier recours · Ton avis : Très favorable
+arret-j14-attente · -|repondre	Autour des points de pompage d’eau potable, des plans d’action seraient obligatoires.
+arret-j14-attente · -|repondre	Centres de données, faciliter leur construction
+arret-j14-attente · -|repondre	Cet article supprimerait ces zones partout en France.
+arret-j14-attente · -|repondre	Dans une zone à faibles émissions, les véhicules trop polluants peuvent être interdits.
+arret-j14-attente · -|repondre	Deviner ✓
+arret-j14-attente · -|repondre	En France aussi, la règle devrait évoluer pour les interdire, tant que ce doute dure.
+arret-j14-attente · -|repondre	Grands projets industriels, l’État délivrerait les permis
+arret-j14-attente · -|repondre	Il bloquerait les règles autorisant ces mines, tant qu’un doute existe sur leurs dégâts.
+arret-j14-attente · -|repondre	Ils pourraient alors s’installer par exception aux règles locales d’urbanisme.
+arret-j14-attente · -|repondre	Le Gouvernement pourrait déclarer un grand projet industriel d’intérêt national majeur.
+arret-j14-attente · -|repondre	Le Gouvernement serait invité, sans y être obligé, à défendre une pause mondiale.
+arret-j14-attente · -|repondre	Le maire et l’intercommunalité pourraient refuser au départ, pas après avoir dit oui.
+arret-j14-attente · -|repondre	Les grands centres de données stratégiques pourraient être déclarés d’intérêt national.
+arret-j14-attente · -|repondre	L’État adapterait les règles locales d’urbanisme et délivrerait lui-même les permis.
+arret-j14-attente · -|repondre	L’État pourrait leur réserver à l’avance un raccordement au réseau électrique.
+arret-j14-attente · -|repondre	Mines au fond des mers, demander une pause mondiale
+arret-j14-attente · -|repondre	Près des plus menacés, l’État limiterait ou interdirait engrais et pesticides avant 2030.
+arret-j14-attente · -|repondre	Répondre ●
+arret-j14-attente · -|repondre	Supprimer les zones à faibles émissions
+arret-j14-attente · -|repondre	Supprimer l’article sur les pesticides près de l’eau potable
+arret-j14-attente · -|repondre	Une quarantaine de villes et d’agglomérations en ont mis en place.
+arret-j14-attente · -|revelation	0 point aujourd’hui · 0 cette semaine
+arret-j14-attente · -|revelation	1 point aujourd’hui · 1 cette semaine
+arret-j14-attente · -|revelation	1 point aujourd’hui · 2 cette semaine
+arret-j14-attente · -|revelation	2 points aujourd’hui · 4 cette semaine
+arret-j14-attente · -|revelation	?
+arret-j14-attente · -|revelation	Alexandra Martin
+arret-j14-attente · -|revelation	Amis · Courtes peines de prison sans aménagement automatique
+arret-j14-attente · -|revelation	Amis · Grands projets industriels, l’État délivrerait les permis
+arret-j14-attente · -|revelation	Amis · Mines au fond des mers, demander une pause mondiale
+arret-j14-attente · -|revelation	Amis · Mineurs dès 13 ans sans réduction de peine automatique
+arret-j14-attente · -|revelation	Avancer au dimanche
+arret-j14-attente · -|revelation	Cette semaine, entre local et national, tu as penché autant d’un côté que de l’autre.
+arret-j14-attente · -|revelation	Cette semaine, ton portrait est encore flou. Chaque réponse le précise.
+arret-j14-attente · -|revelation	C’était Agathe.
+arret-j14-attente · -|revelation	C’était Nassim.
+arret-j14-attente · -|revelation	C’était Odile.
+arret-j14-attente · -|revelation	C’était Valentin.
+arret-j14-attente · -|revelation	Et l’Assemblée ?
+arret-j14-attente · -|revelation	Et maintenant, la question d’aujourd’hui.
+arret-j14-attente · -|revelation	Jouer
+arret-j14-attente · -|revelation	LA SURPRISE DE LA SEMAINE
+arret-j14-attente · -|revelation	LES TITRES DE LA SEMAINE · AMIS
+arret-j14-attente · -|revelation	Le 10 juillet 2026. C’était un amendement, une modification d’un texte en discussion.
+arret-j14-attente · -|revelation	Le 12 octobre 2023.
+arret-j14-attente · -|revelation	Le 13 février 2025. C’était un amendement, une modification d’un texte en discussion.
+arret-j14-attente · -|revelation	Le 17 janvier 2023. C’était une résolution, un texte qui invite le Gouvernement à agir, sans l’y obliger.
+arret-j14-attente · -|revelation	Le 21 juillet 2023. C’était un article d’un texte plus long. Le Sénat devait encore voter ce texte.
+arret-j14-attente · -|revelation	Le 3 avril 2025. Le Sénat devait encore voter.
+arret-j14-attente · -|revelation	Le Devin : Nassim
+arret-j14-attente · -|revelation	Le Fidèle : Agathe, Nassim, Valentin et Zoé
+arret-j14-attente · -|revelation	Le Fidèle : Nassim et Zoé
+arret-j14-attente · -|revelation	Le Mystère : Agathe
+arret-j14-attente · -|revelation	Le Mystère : Zoé
+arret-j14-attente · -|revelation	Le texte et ses sources
+arret-j14-attente · -|revelation	Loïc Kervran
+arret-j14-attente · -|revelation	Max Mathiasin
+arret-j14-attente · -|revelation	Michel Castellani
+arret-j14-attente · -|revelation	Milieu des réponses
+arret-j14-attente · -|revelation	Nicolas Thierry
+arret-j14-attente · -|revelation	POUR TOI, CETTE SEMAINE
+arret-j14-attente · -|revelation	Pouria Amirshahi
+arret-j14-attente · -|revelation	Proposé par Alexandra Martin, députée, Droite Républicaine.
+arret-j14-attente · -|revelation	Proposé par Loïc Kervran, député, Horizons & Indépendants.
+arret-j14-attente · -|revelation	Proposé par Max Mathiasin, député, Libertés, Indépendants, Outre-mer et Territoires.
+arret-j14-attente · -|revelation	Proposé par Nicolas Thierry, député, Écologiste - NUPES.
+arret-j14-attente · -|revelation	Proposé par Roger Chudeau, député, Rassemblement National.
+arret-j14-attente · -|revelation	Proposé par le Gouvernement.
+arret-j14-attente · -|revelation	Roger Chudeau
+arret-j14-attente · -|revelation	Sa raison : « La récidive vient de l’impunité, pas de la prison. »
+arret-j14-attente · -|revelation	Sa raison : « L’État prendrait la main, et les grands projets iraient plus vite. »
+arret-j14-attente · -|revelation	Sa raison : « On ne sait rien des effets d’une exploitation, n’agissons pas à l’aveugle. »
+arret-j14-attente · -|revelation	Sa raison : « Qui peut conduire un scooter peut comprendre ses actes et en répondre. »
+arret-j14-attente · -|revelation	Ta raison, « Notre langue est un héritage, que nous devons conserver et transmettre », était l’argument de Roger Chudeau, député, Rassemblement National.
+arret-j14-attente · -|revelation	Ta raison, « On ne sait rien des effets d’une exploitation, n’agissons pas à l’aveugle », était l’argument de Michel Castellani, député, Libertés, Indépendants, Outre-mer et Territoires.
+arret-j14-attente · -|revelation	Ta raison, « Un mineur qui commet un délit n’a pas le discernement d’un adulte », était l’argument de Pouria Amirshahi, député, Écologiste et Social.
+arret-j14-attente · -|revelation	Texte adopté.
+arret-j14-attente · -|revelation	Texte rejeté.
+arret-j14-attente · -|revelation	Ton cercle, lui, l’aurait adopté.
+arret-j14-attente · -|revelation	Ton cercle, lui, était partagé.
+arret-j14-attente · -|revelation	Ton pari : Agathe.
+arret-j14-attente · -|revelation	Ton pari : Nassim, parce que « Qui peut conduire un scooter peut comprendre ses actes et en répondre ».
+arret-j14-attente · -|revelation	Ton pari : Nassim.
+arret-j14-attente · -|revelation	Ton pari : Odile.
+arret-j14-attente · -|revelation	Ton pari : Valentin, parce que « Inventons les solutions de demain plutôt que refaire les erreurs du passé ».
+arret-j14-attente · -|revelation	Ton pari : Valentin.
+arret-j14-attente · -|revelation	Tu avais passé.
+arret-j14-attente · -|revelation	Voir le texte
+arret-j14-attente · -|revelation	a le mieux deviné les autres cette semaine
+arret-j14-attente · -|revelation	le plus difficile à deviner cette semaine
+arret-j14-attente · -|revelation	le texte qui a le plus trompé le cercle
+arret-j14-attente · -|revelation	ont répondu les sept jours
+arret-j14-attente · -|revelation	Écologiste -
+arret-j14-attente · -|revelation	×
+arret-j14-attente · -|verrou	18:00
+arret-j14-attente · -|verrou	18h. Le vote de l’Assemblée t’attend, et la question d’aujourd’hui. Ce soir, aussi : les titres de la semaine.
+arret-j14-attente · -|verrou	18h. Qui avait dit quoi ? La révélation d’hier t’attend, et la question d’aujourd’hui.
+arret-j14-attente · -|verrou	E ⏎ Elenchos · maintenant
+arret-j14-attente · -|verrou	Jour 14 · dimanche
+arret-j14-attente · -|verrou	Jour 2 · mardi
+arret-j14-attente · -|verrou	Jour 3 · mercredi
+arret-j14-attente · -|verrou	Jour 4 · jeudi
+arret-j14-attente · -|verrou	Jour 7 · dimanche
+arret-j14-attente · -|verrou	Jour 8 · lundi
+arret-j14-attente · -|verrou	Vous avez avancé de six jours. Comme vous n’avez rien deviné pendant le saut, la révélation de ce soir commence au vote.
+arret-j14-attente · -|verrou	Vous avez avancé de trois jours. Comme vous n’avez rien deviné pendant le saut, la révélation de ce soir commence au vote.
+arret-j14-attente · -|verrou	dimanche
+arret-j14-attente · -|verrou	jeudi
+arret-j14-attente · -|verrou	lundi
+arret-j14-attente · -|verrou	mardi
+arret-j14-attente · -|verrou	mercredi
+arret-j14-attente · arret-questions|attente	De moins en moins amusant
+arret-j14-attente · arret-questions|attente	De plus en plus amusant
+arret-j14-attente · arret-questions|attente	Essai arrêté au jour 14
+arret-j14-attente · arret-questions|attente	Essai arrêté au jour 14.
+arret-j14-attente · arret-questions|attente	Jamais amusant
+arret-j14-attente · arret-questions|attente	Jusqu’ici, deviner était :
+arret-j14-attente · arret-questions|attente	Toujours aussi amusant
+arret-j14-attente · arret-questions|attente	✓ De moins en moins amusant
+arret-j14-attente · arret-questions|attente	✓ Je ne m’amuse pas
+arret-j14-attente · carnet|attente	Ailleurs
+arret-j14-attente · carnet|attente	Aller au jour suivant
+arret-j14-attente · carnet|attente	Aucun
+arret-j14-attente · carnet|attente	Aujourd’hui, votre moment préféré :
+arret-j14-attente · carnet|attente	Ce que le jeu a fait pendant le saut, c’était clair ?
+arret-j14-attente · carnet|attente	Cette semaine, où avez-vous hésité ?
+arret-j14-attente · carnet|attente	Cette semaine, votre moment préféré :
+arret-j14-attente · carnet|attente	Deviner
+arret-j14-attente · carnet|attente	Donner mon avis
+arret-j14-attente · carnet|attente	En partie
+arret-j14-attente · carnet|attente	La révélation
+arret-j14-attente · carnet|attente	Le défi de Valentin
+arret-j14-attente · carnet|attente	Le saut
+arret-j14-attente · carnet|attente	Les titres
+arret-j14-attente · carnet|attente	L’avis du cercle
+arret-j14-attente · carnet|attente	Ma phrase de la semaine
+arret-j14-attente · carnet|attente	Ma phrase du jour
+arret-j14-attente · carnet|attente	Mon portrait
+arret-j14-attente · carnet|attente	Non
+arret-j14-attente · carnet|attente	Nulle part
+arret-j14-attente · carnet|attente	Oui
+arret-j14-attente · carnet|attente	Répondre
+arret-j14-attente · carnet|attente	Sur ce qu’il fallait faire ou comprendre. Plusieurs choix possibles ; pour « Ailleurs », dites où dans la conversation.
+arret-j14-attente · carnet|attente	Votre carnet du jour
+arret-j14-attente · carnet|attente	Votre moment préféré :
+arret-j14-attente · carnet|attente	✓ Donner mon avis
+arret-j14-attente · carnet|attente	✓ La révélation
+arret-j14-attente · carnet|attente	✓ Ma phrase du jour
+arret-j14-attente · devoilement|attente	Vous l’aviez à deviner le jour 3.
+arret-j14-attente · devoilement|attente	Vous l’aviez à deviner le jour 7.
+arret-j14-attente · saut|revelation	Agathe, Nassim, Odile et Valentin jouent comme chaque jour.
+arret-j14-attente · saut|revelation	Ces réponses comptent comme les autres, pour votre portrait comme pour Le Fidèle.
+arret-j14-attente · saut|revelation	D
+arret-j14-attente · saut|revelation	Dimanche à 18h : la révélation, puis les titres de la semaine.
+arret-j14-attente · saut|revelation	Dimanche à 18h : la révélation, puis les titres de la semaine. C’est le dernier jour de jeu.
+arret-j14-attente · saut|revelation	Du lundi au samedi :
+arret-j14-attente · saut|revelation	J
+arret-j14-attente · saut|revelation	Jeudi, vendredi et samedi :
+arret-j14-attente · saut|revelation	L
+arret-j14-attente · saut|revelation	Les révélations de mardi à samedi ont lieu sans vous. Leurs votes et leurs auteurs seront dans votre Historique.
+arret-j14-attente · saut|revelation	Les révélations de vendredi et de samedi ont lieu sans vous. Leurs votes et leurs auteurs seront dans votre Historique.
+arret-j14-attente · saut|revelation	M
+arret-j14-attente · saut|revelation	Premier saut
+arret-j14-attente · saut|revelation	S
+arret-j14-attente · saut|revelation	Second saut
+arret-j14-attente · saut|revelation	Semaine 1
+arret-j14-attente · saut|revelation	Semaine 2
+arret-j14-attente · saut|revelation	Vous répondez d’affilée aux six textes de ces jours-là, sans deviner. Environ deux minutes.
+arret-j14-attente · saut|revelation	Vous répondez d’affilée aux trois textes de ces jours-là, sans deviner. Environ une minute.
+arret-j14-attente · saut|revelation	vous reprenez ici
+arret-j14-attente · saut|revelation	↑
+arret-j14-attente · saut|revelation	○
+arret-j14-attente · saut|revelation	○ vous répondez seulement
+arret-j14-attente · saut|revelation	●
+arret-j14-attente · saut|revelation	● vous jouez
+arret-j2-revelation · -|1.4	Appareils mobiles activés à distance pour écouter et filmer · Ton avis : Très défavorable
+arret-j2-revelation · -|1.4	Pétrole et gaz outre-mer, rouvrir recherche et exploitation · Ton avis : Très favorable
+arret-j2-revelation · -|1.6	Ta raison, « Même des appareils de santé ou intimes pourraient être activés à distance », était l’argument de Sandra Regol, députée, Écologiste et Social.
+arret-j2-revelation · -|attente	Révélation dans 19 h 52
+arret-j2-revelation · -|proche	Le Fidèle cette semaine
+arret-j2-revelation · -|proche	● Toi ◎ Odile
+arret-j2-revelation · -|raison	Grands projets industriels, l’État délivrerait les permis · Ton avis : Très favorable
+arret-j2-revelation · arret-questions|revelation	Essai arrêté au jour 2
+arret-j2-revelation · arret-questions|revelation	Essai arrêté au jour 2.
+arret-j3-attente · -|1.4	Appareils mobiles activés à distance pour écouter et filmer · Ton avis : Défavorable
+arret-j3-attente · -|1.6	Ton pari : Défavorable.
+arret-j3-attente · -|1.6	Ton pari : Très favorable.
+arret-j3-attente · -|1.7	Valentin a réussi à te surprendre deux fois.
+arret-j3-attente · -|attente	Aujourd’hui, tu as donné du poids à la précaution comme à l’innovation.
+arret-j3-attente · -|attente	Aujourd’hui, tu as fait passer la décision nationale avant la décision locale.
+arret-j3-attente · -|attente	Révélation dans 19 h 51
+arret-j3-attente · -|deviner	Ta devinette : « Avec ce veto au départ, on n’installe pas d’usine contre les élus. »
+arret-j3-attente · -|deviner	Ta devinette : « Renoncer chez nous, c’est déplacer l’exploitation ailleurs, en pire pour l’environnement. »
+arret-j3-attente · -|raison	Grands projets industriels, l’État délivrerait les permis · Ton avis : Favorable
+arret-j3-attente · -|raison	Mines au fond des mers, demander une pause mondiale · Ton avis : Défavorable
+arret-j3-attente · -|raison	Supprimer les zones à faibles émissions · Ton avis : Très favorable
+arret-j3-attente · -|revelation	Frédéric Zgainski
+arret-j3-attente · -|revelation	Ta raison, « L’État prendrait la main, et les grands projets iraient plus vite », était l’argument de Frédéric Zgainski, député, Démocrate (MoDem et Indépendants).
+arret-j3-attente · -|revelation	Ton pari : Odile, parce que « Avec ce veto au départ, on n’installe pas d’usine contre les élus ».
+arret-j3-attente · arret-questions|attente	Essai arrêté au jour 3
+arret-j3-attente · arret-questions|attente	Essai arrêté au jour 3.
+arret-j3-attente · arret-questions|attente	✓ Jamais amusant
+arret-j3-attente · carnet|attente	✓ Deviner
+arret-j3-repondre · -|1.4	Moins d’argent de l’État aux communes qui aident la corrida · Ton avis : Neutre
+arret-j3-repondre · -|1.6	Davy Rimane
+arret-j3-repondre · -|1.6	Ta raison, « Mieux vaut prendre le risque de décider que subir sans fin l’inaction », était l’argument de Davy Rimane, député, Gauche Démocrate et Républicaine.
+arret-j3-repondre · -|raison	Mines au fond des mers, demander une pause mondiale · Ton avis : Neutre
+arret-j3-repondre · -|revelation	0 point aujourd’hui · 1 cette semaine
+arret-j3-repondre · -|revelation	Alma Dufour
+arret-j3-repondre · -|revelation	Ta raison, « Sans définition de l’industrie verte, c’est un chèque en blanc », était l’argument d’Alma Dufour, députée, La France insoumise - Nouvelle Union Populaire écologique et sociale.
+arret-j3-repondre · arret-questions|repondre	✓ Je ne comprends pas tout
+arret-j3-repondre · carnet|attente	✓ Aucun
+arret-j4-apres-annuler · -|1.4	Moins d’argent de l’État aux communes qui aident la corrida · Ton avis : Favorable
+arret-j4-apres-annuler · -|deviner	Ta devinette : « La récidive vient de l’impunité, pas de la prison. »
+arret-j4-apres-annuler · -|deviner	« La récidive vient de l’impunité, pas de la prison. »
+arret-j4-apres-annuler · -|deviner	« Les courtes peines produisent de la récidive dans 62 % des cas. »
+arret-j4-apres-annuler · -|deviner	« Ne pouvant donner un mois, les juges donnent deux mois de prison. »
+arret-j4-apres-annuler · -|deviner	« Pour une courte peine, la prison ferme doit rester un dernier recours. »
+arret-j4-apres-annuler · -|moi-historique	Défavorable · révélé jeudi à 18h
+arret-j4-apres-annuler · -|moi-historique	Lundi · Grands projets industriels, l’État délivrerait les permis
+arret-j4-apres-annuler · -|moi-historique	Mardi · Mines au fond des mers, demander une pause mondiale
+arret-j4-apres-annuler · -|moi-historique	Mercredi · Supprimer les zones à faibles émissions
+arret-j4-apres-annuler · -|moi-historique	Neutre · révélé vendredi à 18h
+arret-j4-apres-annuler · -|moi-historique	Pour commencer · Appareils mobiles activés à distance pour écouter et filmer
+arret-j4-apres-annuler · -|moi-historique	Pour commencer · Moins d’argent de l’État aux communes qui aident la corrida
+arret-j4-apres-annuler · -|moi-historique	Pour commencer · Pétrole et gaz outre-mer, rouvrir recherche et exploitation
+arret-j4-apres-annuler · -|raison	Supprimer les zones à faibles émissions · Ton avis : Neutre
+arret-j4-apres-annuler · -|revelation	3 points aujourd’hui · 4 cette semaine
+arret-j4-apres-annuler · -|revelation	Ton pari : Odile, parce que « La récidive vient de l’impunité, pas de la prison ».
+arret-j4-apres-annuler · -|revelation	Tu connais ton monde, et ses raisons.
+arret-j4-apres-annuler · arret-questions|revelation	Essai arrêté au jour 4
+arret-j4-apres-annuler · arret-questions|revelation	Essai arrêté au jour 4.
+arret-j4-apres-annuler · arret-questions|revelation	✓ De plus en plus amusant
+arret-j4-revelation · -|attente	Aujourd’hui, tu as fait passer la décision locale avant la décision nationale.
+arret-j4-revelation · -|revelation	Charles Fournier
+arret-j4-revelation · -|revelation	Ta raison, « Si la mairie change d’avis, le projet devrait pouvoir être abandonné », était l’argument de Charles Fournier, député, Écologiste - NUPES.
+arret-j4-revelation · -|revelation	Ton pari : Valentin, parce que « La récidive vient de l’impunité, pas de la prison ».
+arret-j7-deviner · -|1.4	Pétrole et gaz outre-mer, rouvrir recherche et exploitation · Ton avis : Neutre
+arret-j7-deviner · -|1.6	Anne Stambach-Terrenoir
+arret-j7-deviner · -|1.6	Ta raison, « Des régions de corrida, comme la Catalogne, y ont déjà mis fin », était l’argument d’Anne Stambach-Terrenoir, députée, La France insoumise - Nouveau Front Populaire.
+arret-j7-deviner · -|attente	Révélation dans 19 h 50
+arret-j7-deviner · -|deviner	Ta devinette : aucune des quatre.
+arret-j7-deviner · -|proche	Courtes peines de prison sans aménagement automatique : Très favorable, « La récidive vient de l’impunité, pas de la prison. »
+arret-j7-deviner · -|proche	Tu pensais à Nassim
+arret-j7-deviner · -|ratt-attente	Aujourd’hui, tu as donné du poids à la tradition comme au changement.
+arret-j7-deviner · -|ratt-attente	Aujourd’hui, tu as penché vers la liberté.
+arret-j7-deviner · -|ratt-raison	Mineurs dès 13 ans sans réduction de peine automatique · Ton avis : Très défavorable
+arret-j7-deviner · -|ratt-raison	École et actes officiels, écriture inclusive interdite · Ton avis : Très défavorable
+arret-j7-deviner · -|ratt-raison	Énergies renouvelables, le préfet en dernier recours · Ton avis : Favorable
+arret-j7-deviner · -|revelation	1 point aujourd’hui · 3 cette semaine
+arret-j7-deviner · -|revelation	Cette semaine, entre local et national, tu as le plus souvent choisi la décision nationale.
+arret-j7-deviner · -|revelation	Le Devin : Odile
+arret-j7-deviner · -|revelation	Le Mystère : Odile
+arret-j7-deviner · -|revelation	Ton pari : Valentin, aucune des quatre raisons.
+arret-j7-deviner · arret-questions|deviner	Essai arrêté au jour 7
+arret-j7-deviner · arret-questions|deviner	Essai arrêté au jour 7.
+arret-j8-apres-annuler · -|1.4	Pétrole et gaz outre-mer, rouvrir recherche et exploitation · Ton avis : Très défavorable
+arret-j8-apres-annuler · -|attente	Aujourd’hui, tu n’as penché ni vers la décision locale ni vers la décision nationale.
+arret-j8-apres-annuler · -|cercle	Surprise de la semaine : Supprimer les zones à faibles émissions
+arret-j8-apres-annuler · -|deviner	Dans le jeu, Google vous demanderait ici de choisir votre compte ; seul un compte personnel serait accepté, pas celui d’un employeur ou d’une école. Dans l’essai, rien ne s’est connecté.
+arret-j8-apres-annuler · -|deviner	Ta devinette : « Plutôt qu’une pause, explorons vite pour savoir si l’on peut exploiter. »
+arret-j8-apres-annuler · -|deviner	Ta devinette : « Un mineur qui commet un délit n’a pas le discernement d’un adulte. »
+arret-j8-apres-annuler · -|moi-historique	Dimanche · Centres de données, faciliter leur construction
+arret-j8-apres-annuler · -|moi-historique	Jeudi · Énergies renouvelables, le préfet en dernier recours
+arret-j8-apres-annuler · -|moi-historique	Neutre · révélé mardi à 18h
+arret-j8-apres-annuler · -|moi-historique	Samedi · Mineurs dès 13 ans sans réduction de peine automatique
+arret-j8-apres-annuler · -|moi-historique	Très favorable · révélé lundi à 18h
+arret-j8-apres-annuler · -|moi-historique	Vendredi · École et actes officiels, écriture inclusive interdite
+arret-j8-apres-annuler · -|raison	Centres de données, faciliter leur construction · Ton avis : Neutre
+arret-j8-apres-annuler · -|raison	Grands projets industriels, l’État délivrerait les permis · Ton avis : Neutre
+arret-j8-apres-annuler · -|raison	Supprimer les zones à faibles émissions · Ton avis : Favorable
+arret-j8-apres-annuler · -|ratt-attente	Aujourd’hui, tu as fait passer la sécurité avant la liberté.
+arret-j8-apres-annuler · -|ratt-attente	Aujourd’hui, tu as penché vers la tradition.
+arret-j8-apres-annuler · -|ratt-raison	Énergies renouvelables, le préfet en dernier recours · Ton avis : Neutre
+arret-j8-apres-annuler · -|revelation	2 points aujourd’hui · 2 cette semaine
+arret-j8-apres-annuler · -|revelation	Hervé de Lépinau
+arret-j8-apres-annuler · -|revelation	Jérémie Patrier-Leitus
+arret-j8-apres-annuler · -|revelation	Le Mystère : Nassim
+arret-j8-apres-annuler · -|revelation	Marianne Maximi
+arret-j8-apres-annuler · -|revelation	Ta raison, « Allonger les peines de prison des jeunes fait augmenter la récidive », était l’argument de Marianne Maximi, députée, La France insoumise - Nouveau Front Populaire.
+arret-j8-apres-annuler · -|revelation	Ta raison, « Le point médian complique la lecture des dyslexiques et des personnes handicapées », était l’argument de Jérémie Patrier-Leitus, député, Horizons et apparentés.
+arret-j8-apres-annuler · -|revelation	Ta raison, « Renoncer chez nous, c’est déplacer l’exploitation ailleurs, en pire pour l’environnement », était l’argument d’Hervé de Lépinau, député, Rassemblement National.
+arret-j8-apres-annuler · -|revelation	Ton pari : Agathe, parce que « Un mineur qui commet un délit n’a pas le discernement d’un adulte ».
+arret-j8-apres-annuler · -|revelation	Ton pari : Nassim, parce que « Plutôt qu’une pause, explorons vite pour savoir si l’on peut exploiter ».
+arret-j8-apres-annuler · arret-questions|revelation	Essai arrêté au jour 8
+arret-j8-apres-annuler · arret-questions|revelation	Essai arrêté au jour 8.
+arret-j8-apres-annuler · carnet|attente	✓ Les titres
+arret-j8-apres-annuler · carnet|attente	✓ Ma phrase de la semaine
+arret-j8-apres-annuler · carnet|attente	✓ Non
+arret-saut1-texte2 · -|1.6	Marine Le Pen
+arret-saut1-texte2 · -|1.6	Ta raison, « Respectons ceux qui souhaitent préserver cette coutume, même sans l’aimer », était l’argument de Marine Le Pen, députée, Rassemblement National.
+arret-saut1-texte2 · -|proche	Courtes peines de prison sans aménagement automatique : Neutre, aucune des quatre raisons
+arret-saut1-texte2 · -|proche	Grands projets industriels, l’État délivrerait les permis : Favorable, « L’État prendrait la main, et les grands projets iraient plus vite. »
+arret-saut1-texte2 · -|proche	Tu pensais à Odile
+arret-saut1-texte2 · -|proche	● Toi ◎ Valentin
+arret-saut1-texte2 · arret-questions|ratt-position	Essai arrêté pendant le premier saut
+arret-saut1-texte2 · arret-questions|ratt-position	Essai arrêté pendant le premier saut.
+arret-saut2-texte5 · -|deviner	Ta devinette : « Allonger les peines de prison des jeunes fait augmenter la récidive. »
+arret-saut2-texte5 · -|deviner	Ta devinette : « Ne pouvant donner un mois, les juges donnent deux mois de prison. »
+arret-saut2-texte5 · -|raison	Centres de données, faciliter leur construction · Ton avis : Défavorable
+arret-saut2-texte5 · -|ratt-attente	Aujourd’hui, tu as fait passer la liberté avant la sécurité.
+arret-saut2-texte5 · -|ratt-attente	Aujourd’hui, tu as penché vers le changement.
+arret-saut2-texte5 · -|ratt-raison	Eau, les communes pourraient la reprendre · Ton avis : Neutre
+arret-saut2-texte5 · -|ratt-raison	Mineurs dès 13 ans sans réduction de peine automatique · Ton avis : Favorable
+arret-saut2-texte5 · -|ratt-raison	Régions gérant des routes nationales, pouvoirs élargis · Ton avis : Neutre
+arret-saut2-texte5 · -|ratt-raison	Supprimer les nouveaux usages de l’ADN dans les enquêtes · Ton avis : Très favorable
+arret-saut2-texte5 · -|ratt-raison	Supprimer l’article facilitant les réserves d’eau agricoles · Ton avis : Défavorable
+arret-saut2-texte5 · -|revelation	0 point aujourd’hui · 2 cette semaine
+arret-saut2-texte5 · -|revelation	Moetai Brotherson
+arret-saut2-texte5 · -|revelation	Ta raison, « Des trafiquants se servent de jeunes parce que leurs peines sont réduites », était l’argument d’Alexandra Martin, députée, Droite Républicaine.
+arret-saut2-texte5 · -|revelation	Ta raison, « Inventons les solutions de demain plutôt que refaire les erreurs du passé », était l’argument de Moetai Brotherson, député, Gauche démocrate et républicaine - NUPES.
+arret-saut2-texte5 · -|revelation	Ton pari : Nassim, parce que « Allonger les peines de prison des jeunes fait augmenter la récidive ».
+arret-saut2-texte5 · -|revelation	Ton pari : Odile, parce que « Ne pouvant donner un mois, les juges donnent deux mois de prison ».
+arret-saut2-texte5 · -|revelation	républicaine -
+arret-saut2-texte5 · arret-questions|ratt-position	Essai arrêté pendant le second saut
+arret-saut2-texte5 · arret-questions|ratt-position	Essai arrêté pendant le second saut.
+arret-saut2-texte5 · carnet|attente	✓ Oui
+ecran-abandon-dimanche · -|1.4	Moins d’argent de l’État aux communes qui aident la corrida · Ton avis : Très défavorable
+ecran-abandon-dimanche · -|attente	Aujourd’hui, tu as fait passer l’innovation avant la précaution.
+ecran-abandon-dimanche · -|deviner	Ta devinette : « Les courtes peines produisent de la récidive dans 62 % des cas. »
+ecran-abandon-dimanche · -|fiche	Extrait 1
+ecran-abandon-dimanche · -|fiche	Extrait 2
+ecran-abandon-dimanche · -|fiche	Julie Laernoes
+ecran-abandon-dimanche · -|fiche	Julie Laernoes ⏎ Écologiste et Social
+ecran-abandon-dimanche · -|fiche	LES QUATRE RAISONS
+ecran-abandon-dimanche · -|fiche	Le texte de dimanche ne sera pas deviné : l’essai s’arrête avant. Voici quand même son vote et ses auteurs.
+ecran-abandon-dimanche · -|fiche	Lionel Duparay
+ecran-abandon-dimanche · -|fiche	Lionel Duparay ⏎ Droite Républicaine
+ecran-abandon-dimanche · -|fiche	Mathilde Hignet
+ecran-abandon-dimanche · -|fiche	Mathilde Hignet ⏎ La France insoumise - Nouveau Front Populaire
+ecran-abandon-dimanche · -|fiche	Nicolas Tryzna
+ecran-abandon-dimanche · -|fiche	Proposé par Nicolas Tryzna, Droite Républicaine.
+ecran-abandon-dimanche · -|fiche	Sources : extraits des débats
+ecran-abandon-dimanche · -|fiche	Sébastien Humbert
+ecran-abandon-dimanche · -|fiche	Sébastien Humbert ⏎ Rassemblement National
+ecran-abandon-dimanche · -|fiche	Voir le scrutin sur le site de l’Assemblée
+ecran-abandon-dimanche · -|fiche	Vote :
+ecran-abandon-dimanche · -|fiche	Vote : rejeté le 12 février 2026. C’était un amendement, une modification d’un texte en discussion. Le jour même, le texte entier a été retiré.
+ecran-abandon-dimanche · -|ratt-raison	Diplôme de professeur de danse étendu à d’autres danses · Ton avis : Défavorable
+ecran-abandon-dimanche · -|ratt-raison	Eau, les communes pourraient la reprendre · Ton avis : Très défavorable
+ecran-abandon-dimanche · -|ratt-raison	Régions gérant des routes nationales, pouvoirs élargis · Ton avis : Très défavorable
+ecran-abandon-dimanche · -|ratt-raison	Supprimer les nouveaux usages de l’ADN dans les enquêtes · Ton avis : Favorable
+ecran-abandon-dimanche · -|ratt-raison	Supprimer l’article facilitant les réserves d’eau agricoles · Ton avis : Très favorable
+ecran-abandon-dimanche · -|ratt-raison	École et actes officiels, écriture inclusive interdite · Ton avis : Très favorable
+ecran-abandon-dimanche · -|revelation	Abandonner
+ecran-abandon-dimanche · -|revelation	Abandonner cette journée ?
+ecran-abandon-dimanche · -|revelation	Clôture
+ecran-abandon-dimanche · -|revelation	Fabienne Colboc
+ecran-abandon-dimanche · -|revelation	La révélation s’arrêtera là, sans les titres ni votre phrase de la semaine. Vous ne devinerez pas les réponses d’hier, et vous ne répondrez pas au texte du jour.
+ecran-abandon-dimanche · -|revelation	Le 7 mars 2024. C’était un article d’un texte plus long. Le Sénat devait encore voter ce texte.
+ecran-abandon-dimanche · -|revelation	Proposé par Fabienne Colboc, députée, Renaissance.
+ecran-abandon-dimanche · -|revelation	Ton pari : Agathe, parce que « Les courtes peines produisent de la récidive dans 62 % des cas ».
+ecran-abandon-dimanche · -|revelation	Ton pari : Odile, aucune des quatre raisons.
+ecran-abandon-dimanche · -|revelation	Vous ne pourrez pas y revenir.
+ecran-abandon-dimanche · -|verrou	18h. Le vote de l’Assemblée t’attend, et la question d’aujourd’hui.
+ecran-abandon-dimanche · carnet|revelation	✓ Mon portrait
+ecran-abandon-dimanche · cloture-questions|fiche	Au fil de l’essai, deviner était :
+ecran-abandon-dimanche · cloture-questions|fiche	Avec des textes rejetés, « Et l’Assemblée ? » était :
+ecran-abandon-dimanche · cloture-questions|fiche	Avec un peu de suspense
+ecran-abandon-dimanche · cloture-questions|fiche	Avec un vrai suspense
+ecran-abandon-dimanche · cloture-questions|fiche	Ce qui vous a le plus servi pour deviner :
+ecran-abandon-dimanche · cloture-questions|fiche	Claire
+ecran-abandon-dimanche · cloture-questions|fiche	Claire, mais étrange
+ecran-abandon-dimanche · cloture-questions|fiche	Dans Deviner, la règle écrite sous « À qui sont ces réponses ? » vous a paru :
+ecran-abandon-dimanche · cloture-questions|fiche	Il me ressemblait
+ecran-abandon-dimanche · cloture-questions|fiche	Il me ressemblait un peu
+ecran-abandon-dimanche · cloture-questions|fiche	Il m’apprenait quelque chose sur le cercle
+ecran-abandon-dimanche · cloture-questions|fiche	Il ne me ressemblait pas
+ecran-abandon-dimanche · cloture-questions|fiche	Je le lisais sans qu’il m’apprenne grand-chose
+ecran-abandon-dimanche · cloture-questions|fiche	Je ne le lisais pas
+ecran-abandon-dimanche · cloture-questions|fiche	Je ne l’ai pas lue
+ecran-abandon-dimanche · cloture-questions|fiche	Je ne l’ai pas regardé
+ecran-abandon-dimanche · cloture-questions|fiche	Je ne l’ai pas remarquée
+ecran-abandon-dimanche · cloture-questions|fiche	La barre du portrait :
+ecran-abandon-dimanche · cloture-questions|fiche	Le Cercle ou l’écran d’un proche
+ecran-abandon-dimanche · cloture-questions|fiche	Le souvenir du premier essai
+ecran-abandon-dimanche · cloture-questions|fiche	Les quatre raisons, au moment de répondre, vous ont paru :
+ecran-abandon-dimanche · cloture-questions|fiche	Les révélations
+ecran-abandon-dimanche · cloture-questions|fiche	L’avis du cercle, à la révélation :
+ecran-abandon-dimanche · cloture-questions|fiche	L’essai est fini. Quelques questions, votre carnet à copier, puis le dévoilement.
+ecran-abandon-dimanche · cloture-questions|fiche	Nettement plus nuancées
+ecran-abandon-dimanche · cloture-questions|fiche	Pas claire
+ecran-abandon-dimanche · cloture-questions|fiche	Pas plus nuancées qu’au premier essai
+ecran-abandon-dimanche · cloture-questions|fiche	Pour tout le reste, vos mots dans la conversation, sans parler de vos réponses.
+ecran-abandon-dimanche · cloture-questions|fiche	Remarquée et comprise
+ecran-abandon-dimanche · cloture-questions|fiche	Remarquée, sans savoir ce qu’elle mesurait
+ecran-abandon-dimanche · cloture-questions|fiche	Rien de précis
+ecran-abandon-dimanche · cloture-questions|fiche	Sans suspense
+ecran-abandon-dimanche · cloture-questions|fiche	Un peu plus nuancées
+ecran-abandon-dimanche · cloture-questions|fiche	Votre portrait, au second dimanche :
+ecran-abandons-jours · -|cercle	Surprise de la semaine : Eau, les communes pourraient la reprendre
+ecran-abandons-jours · -|deviner	Les visages déjà posés comptent comme si vous aviez validé ; les deux cartes sans visage compteront comme passées. Vous ne répondrez pas au texte du jour.
+ecran-abandons-jours · -|deviner	Ta devinette : « Des cours parfois dangereux, souvent d’enfants, donnés sans diplôme, ça pose problème. »
+ecran-abandons-jours · -|deviner	Vos trois cartes compteront comme passées, et vous ne répondrez pas au texte du jour.
+ecran-abandons-jours · -|fiche	Ta réponse :
+ecran-abandons-jours · -|fiche	Ta réponse : Défavorable · « Interdire sans financer la recherche de produits de remplacement est une hérésie. »
+ecran-abandons-jours · -|raison	Centres de données, faciliter leur construction · Ton avis : Favorable
+ecran-abandons-jours · -|ratt-raison	Eau, les communes pourraient la reprendre · Ton avis : Favorable
+ecran-abandons-jours · -|ratt-raison	Régions gérant des routes nationales, pouvoirs élargis · Ton avis : Très favorable
+ecran-abandons-jours · -|ratt-raison	Supprimer les nouveaux contrôles près des frontières · Ton avis : Très défavorable
+ecran-abandons-jours · -|repondre	Vous ne répondrez pas au texte du jour.
+ecran-abandons-jours · -|revelation	0 point aujourd’hui
+ecran-abandons-jours · -|revelation	Amis · Diplôme de professeur de danse étendu à d’autres danses
+ecran-abandons-jours · -|revelation	Amélia Lakrafi
+ecran-abandons-jours · -|revelation	Cette semaine, entre local et national, tu as le plus souvent choisi la décision locale.
+ecran-abandons-jours · -|revelation	C’était Nassim. Agathe avait répondu la même chose.
+ecran-abandons-jours · -|revelation	Le Fidèle : Nassim
+ecran-abandons-jours · -|revelation	Nicolas Sansu
+ecran-abandons-jours · -|revelation	Sa raison : « Des cours parfois dangereux, souvent d’enfants, donnés sans diplôme, ça pose problème. »
+ecran-abandons-jours · -|revelation	Ta raison, « Pour lutter contre les trafics, mieux vaut renforcer les douanes, plus efficaces », était l’argument de Nicolas Sansu, député, Gauche Démocrate et Républicaine.
+ecran-abandons-jours · -|revelation	Ta raison, « Une langue doit se réinventer, car une langue figée meurt », était l’argument d’Amélia Lakrafi, députée, Renaissance.
+ecran-abandons-jours · -|revelation	Ton pari : Odile, parce que « Des cours parfois dangereux, souvent d’enfants, donnés sans diplôme, ça pose problème ».
+ecran-abandons-jours · -|revelation	Ton pari : Valentin, parce que « Avec ce veto au départ, on n’installe pas d’usine contre les élus ».
+ecran-abandons-jours · -|revelation	a répondu les sept jours
+ecran-abandons-jours · carnet|attente	✓ En partie
+ecran-abandons-jours · cloture-questions|fiche	✓ Il me ressemblait
+ecran-abandons-jours · cloture-questions|fiche	✓ Il m’apprenait quelque chose sur le cercle
+ecran-abandons-jours · cloture-questions|fiche	✓ Je ne l’ai pas remarquée
+ecran-abandons-jours · cloture-questions|fiche	✓ Le souvenir du premier essai
+ecran-abandons-jours · cloture-questions|fiche	✓ Nettement plus nuancées
+ecran-abandons-jours · cloture-questions|fiche	✓ Pas claire
+ecran-abandons-jours · cloture-questions|fiche	✓ Sans suspense
+ecran-compte-apple · -|attente	Révélation dans 19 h 55
+ecran-compte-apple · -|attente	Révélation dans 19 h 56
+ecran-compte-apple · -|cercle	Encore flou : Agathe, Nassim, Mia
+ecran-compte-apple · -|cercle	Encore flou : Agathe, Nassim, Odile, Valentin, Mia
+ecran-compte-apple · -|cercle	Encore flou : Mia
+ecran-compte-apple · -|cercle	Encore flou : Valentin, Mia
+ecran-compte-apple · -|cercle	Mia
+ecran-compte-apple · -|fiche	Ta réponse : Favorable · « Interdire sans financer la recherche de produits de remplacement est une hérésie. »
+ecran-compte-apple · -|raison	Supprimer l’article sur les pesticides près de l’eau potable · Ton avis : Favorable
+ecran-compte-apple · -|ratt-raison	Diplôme de professeur de danse étendu à d’autres danses · Ton avis : Très défavorable
+ecran-compte-apple · -|ratt-raison	Mineurs dès 13 ans sans réduction de peine automatique · Ton avis : Neutre
+ecran-compte-apple · -|ratt-raison	Supprimer les nouveaux usages de l’ADN dans les enquêtes · Ton avis : Neutre
+ecran-compte-apple · -|ratt-raison	Supprimer l’article facilitant les réserves d’eau agricoles · Ton avis : Favorable
+ecran-compte-apple · -|ratt-raison	École et actes officiels, écriture inclusive interdite · Ton avis : Neutre
+ecran-compte-apple · -|revelation	Le Fidèle : Agathe, Nassim, Valentin et Mia
+ecran-compte-apple · -|revelation	Le Fidèle : Nassim et Mia
+ecran-compte-apple · -|revelation	Le Mystère : Mia
+ecran-compte-apple · -|revelation	Ta raison, « Chassés de Rotterdam puis d’Anvers, les trafiquants arrivent au Havre », était l’argument de Michaël Taverne, député, Rassemblement National.
+ecran-compte-apple · -|revelation	Ton pari : Nassim, parce que « Les courtes peines produisent de la récidive dans 62 % des cas ».
+ecran-compte-apple · carnet|attente	✓ Le saut
+ecran-compte-apple · cloture-questions|fiche	✓ Avec un vrai suspense
+ecran-compte-apple · cloture-questions|fiche	✓ Claire, mais étrange
+ecran-compte-apple · cloture-questions|fiche	✓ Je ne l’ai pas regardé
+ecran-compte-apple · cloture-questions|fiche	✓ Les révélations
+ecran-compte-apple · cloture-questions|fiche	✓ Remarquée, sans savoir ce qu’elle mesurait
+ecran-compte-email · -|cercle	Encore flou : Agathe, Nassim, Inès
+ecran-compte-email · -|cercle	Encore flou : Agathe, Nassim, Odile, Valentin, Inès
+ecran-compte-email · -|cercle	Encore flou : Inès
+ecran-compte-email · -|cercle	Encore flou : Valentin, Inès
+ecran-compte-email · -|cercle	I
+ecran-compte-email · -|cercle	Inès
+ecran-compte-email · -|deviner	Ta devinette : « Le hip-hop évolue sans cesse, un carcan académique pourrait brider sa créativité. »
+ecran-compte-email · -|deviner	Ta devinette : « Sans définition de l’industrie verte, c’est un chèque en blanc. »
+ecran-compte-email · -|fiche	Ta réponse : Très favorable · « On interdit d’avance et en bloc, sans évaluer d’abord les effets. »
+ecran-compte-email · -|raison	Mines au fond des mers, demander une pause mondiale · Ton avis : Très favorable
+ecran-compte-email · -|raison	Supprimer l’article sur les pesticides près de l’eau potable · Ton avis : Très favorable
+ecran-compte-email · -|ratt-raison	Mineurs dès 13 ans sans réduction de peine automatique · Ton avis : Défavorable
+ecran-compte-email · -|ratt-raison	Énergies renouvelables, le préfet en dernier recours · Ton avis : Défavorable
+ecran-compte-email · -|revelation	2 points aujourd’hui · 5 cette semaine
+ecran-compte-email · -|revelation	Cette semaine, entre précaution et innovation, tu as le plus souvent choisi l’innovation.
+ecran-compte-email · -|revelation	Le Fidèle : Agathe, Nassim, Valentin et Inès
+ecran-compte-email · -|revelation	Le Fidèle : Nassim et Inès
+ecran-compte-email · -|revelation	Le Mystère : Inès
+ecran-compte-email · -|revelation	Roger Vicot
+ecran-compte-email · -|revelation	Sylvie Josserand
+ecran-compte-email · -|revelation	Ta raison, « Le hip-hop vit hors de tout cadre, laissons-le continuer ainsi », était l’argument de Yannick Monnet, député, Gauche démocrate et républicaine - NUPES.
+ecran-compte-email · -|revelation	Ta raison, « On pourrait être contrôlé et fouillé sans avoir rien fait de suspect », était l’argument de Roger Vicot, député, Socialistes et apparentés.
+ecran-compte-email · -|revelation	Ta raison, « Qui peut conduire un scooter peut comprendre ses actes et en répondre », était l’argument de Sylvie Josserand, députée, Rassemblement National.
+ecran-compte-email · -|revelation	Ton pari : Agathe, parce que « Sans définition de l’industrie verte, c’est un chèque en blanc ».
+ecran-compte-email · -|revelation	Ton pari : Valentin, parce que « Le hip-hop évolue sans cesse, un carcan académique pourrait brider sa créativité ».
+ecran-compte-email · -|revelation	Yannick Monnet
+ecran-compte-email · carnet|attente	✓ Le Cercle
+ecran-compte-email · carnet|attente	✓ Nulle part
+ecran-compte-email · cloture-questions|fiche	✓ Le défi de Valentin
+ecran-compte-email-plus-tard · -|attente	Aujourd’hui, tu as penché vers la sécurité.
+ecran-compte-email-plus-tard · -|attente	Révélation dans 19 h 54
+ecran-compte-email-plus-tard · -|fiche	Ta réponse : Très favorable · aucune des quatre raisons
+ecran-compte-email-plus-tard · -|raison	Grands projets industriels, l’État délivrerait les permis · Ton avis : Défavorable
+ecran-compte-email-plus-tard · -|ratt-attente	Aujourd’hui, tu as fait passer le changement avant la tradition.
+ecran-compte-email-plus-tard · -|ratt-raison	Diplôme de professeur de danse étendu à d’autres danses · Ton avis : Favorable
+ecran-compte-email-plus-tard · -|ratt-raison	École et actes officiels, écriture inclusive interdite · Ton avis : Défavorable
+ecran-compte-email-plus-tard · -|revelation	1 point aujourd’hui
+ecran-compte-email-plus-tard · -|revelation	Cette semaine, entre sécurité et liberté, tu as le plus souvent choisi la sécurité.
+ecran-compte-email-plus-tard · -|revelation	Isabelle Périgault
+ecran-compte-email-plus-tard · -|revelation	Jo
+ecran-compte-email-plus-tard · -|revelation	Le Fidèle : Agathe, Nassim, Valentin et Jo
+ecran-compte-email-plus-tard · -|revelation	Le Fidèle : Nassim et Jo
+ecran-compte-email-plus-tard · -|revelation	Le Mystère : Jo
+ecran-compte-email-plus-tard · -|revelation	Ta raison, « Valorisons les danses nouvelles, comme le hip-hop, avec la reconnaissance de l’État », était l’argument d’Isabelle Périgault, députée, Les Républicains.
+ecran-compte-email-plus-tard · cloture-questions|fiche	✓ Avec un peu de suspense
+ecran-compte-email-plus-tard · cloture-questions|fiche	✓ Je ne l’ai pas lue
+ecran-compte-email-plus-tard · cloture-questions|fiche	✓ Pas plus nuancées qu’au premier essai
+ecran-compte-email-plus-tard · cloture-questions|fiche	✓ Remarquée et comprise
+ecran-compte-email-plus-tard · cloture-questions|fiche	✓ Toujours aussi amusant
+ecran-compte-google · -|cercle	Encore flou : Agathe, Nassim, Noé
+ecran-compte-google · -|cercle	Encore flou : Agathe, Nassim, Odile, Valentin, Noé
+ecran-compte-google · -|cercle	Encore flou : Noé
+ecran-compte-google · -|cercle	Encore flou : Valentin, Noé
+ecran-compte-google · -|cercle	No
+ecran-compte-google · -|cercle	Noé
+ecran-compte-google · -|deviner	Ta devinette : « Valorisons les danses nouvelles, comme le hip-hop, avec la reconnaissance de l’État. »
+ecran-compte-google · -|fiche	Ta réponse : Très favorable · « Traiter l’eau coûte plus cher qu’aider les agriculteurs à changer de pratiques. »
+ecran-compte-google · -|raison	Mines au fond des mers, demander une pause mondiale · Ton avis : Très défavorable
+ecran-compte-google · -|ratt-raison	Supprimer les nouveaux usages de l’ADN dans les enquêtes · Ton avis : Défavorable
+ecran-compte-google · -|revelation	Le Fidèle : Agathe, Nassim, Valentin et Noé
+ecran-compte-google · -|revelation	Le Fidèle : Nassim et Noé
+ecran-compte-google · -|revelation	Le Mystère : Noé
+ecran-compte-google · -|revelation	Ton pari : Nassim, parce que « Valorisons les danses nouvelles, comme le hip-hop, avec la reconnaissance de l’État ».
+ecran-compte-google · cloture-questions|fiche	✓ Rien de précis
+ecran-fermeture-app · -|attente	Révélation dans 19 h 53
+ecran-fermeture-app · -|deviner	Ta devinette : « Si la mairie change d’avis, le projet devrait pouvoir être abandonné. »
+ecran-fermeture-app · -|fiche	Ta réponse : Neutre · « Près de vingt millions de personnes ont bu une eau hors normes. »
+ecran-fermeture-app · -|raison	Supprimer l’article sur les pesticides près de l’eau potable · Ton avis : Neutre
+ecran-fermeture-app · -|ratt-raison	Eau, les communes pourraient la reprendre · Ton avis : Défavorable
+ecran-fermeture-app · -|ratt-raison	Supprimer les nouveaux contrôles près des frontières · Ton avis : Très favorable
+ecran-fermeture-app · -|ratt-raison	Supprimer l’article facilitant les réserves d’eau agricoles · Ton avis : Très défavorable
+ecran-fermeture-app · -|revelation	Cette semaine, entre sécurité et liberté, tu as penché autant d’un côté que de l’autre.
+ecran-fermeture-app · -|revelation	Entre sécurité et liberté, tu choisis le plus souvent la liberté.
+ecran-fermeture-app · -|revelation	Guillaume Kasbarian
+ecran-fermeture-app · -|revelation	Géraldine Bannier
+ecran-fermeture-app · -|revelation	Laurent Esquenet-Goxes
+ecran-fermeture-app · -|revelation	Ta raison, « Avec ce veto au départ, on n’installe pas d’usine contre les élus », était l’argument de Guillaume Kasbarian, député, Renaissance.
+ecran-fermeture-app · -|revelation	Ta raison, « C’est l’usage, contrôlé par l’Académie, qui fait la langue, pas une loi », était l’argument de Géraldine Bannier, députée, Démocrate (MoDem et Indépendants).
+ecran-fermeture-app · -|revelation	Ta raison, « Des cours parfois dangereux, souvent d’enfants, donnés sans diplôme, ça pose problème », était l’argument de Laurent Esquenet-Goxes, député, Démocrate (MoDem et Indépendants).
+ecran-fermeture-app · -|revelation	Ton pari : Agathe, parce que « Allonger les peines de prison des jeunes fait augmenter la récidive ».
+ecran-fermeture-app · -|revelation	Ton pari : Agathe, parce que « Si la mairie change d’avis, le projet devrait pouvoir être abandonné ».
+ecran-fermeture-app · -|revelation	Ton pari : Valentin, parce que « Valorisons les danses nouvelles, comme le hip-hop, avec la reconnaissance de l’État ».
+ecran-fermeture-app · carnet|attente	✓ Répondre
+ecran-fermeture-app · cloture-questions|fiche	✓ Je ne le lisais pas
+ecran-pseudo-alphabet · -|1.8	Ce pseudo ressemble trop au prénom d’un personnage : choisissez-en un autre.
+ecran-pseudo-alphabet · -|attente	Révélation dans 19 h 57
+ecran-pseudo-alphabet · -|cercle	Encore flou : Agathe, Nassim, Lou
+ecran-pseudo-alphabet · -|cercle	Encore flou : Agathe, Nassim, Odile, Valentin, Lou
+ecran-pseudo-alphabet · -|cercle	Encore flou : Lou
+ecran-pseudo-alphabet · -|cercle	Encore flou : Valentin, Lou
+ecran-pseudo-alphabet · -|cercle	Lou
+ecran-pseudo-alphabet · -|raison	Centres de données, faciliter leur construction · Ton avis : Très défavorable
+ecran-pseudo-alphabet · -|ratt-raison	Supprimer les nouveaux contrôles près des frontières · Ton avis : Favorable
+ecran-pseudo-alphabet · -|revelation	Cette semaine, entre précaution et innovation, tu as le plus souvent choisi la précaution.
+ecran-pseudo-alphabet · -|revelation	Le Devin : Valentin
+ecran-pseudo-alphabet · -|revelation	Le Fidèle : Agathe, Nassim, Valentin et Lou
+ecran-pseudo-alphabet · -|revelation	Le Fidèle : Nassim et Lou
+ecran-pseudo-alphabet · -|revelation	Le Mystère : Lou
+ecran-pseudo-alphabet · -|revelation	Rodrigo Arenas
+ecran-pseudo-alphabet · -|revelation	Ta raison, « Le hip-hop évolue sans cesse, un carcan académique pourrait brider sa créativité », était l’argument de Rodrigo Arenas, député, La France insoumise - Nouvelle Union Populaire écologique et sociale.
+ecran-pseudo-alphabet · -|revelation	Ton pari : Nassim, parce que « La récidive vient de l’impunité, pas de la prison ».
+ecran-pseudo-alphabet · -|revelation	Ton pari : Valentin, parce que « Plutôt qu’une pause, explorons vite pour savoir si l’on peut exploiter ».
+ecran-pseudo-alphabet · carnet|attente	✓ L’avis du cercle
+ecran-rattrapage-recharge · -|deviner	Ta devinette : « L’État prendrait la main, et les grands projets iraient plus vite. »
+ecran-rattrapage-recharge · -|deviner	Ta devinette : « On ne sait rien des effets d’une exploitation, n’agissons pas à l’aveugle. »
+ecran-rattrapage-recharge · -|fiche	Ta réponse : Très défavorable · aucune des quatre raisons
+ecran-rattrapage-recharge · -|raison	Supprimer les zones à faibles émissions · Ton avis : Très défavorable
+ecran-rattrapage-recharge · -|raison	Supprimer l’article sur les pesticides près de l’eau potable · Ton avis : Très défavorable
+ecran-rattrapage-recharge · -|ratt-raison	Diplôme de professeur de danse étendu à d’autres danses · Ton avis : Très favorable
+ecran-rattrapage-recharge · -|ratt-raison	Régions gérant des routes nationales, pouvoirs élargis · Ton avis : Favorable
+ecran-rattrapage-recharge · -|ratt-raison	Énergies renouvelables, le préfet en dernier recours · Ton avis : Très défavorable
+ecran-rattrapage-recharge · -|revelation	2 points aujourd’hui
+ecran-rattrapage-recharge · -|revelation	Ton pari : Agathe, parce que « Valorisons les danses nouvelles, comme le hip-hop, avec la reconnaissance de l’État ».
+ecran-rattrapage-recharge · -|revelation	Ton pari : Nassim, aucune des quatre raisons.
+ecran-rattrapage-recharge · -|revelation	Ton pari : Nassim, parce que « On ne sait rien des effets d’une exploitation, n’agissons pas à l’aveugle ».
+ecran-rattrapage-recharge · -|revelation	Ton pari : Nassim, parce que « Un mineur qui commet un délit n’a pas le discernement d’un adulte ».
+ecran-rattrapage-recharge · -|revelation	Ton pari : Odile, parce que « L’État prendrait la main, et les grands projets iraient plus vite ».
+ecran-revelation-rouverte · -|deviner	Reprendre la révélation
+ecran-revelation-rouverte · -|fiche	Ta réponse : Très défavorable · « Interdire sans financer la recherche de produits de remplacement est une hérésie. »
+ecran-revelation-rouverte · -|ratt-raison	Supprimer les nouveaux contrôles près des frontières · Ton avis : Défavorable
+ecran-revelation-rouverte · -|revelation	1 point aujourd’hui · 4 cette semaine
+ecran-revelation-rouverte · -|revelation	3 points aujourd’hui · 3 cette semaine
+ecran-revelation-rouverte · -|revelation	Ton pari : Agathe, aucune des quatre raisons.
+ecran-revelation-rouverte · -|revelation	Ton pari : Valentin, parce que « L’État prendrait la main, et les grands projets iraient plus vite ».
+ecran-revelation-rouverte · carnet|attente	✓ Ailleurs
+ecran-revelation-rouverte · cloture-questions|fiche	✓ Claire
+ecran-revelation-rouverte · cloture-questions|fiche	✓ Je le lisais sans qu’il m’apprenne grand-chose
+ecran-revelation-rouverte · cloture-questions|fiche	✓ Un peu plus nuancées
+ecran-rond-deux-lettres · -|cercle	An
+ecran-rond-deux-lettres · -|cercle	Antoine
+ecran-rond-deux-lettres · -|cercle	Encore flou : Agathe, Nassim, Antoine
+ecran-rond-deux-lettres · -|cercle	Encore flou : Agathe, Nassim, Odile, Valentin, Antoine
+ecran-rond-deux-lettres · -|cercle	Encore flou : Antoine
+ecran-rond-deux-lettres · -|cercle	Encore flou : Valentin, Antoine
+ecran-rond-deux-lettres · -|fiche	Ta réponse : Neutre · « On interdit d’avance et en bloc, sans évaluer d’abord les effets. »
+ecran-rond-deux-lettres · -|moi-historique	Défavorable · révélé mercredi à 18h
+ecran-rond-deux-lettres · -|moi-historique	Très défavorable · révélé jeudi à 18h
+ecran-rond-deux-lettres · -|moi-portrait	Votre barre est pleine. Ce qu’elle annoncera au bout, dans le jeu, n’est pas encore décidé : ici, elle reste pleine.
+ecran-rond-deux-lettres · -|moi-titres	Le Mystère, Le Fidèle · Amis
+ecran-rond-deux-lettres · -|moi-titres	Semaine 14
+ecran-rond-deux-lettres · -|moi-titres	Semaine 15
+ecran-rond-deux-lettres · -|proche	Mines au fond des mers, demander une pause mondiale : Favorable, « On ne sait rien des effets d’une exploitation, n’agissons pas à l’aveugle. »
+ecran-rond-deux-lettres · -|proche	Mineurs dès 13 ans sans réduction de peine automatique : Très favorable, « Des trafiquants se servent de jeunes parce que leurs peines sont réduites. »
+ecran-rond-deux-lettres · -|proche	Voir tout
+ecran-rond-deux-lettres · -|revelation	Le Devin : Agathe
+ecran-rond-deux-lettres · -|revelation	Le Fidèle : Agathe, Nassim, Valentin et Antoine
+ecran-rond-deux-lettres · -|revelation	Le Fidèle : Nassim et Antoine
+ecran-rond-deux-lettres · -|revelation	Le Mystère : Antoine
+ecran-rond-deux-lettres · -|revelation	Ta raison, « Ce serait cantonné à 40 km des frontières et à douze heures », était l’argument de Xavier Albertini, député, Horizons & Indépendants.
+ecran-rond-deux-lettres · -|revelation	Ton pari : Odile, parce que « Le hip-hop évolue sans cesse, un carcan académique pourrait brider sa créativité ».
+ecran-rond-deux-lettres · -|revelation	Xavier Albertini
+ecran-rond-deux-lettres · cloture-questions|fiche	✓ Il ne me ressemblait pas
+hasard-ecran-01 · -|cercle	Encore flou : Agathe, Nassim, Odile, Valentin, Odon
+hasard-ecran-01 · -|cercle	Encore flou : Agathe, Nassim, Odon
+hasard-ecran-01 · -|cercle	Encore flou : Odon
+hasard-ecran-01 · -|cercle	Encore flou : Valentin, Odon
+hasard-ecran-01 · -|cercle	Od
+hasard-ecran-01 · -|cercle	Odon
+hasard-ecran-01 · arret-questions|revelation	✓ Je n’ai pas le temps
+hasard-ecran-02 · -|cercle	Anaïs
+hasard-ecran-02 · -|cercle	Encore flou : Agathe, Nassim, Anaïs
+hasard-ecran-02 · -|cercle	Encore flou : Agathe, Nassim, Odile, Valentin, Anaïs
+hasard-ecran-02 · -|cercle	Encore flou : Anaïs
+hasard-ecran-02 · -|cercle	Encore flou : Valentin, Anaïs
+hasard-ecran-02 · -|fiche	Ta réponse : Favorable · aucune des quatre raisons
+hasard-ecran-02 · -|moi-historique	Très favorable · révélé mercredi à 18h
+hasard-ecran-02 · -|revelation	Emmanuel Maquet
+hasard-ecran-02 · -|revelation	Le Fidèle : Agathe, Nassim, Valentin et Anaïs
+hasard-ecran-02 · -|revelation	Le Fidèle : Nassim et Anaïs
+hasard-ecran-02 · -|revelation	Le Mystère : Anaïs
+hasard-ecran-02 · -|revelation	Ta raison, « Plutôt qu’une pause, explorons vite pour savoir si l’on peut exploiter », était l’argument d’Emmanuel Maquet, député, Les Républicains.
+hasard-ecran-02 · -|revelation	Ton pari : Valentin, parce que « Renoncer chez nous, c’est déplacer l’exploitation ailleurs, en pire pour l’environnement ».
+hasard-ecran-02 · cloture-questions|fiche	✓ Le Cercle ou l’écran d’un proche
+hasard-ecran-03 · -|attente	Révélation dans 19 h 48
+hasard-ecran-03 · -|cercle	Ana
+hasard-ecran-03 · -|cercle	Encore flou : Agathe, Nassim, Ana
+hasard-ecran-03 · -|cercle	Encore flou : Agathe, Nassim, Odile, Valentin, Ana
+hasard-ecran-03 · -|cercle	Encore flou : Ana
+hasard-ecran-03 · -|cercle	Encore flou : Valentin, Ana
+hasard-ecran-03 · -|cercle	Surprise de la semaine : Supprimer l’article facilitant les réserves d’eau agricoles
+hasard-ecran-03 · -|deviner	Ta devinette : « Pour une courte peine, la prison ferme doit rester un dernier recours. »
+hasard-ecran-03 · -|fiche	Ta réponse : Favorable · « Traiter l’eau coûte plus cher qu’aider les agriculteurs à changer de pratiques. »
+hasard-ecran-03 · -|moi-historique	Favorable · révélé jeudi à 18h
+hasard-ecran-03 · -|moi-historique	Très favorable · révélé vendredi à 18h
+hasard-ecran-03 · -|revelation	Cette semaine, entre précaution et innovation, tu as penché autant d’un côté que de l’autre.
+hasard-ecran-03 · -|revelation	Le Fidèle : Agathe, Nassim, Valentin et Ana
+hasard-ecran-03 · -|revelation	Le Fidèle : Nassim et Ana
+hasard-ecran-03 · -|revelation	Le Mystère : Ana
+hasard-ecran-03 · -|revelation	Ton pari : Nassim, parce que « Pour une courte peine, la prison ferme doit rester un dernier recours ».
+hasard-ecran-04 · -|cercle	Ag
+hasard-ecran-04 · -|cercle	Agnès
+hasard-ecran-04 · -|cercle	Encore flou : Agathe, Nassim, Agnès
+hasard-ecran-04 · -|cercle	Encore flou : Agathe, Nassim, Odile, Valentin, Agnès
+hasard-ecran-04 · -|cercle	Encore flou : Agnès
+hasard-ecran-04 · -|cercle	Encore flou : Valentin, Agnès
+hasard-ecran-04 · -|cercle	Surprise de la semaine : Régions gérant des routes nationales, pouvoirs élargis
+hasard-ecran-04 · -|deviner	Ta devinette : « Des trafiquants se servent de jeunes parce que leurs peines sont réduites. »
+hasard-ecran-04 · -|deviner	Ta devinette : « Le hip-hop vit hors de tout cadre, laissons-le continuer ainsi. »
+hasard-ecran-04 · -|fiche	Ta réponse : Favorable · « Près de vingt millions de personnes ont bu une eau hors normes. »
+hasard-ecran-04 · -|revelation	Le Fidèle : Agathe, Nassim, Valentin et Agnès
+hasard-ecran-04 · -|revelation	Le Mystère : Agnès
+hasard-ecran-04 · -|revelation	Ton pari : Agathe, parce que « Plutôt qu’une pause, explorons vite pour savoir si l’on peut exploiter ».
+hasard-ecran-04 · -|revelation	Ton pari : Nassim, parce que « Le hip-hop vit hors de tout cadre, laissons-le continuer ainsi ».
+hasard-ecran-04 · -|revelation	Ton pari : Odile, parce que « Des trafiquants se servent de jeunes parce que leurs peines sont réduites ».
+hasard-ecran-04 · -|revelation	Ton pari : Odile, parce que « Les courtes peines produisent de la récidive dans 62 % des cas ».
+hasard-ecran-05 · -|attente	Révélation dans 19 h 47
+hasard-ecran-05 · -|cercle	Encore flou : Agathe, Nassim, Odile, Valentin, Paul
+hasard-ecran-05 · -|cercle	Encore flou : Agathe, Nassim, Paul
+hasard-ecran-05 · -|cercle	Encore flou : Paul
+hasard-ecran-05 · -|cercle	Encore flou : Valentin, Paul
+hasard-ecran-05 · -|cercle	P
+hasard-ecran-05 · -|cercle	Paul
+hasard-ecran-05 · -|fiche	Ta réponse : Défavorable · « Traiter l’eau coûte plus cher qu’aider les agriculteurs à changer de pratiques. »
+hasard-ecran-05 · -|moi-historique	Défavorable · révélé mardi à 18h
+hasard-ecran-05 · -|moi-historique	Neutre · révélé jeudi à 18h
+hasard-ecran-05 · -|moi-historique	Très défavorable · révélé lundi à 18h
+hasard-ecran-05 · -|proche	Le Devin et Le Fidèle cette semaine
+hasard-ecran-05 · -|proche	Mines au fond des mers, demander une pause mondiale : Favorable, « Inventons les solutions de demain plutôt que refaire les erreurs du passé. »
+hasard-ecran-05 · -|revelation	Le Fidèle : Agathe, Nassim, Valentin et Paul
+hasard-ecran-05 · -|revelation	Le Fidèle : Nassim et Paul
+hasard-ecran-05 · -|revelation	Le Mystère : Paul
+hasard-ecran-05 · -|revelation	Ton pari : Valentin, parce que « Les courtes peines produisent de la récidive dans 62 % des cas ».
+hasard-ecran-06 · -|revelation	2 points aujourd’hui · 3 cette semaine
+hasard-ecran-06 · -|revelation	Cette semaine, entre sécurité et liberté, tu as le plus souvent choisi la liberté.
+hasard-ecran-06 · -|revelation	Ton pari : Nassim, parce que « Si la mairie change d’avis, le projet devrait pouvoir être abandonné ».
+hasard-ecran-06 · -|revelation	Ton pari : Valentin, parce que « Allonger les peines de prison des jeunes fait augmenter la récidive ».
+hasard-ecran-07 · -|attente	Révélation dans 19 h 46
+hasard-ecran-08 · -|fiche	Ta réponse : Neutre · « Interdire sans financer la recherche de produits de remplacement est une hérésie. »
+hasard-ecran-08 · -|revelation	Le Fidèle : Agathe, Nassim, Valentin et Vic
+hasard-ecran-08 · -|revelation	Le Mystère : Vic
+hasard-ecran-08 · -|revelation	Vi
+hasard-ecran-08 · -|revelation	Vic
+hasard-ecran-09 · -|attente	Révélation dans 19 h 45
+hasard-ecran-09 · -|revelation	Le Fidèle : Agathe, Nassim, Valentin et Odon
+hasard-ecran-09 · -|revelation	Le Fidèle : Nassim et Odon
+hasard-ecran-09 · -|revelation	Ton pari : Odile, parce que « Inventons les solutions de demain plutôt que refaire les erreurs du passé ».
+hasard-ecran-10 · -|cercle	Encore flou : Agathe, Nassim, Nina
+hasard-ecran-10 · -|cercle	Encore flou : Agathe, Nassim, Odile, Valentin, Nina
+hasard-ecran-10 · -|cercle	Encore flou : Nina
+hasard-ecran-10 · -|cercle	Encore flou : Valentin, Nina
+hasard-ecran-10 · -|cercle	Ni
+hasard-ecran-10 · -|cercle	Nina
+hasard-ecran-10 · -|cercle	Surprise de la semaine : Mineurs dès 13 ans sans réduction de peine automatique
+hasard-ecran-10 · -|moi-historique	Très défavorable · révélé vendredi à 18h
+hasard-ecran-10 · -|moi-historique	Très favorable · révélé jeudi à 18h
+hasard-ecran-10 · -|revelation	Le Fidèle : Agathe, Nassim, Valentin et Nina
+hasard-ecran-10 · -|revelation	Le Fidèle : Nassim et Nina
+hasard-ecran-10 · -|revelation	Le Mystère : Nina
+hasard-ecran-10 · -|revelation	Ton pari : Valentin, parce que « On ne sait rien des effets d’une exploitation, n’agissons pas à l’aveugle ».
+hasard-ecran-11 · -|attente	Révélation dans 19 h 44
+hasard-ecran-12 · -|cercle	Encore flou : Agathe, Nassim, Hugo
+hasard-ecran-12 · -|cercle	Encore flou : Agathe, Nassim, Odile, Valentin, Hugo
+hasard-ecran-12 · -|cercle	Encore flou : Hugo
+hasard-ecran-12 · -|cercle	Encore flou : Valentin, Hugo
+hasard-ecran-12 · -|cercle	H
+hasard-ecran-12 · -|cercle	Hugo
+hasard-ecran-12 · -|fiche	Ta réponse : Très favorable · « Près de vingt millions de personnes ont bu une eau hors normes. »
+hasard-ecran-12 · -|revelation	0 point aujourd’hui · 6 cette semaine
+hasard-ecran-12 · -|revelation	3 points aujourd’hui · 6 cette semaine
+hasard-ecran-12 · -|revelation	Le Fidèle : Agathe, Nassim, Valentin et Hugo
+hasard-ecran-12 · -|revelation	Le Fidèle : Nassim et Hugo
+hasard-ecran-12 · -|revelation	Le Mystère : Hugo
+hasard-ecran-12 · -|revelation	Ton pari : Odile, parce que « On ne sait rien des effets d’une exploitation, n’agissons pas à l’aveugle ».

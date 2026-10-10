@@ -1,0 +1,9 @@
+{
+ "appareil": "iphone15",
+ "sombre": true,
+ "graine": 20,
+ "abandons": {
+  "7": "revelation",
+  "14": "revelation"
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "appareil": "ipad",
+ "sombre": false,
+ "graine": 19,
+ "croix": {
+  "2": true,
+  "3": true,
+  "7": true
+ },
+ "revoir": {
+  "2": true,
+  "14": true
+ }
+}

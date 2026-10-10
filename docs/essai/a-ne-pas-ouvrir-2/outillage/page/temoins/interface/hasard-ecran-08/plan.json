@@ -1,0 +1,18 @@
+{
+ "appareil": "se",
+ "sombre": false,
+ "graine": 1007,
+ "pseudo": "Vic",
+ "pPasser": 0.07290075346827507,
+ "pRaison": 0.099184068152681,
+ "pRelire": 0.1279185003368184,
+ "pVisite": 0.09440268692560494,
+ "pVisiteDeviner": 0.013837503734976053,
+ "pChanger": 0.002650230983272195,
+ "revoir": {
+  "7": true
+ },
+ "abandons": {
+  "1": "repondre"
+ }
+}

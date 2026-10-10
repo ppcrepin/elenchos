@@ -1,0 +1,21 @@
+{
+ "appareil": "iphone15",
+ "sombre": false,
+ "graine": 1003,
+ "pseudo": "Agnès",
+ "pPasser": 0.06737876390106975,
+ "pRaison": 0.9188645519316196,
+ "pRelire": 0.2831018865806982,
+ "pVisite": 0.32427157228812575,
+ "pVisiteDeviner": 0.25989045503083613,
+ "pChanger": 0.042491134721785784,
+ "abandons": {
+  "2": "repondre"
+ },
+ "recharges": [
+  {
+   "jour": 7,
+   "ecran": "attente"
+  }
+ ]
+}

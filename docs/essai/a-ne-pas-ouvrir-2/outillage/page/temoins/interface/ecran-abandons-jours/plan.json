@@ -1,0 +1,14 @@
+{
+ "appareil": "se",
+ "sombre": false,
+ "graine": 21,
+ "abandons": {
+  "1": "deviner",
+  "2": "repondre",
+  "3": "deviner"
+ },
+ "annulerSaut": {
+  "1": true,
+  "2": true
+ }
+}

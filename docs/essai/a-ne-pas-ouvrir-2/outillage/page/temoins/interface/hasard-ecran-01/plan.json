@@ -1,0 +1,23 @@
+{
+ "appareil": "iphone15",
+ "sombre": true,
+ "graine": 1000,
+ "pseudo": "Odon",
+ "pPasser": 0.24830637406557798,
+ "pRaison": 0.6915161057841033,
+ "pRelire": 0.26417256428394464,
+ "pVisite": 0.01068443558178842,
+ "pVisiteDeviner": 0.12753083689603953,
+ "pChanger": 0.030060304305516185,
+ "croix": {
+  "14": true
+ },
+ "annulerSaut": {
+  "1": false,
+  "2": false
+ },
+ "arret": {
+  "jour": 3,
+  "moment": "revelation"
+ }
+}

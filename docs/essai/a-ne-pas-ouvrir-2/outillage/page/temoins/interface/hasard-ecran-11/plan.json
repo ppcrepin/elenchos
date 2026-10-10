@@ -1,0 +1,16 @@
+{
+ "appareil": "se",
+ "sombre": true,
+ "graine": 1010,
+ "pseudo": "Ana",
+ "pPasser": 0.24051694124937056,
+ "pRaison": 0.8880032976157963,
+ "pRelire": 0.10408346594776959,
+ "pVisite": 0.12941011511720715,
+ "pVisiteDeviner": 0.09711667341180145,
+ "pChanger": 0.006953426310792566,
+ "arret": {
+  "jour": 8,
+  "moment": "attente"
+ }
+}

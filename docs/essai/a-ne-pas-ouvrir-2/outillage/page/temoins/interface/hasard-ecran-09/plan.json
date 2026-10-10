@@ -1,0 +1,21 @@
+{
+ "appareil": "ipad",
+ "sombre": true,
+ "graine": 1008,
+ "pseudo": "Odon",
+ "pPasser": 0.21789472089149056,
+ "pRaison": 0.5006968479137868,
+ "pRelire": 0.25589817299041895,
+ "pVisite": 0.2758334280923009,
+ "pVisiteDeviner": 0.17835989885497838,
+ "pChanger": 0.014788207202218474,
+ "croix": {
+  "14": true
+ },
+ "recharges": [
+  {
+   "jour": 2,
+   "ecran": "attente"
+  }
+ ]
+}

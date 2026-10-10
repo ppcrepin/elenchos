@@ -1,0 +1,11 @@
+Contrôle 14 à l'écran (b, d, h, i, j), Chromium (Playwright 1.56.1)
+Construction : /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/frontend-b-lot7/construction-courante/temoin/index.html (SHA-256 e021a0da4192423bf89a5ba0b36a826fb397e5a1557bf8ef2645341220a86c03)
+Page du premier essai : /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/frontend-b-premier/construction/porteur/index.html (SHA-256 734d0079df6ab6ae6cd8a16811b4f2bfb5b7bcd56a58bb4c70ab29ccd9a2e72a)
+
+(j) performance (Chromium ralenti quatre fois)
+passé (j) calcul de l'histoire (budget 1 s) : 88, 78, 76 ms — médiane 78 ms
+passé (j) chargement entier, de la navigation au premier écran (à comparer aux 2 s de la vue de secours) : 938, 848, 721 ms — médiane 848 ms
+(j) traitement le plus long par sorte de geste (ms) : notification 90, rev-jouer 89, onglet-jour 79, onglet-cercle 68, visage 67, rev-suivant 58, onglet-moi 53, moi-titres 53, aller-jour-suivant 52, feuille-raison 51
+passé (j) temps par geste (budget 100 ms) sur une partie entière de 284 gestes : 847 évènements de plus de 16 ms, traitement max 90 ms, 95e centile 34 ms
+
+RÉSULTAT : aucun écart

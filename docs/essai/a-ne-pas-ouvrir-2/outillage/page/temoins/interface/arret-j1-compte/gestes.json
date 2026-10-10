@@ -1,0 +1,270 @@
+[
+ {
+  "n": 1,
+  "a": "message0-continuer",
+  "d": {},
+  "k": 1,
+  "ecran": null,
+  "cadre": null
+ },
+ {
+  "n": 2,
+  "a": "commencer",
+  "d": {},
+  "k": 1,
+  "ecran": "1.1",
+  "cadre": "arrivee"
+ },
+ {
+  "n": 3,
+  "a": "apercu",
+  "d": {},
+  "k": 1,
+  "ecran": "1.1",
+  "cadre": null
+ },
+ {
+  "n": 4,
+  "a": "entree-position",
+  "d": {
+   "valeur": "3"
+  },
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": null
+ },
+ {
+  "n": 5,
+  "a": "consentement-accepter",
+  "d": {},
+  "k": 1,
+  "ecran": "1.3",
+  "cadre": null
+ },
+ {
+  "n": 6,
+  "a": "entree-suivant",
+  "d": {},
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": null
+ },
+ {
+  "n": 7,
+  "a": "entree-raison",
+  "d": {
+   "valeur": "3"
+  },
+  "k": 1,
+  "ecran": "1.4",
+  "cadre": null
+ },
+ {
+  "n": 8,
+  "a": "entree-valider-raison",
+  "d": {},
+  "k": 1,
+  "ecran": "1.4",
+  "cadre": null
+ },
+ {
+  "n": 9,
+  "a": "entree-pari",
+  "d": {
+   "valeur": "4"
+  },
+  "k": 1,
+  "ecran": "1.5",
+  "cadre": null
+ },
+ {
+  "n": 10,
+  "a": "entree-voir",
+  "d": {},
+  "k": 1,
+  "ecran": "1.5",
+  "cadre": null
+ },
+ {
+  "n": 11,
+  "a": "entree-texte-suivant",
+  "d": {},
+  "k": 1,
+  "ecran": "1.6",
+  "cadre": null
+ },
+ {
+  "n": 12,
+  "a": "entree-position",
+  "d": {
+   "valeur": "2"
+  },
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": null
+ },
+ {
+  "n": 13,
+  "a": "entree-suivant",
+  "d": {},
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": null
+ },
+ {
+  "n": 14,
+  "a": "entree-raison",
+  "d": {
+   "valeur": "2"
+  },
+  "k": 1,
+  "ecran": "1.4",
+  "cadre": null
+ },
+ {
+  "n": 15,
+  "a": "entree-valider-raison",
+  "d": {},
+  "k": 1,
+  "ecran": "1.4",
+  "cadre": null
+ },
+ {
+  "n": 16,
+  "a": "entree-pari",
+  "d": {
+   "valeur": "4"
+  },
+  "k": 1,
+  "ecran": "1.5",
+  "cadre": null
+ },
+ {
+  "n": 17,
+  "a": "entree-voir",
+  "d": {},
+  "k": 1,
+  "ecran": "1.5",
+  "cadre": null
+ },
+ {
+  "n": 18,
+  "a": "entree-texte-suivant",
+  "d": {},
+  "k": 1,
+  "ecran": "1.6",
+  "cadre": null
+ },
+ {
+  "n": 19,
+  "a": "entree-position",
+  "d": {
+   "valeur": "2"
+  },
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": null
+ },
+ {
+  "n": 20,
+  "a": "entree-suivant",
+  "d": {},
+  "k": 1,
+  "ecran": "1.2",
+  "cadre": null
+ },
+ {
+  "n": 21,
+  "a": "entree-raison",
+  "d": {
+   "valeur": "2"
+  },
+  "k": 1,
+  "ecran": "1.4",
+  "cadre": null
+ },
+ {
+  "n": 22,
+  "a": "entree-valider-raison",
+  "d": {},
+  "k": 1,
+  "ecran": "1.4",
+  "cadre": null
+ },
+ {
+  "n": 23,
+  "a": "entree-pari",
+  "d": {
+   "valeur": "3"
+  },
+  "k": 1,
+  "ecran": "1.5",
+  "cadre": null
+ },
+ {
+  "n": 24,
+  "a": "entree-voir",
+  "d": {},
+  "k": 1,
+  "ecran": "1.5",
+  "cadre": null
+ },
+ {
+  "n": 25,
+  "a": "entree-texte-suivant",
+  "d": {},
+  "k": 1,
+  "ecran": "1.6",
+  "cadre": null
+ },
+ {
+  "n": 26,
+  "a": "creer-compte",
+  "d": {},
+  "k": 1,
+  "ecran": "1.7",
+  "cadre": null
+ },
+ {
+  "n": 27,
+  "a": "arreter",
+  "d": {},
+  "k": 1,
+  "ecran": "1.8",
+  "cadre": null
+ },
+ {
+  "n": 28,
+  "a": "arret-confirmer",
+  "d": {},
+  "k": 1,
+  "ecran": "1.8",
+  "cadre": "arret-confirmation"
+ },
+ {
+  "n": 29,
+  "a": "arret-raison",
+  "d": {
+   "valeur": "vu_assez"
+  },
+  "k": 1,
+  "ecran": "1.8",
+  "cadre": "arret-questions"
+ },
+ {
+  "n": 30,
+  "a": "arret-continuer",
+  "d": {},
+  "k": 1,
+  "ecran": "1.8",
+  "cadre": "arret-questions"
+ },
+ {
+  "n": 31,
+  "a": "voir-devoilement",
+  "d": {},
+  "k": 1,
+  "ecran": "1.8",
+  "cadre": "export"
+ }
+]

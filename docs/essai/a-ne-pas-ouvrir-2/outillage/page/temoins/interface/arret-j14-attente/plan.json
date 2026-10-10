@@ -1,0 +1,13 @@
+{
+ "appareil": "iphone15",
+ "sombre": false,
+ "graine": 52,
+ "arret": {
+  "jour": 14,
+  "moment": "attente"
+ },
+ "annulerSaut": {
+  "1": true,
+  "2": true
+ }
+}

@@ -1,0 +1,101 @@
+[
+ {
+  "coups": {
+   "abandon": false,
+   "annuler_saut": null,
+   "carnet": {
+    "hesite": null,
+    "moment": "deviner",
+    "moment_semaine": "deviner",
+    "saut_clair": "non"
+   },
+   "compte": null,
+   "consentement": null,
+   "deviner": {
+    "cartes": [
+     {
+      "designe": "Odile",
+      "raison": null
+     },
+     {
+      "designe": "Agathe",
+      "raison": null
+     },
+     {
+      "designe": "Valentin",
+      "raison": null
+     }
+    ],
+    "validee": true
+   },
+   "entree": null,
+   "ouvert": {
+    "cercle": 0,
+    "moi": 0,
+    "proche": 0,
+    "qui_est_qui": 0
+   },
+   "pendant_deviner": {
+    "cercle": 0,
+    "proche": 0
+   },
+   "pseudo": null,
+   "relire": 1,
+   "reponse": {
+    "niveau": 3,
+    "raison": 3
+   },
+   "rouvrir": 0
+  },
+  "etapes": {
+   "deviner": true,
+   "entree": null,
+   "repondre": true
+  },
+  "jour": 7,
+  "sauts": [
+   {
+    "coups": {
+     "ouvert": {
+      "cercle": 0,
+      "moi": 0,
+      "proche": 0,
+      "qui_est_qui": 0
+     }
+    },
+    "depart": "2026-10-10T22:05+02:00",
+    "numero": 1,
+    "textes_atteints": 3
+   }
+  ],
+  "versions": [
+   1
+  ],
+  "mesures": {
+   "abandon": false,
+   "compte": null,
+   "duree_deviner": null,
+   "duree_entree": null,
+   "duree_repondre": null,
+   "duree_seance": null,
+   "entree_verdicts": null,
+   "jours_ecoules": 0,
+   "ouvert": {
+    "cercle": 0,
+    "moi": 0,
+    "proche": 0,
+    "qui_est_qui": 0
+   },
+   "passer": 0,
+   "pendant_deviner": {
+    "cercle": 0,
+    "proche": 0
+   },
+   "relire": 1,
+   "revelation_raison_tentee": null,
+   "revelation_rouverte": 0,
+   "revelation_verdicts": null
+  },
+  "texte": "Carnet du second essai Elenchos\nCe carnet ne contient ni vos avis ni leurs raisons, ni vos phrases du jour ou de la semaine, ni votre portrait, ni votre pseudo, ni l’avis du cercle.\nLes titres et les chiffres « Sur tout l’essai » dépendent en partie de vos avis, mais seulement en cumul, jamais texte par texte.\nEssai en cours : carnet copié au jour 7.\n\nJour 1 · lundi\nOuverture : samedi 10 octobre 2026, entre 22h00 et 22h59.\nVersion de la page : 1.\nDurée : 0 min 03 s, dont 0 min 02 s pour l’entrée, 0 min 00 s pour deviner et 0 min 00 s pour répondre.\nEntrée : paris sur Valentin faux, faux, juste.\nCompte : Continuer avec Google.\nBoutons touchés : Relire 0 fois, Passer 2 fois.\nOuvert : Le Cercle 0 fois, écran d’un proche 0 fois, Moi 0 fois, fiche « Qui est qui » 0 fois.\nPendant Deviner : Le Cercle 0 fois, écran d’un proche 0 fois.\nJournée abandonnée : non.\nVotre moment préféré : Donner mon avis.\n\nJour 2 · mardi\nOuverture : samedi 10 octobre 2026, entre 22h00 et 22h59.\nJours écoulés depuis l’ouverture précédente : 0.\nVersion de la page : 1.\nDurée : 0 min 03 s, dont 0 min 00 s pour deviner et 0 min 00 s pour répondre.\nBoutons touchés : Relire 0 fois, Passer 0 fois.\nRévélation : passé, faux, passé. Raison cachée : pas tentée.\nRévélation rouverte : 0 fois.\nOuvert : Le Cercle 0 fois, écran d’un proche 0 fois, Moi 0 fois, fiche « Qui est qui » 0 fois.\nPendant Deviner : Le Cercle 0 fois, écran d’un proche 0 fois.\nJournée abandonnée : non.\nVotre moment préféré : La révélation.\n\nJour 3 · mercredi\nOuverture : samedi 10 octobre 2026, entre 22h00 et 22h59.\nJours écoulés depuis l’ouverture précédente : 0.\nVersion de la page : 1.\nDurée : 0 min 03 s, dont 0 min 00 s pour deviner et 0 min 00 s pour répondre.\nBoutons touchés : Relire 0 fois, Passer 0 fois.\nRévélation : juste, faux, juste. Raison cachée : pas tentée.\nRévélation rouverte : 0 fois.\nOuvert : Le Cercle 2 fois, écran d’un proche 1 fois, Moi 0 fois, fiche « Qui est qui » 0 fois.\nPendant Deviner : Le Cercle 2 fois, écran d’un proche 1 fois.\nJournée abandonnée : non.\nVotre moment préféré : Ma phrase du jour.\n\nJour 4 · jeudi\nOuverture : samedi 10 octobre 2026, entre 22h00 et 22h59.\nJours écoulés depuis l’ouverture précédente : 0.\nVersion de la page : 1.\nDurée : 0 min 02 s.\nRévélation : faux, faux, faux. Raison cachée : pas tentée.\nOuvert : Le Cercle 0 fois, écran d’un proche 0 fois, Moi 0 fois, fiche « Qui est qui » 0 fois.\n\nPremier saut · jeudi à samedi\nDurée : 0 min 01 s, dont 0 min 00 s sur la page du saut.\nPour répondre : 0 min 00 s, 0 min 00 s, 0 min 00 s.\nBoutons touchés : Annuler 0 fois.\nOuvert : Le Cercle 0 fois, écran d’un proche 0 fois, Moi 0 fois, fiche « Qui est qui » 0 fois.\n\nJour 7 · dimanche\nOuverture : samedi 10 octobre 2026, entre 22h00 et 22h59.\nJours écoulés depuis l’ouverture précédente : 0.\nVersion de la page : 1.\nDurée : 0 min 01 s, dont 0 min 00 s pour deviner et 0 min 00 s pour répondre.\nBoutons touchés : Relire 1 fois, Passer 0 fois.\nRévélation rouverte : 0 fois.\nOuvert : Le Cercle 0 fois, écran d’un proche 0 fois, Moi 0 fois, fiche « Qui est qui » 0 fois.\nPendant Deviner : Le Cercle 0 fois, écran d’un proche 0 fois.\nJournée abandonnée : non.\nVotre moment préféré : Deviner.\n\nSemaine 1\nLe Sans-Faute : pas attribué.\nLe Devin : Nassim.\nLe Mystère : Nassim.\nLe Fidèle : Nassim et vous.\nCe que le jeu a fait pendant le saut, c’était clair : Non.\nOù vous avez hésité cette semaine : pas de réponse.\nCette semaine, votre moment préféré : Deviner.\n\nSur tout l’essai\nQuand un personnage devinait la réponse d’un autre personnage, il a trouvé son auteur : 25 fois sur 45.\nQuand un personnage devinait l’une de vos réponses, il a trouvé que c’était vous : 5 fois sur 18.\nTitres attribués par tirage au sort, faute de départage : 0.\n\nFin du carnet"
+ }
+]

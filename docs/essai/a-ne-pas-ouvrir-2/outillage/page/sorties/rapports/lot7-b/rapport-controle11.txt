@@ -1,0 +1,59 @@
+Contrôle 11, parties jouées par l'interface (Chromium ; iPhone 15, iPhone SE 320 × 548, iPad ; clair et sombre)
+Parties : 36 ; écrans relevés : 6571 (sans relevé, partie à l'horloge de l'outil du contrôle 14 i : ecran-durees-fermeture)
+  écrans relevés à 320 px : 2335
+  écrans d'avant la révélation contrôlés : 3271
+  écrans 1.6 comparés : 105
+  dévoilements comparés à C : 36
+  votes 2.7d comparés : 184
+  auteurs 2.7e comparés : 181
+  « était l'argument de » comparés : 118
+  fiches 5.4 comparées : 21
+
+Annexe C :
+affichée : « Pour que Valentin sache que c'était toi, et retrouver tes réponses demain. »
+affichée : « Continuer avec Apple »
+affichée : « Continuer avec Google »
+affichée : « Recevoir un code par e-mail »
+affichée : « Tu recevras un code à six chiffres. »
+affichée : « E-mail »
+affichée : « Recevoir mon code »
+écrite dans textes.js (non affichée dans ces parties) : « Connexion »
+écrite dans textes.js (non affichée dans ces parties) : « Vers tes premiers curseurs nets »
+affichée : « Semaine {n} »
+affichée : « Pour commencer · {titre} »
+affichée : « Milieu des réponses »
+écrite dans textes.js (non affichée dans ces parties) : « {Prénom} décroche Le Pas de Côté. »
+écrite dans textes.js (non affichée dans ces parties) : « Une réponse à l'opposé de ce que disait son portrait. »
+écrite dans textes.js (non affichée dans ces parties) : « {A} et {B} décrochent Le Pas de Côté. »
+écrite dans textes.js (non affichée dans ces parties) : « Des réponses à l'opposé de ce que disaient leurs portraits. »
+affichée : « C'était {Y}. {X} avait répondu la même chose. »
+retirée par l'annexe (non vérifiée) : « Le repère montre où le cercle se coupe en deux. »
+retirée par l'annexe (non vérifiée) : « Le repère montre où le cercle se coupe en deux. »
+affichée : « Milieu des réponses »
+affichée : « Reprendre la révélation »
+affichée : « Revoir la révélation »
+affichée : « C'était un amendement, une modification d'un texte en discussion. »
+affichée : « C'était un article d'un texte plus long. »
+affichée : « Le Sénat devait encore voter ce texte. »
+écrite dans textes.js (non affichée dans ces parties) : « …, avant même l'examen de ses articles. »
+affichée : « C'était une résolution, un texte qui invite le Gouvernement à agir, sans l'y obliger. »
+affichée : « Avec lui, l'Assemblée a rejeté le texte entier. »
+affichée : « Le jour même, le texte entier a été retiré. »
+écrite dans textes.js (non affichée dans ces parties) : « sans groupe »
+gabarit écrit dans textes.js : « Proposé par la commission … » (gabarit « Proposé par la {A}. »)
+retirée par l'annexe (non vérifiée) : « Pas dans l'essai. »
+retirée par l'annexe (non vérifiée) : « : un pseudo, ton e-mail. »
+affichée : « Abandonner cette journée »
+affichée : « Abandonner »
+affichée : « Jour suivant »
+affichée : « Avancer au dimanche »
+affichée : « Texte suivant »
+affichée : « Aller au dimanche »
+affichée : « Premier saut · texte {k} sur 3 »
+affichée : « Qui, durée, droits »
+écrite dans textes.js (non affichée dans ces parties) : « C'est lui qui vous invite. »
+affichée : « Essai arrêté pendant l'entrée. »
+affichée : « … pendant le premier saut. »
+écrite dans textes.js (non affichée dans ces parties) : « Si vous le voulez »
+
+Aucun écart.

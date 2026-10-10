@@ -1,0 +1,27 @@
+{
+ "appareil": "ipad",
+ "sombre": false,
+ "graine": 1005,
+ "pseudo": "Ana",
+ "pPasser": 0.20767551152966915,
+ "pRaison": 0.5468205728102475,
+ "pRelire": 0.17008560514077545,
+ "pVisite": 0.41654598559252914,
+ "pVisiteDeviner": 0.09954608611296863,
+ "pChanger": 0.02486643355805427,
+ "croix": {
+  "14": true
+ },
+ "revoir": {
+  "7": true
+ },
+ "abandons": {
+  "14": "deviner"
+ },
+ "recharges": [
+  {
+   "jour": 2,
+   "ecran": "repondre"
+  }
+ ]
+}

@@ -28,9 +28,19 @@ async function jouer(s, plan, options) {
   const mem = { faits: new Set(), choix: {}, visites: [], gestes: [], releve: [], blocs: new Map(), pseudoFait: false, refusIdx: 0 };
   const une = (cle) => { if (mem.faits.has(cle)) { return false; } mem.faits.add(cle); return true; };
   let fini = false, n = 0, raisonFin = null;
+  /** Joueur qui tranche (plan.trancher = pôle visé, 0 ou 1, par tension) : « Très » du côté du pôle, argument attendu. */
+  function tranche(t) {
+    const tx = s.construction.scelle.textes[t];
+    if (!plan.trancher || !tx || plan.trancher[tx.tension] === undefined) { return null; }
+    const P = plan.trancher[tx.tension];
+    const niveau = tx.sens === P ? 5 : 1, cote = niveau === 5 ? 'pour' : 'contre';
+    const att = tx.considerations.find((x) => x.cote === cote && x.pole === P) || tx.considerations.find((x) => x.cote === cote && x.pole === 'aucun');
+    return { niveau: String(niveau), raison: att ? String(att.rang) : 'aucune' };
+  }
 
   async function noter(action) {
     const r = await O.relever(s.page);
+    if (o.coupures) { r.coupures = await O.coupures(s.page, o.groupes); }
     const cle = (r.cadre || '-') + '|' + (r.ecran || '-');
     r.blocs.forEach((b) => { if (!mem.blocs.has(b)) { mem.blocs.set(b, cle); } });
     delete r.blocs;
@@ -53,8 +63,12 @@ async function jouer(s, plan, options) {
     const cadre = vue && vue.cadre ? vue.cadre.page : null;
     const k = e ? Math.max.apply(null, Object.keys(e.jours).map(Number)) : null;
     const dj = e && k !== null ? e.jours[String(k)] : null;
-    const rangRatt = await s.page.evaluate(() => { const m = /saut · texte (\d+) sur/.exec(document.body.innerText.replace(/ /g, ' ')); return m ? +m[1] : null; });
+    const ratt = await s.page.evaluate(() => { const m = /(Premier|Second) saut · texte (\d+) sur/.exec(document.body.innerText.replace(/[\u00a0\u202f]/g, ' ')); return m ? { saut: m[1] === 'Premier' ? 1 : 2, rang: +m[2] } : null; });
+    const rangRatt = ratt ? ratt.rang : null;
+    const sautRatt = ratt ? ratt.saut : null;
+    const correspond = (r) => (r.saut !== undefined ? r.saut === sautRatt : r.jour === k) && r.ecran === (ecran || cadre) && (r.rang === undefined || r.rang === rangRatt);
     const info = { k, ecran, cadre, rangRatt, n };
+    if (o.jusqua && await o.jusqua(info, e, s)) { fini = true; raisonFin = 'jusqua'; break; }
     if (plan.pause) { await plan.pause(s, info); }
 
     let x = null, special = null;
@@ -68,21 +82,21 @@ async function jouer(s, plan, options) {
     // Rechargement et fermeture de l'app aux moments du plan.
     if (!x) {
       for (const [i, r] of (plan.recharges || []).entries()) {
-        if (r.jour === k && r.ecran === (ecran || cadre) && (r.rang === undefined || r.rang === rangRatt) && une('recharge-' + i)) { special = { type: 'recharge' }; break; }
+        if (correspond(r) && une('recharge-' + i)) { special = { type: 'recharge' }; break; }
       }
     }
     if (!x && !special) {
       for (const [i, r] of (plan.fermetures || []).entries()) {
-        if (r.jour === k && r.ecran === (ecran || cadre) && (r.rang === undefined || r.rang === rangRatt) && une('fermeture-' + i)) { special = { type: 'fermeture', ms: r.ms || 0 }; break; }
+        if (correspond(r) && une('fermeture-' + i)) { special = { type: 'fermeture', ms: r.ms || 0 }; break; }
       }
     }
     // Arrêt de l'essai au moment du plan.
     const ar = plan.arret;
-    if (!x && !special && ar && !e.arret && k === ar.jour) {
+    if (!x && !special && ar && !e.arret && (ar.saut !== undefined ? ar.saut === sautRatt : k === ar.jour)) {
       const m = ar.moment;
       const ok = (m === 'entree' && ecran && /^1\.[2-6]$/.test(ecran)) || (m === 'compte' && (ecran === '1.8' || ecran === '1.8b' || ecran === '1.9')) ||
         (m === 'revelation' && ecran === 'revelation') || (m === 'deviner' && ecran === 'deviner') || (m === 'repondre' && ecran === 'repondre') ||
-        (m === 'attente' && ecran === 'attente') || (m === 'saut' && cadre === 'saut') || (/^ratt-/.test(m) && rangRatt === +m.slice(5) && ecran === 'ratt-position') ||
+        (m === 'attente' && ecran === 'attente') || (m === 'apres-annuler' && ecran === 'revelation' && mem.faits.has('annuler-saut-' + k)) || (/^ratt-/.test(m) && rangRatt === +m.slice(5) && ecran === 'ratt-position') ||
         (m === 'verrou' && ecran === 'verrou');
       if (ok && has('arreter')) { x = pick('arreter'); }
     }
@@ -152,9 +166,9 @@ async function jouer(s, plan, options) {
         else if (has('entree-voir')) { x = pick('entree-voir'); }
         else if (has('entree-pari')) { x = pick('entree-pari'); }
         else if (has('entree-valider-raison')) { x = pick('entree-valider-raison'); }
-        else if (has('entree-raison')) { x = pick('entree-raison'); }
+        else if (has('entree-raison')) { const tc = tranche(vue.tel.E); x = (tc && pick('entree-raison', (y) => y.d.valeur === tc.raison)) || pick('entree-raison'); }
         else if (has('entree-suivant')) { x = R.oui(p('pChanger', 0.05)) && une('ech-' + n) ? pick('entree-position') : pick('entree-suivant'); }
-        else if (has('entree-position')) { x = pick('entree-position'); }
+        else if (has('entree-position')) { const tc = tranche(vue.tel.E); x = (tc && pick('entree-position', (y) => y.d.valeur === tc.niveau)) || pick('entree-position'); }
       }
       else if (has('creer-compte')) { x = pick('creer-compte'); }
       else if (ecran === '1.8') {
@@ -195,13 +209,19 @@ async function jouer(s, plan, options) {
       else if (ecran === 'repondre' || ecran === 'raison' || ecran === 'ratt-position' || ecran === 'ratt-raison') {
         const pre = /^ratt/.test(ecran) ? 'ratt' : 'jour';
         x = pick(pre + '-valider-raison') || (pre === 'ratt' ? pick('ratt-valider') : null);
-        if (!x && has(pre + '-raison')) { x = pick(pre + '-raison'); }
-        if (!x && has(pre + '-suivant-raison')) { x = R.oui(p('pChanger', 0.05)) && une('chg-' + n) ? pick(pre + '-position') : pick(pre + '-suivant-raison'); }
-        if (!x && has(pre + '-position')) { x = pick(pre + '-position'); }
+        const tA = pre === 'ratt' ? (vue.tel.jour ? s.construction.cal.ligne(vue.tel.jour).repondu : null) : s.construction.cal.ligne(k).repondu;
+        const tc = tA ? tranche(tA) : null;
+        if (!x && has(pre + '-raison')) { x = (tc && pick(pre + '-raison', (y) => y.d.valeur === tc.raison)) || pick(pre + '-raison'); }
+        if (!x && has(pre + '-suivant-raison')) { x = !tc && R.oui(p('pChanger', 0.05)) && une('chg-' + n) ? pick(pre + '-position') : pick(pre + '-suivant-raison'); }
+        if (!x && has(pre + '-position')) { x = (tc && pick(pre + '-position', (y) => y.d.valeur === tc.niveau)) || pick(pre + '-position'); }
       }
       else if (ecran === 'ratt-attente') { x = pick('texte-suivant') || pick('aller-au-dimanche'); }
       else if (ecran === 'attente') {
-        if (une('visite-' + k) && R.oui(p('pVisite', 0.3))) {
+        if (plan.visitesCompletes && une('visite-' + k)) {
+          mem.visites.push('proche', 'retour', 'onglet-moi', 'moi-portrait', 'retour', 'moi-titres', 'retour', 'titres-passes', 'retour', 'moi-historique', 'retour', 'onglet-cercle', 'titres-passes', 'retour', 'onglet-jour');
+          x = pick('onglet-cercle');
+        }
+        if (!x && une('visite-' + k) && R.oui(p('pVisite', 0.3))) {
           mem.visites.push('proche', 'retour', 'onglet-moi', R.parmi(['moi-titres', 'moi-historique', 'moi-portrait', 'titres-passes']), 'retour', 'onglet-jour');
           x = pick('onglet-cercle');
         }
@@ -224,12 +244,14 @@ async function jouer(s, plan, options) {
       continue;
     }
     if (special && special.type === 'fermeture') {
+      // L'app passe en arrière-plan (évènement de visibilité, comme iOS), puis elle est fermée.
+      await s.page.evaluate(() => { Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => 'hidden' }); Object.defineProperty(document, 'hidden', { configurable: true, get: () => true }); document.dispatchEvent(new Event('visibilitychange')); });
       await s.page.close({ runBeforeUnload: true });
-      if (plan.horloge && special.ms) { await s.ctx.clock.fastForward(special.ms); }
       s.page = await s.ctx.newPage();
+      if (plan.horloge && special.ms) { await s.ctx.clock.fastForward(special.ms); }
       s.page.on('pageerror', (er) => s.erreurs.push(String(er && er.stack || er)));
       await s.page.goto(O.ADRESSE); await s.page.waitForTimeout(50);
-      mem.gestes.push({ n, special: 'fermeture', k, ecran: ecran || cadre });
+      mem.gestes.push({ n, special: 'fermeture', k, ecran: ecran || cadre, F: info.F });
       await noter('reouverture');
       continue;
     }
@@ -240,11 +262,12 @@ async function jouer(s, plan, options) {
       await noter('pseudo:' + special.valeur);
       continue;
     }
-    mem.gestes.push({ n, a: x.a, d: x.d, k, ecran, cadre });
+    mem.gestes.push({ n, a: x.a, d: x.d, k, ecran, cadre, F: info.F });
     const t0 = Date.now();
     await O.toucher(s, x);
     if (o.mesurer) { o.mesurer(x, Date.now() - t0); }
-    await noter(x.a + (Object.keys(x.d).length ? ' ' + JSON.stringify(x.d) : ''));
+    const rr = await noter(x.a + (Object.keys(x.d).length ? ' ' + JSON.stringify(x.d) : ''));
+    if (o.apres) { await o.apres(s, rr, x); }
   }
   return { gestes: mem.gestes, releve: mem.releve, blocs: mem.blocs, raisonFin };
 }

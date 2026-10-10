@@ -1,0 +1,22 @@
+{
+ "appareil": "iphone15",
+ "sombre": false,
+ "graine": 17,
+ "recharges": [
+  {
+   "saut": 1,
+   "ecran": "ratt-position",
+   "rang": 2
+  },
+  {
+   "saut": 2,
+   "ecran": "ratt-position",
+   "rang": 4
+  },
+  {
+   "saut": 2,
+   "ecran": "ratt-attente",
+   "rang": 5
+  }
+ ]
+}

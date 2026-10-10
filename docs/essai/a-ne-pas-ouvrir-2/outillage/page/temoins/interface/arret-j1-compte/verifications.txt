@@ -1,0 +1,5 @@
+passé journal valide (règles 1 à 15)
+passé aucune erreur de script, aucune requête sortante
+passé partie menée au dévoilement (devoilement)
+passé arrêt écrit au jour 1 ({"f2":null,"jour":1,"raison":"vu_assez"})
+passé carnet d'arrêt exporté

@@ -1,0 +1,37 @@
+Contrôle 14 à l'écran (b, d, h, i, j), Chromium (Playwright 1.56.1)
+Construction : /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/frontend-b-lot7/construction-courante/temoin/index.html (SHA-256 e021a0da4192423bf89a5ba0b36a826fb397e5a1557bf8ef2645341220a86c03)
+Page du premier essai : /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/frontend-b-premier/construction/porteur/index.html (SHA-256 734d0079df6ab6ae6cd8a16811b4f2bfb5b7bcd56a58bb4c70ab29ccd9a2e72a)
+
+(b) mémoire
+passé (b) sans ancienne partie : la page s'ouvre sur le premier message
+passé (b) sans ancienne partie : seule la clé partie-2 est écrite — elenchos-essai:partie-2
+passé (b) aucune écriture hors de partie-2 et verif-2 — ecrit elenchos-essai:verif-2, lit elenchos-essai:verif-2, efface elenchos-essai:verif-2, lit elenchos-essai:partie-2, ecrit elenchos-essai:partie-2
+passé (b) ancienne partie présente : la page de la partie du premier essai est proposée
+passé (b) ancienne partie : repérée par la liste des clés, jamais lue
+passé (b) « Annuler » sur la confirmation garde l'ancienne partie
+passé (b) effacement de l'ancienne partie : clés du premier essai retirées, autres sites intacts — autre-site:cle, elenchos-essai:partie-2
+passé (b) puis la partie commence (premier message)
+passé (b) les deux clés : la page de la partie du premier essai est proposée
+passé (b) les deux clés : partie-2 inchangée au chargement
+passé (b) les deux clés : l'ancienne jamais lue
+passé (b) les deux clés : après l'effacement, la partie reprend où elle était — deviner / deviner
+passé (b) les deux clés : seules partie-2 (et verif-2) restent — elenchos-essai:partie-2
+passé (b) page du premier essai sur la même mémoire : partie-2 intacte à son chargement — elenchos-essai:partie, elenchos-essai:partie-2
+passé (b) page du premier essai : partie-2 intacte après son premier toucher — elenchos-essai:partie, elenchos-essai:partie-2
+passé (b) retour sur la nouvelle page : l'effacement de l'ancienne partie est proposé si la clé du premier essai existe — clé du premier essai : créée ; page proposée : true
+passé (b) « Jouer » au jour 4 ouvre la page du saut
+passé (b) « Annuler » sur la page du saut : seul le compte de « Annuler » change dans la partie — /jours/4/coups/annuler_saut : 0 → 1
+passé (b) « Annuler » ramène sur 2.7f
+(b) rechargement au milieu du rattrapage : partie ecran-rattrapage-recharge (temoins/interface), vérifications.txt
+(d) « Tout effacer »
+passé (d) « Tout effacer » pendant l'essai : confirmation avec « Copier mon carnet d'abord »
+passé (d) « Tout effacer » pendant l'essai : plus aucune clé « elenchos-essai: », premier essai compris ; autres sites intacts — autre-site:cle
+passé (d) après « Tout effacer », un rechargement repart du premier message
+passé (d) « Tout effacer » après le dévoilement : plus aucune clé « elenchos-essai: », premier essai compris — autre-site:cle
+(i) durées
+passé (i) partie à l'horloge de l'outil, deux fermetures de l'app pendant les rattrapages : journal valide
+passé (i) saut 1 : durée du saut, dont la page du saut, et durée de chaque texte du rattrapage (une fermeture de 10 min au milieu, hors premier plan) — attendu {"duree_page":3,"duree_saut":57,"durees_textes":[12,21,12]} ; lu {"duree_page":3,"duree_saut":57,"durees_textes":[12,21,12],"numero":1} ; fermetures aux gestes 128, 194
+passé (i) saut 2 : durée du saut, dont la page du saut, et durée de chaque texte du rattrapage (une fermeture de 10 min au milieu, hors premier plan) — attendu {"duree_page":3,"duree_saut":96,"durees_textes":[12,12,12,15,12,12]} ; lu {"duree_page":3,"duree_saut":96,"durees_textes":[12,12,12,15,12,12],"numero":2} ; fermetures aux gestes 128, 194
+passé (i) jour 4 : la séance s'arrête à l'ouverture de la page du saut confirmée (la page quittée par « Annuler » compte dans le jour) — attendu 33, lu 33
+
+RÉSULTAT : aucun écart

@@ -1,0 +1,13 @@
+{
+ "appareil": "se",
+ "sombre": false,
+ "graine": 44,
+ "arret": {
+  "jour": 3,
+  "moment": "repondre"
+ },
+ "annulerSaut": {
+  "1": true,
+  "2": true
+ }
+}

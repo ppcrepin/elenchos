@@ -14,6 +14,7 @@ const path = require('node:path');
 const O = require('./outils.js');
 const JO = require('./joueur.js');
 const X = require('../../textes.js');
+const N = require('../../noyau.js');
 
 const n = O.normaliser;
 
@@ -29,8 +30,7 @@ function cas() {
   // Cas d'écran (LISEZ-MOI, « cas d'écran »).
   ajouter('ecran-pseudo-alphabet', { graine: 11, pseudosRefuses: ['Οdile', 'Vаlentin', 'Аgathe'], pseudo: 'Lou', voie: 'apple' }, 'iphone15', false, (r) => {
     const refus = r.releve.filter((x) => /^pseudo:/.test(x.action) && x.bande && n(x.bande).includes(n(X.notePrenom)));
-    return [['trois pseudos d\'un autre alphabet refusés, message du prénom à l\'écran', refus.length === 3, refus.length + ' refus vus'],
-      ['aucun bouton de compte actif tant que le pseudo est refusé', r.releve.filter((x) => /^pseudo:/.test(x.action) && x.action !== 'pseudo:Lou').every((x) => true), '']];
+    return [['trois pseudos d\'un autre alphabet refusés, message du prénom à l\'écran', refus.length === 3, refus.length + ' refus vus']];
   });
   ajouter('ecran-rond-deux-lettres', { graine: 12, pseudo: 'Antoine', voie: 'google', pVisite: 1 }, 'se', true, (r) => {
     const vu = r.releve.some((x) => x.ecran === 'cercle' && x.tel && /(^|\n)An(\n|$)/.test(x.tel));
@@ -40,11 +40,11 @@ function cas() {
   ajouter('ecran-compte-google', { graine: 14, pseudo: 'Noé', voie: 'google' }, 'iphone15', true);
   ajouter('ecran-compte-email', { graine: 15, pseudo: 'Inès', voie: 'email' }, 'se', false);
   ajouter('ecran-compte-email-plus-tard', { graine: 16, pseudo: 'Jo', voie: 'email_plus_tard' }, 'ipad', true);
-  ajouter('ecran-rattrapage-recharge', { graine: 17, recharges: [{ jour: 5, ecran: 'ratt-position', rang: 2 }, { jour: 11, ecran: 'ratt-position', rang: 4 }, { jour: 12, ecran: 'ratt-attente', rang: 5 }] }, 'iphone15', false, (r) => {
+  ajouter('ecran-rattrapage-recharge', { graine: 17, recharges: [{ saut: 1, ecran: 'ratt-position', rang: 2 }, { saut: 2, ecran: 'ratt-position', rang: 4 }, { saut: 2, ecran: 'ratt-attente', rang: 5 }] }, 'iphone15', false, (r) => {
     const apres = r.releve.filter((x) => x.action === 'rechargement').map((x) => ((x.barre || '') + '\n' + (x.tel || '')).replace(/[\u00a0\u202f]/g, ' '));
     return [['après chaque rechargement, le rattrapage reprend sur un texte du saut', apres.length === 3 && apres.every((t) => /saut · texte \d+ sur \d+/.test(t)), apres.map((t) => (/saut · texte \d+ sur \d+/.exec(t) || ['?'])[0]).join(' ; ')]];
   });
-  ajouter('ecran-fermeture-app', { graine: 18, fermetures: [{ jour: 5, ecran: 'ratt-position', rang: 2 }, { jour: 10, ecran: 'ratt-raison', rang: 3 }] }, 'se', true, (r) => {
+  ajouter('ecran-fermeture-app', { graine: 18, fermetures: [{ saut: 1, ecran: 'ratt-position', rang: 2 }, { saut: 2, ecran: 'ratt-raison', rang: 3 }] }, 'se', true, (r) => {
     const apres = r.releve.filter((x) => x.action === 'reouverture').map((x) => ((x.barre || '') + '\n' + (x.tel || '')).replace(/[\u00a0\u202f]/g, ' '));
     return [['après la fermeture de l\'app, le rattrapage reprend sur un texte du saut', apres.length === 2 && apres.every((t) => /saut · texte \d+ sur \d+/.test(t)), apres.map((t) => (/saut · texte \d+ sur \d+/.exec(t) || ['?'])[0]).join(' ; ')]];
   });
@@ -64,13 +64,14 @@ function cas() {
   const arrets = [
     ['arret-j1-entree', { jour: 1, moment: 'entree' }], ['arret-j1-compte', { jour: 1, moment: 'compte' }], ['arret-j1-deviner', { jour: 1, moment: 'deviner' }],
     ['arret-j2-revelation', { jour: 2, moment: 'revelation' }], ['arret-j3-repondre', { jour: 3, moment: 'repondre' }], ['arret-j3-attente', { jour: 3, moment: 'attente' }],
-    ['arret-j4-revelation', { jour: 4, moment: 'revelation' }], ['arret-j4-page-saut', { jour: 4, moment: 'saut' }], ['arret-saut1-texte2', { jour: 5, moment: 'ratt-2' }],
-    ['arret-j7-deviner', { jour: 7, moment: 'deviner' }], ['arret-j8-page-saut', { jour: 8, moment: 'saut' }], ['arret-saut2-texte5', { jour: 12, moment: 'ratt-5' }],
+    ['arret-j4-revelation', { jour: 4, moment: 'revelation' }], ['arret-j4-apres-annuler', { jour: 4, moment: 'apres-annuler' }], ['arret-saut1-texte2', { saut: 1, moment: 'ratt-2' }],
+    ['arret-j7-deviner', { jour: 7, moment: 'deviner' }], ['arret-j8-apres-annuler', { jour: 8, moment: 'apres-annuler' }], ['arret-saut2-texte5', { saut: 2, moment: 'ratt-5' }],
     ['arret-j14-attente', { jour: 14, moment: 'attente' }]
   ];
-  arrets.forEach(([id, a], i) => ajouter(id, { graine: 40 + i, arret: a }, APP[i % 3], i % 2 === 1, (r) => {
+  arrets.forEach(([id, a], i) => ajouter(id, { graine: 40 + i, arret: a, annulerSaut: { 1: true, 2: true } }, APP[i % 3], i % 2 === 1, (r) => {
     const j = r.journal;
-    return [['arrêt écrit au jour ' + a.jour, !!j.arret && j.arret.jour === a.jour, JSON.stringify(j.arret)],
+    const jour = a.saut ? (a.saut === 1 ? 4 : 8) + (+a.moment.slice(5)) - 1 : a.jour;
+    return [['arrêt écrit au jour ' + jour, !!j.arret && j.arret.jour === jour, JSON.stringify(j.arret)],
       ['carnet d\'arrêt exporté', !!r.carnet && /Essai arrêté/.test(r.carnet), '']];
   }));
 
@@ -103,10 +104,17 @@ async function devoilementAffiche(page) {
   }));
 }
 
+/** Noms de groupes du fichier scellé (toutes les valeurs « groupe »), pour la règle de coupure du contrôle 11. */
+function groupesDe(scelle) {
+  const l = new Set();
+  (function voir(x) { if (Array.isArray(x)) { x.forEach(voir); } else if (x && typeof x === 'object') { Object.keys(x).forEach((k) => { if (k === 'groupe' && typeof x[k] === 'string') { l.add(x[k]); } else { voir(x[k]); } }); } })(scelle);
+  return [...l];
+}
+
 async function jouerUne(nav, construction, c, sortie, releves) {
   const s = await O.ouvrir(nav, construction, { appareil: c.appareil, sombre: c.sombre });
   const t0 = Date.now();
-  const r = await JO.jouer(s, c.plan);
+  const r = await JO.jouer(s, c.plan, { coupures: c.appareil === 'se', groupes: groupesDe(construction.scelle) });
   const ms = Date.now() - t0;
   const etat = await O.etat(s.page);
   const close = !!(etat.fin || etat.arret);
@@ -118,7 +126,8 @@ async function jouerUne(nav, construction, c, sortie, releves) {
   const dossier = path.join(sortie, c.id);
   fs.mkdirSync(dossier, { recursive: true });
   const ecrire = (f, x) => fs.writeFileSync(path.join(dossier, f), typeof x === 'string' ? x : JSON.stringify(x, null, 1) + '\n');
-  ecrire('journal.json', jv.journal); ecrire('durees.json', durees); ecrire('copies.json', copies);
+  // Journal et durées sous forme canonique (schéma, partie 4.4 ; le programme de contrôle la vérifie).
+  ecrire('journal.json', N.jsonCanonique(jv.journal)); ecrire('durees.json', N.jsonCanonique(durees)); ecrire('copies.json', copies);
   if (carnet) { ecrire('carnet.txt', carnet); }
   ecrire('gestes.json', r.gestes);
   ecrire('plan.json', Object.assign({ appareil: c.appareil, sombre: c.sombre }, c.plan));

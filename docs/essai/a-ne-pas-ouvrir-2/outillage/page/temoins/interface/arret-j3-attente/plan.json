@@ -1,0 +1,13 @@
+{
+ "appareil": "ipad",
+ "sombre": true,
+ "graine": 45,
+ "arret": {
+  "jour": 3,
+  "moment": "attente"
+ },
+ "annulerSaut": {
+  "1": true,
+  "2": true
+ }
+}

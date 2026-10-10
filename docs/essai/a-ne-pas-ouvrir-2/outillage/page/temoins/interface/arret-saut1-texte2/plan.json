@@ -1,0 +1,13 @@
+{
+ "appareil": "ipad",
+ "sombre": false,
+ "graine": 48,
+ "arret": {
+  "saut": 1,
+  "moment": "ratt-2"
+ },
+ "annulerSaut": {
+  "1": true,
+  "2": true
+ }
+}

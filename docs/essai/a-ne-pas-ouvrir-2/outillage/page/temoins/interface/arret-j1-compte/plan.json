@@ -1,0 +1,13 @@
+{
+ "appareil": "se",
+ "sombre": true,
+ "graine": 41,
+ "arret": {
+  "jour": 1,
+  "moment": "compte"
+ },
+ "annulerSaut": {
+  "1": true,
+  "2": true
+ }
+}
