@@ -60,6 +60,7 @@ Les points 1 à 4 touchent des tirages : la page (P) et le contrôle (C) doivent
 ## 9. Semaine 13 : le `departage` de la surprise dans la trace (schéma 4.2, après bd09827)
 
 - **Lecture retenue.** `semaines[12].surprise` suit le point 9 (seul H86 candidat) : `texte` = « H86 », `departage` = « aucun » ; `attributions` et `erreurs` portent les sept textes révélés. Le départage du calcul c3 (tous candidats) n'est écrit qu'au rapport. Sur le candidat 1, c3 donne aussi « aucun » : pas de différence.
+- **Réponse (10 octobre 2026, Back-end)** : confirmé : c'est la lecture de la page (INTERFACE.md, §8 bis), et les traces de l'histoire de P, de C et de S concordent octet pour octet sur le candidat 1. `texte` et `departage` suivent la règle de la surprise du fichier caché (point 9), sur les seuls textes candidats ; le départage du critère c3 n'est écrit qu'aux rapports. Voir `schema.md`, 4.2, cellule de `semaines`.
 
 ## 10. Lectures du schéma, à confirmer à P et à C (sans écart apparent)
 
@@ -69,6 +70,7 @@ Les points 1 à 4 touchent des tirages : la page (P) et le contrôle (C) doivent
 - **Le Mystère** : les cartes de X sont celles dont `auteur_compte` est X (§4, « cet auteur ne sert qu'à … au Mystère »).
 - **Le Sans-Faute** : un jour « avec cartes » est un jour de révélation où le membre a au moins une carte révélée.
 - **Absence et réponse atypique sur T0** : permises (le fichier caché n'exclut que E1 à E3 et T14). Sur le candidat 1, aucune absence sur T0.
+- **Réponse (10 octobre 2026, Game design)** : les six lectures sont confirmées, sans changement de texte : Pas de Côté sur tout personnage qui a répondu au texte révélé (un absent n'en a pas) ; `verdicts` à `null` pour les personnages ; côté attendu d'un absent calculé comme pour un présent (le jeu ne montre jamais « n'a pas joué », règle 3.1 du premier essai) ; cartes de X = celles dont `auteur_compte` vaut X ; Sans-Faute, un jour « avec cartes » est un jour de révélation où le membre a au moins une carte révélée ; absence et réponse atypique permises sur T0, c'est voulu.
 
 ## 11. Graine provisoire : le commit a bougé pendant le travail
 
@@ -79,6 +81,7 @@ Les points 1 à 4 touchent des tirages : la page (P) et le contrôle (C) doivent
 - **Citation.** §9 de simulation-2.md : « la justesse au hasard avec D-024, sur ses quinze cartes ».
 - **Écart.** Le modèle du hasard n'est pas dit (chaque carte attribuée au hasard parmi les quatre personnages, sans remise ? avec passes ?). Non calculé au candidat 1.
 - **Lecture proposée.** Espérance du nombre de cartes justes quand, dans chaque manche, les cartes reçoivent une affectation tirée uniformément parmi les affectations sans répétition des personnages candidats (sans passe), une carte comptant juste si le personnage désigné a donné exactement sa réponse (D-024). À confirmer par Game design avant le candidat final.
+- **Réponse (10 octobre 2026, Game design)** : lecture corrigée : le modèle (affectation sans répétition, tirée uniformément, sans passe) est juste, mais l'espérance se calcule sans énumération, par h = (candidats ayant donné la même réponse) / (nombre de candidats) pour chaque carte. La loi complète du nombre de cartes justes s'ajoute, parce qu'une moyenne seule ne suffit pas à juger un résultat sur 15 cartes. Voir `regles-de-calcul-2.md`, point 13, ligne 7. Le bilan doit dire que le modèle ne passe jamais, alors qu'un vrai joueur passe.
 
 ## 13. Ligne Auteur sans « au dépôt » (fiches S)
 

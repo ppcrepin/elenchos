@@ -781,7 +781,7 @@ Aucune autre clé.
 7. **Deviner.**
    - `deviner` vaut `null` les jours où `deviner_porteur` est faux.
    - Sinon, si l'objet existe :
-     - `cartes` a autant d'éléments que de cartes servies (calcul propre du contrôle) ;
+     - `cartes` a autant d'éléments que de cartes servies (calcul propre du contrôle, sur le seul fichier scellé : les cartes servies au porteur, leur ordre et la carte à raison cachée ne dépendent jamais de ses coups ; seul `auteur_compte` des cartes identiques servies ensemble en dépend) ;
      - un personnage est désigné au plus une fois ;
      - `raison` n'est non nulle que sur la carte à raison cachée dont `designe` est un personnage ;
      - `validee` vrai suppose toutes les `designe` non nulles ;
@@ -1022,7 +1022,7 @@ C'est la forme de S1, partie 4.5, sur les 18 textes, avec ces changements :
 - **FE-6, la trace de l'histoire.** Elle est demandée par le harnais à la version témoin.
 
 **Hors de ces deux rôles, à transmettre**
-- **UX-1** : le repère de l'arrêt V6 (§8.11).
+- **UX-1** : le repère de l'arrêt V6 (§8.11). **Clos (UX, 10 octobre 2026) :** le texte de l'arrêt 1 couvre aussi une erreur pendant le calcul de l'histoire (`simulation-2.md`, §8.9).
 - **UX-2** : T0, jamais répondu par le porteur, figure-t-il dans l'Historique (5.3, 5.4) ? Les phrases attendues en dépendent. **Clos (UX, 10 octobre 2026) : non.** T0 n'apparaît pas dans l'Historique ; son vote et ses auteurs ne se lisent qu'à sa révélation (jour 2), en 2.7d et 2.7e (`simulation-2.md`, §7.1).
 - **UX-3** : l'affichage des amendements identiques d'autres groupes. Il n'a pas de champ pour l'instant ; s'il en faut un, il entre dans la version 5 avant le candidat 1 (aucun fichier n'est encore scellé). La version 6 reste réservée au repli (partie 6). **Clos (UX, 10 octobre 2026) : rien ne s'ajoute, aucun champ.** Seul l'auteur de l'amendement retenu au fichier est nommé ; la version 5 ne change pas (`simulation-2.md`, §7.11).
 - **Contenu-1** : les tables des parties 2.10, 2.10 bis et 2.11, et les formes de lignes de la partie 5.1, étape 8.

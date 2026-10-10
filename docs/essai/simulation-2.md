@@ -1118,7 +1118,7 @@ Des pages du cadre, dans cet ordre. La barre affiche « Début ».
 
 **Cas rare : les deux parties à la fois** (§8.8). Même page, avec ces mots :
 - Titre : « Une partie du premier essai est revenue »
-- « Votre {appareil} garde de nouveau des réponses du premier essai. Elles ne servent plus : la page les efface. Ni votre partie du second essai ni votre carnet du premier essai, déjà dans la conversation, ne sont touchés. »
+- « Votre {appareil} garde de nouveau une partie du premier essai, avec vos réponses s'il y en a. Elles ne servent plus : la page les efface quand vous touchez le bouton. Ni votre partie du second essai ni votre carnet du premier essai, déjà dans la conversation, ne sont touchés. »
 - Bouton : « Effacer et reprendre ». Confirmation inchangée : « Effacer la partie du premier essai ? » / « C'est définitif. » · « Annuler » · « Effacer ». Après « Effacer », la partie reprend à son étape.
 
 **B. Le premier message** (texte de Juridique, revalidé par lui le 9 octobre 2026). C'est le texte du §8.2 de `simulation.md`, dont la dernière puce est remplacée par les deux dernières ci-dessous :
@@ -1340,7 +1340,7 @@ Le bouton touché en 1.8 n'est gardé que si Game design en fait une mesure (c'e
 *Nouvelle vérification au chargement, V6.*
 - La page calcule le SHA-256 d'un résumé canonique de son état à l'arrivée : titres et surprise de chaque semaine, curseurs à l'arrivée en fractions, tempéraments à l'arrivée, manche du jour 0 sur H90, numéro de tirage. Le format exact est celui du schéma de Back-end (`a-ne-pas-ouvrir-2/schema.md`, partie 3).
 - Elle compare cette empreinte à celle que le programme de scellement, qui calcule déjà l'histoire pour la régler, a inscrite dans le fichier scellé. Le résumé lui-même n'est pas dans le fichier : il est joint au rapport de scellement.
-- Un écart arrête la page, comme un vecteur de test faux : arrêt 1 du §8.11, repère V6 (§8.9, 8.11 et 8.13 ci-dessous). Une erreur pendant le calcul de l'histoire donne le même arrêt. (à confirmer par UX)
+- Un écart arrête la page, comme un vecteur de test faux : arrêt 1 du §8.11, repère V6 (§8.9, 8.11 et 8.13 ci-dessous). Une erreur pendant le calcul de l'histoire donne le même arrêt (UX, 10 octobre 2026 : le texte de l'arrêt 1 le couvre).
 - Ce que cela apporte : la preuve, sur l'iPhone même, que le moteur de Safari retrouve la même histoire. Personne dans l'équipe n'a d'iPhone.
 - Ce n'est pas sceller des résultats : seule une empreinte est scellée, et la page ne s'en sert jamais pour afficher quoi que ce soit.
 
@@ -1357,7 +1357,7 @@ Le bouton touché en 1.8 n'est gardé que si Game design en fait une mesure (c'e
 - La page la repère à la seule présence de la clé `elenchos-essai:partie` dans la liste des clés, jamais à son contenu. Elle ne déclenche donc jamais l'arrêt M1.
 - **Si elle est là**, une page du cadre propose de l'effacer, avant tout le reste (texte d'UX, avec confirmation). L'essai ne commence pas tant qu'elle est là.
 - **L'effacement retire** `elenchos-essai:partie`, `elenchos-essai:verif` et `elenchos-essai:sonde-icone`, c'est-à-dire toutes les clés « elenchos-essai: » sauf celles du second essai. La trace de la page-test part donc avec elle (Juridique). Si des traces restent sans `elenchos-essai:partie` (`verif`, `sonde-icone`), la page n'affiche pas cette page, ne les lit pas et n'y touche pas ; « Tout effacer » les retire (comportement du code au lot 1 ; à confirmer par Juridique, qui peut demander qu'elles partent au départ, ce qui ajouterait une écriture au contrôle 5).
-- **Cas rare : les deux parties à la fois.** Il arrive si une ancienne page restée en cache a été rouverte après le début du second essai. La même page d'effacement s'affiche. `partie-2` n'est pas touchée, et la partie reprend à son étape. UX dit si la phrase « la page les efface avant de commencer » doit changer dans ce cas. [Assembleur : pas de réponse d'UX à ce jour.]
+- **Cas rare : les deux parties à la fois.** Il arrive si une ancienne page restée en cache a été rouverte après le début du second essai. La même page d'effacement s'affiche. `partie-2` n'est pas touchée, et la partie reprend à son étape. Les mots de ce cas sont au §8.2 A (UX, relus par Juridique le 10 octobre 2026). « Annuler » n'efface rien et laisse le porteur sur cette page : la partie ne reprend pas tant que la partie du premier essai est là.
 - **« Tout effacer »** (5.7, clôture, arrêt) retire toutes les clés « elenchos-essai: », sans exception.
 
 **Départ et compte (D-033, D-035).**
