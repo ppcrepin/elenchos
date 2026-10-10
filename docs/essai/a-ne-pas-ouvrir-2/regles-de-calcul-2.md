@@ -39,11 +39,12 @@
 
   - On prend le premier niveau non vide ; départage par t("raison|prénom|texte|id").
   - **Pour une réponse type, c'est exactement la règle du premier essai** : sa valeur est le pôle que sert la position.
-  - **Seul changement, la réponse atypique.** Le personnage change de position, pas de valeur :
+  - **Seul changement, la réponse atypique.** Le personnage change de position, pas de valeur. La table s'applique telle quelle, avec sa valeur π_p. Quand le nouveau côté sert l'autre valeur (toujours le cas si sa réponse type n'est pas neutre), la table donne :
     - sur le nouveau côté, il prend d'abord l'inattendu croisé (réponse tiraillée, w = 0) ;
     - sinon la raison hors tension (penchant, w = 1/2) ;
     - sinon l'attendue du nouveau côté : arbitrage net contre son profil, seul cas qui peut faire un Pas de Côté ;
-    - l'ordre suit la table selon la fermeté.
+    - la fermeté ne change rien à cet ordre : un côté n'a jamais deux inattendus (D-034), donc le croisé et la raison hors tension ne se disputent jamais la place ;
+    - quand sa réponse type est neutre et que le côté tiré sert sa valeur, la table donne l'attendue (fermeté moyenne ou forte), ou d'abord la raison hors tension (fermeté faible) : une réponse de sa valeur.
   - **Effet voulu (D-034, « la raison aide à reconnaître chacun »)** : une carte atypique porte souvent la valeur de son auteur. Les Pas de Côté des personnages restent rares : ils ne viennent que des textes sans inattendu.
 - **2.3 Réponses atypiques**, avec α = 1/4 par défaut (réglage : 1/6, 1/4 ou 1/3).
   - Textes dans l'ordre du calendrier ; pour chacun, personnages dans l'ordre Agathe, Nassim, Odile, Valentin.
@@ -53,6 +54,7 @@
     - (c) moins de deux personnages sont déjà atypiques sur ce texte ;
     - et t(clé) < α, avec la clé « ecart|r|prénom|Hi » pour l'histoire, « ecart|prénom|n » pour l'essai.
   - Jamais sur E1–E3 ni sur T14.
+  - Part réelle : à cause de (b), environ une réponse sur 1/α + 1 est atypique (α/(1 + α) : 1/7, 1/5 ou 1/4 selon le cran), un peu moins avec (c). Le dévoilement dit ce chiffre, jamais α.
   - Forme : le côté opposé à la réponse type, au niveau simple. Si la réponse type est neutre : Favorable si t("cote-ecart|[r|]prénom|texte") < 1/2, sinon Défavorable.
   - **H86** : les deux premiers personnages présents, dans l'ordre de t("ecart-hstar|r|prénom"), sont atypiques, sans tenir compte de α ni de (b). Les autres ne le sont pas.
 - **2.4 Absences.** Textes dans l'ordre ; pour chacun, personnages dans le même ordre. Un personnage est absent si :
@@ -194,7 +196,7 @@ Dans l'ordre retenu, il est possible sur S seulement : sa cinquième réponse S 
 
 **§8.6, point 2, deuxième puce** (texte d'origine) :
 
-   - « Environ une réponse sur {quatre} était donnée exprès contre le profil. Dans ces réponses, chacun gardait sa valeur quand une raison le permettait : il changeait de position, pas de valeur. » (règle cachée de D-034).
+   - « Environ une réponse sur {cinq} était donnée exprès contre le profil. Dans ces réponses, chacun gardait sa valeur quand une raison le permettait : il changeait de position, pas de valeur. » (règle cachée de D-034). [Game design, 10 octobre 2026 : « {quatre} » corrigé en « {cinq} », le mot de 1/α + 1 (point 3, 2.3).]
 
 **« Limites et doutes », Game design, point « La règle « même valeur » »** (texte d'origine) :
 

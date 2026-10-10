@@ -1274,8 +1274,6 @@ La page-test n'est pas refaite : D-019 l'a éprouvée, et la page vérifie sa m�
 - les journées abandonnées par le lien « Abandonner cette journée » ;
 - pour chaque saut :
   - le moment où il part ;
-  - les jours qu'il couvre (4 à 6, puis 8 à 13) ;
-  - la révélation montrée au début du saut ;
   - l'étape atteinte dans le rattrapage ;
   - chaque réponse du rattrapage, écrite dès qu'elle est validée ;
 - les comptes de gestes demandés par Game design : révélation rouverte, Le Cercle, écran d'un proche, Moi, fiche ouverts ;
@@ -1304,16 +1302,16 @@ Le bouton touché en 1.8 n'est gardé que si Game design en fait une mesure (c'e
    - ce qu'il faut pour R3 (distance au curseur) et pour Le Pas de Côté.
 2. **`calculer(scellé, étatÀLArrivée, journal)`** calcule, à chaque geste, les jours qui suivent l'arrivée, à partir de cet état.
 
-*La règle de la coupure.* Tout texte révélé après l'arrivée passe par le calcul de chaque geste : à cinq membres, les cartes servies dépendent de la présence du porteur.
+*La règle de la coupure.* Tout texte révélé après l'arrivée passe par le calcul de chaque geste : à cinq membres, les cartes servies dépendent de la présence du porteur. Seule exception : la manche du jour 0 sur H90, jouée à quatre, reste dans l'histoire. Sa révélation, au jour 1, passe par le calcul de chaque geste et compte en semaine 14.
 
 *Mise en cache.*
 - L'état à l'arrivée est calculé une fois par chargement, après les vérifications V1 à V5, puis gelé en profondeur : aucun geste ne peut le modifier.
 - Il vit en mémoire vive seulement, jamais dans `localStorage`. Une seconde copie gardée pourrait diverger de la première, et elle ne ferait rien gagner.
 
 *Nouvelle vérification au chargement, V6.*
-- La page calcule le SHA-256 d'un résumé canonique de son état à l'arrivée : titres par semaine, curseurs à l'arrivée en fractions, tempéraments à l'arrivée, surprise de la semaine 13. Back-end fixe ce format dans le schéma.
-- Elle le compare au résumé inscrit dans le fichier scellé par le programme de scellement, qui calcule déjà l'histoire pour la régler.
-- Un écart arrête la page, comme un vecteur de test faux (repère V6 : texte d'UX, §8.11). [Assembleur : ce texte n'est pas écrit ; UX donne le §8.11 comme inchangé.]
+- La page calcule le SHA-256 d'un résumé canonique de son état à l'arrivée : titres et surprise de chaque semaine, curseurs à l'arrivée en fractions, tempéraments à l'arrivée, manche du jour 0 sur H90, numéro de tirage. Le format exact est celui du schéma de Back-end (`a-ne-pas-ouvrir-2/schema.md`, partie 3).
+- Elle compare cette empreinte à celle que le programme de scellement, qui calcule déjà l'histoire pour la régler, a inscrite dans le fichier scellé. Le résumé lui-même n'est pas dans le fichier : il est joint au rapport de scellement.
+- Un écart arrête la page, comme un vecteur de test faux : arrêt 1 du §8.11, repère V6 (§8.9, 8.11 et 8.13 ci-dessous). Une erreur pendant le calcul de l'histoire donne le même arrêt. (à confirmer par UX)
 - Ce que cela apporte : la preuve, sur l'iPhone même, que le moteur de Safari retrouve la même histoire. Personne dans l'équipe n'a d'iPhone.
 - Ce n'est pas sceller des résultats : seule une empreinte est scellée, et la page ne s'en sert jamais pour afficher quoi que ce soit.
 
@@ -1346,7 +1344,7 @@ Le bouton touché en 1.8 n'est gardé que si Game design en fait une mesure (c'e
 
 **Sauts et rattrapage, dans la mémoire.**
 - La page du saut ne change rien à la partie ; « Annuler » n'écrit que son compte de touchers, comme « Relire » et « Passer ».
-- « Avancer » écrit, en une seule écriture, l'ouverture du saut et la révélation montrée au début.
+- « Avancer au dimanche » écrit, en une seule écriture, le départ du saut. Les jours couverts et la révélation du point de saut se lisent dans la table du calendrier, jamais dans l'état : cette révélation appartient à son jour (4 ou 8), comme celle de tout jour joué.
 - Chaque réponse du rattrapage est écrite dès qu'elle est validée. Si l'app est fermée au milieu, la page reprend au texte suivant. Aucun texte n'est répondu deux fois, aucun n'est sauté en silence.
 - Le jour du dimanche n'est atteint qu'après la dernière réponse du rattrapage.
 - Si UX permet de laisser un texte du rattrapage sans réponse, l'état le note « sans réponse ». [Assembleur : UX exige une réponse (§7.4) : sans objet.]
@@ -1372,7 +1370,7 @@ Le bouton touché en 1.8 n'est gardé que si Game design en fait une mesure (c'e
   - les champs nouveaux (annexe B) ;
   - la table des lettres qui imitent les nôtres ;
   - les chaînes nouvelles, vérifiées contre les polices.
-- Les polices et leurs fichiers ne changent pas (mêmes SHA-256).
+- Les polices et leurs fichiers ne changent pas (mêmes SHA-256), sauf si une chaîne nouvelle (nom de groupe, libellé de commission, mot d'UX) demande un caractère absent des polices réduites : la réduction est alors refaite, et ses SHA-256 sont notés (limites de la Direction artistique).
 - Poids estimé de la page : 340 à 550 Ko.
 
 **Ce que les changements touchent dans la page.**
@@ -1416,7 +1414,7 @@ Environ les deux tiers du code sont repris sans changement :
 - **§8.9, §8.11, §8.13** : inchangés.
 - La note « Qui, durée, droits » garde le texte du §8.9 de `simulation.md`, avec une phrase de plus à la fin de son paragraphe « Qui voit vos réponses » : « Les boutons Apple et Google de l'écran du compte sont dessinés : ils ne se connectent à rien, et la page n'envoie rien à Apple ni à Google. » Le reste ne change pas : l'avis du cercle n'est vu que du porteur (confirmé par Juridique).
 
-*[Assembleur : Front-end ajoute au chargement un arrêt V6 (§8.8), dont le repère d'UX au §8.11 n'est pas écrit.]*
+- **Arrêt V6** (§8.8) : l'arrêt 1 du §8.11 de  (à confirmer par UX)
 
 ### 8.10 Arrêter l'essai (UX)
 
@@ -1510,7 +1508,7 @@ Fin du carnet
 - les champs de l'annexe B ;
 - le format canonique du résumé de l'histoire (V6) ;
 - la trace étendue :
-  - une partie « histoire » : par jour, les cartes, les devinettes, les points ; par semaine, les titres ; à l'arrivée, les curseurs, les tempéraments et Le Pas de Côté ;
+  - une partie « histoire » : par jour, les cartes, les devinettes, les points et Le Pas de Côté de chaque révélation ; par semaine, les titres ; à l'arrivée, les curseurs et les tempéraments ;
   - des séances marquées « saut », avec le rattrapage.
 
 L'auteur du programme de contrôle relit ce schéma.
@@ -1586,7 +1584,7 @@ L'auteur du programme de contrôle relit ce schéma.
     - (g) la publication est un remplacement : trois fichiers, image identique ;
     - (h) mise en page, à toutes les tailles : la page d'arrivée, 1.8, la page du saut, le rattrapage, le graphique, la barre, la ligne de règle, la liste des titres passés (elle défile dans l'écran du jeu, jamais la page), deux lettres sur une marque de curseur ;
     - (i) durées : celle du saut, et celle de chaque texte du rattrapage, y compris après une fermeture de l'app au milieu ;
-    - **(j) nouveau, performance** : temps de l'histoire au chargement, et temps par geste sur la partie témoin la plus longue, dans Chromium ralenti quatre fois et dans la passe WebKit. Un dépassement des budgets du §8.8 est un défaut.
+    - **(j) nouveau, performance** : temps de l'histoire au chargement, temps du chargement entier (de V1 au premier écran, à comparer aux 2 s de la vue de secours ; un cas du harnais ralentit l'histoire à 3 s et vérifie que la vue de secours n'est jamais dessinée), et temps par geste sur la partie témoin la plus longue, dans Chromium ralenti quatre fois et dans la passe WebKit. Un dépassement des budgets du §8.8 est un défaut.
 15. Les chiffres suivent le calendrier de Game design :
     - semaine 1 : manches T0 à T2 ;
     - semaine 2 : manche T6 ; [renvoi : semaines 14 et 15 du cercle, §0]
@@ -1790,10 +1788,10 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
 **Contenu :**
 - **Version du schéma et graine.** La graine est celle de Game design : préfixe « elenchos-essai-2|graine| », plus l'empreinte du commit de la spécification relue.
 - **Vecteurs de test** : trois, dont un sur une clé de l'histoire (clé choisie par Game design).
-- **Calendrier** : une table, une ligne par séance. Elle donne le jour de la semaine, le type (joué, saut ou clôture ; l'entrée fait partie de la séance 1), les textes révélé, deviné et répondu, la semaine, le dimanche, et les deux points de saut.
+- **Calendrier** : une table, une ligne par jour, de 1 à 15. Elle donne le jour de la semaine, le type (joué, point de saut, sauté ou clôture ; l'entrée fait partie du jour 1), le saut, les textes révélé, deviné et répondu, et ce que le porteur en vit. Les semaines forment une seconde table ; le dimanche se lit au jour de la semaine. Forme exacte : schéma de Back-end, partie 2.4.
 - **Cercle** : son nom, « Amis » ; l'invitant, Valentin (le nom du champ revient à Back-end, puisque le premier fichier écrivait « inviteuse ») ; l'ordre d'arrivée.
 - **Personnages** : les quatre fiches, identiques au premier fichier (contrôle 2).
-- **Histoire** : 91 jours. Chaque jour a un texte abstrait :
+- **Histoire** : 91 jours, de −90 à 0. Les jours −90 à −1 ont chacun un texte abstrait, H1 à H90 ; le jour 0 est celui de T0, un texte joué :
   - un identifiant, une tension, un sens ;
   - si les règles de l'histoire s'en servent, quatre raisons abstraites (côté, pôle), sans aucun mot (Game design le dit) ;
   - les réponses des quatre personnages, les absences et les réponses atypiques ;
@@ -1808,7 +1806,7 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
 - **Réglage** :
   - le facteur du portrait accéléré (3, ou 4 ou 2 si le réglage l'exige ; le contrôle vérifie que la valeur est l'une des trois permises par la spécification : 2, 3 ou 4) ; (arbitrage de l'orchestrateur : la règle de Game design, §5.9, fixe les valeurs ; positions : Game design, 2, 3 ou 4 ; Front-end, 3 ou 4.)
   - la longueur de la barre ;
-  - le nombre de réponses atypiques.
+  - la part de réponses atypiques, α (1/6, 1/4 ou 1/3) ;
 
   Les autres seuils (tempéraments, Pas de Côté, netteté) restent dans la spécification, et chaque programme les tient de son côté. Les lire dans le fichier rendrait le contrôle moins indépendant.
 - **Résumé de l'histoire** : son SHA-256 seulement (V6). Le résumé complet est dans le rapport de scellement.

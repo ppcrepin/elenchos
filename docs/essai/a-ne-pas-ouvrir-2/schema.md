@@ -165,7 +165,7 @@ Ce qu'une semaine compte (§0, fichier caché, point 9) :
 - **Révélations** : les textes révélés pendant ses jours, c'est-à-dire répondus du jour `premier_jour − 2` au jour `dernier_jour − 2`. Exemples : semaine 1, H1 à H5 ; semaine 14, H90 et T0 à T5.
 - **Réponses** : les textes répondus du jour `premier_jour − 1` au jour `dernier_jour − 1`. Exemples : semaine 1, H1 à H6 (six textes, point 9) ; semaine 14, T0 à T6.
 - **Titres** : ils tombent le jour `dernier_jour`, un dimanche.
-- Le jour 15 n'appartient à aucune semaine : T13 n'est compté dans aucune.
+- Le jour 15 n'appartient à aucune semaine : la révélation de T13 n'est comptée dans aucune. Sa réponse (jour 13) compte en semaine 15 (Le Fidèle, phrase de la semaine). La réponse à T14 (jour 14) n'est comptée dans aucune semaine.
 
 Le jour où un texte H est répondu est lu dans `histoire.textes.Hi.jour` (partie 2.6). Celui d'un texte T, dans `calendrier[].repondu`.
 
@@ -251,7 +251,7 @@ Chaque `histoire.textes.Hi` contient :
 
 Mêmes formes que S1, partie 2.4, étendues à tous les textes.
 - **`reponses`** : 108 clés, E1 à E3, H1 à H90, 0 à 14. Sous chaque clé, une entrée par personnage présent : `{"niveau", "raison"}`. Aux trois textes d'entrée, les quatre personnages ont une clé.
-- **`absences.<personnage>`** : les textes, H ou T, où il ne répond pas, dans l'ordre du calendrier.
+- **`absences.<personnage>`** : les textes, H ou T, où il ne répond pas, dans l'ordre du calendrier. Absent au texte du jour j, il ne joue pas non plus la manche du jour j (fichier caché, point 3, 2.4). Dans ce document, « présent » au jour j veut dire « pas absent au texte répondu ce jour-là ».
 - **`reponses_atypiques.<personnage>`** : des objets `{"cote_tire", "texte"}`, dans l'ordre du calendrier.
   - `cote_tire` n'est non nul que si la réponse type était neutre (fichier caché, point 3, 2.3).
   - Les deux réponses atypiques imposées sur H86 y figurent comme les autres. Leur motif ne s'écrit pas : le contrôle le recalcule.
@@ -273,7 +273,7 @@ Mêmes formes que S1, partie 2.4, étendues à tous les textes.
 
 | Clé | Type | Valeurs permises | Qui s'en sert |
 |---|---|---|---|
-| `alpha` | fraction | `"1/6"`, `"1/4"` (par défaut), `"1/3"` | scellement et contrôle (réponses atypiques) ; la page, pour le texte du dévoilement (« une réponse sur {quatre} ») |
+| `alpha` | fraction | `"1/6"`, `"1/4"` (par défaut), `"1/3"` | scellement et contrôle (réponses atypiques) ; la page, pour le texte du dévoilement (« une réponse sur {cinq} » : le mot du nombre 1/α + 1, soit sept, cinq ou quatre ; fichier caché, point 3, 2.3) |
 | `barre` | entier | `16` seulement | la page (§5.8) |
 | `facteur` | entier | `2`, `3` (par défaut) ou `4` | la page et le contrôle (§5.9) |
 | `seuils_stricts` | booléen | | la page et le contrôle (côté attendu du porteur, comme au premier essai) |
@@ -392,6 +392,7 @@ Le résumé contient **tout ce que `calculer` reprend de l'histoire**. Les répo
   - quatre personnages, quatre tensions ;
   - calculés sur l'entrée et sur H1 à H90, avec les poids normaux (§5.1, §5.2) ;
   - c'est à la fois le curseur vu par le porteur au jour 1 (textes répondus jusqu'au jour −1) et le point de départ du curseur « juste avant » du Pas de Côté de T0 ;
+  - pour Le Pas de Côté sur H90 (révélé au jour 1, dans `calculer`), le curseur « juste avant » s'obtient en retirant de ces sommes la réponse à H90, lue dans le fichier ;
   - `c` vaut (2 + Σ w·π) / (4 + Σ w).
 - **`manche_jour_0`** :
   - une clé par personnage présent au jour 0 ;
@@ -417,7 +418,7 @@ Le résumé contient **tout ce que `calculer` reprend de l'histoire**. Les répo
   2. `histoire()` ;
   3. mise en forme canonique du résumé, avec le canonicaliseur qui existe déjà ;
   4. SHA-256 ;
-  5. **V6** : comparaison à `histoire.resume_sha256`. Un écart arrête la page (repère d'UX à écrire, §8.11) ;
+  5. **V6** : comparaison à `histoire.resume_sha256`. Un écart, ou une erreur pendant `histoire()`, arrête la page : arrêt 1 du §8.11 de `simulation.md`, repère V6 (à confirmer par UX) ;
   6. premier écran.
 - **La version témoin** écrit aussi le résumé dans la trace de l'histoire (partie 4.2).
 - **Pas de circularité** : le résumé ne contient aucune empreinte ; il se calcule sans `resume_sha256`.
@@ -512,7 +513,7 @@ Dans ce tableau, « joué » désigne les jours de type `joue`, « point de saut
 
 | Clé | Présente quand | Contenu |
 |---|---|---|
-| `pseudo` | jour 1, après 1.8 | inchangé |
+| `pseudo` | jour 1, écrit avec `compte`, dans la même écriture, à la fin du compte (partie 4.4, règle 6) | inchangé |
 | `consentement` | jour 1, après 1.3 | `true` |
 | `entree` | jour 1 | E1, E2, E3, chacun `{"pari", "reponse"}` (S1) |
 | `compte` | jour 1, à la fin du compte | `"apple"`, `"google"`, `"email_valider"`, `"email_plus_tard"` (D-035 ; ligne « Compte » du §8.12) |
@@ -528,6 +529,7 @@ Dans ce tableau, « joué » désigne les jours de type `joue`, « point de saut
 
 **Visages posés (R10, §0).**
 - `cartes[i].designe` est la dernière valeur posée sur la carte : un membre, `"passe"`, ou `null` si la carte est restée vide.
+- Au premier affichage de Deviner, la page écrit l'objet en une seule écriture : une carte `{"designe": null, "raison": null}` par carte servie, et `validee` à `false`. Ensuite, chaque geste est une seule écriture : poser un visage déjà posé ailleurs vide sa carte d'origine ; `raison` revient à `null` dès que `designe` n'est plus un personnage.
 - `validee` dit si « Valider » a été touché.
 - Une manche non validée compte comme le dit le §0 : un visage posé compte, une passe posée compte comme une passe, une carte vide compte comme passée.
 - `mesures.passer` ne compte que les `"passe"` posées.
@@ -566,7 +568,8 @@ Dans ce tableau, « joué » désigne les jours de type `joue`, « point de saut
   - `surprise` vaut `distance` si `net` est vrai, sinon `rarete` (R3, fichier caché, point 5).
   - `somme_w`, `c` et `l` décrivent le curseur de l'auteur vu par le devineur : entrée et textes répondus jusqu'au jour j − 2, avec les poids propres de l'auteur, facteur compris pour le porteur.
 - **`curseur_porteur`** : vu par un personnage, avec les poids normaux du porteur (fichier caché, point 4).
-- **Inchangés** : `mediane`, `classement`, `departages`, `remplacements`, `places`, `raison_cachee`, `ordre`, `cartes`, `rangs`, `cotes_attendus`, `total`.
+- **Inchangés** : `mediane`, `classement`, `departages`, `remplacements`, `places`, `raison_cachee`, `ordre`, `cartes`, `total`.
+- **`rangs` et `cotes_attendus`** : forme de S1, avec une clé par candidat et pour eux seuls. Les rangs vont de 1 au nombre de candidats : 3 dans l'histoire et dans les manches des personnages au jour 1, 4 ensuite (fichier caché, point 4). `curseur_porteur` vaut `null` quand le porteur n'est pas candidat.
 - **À quatre membres** (histoire, jour 0, et manches des personnages au jour 1) : toutes les réponses possibles sont servies, dans l'ordre de l'étape 1. `remplacements` est alors vide.
 
 #### 4.3.5 Une révélation
@@ -582,7 +585,7 @@ Dans ce tableau, « joué » désigne les jours de type `joue`, « point de saut
 
 **`pas_de_cote`** : les membres qui obtiennent Le Pas de Côté sur le texte révélé (§6, point 7), dans l'ordre des membres. Un tableau vide sinon. Jamais sur l'entrée.
 
-**`avis_cercle`** : `null` sous trois réponses. Il est calculé pour chaque texte T révélé, que la révélation soit lue ou non.
+**`avis_cercle`** : `null` sous trois réponses, et pour H90 (jour 1), texte abstrait sans vote. Il est calculé pour chaque texte T révélé, que la révélation soit lue ou non.
 - Forme : `{"comptes": [5 entiers, du niveau 1 au niveau 5], "ligne": "adopte", "rejete" ou "partage", "milieu": [1 ou 2 niveaux croissants]}`.
 - Calcul : §7.14. La réponse du porteur compte s'il a répondu.
 - Il n'existe que dans les traces témoins, jamais dans le carnet.
@@ -617,11 +620,20 @@ Forme de S1, partie 3.9, avec ces écarts :
 - `reference` : les tensions nettes à la lecture précédente. Au jour 7, c'est l'état après l'entrée.
 - `devenues` : les tensions nettes à la lecture, absentes de `reference`, dont le centre ne vaut pas exactement 1/2.
 - `cas` vaut `"nette"`, `"difference"`, `"egalite"` ou `"floue"`.
-- `poids` : comme dans S1, sur les réponses de la semaine.
+- `poids` : comme dans S1, sur les réponses de la semaine, avec les poids normaux w, sans le facteur. Le facteur multiplie tous les poids d'une semaine : il ne change ni la tension retenue, ni le cas, ni la phrase.
 
 **`temperaments`** : par personnage, `{"neutres", "reponses", "seul_cote", "seul_milieu", "temperaments", "textes_partages", "tres"}`, des entiers et un tableau.
 - Le porteur n'y figure jamais : il n'a pas 56 jours d'ancienneté.
-- Les définitions sont celles du §6, point 8, et du fichier caché, point 7.
+- Les définitions sont celles du §6, point 8, et du fichier caché, point 7. Au dimanche d, pour un personnage p :
+  - fenêtre : les textes révélés du jour d − 55 au jour d, hors E1 à E3, qui ont au moins trois réponses de membres, celle de p comprise, et auxquels p a répondu ;
+  - `reponses` : le nombre de ces textes ;
+  - `neutres` : ceux où p a répondu Neutre ; `tres` : ceux où il a répondu Très défavorable ou Très favorable ;
+  - `seul_cote` : ceux où p est favorable (4, 5) ou défavorable (1, 2) et où aucun autre membre qui a répondu n'est de ce côté ;
+  - `textes_partages` : ceux où les réponses des autres membres comptent au moins une favorable et au moins une défavorable ;
+  - `seul_milieu` : parmi `textes_partages`, ceux où p est le seul à avoir répondu Neutre ;
+  - « autres membres » : tous ceux qui ont répondu au texte, porteur compris ;
+  - conditions : d − `depuis` ≥ 56 et `reponses` ≥ 20 ; sinon `temperaments` est vide, et les décomptes sont écrits quand même ;
+  - L'Original : `seul_cote`/`reponses` ≥ 3/10. Le Pont : `textes_partages` ≥ 6 et `seul_milieu`/`textes_partages` ≥ 1/8. Le Mesuré : `neutres`/`reponses` ≥ 1/3. Le Tranché : `tres`/`reponses` ≥ 1/2. En fractions exactes, seuils compris.
 
 #### 4.3.9 Les sauts
 
@@ -929,7 +941,7 @@ C'est la forme de S1, partie 4.5, sur les 18 textes, avec ces changements :
 **Hors de ces deux rôles, à transmettre**
 - **UX-1** : le repère de l'arrêt V6 (§8.11).
 - **UX-2** : T0, jamais répondu par le porteur, figure-t-il dans l'Historique (5.3, 5.4) ? Les phrases attendues en dépendent.
-- **UX-3** : l'affichage des amendements identiques d'autres groupes. Il n'a pas de champ pour l'instant ; s'il en faut un, le fichier passe en version 6 avant le lot 1.
+- **UX-3** : l'affichage des amendements identiques d'autres groupes. Il n'a pas de champ pour l'instant ; s'il en faut un, il entre dans la version 5 avant le candidat 1 (aucun fichier n'est encore scellé). La version 6 reste réservée au repli (partie 6).
 - **Contenu-1** : les tables des parties 2.10, 2.10 bis et 2.11, et les formes de lignes de la partie 5.1, étape 8.
 - **Contenu-2** : l'auteur d'une raison peut-il être un non-inscrit, et compte-t-il comme « un groupe » ? Le schéma en permet un par texte.
 
