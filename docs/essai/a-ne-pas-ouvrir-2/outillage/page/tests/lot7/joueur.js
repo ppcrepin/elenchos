@@ -238,6 +238,9 @@ async function jouer(s, plan, options) {
     }
 
     if (special && special.type === 'recharge') {
+      // Horloge de l'outil : le passage en arrière-plan est fixé par l'outil, comme pour une fermeture (sinon WebKit
+      // et Chromium ne le signalent pas de la même façon au rechargement).
+      if (plan.horloge) { await s.page.evaluate(() => { Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => 'hidden' }); Object.defineProperty(document, 'hidden', { configurable: true, get: () => true }); document.dispatchEvent(new Event('visibilitychange')); }); }
       await s.page.reload(); await s.page.waitForTimeout(50);
       mem.gestes.push({ n, special: 'recharge', k, ecran: ecran || cadre });
       await noter('rechargement');

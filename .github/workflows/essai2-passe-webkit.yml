@@ -7,12 +7,24 @@
 # Ce que la passe éprouve (harnais/passe-moteur.js, --navigateur webkit) : V1 à V6 dans WebKit ; la trace de l'histoire
 # calculée par WebKit, identique à celle de la page dans Node, du contrôle et du scellement ; les 21 témoins en mode
 # moteur et les 200 parties au hasard (refaites ici depuis leur graine) rejoués par le moteur de WebKit, traces
-# identiques ; la performance (§8.8) ; la vue de secours sans script. Les parties jouées par les écrans (mémoire,
-# rechargements, durées, profil gardé) s'ajouteront quand leur harnais sera écrit.
+# identiques ; la performance (§8.8) ; la vue de secours sans script. Puis les écrans (tests/lot7/controle14.js,
+# --navigateur webkit --sobre), sur la construction rangée dans sorties/construction : contrôle 14 (b) mémoire (ancienne
+# partie absente, présente, les deux clés ; la page du premier essai reconstruite depuis ses sources sur la même
+# mémoire ; profil gardé sur disque, fermé puis rouvert ; « Annuler » sur la page du saut ; rechargement au milieu du
+# rattrapage), (d) « Tout effacer », (i) durées (horloge de l'outil, fermeture de l'app et rechargement au milieu du
+# rattrapage). Le journal des écrans ne dit que « juste » ou « ÉCART » (avec le chemin d'une différence), puis
+# « réussi » ou « échoué ».
+# Case « diagnostic » cochée au lancement : seulement les constructions, une sonde du profil gardé sur disque, puis
+# (b), (d) et (i) étape par étape ; le journal dit où un scénario s'arrête (étape, première ligne de l'erreur de
+# l'outil : geste demandé et noms des boutons affichés), sans aucune valeur du jeu.
 name: Essai 2 - passe WebKit
 on:
   workflow_dispatch:
     inputs:
+      diagnostic:
+        description: "Mode de diagnostic : sonde du profil gardé sur disque, puis (b), (d) et (i) étape par étape"
+        type: boolean
+        default: false
       scelle:
         description: "Fichier scellé (chemin dans le dépôt)"
         type: string
@@ -58,11 +70,13 @@ jobs:
         run: |
           python3 -I "$PAGE/construire.py" --scelle "$SCELLE" --entrees "$ENTREES" --sortie "$RUNNER_TEMP/v1" > /dev/null 2>&1 || { echo "échoué : construction"; exit 1; }
       - name: Parties au hasard, refaites depuis leur graine
+        if: ${{ !inputs.diagnostic }}
         env:
           SCELLE: ${{ inputs.scelle }}
         run: |
           node "$PAGE/temoins/hasard.js" "$SCELLE" "$RUNNER_TEMP/hasard" 200 > /dev/null 2>&1 || { echo "échoué : parties au hasard"; exit 1; }
       - name: Passe WebKit
+        if: ${{ !inputs.diagnostic }}
         env:
           ELENCHOS_PLAYWRIGHT: ${{ runner.temp }}/pw/node_modules/playwright
           TZ: Europe/Paris
@@ -71,3 +85,22 @@ jobs:
           node "$PAGE/harnais/passe-moteur.js" --navigateur webkit --construction "$RUNNER_TEMP/v1" --scelle "$SCELLE" \
             --temoins "$PAGE/temoins" --hasard "$RUNNER_TEMP/hasard" --trace-histoire "$TRACE_HISTOIRE" \
             --rapport-construction "$RAPPORT" 2> /dev/null
+      - name: Construction de la page du premier essai depuis ses sources
+        if: ${{ !cancelled() }}
+        run: |
+          python3 -I docs/essai/a-ne-pas-ouvrir/outillage/page/construire.py --scelle docs/essai/a-ne-pas-ouvrir/fichier-scelle.json \
+            --entrees docs/essai/a-ne-pas-ouvrir/entrees-construction.json --sortie "$RUNNER_TEMP/premier" > /dev/null 2>&1 || { echo "échoué : construction de la page du premier essai"; exit 1; }
+      - name: Passe WebKit des écrans (contrôle 14 b, d, i)
+        if: ${{ !cancelled() }}
+        env:
+          ELENCHOS_PLAYWRIGHT: ${{ runner.temp }}/pw/node_modules/playwright
+          TZ: Europe/Paris
+          DIAGNOSTIC: ${{ inputs.diagnostic && '--diagnostic' || '' }}
+        run: |
+          for sorte in porteur temoin; do
+            attendu=$(sed -n "s|^$sorte/index.html : [0-9]* octets, SHA-256 \([0-9a-f]*\)$|\1|p" "$RAPPORT")
+            obtenu=$(shasum -a 256 "$PAGE/sorties/construction/$sorte/index.html" | cut -d ' ' -f 1)
+            if [ -n "$attendu" ] && [ "$attendu" = "$obtenu" ]; then echo "juste : sorties/construction/$sorte/index.html égal au rapport de construction"; else echo "ÉCART : sorties/construction/$sorte/index.html"; exit 1; fi
+          done
+          node "$PAGE/tests/lot7/controle14.js" "$PAGE/sorties/construction" "$RUNNER_TEMP/premier/porteur/index.html" "$RUNNER_TEMP/ecrans" "$RUNNER_TEMP/captures" b,d,i - \
+            --navigateur webkit --sobre $DIAGNOSTIC 2> /dev/null

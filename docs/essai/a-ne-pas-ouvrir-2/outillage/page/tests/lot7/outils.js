@@ -47,11 +47,13 @@ function hasard(graine) {
   return f;
 }
 
-async function lancer() { return PW.chromium.launch({ args: ['--font-render-hinting=none'] }); }
+/** Navigateur de l'outil : Chromium (sans hinting, comme le harnais d'A) ou WebKit (passe WebKit). */
+async function lancer(type) { return type === 'webkit' ? PW.webkit.launch() : PW.chromium.launch({ args: ['--font-render-hinting=none'] }); }
 
 /**
  * Un contexte (une mémoire) et une page. o.appareil : clé de APPAREILS ; o.sombre ; o.html (octets servis) ;
- * o.horloge : true pour l'horloge de l'outil (page.clock, installée à o.heure) ; o.ralenti : facteur CPU.
+ * o.horloge : true pour l'horloge de l'outil (page.clock, installée à o.heure) ; o.ralenti : facteur CPU ;
+ * o.profil : dossier d'un profil gardé sur disque (contexte persistant), avec o.type ('chromium' | 'webkit').
  */
 async function ouvrir(navigateur, construction, o) {
   o = o || {};
@@ -59,7 +61,7 @@ async function ouvrir(navigateur, construction, o) {
   const reglages = Object.assign({}, PW.devices[ap.nom], { locale: 'fr-FR', timezoneId: 'Europe/Paris', colorScheme: o.sombre ? 'dark' : 'light', serviceWorkers: 'block' });
   delete reglages.defaultBrowserType;
   if (ap.largeur) { reglages.viewport = { width: ap.largeur, height: ap.hauteur }; reglages.screen = { width: ap.largeur, height: ap.hauteur }; }
-  const ctx = o.contexte || await navigateur.newContext(reglages);
+  const ctx = o.contexte || (o.profil ? await PW[o.type || 'chromium'].launchPersistentContext(o.profil, Object.assign({}, reglages, o.type === 'webkit' ? {} : { args: ['--font-render-hinting=none'] })) : await navigateur.newContext(reglages));
   const s = { ctx, construction, refusees: [], erreurs: [], html: o.html || construction.html, appareil: o.appareil || 'iphone15', sombre: !!o.sombre };
   if (!o.contexte) {
     await ctx.addInitScript(`Object.defineProperty(Navigator.prototype, 'standalone', { configurable: true, get: function () { return true; } });`);
@@ -76,7 +78,7 @@ async function ouvrir(navigateur, construction, o) {
   s.servi = () => parent.htmlCourant || s.html;
   parent.htmlCourant = s.html;
   if (o.horloge) { await ctx.clock.install({ time: o.heure || Date.UTC(2026, 9, 19, 8, 0) }); }
-  s.page = await ctx.newPage();
+  s.page = (o.profil && ctx.pages()[0]) || await ctx.newPage();
   if (o.ralenti && o.ralenti > 1) { const cdp = await ctx.newCDPSession(s.page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: o.ralenti }); s.cdp = cdp; }
   s.page.on('pageerror', (e) => s.erreurs.push(String(e && e.stack || e)));
   s.page.on('console', (m) => { if (m.type() === 'error' && !/apple-touch-icon|ERR_BLOCKED_BY_CLIENT/.test(m.text())) { s.erreurs.push('console : ' + m.text()); } });
