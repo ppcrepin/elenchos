@@ -2,7 +2,10 @@
  * joués par les transitions d'etat.js, avec les durées, le carnet de la page (carnet.js) et une copie
  * du carnet au jour 7 (E.releverCopie, CR.texteCopie). Écrit DOSSIER/{journal.json, durees.json,
  * carnet-P.txt, copie-1-P.txt, trace-P.json}.
- *   node temoins/a-interface.js FICHIER_SCELLE DOSSIER */
+ *   node temoins/a-interface.js FICHIER_SCELLE DOSSIER [VARIANTE]
+ * VARIANTE (contrôle 12 : mêmes gestes, seules les réponses du porteur changent, entrée et rattrapage compris) :
+ *   neutre (par défaut, la partie (a)) ; favorable (Très favorable, première raison « pour ») ;
+ *   defavorable (Très défavorable, première raison « contre ») ; raisons (Favorable, une autre raison à chaque texte). */
 'use strict';
 const fs = require('node:fs');
 const path = require('node:path');
@@ -17,7 +20,7 @@ const CR = require(P + '/carnet.js');
 const PT = require(P + '/tests/partie-test.js');
 const OPTIONS_A = require('./options-a.js');
 
-const [, , fichier, dossier] = process.argv;
+const [, , fichier, dossier, variante] = process.argv;
 const octets = new Uint8Array(fs.readFileSync(fichier));
 const scelle = JSON.parse(N.utf8Decoder(octets));
 const cal = C.lire(scelle);
@@ -28,7 +31,13 @@ const cartes = M.cartesServies(scelle, cal, arrivee);
 const releves = [];
 const JOUR_COPIE = cal.sauts[0].reprise; // le premier dimanche (tableau (A) : « Copier mon carnet » au jour 7)
 
-const etat = PT.jouer(scelle, cal, Object.assign({}, OPTIONS_A, { cartes,
+const raisonDe = (t, cote, k) => { const l = scelle.textes[t].considerations.filter(c => !cote || c.cote === cote); return l[k % l.length].rang; };
+const REPONSES = {
+  favorable: (t) => ({ niveau: 5, raison: raisonDe(t, 'pour', 0) }),
+  defavorable: (t) => ({ niveau: 1, raison: raisonDe(t, 'contre', 0) }),
+  raisons: (t, k) => ({ niveau: 4, raison: raisonDe(t, 'pour', k + 1) })
+};
+const etat = PT.jouer(scelle, cal, Object.assign({}, OPTIONS_A, variante && variante !== 'neutre' ? { reponse: REPONSES[variante] } : {}, { cartes,
   copier: (j, e, h) => { if (j === JOUR_COPIE) { releves.push(E.releverCopie(e, cal, h)); } } }));
 const MAINTENANT = 1e9; // horloge de premier plan au moment du relevé : toutes les durées sont closes
 const journal = E.journal(etat, cal, empreinte, { graine: null, id: 'a', mode: 'interface' }, releves);

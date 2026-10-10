@@ -1,6 +1,8 @@
 Le Fidèle du porteur, semaine 14 : a a-interface b c d e f g j k l p q r s t u
 Le Fidèle du porteur, semaine 15 : a a-interface b c d e f g i j p q r s t u
 Pas de Côté du porteur (révélation lue) : e
+R3 : surprise par la distance (curseur net de l’auteur) : a a-interface b c d e f g h i j k l m n o p q r s t u
+R3 : surprise par la rareté (curseur flou) : a a-interface b c d e f g h i j k l m n o p q r s t u
 abandon au jour 1 : h
 abandon au jour 14 : i
 abandon au jour 2 : i

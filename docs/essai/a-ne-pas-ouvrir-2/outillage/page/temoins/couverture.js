@@ -59,6 +59,7 @@ for (const id of ids) {
     }
     if (d.manches) {
       for (const [g, m] of Object.entries(d.manches)) {
+        Object.values(m.possibles).forEach(x => vu(x.net ? 'R3 : surprise par la distance (curseur net de l’auteur)' : 'R3 : surprise par la rareté (curseur flou)', id));
         if (g === 'porteur') {
           vu('manche du porteur à ' + m.cartes.length + ' cartes', id);
           const pl = m.places.map(a => m.possibles[a]);

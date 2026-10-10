@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 # Contrôle 14 (g) : preuve de publication (simulation.md, §9, contrôle 14 g et « Correctif » ; §8.8, les trois
-# fichiers de gh-pages). Lancé par la tâche GitHub Actions `essai-preuve-publication.yml`, depuis la racine du
+# fichiers de gh-pages). Second essai (simulation-2.md, §8.8 « Publication », contrôle 14 g : « la publication est un
+# remplacement ») : même adresse, mêmes trois fichiers, même image ; en plus, si PRECEDENT est donné, le commit de
+# gh-pages du premier essai est un ancêtre du commit donné (gh-pages jamais réécrite).
+# Lancé par la tâche GitHub Actions `essai2-preuve-publication.yml` (`essai-preuve-publication.yml` au premier essai), depuis la racine du
 # dépôt (historique complet, branche gh-pages comprise). Lecture seule : rien n'est écrit dans le dépôt ni poussé.
 #
 # Entrées (variables d'environnement) :
 #   COMMIT   commit de gh-pages attendu (SHA complet, 40 caractères)
 #   ATTENDU  SHA-256 attendu de essai/index.html (64 caractères, recopié du rapport de construction)
 #   DEPOT    propriétaire/dépôt (ppcrepin/elenchos)
+#   PRECEDENT commit de gh-pages publié avant celui-ci (premier essai), facultatif : remplacement sans réécriture
 #   GH_TOKEN jeton éphémère de la tâche, en lecture seule (l'API Pages l'exige) ; jamais écrit au journal
 # Réglables pour un essai local : PAGE_TEST (commit de la page-test v2), ADRESSE (page servie), API, DISTANT (dépôt
 # distant pour lire le sommet de gh-pages), ECART_MIN (secondes, 600).
@@ -18,6 +22,7 @@ set -u
 DEPOT=${DEPOT:-ppcrepin/elenchos}
 COMMIT=${COMMIT:-}
 ATTENDU=${ATTENDU:-}
+PRECEDENT=${PRECEDENT:-}
 PAGE_TEST=${PAGE_TEST:-b5d7d00767ccd682dc791ef139ff48f450b1a8d6} # « Publier la page-test de l'icône (version 2) »
 ADRESSE=${ADRESSE:-https://ppcrepin.github.io/elenchos/essai/}
 API=${API:-https://api.github.com}
@@ -95,6 +100,11 @@ awk -F '\t' '{ split($1, a, " "); print a[1] " " a[2] " " $2 }' "$TRAVAIL/arbre"
 cmp -s "$TRAVAIL/arbre-lu" "$TRAVAIL/arbre-attendu"; arbre=$?
 point $arbre "1. arbre : exactement .nojekyll, essai/index.html et essai/apple-touch-icon.png, fichiers ordinaires"
 if [ "$arbre" != 0 ]; then while IFS= read -r l; do info "dans l'arbre : $l"; done < "$TRAVAIL/arbre-lu"; fi
+if [ -n "$PRECEDENT" ]; then
+  if ! git cat-file -e "$PRECEDENT^{commit}" 2> /dev/null; then git fetch -q --no-tags "$DISTANT" "$PRECEDENT" 2> /dev/null; fi
+  [ "$PRECEDENT" != "$COMMIT" ] && git merge-base --is-ancestor "$PRECEDENT" "$COMMIT" 2> /dev/null
+  point $? "1. remplacement : le commit publié précédent (${PRECEDENT:0:7}) est un ancêtre du commit donné, gh-pages n'a pas été réécrite"
+fi
 if git cat-file blob "$COMMIT:essai/index.html" > "$TRAVAIL/page-git" 2> /dev/null; then sha_page_git=$(sha_de "$TRAVAIL/page-git"); else sha_page_git=absent; fi
 info "SHA-256 de essai/index.html lu par Git : $sha_page_git ($(wc -c < "$TRAVAIL/page-git" 2> /dev/null || echo 0) octets)"
 [ "$sha_page_git" = "$ATTENDU" ]; point $? "1. SHA-256 de l'objet essai/index.html, lu par Git, égal à la valeur attendue"

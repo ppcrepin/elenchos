@@ -1,0 +1,73 @@
+# Outillage du second essai (simulation-2.md, §9, contrôle 14 et 14 j ; « WebKit ») : passe WebKit de la page.
+# Mêmes règles que essai-passe-webkit.yml : lancement manuel seulement ; droits en lecture seule ; aucun secret ; rien de
+# téléversé. La page est reconstruite depuis main, et le SHA-256 des deux versions doit égaler celui du rapport de
+# construction de référence. Le journal ne dit que « juste », « ÉCART » (avec le chemin d'une différence), des durées en
+# ms, et « réussi » ou « échoué » : aucune valeur du jeu ; les sorties de la construction et de l'installation sont tues.
+# Même version de Playwright que le harnais de l'équipe (1.56.1) ; WebKit n'est installé que sur cette machine.
+# Ce que la passe éprouve (harnais/passe-moteur.js, --navigateur webkit) : V1 à V6 dans WebKit ; la trace de l'histoire
+# calculée par WebKit, identique à celle de la page dans Node, du contrôle et du scellement ; les 21 témoins en mode
+# moteur et les 200 parties au hasard (refaites ici depuis leur graine) rejoués par le moteur de WebKit, traces
+# identiques ; la performance (§8.8) ; la vue de secours sans script. Les parties jouées par les écrans (mémoire,
+# rechargements, durées, profil gardé) s'ajouteront quand leur harnais sera écrit.
+name: Essai 2 - passe WebKit
+on:
+  workflow_dispatch:
+    inputs:
+      scelle:
+        description: "Fichier scellé (chemin dans le dépôt)"
+        type: string
+        default: docs/essai/a-ne-pas-ouvrir-2/outillage/scellement/final/fichier-scelle-candidat-final.json
+      entrees:
+        description: "Entrées de construction (chemin dans le dépôt)"
+        type: string
+        default: docs/essai/a-ne-pas-ouvrir-2/entrees-construction.json
+permissions:
+  contents: read
+env:
+  PAGE: docs/essai/a-ne-pas-ouvrir-2/outillage/page
+  TRACE_HISTOIRE: docs/essai/a-ne-pas-ouvrir-2/outillage/scellement/final/trace-histoire-P.json
+  RAPPORT: docs/essai/a-ne-pas-ouvrir-2/outillage/page/sorties/construction/rapport-construction.txt
+jobs:
+  webkit:
+    # macOS fixé : Playwright 1.56.1 ne construit WebKit que jusqu'à macOS 15 (voir essai-passe-webkit.yml).
+    runs-on: macos-15
+    timeout-minutes: 120
+    steps:
+      - name: Machine
+        run: |
+          echo "machine : macOS $(sw_vers -productVersion) ($(sw_vers -buildVersion)), $(uname -m), Darwin $(uname -r), image ${ImageOS:-inconnue} ${ImageVersion:-inconnue}"
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Playwright 1.56.1 et WebKit
+        run: |
+          mkdir "$RUNNER_TEMP/pw"
+          cd "$RUNNER_TEMP/pw"
+          npm init -y > /dev/null
+          npm install --silent --no-audit --no-fund playwright@1.56.1 > /dev/null 2>&1 || { echo "échoué : installation"; exit 1; }
+          npx playwright install webkit > /dev/null 2>&1 || { echo "échoué : installation de WebKit"; exit 1; }
+          node -e "const w = require('playwright-core/lib/server/registry/index').registry.findExecutable('webkit'); const u = (w.downloadURLs || [])[0] || ''; console.log('WebKit de Playwright : ' + ((w.executablePath() || '').match(/webkit-[0-9]+/) || ['inconnu'])[0] + ', construit pour : ' + (u.split('/').pop() || 'inconnu'))" 2> /dev/null || echo "WebKit de Playwright : inconnu"
+      - name: Construction depuis main
+        env:
+          SCELLE: ${{ inputs.scelle }}
+          ENTREES: ${{ inputs.entrees }}
+        run: |
+          python3 -I "$PAGE/construire.py" --scelle "$SCELLE" --entrees "$ENTREES" --sortie "$RUNNER_TEMP/v1" > /dev/null 2>&1 || { echo "échoué : construction"; exit 1; }
+      - name: Parties au hasard, refaites depuis leur graine
+        env:
+          SCELLE: ${{ inputs.scelle }}
+        run: |
+          node "$PAGE/temoins/hasard.js" "$SCELLE" "$RUNNER_TEMP/hasard" 200 > /dev/null 2>&1 || { echo "échoué : parties au hasard"; exit 1; }
+      - name: Passe WebKit
+        env:
+          ELENCHOS_PLAYWRIGHT: ${{ runner.temp }}/pw/node_modules/playwright
+          TZ: Europe/Paris
+          SCELLE: ${{ inputs.scelle }}
+        run: |
+          node "$PAGE/harnais/passe-moteur.js" --navigateur webkit --construction "$RUNNER_TEMP/v1" --scelle "$SCELLE" \
+            --temoins "$PAGE/temoins" --hasard "$RUNNER_TEMP/hasard" --trace-histoire "$TRACE_HISTOIRE" \
+            --rapport-construction "$RAPPORT" 2> /dev/null
