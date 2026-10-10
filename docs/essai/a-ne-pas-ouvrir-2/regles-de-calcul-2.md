@@ -76,7 +76,8 @@
   - Sinon : surprise = rareté (définition du premier essai : médiane des réponses possibles, devineur exclu).
   - q est retiré.
 - **4.3** : inchangé ; la justesse suit D-024 ; la redistribution est celle du premier essai.
-- **4.4** : inchangé. À quatre membres, toutes les réponses sont servies, dans l'ordre de l'étape 1.
+- **4.4** : inchangé.
+- **À quatre membres** (histoire, et manches des personnages au jour 1) : il y a au plus trois réponses possibles ; les étapes 2 et 3 de 4.3 les servent toutes, dans l'ordre de l'étape 1, sans remplacement. Ce n'est pas une règle de plus : la règle générale donne ce résultat.
 - **Constat** : dans l'ordre retenu, le curseur du porteur ne peut être net dans une manche de personnage que pour sa carte de T12 (S), devinée le jour 13, après E1, T3, T6 et T9 ; dans l'ordre R2, seulement pour sa carte de T11 (L). Ailleurs, ses cartes se servent à la rareté.
 
 **6. Portrait du porteur** : W = 3w partout où son portrait est calculé (Moi, Le Cercle, écran d'un proche, phrase nette, Pas de Côté, R3 sur ses cartes), jamais en 3.2. Facteur lu dans le fichier scellé, valeurs permises 2, 3 ou 4.

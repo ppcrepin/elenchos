@@ -382,7 +382,7 @@ Le réglage par défaut :
 
 ### 3.1 La coupure
 
-- **`histoire(scellé)` couvre les jours −90 à 0 inclus.** Elle calcule :
+- **`histoire(scellé, calendrier)` couvre les jours −90 à 0 inclus.** Elle calcule :
   - les manches jouées ces jours-là, celle du jour 0 sur H90 comprise ;
   - les révélations de ces jours-là (H1 à H89) ;
   - les titres des semaines 1 à 13 ;
@@ -477,7 +477,7 @@ Exemple tronqué, valeurs inventées :
 | `version` | entier | `1` |
 | `empreinte_scelle` | hex64 | SHA-256 du fichier scellé |
 | `jours` | objet, clés « -90 » à « 0 » | une entrée par jour (ci-dessous) |
-| `semaines` | tableau de 13 objets | les titres des semaines 1 à 13, avec leurs décomptes : la forme de S1, partie 3.9, sans `phrase_semaine` ni `pas_de_cote`, plus `sans_faute`. Les clés `points`, `raisons`, `tentatives` et `erreurs` portent les quatre personnages. |
+| `semaines` | tableau de 13 objets | les titres des semaines 1 à 13, avec leurs décomptes : la forme de S1, partie 3.9, sans `phrase_semaine` ni `pas_de_cote` ; `sans_faute` suit R7 (§6, point 6), chaque semaine. Les clés `points`, `raisons`, `tentatives` et `erreurs` portent les quatre personnages. |
 | `arrivee` | objet | `{"curseurs", "resume", "resume_sha256", "temperaments"}` |
 
 **`jours.<j>`** vaut `{"manches", "repondu", "revelation"}`.
@@ -899,7 +899,7 @@ C'est la forme de S1, partie 4.5, sur les 18 textes, avec ces changements :
 
 1. **V4** : version 5. La page lit le calendrier, les semaines, les membres, l'invitant et le réglage (facteur, barre, α, seuils stricts). Plus aucun 14, 15, 16 ni 91 n'est écrit en dur.
 2. **Moteur coupé en deux.**
-   - `histoire(scellé)` couvre les jours −90 à 0 et rend le résumé de la partie 3, puis des index de travail que la page peut ajouter en mémoire vive.
+   - `histoire(scellé, calendrier)` couvre les jours −90 à 0 et rend le résumé de la partie 3, puis des index de travail que la page peut ajouter en mémoire vive.
    - Ensuite, V6.
    - `calculer` part du jour 1, révélation de H90 comprise, et lit la manche du jour 0 dans l'état.
 3. **Lecture des champs nouveaux** :
