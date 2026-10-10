@@ -535,7 +535,7 @@ Le §7.9 de la simulation 1 vaut pour un texte entier. Ce qui s'ajoute :
   - {objet} : « C'était une résolution, un texte qui invite le Gouvernement à agir, sans l'y obliger. » (mots d'UX ; la virgule et « l'y » évitent de lire « à [agir sans l'obliger] »).
   - Elle prend la place de {objet} dans les gabarits du tableau ci-dessus : en 2.7d, « Le {date}. C'était une résolution, … » ; en 5.4, « Vote : adopté le {date}. C'était une résolution, … » (ou « rejeté »).
 - **Suite du texte.** Un champ fermé, `vote.suite`, garde un fait du jour même du scrutin qui change le sort du texte entier. Sans lui, une ligne exacte pourrait tromper : un article rejeté qui a fait tomber tout un texte afficherait seulement « C'était un article d'un texte plus long. ».
-  - `texte_tombe` (seulement pour un article rejeté) : « Le texte entier est tombé avec lui. »
+  - `texte_tombe` (seulement pour un article rejeté) : « Avec lui, l'Assemblée a rejeté le texte entier. »
   - `texte_retire` (pour un article ou un amendement) : « Le jour même, le texte entier a été retiré. »
   - `null` dans tous les autres cas : rien.
   - **Place** : la phrase suit {objet} {étape-texte}, en 1.6, 2.7d et 5.4 : « … {objet} {étape-texte} {suite} ». Jamais avant 18h, comme le reste de la ligne du vote.
@@ -1878,7 +1878,7 @@ Conventions d'essai ajoutées le 10 octobre 2026 (arbitrage de l'orchestrateur s
     2. « C'était {Y}. {X} avait répondu la même chose. »
     3. Les trois lignes de l'avis du cercle, le graphique, « Le repère montre où le cercle se coupe en deux. » et sa phrase pour le lecteur d'écran. [Assembleur : « Le repère montre où le cercle se coupe en deux. » est remplacé par « Milieu des réponses » (point 9 ci-dessus).]
     6. « Reprendre la révélation » ; « Revoir la révélation ».
-    7. Les lignes du vote : « C'était un amendement, une modification d'un texte en discussion. » ; « C'était un article d'un texte plus long. » ; « Le Sénat devait encore voter ce texte. » ; « …, avant même l'examen de ses articles. » [Ajout du 10 octobre 2026, conventions d'essai du §7.10 : « C'était une résolution, un texte qui invite le Gouvernement à agir, sans l'y obliger. » ; « Le texte entier est tombé avec lui. » ; « Le jour même, le texte entier a été retiré. »]
+    7. Les lignes du vote : « C'était un amendement, une modification d'un texte en discussion. » ; « C'était un article d'un texte plus long. » ; « Le Sénat devait encore voter ce texte. » ; « …, avant même l'examen de ses articles. » [Ajout du 10 octobre 2026, conventions d'essai du §7.10 : « C'était une résolution, un texte qui invite le Gouvernement à agir, sans l'y obliger. » ; « Avec lui, l'Assemblée a rejeté le texte entier. » ; « Le jour même, le texte entier a été retiré. »]
     8. Les groupes en toutes lettres, dans le gabarit validé ; « sans groupe » ; « Proposé par la commission … ».
     9. Le Sans-Faute dans 4.2, 4.3, 5.2 et 5.5.
     10. Le rond à deux lettres.

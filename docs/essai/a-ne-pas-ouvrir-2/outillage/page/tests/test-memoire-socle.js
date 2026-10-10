@@ -98,7 +98,7 @@ test('Vérifications du chargement : V2, V4 (version, table), V5, V6', () => {
     ['V4', { scelleB64: b64(scelleAvecResume(s => { s.calendrier[5].revele = '2'; })) }],
     ['V4', { scelleB64: N.base64Encoder(N.utf8Encoder(JSON.stringify(scelleAvecResume(), null, 1))) }], // pas canonique
     ['V5', { scelleB64: b64(scelleAvecResume(s => { s.vecteurs_test[1].n += 1; })) }],
-    ['V6', { scelleB64: b64(base) }],                                                  // empreinte du résumé : bouche-trou du fichier de test
+    ['V6', { scelleB64: b64(base) }],                                                  // le résumé du moteur simulé n'est pas celui du fichier
     ['V6', { moteur: { calculer: () => ({}) } }],                                     // moteur sans histoire (lot 1)
     ['V6', { moteur: { histoire: () => { throw new Error('calcul'); }, resume: () => RESUME } }]
   ];
@@ -113,6 +113,25 @@ test('Vérifications du chargement : V2, V4 (version, table), V5, V6', () => {
   x.demarrer();
   assert.ok(Object.isFrozen(x.socle.arrivee()) && Object.isFrozen(x.socle.arrivee().resume));
   assert.ok(!x.st.m.get('elenchos-essai:partie-2').includes('elenchos-essai-resume-histoire'));
+});
+
+test('V6 avec le vrai moteur (lot 2) : l\'histoire du fichier de test passe ; une réponse scellée changée l\'arrête', () => {
+  const M = require('../moteur.js');
+  const x = env({ scelleB64: b64(base), moteur: M });
+  assert.equal(x.demarrer(), 'nouvelle');
+  const arr = x.socle.arrivee();
+  assert.ok(Object.isFrozen(arr) && Object.isFrozen(arr.titres[0].devin.points) && Object.isFrozen(arr.curseurs.Agathe.S.c));
+  assert.throws(() => { 'use strict'; arr.titres[0].devin.titulaire = 'Odile'; });
+  assert.ok(!x.st.m.get('elenchos-essai:partie-2').includes('elenchos-essai-resume-histoire'));
+  // Une seule réponse de l'histoire changée (niveau d'un personnage présent au premier texte) : V6.
+  const autre = JSON.parse(JSON.stringify(base));
+  const h = Object.keys(autre.histoire.textes).filter(t => autre.histoire.textes[t].jour === cal.semaines[0].premier_jour)[0];
+  const p = Object.keys(autre.reponses[h])[0];
+  autre.reponses[h][p].niveau = autre.reponses[h][p].niveau === 5 ? 1 : 5;
+  const y = env({ scelleB64: b64(autre), moteur: M });
+  assert.equal(y.demarrer(), 'arret');
+  assert.deepEqual(y.appels, [['arret', 1, 'V6']]);
+  assert.equal(y.st.length, 0);
 });
 
 test('Mémoire refusée : arrêt 2 ; partie illisible : arrêt 1 (M1), rien n\'est effacé ni réécrit', () => {

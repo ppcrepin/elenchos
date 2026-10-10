@@ -871,7 +871,7 @@ C'est la forme de S1, partie 4.5, sur les 18 textes, avec ces changements :
   - « 2.7d » pour T0 à T13 ;
   - « 5.4 » pour les textes que l'Historique montre (partie 8, point UX-2), et pour la fiche de T14 affichée à la clôture (§7.5, point 2) : pour T14 seulement, les phrases du vote, {suite} comprise, sont permises à partir de l'ouverture de la clôture, jamais avant ;
   - **{objet}** a une phrase de plus, pour `resolution` : « C'était une résolution, un texte qui invite le Gouvernement à agir, sans l'y obliger. » ;
-  - **{suite}** suit {objet} {étape-texte}, en 1.6, 2.7d et 5.4 : « Le texte entier est tombé avec lui. » pour `texte_tombe` ; « Le jour même, le texte entier a été retiré. » pour `texte_retire` ; rien pour `null` ;
+  - **{suite}** suit {objet} {étape-texte}, en 1.6, 2.7d et 5.4 : « Avec lui, l'Assemblée a rejeté le texte entier. » pour `texte_tombe` ; « Le jour même, le texte entier a été retiré. » pour `texte_retire` ; rien pour `null` ;
   - la phrase {suite}, quand elle existe, entre dans `interdites_avant_revelation`, comme la phrase d'étape (jamais avant 18h).
 - **`auteur`** : les quatre formes (§7.11), dont « Proposé par la {libelle}. » et « {nom}, {député | députée} sans groupe ».
 - **`arguments`** : « … de {nom}, {mandat}, {groupe}. », ou « …, {mandat} sans groupe. » ; élision selon la partie 2.11.

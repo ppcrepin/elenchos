@@ -1,28 +1,26 @@
-/* Moteur de la page de l'essai (outillage d'essai, D-001 tenu).
+/* Moteur de la page du second essai (outillage d'essai, D-001 tenu).
  *
- * SECOND ESSAI, ÉTAT AU LOT 1 : copie du moteur du premier essai, pas encore
- * adaptée (lots 2 et 3, instance A). Elle lit encore le fichier scellé en
- * version 4 et le journal en version 3 ; elle sert de base aux lots 2 et 3,
- * qui la remplacent par histoire(scelle, cal), resume(arrivee) et
- * calculer(scelle, cal, arrivee, journal) (contrat : INTERFACE.md).
- * Seul changement du lot 1 : le nombre de raisons est lu dans les données.
- * La validité du journal version 4 est dans journal.js.
+ * ÉTAT AU LOT 2 (histoire) : les règles communes (portrait, manches, révélations,
+ * titres, tempéraments, Pas de Côté), `histoire` et `resume`. `calculer`
+ * (jours de l'essai) arrive au lot 3 ; d'ici là il lève une erreur.
+ * Le moteur du premier essai est gardé dans tests/premier-essai/.
  *
- * Fonctions pures : elles reçoivent le fichier scellé (objet lu), le
- * journal des entrées (schema.md, partie 3.12 : coups, ouvertures,
- * versions, écrans affichés, heures lues pour « En attendant ») et, pour
- * le carnet, les durées mesurées par l'interface. Elles n'accèdent ni à
- * l'écran, ni au stockage, ni à l'horloge, ni au hasard (simulation.md, §9).
+ * Fonctions pures : elles ne lisent ni l'écran, ni la mémoire, ni l'horloge,
+ * ni le hasard (§8.8). Toutes les grandeurs sont exactes (fractions BigInt).
+ * Aucun nombre du calendrier n'est écrit ici : jours, semaines, membres et
+ * textes se lisent dans `cal` (calendrier.js) et le fichier scellé.
  *
- *   calculer(scelle, journal)          -> toutes les grandeurs de la partie 3
- *                                         du schéma, séance par séance
- *   copie(scelle, journal, c, D, dc)   -> copie du carnet en cours d'essai
- *   carnet(scelle, journal, resultats, durees, statut) -> texte du §8.12
- *   validerJournal(scelle, journal)    -> liste des écarts aux règles de
- *                                         validité (partie 3.12)
+ *   histoire(scelle, cal[, collecteur]) -> l'état à l'arrivée (jours de la
+ *        première semaine du cercle à la veille de l'arrivée). Si `collecteur`
+ *        est un objet, il reçoit le détail de chaque jour, de chaque semaine et
+ *        de l'arrivée, pour la trace de l'histoire (trace.js, version témoin).
+ *   resume(arrivee) -> le résumé de la partie 3.2 du schéma (V6), en chaînes
+ *        ASCII et fractions écrites « p/q ».
+ *   regles -> les règles une à une, pour les tests et pour le lot 3.
  *
- * Renvois : « §n » = simulation.md ; « règles §n » = regles-de-calcul.md ;
- * « partie n » = schema.md.
+ * Renvois : « §n » = simulation-2.md ; « caché n » = a-ne-pas-ouvrir-2/
+ * regles-de-calcul-2.md, point n ; « règles 1 §n » = a-ne-pas-ouvrir/
+ * regles-de-calcul.md ; « partie n » = a-ne-pas-ouvrir-2/schema.md.
  */
 'use strict';
 
@@ -33,282 +31,336 @@ if (typeof module !== 'undefined' && module.exports) { var ElenchosNoyau = requi
 var ElenchosMoteur = (function (N) {
   var F = N.Fraction;
 
-  var PERSONNAGES = ['Agathe', 'Nassim', 'Odile', 'Valentin'];
-  var MEMBRES = PERSONNAGES.concat(['porteur']);
+  var PORTEUR = 'porteur';
+  /** Les quatre tensions de l'essai, dans l'ordre S, P, T, L (partie 1.3). */
   var TENSIONS = ['S', 'P', 'T', 'L'];
-  var ENTREE = ['E1', 'E2', 'E3'];
-  var TEXTES = ENTREE.concat(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14']);
 
-  var C95 = F('0.95'), C07 = F('0.07'), C25 = F('0.25'), C70 = F('0.70'), DEUX_CINQ = F(2, 5), TROIS_CINQ = F(3, 5);
-  var DEMI = F(1, 2);
+  /* Constantes des règles (spécification ; jamais lues dans le fichier, annexe B). */
+  var C95 = F('0.95'), C07 = F('0.07'), C25 = F('0.25');
+  var DEMI = F(1, 2), UN_CINQUIEME = F(1, 5), DEUX_CINQ = F(2, 5), TROIS_CINQ = F(3, 5);
+  var SEUIL_NET = F(10);                    // §5.1 : net dès Σw ≥ 10
+  var MIN_TENTATIVES_MYSTERE = 6;           // §6, point 3
+  var MIN_ATTRIBUTIONS_SURPRISE = 4;        // §6, point 5
+  var MIN_JOURS_SANS_FAUTE = 5;             // §6, point 6 (R7)
+  var TEMP = {                              // §6, point 8 (conventions d'essai)
+    fenetre: 56, anciennete: 56, minReponses: 20, minReponsesTexte: 3,
+    original: F(3, 10), pontTextes: 6, pont: F(1, 8), mesure: F(1, 3), tranche: F(1, 2)
+  };
+  var ORDRE_TEMPERAMENTS = ['original', 'pont', 'mesure', 'tranche'];
 
   function ErreurMoteur(message) {
-    var e = new Error(message);
+    var e = new Error('moteur : ' + message);
     e.name = 'ErreurMoteur';
     return e;
   }
   function exiger(cond, message) { if (!cond) { throw ErreurMoteur(message); } }
-
-  function rangMembre(m) { return MEMBRES.indexOf(m); }
-  function trierMembres(liste) { return liste.slice().sort(function (a, b) { return rangMembre(a) - rangMembre(b); }); }
-  function estPersonnage(x) { return PERSONNAGES.indexOf(x) >= 0; }
+  function a(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
 
   /* ------------------------------------------------------------------ */
-  /* Positions, côtés, classement d'une réponse (§0, §5.1)               */
+  /* Positions et portrait (§0, §5.1, §5.2 du premier essai)             */
   /* ------------------------------------------------------------------ */
 
   /** Côté d'un niveau : -1 défavorable, 0 neutre, 1 favorable. */
   function cote(niveau) { return niveau <= 2 ? -1 : (niveau === 3 ? 0 : 1); }
-  /** Valeur v d'une position (§0). */
+  /** Valeur v d'une position. */
   function valeur(niveau) { return F(niveau - 1, 4); }
+  function identiques(r1, r2) { return r1.niveau === r2.niveau && r1.raison === r2.raison; }
 
-  /** §5.1 : classe, poids w et pôle π d'une réponse sur un texte. */
-  function classer(texte, rep) {
+  /** Les raisons d'un texte : `considerations` (texte joué) ou `raisons` (texte abstrait). */
+  function raisonsDe(tx) { return tx.considerations || tx.raisons; }
+  function raisonDeRang(tx, rang) {
+    var l = raisonsDe(tx);
+    for (var i = 0; i < l.length; i++) { if (l[i].rang === rang) { return l[i]; } }
+    throw ErreurMoteur('raison ' + rang + ' absente du texte');
+  }
+
+  /** §5.1 : classe, poids w et pôle π d'une réponse. */
+  function classer(tx, rep) {
     var c = cote(rep.niveau);
     if (c === 0) { return { classe: 'neutre', w: F(0), pole: null }; }
-    var pi = c > 0 ? texte.sens : 1 - texte.sens;
-    var rho = rep.raison === 'aucune' ? 'aucun' : texte.considerations[rep.raison - 1].pole;
-    if (rho === 'aucun') { return { classe: 'penchant', w: F(1, 2), pole: pi }; }
+    var pi = c > 0 ? tx.sens : 1 - tx.sens;
+    var rho = rep.raison === 'aucune' ? 'aucun' : raisonDeRang(tx, rep.raison).pole;
+    if (rho === 'aucun') { return { classe: 'penchant', w: DEMI, pole: pi }; }
     if (rho === pi) { return { classe: 'arbitrage', w: F(1), pole: pi }; }
     return { classe: 'tiraille', w: F(0), pole: null };
   }
 
-  /** §5.2 : curseur sur une liste de {texte, rep} d'une même tension. */
-  function curseur(reponses) {
-    var sw = F(0), swp = F(0);
-    for (var i = 0; i < reponses.length; i++) {
-      var k = classer(reponses[i].texte, reponses[i].rep);
-      sw = sw.plus(k.w);
-      if (k.pole === 1) { swp = swp.plus(k.w); }
-    }
-    var c = F(2).plus(swp).divise(F(4).plus(sw));
-    var l = F.max(C95.moins(C07.fois(sw)), C25);
-    return { somme_w: sw, c: c, l: l, net: sw.supEgal(10) };
+  /** Sommes d'un curseur : Σw et Σw·π (π vaut 0 ou 1). */
+  function sommesVides() { return { sw: F(0), swp: F(0) }; }
+  function ajouter(s, cl, facteur) {
+    if (cl.w.estZero()) { return s; }
+    var w = cl.w.fois(facteur);
+    return { sw: s.sw.plus(w), swp: cl.pole === 1 ? s.swp.plus(w) : s.swp };
+  }
+  /** §5.2 : centre, largeur, netteté. */
+  function curseur(s) {
+    var c = F(2).plus(s.swp).divise(F(4).plus(s.sw));
+    var l = F.max(C95.moins(C07.fois(s.sw)), C25);
+    return { c: c, l: l, net: s.sw.supEgal(SEUIL_NET), somme_w: s.sw };
   }
 
   /* ------------------------------------------------------------------ */
-  /* Contexte : fichier scellé et journal                                */
+  /* Contexte : fichier scellé, calendrier, réponses                     */
   /* ------------------------------------------------------------------ */
 
-  function contexte(scelle, journal) {
-    exiger(scelle && scelle.format === 'elenchos-essai-scelle' && scelle.version === 4, 'fichier scellé : format ou version inattendus');
+  /**
+   * reponsePorteur(t) : la réponse du porteur au texte t, ou null (lot 3 :
+   * lue dans le journal). Dans l'histoire, le porteur n'a pas de réponse.
+   */
+  function contexte(scelle, cal, reponsePorteur) {
+    exiger(scelle && scelle.format === 'elenchos-essai-scelle' && scelle.version === 5, 'fichier scellé : format ou version inattendus');
+    exiger(cal && typeof cal.texteRepondu === 'function', 'calendrier absent');
     var tir = N.creerTirage(scelle.graine);
-    var S = journal.seances;
-    exiger(Array.isArray(S) && S.length >= 1 && S.length <= 16, 'journal : séances absentes');
-    var K = S.length - 1;
+    var membres = cal.membres.slice();
+    var personnages = membres.filter(function (m) { return m !== PORTEUR; });
+    var entree = cal.textesEntree.slice();
+    var facteurPorteur = scelle.reglage.facteur;
+    exiger(Number.isSafeInteger(facteurPorteur) && facteurPorteur >= 1, 'facteur');
+    var premierJour = cal.semaines[0].premier_jour;
 
-    function texte(n) { return scelle.textes[n]; }
-
-    /** Réponse d'un membre à un texte, ou null. */
-    function reponse(membre, n) {
-      if (membre !== 'porteur') {
-        var r = scelle.reponses[n][membre];
-        return r ? r : null;
-      }
-      if (ENTREE.indexOf(n) >= 0) {
-        var e = S[0].coups.entree;
-        return e && e[n] && e[n].reponse ? e[n].reponse : null;
-      }
-      var k = +n;
-      return k <= K && S[k].coups.reponse ? S[k].coups.reponse : null;
+    function texte(t) {
+      var x = a(scelle.textes, t) ? scelle.textes[t] : (a(scelle.histoire.textes, t) ? scelle.histoire.textes[t] : null);
+      exiger(x !== null, 'texte inconnu : ' + t);
+      return x;
+    }
+    function estEntree(t) { return entree.indexOf(t) >= 0; }
+    function reponse(m, t) {
+      if (m === PORTEUR) { return reponsePorteur ? reponsePorteur(t) : null; }
+      exiger(a(scelle.reponses, t), 'réponses absentes : ' + t);
+      var r = a(scelle.reponses[t], m) ? scelle.reponses[t][m] : null;
+      var absent = scelle.absences[m].indexOf(t) >= 0;
+      exiger((r === null) === absent, 'réponse et absence de ' + m + ' au texte ' + t);
+      return r;
+    }
+    /** Un personnage est présent au jour j s'il n'est pas absent au texte répondu ce jour-là (partie 2.7). */
+    function present(m, j) {
+      if (m === PORTEUR) { return true; }
+      var t = cal.texteRepondu(j);
+      return t === null || scelle.absences[m].indexOf(t) < 0;
+    }
+    function facteur(m) { return m === PORTEUR ? facteurPorteur : 1; }
+    function jourDe(t) { return cal.jourDeReponse(t); }
+    function aUnTitre(t) {
+      if (a(scelle.textes, t)) { return true; }
+      return a(scelle.histoire.textes, t) && scelle.histoire.textes[t].fiche !== null;
     }
 
-    /** Réponses d'un membre, sur une tension : entrée et textes 1..jusqua. */
-    function reponsesSur(membre, tension, jusqua) {
-      var liste = [];
-      var noms = ENTREE.slice();
-      for (var n = 1; n <= jusqua; n++) { noms.push(String(n)); }
-      for (var i = 0; i < noms.length; i++) {
-        var t = texte(noms[i]);
-        if (t.tension !== tension) { continue; }
-        var r = reponse(membre, noms[i]);
-        if (r) { liste.push({ texte: t, rep: r, n: noms[i] }); }
+    /* Sommes de chaque membre, par tension, sur l'entrée et les textes répondus
+     * jusqu'au jour d compris, avec ses propres poids (facteur pour le porteur). */
+    var memo = Object.create(null);
+    function sommesJusqua(m, d) {
+      var tab = memo[m];
+      if (!tab) {
+        var s0 = {};
+        TENSIONS.forEach(function (x) { s0[x] = sommesVides(); });
+        entree.forEach(function (t) {
+          var r = reponse(m, t);
+          if (r) { var tx = texte(t); s0[tx.tension] = ajouter(s0[tx.tension], classer(tx, r), facteur(m)); }
+        });
+        tab = memo[m] = { dernier: premierJour - 1, parJour: Object.create(null) };
+        tab.parJour[String(premierJour - 1)] = s0;
       }
-      return liste;
+      if (d < premierJour - 1) { d = premierJour - 1; }
+      while (tab.dernier < d) {
+        var prec = tab.parJour[String(tab.dernier)];
+        var jour = tab.dernier + 1;
+        var suiv = {};
+        TENSIONS.forEach(function (x) { suiv[x] = prec[x]; });
+        var t = cal.texteRepondu(jour);
+        if (t !== null) {
+          var r = reponse(m, t);
+          if (r) { var tx = texte(t); suiv[tx.tension] = ajouter(suiv[tx.tension], classer(tx, r), facteur(m)); }
+        }
+        tab.parJour[String(jour)] = suiv;
+        tab.dernier = jour;
+      }
+      return tab.parJour[String(d)];
     }
 
-    return { scelle: scelle, journal: journal, S: S, K: K, tir: tir, texte: texte, reponse: reponse, reponsesSur: reponsesSur };
+    return {
+      scelle: scelle, cal: cal, tir: tir, membres: membres, personnages: personnages, entree: entree,
+      premierJour: premierJour, texte: texte, estEntree: estEntree, reponse: reponse, present: present,
+      facteur: facteur, jourDe: jourDe, aUnTitre: aUnTitre, sommesJusqua: sommesJusqua,
+      estMembre: function (m, j) { return cal.depuis(m) <= j; }
+    };
   }
 
   /* ------------------------------------------------------------------ */
-  /* Une manche de Deviner (règles §3 et §4, partie 3.6)                 */
+  /* Une manche (§4 ; caché 4 et 5 ; règles 1 §3 et §4 ; partie 4.3.4)   */
   /* ------------------------------------------------------------------ */
-
-  function identiques(a, b) { return a.niveau === b.niveau && a.raison === b.raison; }
 
   function mediane(valeurs) {
-    var v = valeurs.slice().sort(function (a, b) { return a.cmp(b); });
+    var v = valeurs.slice().sort(function (x, y) { return x.cmp(y); });
     var n = v.length;
     if (n % 2 === 1) { return v[(n - 1) / 2]; }
     return v[n / 2 - 1].plus(v[n / 2]).divise(2);
   }
 
-  /** Côté attendu, aligné sur le sens du texte, d'une valeur a (règles §3.2). */
-  function coteAttendu(a, stricts) {
-    if (stricts) { return a.sup(TROIS_CINQ) ? 1 : (a.inf(DEUX_CINQ) ? -1 : 0); }
-    return a.supEgal(TROIS_CINQ) ? 1 : (a.infEgal(DEUX_CINQ) ? -1 : 0);
+  /** Côté attendu, aligné sur le sens du texte, d'une valeur x (règles 1 §3.2). */
+  function coteAttendu(x, stricts) {
+    if (stricts) { return x.sup(TROIS_CINQ) ? 1 : (x.inf(DEUX_CINQ) ? -1 : 0); }
+    return x.supEgal(TROIS_CINQ) ? 1 : (x.infEgal(DEUX_CINQ) ? -1 : 0);
   }
 
-  /** Score d'une carte de côté sigma pour un candidat de côté attendu e (règles §3.3). */
+  /** Score d'une carte de côté sigma pour un candidat de côté attendu e (règles 1 §3.3). */
   function score(sigma, e) {
     if (e !== 'inconnu' && sigma === e) { return 2; }
     if (sigma === 0 || e === 0 || e === 'inconnu') { return 1; }
     return 0;
   }
 
-  /** Raison devinée sur la carte à raison cachée (règles §3.5). */
-  function raisonDevinee(texte, sigma, e) {
-    var liste = [];
-    for (var i = 0; i < texte.considerations.length; i++) { // nombre de raisons lu dans les données (D-034)
-      var cons = texte.considerations[i];
-      if (sigma === 0 || (sigma > 0 && cons.cote === 'pour') || (sigma < 0 && cons.cote === 'contre')) { liste.push(cons); }
-    }
+  /** Raison devinée sur la carte à raison cachée (règles 1 §3.5). */
+  function raisonDevinee(tx, sigma, e) {
+    var liste = raisonsDe(tx).filter(function (r) {
+      return sigma === 0 || (sigma > 0 && r.cote === 'pour') || (sigma < 0 && r.cote === 'contre');
+    });
     if (liste.length === 0) { return 'aucune'; }
     if (e === 1 || e === -1) {
-      var vise = e === 1 ? texte.sens : 1 - texte.sens;
-      for (var j = 0; j < liste.length; j++) { if (liste[j].pole === vise) { return liste[j].rang; } }
+      var vise = e === 1 ? tx.sens : 1 - tx.sens;
+      for (var i = 0; i < liste.length; i++) { if (liste[i].pole === vise) { return liste[i].rang; } }
     }
     for (var k = 0; k < liste.length; k++) { if (liste[k].pole === 'aucun') { return liste[k].rang; } }
     return liste[0].rang;
   }
 
   /**
-   * Manche du devineur g à la séance k (2 à 14), sur le texte k-1.
-   * mancheDe(j, g) rend la manche déjà calculée de g à la séance j < k.
+   * Manche du devineur g au jour j, sur le texte répondu au jour j − 1.
+   * mancheDe(d, g) : la manche déjà calculée de g au jour d < j (pour le côté
+   * attendu du porteur). designations : pour le porteur seulement (lot 3),
+   * tableau de {designe, raison} ou null (Deviner jamais affiché).
    */
-  function calculerManche(ctx, g, k, mancheDe) {
-    var tir = ctx.tir;
-    var n = String(k - 1);
+  function calculerManche(ctx, g, j, mancheDe, designations) {
+    var tir = ctx.tir, cal = ctx.cal;
+    var n = cal.texteRepondu(j - 1);
+    exiger(n !== null, 'jour ' + j + ' : pas de texte à deviner');
     var tx = ctx.texte(n);
-    var auteurs = MEMBRES.filter(function (m) { return m !== g && ctx.reponse(m, n) !== null; });
+    var cj = String(j);
+    // Candidats : les autres membres qui l'étaient le jour où le texte a été répondu (§4, caché 4).
+    var candidats = ctx.membres.filter(function (m) { return m !== g && ctx.estMembre(m, j - 1); });
+    var auteurs = candidats.filter(function (m) { return ctx.reponse(m, n) !== null; });
 
-    // §4.2 : grandeurs de surprise
+    // R3 (caché 5, 4.2) : curseur de l'auteur vu au jour j (textes répondus jusqu'au jour j − 2), ses propres poids.
     var possibles = {};
     var xs = [];
-    auteurs.forEach(function (a) {
-      var rep = ctx.reponse(a, n);
+    auteurs.forEach(function (au) {
+      var rep = ctx.reponse(au, n);
       var v = valeur(rep.niveau);
       var x = tx.sens === 1 ? v : F(1).moins(v);
-      var cur = curseur(ctx.reponsesSur(a, tx.tension, k - 2));
-      var q = C95.moins(cur.l).divise(C70);
-      var distance = x.moins(cur.c).abs();
-      possibles[a] = { niveau: rep.niveau, raison: rep.raison, somme_w: cur.somme_w, x: x, c: cur.c, l: cur.l, q: q, distance: distance };
+      var cur = curseur(ctx.sommesJusqua(au, j - 2)[tx.tension]);
+      possibles[au] = { c: cur.c, distance: x.moins(cur.c).abs(), l: cur.l, net: cur.net, niveau: rep.niveau,
+        raison: rep.raison, rarete: null, somme_w: cur.somme_w, surprise: null, x: x };
       xs.push(x);
     });
     var med = auteurs.length ? mediane(xs) : null;
-    auteurs.forEach(function (a) {
-      var p = possibles[a];
+    auteurs.forEach(function (au) {
+      var p = possibles[au];
       p.rarete = p.x.moins(med).abs();
-      p.surprise = p.q.fois(p.distance).plus(F(1).moins(p.q).fois(p.rarete));
+      p.surprise = p.net ? p.distance : p.rarete;
     });
 
-    // §4.3, étape 1 : classement
-    var classement = auteurs.slice().sort(function (a, b) {
-      var c = possibles[b].surprise.cmp(possibles[a].surprise);
+    // Classement (règles 1 §4.3, étape 1).
+    var classement = auteurs.slice().sort(function (x, y) {
+      var c = possibles[y].surprise.cmp(possibles[x].surprise);
       if (c !== 0) { return c; }
-      return tir.comparer(tir.t('surprise|' + g + '|' + k + '|' + a), tir.t('surprise|' + g + '|' + k + '|' + b));
+      return tir.comparer(tir.t('surprise|' + g + '|' + cj + '|' + x), tir.t('surprise|' + g + '|' + cj + '|' + y));
     });
     var departages = 0;
     for (var i = 0; i < classement.length;) {
-      var j = i + 1;
-      while (j < classement.length && possibles[classement[j]].surprise.egal(possibles[classement[i]].surprise)) { j++; }
-      if (j - i >= 2) { departages++; }
-      i = j;
+      var k = i + 1;
+      while (k < classement.length && possibles[classement[k]].surprise.egal(possibles[classement[i]].surprise)) { k++; }
+      if (k - i >= 2) { departages++; }
+      i = k;
     }
 
-    // étape 2 : places
+    // Places (étape 2). À quatre membres, il y a au plus trois réponses : toutes sont servies, dans l'ordre de l'étape 1.
     var places = classement.slice(0, 2);
-    if (classement.length >= 3) { places.push(tir.plusPetit(classement.slice(2), 'hasard|' + g + '|' + k + '|')); }
+    if (classement.length >= 3) { places.push(tir.plusPetit(classement.slice(2), 'hasard|' + g + '|' + cj + '|')); }
 
-    // étape 3 : cartes identiques remplacées
+    // Cartes identiques remplacées (étape 3).
     var remplacements = [];
-    function rep(a) { return possibles[a]; }
     for (;;) {
       var avecJumelle = places.filter(function (p) {
-        return places.some(function (o) { return o !== p && identiques(rep(o), rep(p)); });
+        return places.some(function (o) { return o !== p && identiques(possibles[o], possibles[p]); });
       });
       if (avecJumelle.length === 0) { break; }
       var eligibles = classement.filter(function (r) {
-        return places.indexOf(r) < 0 && places.every(function (p) { return !identiques(rep(r), rep(p)); });
+        return places.indexOf(r) < 0 && places.every(function (p) { return !identiques(possibles[r], possibles[p]); });
       });
       if (eligibles.length === 0) { break; }
       var ecartee = avecJumelle.reduce(function (pire, p) { return classement.indexOf(p) > classement.indexOf(pire) ? p : pire; });
       var place = places.indexOf(ecartee);
       places[place] = eligibles[0];
-      remplacements.push({ place: place + 1, ecartee: ecartee, remplacante: eligibles[0] });
+      remplacements.push({ ecartee: ecartee, place: place + 1, remplacante: eligibles[0] });
     }
 
-    // §4.4 : carte à raison cachée
+    // Carte à raison cachée (règles 1 §4.4).
     var cachee = null;
     if (places.length) {
       cachee = places[places.length - 1];
-      if (rep(cachee).raison === 'aucune') {
-        var avecRaison = places.filter(function (p) { return rep(p).raison !== 'aucune'; });
+      if (possibles[cachee].raison === 'aucune') {
+        var avecRaison = places.filter(function (p) { return possibles[p].raison !== 'aucune'; });
         if (avecRaison.length) {
           cachee = avecRaison.reduce(function (pire, p) { return classement.indexOf(p) > classement.indexOf(pire) ? p : pire; });
         }
       }
     }
 
-    // §4.5 : ordre d'affichage
-    var ordre = tir.melanger(places, 'ordre|' + g + '|' + k + '|');
-    var cartes = ordre.map(function (a) {
-      return { auteur: a, auteur_compte: a, cachee: a === cachee, designe: null, raison_devinee: null };
+    // Ordre d'affichage (§4.5 du premier essai).
+    var ordre = tir.melanger(places, 'ordre|' + g + '|' + cj + '|');
+    var cartes = ordre.map(function (au) {
+      return { auteur: au, auteur_compte: au, cachee: au === cachee, designe: null, raison_devinee: null };
     });
 
-    var resultat = {
-      texte: n, possibles: possibles, mediane: med, classement: classement, departages: departages,
-      remplacements: remplacements, places: places.slice(), raison_cachee: cachee, ordre: ordre, cartes: cartes,
-      rangs: null, cotes_attendus: null, curseur_porteur: null, total: null
+    var res = {
+      candidats: candidats, cartes: cartes, classement: classement, cotes_attendus: null, curseur_porteur: null,
+      departages: departages, mediane: med, ordre: ordre, places: places.slice(), possibles: possibles,
+      raison_cachee: cachee, rangs: null, remplacements: remplacements, texte: n, total: null
     };
 
-    if (g === 'porteur') {
-      // coups.deviner vaut null tant que la page n'a pas encore montré la manche
-      // (elle demande alors au moteur les cartes à servir) ; sinon, une entrée par carte.
-      var dev = ctx.S[k].coups.deviner;
-      exiger(dev === null || (Array.isArray(dev) && dev.length === cartes.length),
-        'séance ' + k + ' : coups.deviner doit avoir ' + cartes.length + ' élément(s)');
-      if (dev) { cartes.forEach(function (c, i) { c.designe = dev[i].designe; c.raison_devinee = dev[i].raison; }); }
+    if (g === PORTEUR) {
+      exiger(designations === null || designations === undefined || (Array.isArray(designations) && designations.length === cartes.length),
+        'jour ' + j + ' : le porteur doit avoir ' + cartes.length + ' carte(s)');
+      if (designations) { cartes.forEach(function (c, x) { c.designe = designations[x].designe; c.raison_devinee = designations[x].raison; }); }
     } else {
-      devinerPersonnage(ctx, g, k, tx, resultat, mancheDe);
+      devinerPersonnage(ctx, g, j, tx, res, mancheDe);
     }
-    redistribuer(resultat.cartes, possibles);
-    return resultat;
+    redistribuer(cartes, possibles, ctx.membres);
+    return res;
   }
 
-  /** Règles §3 : rangs, côtés attendus, affectation, raison devinée. */
-  function devinerPersonnage(ctx, g, k, tx, res, mancheDe) {
+  /** Règles 1 §3 et caché 4 : rangs, côtés attendus, affectation, raison devinée. */
+  function devinerPersonnage(ctx, g, j, tx, res, mancheDe) {
     var tir = ctx.tir;
-    var candidats = MEMBRES.filter(function (m) { return m !== g; });
-    var melange = tir.melanger(candidats, 'devine|' + g + '|' + k + '|');
+    var candidats = res.candidats;
     var rangs = {};
-    melange.forEach(function (c, i) { rangs[c] = i + 1; });
+    tir.melanger(candidats, 'devine|' + g + '|' + j + '|').forEach(function (c, i) { rangs[c] = i + 1; });
 
-    // côté attendu de chaque candidat (règles §3.2)
     var cotes = {};
     var curPorteur = null;
     candidats.forEach(function (x) {
-      if (x !== 'porteur') {
+      if (x !== PORTEUR) {
         var p = F(ctx.scelle.personnages[x].profil[tx.tension].position, 100);
         cotes[x] = coteAttendu(tx.sens === 1 ? p : F(1).moins(p), false);
         return;
       }
-      var vues = [];
-      for (var j = 1; j <= k - 2; j++) {
-        var nj = String(j);
-        var tj = ctx.texte(nj);
-        if (tj.tension !== tx.tension) { continue; }
-        var m = mancheDe(j + 1, g);
-        if (m && m.places.indexOf('porteur') >= 0) { vues.push({ texte: tj, rep: ctx.reponse('porteur', nj) }); }
+      // Le porteur : ses réponses vues dans les cartes de g, déjà révélées, même tension, poids normaux (caché 4).
+      var s = sommesVides();
+      for (var d = ctx.premierJour; d <= j - 1; d++) {
+        var m = mancheDe(d, g);
+        if (!m || m.places.indexOf(PORTEUR) < 0) { continue; }
+        var tm = ctx.texte(m.texte);
+        if (tm.tension !== tx.tension) { continue; }
+        s = ajouter(s, classer(tm, ctx.reponse(PORTEUR, m.texte)), 1);
       }
-      var cur = curseur(vues);
-      curPorteur = { somme_w: cur.somme_w, c: cur.c };
+      var cur = curseur(s);
+      curPorteur = { c: cur.c, somme_w: cur.somme_w };
       if (cur.somme_w.estZero()) { cotes[x] = 'inconnu'; return; }
       cotes[x] = coteAttendu(tx.sens === 1 ? cur.c : F(1).moins(cur.c), ctx.scelle.reglage.seuils_stricts === true);
     });
 
-    // affectation de total maximal, la plus petite dans l'ordre lexicographique des rangs (règles §3.4)
+    // Affectation de total maximal, la plus petite dans l'ordre lexicographique des rangs (règles 1 §3.4).
     var cartes = res.cartes;
+    var nb = candidats.length;
     var parRang = {};
     candidats.forEach(function (c) { parRang[rangs[c]] = c; });
     var meilleur = null, meilleurTotal = -1;
@@ -318,14 +370,14 @@ var ElenchosMoteur = (function (N) {
         if (total > meilleurTotal) { meilleurTotal = total; meilleur = suite.slice(); }
         return;
       }
-      for (var r = 1; r <= 4; r++) {
+      for (var r = 1; r <= nb; r++) {
         if (suite.indexOf(r) >= 0) { continue; }
-        var cand = parRang[r];
         suite.push(r);
-        explorer(i + 1, total + score(cote(res.possibles[cartes[i].auteur].niveau), cotes[cand]));
+        explorer(i + 1, total + score(cote(res.possibles[cartes[i].auteur].niveau), cotes[parRang[r]]));
         suite.pop();
       }
     })(0, 0);
+    exiger(cartes.length === 0 || meilleur !== null, 'affectation impossible');
     cartes.forEach(function (c, i) { c.designe = parRang[meilleur[i]]; });
     cartes.forEach(function (c) {
       if (c.cachee) { c.raison_devinee = raisonDevinee(tx, cote(res.possibles[c.auteur].niveau), cotes[c.designe]); }
@@ -336,858 +388,355 @@ var ElenchosMoteur = (function (N) {
     res.total = cartes.length ? meilleurTotal : 0;
   }
 
-  /** Règles §4.3, étape 4 : auteurs redistribués entre cartes identiques. */
-  function redistribuer(cartes, possibles) {
+  /** Règles 1 §4.3, étape 4 : auteurs redistribués entre cartes identiques. */
+  function redistribuer(cartes, possibles, membres) {
     var vus = [];
+    var ordreMembre = function (x, y) { return membres.indexOf(x) - membres.indexOf(y); };
     cartes.forEach(function (c, i) {
       if (vus.indexOf(i) >= 0) { return; }
       var groupe = [];
-      cartes.forEach(function (d, j) { if (identiques(possibles[c.auteur], possibles[d.auteur])) { groupe.push(j); } });
-      groupe.forEach(function (j) { vus.push(j); });
+      cartes.forEach(function (d, k) { if (identiques(possibles[c.auteur], possibles[d.auteur])) { groupe.push(k); } });
+      groupe.forEach(function (k) { vus.push(k); });
       if (groupe.length < 2) { return; }
-      var auteurs = groupe.map(function (j) { return cartes[j].auteur; });
+      var auteurs = groupe.map(function (k) { return cartes[k].auteur; });
       var pris = [], libres = [];
-      groupe.forEach(function (j) {
-        var d = cartes[j].designe;
-        if (d !== null && d !== 'passe' && auteurs.indexOf(d) >= 0) { cartes[j].auteur_compte = d; pris.push(d); }
-        else { libres.push(j); }
+      groupe.forEach(function (k) {
+        var d = cartes[k].designe;
+        if (d !== null && d !== 'passe' && auteurs.indexOf(d) >= 0 && pris.indexOf(d) < 0) { cartes[k].auteur_compte = d; pris.push(d); }
+        else { libres.push(k); }
       });
-      var restants = trierMembres(auteurs.filter(function (a) { return pris.indexOf(a) < 0; }));
-      libres.forEach(function (j, i) { cartes[j].auteur_compte = restants[i]; });
+      var restants = auteurs.filter(function (x) { return pris.indexOf(x) < 0; }).sort(ordreMembre);
+      libres.forEach(function (k, x) { cartes[k].auteur_compte = restants[x]; });
     });
   }
 
   /* ------------------------------------------------------------------ */
-  /* Révélation (partie 3.7)                                             */
+  /* Révélation (§4 ; D-024 ; R5 ; R11 ; parties 4.3.5)                  */
   /* ------------------------------------------------------------------ */
-
-  function semaineDeRevelation(k) { return k >= 3 && k <= 7 ? 1 : (k >= 8 && k <= 14 ? 2 : null); }
 
   function estPasse(designe) { return designe === 'passe' || designe === null; }
 
-  function calculerRevelation(ctx, k, manchesVeille, revelations) {
+  /** Juste (D-024) : le membre désigné a donné exactement la réponse de la carte. */
+  function estJuste(ctx, manche, carte) {
+    if (estPasse(carte.designe)) { return false; }
+    var r = ctx.reponse(carte.designe, manche.texte);
+    return r !== null && identiques(r, manche.possibles[carte.auteur]);
+  }
+
+  /** Verdicts du porteur (partie 4.3.5). */
+  function verdict(juste, jumeau, raison, passe) {
+    if (passe) { return 'passe'; }
+    if (!juste) { return 'faux'; }
+    return (jumeau ? 'jumeau' : 'juste') + (raison ? '_et_raison' : '');
+  }
+
+  /**
+   * Le Pas de Côté (§6, point 7 ; caché 8) sur le texte t : arbitrage net à
+   * l'opposé du curseur net et clairement penché de son auteur, tel qu'il était
+   * juste avant (toutes ses réponses antérieures, entrée comprise, ses poids).
+   */
+  function pasDeCote(ctx, t) {
+    if (ctx.estEntree(t)) { return []; }
+    var tx = ctx.texte(t);
+    var jour = ctx.jourDe(t);
+    return ctx.membres.filter(function (m) {
+      var r = ctx.reponse(m, t);
+      if (r === null) { return false; }
+      var cl = classer(tx, r);
+      if (cl.classe !== 'arbitrage') { return false; }
+      var cur = curseur(ctx.sommesJusqua(m, jour - 1)[tx.tension]);
+      if (!cur.net || cur.c.moins(DEMI).abs().inf(UN_CINQUIEME)) { return false; }
+      return cur.c.sup(DEMI) ? cl.pole === 0 : cl.pole === 1;
+    });
+  }
+
+  /**
+   * Révélation du jour j : le texte répondu au jour j − 2, avec les manches
+   * jouées au jour j − 1. revelations[d] : révélations déjà calculées (points de la semaine).
+   */
+  function calculerRevelation(ctx, j, manchesVeille, revelations) {
+    var cal = ctx.cal;
+    var t = cal.texteRepondu(j - 2);
+    var semaine = cal.semaineDuJour(j);
     var devineurs = {};
     Object.keys(manchesVeille).forEach(function (g) {
       var m = manchesVeille[g];
-      var justes = m.cartes.map(function (c) { return c.designe === c.auteur_compte; });
+      var justes = [], jumeaux = [], verdicts = [];
       var trouvee = null;
-      var verdicts = [];
-      m.cartes.forEach(function (c, i) {
-        var raisonJuste = c.cachee && justes[i] && c.raison_devinee !== null && c.raison_devinee === m.possibles[c.auteur].raison;
-        if (c.cachee) { trouvee = !!raisonJuste; }
-        verdicts.push(estPasse(c.designe) ? 'passe' : (justes[i] ? (raisonJuste ? 'juste_et_raison' : 'juste') : 'faux'));
+      m.cartes.forEach(function (c) {
+        var juste = estJuste(ctx, m, c);
+        var jumeau = juste && c.designe !== c.auteur_compte;
+        var raison = c.cachee && juste && c.raison_devinee !== null && c.raison_devinee === m.possibles[c.auteur].raison;
+        if (c.cachee) { trouvee = raison; }
+        justes.push(juste);
+        jumeaux.push(jumeau);
+        verdicts.push(verdict(juste, jumeau, raison, estPasse(c.designe)));
       });
       var points = justes.filter(Boolean).length;
-      var sem = semaineDeRevelation(k);
       var ps = null;
-      if (sem !== null) {
+      if (semaine !== null) {
         ps = points;
-        for (var j = (sem === 1 ? 3 : 8); j < k; j++) {
-          if (revelations[j] && revelations[j].devineurs[g]) { ps += revelations[j].devineurs[g].points; }
+        var w = cal.semaine(semaine);
+        for (var d = w.premier_jour; d < j; d++) {
+          if (revelations[d] && revelations[d].devineurs[g]) { ps += revelations[d].devineurs[g].points; }
         }
       }
-      devineurs[g] = { justes: justes, raison_trouvee: m.cartes.length ? trouvee : null, points: points,
-        points_semaine: ps, verdicts: g === 'porteur' ? verdicts : null };
+      devineurs[g] = { jumeaux: jumeaux, justes: justes, points: points, points_semaine: ps,
+        raison_trouvee: m.cartes.length ? trouvee : null, verdicts: g === PORTEUR ? verdicts : null };
     });
-    return { texte: String(k - 2), devineurs: devineurs };
+    return { devineurs: devineurs, pas_de_cote: pasDeCote(ctx, t), texte: t };
   }
 
   /* ------------------------------------------------------------------ */
-  /* Phrases du jour et de la semaine (§5.5 à §5.7)                      */
+  /* Titres d'une semaine (§6 ; caché 9 ; partie 4.2 et S1 3.9)          */
   /* ------------------------------------------------------------------ */
 
-  var POLES = {
-    S: ['la sécurité', 'la liberté'], P: ['la précaution', "l'innovation"],
-    T: ['la tradition', 'le changement'], L: ['la décision locale', 'la décision nationale']
-  };
-  var ENTRE = { S: 'sécurité et liberté', P: 'précaution et innovation', T: 'tradition et changement', L: 'local et national' };
+  /**
+   * Titres de la semaine `numero`. revelations[d] et manches[d] : calculés pour
+   * tous les jours de la semaine. Membres de la semaine : ceux qui le sont à son
+   * dernier jour, dans l'ordre des visages.
+   */
+  function calculerTitres(ctx, numero, revelations, manches) {
+    var cal = ctx.cal, tir = ctx.tir;
+    var w = cal.semaine(numero);
+    var membres = ctx.membres.filter(function (m) { return ctx.estMembre(m, w.dernier_jour); });
+    var jours = [];
+    for (var d = w.premier_jour; d <= w.dernier_jour; d++) { if (revelations[d]) { jours.push(d); } }
+    function mancheRevelee(d, g) { return manches[d - 1] && manches[d - 1][g] ? manches[d - 1][g] : null; }
+    function zero() { var o = {}; membres.forEach(function (m) { o[m] = 0; }); return o; }
 
-  function aPole(p) { return p.indexOf('le ') === 0 ? 'au ' + p.slice(3) : 'à ' + p; }
-
-  function phraseDuJour(tension, cl) {
-    var p = POLES[tension];
-    var s;
-    if (cl.classe === 'arbitrage') { s = "Aujourd'hui, tu as fait passer " + p[cl.pole] + ' avant ' + p[1 - cl.pole] + '.'; }
-    else if (cl.classe === 'penchant') { s = "Aujourd'hui, tu as penché vers " + p[cl.pole] + '.'; }
-    else if (cl.classe === 'tiraille') { s = "Aujourd'hui, tu as donné du poids " + aPole(p[0]) + ' comme ' + aPole(p[1]) + '.'; }
-    else { s = "Aujourd'hui, tu n'as penché ni vers " + p[0] + ' ni vers ' + p[1] + '.'; }
-    return N.typographier(s);
-  }
-
-  function portraitDe(ctx, jusqua) {
-    var tensions = {};
-    TENSIONS.forEach(function (t) { tensions[t] = curseur(ctx.reponsesSur('porteur', t, jusqua)); });
-    var nets = TENSIONS.filter(function (t) { return tensions[t].net; });
-    var flous = TENSIONS.filter(function (t) { return !tensions[t].net; }).sort(function (a, b) {
-      var c = tensions[a].l.cmp(tensions[b].l);
-      return c !== 0 ? c : TENSIONS.indexOf(a) - TENSIONS.indexOf(b);
+    // Le Sans-Faute (R7) : des cartes au moins cinq jours, aucune erreur ni passe ces jours-là.
+    var sansFaute = membres.filter(function (m) {
+      var avecCartes = jours.filter(function (d) { var x = mancheRevelee(d, m); return x && x.cartes.length >= 1; });
+      if (avecCartes.length < MIN_JOURS_SANS_FAUTE) { return false; }
+      return avecCartes.every(function (d) { return revelations[d].devineurs[m].justes.every(Boolean); });
     });
-    return { tensions: tensions, ordre_moi: nets.concat(flous) };
-  }
 
-  function phraseSemaine(ctx, semaine, k) {
-    var premiers = semaine === 1 ? [1, 6] : [7, 13];
-    var poids = {};
-    TENSIONS.forEach(function (t) { poids[t] = { pole0: F(0), pole1: F(0), comptent: 0 }; });
-    for (var n = premiers[0]; n <= premiers[1]; n++) {
-      var r = ctx.reponse('porteur', String(n));
-      if (!r) { continue; }
-      var tx = ctx.texte(String(n));
-      var cl = classer(tx, r);
-      if (cl.w.estZero()) { continue; }
-      var pt = poids[tx.tension];
-      if (cl.pole === 0) { pt.pole0 = pt.pole0.plus(cl.w); } else { pt.pole1 = pt.pole1.plus(cl.w); }
-      pt.comptent += 1;
-    }
-    // Curseur net impossible dans l'essai (§5.4, §5.7) : s'il se présentait, on s'arrête sans choisir de lecture.
-    TENSIONS.forEach(function (t) { exiger(!curseur(ctx.reponsesSur('porteur', t, Math.min(k, 14))).net, 'phrase de la semaine : curseur net, impossible dans l\'essai (§5.4)'); });
-    var tension = null, cas, phrase;
-    var retenues = TENSIONS.filter(function (t) { return poids[t].comptent >= 2; });
-    if (retenues.length === 0) {
-      cas = 'floue';
-      phrase = 'Cette semaine, ton portrait est encore flou. Chaque réponse le précise.';
-    } else {
-      tension = retenues.reduce(function (best, t) {
-        var ecartT = poids[t].pole0.moins(poids[t].pole1).abs(), ecartB = poids[best].pole0.moins(poids[best].pole1).abs();
-        var c = ecartT.cmp(ecartB);
-        if (c !== 0) { return c > 0 ? t : best; }
-        var totT = poids[t].pole0.plus(poids[t].pole1), totB = poids[best].pole0.plus(poids[best].pole1);
-        return totT.sup(totB) ? t : best;
-      });
-      var pw = poids[tension];
-      var diff = pw.pole0.cmp(pw.pole1);
-      if (diff === 0) {
-        cas = 'egalite';
-        phrase = 'Cette semaine, entre ' + ENTRE[tension] + ", tu as penché autant d'un côté que de l'autre.";
-      } else {
-        cas = 'difference';
-        phrase = 'Cette semaine, entre ' + ENTRE[tension] + ', tu as le plus souvent choisi ' + POLES[tension][diff > 0 ? 0 : 1] + '.';
-      }
-    }
-    return { poids: poids, tension: tension, cas: cas, phrase: N.typographier(phrase) };
-  }
-
-  /* ------------------------------------------------------------------ */
-  /* Le dimanche (§6, partie 3.9)                                        */
-  /* ------------------------------------------------------------------ */
-
-  function titulaireParTirage(ctx, cle, liste) { return ctx.tir.plusPetit(liste, cle); }
-
-  function calculerDimanche(ctx, k, revelations, manches) {
-    var semaine = k === 7 ? 1 : 2;
-    var seances = [];
-    for (var j = (semaine === 1 ? 3 : 8); j <= k; j++) { seances.push(j); }
-
-    // Le Sans-Faute (semaine 2)
-    var sansFaute = [];
-    if (semaine === 2) {
-      MEMBRES.forEach(function (m) {
-        var ok = seances.every(function (j) {
-          var mv = manches[j - 1] && manches[j - 1][m];
-          return mv && mv.cartes.length >= 1 && mv.cartes.every(function (c) { return !estPasse(c.designe) && c.designe === c.auteur_compte; });
-        });
-        if (ok) { sansFaute.push(m); }
-      });
-    }
-
-    // Le Pas de Côté : ne peut pas se déclencher (Σw ≤ 6 < 10 pour tout curseur de l'essai, règles §4.2).
-    MEMBRES.forEach(function (m) {
-      TENSIONS.forEach(function (t) {
-        exiger(!curseur(ctx.reponsesSur(m, t, Math.min(k, 14))).net, 'Pas de Côté : curseur net, impossible dans l\'essai (§5.4)');
+    // Le Devin : le plus de points, au moins un ; puis les raisons cachées trouvées ; puis t("devin|w|prénom").
+    var points = zero(), raisons = zero();
+    jours.forEach(function (d) {
+      var dv = revelations[d].devineurs;
+      Object.keys(dv).forEach(function (m) {
+        if (!a(points, m)) { return; }
+        points[m] += dv[m].points;
+        if (dv[m].raison_trouvee === true) { raisons[m] += 1; }
       });
     });
-
-    // Le Devin
-    var points = {}, raisons = {};
-    MEMBRES.forEach(function (m) { points[m] = 0; raisons[m] = 0; });
-    seances.forEach(function (j) {
-      var dv = revelations[j].devineurs;
-      Object.keys(dv).forEach(function (m) { points[m] += dv[m].points; if (dv[m].raison_trouvee === true) { raisons[m] += 1; } });
-    });
-    var devin = { titulaire: null, points: points, raisons: raisons, departage: 'aucun' };
-    var maxP = Math.max.apply(null, MEMBRES.map(function (m) { return points[m]; }));
+    var devin = { departage: 'aucun', points: points, raisons: raisons, titulaire: null };
+    var maxP = Math.max.apply(null, membres.map(function (m) { return points[m]; }));
     if (maxP >= 1) {
-      var tete = MEMBRES.filter(function (m) { return points[m] === maxP; });
+      var tete = membres.filter(function (m) { return points[m] === maxP; });
       if (tete.length === 1) { devin.titulaire = tete[0]; }
       else {
         var maxR = Math.max.apply(null, tete.map(function (m) { return raisons[m]; }));
         var tete2 = tete.filter(function (m) { return raisons[m] === maxR; });
         if (tete2.length === 1) { devin.titulaire = tete2[0]; devin.departage = 'raisons'; }
-        else { devin.titulaire = titulaireParTirage(ctx, 'devin|' + semaine + '|', tete2); devin.departage = 'tirage'; }
+        else { devin.titulaire = tir.plusPetit(tete2, 'devin|' + numero + '|'); devin.departage = 'tirage'; }
       }
     }
 
-    // Le Mystère
-    var tentatives = {}, erreurs = {};
-    MEMBRES.forEach(function (m) { tentatives[m] = 0; erreurs[m] = 0; });
-    seances.forEach(function (j) {
-      var mv = manches[j - 1];
-      Object.keys(mv).forEach(function (g) {
-        mv[g].cartes.forEach(function (c) {
+    // Le Mystère et la surprise : tentatives, passes exclues ; une erreur désigne un membre dont la réponse diffère.
+    var tentatives = zero(), erreurs = zero();
+    var attributions = {}, errs = {};
+    jours.forEach(function (d) {
+      var t = revelations[d].texte;
+      attributions[t] = 0; errs[t] = 0;
+      var dv = revelations[d].devineurs;
+      Object.keys(dv).forEach(function (g) {
+        var m = mancheRevelee(d, g);
+        m.cartes.forEach(function (c, i) {
           if (estPasse(c.designe)) { return; }
-          tentatives[c.auteur_compte] += 1;
-          if (c.designe !== c.auteur_compte) { erreurs[c.auteur_compte] += 1; }
+          var faux = !dv[g].justes[i];
+          attributions[t] += 1;
+          if (faux) { errs[t] += 1; }
+          if (a(tentatives, c.auteur_compte)) {
+            tentatives[c.auteur_compte] += 1;
+            if (faux) { erreurs[c.auteur_compte] += 1; }
+          }
         });
       });
     });
-    var mystere = { titulaire: null, tentatives: tentatives, erreurs: erreurs, departage: 'aucun' };
-    var eligibles = MEMBRES.filter(function (m) { return tentatives[m] >= 6 && erreurs[m] >= 1; }); // §6, points 3 et 9
-    if (eligibles.length) {
+    var mystere = { departage: 'aucun', erreurs: erreurs, tentatives: tentatives, titulaire: null };
+    var elig = membres.filter(function (m) { return tentatives[m] >= MIN_TENTATIVES_MYSTERE && erreurs[m] >= 1; });
+    if (elig.length) {
       var prop = function (m) { return F(erreurs[m], tentatives[m]); };
-      var maxProp = eligibles.reduce(function (b, m) { return prop(m).sup(b) ? prop(m) : b; }, prop(eligibles[0]));
-      var t1 = eligibles.filter(function (m) { return prop(m).egal(maxProp); });
+      var maxProp = elig.reduce(function (b, m) { return prop(m).sup(b) ? prop(m) : b; }, prop(elig[0]));
+      var t1 = elig.filter(function (m) { return prop(m).egal(maxProp); });
       if (t1.length === 1) { mystere.titulaire = t1[0]; }
       else {
         var maxE = Math.max.apply(null, t1.map(function (m) { return erreurs[m]; }));
         var t2 = t1.filter(function (m) { return erreurs[m] === maxE; });
         if (t2.length === 1) { mystere.titulaire = t2[0]; mystere.departage = 'erreurs'; }
-        else { mystere.titulaire = titulaireParTirage(ctx, 'mystere|' + semaine + '|', t2); mystere.departage = 'tirage'; }
+        else { mystere.titulaire = tir.plusPetit(t2, 'mystere|' + numero + '|'); mystere.departage = 'tirage'; }
       }
     }
 
-    // Le Fidèle
-    var bornes = semaine === 1 ? [1, 6] : [7, 13];
-    var fideles = MEMBRES.filter(function (m) {
-      for (var n = bornes[0]; n <= bornes[1]; n++) { if (!ctx.reponse(m, String(n))) { return false; } }
-      return true;
+    // Le Fidèle : tous les textes de la semaine répondus depuis son arrivée (§6, point 4).
+    var repondus = cal.textesRepondusSemaine(numero);
+    var fideles = membres.filter(function (m) {
+      return repondus.every(function (t) { return ctx.jourDe(t) < cal.depuis(m) || ctx.reponse(m, t) !== null; });
     });
 
-    // Surprise de la semaine
-    var attributions = {}, errs = {};
-    seances.forEach(function (j) {
-      var n = String(j - 2);
-      attributions[n] = 0; errs[n] = 0;
-      var mv = manches[j - 1];
-      Object.keys(mv).forEach(function (g) {
-        mv[g].cartes.forEach(function (c) {
-          if (estPasse(c.designe)) { return; }
-          attributions[n] += 1;
-          if (c.designe !== c.auteur_compte) { errs[n] += 1; }
-        });
-      });
+    // La surprise de la semaine : seul un texte qui a un titre peut l'être (caché 9).
+    var surprise = { attributions: attributions, departage: 'aucun', erreurs: errs, texte: null };
+    var textesElig = Object.keys(attributions).filter(function (t) {
+      return ctx.aUnTitre(t) && attributions[t] >= MIN_ATTRIBUTIONS_SURPRISE && errs[t] >= 1;
     });
-    var surprise = { texte: null, attributions: attributions, erreurs: errs, departage: 'aucun' };
-    var textesElig = Object.keys(attributions).filter(function (n) { return attributions[n] >= 4 && errs[n] >= 1; }) // §6, points 5 et 9
-      .sort(function (a, b) { return +a - +b; });
     if (textesElig.length) {
-      var pr = function (n) { return F(errs[n], attributions[n]); };
-      var mx = textesElig.reduce(function (b, n) { return pr(n).sup(b) ? pr(n) : b; }, pr(textesElig[0]));
-      var s1 = textesElig.filter(function (n) { return pr(n).egal(mx); });
+      var pr = function (t) { return F(errs[t], attributions[t]); };
+      var mx = textesElig.reduce(function (b, t) { return pr(t).sup(b) ? pr(t) : b; }, pr(textesElig[0]));
+      var s1 = textesElig.filter(function (t) { return pr(t).egal(mx); });
       if (s1.length === 1) { surprise.texte = s1[0]; }
       else {
-        var me = Math.max.apply(null, s1.map(function (n) { return errs[n]; }));
-        var s2 = s1.filter(function (n) { return errs[n] === me; });
+        var me = Math.max.apply(null, s1.map(function (t) { return errs[t]; }));
+        var s2 = s1.filter(function (t) { return errs[t] === me; });
         if (s2.length === 1) { surprise.texte = s2[0]; surprise.departage = 'erreurs'; }
-        else { surprise.texte = titulaireParTirage(ctx, 'surprise-semaine|' + semaine + '|', s2); surprise.departage = 'tirage'; }
+        else { surprise.texte = tir.plusPetit(s2, 'surprise-semaine|' + numero + '|'); surprise.departage = 'tirage'; }
       }
     }
 
-    return {
-      semaine: semaine, sans_faute: sansFaute, pas_de_cote: [], devin: devin, mystere: mystere,
-      fidele: { titulaires: fideles }, surprise: surprise, phrase_semaine: phraseSemaine(ctx, semaine, k)
-    };
+    return { devin: devin, fidele: { titulaires: fideles }, mystere: mystere, sans_faute: sansFaute, semaine: numero, surprise: surprise };
   }
 
   /* ------------------------------------------------------------------ */
-  /* Calcul d'une partie                                                 */
+  /* Tempéraments (§6, point 8 ; caché 7 ; partie 4.3.8)                 */
   /* ------------------------------------------------------------------ */
 
-  function minutesR(m) { return (m - 1080 + 1440) % 1440; }
-
-  /** Personnages affichés dans « Déjà joué aujourd'hui » à la séance k (§7.5). */
-  function visagesDejaJoue(scelle, k, heure) {
-    var r = minutesR(N.lireHeure(heure));
-    return PERSONNAGES.filter(function (p) {
-      return !!scelle.reponses[String(k)][p] && minutesR(N.lireHeure(scelle.personnages[p].heure_de_jeu)) <= r;
-    });
-  }
-
-  /** Compte à rebours de 2.5 (§7.5) : minutes jusqu'au prochain 18:00. */
-  function minutesAvantDixHuit(heure) { return 1440 - minutesR(N.lireHeure(heure)); }
-
-  /**
-   * Toutes les grandeurs de la partie 3 du schéma, séance par séance, sauf
-   * les durées (entrées de l'interface) et le carnet. Les fractions sont des
-   * objets Fraction ; trace() les écrit « p/q ».
-   */
-  function calculer(scelle, journal) {
-    var ctx = contexte(scelle, journal);
-    var S = ctx.S, K = ctx.K;
-    var manches = {};     // manches[k][g]
-    var revelations = {}; // revelations[k]
-    var dimanches = {};
-    function mancheDe(j, g) { return manches[j] ? (manches[j][g] || null) : null; }
-
-    for (var k = 2; k <= Math.min(K, 14); k++) {
-      manches[k] = {};
-      var devineurs = ['porteur'].concat(PERSONNAGES.filter(function (p) { return !!scelle.reponses[String(k)][p]; }));
-      for (var i = 0; i < devineurs.length; i++) { manches[k][devineurs[i]] = calculerManche(ctx, devineurs[i], k, mancheDe); }
-    }
-    for (var kr = 3; kr <= Math.min(K, 15); kr++) { revelations[kr] = calculerRevelation(ctx, kr, manches[kr - 1], revelations); }
-    [7, 14].forEach(function (kd) { if (kd <= K) { dimanches[kd] = calculerDimanche(ctx, kd, revelations, manches); } });
-
-    var seances = S.map(function (s, k) {
-      exiger(s.k === k, 'séance ' + k + ' : numéro inattendu');
-      var res = { k: k, entree: null, revelation: revelations[k] || null, manches: manches[k] || null, phrase_jour: null,
-        attente: null, dimanche: dimanches[k] || null };
-      if (k === 0) {
-        var textes = {}, justes = 0;
-        ENTREE.forEach(function (e) {
-          var inv = scelle.reponses[e][scelle.cercle.inviteuse];
-          var ce = s.coups.entree && s.coups.entree[e] ? s.coups.entree[e] : { pari: null };
-          var juste = ce.pari === null || ce.pari === undefined ? null : cote(ce.pari) === cote(inv.niveau);
-          if (juste === true) { justes++; }
-          textes[e] = { inviteuse: { niveau: inv.niveau, raison: inv.raison }, juste: juste };
-        });
-        res.entree = { textes: textes, justes: justes };
-      }
-      if (k >= 1 && k <= 14 && s.coups.reponse) {
-        var cl = classer(ctx.texte(String(k)), s.coups.reponse);
-        res.phrase_jour = { texte: String(k), classe: cl.classe, w: cl.w, pole: cl.w.estZero() ? null : cl.pole,
-          phrase: phraseDuJour(ctx.texte(String(k)).tension, cl) };
-      }
-      if (s.attente) {
-        exiger(k >= 1 && k <= 14, 'séance ' + k + ' : « En attendant » hors des séances 1 à 14');
-        res.attente = { lectures: s.attente.lectures.map(function (l) { return { heure: l.heure, visages: visagesDejaJoue(scelle, k, l.heure) }; }) };
-      }
-      res.portrait = portraitDe(ctx, Math.min(k, 14));
-      var vus = {};
-      PERSONNAGES.forEach(function (p) {
-        vus[p] = {};
-        TENSIONS.forEach(function (t) {
-          var c = curseur(ctx.reponsesSur(p, t, k - 2));
-          vus[p][t] = { somme_w: c.somme_w, c: c.c, l: c.l };
-        });
-      });
-      res.curseurs_vus = vus;
-      var surprises = {};
-      PERSONNAGES.forEach(function (p) {
-        var liste = [];
-        for (var n = Math.min(k - 2, 13); n >= 1; n--) {
-          var mp = manches[n + 1] && manches[n + 1].porteur;
-          if (!mp) { continue; }
-          mp.cartes.forEach(function (c) {
-            if (c.auteur_compte === p && !estPasse(c.designe) && c.designe !== p) { liste.push(String(n)); }
-          });
-        }
-        surprises[p] = liste;
-      });
-      res.surprises_proches = surprises;
-      res.mesures = mesuresSansDurees(s, k, revelations[k] || null, S[k - 1] || null,
-        revelations[k] ? manches[k - 1].porteur : null);
-      return res;
-    });
-
-    return { seances: seances, agregats: agregats(ctx, revelations, manches, dimanches), revelations: revelations,
-      manches: manches, dimanches: dimanches };
-  }
-
-  /** Mesures de la séance k (partie 3.10), durées laissées nulles :
-   *  l'interface les mesure, trace() les place. mancheRevelee : la manche
-   *  du porteur révélée à cette séance (jouée à la séance k-1). */
-  function mesuresSansDurees(s, k, revelation, precedente, mancheRevelee) {
-    var dev = s.coups.deviner;
-    var mesure = {
-      // une séance affichée mais pas encore touchée n'a pas d'ouverture (page en cours de jeu)
-      jours_ecoules: precedente && precedente.ouverture && s.ouverture ? N.joursEcoules(precedente.ouverture, s.ouverture) : null,
-      duree_seance: null, duree_deviner: null, duree_repondre: null,
-      relire: s.coups.relire,
-      passer: Array.isArray(dev) ? dev.filter(function (d) { return d.designe === 'passe'; }).length : 0,
-      revelation_verdicts: null, revelation_raison_tentee: null
-    };
-    if (revelation) {
-      mesure.revelation_verdicts = revelation.devineurs.porteur.verdicts.slice();
-      var cachee = mancheRevelee.cartes.filter(function (x) { return x.cachee; })[0];
-      mesure.revelation_raison_tentee = cachee ? cachee.raison_devinee !== null : null;
-    }
-    return mesure;
-  }
-
-  function agregats(ctx, revelations, manches, dimanches) {
-    var K = ctx.K;
-    var reponduRevele = 0;
-    for (var n = 1; n <= 13 && n + 2 <= K; n++) { if (ctx.reponse('porteur', String(n))) { reponduRevele++; } }
-    if (reponduRevele < 5) {
-      return { justesse_personnages_entre_eux: null, justesse_personnages_sur_porteur: null, titres_tires_au_sort: null };
-    }
-    var ee = { justes: 0, total: 0 }, sp = { justes: 0, total: 0 };
-    for (var k = 3; k <= Math.min(K, 15); k++) {
-      var mv = manches[k - 1];
-      Object.keys(mv).forEach(function (g) {
-        if (g === 'porteur') { return; }
-        mv[g].cartes.forEach(function (c) {
-          var cible = c.auteur_compte === 'porteur' ? sp : ee;
-          cible.total += 1;
-          if (c.designe === c.auteur_compte) { cible.justes += 1; }
-        });
-      });
-    }
-    var tirages = 0;
-    Object.keys(dimanches).forEach(function (kd) {
-      var d = dimanches[kd];
-      [d.devin, d.mystere, d.surprise].forEach(function (t) { if (t.departage === 'tirage') { tirages++; } });
-    });
-    return { justesse_personnages_entre_eux: ee.total ? ee : null, justesse_personnages_sur_porteur: sp.total ? sp : null,
-      titres_tires_au_sort: tirages };
-  }
-
-  /* ------------------------------------------------------------------ */
-  /* Carnet (§8.12)                                                      */
-  /* ------------------------------------------------------------------ */
-
-  var LIBELLES = {
-    q1: { aurais_pu: 'J’aurais pu trouver', ne_pouvais_pas: 'Je ne pouvais pas trouver', les_deux: 'Les deux' },
-    q2: { premier_coup: 'Compris du premier coup', en_relisant: 'Compris en relisant', pas_tout: 'Pas tout compris' },
-    q3: { revelation: 'La révélation', titres: 'Les titres', phrase_semaine: 'Ma phrase de la semaine', deviner: 'Deviner',
-      donner_avis: 'Donner mon avis', phrase_jour: 'Ma phrase du jour', aucun: 'Aucun' },
-    arret: { pas_amuse: 'Je ne m’amuse pas', pas_compris: 'Je ne comprends pas tout', pas_le_temps: 'Je n’ai pas le temps',
-      vu_assez: 'J’ai vu ce que je voulais voir', autre: 'Autre raison' },
-    f2: { de_plus_en_plus: 'De plus en plus amusant', toujours_autant: 'Toujours aussi amusant',
-      de_moins_en_moins: 'De moins en moins amusant', jamais: 'Jamais amusant' }
-  };
-  var VERDICTS = { juste_et_raison: 'juste avec la raison', juste: 'juste', faux: 'faux', passe: 'passé' };
-  var POLES_F1 = { S: ['Sécurité', 'Liberté individuelle'], P: ['Précaution', 'Innovation'], T: ['Tradition', 'Changement'], L: ['Local', 'National'] };
-
-  function libelle(table, code) {
-    exiger(Object.prototype.hasOwnProperty.call(LIBELLES[table], code), 'code inconnu ' + table + ' : ' + code);
-    return LIBELLES[table][code];
-  }
-
-  /** « {m} min {ss} s » (§8.12). */
-  function duree(d) {
-    exiger(Number.isSafeInteger(d) && d >= 0, 'durée invalide : ' + d);
-    return Math.floor(d / 60) + ' min ' + N.deux(d % 60) + ' s';
-  }
-
-  function titulaires(liste) {
-    if (!liste.length) { return 'pas attribué'; }
-    return N.listeEt(trierMembres(liste).map(function (m) { return m === 'porteur' ? 'vous' : m; }));
-  }
-
-  function caseF1(t, v) {
-    var p = POLES_F1[t];
-    if (v === 'pole0') { return p[0]; }
-    if (v === 'pole1') { return p[1]; }
-    if (v === 'milieu') { return 'au milieu entre ' + p[0] + ' et ' + p[1]; }
-    exiger(v === null, 'case F1 invalide : ' + v);
-    return 'sans choix entre ' + p[0] + ' et ' + p[1];
-  }
-
-  /**
-   * Texte du carnet (§8.12). statut : {type: 'fin'} | {type: 'arret'} |
-   * {type: 'copie', k}. durees : une entrée {k, duree_seance,
-   * duree_deviner, duree_repondre} par séance du journal donné.
-   */
-  function carnet(scelle, journal, R, durees, statut) {
-    var S = journal.seances, K = S.length - 1;
-    var l = [];
-    l.push('Carnet de l’essai Elenchos');
-    l.push('Ce carnet ne contient ni vos avis ni leurs raisons, ni vos phrases du jour ou de la semaine, ni votre portrait, ni votre pseudo.');
-    l.push('Les titres et les chiffres « Sur tout l’essai » dépendent en partie de vos avis, mais seulement en cumul, jamais texte par texte.');
-    if (statut.type === 'fin') {
-      exiger(K === 15, 'carnet : fin avant la clôture');
-      l.push('Essai mené jusqu’à la clôture.');
-    } else if (statut.type === 'arret') {
-      exiger(journal.arret && journal.arret.k === K, 'carnet : arrêt incohérent');
-      l.push(K === 0 ? 'Essai arrêté à l’entrée.' : 'Essai arrêté au jour ' + K + '.');
-      l.push('Raison de l’arrêt : ' + (journal.arret.raison === null ? 'pas de réponse' : libelle('arret', journal.arret.raison)) + '.');
-    } else {
-      exiger(statut.type === 'copie' && statut.k === K, 'carnet : copie incohérente');
-      l.push(K === 0 ? 'Essai en cours : carnet copié à l’entrée.' : 'Essai en cours : carnet copié au jour ' + K + '.');
-    }
-
-    for (var k = 0; k <= K; k++) {
-      var s = S[k], m = R.seances[k].mesures, d = durees[k];
-      exiger(d && d.k === k, 'carnet : durées absentes pour la séance ' + k);
-      l.push('');
-      l.push(k === 0 ? 'Entrée' : (k === 15 ? 'Clôture' : 'Jour ' + k + ' sur 14'));
-      var h = +s.ouverture.slice(11, 13);
-      l.push('Ouverture : ' + N.dateCarnet(s.ouverture) + ', entre ' + h + 'h00 et ' + h + 'h59.');
-      if (k >= 1) { l.push('Jours écoulés depuis l’ouverture précédente : ' + m.jours_ecoules + '.'); }
-      exiger(Array.isArray(s.versions) && s.versions.length >= 1, 'carnet : versions absentes, séance ' + k);
-      l.push('Version de la page : ' + s.versions.join(', puis ') + '.');
-      var suite = '';
-      if (d.duree_deviner !== null && d.duree_repondre !== null) { suite = ', dont ' + duree(d.duree_deviner) + ' pour deviner et ' + duree(d.duree_repondre) + ' pour répondre'; }
-      else if (d.duree_deviner !== null) { suite = ', dont ' + duree(d.duree_deviner) + ' pour deviner'; }
-      else if (d.duree_repondre !== null) { suite = ', dont ' + duree(d.duree_repondre) + ' pour répondre'; }
-      l.push('Durée : ' + duree(d.duree_seance) + suite + '.');
-      if (k >= 2 && k <= 14) { l.push('Boutons touchés : Relire ' + m.relire + ' fois, Passer ' + m.passer + ' fois.'); }
-      if (k >= 3) {
-        var v = m.revelation_verdicts;
-        if (v.length === 0) { l.push('Révélation : aucune carte.'); }
-        else {
-          var ligne = 'Révélation : ' + v.map(function (x) { return VERDICTS[x]; }).join(', ') + '.';
-          if (m.revelation_raison_tentee !== null) { ligne += ' Raison cachée : ' + (m.revelation_raison_tentee ? 'tentée' : 'pas tentée') + '.'; }
-          l.push(ligne);
-        }
-      }
-      var q = s.coups.carnet;
-      if (q.q1 !== null) { l.push('Vos erreurs à la révélation : ' + libelle('q1', q.q1) + '.'); }
-      if (q.q2 !== null) { l.push((k === 0 ? 'Les trois textes et leurs raisons' : 'Le texte du jour et ses quatre raisons') + ' : ' + libelle('q2', q.q2) + '.'); }
-      if (q.q3 !== null) { l.push('Votre moment préféré : ' + libelle('q3', q.q3) + '.'); }
-
-      if (k === 7 || k === 14) {
-        var dm = R.seances[k].dimanche;
-        l.push('');
-        l.push('Titres de la semaine ' + dm.semaine);
-        if (dm.semaine === 2) { l.push('Le Sans-Faute : ' + titulaires(dm.sans_faute) + '.'); }
-        l.push('Le Devin : ' + titulaires(dm.devin.titulaire ? [dm.devin.titulaire] : []) + '.');
-        l.push('Le Mystère : ' + titulaires(dm.mystere.titulaire ? [dm.mystere.titulaire] : []) + '.');
-        l.push('Le Fidèle : ' + titulaires(dm.fidele.titulaires) + '.');
+  function calculerTemperaments(ctx, d, p) {
+    var cal = ctx.cal;
+    var n = { neutres: 0, reponses: 0, seul_cote: 0, seul_milieu: 0, textes_partages: 0, tres: 0 };
+    for (var jour = d - (TEMP.fenetre - 1); jour <= d; jour++) {
+      var t = cal.texteRepondu(jour - 2); // révélé ce jour-là
+      if (t === null || ctx.estEntree(t)) { continue; }
+      var rp = ctx.reponse(p, t);
+      if (rp === null) { continue; }
+      var autres = ctx.membres.filter(function (m) { return m !== p; })
+        .map(function (m) { return ctx.reponse(m, t); }).filter(function (r) { return r !== null; });
+      if (autres.length + 1 < TEMP.minReponsesTexte) { continue; }
+      var cp = cote(rp.niveau);
+      n.reponses += 1;
+      if (cp === 0) { n.neutres += 1; }
+      if (rp.niveau === 1 || rp.niveau === 5) { n.tres += 1; }
+      if (cp !== 0 && !autres.some(function (r) { return cote(r.niveau) === cp; })) { n.seul_cote += 1; }
+      var partage = autres.some(function (r) { return cote(r.niveau) > 0; }) && autres.some(function (r) { return cote(r.niveau) < 0; });
+      if (partage) {
+        n.textes_partages += 1;
+        if (cp === 0 && !autres.some(function (r) { return cote(r.niveau) === 0; })) { n.seul_milieu += 1; }
       }
     }
-
-    var a = R.agregats;
-    l.push('');
-    l.push('Sur tout l’essai');
-    l.push('Quand un personnage devinait la réponse d’un autre personnage, il a trouvé son auteur : ' +
-      (a.justesse_personnages_entre_eux ? a.justesse_personnages_entre_eux.justes + ' fois sur ' + a.justesse_personnages_entre_eux.total : 'pas de chiffre') + '.');
-    l.push('Quand un personnage devinait l’une de vos réponses, il a trouvé que c’était vous : ' +
-      (a.justesse_personnages_sur_porteur ? a.justesse_personnages_sur_porteur.justes + ' fois sur ' + a.justesse_personnages_sur_porteur.total : 'pas de chiffre') + '.');
-    l.push('Titres attribués par tirage au sort, faute de départage : ' + (a.titres_tires_au_sort === null ? 'pas de chiffre' : a.titres_tires_au_sort) + '.');
-
-    var fin = statut.type === 'fin' ? journal.fin : (statut.type === 'arret' && K >= 3 ? journal.arret : null);
-    if (fin) {
-      l.push('');
-      l.push('Questions de fin');
-      l.push((statut.type === 'fin' ? 'Au fil des deux semaines' : 'Jusqu’ici') + ', deviner était : ' +
-        (fin.f2 === null ? 'pas de réponse' : libelle('f2', fin.f2)) + '.');
-      if (fin.f1 === null) { l.push('Où vous placez chacun : question passée.'); }
-      else {
-        l.push('Où vous placez chacun :');
-        PERSONNAGES.forEach(function (p) {
-          l.push(p + ' : ' + TENSIONS.map(function (t) { return caseF1(t, fin.f1[p][t]); }).join(' · ') + '.');
-        });
-      }
+    var liste = [];
+    if (d - cal.depuis(p) >= TEMP.anciennete && n.reponses >= TEMP.minReponses) {
+      var part = function (x) { return F(x, n.reponses); };
+      if (part(n.seul_cote).supEgal(TEMP.original)) { liste.push('original'); }
+      if (n.textes_partages >= TEMP.pontTextes && F(n.seul_milieu, n.textes_partages).supEgal(TEMP.pont)) { liste.push('pont'); }
+      if (part(n.neutres).supEgal(TEMP.mesure)) { liste.push('mesure'); }
+      if (part(n.tres).supEgal(TEMP.tranche)) { liste.push('tranche'); }
     }
-    l.push('');
-    l.push('Fin du carnet');
-    var texte = l.join('\n');
-    exiger(texte.normalize('NFC') === texte && texte.indexOf("'") < 0 && !/ {2}|^ | $/m.test(texte), 'carnet : forme invalide');
-    return texte;
-  }
-
-  /* ------------------------------------------------------------------ */
-  /* Durées et copie du carnet en cours d'essai (§8.12, partie 3.2)      */
-  /* ------------------------------------------------------------------ */
-
-  /** Vérifie qu'une ligne de durées suit la présence fixée par etapes
-   *  (partie 3.10) ; rend la ligne. */
-  function dureesConformes(durees, k, etapes, ou) {
-    exiger(durees && durees.k === k, ou + ' : durées absentes');
-    exiger(Number.isSafeInteger(durees.duree_seance), ou + ' : duree_seance absente');
-    var dev = !!(etapes && etapes.deviner), rep = !!(etapes && etapes.repondre);
-    exiger((durees.duree_deviner !== null) === dev, ou + ' : présence de duree_deviner contraire à etapes');
-    exiger((durees.duree_repondre !== null) === rep, ou + ' : présence de duree_repondre contraire à etapes');
-    return durees;
-  }
-
-  function copierCoups(c) { return JSON.parse(JSON.stringify(c)); }
-
-  /**
-   * Copie du carnet faite en cours d'essai, au toucher « Copier mon carnet
-   * d'abord » (§8.12) : séances 0 à c.k, la séance c.k prise dans l'état
-   * de la copie (coups, versions, etapes). D : durées des séances 0 à
-   * c.k - 1 ; dc : durées de la séance c.k à l'instant de la copie.
-   * Rend {k, coups, versions, etapes, mesures, texte} (partie 3.2).
-   */
-  function copie(scelle, journal, c, D, dc) {
-    var S = journal.seances;
-    exiger(c.k >= 0 && c.k < S.length, 'copie : séance inconnue');
-    var j2 = { partie: journal.partie, seances: S.slice(0, c.k).concat([{ k: c.k, ouverture: S[c.k].ouverture, versions: c.versions,
-      etapes: c.etapes, coups: c.coups, attente: null }]), copies: [], arret: null, fin: null };
-    var R2 = calculer(scelle, j2);
-    dureesConformes(dc, c.k, c.etapes, 'copie');
-    var mc = {};
-    Object.keys(R2.seances[c.k].mesures).forEach(function (x) { mc[x] = R2.seances[c.k].mesures[x]; });
-    mc.duree_seance = dc.duree_seance; mc.duree_deviner = dc.duree_deviner; mc.duree_repondre = dc.duree_repondre;
-    return { k: c.k, coups: copierCoups(c.coups), versions: c.versions.slice(), etapes: c.etapes ? { deviner: c.etapes.deviner, repondre: c.etapes.repondre } : null,
-      mesures: mc, texte: carnet(scelle, j2, R2, D.slice(0, c.k).concat([dc]), { type: 'copie', k: c.k }) };
-  }
-
-  /* ------------------------------------------------------------------ */
-  /* Validité du journal (partie 3.12)                                   */
-  /* ------------------------------------------------------------------ */
-
-  var Q3_CHOIX = {
-    0: ['donner_avis', 'deviner', 'revelation', 'aucun'],
-    1: ['donner_avis', 'phrase_jour', 'aucun'],
-    2: ['deviner', 'donner_avis', 'phrase_jour', 'aucun'],
-    courant: ['revelation', 'deviner', 'donner_avis', 'phrase_jour', 'aucun'],
-    dimanche: ['revelation', 'titres', 'phrase_semaine', 'deviner', 'donner_avis', 'phrase_jour', 'aucun']
-  };
-
-  /** Choix de la question 3 proposés à la séance k (§8.3, « Moments
-   *  vécus », commit 3553b2e), dans l'ordre du tableau. Aux séances 1 à 14,
-   *  selon les écrans affichés (etapes), jamais selon la réponse :
-   *  « Deviner » si etapes.deviner ; « Donner mon avis » et « Ma phrase du
-   *  jour » si etapes.repondre. etapes vaut null en mode moteur : la liste
-   *  est alors la plus large (aucun écran n'est connu). */
-  function choixQ3(k, etapes) {
-    var c = k === 0 ? Q3_CHOIX[0] : (k === 1 ? Q3_CHOIX[1] : (k === 2 ? Q3_CHOIX[2] : (k === 7 || k === 14 ? Q3_CHOIX.dimanche : (k <= 14 ? Q3_CHOIX.courant : []))));
-    if (k < 1 || k > 14 || !etapes) { return c.slice(); }
-    return c.filter(function (x) {
-      if (x === 'deviner') { return etapes.deviner; }
-      if (x === 'donner_avis' || x === 'phrase_jour') { return etapes.repondre; }
-      return true;
-    });
-  }
-
-  function estNiveau(x) { return Number.isSafeInteger(x) && x >= 1 && x <= 5; }
-  function estRaison(x) { return x === 'aucune' || (Number.isSafeInteger(x) && x >= 1 && x <= 4); }
-  function estReponse(r) { return r && typeof r === 'object' && estNiveau(r.niveau) && estRaison(r.raison) && Object.keys(r).length === 2; }
-
-  /** Rend la liste des écarts (« règle n, /chemin : … »), vide si le journal est valide. */
-  /** Pseudo tel que la page le garde (§7.2 ; Q-F7) : non vide, au plus 20
-   *  points de code, en NFC, sans caractère Cc, Cf ni Cs, sans blanc autre que
-   *  U+0020, sans espace double ni espace au bord, pas un prénom des quatre
-   *  personnages (minuscules par la correspondance par défaut). */
-  function pseudoGardable(x) {
-    if (typeof x !== 'string') { return false; }
-    var n = Array.from(x).length;
-    if (n < 1 || n > 20 || x.normalize('NFC') !== x) { return false; }
-    if (/[\p{Cc}\p{Cf}\p{Cs}]/u.test(x) || /[^\S ]/u.test(x) || /  /.test(x) || x !== x.trim()) { return false; }
-    return !PERSONNAGES.some(function (p) { return p.toLowerCase() === x.toLowerCase(); });
-  }
-
-  function validerJournal(scelle, journal) {
-    var e = [];
-    function err(regle, chemin, msg) { e.push('règle ' + regle + ', ' + chemin + ' : ' + msg); }
-    var S = journal.seances;
-    if (!Array.isArray(S) || S.length < 1 || S.length > 16) { err(3, '/seances', 'séances absentes'); return e; }
-    var K = S.length - 1;
-    var p = journal.partie || {};
-    var mode = p.mode;
-    if (mode !== 'interface' && mode !== 'moteur') { err(2, '/partie/mode', 'mode inconnu'); }
-    if (p.graine === null ? !/^[a-z]$/.test(p.id) : !(/^hasard-[0-9]{3}$/.test(p.id) && /^[0-9a-f]{16}$/.test(p.graine))) {
-      err(2, '/partie', 'id ou graine invalides');
-    }
-    if ((journal.fin === null) === (journal.arret === null)) { err(3, '/fin', 'exactement un de fin et arret'); }
-    if (journal.fin !== null && K !== 15) { err(3, '/fin', 'fin avant la séance 15'); }
-    if (journal.arret !== null && journal.arret.k !== K) { err(3, '/arret/k', 'arret.k différent de la dernière séance'); }
-    if (mode === 'moteur' && journal.copies.length) { err(2, '/copies', 'copies en mode moteur'); }
-
-    var prevMs = null, prevVersion = null;
-    var tx = scelle.textes;
-    // Pour les règles qui dépendent des cartes servies, on calcule les manches au fil de l'eau.
-    var R = null;
-    try { R = calculer(scelle, journal); } catch (x) { err(7, '/seances', 'calcul impossible : ' + x.message); return e; }
-
-    /* Règles d'une séance ; pour une copie (cp vrai), seules les règles 1,
-     * 7 et 10 (règle 14), sur l'état de la copie, avec R calculé sur cet état. */
-    function verifierSeance(s, k, R, ch, cp) {
-      var c = s.coups;
-      if (!cp) {
-        if (s.k !== k) { err(3, ch + '/k', 'numéro'); }
-        try {
-          var ms = N.lireInstant(s.ouverture);
-          if (prevMs !== null && ms < prevMs) { err(4, ch + '/ouverture', 'ouverture antérieure à la précédente'); }
-          prevMs = ms;
-        } catch (x) { err(4, ch + '/ouverture', x.message); }
-        if (mode === 'moteur') {
-          if (s.versions !== null || s.etapes !== null) { err(2, ch, 'versions et etapes nuls en mode moteur'); }
-        } else {
-          if (!Array.isArray(s.versions) || !s.versions.length) { err(5, ch + '/versions', 'absentes'); }
-          else {
-            s.versions.forEach(function (v, i) {
-              if (!Number.isSafeInteger(v) || v < 1) { err(5, ch + '/versions/' + i, 'entier ≥ 1 attendu'); }
-              if (i > 0 && v <= s.versions[i - 1]) { err(5, ch + '/versions/' + i, 'non croissant'); }
-            });
-            if (prevVersion !== null && s.versions[0] < prevVersion) { err(5, ch + '/versions/0', 'inférieur à la séance précédente'); }
-            prevVersion = s.versions[s.versions.length - 1];
-          }
-          if (k === 0 || k === 15) { if (s.etapes !== null) { err(12, ch + '/etapes', 'nul attendu'); } }
-          else if (!s.etapes || typeof s.etapes.deviner !== 'boolean' || typeof s.etapes.repondre !== 'boolean') { err(12, ch + '/etapes', 'absent'); }
-        }
-      }
-      var cles = ['carnet', 'consentement', 'deviner', 'entree', 'pseudo', 'relire', 'reponse'];
-      if (!c || Object.keys(c).sort().join() !== cles.join()) { err(1, ch + '/coups', 'clés inattendues'); return; }
-      if (!Number.isSafeInteger(c.relire) || c.relire < 0) { err(1, ch + '/coups/relire', 'entier attendu'); }
-      if (!cp && (k < 2 || k > 14) && c.relire !== 0) { err(9, ch + '/coups/relire', '0 attendu hors des séances 2 à 14'); }
-
-      // Entrée (règle 6)
-      if (k === 0 && !cp) {
-        var ent = c.entree;
-        if (!ent || Object.keys(ent).sort().join() !== 'E1,E2,E3') { err(6, ch + '/coups/entree', 'E1, E2, E3 attendus'); }
-        else {
-          var precOk = true, nbRep = 0;
-          ENTREE.forEach(function (x) {
-            var r = ent[x];
-            if (r.reponse !== null && !estReponse(r.reponse)) { err(6, ch + '/coups/entree/' + x, 'réponse invalide'); }
-            if (r.pari !== null && !estNiveau(r.pari)) { err(6, ch + '/coups/entree/' + x + '/pari', 'niveau attendu'); }
-            if (r.pari !== null && r.reponse === null) { err(6, ch + '/coups/entree/' + x, 'pari sans réponse'); }
-            if (r.reponse !== null && !precOk) { err(6, ch + '/coups/entree/' + x, 'texte joué hors ordre'); }
-            precOk = r.reponse !== null && r.pari !== null;
-            if (r.reponse !== null) { nbRep++; }
-          });
-          if (nbRep > 0 && c.consentement !== true) { err(6, ch + '/coups/consentement', 'true attendu dès une réponse'); }
-          if (c.pseudo !== null && !(ent.E3.pari !== null)) { err(6, ch + '/coups/pseudo', 'pseudo avant le troisième pari'); }
-        }
-        if (c.pseudo !== null && !pseudoGardable(c.pseudo)) { err(6, ch + '/coups/pseudo', 'pseudo invalide'); }
-        if (K >= 1 && c.pseudo === null) { err(6, ch + '/coups/pseudo', 'pseudo attendu pour quitter l’entrée'); }
-      } else if (k !== 0) {
-        if (c.entree !== null || c.pseudo !== null || c.consentement !== null) { err(6, ch + '/coups', 'entrée hors séance 0'); }
-      }
-
-      // Deviner (règle 7)
-      var manche = R.seances[k].manches ? R.seances[k].manches.porteur : null;
-      var validee = true, sansCarte = false;
-      if (k >= 2 && k <= 14) {
-        if (!Array.isArray(c.deviner)) { err(7, ch + '/coups/deviner', 'tableau attendu'); }
-        else {
-          sansCarte = c.deviner.length === 0;
-          var nuls = c.deviner.filter(function (d) { return d.designe === null; }).length;
-          validee = nuls === 0;
-          if (nuls > 0 && nuls !== c.deviner.length) { err(7, ch + '/coups/deviner', 'manche à moitié validée'); }
-          var vus = [];
-          c.deviner.forEach(function (d, i) {
-            var cd = ch + '/coups/deviner/' + i;
-            if (Object.keys(d).sort().join() !== 'designe,raison') { err(7, cd, 'clés'); }
-            if (d.designe !== null && d.designe !== 'passe' && !estPersonnage(d.designe)) { err(7, cd + '/designe', 'valeur'); }
-            if (estPersonnage(d.designe)) { if (vus.indexOf(d.designe) >= 0) { err(7, cd + '/designe', 'personnage désigné deux fois'); } vus.push(d.designe); }
-            if (d.raison !== null) {
-              if (!estRaison(d.raison)) { err(7, cd + '/raison', 'valeur'); }
-              if (!manche || !manche.cartes[i] || !manche.cartes[i].cachee) { err(7, cd + '/raison', 'raison hors de la carte à raison cachée'); }
-              if (!estPersonnage(d.designe)) { err(7, cd + '/raison', 'raison sans visage'); }
-              if (nuls > 0) { err(7, cd + '/raison', 'raison dans une manche non validée'); }
-            }
-          });
-        }
-      } else if (c.deviner !== null) { err(7, ch + '/coups/deviner', 'nul attendu'); }
-
-      // Répondre (règle 8)
-      if (cp) { /* règle 14 : comparée à la séance */ } else if (k >= 1 && k <= 14) {
-        if (c.reponse !== null && !estReponse(c.reponse)) { err(8, ch + '/coups/reponse', 'réponse invalide'); }
-        if (c.reponse !== null && !validee) { err(8, ch + '/coups/reponse', 'réponse avant « Valider »'); }
-      } else if (c.reponse !== null) { err(8, ch + '/coups/reponse', 'nul attendu'); }
-
-      // Carnet du jour (règle 10)
-      var q = c.carnet;
-      if (!q || Object.keys(q).sort().join() !== 'q1,q2,q3') { err(10, ch + '/coups/carnet', 'clés'); return; }
-      var faux = 0;
-      if (k === 0) {
-        ENTREE.forEach(function (x) { if (R.seances[0].entree.textes[x].juste === false) { faux++; } });
-        if ((q.q1 !== null || q.q2 !== null || q.q3 !== null) && c.pseudo === null) { err(10, ch + '/coups/carnet', 'questions avant 1.9'); }
-      } else if (k >= 3) {
-        faux = R.seances[k].mesures.revelation_verdicts.filter(function (v) { return v === 'faux'; }).length;
-      }
-      if (q.q1 !== null) {
-        if (!Object.prototype.hasOwnProperty.call(LIBELLES.q1, q.q1)) { err(10, ch + '/coups/carnet/q1', 'code'); }
-        if (faux < 1 || (q.q1 === 'les_deux' && faux < 2)) { err(10, ch + '/coups/carnet/q1', 'pas assez de « Ça alors ! »'); }
-      }
-      if (q.q2 !== null) {
-        if (!Object.prototype.hasOwnProperty.call(LIBELLES.q2, q.q2)) { err(10, ch + '/coups/carnet/q2', 'code'); }
-        if (k === 15) { err(10, ch + '/coups/carnet/q2', 'pas de q2 à la clôture'); }
-        if (k >= 1 && k <= 14 && mode === 'interface' && !(s.etapes && s.etapes.repondre)) { err(10, ch + '/coups/carnet/q2', 'Répondre pas affiché'); }
-      }
-      var etq3 = mode === 'interface' ? s.etapes : null; // mode moteur : tous les choix (règle 10)
-      if (q.q3 !== null && choixQ3(k, etq3).indexOf(q.q3) < 0) { err(10, ch + '/coups/carnet/q3', 'choix non proposé'); }
-
-      // Attente (règle 11)
-      if (!cp && s.attente !== null) {
-        var finie = k >= 1 && k <= 14 && c.reponse !== null && validee;
-        if (!finie) { err(11, ch + '/attente', '« En attendant » sur une journée pas finie'); }
-        if (!s.attente.lectures || !s.attente.lectures.length) { err(11, ch + '/attente/lectures', 'au moins une lecture'); }
-        else { s.attente.lectures.forEach(function (l, i) { try { N.lireHeure(l.heure); } catch (x) { err(11, ch + '/attente/lectures/' + i, x.message); } }); }
-      }
-
-      // Étapes (règle 12)
-      if (!cp && mode === 'interface' && s.etapes && k >= 1 && k <= 14) {
-        if (k === 1 && s.etapes.deviner) { err(12, ch + '/etapes/deviner', 'faux attendu à la séance 1'); }
-        if (Array.isArray(c.deviner) && c.deviner.some(function (d) { return d.designe !== null; }) && !s.etapes.deviner) { err(12, ch + '/etapes/deviner', 'vrai attendu'); }
-        if (c.reponse !== null && !s.etapes.repondre) { err(12, ch + '/etapes/repondre', 'vrai attendu'); }
-        if (sansCarte && s.etapes.deviner) { err(12, ch + '/etapes/deviner', 'faux un jour sans carte'); }
-      }
-    }
-    S.forEach(function (s, k) { verifierSeance(s, k, R, '/seances/' + k, false); });
-
-    // Arrêt et fin (règle 13)
-    function validerF1(f1, ch) {
-      if (Object.keys(f1).sort().join() !== PERSONNAGES.slice().sort().join()) { err(13, ch, 'personnages'); return; }
-      PERSONNAGES.forEach(function (p) {
-        if (Object.keys(f1[p]).sort().join() !== 'L,P,S,T') { err(13, ch + '/' + p, 'tensions'); return; }
-        TENSIONS.forEach(function (t) { if ([null, 'pole0', 'milieu', 'pole1'].indexOf(f1[p][t]) < 0) { err(13, ch + '/' + p + '/' + t, 'code'); } });
-      });
-    }
-    if (journal.arret) {
-      var a = journal.arret;
-      if (a.raison !== null && !Object.prototype.hasOwnProperty.call(LIBELLES.arret, a.raison)) { err(13, '/arret/raison', 'code'); }
-      if (a.k < 3 && (a.f2 !== null || a.f1 !== null)) { err(13, '/arret', 'f1 et f2 nuls avant le jour 3'); }
-      if (a.f2 !== null && !Object.prototype.hasOwnProperty.call(LIBELLES.f2, a.f2)) { err(13, '/arret/f2', 'code'); }
-      if (a.f1 !== null) { validerF1(a.f1, '/arret/f1'); }
-    }
-    if (journal.fin) {
-      if (journal.fin.f2 !== null && !Object.prototype.hasOwnProperty.call(LIBELLES.f2, journal.fin.f2)) { err(13, '/fin/f2', 'code'); }
-      if (!journal.fin.f1) { err(13, '/fin/f1', 'objet attendu'); } else { validerF1(journal.fin.f1, '/fin/f1'); }
-    }
-
-    // Copies (règle 14)
-    var prevK = 0;
-    (journal.copies || []).forEach(function (cp, i) {
-      var ch = '/copies/' + i;
-      if (!(cp.k >= 0 && cp.k <= Math.min(K, 14)) || cp.k < prevK) { err(14, ch + '/k', 'hors bornes (0 à min(K, 14)) ou hors ordre'); return; }
-      prevK = cp.k;
-      var s = S[cp.k];
-      if (cp.coups.relire > s.coups.relire) { err(14, ch + '/coups/relire', 'supérieur à la séance'); }
-      if (cp.coups.reponse !== null && JSON.stringify(cp.coups.reponse) !== JSON.stringify(s.coups.reponse)) { err(14, ch + '/coups/reponse', 'différente de la séance'); }
-      if (Array.isArray(cp.coups.deviner)) {
-        cp.coups.deviner.forEach(function (d, j) {
-          if (d.designe !== null && (!s.coups.deviner || s.coups.deviner[j].designe !== d.designe)) { err(14, ch + '/coups/deviner/' + j, 'désignation différente'); }
-          if (d.raison !== null && (!s.coups.deviner || s.coups.deviner[j].raison !== d.raison)) { err(14, ch + '/coups/deviner/' + j, 'raison différente'); }
-        });
-      }
-      if (!Array.isArray(cp.versions) || cp.versions.some(function (v, j) { return s.versions[j] !== v; })) { err(14, ch + '/versions', 'pas un début de celles de la séance'); }
-      if (cp.etapes && s.etapes && ((cp.etapes.deviner && !s.etapes.deviner) || (cp.etapes.repondre && !s.etapes.repondre))) { err(14, ch + '/etapes', 'étape vraie dans la copie, fausse dans la séance'); }
-      if (cp.k === 0) {
-        if (cp.coups.pseudo !== null && cp.coups.pseudo !== s.coups.pseudo) { err(14, ch + '/coups/pseudo', 'différent de la séance'); }
-        if (cp.coups.entree && s.coups.entree) {
-          ENTREE.forEach(function (x) {
-            var a = cp.coups.entree[x], b = s.coups.entree[x];
-            if (!a || !b) { return; }
-            if (a.reponse !== null && JSON.stringify(a.reponse) !== JSON.stringify(b.reponse)) { err(14, ch + '/coups/entree/' + x + '/reponse', 'différente de la séance'); }
-            if (a.pari !== null && a.pari !== b.pari) { err(14, ch + '/coups/entree/' + x + '/pari', 'différent de la séance'); }
-          });
-        }
-      }
-      // Règles 7 et 10 sur les coups de la copie, calculés dans l'état de la copie.
-      var jc = { partie: journal.partie, seances: S.slice(0, cp.k).concat([{ k: cp.k, ouverture: s.ouverture, versions: cp.versions, etapes: cp.etapes, coups: cp.coups, attente: null }]),
-        copies: [], arret: { k: cp.k, raison: null, f2: null, f1: null }, fin: null };
-      var Rc = null;
-      try { Rc = calculer(scelle, jc); } catch (x) { err(14, ch + '/coups', 'calcul impossible : ' + x.message); return; }
-      verifierSeance(jc.seances[cp.k], cp.k, Rc, ch, true);
-    });
-    return e;
-  }
-
-  /* ------------------------------------------------------------------ */
-  /* Corrigé de F1 (devoilement.md)                                      */
-  /* ------------------------------------------------------------------ */
-
-  /** Corrigé de F1 : « milieu » de 41 à 59, sinon le pôle du côté de p. */
-  function corrigeF1(scelle) {
-    var c = {};
-    PERSONNAGES.forEach(function (p) {
-      c[p] = {};
-      TENSIONS.forEach(function (t) {
-        var pos = scelle.personnages[p].profil[t].position;
-        c[p][t] = pos >= 41 && pos <= 59 ? 'milieu' : (pos >= 60 ? 'pole1' : 'pole0');
-      });
-    });
-    return c;
-  }
-
-  function casesJustes(f1, corrige) {
-    var n = 0;
-    PERSONNAGES.forEach(function (p) { TENSIONS.forEach(function (t) { if (f1[p][t] !== null && f1[p][t] === corrige[p][t]) { n++; } }); });
+    n.temperaments = liste;
     return n;
   }
 
+  /* ------------------------------------------------------------------ */
+  /* L'histoire (§1, §8.8 ; partie 3)                                    */
+  /* ------------------------------------------------------------------ */
+
+  /**
+   * Jours de la première semaine du cercle à la veille de l'arrivée : manches,
+   * révélations, titres des semaines tombées, tempéraments du dernier dimanche,
+   * curseurs vus à l'arrivée. Ne dépend en rien du porteur.
+   */
+  function histoire(scelle, cal, collecteur) {
+    var ctx = contexte(scelle, cal, null);
+    var coupure = cal.premier - 1;
+    var manches = {}, revelations = {};
+    function mancheDe(d, g) { return manches[d] && manches[d][g] ? manches[d][g] : null; }
+
+    for (var j = ctx.premierJour; j <= coupure; j++) {
+      manches[j] = {};
+      if (cal.texteRepondu(j - 1) !== null) {
+        ctx.personnages.forEach(function (g) {
+          if (ctx.estMembre(g, j) && ctx.present(g, j)) { manches[j][g] = calculerManche(ctx, g, j, mancheDe, null); }
+        });
+      }
+      revelations[j] = cal.texteRepondu(j - 2) !== null && manches[j - 1] ? calculerRevelation(ctx, j, manches[j - 1], revelations) : null;
+    }
+
+    var semaines = cal.semaines.filter(function (w) { return w.dernier_jour <= coupure; });
+    exiger(semaines.length >= 1 && semaines[semaines.length - 1].dernier_jour === coupure, 'la veille de l\'arrivée finit une semaine');
+    var titres = semaines.map(function (w) { return calculerTitres(ctx, w.numero, revelations, manches); });
+
+    var curseurs = {}, sommes = {}, temperaments = {};
+    ctx.personnages.forEach(function (p) {
+      curseurs[p] = {}; sommes[p] = {};
+      var s = ctx.sommesJusqua(p, cal.premier - 2); // vus au jour de l'arrivée : entrée et textes répondus jusqu'au jour j − 2
+      TENSIONS.forEach(function (t) { sommes[p][t] = s[t]; curseurs[p][t] = curseur(s[t]); });
+      temperaments[p] = calculerTemperaments(ctx, coupure, p);
+    });
+
+    if (collecteur && typeof collecteur === 'object') {
+      collecteur.jours = {};
+      for (var d = ctx.premierJour; d <= coupure; d++) {
+        collecteur.jours[String(d)] = { manches: manches[d], repondu: cal.texteRepondu(d), revelation: revelations[d] };
+      }
+      collecteur.semaines = titres;
+      collecteur.arrivee = { curseurs: curseurs, temperaments: temperaments };
+    }
+
+    return {
+      coupure: coupure,
+      curseurs: curseurs,
+      manche_jour_0: { manches: manches[coupure], texte: cal.texteRepondu(coupure - 1) },
+      sommes: sommes,
+      temperaments: temperaments,
+      tirage: scelle.histoire.tirage,
+      titres: titres
+    };
+  }
+
+  /** Le résumé de l'état à l'arrivée (partie 3.2), prêt pour la forme canonique. */
+  function resume(arr) {
+    var curseurs = {}, temps = {}, devineurs = {};
+    Object.keys(arr.curseurs).forEach(function (p) {
+      curseurs[p] = {};
+      TENSIONS.forEach(function (t) {
+        curseurs[p][t] = { c: arr.curseurs[p][t].c.toString(), somme_w: arr.curseurs[p][t].somme_w.toString() };
+      });
+      temps[p] = arr.temperaments[p].temperaments.slice();
+    });
+    Object.keys(arr.manche_jour_0.manches).forEach(function (g) {
+      devineurs[g] = arr.manche_jour_0.manches[g].cartes.map(function (c) {
+        return { auteur: c.auteur, auteur_compte: c.auteur_compte, cachee: c.cachee, designe: c.designe, raison_devinee: c.raison_devinee };
+      });
+    });
+    return {
+      curseurs: curseurs,
+      format: 'elenchos-essai-resume-histoire',
+      manche_jour_0: { devineurs: devineurs, texte: arr.manche_jour_0.texte },
+      temperaments: temps,
+      tirage: arr.tirage,
+      titres: arr.titres.map(function (x) {
+        return { devin: x.devin.titulaire, fidele: x.fidele.titulaires.slice(), mystere: x.mystere.titulaire,
+          sans_faute: x.sans_faute.slice(), semaine: x.semaine, surprise: x.surprise.texte };
+      }),
+      version: 1
+    };
+  }
+
+  /** Lot 3. */
+  function calculer() { throw ErreurMoteur('calculer : lot 3, pas encore écrit'); }
+
   return {
-    PERSONNAGES: PERSONNAGES, MEMBRES: MEMBRES, TENSIONS: TENSIONS, ENTREE: ENTREE, TEXTES: TEXTES,
-    cote: cote, valeur: valeur, classer: classer, curseur: curseur,
-    calculer: calculer, carnet: carnet, copie: copie, dureesConformes: dureesConformes, validerJournal: validerJournal,
-    visagesDejaJoue: visagesDejaJoue, minutesAvantDixHuit: minutesAvantDixHuit, choixQ3: choixQ3,
-    phraseDuJour: phraseDuJour, corrigeF1: corrigeF1, casesJustes: casesJustes, duree: duree, LIBELLES: LIBELLES
+    ErreurMoteur: ErreurMoteur,
+    PORTEUR: PORTEUR, TENSIONS: TENSIONS, ORDRE_TEMPERAMENTS: ORDRE_TEMPERAMENTS,
+    histoire: histoire, resume: resume, calculer: calculer,
+    regles: {
+      contexte: contexte, cote: cote, valeur: valeur, identiques: identiques, classer: classer,
+      sommesVides: sommesVides, ajouter: ajouter, curseur: curseur, mediane: mediane,
+      coteAttendu: coteAttendu, score: score, raisonDevinee: raisonDevinee,
+      calculerManche: calculerManche, redistribuer: redistribuer, estJuste: estJuste,
+      pasDeCote: pasDeCote, calculerRevelation: calculerRevelation, calculerTitres: calculerTitres,
+      calculerTemperaments: calculerTemperaments, TEMP: TEMP
+    }
   };
 })(ElenchosNoyau);
 

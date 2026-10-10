@@ -81,7 +81,48 @@ var ElenchosTrace = (function () {
     return assembler(journal, R, D, texte, copies, empreinte);
   }
 
-  return { enTrace: enTrace, assembler: assembler, tracer: tracer };
+  /**
+   * Trace de l'histoire, version 1 (second essai ; a-ne-pas-ouvrir-2/schema.md,
+   * partie 4.2). `collecte` : ce que M.histoire(scelle, cal, collecte) a rempli
+   * (jours, semaines, arrivee) ; `resume` : M.resume(arrivee) ; `resumeSha256` :
+   * son empreinte (V6) ; `empreinte` : SHA-256 du fichier scellé. Rien n'est
+   * recalculé ici : les grandeurs sont celles du moteur, écrites en « p/q ».
+   * Le point d'entrée du harnais (version témoin) l'appelle une fois par fichier.
+   */
+  function histoire(collecte, resume, resumeSha256, empreinte) {
+    var jours = {};
+    Object.keys(collecte.jours).forEach(function (j) {
+      var x = collecte.jours[j];
+      jours[j] = { manches: enTrace(x.manches), repondu: x.repondu, revelation: x.revelation ? enTrace(x.revelation) : null };
+    });
+    var curseurs = {};
+    Object.keys(collecte.arrivee.curseurs).forEach(function (p) {
+      curseurs[p] = {};
+      Object.keys(collecte.arrivee.curseurs[p]).forEach(function (t) {
+        var c = collecte.arrivee.curseurs[p][t];
+        curseurs[p][t] = { c: c.c.toString(), l: c.l.toString(), net: c.net, somme_w: c.somme_w.toString() };
+      });
+    });
+    return {
+      arrivee: { curseurs: curseurs, resume: copie(resume), resume_sha256: resumeSha256, temperaments: enTrace(collecte.arrivee.temperaments) },
+      empreinte_scelle: empreinte,
+      format: 'elenchos-essai-trace-histoire',
+      jours: jours,
+      semaines: enTrace(collecte.semaines),
+      version: 1
+    };
+  }
+
+  /** Node et harnais : la trace de l'histoire d'un fichier scellé, de bout en bout. */
+  function tracerHistoire(N, C, M, octets) {
+    var scelle = JSON.parse(N.utf8Decoder(octets));
+    var collecte = {};
+    var arrivee = M.histoire(scelle, C.lire(scelle), collecte);
+    var resume = M.resume(arrivee);
+    return histoire(collecte, resume, N.sha256(N.utf8Encoder(N.jsonCanonique(resume))), N.sha256(octets));
+  }
+
+  return { enTrace: enTrace, assembler: assembler, tracer: tracer, histoire: histoire, tracerHistoire: tracerHistoire };
 })();
 
 /*node-debut*/
