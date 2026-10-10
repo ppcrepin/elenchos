@@ -22,7 +22,7 @@ Remarques du rédacteur sur le lot :
   2. Elle serait levée dans les régions d'outre-mer, comme la Guyane, pas en métropole.
   3. La région pourrait y accorder des permis de chercher, puis d'exploiter, pétrole et gaz.
 - Vote : rejeté, 64 pour, 74 contre, 1 abstention (11 juin 2026), en première lecture ; étape : aucune ; suite : `texte_tombe` (CRSANR5L17S2026O1N268.txt:701-702 ; :708, « la proposition de loi est rejetée » ; dossier DLR5L17N53304, acte SN2-DEPOT L17-VD232693DIN : retour au Sénat).
-- Objet du vote : article (article 1er, amendé, article central)
+- Objet du vote : article
 - Auteur : Georges Patient, sénateur, Rassemblement des démocrates, progressistes et indépendants au dépôt.
   - Sénat, 3 décembre 2025 : acte SN1-DEPOT du dossier DLR5L17N53304, texte PIONSNR5S479B0185, initiateur PA415499.
   - Groupe PO732421, du 28 juin 2017 au 30 septembre 2026.
@@ -54,6 +54,7 @@ Remarques du rédacteur sur le lot :
     - Ligne 2 : texte no 2415, I, 1° (« ni dans les régions d'outre-mer lorsqu'elles exercent les compétences mentionnées à l'article L. 611-19 ») ; amendement no 22 adopté, Saint-Pierre-et-Miquelon retiré (N268:637-641) ; extensions à tout le territoire rejetées (N268:602, :692) ; Guyane : N268:447 et :453.
     - Ligne 3 : texte no 2415, II, 1° (permis exclusif de recherches, autorisation de prospections préalables, concession, « déposées auprès [...] d'une région d'outre-mer ») ; N268:453.
 - Doutes :
+  - **Objet du vote, précision.** Article 1er, amendé, article central.
   - **Suite.** `texte_tombe` ; phrase à 18h (UX) : « Avec lui, l'Assemblée a rejeté le texte entier. » Le dossier montre un retour au Sénat en deuxième lecture (SN2-DEPOT) : on n'écrit donc pas « tombé ».
   - **Titre.** L'ancien titre (« autoriser de nouveau les forages ») reprenait le mot des opposants (N268:447, :463). Le nouveau reprend « recherche » et « exploitation », les mots de l'intitulé officiel. Il évite aussi « lever l'interdiction », qui retire quelque chose sans commencer par « Supprimer » (arbitrage 3 de forme).
   - **Amendement no 7 (adopté).** Il supprime l'alinéa 4 : « 2° Le second alinéa des articles L. 661-1 et L. 691-1 est supprimé. » Son effet n'est pas établi : ces articles du code minier ne sont pas disponibles localement. Les dérogations du I, 1° et du II, 1° restaient dans l'article voté.
@@ -75,7 +76,7 @@ Remarques du rédacteur sur le lot :
   2. Il bloquerait les règles autorisant ces mines, tant que leurs dégâts restent possibles.
   3. En France aussi, la règle devrait évoluer pour les interdire, tant que ce doute dure.
 - Vote : adopté, 215 pour, 56 contre, 28 abstentions (17 janvier 2023), vote sur l'ensemble ; étape : aucune ; suite : `null` (CRSANR5L16S2023O1N119.txt:496-497).
-- Objet du vote : resolution (proposition de résolution, article 34-1 de la Constitution, article unique)
+- Objet du vote : resolution
 - Auteur : Nicolas Thierry, député, Écologiste - NUPES au dépôt.
   - Proposition de résolution no 440, enregistrée le 7 novembre 2022 ; premier nom des signataires.
   - Groupe PO800526, du 29 juin 2022 au 9 juin 2024.
@@ -104,6 +105,7 @@ Remarques du rédacteur sur le lot :
     - Ligne 2 : dispositif (« que la France bloque l'adoption de toute réglementation pour l'exploitation minière des fonds marins par l'AIFM » ; « tant qu'il n'aura pas été démontré [...] que cette activité extractive peut être entreprise sans dégrader les écosystèmes marins »).
     - Ligne 3 : dispositif (« qu'en France une évolution du cadre réglementaire est souhaitable [...] pour interdire tout projet d'exploitation jusqu'à ce que le niveau de connaissance scientifique garantisse [...] »).
 - Doutes :
+  - **Objet du vote, précision.** Proposition de résolution, article 34-1 de la Constitution, article unique.
   - **Forme du vote.** Objet `resolution`, étape `aucune` (arbitrage 2 de forme). Phrase d'objet (UX) : « C'était une résolution, un texte qui invite le Gouvernement à agir, sans l'y obliger. » Gros titre inchangé (D-014).
   - **Raison 2 réécrite.** Le côté était retrouvé mais jugé fragile par les deux annotateurs. « Génie français » est retiré (il pouvait se lire comme de la fierté nationale), et l'opposition passé/avenir est mise en tête.
   - **Annotation de la raison 2 (4e passage, Q08).** Côté « pour » retrouvé du premier coup, pôle 1, hésitant ; l'annotateur la juge fragile (D-034), comme les deux annotateurs d'aveugle3. Arbitrage de l'orchestrateur : gardée, le côté a été retrouvé du premier coup aux trois lectures (A.7, point 10 tenu). Fragilité à surveiller : la raison peut se lire sans pôle.
@@ -122,7 +124,7 @@ Remarques du rédacteur sur le lot :
   2. Ils pourraient alors déroger aux règles d'urbanisme locales pour s'installer.
   3. L'État pourrait leur réserver à l'avance un raccordement au réseau électrique.
 - Vote : adopté, 105 pour, 97 contre, 0 abstention (28 mai 2025), en première lecture ; étape : navette ; suite : `null` (CRSANR5L17S2025O1N219.txt:502-503).
-- Objet du vote : article (article 15, examen prioritaire, du projet de loi de simplification de la vie économique)
+- Objet du vote : article
 - Auteur : Gouvernement ; projet de loi de simplification de la vie économique, nos 481 rectifié, 1191 (CRSANR5L17S2025O1N180.txt:8).
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/2139
 - Sources :
@@ -147,6 +149,7 @@ Remarques du rédacteur sur le lot :
     - Ligne 2 : N180:159 ; N180:183 (amendements nos 835 et 1530 rejetés).
     - Ligne 3 : N219:481 et :499 (amendement no 2648 adopté ; il vise aussi des projets industriels, capacité réservée « dans des zones » : simplification acceptée par le vérificateur).
 - Doutes :
+  - **Objet du vote, précision.** Article 15, examen prioritaire, du projet de loi de simplification de la vie économique.
   - **Raison 1 réécrite (vérificateur).** « Refuser ces centres » déplaçait l'attaque : les opposants contestaient les dérogations (N180:134), pas les centres. « S'y opposer » renvoie au texte servi. L'écart de force avec les deux faits chiffrés du côté « contre » reste ; il n'y a rien de plus concret chez un groupe libre (Bouquin, RN, N180:509, est « aucun »).
   - **Annotation de la raison 1 (4e passage, Q02).** Côté retrouvé ; pôle 1 si la tension est P, « aucun » si elle est L (l'annotateur retient L, hésitant). Si elle est lue « aucun », le côté « pour » n'aurait plus d'attendue : texte à remplacer (A.7, point 6, dernière phrase). Tension P retenue (trois lectures sur quatre) : pôle 1.
   - **Pas de croisé possible.** Cazeneuve, Croizier et Lebec sont absents du scrutin (vérifié) ; les autres croisés possibles sont dans des groupes déjà pris.
@@ -162,7 +165,7 @@ Remarques du rédacteur sur le lot :
   2. Si un juge annulait un droit de pomper, l'État pourrait laisser pomper jusqu'à deux ans.
   3. Cet amendement supprimerait tout l'article qui prévoit ces mesures.
 - Vote : rejeté, 35 pour, 134 contre, 2 abstentions (21 mai 2026), en première lecture ; étape : aucune ; suite : `null` (CRSANR5L17S2026O1N240.txt:206-207).
-- Objet du vote : amendement (no 237 et identiques nos 523 et 1471, de suppression de l'article 5 du projet de loi d'urgence pour la protection et la souveraineté agricoles)
+- Objet du vote : amendement
 - Auteur : Mathilde Hignet, députée, La France insoumise - Nouveau Front Populaire au dépôt.
   - Première signataire selon le titre du scrutin, PA794082, groupe PO845413.
   - Amendement défendu par Stambach-Terrenoir (N240:82).
@@ -191,6 +194,7 @@ Remarques du rédacteur sur le lot :
     - Ligne 2 : texte no 2765, article 5, art. L. 214-3-2 créé (« à titre provisoire et pour une durée maximale de deux ans [...] autoriser la poursuite des prélèvements »).
     - Ligne 3 : phrase fixe (arbitrage 3 de forme) ; N240:82, :204-207.
 - Doutes :
+  - **Objet du vote, précision.** No 237 et identiques nos 523 et 1471, de suppression de l'article 5 du projet de loi d'urgence pour la protection et la souveraineté agricoles.
   - **Présentation B.** Être favorable, c'est supprimer l'article (pôle 0). Titre en « Supprimer », une seule négation ; ligne 3 fixe.
   - **Raison 3 réécrite (vérificateur).** « Retard » seul était vague ; « le cœur de l'urgence agricole » est dans la même ligne de l'extrait. Le pôle 1 reste fragile : elle peut être lue « aucun ». Le côté « contre » n'aurait alors plus d'attendue ; Martineau (Dem, N240:28) ne règle rien, il est lui aussi « aucun ».
   - **Raison 4.** Lue « aucun » par les deux annotateurs : elle devient pratique. Je garde la phrase. La variante du vérificateur (« ces retenues servent aussi ») adoucirait « l'usage prioritaire ». « Retenues collinaires » est le mot de l'orateur, contesté en séance (Pilato, N240:140), et l'écart avec la ligne 1 (« pour irriguer ») est le sien.
@@ -210,7 +214,7 @@ Remarques du rédacteur sur le lot :
   2. Près des plus menacés, l'État limiterait ou interdirait engrais et pesticides avant 2030.
   3. Cet amendement supprimerait tout l'article qui prévoit ces mesures.
 - Vote : rejeté, 106 pour, 131 contre, 2 abstentions (12 février 2026), en première lecture ; étape : aucune ; suite : `texte_retire` (CRSANR5L17S2026O1N148.txt:62-63 ; retrait : :562, « nous allons retirer la proposition de loi », et :565, « Il est pris acte du retrait de la proposition de loi par son auteur »).
-- Objet du vote : amendement (no 1 et identiques nos 46, 47 et 70, de suppression de l'article 1er de la proposition de loi pour protéger l'eau potable, nos 2308, 2427)
+- Objet du vote : amendement
 - Auteur : Nicolas Tryzna, député, Droite Républicaine au dépôt.
   - Premier signataire selon le titre du scrutin, PA842121, membre du groupe PO845425 depuis le 14 novembre 2025.
   - Amendement défendu par Duparay (N147:452).
@@ -240,6 +244,7 @@ Remarques du rédacteur sur le lot :
     - Ligne 2 : II, 4° (« Avant le 1er janvier 2030, le représentant de l'État dans le département met en place des mesures limitant ou interdisant, le cas échéant, certaines occupations des sols et l'utilisation d'intrants, pour les zones les plus contributives [...] au sein des captages prioritaires », seuils pour « engrais azotés minéraux » et « produits phytopharmaceutiques de synthèse »).
     - Ligne 3 : phrase fixe ; N147:452.
 - Doutes :
+  - **Objet du vote, précision.** No 1 et identiques nos 46, 47 et 70, de suppression de l'article 1er de la proposition de loi pour protéger l'eau potable, nos 2308, 2427.
   - **Arbitrage de l'orchestrateur (10 octobre 2026), après le quatrième passage d'annotation.** La raison de Hignet, prévue en pratique (« aucun »), a été lue au pôle 0 par les deux derniers annotateurs (« prévenir à la source plutôt que réparer »). Le côté « contre » n'avait donc plus d'inattendu. On applique A.7, point 6, « aucun inattendu » : Turquois (pratique « pour ») sort, Duparay (attendue de pôle 1, lue 1 par les deux annotateurs du premier passage) revient en raison 2. Deux attendues de chaque côté, quatre groupes, votes vérifiés. Le Feur reste écartée : son côté même ne se lit pas du premier coup (quatrième passage).
   - **Suite.** `texte_retire` ; phrase à 18h (UX) : « Le jour même, le texte entier a été retiré. »
   - **Point 6 de A.7.** Aucun croisé « contre » d'un groupe libre n'a été relu : Le Feur est lu au pôle 0 ou d'un côté incertain, Coggia (EPR) donne l'avis de la commission.
@@ -257,8 +262,8 @@ Remarques du rédacteur sur le lot :
 - Prête pour la vérification indépendante (raison 4 annotée : pôle 0 aux 3e et 4e passages ; aucun inattendu, A.7 point 6).
 
 ### H86 · scrutin 7313 (17e législature)
-- Titre affiché : Vaisselle en plastique interdite dans les cantines d'enfants (60 car.)
-- Tension : P ; sens s = 0 (être favorable sert la précaution)
+- Titre : Vaisselle en plastique interdite dans les cantines d'enfants
+- Tension : P ; sens s = 0
 - Vote : adopté, 72 pour, 17 contre, 2 abstentions (4 juin 2026), vote sur l'ensemble, en première lecture ; étape : navette ; suite : `null`.
 - Objet du vote : texte
 - Relevé 1, fichier du scrutin VTANR5L17V7313.json : sort « adopté » ; 2026-06-04 ; 72/17/2, 2 non-votants ; RN 17 contre seul ; UDR 2 abstentions.
@@ -267,6 +272,7 @@ Remarques du rédacteur sur le lot :
   - dossier DLR5L17N51775 : AN1-DEPOT 24 mars 2025, AN1-DEBATS-DEC 4 juin 2026, SN1-DEPOT 4 juin 2026, donc `navette`.
 - Lien du scrutin : https://www.assemblee-nationale.fr/dyn/17/scrutins/7313
 - Doutes :
+  - Titre de 60 caractères, affiché seul (A.6). Sens 0 : être favorable sert la précaution.
   - Fiche légère (suffixe passé ici). Titre fixé par A.6.
   - Le texte « garantit » une interdiction déjà prévue (N263:164) : le titre se lit comme une interdiction nouvelle, ce qui est acceptable pour un titre seul.
 - Prête : oui (vérifiée, RAS).

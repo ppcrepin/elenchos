@@ -22,7 +22,7 @@
 - **Sens.** Il alterne d'une occurrence à l'autre de chaque tension. La première occurrence de S, T et L a le sens 1. Pour P, l'alternance est calée pour que H86 ait le sens 0.
 - **Raisons** : quatre, numérotées 1 = « pour » attendue, 2 = second « pour », 3 = « contre » attendue, 4 = second « contre ».
   - Sans inattendu si t("histoire-raisons|Hi") < 1/2 : la raison 2 a le pôle s, la raison 4 le pôle 1 − s.
-  - Sinon, chaque côté c reçoit un inattendu croisé si t("histoire-inattendu|Hi|c") < 1/2 (pôle d'en face), sinon un inattendu pratique (pôle aucun).
+  - Sinon, chaque côté c (écrit `pour` ou `contre` dans la clé) reçoit un inattendu croisé si t("histoire-inattendu|Hi|c") < 1/2 (pôle d'en face), sinon un inattendu pratique (pôle aucun).
   - Les proportions (1/2 et 1/2) sont fixées d'avance, pour le candidat en deux temps. Elles s'appuient sur le premier relevé de Contenu (3 ou 4 paires sur 10 débats lus) ; le lot servi en aura probablement plus, puisqu'il est choisi.
 - **Ordre d'affichage** : t("ordre-raisons|Hi|k").
 
@@ -50,7 +50,7 @@
   - Textes dans l'ordre du calendrier ; pour chacun, personnages dans l'ordre Agathe, Nassim, Odile, Valentin.
   - Une réponse est atypique si :
     - (a) le personnage est présent ;
-    - (b) sa réponse au texte précédent de la même période n'est pas atypique ;
+    - (b) il n'a pas fait de réponse atypique au texte qui précède immédiatement, dans la même période (condition remplie s'il y était absent ; H1 et T0 n'ont pas de texte précédent) ;
     - (c) moins de deux personnages sont déjà atypiques sur ce texte ;
     - et t(clé) < α, avec la clé « ecart|r|prénom|Hi » pour l'histoire, « ecart|prénom|n » pour l'essai.
   - Jamais sur E1–E3 ni sur T14.
@@ -59,7 +59,7 @@
   - **H86** : les deux premiers personnages présents, dans l'ordre de t("ecart-hstar|r|prénom"), sont atypiques, sans tenir compte de α ni de (b). Les autres ne le sont pas.
 - **2.4 Absences.** Textes dans l'ordre ; pour chacun, personnages dans le même ordre. Un personnage est absent si :
   - aucun autre n'est déjà absent sur ce texte ;
-  - il n'a été absent à aucun de ses six textes précédents de la même période ;
+  - il n'a été absent à aucun des textes de la même période qui précèdent celui-ci, au plus six (moins en début de période) ;
   - et t("absence|[r|]prénom|texte") < 1/14.
   
   Jamais sur E1–E3 ni sur T14. Une absence le jour j : pas de réponse au texte du jour j, ni de manche ce jour-là. Elles sont tirées avant les réponses atypiques.
@@ -162,7 +162,7 @@ Partie témoin ajoutée : un Pas de Côté du porteur sur T12 (S), révélé au 
 - **Amendements de suppression.** On sert le scrutin de l'amendement, jamais un autre. Suppression adoptée : l'article visé est servi, rejeté (présentation A). Suppression rejetée : l'amendement est servi, rejeté (présentation B), avec un titre sans seconde négation. Ici : 2758 en A ; 7922, 8167, 6770 et 5359 en B.
   - *Mise à jour du 10 octobre 2026 (conventions d'essai, `simulation-2.md`, A.7, points 13 et 14).* En présentation B, les lignes 1 et 2 disent ce que ferait l'article, au conditionnel ; la ligne 3 est la phrase fixe, identique pour tout le lot : « Cet amendement supprimerait tout l'article qui prévoit ces mesures. » Le contrôle 1 vérifie l'égalité exacte sur la liste des textes B, passée en paramètre (schéma, partie 5.1, étape 8). La règle 1.1 du lot de Game design (ligne 2 = le retrait) est retirée.
   - Tout titre qui retire quelque chose commence par « Supprimer », présentation B comprise et 2190 compris (« Supprimer les zones à faibles émissions ») ; les titres B gardent 60 caractères au plus et une seule négation. Raison : les titres en « Retirer… » étaient tous rejetés (0 adopté sur 4) ; avec un seul verbe, 1 adopté sur 5, le verbe ne prédit plus le résultat.
-- **Tirage** des cases restantes dans chaque tension : t("ordre-texte|tension|i").
+- **Tirage** des cases restantes dans chaque tension : les textes de la liste « Cases {tension} » ci-dessus, numérotés i = 1, 2, … dans l'ordre de cette liste, sont mélangés au sens du §0, c'est-à-dire triés par t("ordre-texte|tension|i") croissant ; le premier va à la première case de la tension dans l'ordre du calendrier (T1 à T13), le deuxième à la suivante, et ainsi de suite. (Précisions des points 2 bis, 3 et 14 écrites le 10 octobre 2026 sur relevé du programme de scellement ; la page et le scellement, écrits séparément, avaient fait les mêmes lectures : histoires identiques.)
 
 **15. Limites propres.**
 - Les atypiques « de même valeur » rendent les cartes d'écart plus lisibles par leur raison. La justesse montera sur ces cartes ; c'est voulu, et à lire comme tel.
