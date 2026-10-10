@@ -1,5 +1,5 @@
-Chromium (playwright-core 1.56.1), version témoin : /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/frontend-lot6-construction/temoin/index.html (SHA-256 879b2ebd13f4a0fbf347f2aca0faad42b07631156c625b9d8da0eb43de6fc74f)
-chargement : 274 ms
+Chromium (playwright-core 1.56.1), version témoin : /tmp/claude-0/-home-user-elenchos/aab25699-b440-58aa-ae88-65e053f9256b/scratchpad/frontend-lot6-construction/temoin/index.html (SHA-256 43e9bcb3c70c791dc4ea64399d187b6ec54079b30764705d84f97dd0ad1056a7)
+chargement : 387 ms
 histoire : trace du navigateur identique à trace-histoire-P.json (448519 octets)
 témoin a : rejoué dans Chromium, trace identique à la trace P de Node
 témoin b : rejoué dans Chromium, trace identique à la trace P de Node
@@ -22,6 +22,9 @@ témoin r : rejoué dans Chromium, trace identique à la trace P de Node
 témoin s : rejoué dans Chromium, trace identique à la trace P de Node
 témoin t : rejoué dans Chromium, trace identique à la trace P de Node
 témoin u : rejoué dans Chromium, trace identique à la trace P de Node
-ralenti 30 fois : chargement 10511 ms ; vue de secours cachée à 20099 ms ; premier rendu de contenu à 1272 ms
-ÉCART : la vue de secours a pu être peinte : premier rendu à 1272 ms, cachée à 20099 ms
-RÉSULTAT : écarts (voir plus haut)
+ralenti 3 fois : chargement 1079 ms ; 172 images observées ; vue de secours visible sur 0
+ralenti 5 fois : chargement 1691 ms ; 139 images observées ; vue de secours visible sur 0
+ralenti 7 fois : chargement 2271 ms ; 138 images observées ; vue de secours visible sur 0
+ralenti 30 fois : chargement 14122 ms ; 148 images observées ; vue de secours visible sur 0
+sans script : hidden à 1900 ms, visible à 2209 ms
+RÉSULTAT : aucun écart
