@@ -35,6 +35,8 @@ var ElenchosJournal = (function (N) {
   var CLES_COUPS = ['abandon', 'annuler_saut', 'carnet', 'compte', 'consentement', 'deviner', 'entree', 'ouvert',
     'pendant_deviner', 'pseudo', 'relire', 'reponse', 'rouvrir'];
   var CLES_OUVERT = ['cercle', 'moi', 'proche', 'qui_est_qui'];
+  /** Ouvertures impossibles au point de saut avant la confirmation (règle 9 ; §0) : seule la fiche « Qui est qui » s'ouvre. */
+  var OUVERT_HORS_POINT = ['cercle', 'moi', 'proche'];
   var CLES_CARNET = ['hesite', 'moment', 'moment_semaine', 'saut_clair'];
   var CLES_SAUT = ['coups', 'depart', 'numero', 'textes_atteints'];
   var CLES_ETAPES = ['deviner', 'entree', 'repondre'];
@@ -276,7 +278,10 @@ var ElenchosJournal = (function (N) {
         err(9, ch + '/coups/pendant_deviner', 'deux entiers');
       }
       if (c.rouvrir > 0 && !(joue && l.revelation_porteur === 'lue')) { err(9, ch + '/coups/rouvrir', 'hors d\'un jour joué à révélation lue'); }
-      if (point) { if (!estCompteur(c.annuler_saut)) { err(9, ch + '/coups/annuler_saut', 'entier attendu au point de saut'); } }
+      if (point) {
+        if (!estCompteur(c.annuler_saut)) { err(9, ch + '/coups/annuler_saut', 'entier attendu au point de saut'); }
+        OUVERT_HORS_POINT.forEach(function (k) { if (c.ouvert && c.ouvert[k] !== 0) { err(9, ch + '/coups/ouvert/' + k, '0 au point de saut : Le Cercle et Moi n\'y sont pas accessibles avant la confirmation'); } });
+      }
       else if (c.annuler_saut !== null) { err(9, ch + '/coups/annuler_saut', 'nul hors d\'un point de saut'); }
       if (saute && (c.relire !== 0 || c.rouvrir !== 0 || (c.ouvert && CLES_OUVERT.some(function (k) { return c.ouvert[k] !== 0; })))) {
         err(9, ch + '/coups', 'compteurs à 0 un jour sauté');
@@ -393,7 +398,7 @@ var ElenchosJournal = (function (N) {
 
   return {
     FORMAT: FORMAT, VERSION: VERSION, CODES: CODES, JOUR_F2: JOUR_F2,
-    CLES_COUPS: CLES_COUPS, CLES_OUVERT: CLES_OUVERT, CLES_CARNET: CLES_CARNET, CLES_FIN: CLES_FIN,
+    CLES_COUPS: CLES_COUPS, CLES_OUVERT: CLES_OUVERT, OUVERT_HORS_POINT: OUVERT_HORS_POINT, CLES_CARNET: CLES_CARNET, CLES_FIN: CLES_FIN,
     valider: valider, choixMoment: choixMoment, pseudoGardable: pseudoGardable, estReponse: estReponse, nombreRaisons: nombreRaisons
   };
 })(ElenchosNoyau);

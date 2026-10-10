@@ -107,7 +107,7 @@ function jouer(scelle, cal, options) {
     // Point de saut : la révélation se lit, puis la page du saut, « Annuler » éventuel, puis le rattrapage.
     const n = (o.annuler && o.annuler[j]) || 0;
     for (let i = 0; i < n; i++) { E.ouvrirPageSaut(etat, cal, hz.pp()); toucher(); E.annulerSaut(etat, cal); }
-    E.compter(etat, cal, 'moi');
+    E.compter(etat, cal, 'qui_est_qui'); // seule ouverture possible avant la confirmation (règle 9)
     E.ouvrirPageSaut(etat, cal, hz.pp());
     toucher();
     E.confirmerSaut(etat, cal, hz.instant(), hz.pp());

@@ -41,7 +41,8 @@ test('Partie complète : entrée, trois jours, deux sauts et leurs rattrapages, 
   assert.equal(j.jours[4].coups.abandon, null);
   assert.equal(j.jours[2].coups.abandon, false);
   assert.equal(j.sauts[0].coups.ouvert.qui_est_qui, 1, 'ouverture pendant le saut : comptée au saut');
-  assert.equal(j.jours[4].coups.ouvert.moi, 1, 'ouverture avant la confirmation : comptée au jour');
+  assert.equal(j.jours[4].coups.ouvert.qui_est_qui, 1, 'ouverture avant la confirmation : comptée au jour');
+  assert.deepEqual([j.jours[4].coups.ouvert.cercle, j.jours[4].coups.ouvert.moi, j.jours[4].coups.ouvert.proche], [0, 0, 0]);
   assert.deepEqual(j.jours[2].coups.pendant_deviner, { cercle: 0, proche: 1 });
   assert.notEqual(j.fin, null);
   // Forme canonique possible (aucune valeur hors du JSON canonique).
@@ -353,4 +354,24 @@ test('Copie du carnet pendant un saut (Q-K7) : durées et sauts pris au toucher 
   // Sans relevé : tableaux vides, comme avant.
   assert.deepEqual(E.fichierDurees(e, cal, 9e8).copies, []);
   assert.deepEqual(E.journal(e, cal, EMPREINTE).copies, []);
+});
+
+test('Point de saut avant la confirmation : Le Cercle, Moi et un proche refusés ; la règle 9 du journal le vérifie (§0)', () => {
+  const s1 = cal.sauts[0];
+  const e = P.jouer(scelle, cal, { arretA: { jour: s1.point, moment: 'debut' } });
+  e.arret = null;
+  assert.equal(E.K(e), s1.point);
+  ['cercle', 'moi', 'proche'].forEach(q => assert.throws(() => E.compter(e, cal, q), /point de saut/));
+  E.compter(e, cal, 'qui_est_qui'); // la fiche du cadre reste accessible
+  // Après la confirmation, les ouvertures vont au saut.
+  E.ouvrirPageSaut(e, cal, 1e8);
+  E.confirmerSaut(e, cal, '2026-10-22T19:00+02:00', 1e8 + 1000);
+  E.compter(e, cal, 'moi');
+  assert.equal(e.sauts[0].coups.ouvert.moi, 1);
+  assert.equal(E.jour(e, s1.point).coups.ouvert.moi, 0);
+  // Un journal qui en compte quand même au point de saut est refusé par la règle 9.
+  const j = journalDe(P.jouer(scelle, cal, {}));
+  j.jours[String(s1.point)].coups.ouvert.moi = 1;
+  const l = J.valider(scelle, cal, j, opts());
+  assert.ok(l.some(x => x.startsWith('règle 9, /jours/' + s1.point + '/coups/ouvert/moi')), l.join('\n'));
 });

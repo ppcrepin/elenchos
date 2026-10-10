@@ -906,6 +906,34 @@ var ElenchosMoteur = (function (N) {
 
   function copieJson(v) { return v === null || v === undefined ? null : JSON.parse(JSON.stringify(v)); }
 
+  /** Les réponses du porteur lues dans un journal v4 : t -> {niveau, raison} ou null (jours atteints seulement). */
+  function reponsesDuJournal(scelle, cal, journal) {
+    var J = journal.jours, P = cal.premier, K = P - 1;
+    while (a(J, String(K + 1))) { K++; }
+    var entreeJ = K >= P ? J[String(P)].coups.entree : null;
+    return function (t) {
+      if (cal.textesEntree.indexOf(t) >= 0) { return entreeJ && entreeJ[t] && entreeJ[t].reponse ? entreeJ[t].reponse : null; }
+      if (a(scelle.histoire.textes, t)) { return null; }
+      var d = cal.jourDeReponse(t);
+      if (d < P || d > K) { return null; }
+      return J[String(d)].coups.reponse || null;
+    };
+  }
+
+  /**
+   * Tempéraments des personnages au jour d (§6, point 8 ; partie 4.3.8), pour un
+   * journal quelconque : les décomptes et la liste, personnage par personnage.
+   * C'est le calcul de `calculer` aux dimanches ; le carnet (carnet.js) s'en sert
+   * pour un jour où `calculer` ne l'a pas fait. -> {personnage: {neutres, reponses,
+   * seul_cote, seul_milieu, temperaments, textes_partages, tres}}
+   */
+  function temperamentsAu(scelle, cal, arrivee, journal, d) {
+    var ctx = contexte(scelle, cal, reponsesDuJournal(scelle, cal, journal), arrivee);
+    var r = {};
+    ctx.personnages.forEach(function (p) { r[p] = calculerTemperaments(ctx, d, p); });
+    return r;
+  }
+
   /** Cartes servies au porteur le jour j : elles ne dépendent que du fichier (règle 7 du journal). */
   function cartesServies(scelle, cal, arrivee) {
     var ctx = contexte(scelle, cal, null, arrivee);
@@ -938,14 +966,7 @@ var ElenchosMoteur = (function (N) {
     exiger(K >= P && K <= cal.dernier, 'journal : jours atteints');
     var jour = function (j) { return J[String(j)]; };
     var entreeJ = jour(P).coups.entree;
-
-    function reponsePorteur(t) {
-      if (cal.textesEntree.indexOf(t) >= 0) { return entreeJ && entreeJ[t] && entreeJ[t].reponse ? entreeJ[t].reponse : null; }
-      if (a(scelle.histoire.textes, t)) { return null; }
-      var d = cal.jourDeReponse(t);
-      if (d < P || d > K) { return null; }
-      return jour(d).coups.reponse || null;
-    }
+    var reponsePorteur = reponsesDuJournal(scelle, cal, journal);
     var ctx = contexte(scelle, cal, reponsePorteur, arrivee);
 
     var manches = {}, revelations = {}, cartesPorteur = {};
@@ -1154,6 +1175,7 @@ var ElenchosMoteur = (function (N) {
     ErreurMoteur: ErreurMoteur,
     PORTEUR: PORTEUR, TENSIONS: TENSIONS, ORDRE_TEMPERAMENTS: ORDRE_TEMPERAMENTS,
     histoire: histoire, resume: resume, calculer: calculer, cartesServies: cartesServies, visagesDejaJoue: visagesDejaJoue,
+    temperamentsAu: temperamentsAu, reponsesDuJournal: reponsesDuJournal,
     regles: {
       contexte: contexte, cote: cote, valeur: valeur, identiques: identiques, classer: classer,
       sommesVides: sommesVides, ajouter: ajouter, curseur: curseur, mediane: mediane,

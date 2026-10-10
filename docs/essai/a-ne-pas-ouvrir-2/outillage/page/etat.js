@@ -413,6 +413,8 @@ var ElenchosEtat = (function (N, J) {
     exiger(J.CLES_OUVERT.indexOf(quoi) >= 0, 'geste inconnu : ' + quoi);
     if (s) { s.coups.ouvert[quoi] += 1; return; }
     exiger(!cal.estSaute(k), 'ouverture un jour sauté hors d\'un saut');
+    // Point de saut, saut pas encore confirmé : ni Le Cercle ni Moi ne sont accessibles (§0 ; partie 4.4, règle 9).
+    exiger(!(cal.estPointDeSaut(k) && J.OUVERT_HORS_POINT.indexOf(quoi) >= 0), 'Le Cercle, Moi ou un proche au point de saut, avant la confirmation');
     d.coups.ouvert[quoi] += 1;
     if (pendantDeviner && (quoi === 'cercle' || quoi === 'proche') && d.coups.pendant_deviner !== null) { d.coups.pendant_deviner[quoi] += 1; }
   }

@@ -283,6 +283,18 @@ for (const [nom, fichier] of Object.entries(FICHIERS)) {
     assert.equal(r(cal.sauts[0].point).message.forme, 'cartes');
   });
 
+  test(nom + ' : temperamentsAu(d) pour un journal quelconque = les tempéraments que calculer() écrit aux dimanches', () => {
+    const j = jouer(x, { abandons: { [cal.premier + 1]: 'tout' } });
+    const R = M.calculer(scelle, cal, arrivee, j);
+    cal.semainesEssai.map(n => cal.semaine(n).dernier_jour).forEach(d => {
+      const t = M.temperamentsAu(scelle, cal, arrivee, j, d);
+      assert.equal(N.jsonCanonique(TR.enTrace(t)), N.jsonCanonique(TR.enTrace(R.jours[String(d)].dimanche.temperaments)));
+    });
+    // Un autre jour (pas un dimanche) : même définition, fenêtre de 56 jours finissant ce jour-là.
+    const t5 = M.temperamentsAu(scelle, cal, arrivee, j, cal.premier + 4);
+    PERSOS.forEach(p => assert.deepEqual(t5[p].temperaments, M.ORDRE_TEMPERAMENTS.filter(c => t5[p].temperaments.includes(c))));
+  });
+
   test(nom + ' : barre du portrait (§5.8) — un cran par réponse validée, entrée comprise ; pleine à la longueur du fichier ou au premier curseur net', () => {
     const j = jouer(x);
     const R = M.calculer(scelle, cal, arrivee, j);
