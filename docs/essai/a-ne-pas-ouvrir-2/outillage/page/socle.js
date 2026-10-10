@@ -317,6 +317,8 @@ var ElenchosSocle = (function (N, C, J, E, Me, MoteurDeLaPage) {
       geste: geste,
       toutEffacer: toutEffacer,
       arreter: arreter,
+      /** Heure du départ d'un saut : seule heure lue pendant un saut (§8.8, « L'heure »), pour E.confirmerSaut. */
+      instantDuSaut: function () { return lireInstant(); },
       /** Lecture de l'heure de Paris : seulement à l'affichage de 2.5 (« En attendant »), comme au premier essai. */
       lireParis: function () { var p = lireParis(); lectures.push({ jour: E.K(etat), heure: p.hhmm }); return p; },
       horloge: function () { return horloge(); },

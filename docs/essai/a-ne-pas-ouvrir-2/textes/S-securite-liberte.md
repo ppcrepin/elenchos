@@ -214,7 +214,7 @@ Remarques du rédacteur sur le lot :
 ### Case S (rang tiré au scellement) · scrutin 8167 (17e législature)
 - Titre : Retirer les nouveaux contrôles près des frontières et côtes
 - Lignes :
-  1. Des policiers pourraient contrôler et fouiller une personne, quel que soit son comportement.
+  1. Des policiers pourraient contrôler et fouiller quelqu'un, quel que soit son comportement.
   2. Ce serait possible jusqu'à 40 km des frontières et des côtes, et dans les aéroports.
   3. Cet amendement retirerait ce pouvoir en supprimant tout l'article.
 - Vote : rejeté, 12 pour, 23 contre, 0 abstention (10 juillet 2026) ; amendements identiques nos 200, 228, 272, 462 et 468 de suppression de l'article 9 du projet de loi visant à offrir des réponses immédiates aux phénomènes troublant l'ordre public, en première lecture (CRSANR5L17S2026E1N012.txt:52 ; VTANR5L17V8167.json). Présentation B : être favorable, c'est soutenir le retrait.
@@ -248,7 +248,7 @@ Remarques du rédacteur sur le lot :
   - Le texte de la commission a pu changer en séance avant ce vote : seules les lignes 1079-1235 du texte de commission sont lues. Les lignes 1 et 2 concordent avec les orateurs (Vicot N012:24, Bernalicis N012:49, Albertini N012:32).
   - Raison 2 : Mathiasin, l'auteur, porte le même argument (am-2984-200.txt, l. 65-76). Les raisons 2 et 4 peuvent être annotées « aucun » ; elles resteraient des inattendues et la règle tiendrait.
   - 35 votants seulement (N012:54). Albertini est rapporteur.
-  - Longueur : la ligne 1 fait 92 caractères, plus que toute ligne du premier essai (89 au plus) ; aucune limite n'est écrite. À faire juger par UX (note de l'orchestrateur).
+  - Longueur : la ligne 1 faisait 92 caractères, au-delà des 90 du brief de rédaction du premier essai ; l'orchestrateur a remplacé « une personne » par « quelqu'un » (89) (note de l'orchestrateur).
   - Taverne parle aussi en E1 : le porteur reverra son nom.
   - Même dossier que 8279, écarté : un seul scrutin servi dans ce dossier.
 - Statut : prête pour l'annotation à l'aveugle, étendue à la présentation B, puis la vérification indépendante.
