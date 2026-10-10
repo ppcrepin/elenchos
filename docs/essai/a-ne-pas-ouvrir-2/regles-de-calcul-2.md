@@ -155,9 +155,12 @@ Partie témoin ajoutée : un Pas de Côté du porteur sur T12 (S), révélé au 
 - **Ordre R2** (un texte S tombe sans remplaçant dans S) : S L P S L T S | L P L S L P T | P. Porteur : S 4 (E1, T3, T6, T10), P 4 (E2, T2, T8, T12), T 3, L 5 (T1, T4, T7, T9, T11). Lot : S 5, P 5, T 3, L 5. Manches inchangées. Pas de Côté du porteur impossible.
 - **Ordre R3** (aucun tirage de calibrage ne passe avec cette entrée) : entrée S, P, L (E3 = 3370) ; T0 à T14 : S T P S L T S | P L S P L S T | P.
 - **Sens (E9).** Dans chaque tension, les réponses du porteur avant le second dimanche couvrent les deux sens, à un texte près. T0 reçoit un texte S du sens majoritaire de S ; T14 un texte P, choisi (P est à égalité). C'est une cible : si le stock ne la permet pas, on la relâche avant les règles de D-028. Elle limite le biais d'approbation noté au premier essai.
-- **Rôles choisis, cases tirées.** E1 = 1161, E2 = 7386, E3 = 3708, T0 = 1262, T14 = 5359. Cases S : 795, 7922, 2190, 8279. Cases P : 840, 2139, 6770. Cases T : 2758, 3449. Cases L : 3370, 707, 2484, 989. Réserves : 5242 (T), 8167 (S, n'entre que si 8279 sort).
-- **Mélange.** 9 rejetés sur 18 (S 2, P 3, T 2, L 2), dont 2 à l'entrée. La cible 7 n'est pas atteignable (le stock manque d'adoptés) ; les bornes de D-028 sont tenues ; aucune relâche de A.3.
-- **Amendements de suppression.** On sert le scrutin de l'amendement, jamais un autre. Suppression adoptée : l'article visé est servi, rejeté (présentation A). Suppression rejetée : l'amendement est servi, rejeté (présentation B), avec un titre sans seconde négation. Ici : 2758 en A ; 7922, 6770, 5359 et 8167 en B.
+- **Rôles choisis, cases tirées.** E1 = 1161, E2 = 7386, E3 = 3708, T0 = 1262, T14 = 5359. Cases S : 795, 7922, 2190, 8167. Cases P : 840, 2139, 6770. Cases T : 2758, 3449. Cases L : 3370, 707, 2484, 989. Réserve : 5242 (T, rejetée), la seule.
+  - *Mise à jour du 10 octobre 2026.* 8279 est écarté par la règle A.5 : l'ensemble du projet de loi reprend une mesure jouée au premier essai (le délit d'organisation de rave-party et la pénalisation de la participation, texte E1, scrutin 6124). La réserve 8167 (S) entre dans sa case. Il ne reste qu'une réserve, 5242, à la fois T et rejetée.
+- **Mélange.** 10 rejetés sur 18 (S 3, P 3, T 2, L 2), dont 2 à l'entrée, dans les bornes de D-028 (8167, rejeté, remplace 8279, adopté). La cible 7 n'est pas atteignable (le stock manque d'adoptés) ; aucune relâche de A.3.
+- **Amendements de suppression.** On sert le scrutin de l'amendement, jamais un autre. Suppression adoptée : l'article visé est servi, rejeté (présentation A). Suppression rejetée : l'amendement est servi, rejeté (présentation B), avec un titre sans seconde négation. Ici : 2758 en A ; 7922, 8167, 6770 et 5359 en B.
+  - *Mise à jour du 10 octobre 2026 (conventions d'essai, `simulation-2.md`, A.7, points 13 et 14).* En présentation B, les lignes 1 et 2 disent ce que ferait l'article, au conditionnel ; la ligne 3 est la phrase fixe, identique pour tout le lot : « Cet amendement supprimerait tout l'article qui prévoit ces mesures. » Le contrôle 1 vérifie l'égalité exacte sur la liste des textes B, passée en paramètre (schéma, partie 5.1, étape 8). La règle 1.1 du lot de Game design (ligne 2 = le retrait) est retirée.
+  - Tout titre qui retire quelque chose commence par « Supprimer », présentation B comprise et 2190 compris (« Supprimer les zones à faibles émissions ») ; les titres B gardent 60 caractères au plus et une seule négation. Raison : les titres en « Retirer… » étaient tous rejetés (0 adopté sur 4) ; avec un seul verbe, 1 adopté sur 5, le verbe ne prédit plus le résultat.
 - **Tirage** des cases restantes dans chaque tension : t("ordre-texte|tension|i").
 
 **15. Limites propres.**
@@ -165,7 +168,7 @@ Partie témoin ajoutée : un Pas de Côté du porteur sur T12 (S), révélé au 
 - Le porteur a lu, peut-être, les règles du premier essai ; la règle 2.2 bis est nouvelle.
 - Les profils sont connus depuis le premier dévoilement : sa justesse est une borne haute.
 - Quinze cartes : tout chiffre de justesse est fragile.
-- Trois textes sont servis en présentation B (double négation possible) ; la lecture du carnet le dira.
+- Quatre textes sont servis en présentation B (7922, 8167, 6770, 5359), dont trois répondus avant le second dimanche (double négation possible, limitée par la phrase fixe de la ligne 3) ; la lecture du carnet le dira. *(Mise à jour du 10 octobre 2026 : « trois » avant l'entrée de 8167.)*
 
 ## 16. Passages déplacés de `simulation-2.md` (arbitrage de l'orchestrateur, 9 octobre 2026)
 
@@ -192,7 +195,7 @@ Dans l'ordre retenu, il est possible sur S seulement : sa cinquième réponse S 
 ### Ajouts après la relecture de Cohérence (passages déplacés)
 
 - Un cercle unanimement neutre est impossible : aucune tension n'a trois profils neutres, Odile n'est jamais neutre, et une réponse atypique n'est jamais neutre (2.3).
-- Rejetés du lot retenu : S 2, P 3, T 2, L 2 (9 sur 18).
+- Rejetés du lot retenu : S 3, P 3, T 2, L 2 (10 sur 18). *(Mise à jour du 10 octobre 2026 : S 2 et 9 sur 18 avant que 8167, rejeté, remplace 8279, adopté ; point 14.)*
 
 **§8.6, point 2, deuxième puce** (texte d'origine) :
 

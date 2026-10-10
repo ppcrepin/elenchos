@@ -528,6 +528,20 @@ Le §7.9 de la simulation 1 vaut pour un texte entier. Ce qui s'ajoute :
 - **Règles inchangées** : jamais avant 18h, jamais de décompte des voix (E4 renvoie les voix à l'étape 6).
 - **Exemple** (inventé) : « Texte rejeté. » / « Le 13 février 2025. C'était un amendement, une modification d'un texte en discussion. »
 
+**Conventions d'essai ajoutées le 10 octobre 2026** (arbitrage de l'orchestrateur sur les points de forme du lot, après les avis de Back-end, d'UX et de Game design ; aucune décision n'est modifiée, D-014 est tenu)
+
+- **Résolution.** `vote.objet` reçoit une cinquième valeur, `resolution`, pour une proposition de résolution (article 34-1 de la Constitution). Issue `adopte` ou `rejete`, étape `aucune` seulement : une résolution n'a pas de suite.
+  - Gros titre inchangé : « Texte adopté. » ou « Texte rejeté. » (D-014).
+  - {objet} : « C'était une résolution, un texte qui invite le Gouvernement à agir, sans l'y obliger. » (mots d'UX ; la virgule et « l'y » évitent de lire « à [agir sans l'obliger] »).
+  - Elle prend la place de {objet} dans les gabarits du tableau ci-dessus : en 2.7d, « Le {date}. C'était une résolution, … » ; en 5.4, « Vote : adopté le {date}. C'était une résolution, … » (ou « rejeté »).
+- **Suite du texte.** Un champ fermé, `vote.suite`, garde un fait du jour même du scrutin qui change le sort du texte entier. Sans lui, une ligne exacte peut tromper : « C'était un article d'un texte plus long. » laisse croire que le texte a continué.
+  - `texte_tombe` (seulement pour un article rejeté) : « Le texte entier est tombé avec lui. »
+  - `texte_retire` (pour un article ou un amendement) : « Le jour même, le texte entier a été retiré. »
+  - `null` dans tous les autres cas : rien.
+  - **Place** : la phrase suit {objet} {étape-texte}, en 1.6, 2.7d et 5.4 : « … {objet} {étape-texte} {suite} ». Jamais avant 18h, comme le reste de la ligne du vote.
+  - Le passif est voulu : « son auteur a retiré la proposition » se lirait comme l'auteur affiché juste en dessous, qui peut être celui d'un amendement. « entier » distingue le texte de l'objet voté, que le gros titre appelle aussi « Texte ».
+  - Le fait est relevé deux fois, avec sa preuve, comme le reste du vote (annexe A). (arbitrage de l'orchestrateur : un champ à part ; positions : Back-end et Game design, un champ fermé `suite` ; UX, deux valeurs de plus pour `etape`, écartées parce que `etape` dit seulement la navette.)
+
 ### 7.11 Auteurs et groupes (E5)
 Reprendre le texte de la version de travail d'UX, recopié ci-dessous mot pour mot. Le gabarit « {mandat} du groupe {groupe} » n'est pas retenu pour l'essai (Cohérence) : aucune décision ne le porte, et E5 (D-030) n'a changé que le nom du groupe, pas le gabarit validé de 1.6, 2.7e et 5.4 (D-014). L'essai garde la virgule validée : « {nom}, {mandat}, {groupe} » (en 5.4, « {nom}, {groupe} » pour un député). La lisibilité des noms de groupes en plusieurs mots, relevée par UX, est un constat pour l'étape 6.
 
@@ -552,6 +566,14 @@ Ces points remplacent « Groupe » et « D'un seul tenant » du §7.10 de la sim
   - un nom de groupe passe à la ligne à ses espaces, jamais à un trait d'union ;
   - une ligne ne commence jamais par « - » (cas de « La France insoumise - Nouveau Front Populaire ») ;
   - le moyen revient à Front-end.
+
+**Conventions d'essai ajoutées le 10 octobre 2026** (arbitrage de l'orchestrateur sur les points de forme du lot, après les avis de Back-end, d'UX et de Game design ; aucune décision n'est modifiée, le gabarit validé de D-014 ne bouge pas)
+
+- **Un seul auteur.** Quand un texte est déposé par plusieurs personnes, « Proposé par » nomme la première personne nommée dans le texte déposé, avec son mandat et son groupe au dépôt. C'est la logique du premier signataire d'un amendement (A.7, point 4) et des textes signés « et plusieurs de ses collègues ». (Avis unanimes.)
+  - Limite, dite franchement : un auteur seul peut attribuer à un camp une mesure portée par plusieurs groupes. Piste de Game design pour l'étape 6 : le gabarit validé, suivi de « avec des députés de {n} autres groupes ». Elle touche D-014 : elle n'entre pas dans l'essai.
+- **Le libellé du moment.** Fait foi le libellé de l'organe dont l'élu était membre à la date retenue : le dépôt pour l'auteur, la séance pour une raison. Si ce libellé n'est qu'un sigle, l'élu n'est pas retenu. On ne prend jamais le libellé d'un autre organe, même s'il désigne le même groupe. (arbitrage de l'orchestrateur : règle mécanique, par identifiant et date ; positions : Back-end et Game design, jamais un autre organe ; UX acceptait un autre organe si Contenu prouvait que c'est le même groupe, écarté parce que cette preuve demande un jugement.)
+- **Noms de groupes longs.** Le nom officiel reste entier, jusqu'à 70 caractères (schéma de Back-end ; 60 auparavant). La longueur d'un nom de groupe ne guide jamais le choix d'un orateur. (Avis unanimes.)
+- **Noms de personnes.** Un nom s'affiche exactement comme l'institution l'écrit ; Front-end empêche toute coupure de ligne à l'intérieur d'un nom de personne. (Avis unanimes.)
 
 ### 7.12 La ligne de règle de Deviner (D-024)
 - Reprendre le texte de la version de travail d'UX, recopié ci-dessous : « Un proche par réponse, chacun une fois. Si deux ont donné la même, l'un ou l'autre est juste. »
@@ -1718,7 +1740,7 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
 - Jamais moins de 6 rejetés.
 
 **A.4 Objet du vote**
-- Texte entier, article, amendement ou motion. L'objet est inscrit dans la fiche et relevé deux fois.
+- Texte entier, article, amendement ou motion ; résolution depuis la convention d'essai du 10 octobre 2026 (§7.10). L'objet est inscrit dans la fiche et relevé deux fois, comme la suite du texte (§7.10).
 - L'objet ne trahit pas le résultat :
   - tout type d'objet servi au moins deux fois compte au moins un adopté et un rejeté ;
   - au moins un texte entier ou article central est rejeté.
@@ -1740,12 +1762,14 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
 **A.7 Fiches : conventions 1 à 10, avec ces changements**
 1. **Titres :** sans deux-points, 60 caractères au plus (E8).
 2. **Groupes :** en toutes lettres, pris dans la liste fermée (E5). Remplace le libellé court de la convention 8 et du §7.10, sous réserve d'UX pour la place à l'écran. (arbitrage de l'orchestrateur : jamais de sigle dans l'essai, §7.11 ; la ligne est ramenée à cette règle ; positions : Contenu, « le sigle officiel seulement là où la place manque » ; UX, jamais de sigle.)
+   - Convention d'essai du 10 octobre 2026 : fait foi le libellé de l'organe au moment (le dépôt pour l'auteur, la séance pour une raison) ; si ce libellé n'est qu'un sigle, l'élu n'est pas retenu ; jamais le libellé d'un autre organe (§7.11). Le nom officiel reste entier, jusqu'à 70 caractères ; sa longueur ne guide pas le choix des orateurs.
 3. **Vote :** la ligne dit l'objet du vote (E4). Les faits viennent de Contenu, les mots d'UX. Proposition, à confirmer par UX et Back-end, pour un amendement ou un article :
    - rejeté : étape `aucune` ;
    - adopté : l'étape du texte après cette lecture (`navette` ou `aucune`, comme au §7.10) ; jamais `definitif` : si aucune case n'est exacte, le texte va en réserve. (arbitrage de l'orchestrateur : position d'UX ; Contenu en tient compte au relevé ; positions : Contenu, `navette` ou `definitif` ; UX, jamais `definitif`.)
 4. **Auteur d'un amendement :** le premier signataire que nomme le titre du scrutin, avec son mandat et son groupe au dépôt.
    - Les amendements identiques d'autres groupes sont notés dans la fiche ; leur affichage revient à UX. [Assembleur : UX n'a pas encore écrit cet affichage.]
    - Pour un amendement du Gouvernement : « Proposé par le Gouvernement. »
+   - Convention d'essai du 10 octobre 2026 : un texte déposé par plusieurs personnes a un seul auteur, la première personne nommée dans le texte déposé (§7.11) ; les autres sont notées dans la fiche.
 5. **Raisons (D-034) :** quatre, deux « pour » et deux « contre », de quatre groupes. De chaque côté, une raison attendue et une seconde, attendue ou inattendue :
    - *attendue* : elle sert le pôle de son côté (« pour » : le pôle s ; « contre » : l'autre) ;
    - *inattendue croisée* : elle défend son côté au nom du pôle d'en face ;
@@ -1774,6 +1798,21 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
     - S'il n'y en a pas, la règle 6 s'applique : aucun inattendu.
 11. **Vérifications (§8) :** comme au premier essai. En plus, l'adversaire vérifie si un côté paraît « plus raisonnable » à cause de son inattendu.
 
+Conventions d'essai ajoutées le 10 octobre 2026 (arbitrage de l'orchestrateur sur les points de forme du lot, après les avis de Back-end, d'UX et de Game design ; aucune décision n'est modifiée) :
+
+12. **Lignes : 90 caractères au plus** (points de code), titre non compris. À 390 px, 90 signes tiennent en deux rangées ; au-delà, on passe à trois (estimation d'UX, à mesurer par Front-end). Le contrôle 1 le vérifie.
+13. **Titres qui retirent quelque chose.** Tout titre dont la mesure retire ou supprime quelque chose commence par « Supprimer », qu'il s'agisse d'un amendement de suppression ou d'un article qui supprime. Un seul verbe pour tous ces titres, pour que le verbe n'annonce pas le résultat (A.4). Le titre garde au plus une négation et 60 caractères.
+14. **Quand la mesure servie est l'amendement de suppression lui-même** (A.4) :
+    - lignes 1 et 2 : ce que ferait l'article, au conditionnel ;
+    - ligne 3 : une phrase fixe, la même pour tout le lot, « Cet amendement supprimerait tout l'article qui prévoit ces mesures. » On ne comprend un retrait qu'après avoir lu ce qui est retiré, et une phrase identique se reconnaît d'un texte à l'autre. Le contrôle 1 vérifie l'égalité exacte.
+15. **Forme des fiches pour le lecteur du contrôle 1** (schéma de Back-end, partie 5.1, étape 8) :
+    - une ligne « - Objet du vote : » dans chaque fiche ;
+    - un auteur Gouvernement s'écrit « - Auteur : Gouvernement ; … » ;
+    - le groupe est suivi de « au dépôt », sans virgule ;
+    - un point est admis en fin de ligne ;
+    - les en-têtes portent le vrai rang T{n}, calculé par l'orchestrateur avant le contrôle, à partir du tirage des cases ; une mention ajoutée à un en-tête passe dans les Doutes de la fiche ;
+    - tout autre en-tête de scrutin est refusé, sauf ceux des réserves et des fiches écartées.
+
 **A.8 Un premier chiffre sur les raisons, pour le bilan**
 - **Au relevé :** la part des candidats lus qui offrent un inattendu de chaque côté. C'est le seul chiffre qui dit ce que les débats offrent.
 - **Sur le lot :** le nombre de textes servis avec la paire, par type. Ce chiffre surestime le premier, puisque le lot est choisi.
@@ -1797,7 +1836,8 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
   - les réponses des quatre personnages, les absences et les réponses atypiques ;
   - un seul vrai texte, la surprise de la semaine 13, avec sa fiche légère : titre, tension, sens, vote.
 - **Textes joués** : E1 à E3 et T0 à T14, en fiches complètes. Champs nouveaux (E4, E5) :
-  - l'objet du vote : texte entier, article, amendement ou motion ;
+  - l'objet du vote : texte entier, article, amendement, motion ou résolution (résolution : convention d'essai du 10 octobre 2026, §7.10) ;
+  - la suite du texte, quand un fait du jour même change son sort : texte tombé, texte retiré, ou rien (convention d'essai du 10 octobre 2026, §7.10) ;
   - les auteurs « commission » et « non inscrit » ;
   - les groupes en toutes lettres.
 
@@ -1838,7 +1878,7 @@ Tout ce qui n'est pas dit ici reste comme à l'annexe A de `simulation.md` et da
     2. « C'était {Y}. {X} avait répondu la même chose. »
     3. Les trois lignes de l'avis du cercle, le graphique, « Le repère montre où le cercle se coupe en deux. » et sa phrase pour le lecteur d'écran. [Assembleur : « Le repère montre où le cercle se coupe en deux. » est remplacé par « Milieu des réponses » (point 9 ci-dessus).]
     6. « Reprendre la révélation » ; « Revoir la révélation ».
-    7. Les lignes du vote : « C'était un amendement, une modification d'un texte en discussion. » ; « C'était un article d'un texte plus long. » ; « Le Sénat devait encore voter ce texte. » ; « …, avant même l'examen de ses articles. »
+    7. Les lignes du vote : « C'était un amendement, une modification d'un texte en discussion. » ; « C'était un article d'un texte plus long. » ; « Le Sénat devait encore voter ce texte. » ; « …, avant même l'examen de ses articles. » [Ajout du 10 octobre 2026, conventions d'essai du §7.10 : « C'était une résolution, un texte qui invite le Gouvernement à agir, sans l'y obliger. » ; « Le texte entier est tombé avec lui. » ; « Le jour même, le texte entier a été retiré. »]
     8. Les groupes en toutes lettres, dans le gabarit validé ; « sans groupe » ; « Proposé par la commission … ».
     9. Le Sans-Faute dans 4.2, 4.3, 5.2 et 5.5.
     10. Le rond à deux lettres.
@@ -2068,6 +2108,7 @@ Son désaccord avec Front-end sur la forme du graphique (escalier contre rangée
 - ce que devient Le Pas de Côté après son annonce ;
 - l'étiquette d'une barre pleine sans curseur net.
 - la lisibilité du gabarit « {nom}, {mandat}, {groupe} » avec des noms de groupes en plusieurs mots (UX).
+- un auteur seul peut attribuer à un camp une mesure portée par plusieurs groupes ; piste : « avec des députés de {n} autres groupes » après le gabarit validé, qui touche D-014 (Game design, 10 octobre 2026 ; §7.11).
 
 ### À dire au porteur
 
