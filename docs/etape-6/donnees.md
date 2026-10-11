@@ -8,7 +8,7 @@
 
 ## En bref
 
-**Ce qui a été fait.** Chaque exigence du plan (travail 3), celles de vos décisions D-042, D-043, D-045 et D-048, et les quatre règles de la limite 3 de `docs/plateforme.md` sont écrites ici comme des règles vérifiables : **43 exigences** (partie 3). Pour chacune, le test automatique qui la prouvera dans le code est décrit, avec le travail où il sera construit. Quatre outils de test servent partout (partie 2). Ce qu'aucun programme ne peut prouver, par exemple qu'un prestataire est vraiment européen, est dit franchement et confié à un contrôle humain (partie 3, fin).
+**Ce qui a été fait.** Chaque exigence du plan (travail 3), celles de vos décisions D-042, D-043, D-045 et D-048, et les quatre règles de la limite 3 de `docs/plateforme.md` sont écrites ici comme des règles vérifiables : **43 exigences** (partie 3), plus cinq sous-points tirés des règles de Game design (`docs/etape-6/regles.md`) : P-03 a, P-04 a, P-22 a, P-27 a et P-39 a. P-22 a et P-39 a ne valent que si vous acceptez la question « Mesures » de ce document. Pour chacune, le test automatique qui la prouvera dans le code est décrit, avec le travail où il sera construit. Quatre outils de test servent partout (partie 2). Ce qu'aucun programme ne peut prouver, par exemple qu'un prestataire est vraiment européen, est dit franchement et confié à un contrôle humain (partie 3, fin).
 
 **Ce que vous regardez : « qui voit quoi » (partie 1).** Un tableau : pour chaque donnée d'un joueur, qui la voit. Trois choses à retenir :
 - **les réponses ne sont vues que du cercle**, selon les règles du jeu. Aucun écran ne les montre à l'équipe : ni à vous, ni aux agents ;
@@ -109,12 +109,12 @@ Le pseudo reste un seul champ du compte, le même dans tous ses cercles. Si un j
 *Test.* La base n'a qu'un champ pseudo, rattaché au compte, aucun rattaché à un cercle (comparaison avec la carte des données). *Travail 9.*
 
 **P-04. Chaque donnée gardée figure sur la carte des données, avec un usage de la liste fermée.** *D-042, point 2 ; plan, travail 11 (carte des données).*
-Les usages permis sont quatre : faire tourner le jeu ; compter la part de « aucune » (D-027) ; les mesures sur les gestes ; la sécurité. Un champ sans ligne sur la carte n'a pas le droit d'exister.
+Les usages permis sont quatre : faire tourner le jeu ; compter la part de « aucune » (D-027) ; les mesures sur les gestes ; la sécurité. Un cinquième, régler les seuils du jeu, s'y ajoute seulement si la question « Mesures » de `docs/etape-6/regles.md` est acceptée (P-22 a). Un champ sans ligne sur la carte n'a pas le droit d'exister.
 *Test.* À chaque changement de code, un programme compare les tables réelles de la base d'essai à la carte : tout champ absent de la carte, ou sans usage, fait échouer la vérification. *Travail 5, puis à chaque changement.*
 
-**P-04 a. Un texte corrigé après coup peut sortir des portraits.** *Règle 20 de `docs/etape-6/regles.md` (proposé) ; D-044, point 1.*
-Chaque réponse garde le texte auquel elle répond, et un curseur doit pouvoir se recalculer sans les réponses à un texte retiré. Le reste ne bouge pas : les réponses restent dans l'Historique, et les cartes, les points, les titres, Le Fidèle, l'avis du cercle et la barre tiennent.
-*Test.* Sur une base inventée, on retire un texte des portraits : chaque curseur est égal à celui qu'on obtient en rejouant toutes les réponses sauf celles de ce texte ; les points, les titres et la barre sont inchangés ; les réponses sont toujours dans l'Historique. *Travail 8.*
+**P-04 a. Un texte corrigé après coup peut sortir des portraits.** *Règle 20 de `docs/etape-6/regles.md` (proposé, confirmée par Contenu et Back-end) ; D-044, point 1.*
+Chaque réponse garde le texte auquel elle répond. Le texte porte un champ « retiré des portraits le … », inscrit sur la carte des données (partie 4). Quand il est rempli, le recalcul rejoue toutes les réponses sans celles de ce texte, y compris une réponse arrivée après le retrait, même en retard (règle 6). Le recalcul peut être relancé sans changer le résultat. Il s'applique hors de 15h–19h et jamais le dimanche, comme une mise en ligne, pour ne croiser ni les titres du dimanche ni la révélation préparée d'avance. Une étiquette fausse (le lien entre une raison et une valeur, jamais montré au joueur) se corrige par un recalcul avec la bonne étiquette, sans retrait. Le reste ne bouge pas : les réponses restent dans l'Historique, et les cartes, les points, les titres, Le Fidèle, l'avis du cercle et la barre tiennent. L'avis de retrait ou de correction passe dans le sens chaîne → jeu, par le point d'entrée des textes (P-14) : la chaîne ne touche jamais la base des joueurs, et D-043 tient.
+*Test.* Sur une base inventée, on retire un texte des portraits : chaque curseur est égal à celui qu'on obtient en rejouant toutes les réponses sauf celles de ce texte ; une réponse en retard arrivée après le retrait n'y compte pas ; une seconde passe ne change rien ; les points, les titres et la barre sont inchangés ; les réponses sont toujours dans l'Historique. Horloge simulée : un retrait demandé à 16h ou un dimanche attend la première heure permise. Une étiquette corrigée donne les curseurs qu'on obtient en rejouant tout avec la bonne étiquette, sans champ de retrait rempli. L'avis arrive par le point d'entrée des textes, qui ne renvoie rien d'autre qu'un accusé de réception. *Travail 8.*
 
 ### B. Rien de personnel qui sorte
 
@@ -159,7 +159,7 @@ Scaleway garde une copie qu'il ne peut pas lire : la clé reste chez nous.
 
 **P-14. La chaîne des textes n'a aucun accès aux données des joueurs.** *Plan, travail 3 ; D-043, point 3 ; D-044, point 2 ; la séparation, proposé.*
 La chaîne tourne à part : sa propre application et sa propre base, qui ne contient que des données publiques de l'Assemblée. Elle ne possède aucun mot de passe de la base des joueurs. Le seul passage va dans un sens : la chaîne livre des textes au jeu ; le jeu ne lui renvoie rien. Le registre public de méthode est produit par la chaîne, donc sans aucun chiffre sur les joueurs (§9, D-027).
-*Test.* Les réglages de l'application de la chaîne ne contiennent aucune adresse ni aucun mot de passe de la base des joueurs (inventaire automatique). Une tentative de connexion de la chaîne à cette base échoue. Le code de la chaîne n'utilise aucun module du jeu. Le point d'entrée du jeu qui reçoit les textes n'accepte qu'une livraison de texte et ne renvoie rien d'autre qu'un accusé de réception. *Travail 10.*
+*Test.* Les réglages de l'application de la chaîne ne contiennent aucune adresse ni aucun mot de passe de la base des joueurs (inventaire automatique). Une tentative de connexion de la chaîne à cette base échoue. Le code de la chaîne n'utilise aucun module du jeu. Le point d'entrée du jeu qui reçoit les textes n'accepte qu'une livraison de texte ou un avis de correction (retrait des portraits ou étiquette corrigée, P-04 a), et ne renvoie rien d'autre qu'un accusé de réception. *Travail 10.*
 
 **P-15. Le jeu n'appelle aucun fournisseur d'IA.** *D-043, point 3.*
 *Test.* La liste fermée des sorties du serveur (P-12) ne contient aucun fournisseur d'IA ; la liste des bibliothèques du jeu ne contient aucune bibliothèque d'IA. *Travail 5.*
@@ -198,7 +198,7 @@ Le jeu, les comptes, les mesures et la sécurité se connectent chacun sous leur
 *Test.* Un programme lit les droits réels de chaque rôle dans la base d'essai et les compare à la carte : un droit en trop fait échouer la vérification. *Travail 5.*
 
 **P-22 a. Trois comptes pour le réglage de mi-bêta, si la question « Mesures » de `docs/etape-6/regles.md` est acceptée.** *`docs/etape-6/regles.md`, section 5 et question 2 ; seconde exception à la liste fermée (D-042, point 2) et à D-027, si elle est acceptée.*
-Le rôle du jeu calcule alors trois comptes et les dépose déjà totalisés, là où le rôle des mesures les lit : le nombre de Pas de Côté annoncés, par mois ; le nombre de tempéraments en cours, pour chacun des quatre, rapporté au nombre de joueurs qui peuvent en avoir ; la part des joueurs qui ont au moins un curseur net à 40, 60 et 80 réponses. Le rôle des mesures ne lit toujours ni les réponses, ni les curseurs. Si la question est refusée, rien de tout cela n'existe.
+Le rôle du jeu calcule alors trois comptes et les dépose déjà totalisés, là où le rôle des mesures les lit : le nombre de Pas de Côté annoncés, par mois ; le nombre de tempéraments en cours, pour chacun des quatre, rapporté au nombre de joueurs qui peuvent en avoir ; la part des joueurs qui ont au moins un curseur net à 40, 60 et 80 réponses. Le rôle des mesures ne lit toujours ni les réponses, ni les curseurs. Qui les lit suit votre réponse à la question « Agents » (P-21) : vous seul si vous choisissez « Seulement la part de « aucune » » ou « Vous seul » ; les agents aussi si vous choisissez « Aussi les totaux des mesures » ou « Aussi des extraits de journaux ». Si la question « Mesures » est refusée, rien de tout cela n'existe.
 
 **P-23. Les réponses ne servent qu'à jouer et à compter la part de « aucune ».** *D-027 ; D-042, point 2.*
 Le rôle des mesures ne lit pas les réponses. Il ne lit qu'une vue, c'est-à-dire une fenêtre préparée par la base, qui donne pour chaque texte deux nombres : réponses et « aucune ». La vue ne répond qu'après la révélation du texte et au-dessus de 30 réponses (seuil à fixer dans l'analyse d'impact, D-027). Le compte est fait une fois, puis figé (proposé) : il ne bouge plus si un joueur efface ses réponses ensuite, pour qu'on ne puisse pas retrouver une raison par différence entre deux comptes. Aucune ligne par cercle ni par personne n'existe.
@@ -293,9 +293,14 @@ Partent : le compte, l'adresse, le lien avec Apple ou Google (révoqué chez eux
 Un geste gardé ne porte ni position, ni raison, ni tension. La durée de l'écran de la raison n'est jamais gardée sous l'identifiant d'un joueur (P-40). Règle des essais, reprise telle quelle : un chiffre qui changerait si le joueur avait répondu autrement n'est jamais donné texte par texte (seule exception : la part de « aucune », D-027, P-23). Les mesures validées qui dépendent des réponses de tous, la justesse (mesure 5, lue contre le hasard de chaque manche) et la part des Mystère allant à un membre arrivé depuis moins de deux semaines (D-041), restent calculables : le rôle du jeu les calcule (P-22), et elles ne sortent qu'en totaux, sur des groupes au-dessus du seuil, jamais texte par texte ni par personne.
 *Test.* Réponses inversées : la réserve des gestes est identique octet pour octet ; dans le rapport des mesures, seuls changent les totaux de justesse et de Mystère, qui n'ont aucune ligne par texte ni par personne. Le format d'un geste n'a aucun champ de position, de raison ni de tension (comparaison avec la carte). *Travail 12.*
 
-**P-39 a. Les trois comptes de mi-bêta, si la question « Mesures » de `docs/etape-6/regles.md` est acceptée.** *`docs/etape-6/regles.md`, section 5 ; conditions calquées sur D-027.*
-Comptés sur tous les joueurs à la fois, jamais par cercle ni par personne, jamais croisés avec une autre donnée ; rien sous 30 joueurs ; seuls les comptes sont gardés ; lus pour le réglage seulement ; jamais publiés ; avis de Juridique et de l'avocat avant la bêta.
-*Test.* Chaque table de compte n'a ni colonne de cercle ni colonne de personne ; sous 30 joueurs, rien n'est déposé ; aucune liste de joueurs n'est gardée derrière un compte ; le registre public n'en reçoit rien. *Travail 12, si la question est acceptée.*
+**P-39 a. Les trois comptes de mi-bêta, si la question « Mesures » de `docs/etape-6/regles.md` est acceptée.** *`docs/etape-6/regles.md`, section 5 et section 10 (conditions de Juridique) ; conditions calquées sur D-027.*
+- Comptés sur tous les joueurs à la fois, jamais par cercle ni par personne, jamais croisés avec une autre donnée ; seuls les comptes sont gardés ; lus pour le réglage seulement ; jamais publiés.
+- **Seuil de 30 joueurs par groupe compté**, et non sur la bêta entière : par exemple, la part des joueurs qui ont un curseur net à 60 réponses ne s'affiche que si au moins 30 joueurs ont atteint 60 réponses.
+- **Consentement dès le premier joueur de la bêta** : la carte de consentement ou « Qui, durée, droits » dit que les réponses servent aussi, en totaux, à « régler les seuils du jeu ». Sinon, tous les joueurs déjà inscrits devront redonner leur accord, par une version « nouvel accord » de la carte (P-34).
+- **Accord séparé, ou réglage « Ne pas compter mes réponses »**, selon l'avis de l'avocat (partie 5, point 19).
+- **Analyse d'impact** : leur durée de conservation et la liste de qui les lit, alignée sur P-21 (partie 6, point 15).
+
+*Test.* Chaque table de compte n'a ni colonne de cercle ni colonne de personne ; un groupe de 29 joueurs ne donne rien, un groupe de 30 donne son compte ; aucune liste de joueurs n'est gardée derrière un compte ; le registre public n'en reçoit rien. Sans la version de la carte qui le dit, aucun compte n'est calculé. Si l'avocat retient le réglage, un joueur qui l'a coché n'entre dans aucun compte (on compare les comptes avec et sans lui). *Travail 12, si la question est acceptée.*
 
 **P-40. La durée de l'écran de la raison est comptée sur tous les joueurs, jamais par personne, par jour ni par texte.** *`docs/produit.md`, section 8 (condition de Juridique : jamais croisée avec la tension).*
 Un jour, tous les joueurs répondent au même texte, qui touche une seule tension : une durée gardée par jour serait donc croisée avec la tension. Elle se range dans un histogramme par tranches de durée (par exemple de 0 à 2 secondes, de 2 à 5, et ainsi de suite), un par semaine, sans identifiant ni texte ; la durée médiane que demande `docs/produit.md` se lit sur cet histogramme.
@@ -330,7 +335,7 @@ Dit franchement : les tests prouvent qu'aucun chemin technique n'existe dans le 
 
 ## 4. La carte des données : où, combien de temps
 
-Première version, à compléter au travail 5 avec le modèle de données, puis à reprendre dans l'analyse d'impact. Usages (D-042) : 1 faire tourner le jeu ; 2 la part de « aucune » ; 3 les mesures sur les gestes ; 4 la sécurité.
+Première version, à compléter au travail 5 avec le modèle de données, puis à reprendre dans l'analyse d'impact. Usages (D-042) : 1 faire tourner le jeu ; 2 la part de « aucune » ; 3 les mesures sur les gestes ; 4 la sécurité ; 5 régler les seuils du jeu, seulement si la question « Mesures » de `docs/etape-6/regles.md` est acceptée (P-22 a).
 
 | Donnée | Usage | Où | Combien de temps | D'où vient la durée |
 |---|---|---|---|---|
@@ -350,6 +355,8 @@ Première version, à compléter au travail 5 avec le modèle de données, puis 
 | Compte devenu inaccessible | 1 | Scalingo | Effacé 30 jours après la coupure chez Apple ou Google | Proposé (P-30) ; délai à fixer dans l'analyse d'impact |
 | Totaux des gestes | 3 | Scalingo | Sans limite : anonymes | Proposé |
 | Comptes de la part de « aucune » | 2 | Scalingo | Sans limite : anonymes | Juridique, proposé |
+| Trois comptes de mi-bêta (Pas de Côté par mois, tempéraments en cours, curseurs nets à 40, 60 et 80 réponses), si la question « Mesures » est acceptée | 5 | Scalingo | À fixer dans l'analyse d'impact | Proposé, conditionnel (P-22 a, P-39 a) |
+| Texte : « retiré des portraits le … » | 1 | Scalingo | Tant que le texte est gardé | Proposé (règle 20 de `docs/etape-6/regles.md`, P-04 a) |
 | Journaux de notre programme, sans donnée de joueur | 4 | Scalingo | 6 mois | Juridique, proposé (repère de la CNIL, de mémoire) |
 | Journaux de Scalingo, avec l'adresse internet | 4 | Scalingo | Durée de Scalingo, à connaître avant de signer | À vérifier |
 | Trace des ouvertures de la base réelle | 4 | Scalingo | 1 an | Proposé (repère de la CNIL : 6 mois à 1 an, de mémoire) |
@@ -383,6 +390,7 @@ Première version, à compléter au travail 5 avec le modèle de données, puis 
 16. **La durée de l'écran de la raison** : la mesure, comptée par semaine en histogramme, sans joueur ni texte (P-40), est à valider avec l'analyse d'impact, comme le demande `docs/produit.md` (section 8 ; D-044, point 4).
 17. **Le seuil de l'avis du cercle** (D-025) : 3 réponses, proposé (règle 10 de `docs/etape-6/regles.md`) ; en dessous, ni ligne, ni graphique. D-025 demande que ce seuil passe par l'avocat avant la bêta.
 18. **Le Pas de Côté** (règle 14 de `docs/etape-6/regles.md`) : annoncé à tout le cercle, il lui apprend le côté d'une réponse du jour, contraire au penchant net du joueur. Il est à examiner au même rang que la répartition de l'avis du cercle (D-025), et à dire dans « Qui, durée, droits ».
+19. **Les trois comptes de mi-bêta**, si vous acceptez la question « Mesures » de `docs/etape-6/regles.md` (P-22 a, P-39 a) : leur calcul lit des opinions (art. 9) et n'en garde que des totaux. La phrase « régler les seuils du jeu » dans la carte de consentement ou « Qui, durée, droits » suffit-elle, ou faut-il un accord séparé, ou un réglage « Ne pas compter mes réponses » ?
 
 ---
 
@@ -403,7 +411,8 @@ Les risques à y décrire, avec la parade déjà prévue. L'analyse est obligato
 11. **La durée des réponses** : tant que le compte existe, sans limite pour un joueur actif. Est-ce nécessaire au portrait, ou faut-il une limite ?
 12. **La période électorale** : une fuite pendant une campagne aurait un poids particulier. Parade : P-02, P-13, procédure de fuite (art. 33 et 34).
 13. **Le changement de structure** (D-042, D-043) : un nouveau responsable des données, et probablement un nouvel accord à demander à chaque joueur.
-14. **Les erreurs de texte** qui visent un député nommé à 18h (D-044). Parade : procédure de correction, erratum daté.
+14. **Les erreurs de texte** qui visent un député nommé à 18h (D-044). Parade : procédure de correction, erratum daté ; retrait des portraits si l'erreur porte sur ce à quoi on a répondu (P-04 a).
+15. **Les trois comptes de mi-bêta**, si la question « Mesures » de `docs/etape-6/regles.md` est acceptée : un nouvel usage des opinions, en totaux. À y fixer : leur durée de conservation et la liste de qui les lit, alignée sur P-21 (P-39 a).
 
 ---
 
@@ -416,6 +425,8 @@ Ce document applique D-006, D-010, D-024 à D-027, D-035, D-041 à D-045 et D-04
 - **D-048** (« en cas d'incident sur la version en ligne, c'est le porteur qui regarde ») : la troisième option le touche : vous regardez toujours, mais les agents reçoivent des extraits de journaux. Les trois autres le laissent intact.
 - **D-043, point 3, et D-048** : la deuxième et la troisième option reposent sur une lecture de Juridique, à confirmer par l'avocat (partie 5, point 2) : un total au-dessus d'un seuil, ou un journal sans identifiant ni adresse internet, n'est pas une « donnée de joueur ».
 
+- **D-042, point 2, et D-027, selon votre réponse à la question « Mesures » de `docs/etape-6/regles.md`** (P-22 a, P-39 a) : si vous l'acceptez, les trois comptes deviennent une seconde exception à la liste fermée des usages et à « seul usage interne des opinions » (D-027), et la carte de consentement doit le dire dès le premier joueur ; si vous la refusez, rien ne change.
+
 **Proposées, et qui touchent une décision :**
 - **D-045, point 1, D-010 (point 3) et D-029** (P-30) : l'effacement d'un compte inactif a lieu même si l'e-mail n'a pas pu partir, alors que D-045 dit « après un e-mail envoyé » ; un nouvel e-mail part à chaque nouvelle période d'inactivité, alors que D-045 et la règle 5 disent « une seule fois », ce qui élargit l'exception à « aucune relance ». Soumis à l'avocat (partie 5, point 14).
 - **`docs/onboarding.md`, règle 5 du compte** (P-30) : le compte devenu inaccessible est défini, avec un délai proposé de 30 jours, à fixer dans l'analyse d'impact.
@@ -427,6 +438,8 @@ Ce document applique D-006, D-010, D-024 à D-027, D-035, D-041 à D-045 et D-04
 - **D-006 et `docs/onboarding.md`** (P-29) : le lien « expire » ; 7 jours proposés ; le lien est rattaché à l'invitée à sa première réponse ; à confirmer par UX.
 - **D-011 et D-014, l'annonce d'arrivée** (P-06) : le texte validé peut rester dans la notification sur le web, son contenu y étant chiffré jusqu'au téléphone (proposé ; de mémoire, à vérifier au travail 4). C'est la revue que demandait le plan (travail 3). Elle cite le pseudo de qui arrive, que le plan et `docs/produit.md` appellent « prénom » (E7). La question revient au passage aux boutiques (travail 14).
 - **D-045, point 1** (P-30) : « ouvrir le jeu » et « 12 mois » sont précisés.
+- **D-044, point 1, règle 20 de `docs/etape-6/regles.md`** (P-04 a) : un texte corrigé après coup sort des portraits, par un recalcul relançable, hors de 15h–19h et jamais le dimanche ; l'avis passe de la chaîne au jeu, jamais l'inverse : D-043 tient.
+- **D-010, règle 19 (lecture A) et règle 15 (un seul pseudo)** de `docs/etape-6/regles.md` (P-27 a, P-03 a) : propositions de Game design, reprises ici avec leur test.
 - **`docs/plateforme.md`, annexe F** (P-17) : en réponse à la question de cette annexe, le code de la version en ligne peut rester public (proposé).
 
 ---
@@ -438,7 +451,7 @@ Ce document applique D-006, D-010, D-024 à D-027, D-035, D-041 à D-045 et D-04
 - **Les tests prouvent l'absence de chemins dans le code, pas l'honnêteté des personnes** : ni la vôtre, ni celle des prestataires. C'est la limite de toute protection des données ; elle se compense par les contrats, la trace des accès et l'audit de sécurité avant l'ouverture.
 - **Les seuils (30, 10) sont des conventions**, pas des garanties mathématiques. Dans une bêta de 40 à 80 joueurs, certains groupes seront petits : des chiffres seront remplacés par « — ».
 - **Le chiffrement des réponses** (P-02) rend la base plus sûre, mais un peu plus lente à interroger et plus délicate à réparer. À notre taille, l'écart est négligeable (estimation).
-- **Ce document décrit les tests ; il ne les écrit pas.** Le « fini quand » du plan (« chaque exigence a son test automatique ») sera atteint quand chacun de ces tests existera dans le code, aux travaux indiqués. Les 43 exigences ont un test automatique décrit ; celui de P-24 (l'argent) ne sera construit qu'avant l'ouverture ; P-12 et P-16 ont en plus une part humaine, listée en fin de partie 3.
+- **Ce document décrit les tests ; il ne les écrit pas.** Le « fini quand » du plan (« chaque exigence a son test automatique ») sera atteint quand chacun de ces tests existera dans le code, aux travaux indiqués. Les 43 exigences et leurs cinq sous-points ont un test automatique décrit (ceux de P-22 a et P-39 a seulement si la question « Mesures » de `docs/etape-6/regles.md` est acceptée) ; celui de P-24 (l'argent) ne sera construit qu'avant l'ouverture ; P-12 et P-16 ont en plus une part humaine, listée en fin de partie 3.
 
 **À tester avec de vraies personnes, en bêta :**
 - la version pour les joueurs de « qui voit quoi » (dans « Qui, durée, droits ») : est-elle lue, comprise, rassurante ou inquiétante ?
