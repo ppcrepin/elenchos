@@ -1,0 +1,397 @@
+<title>Repère Deviner · Répondre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,700;1,500&family=Alegreya+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Mise en page : la planche des maquettes finales (fond gris clair, annotations au crayon bleu), une rangée de trois téléphones par option, à la largeur d'un iPhone SE. */
+:root {
+  /* La planche (reprise de docs/maquettes/maquettes-finales.html) */
+  --page: #eef0ee; --sheet: #ffffff; --ink: #1c1d1f; --muted: #5f625f; --line: #c4c7c3; --blue: #23729c;
+  --font-ui: "Alegreya Sans", "Segoe UI", system-ui, sans-serif;
+  --font-note: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  /* Le téléphone, univers La Tablée (D-012, D-014) */
+  --t-screen: #F2EEE8; --t-ink: #2A211C; --t-muted: #6B5F57; --t-line: rgba(42, 33, 28, 0.18); --t-fill: #FFFFFF;
+  --t-caramel: #8A5714; --t-btn-bg: #2A211C; --t-btn-fg: #F2EEE8; --t-shadow: rgba(42, 33, 28, 0.09);
+  /* Le miel du repère : une seule teinte, une seule intensité */
+  --miel: #E9B45A; --sur-miel: #2A211C; --miel-bord: #2A211C;
+  --ft: "Alegreya", Georgia, serif; --fb: "Alegreya Sans", "Trebuchet MS", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #141516; --sheet: #1d1e20; --ink: #ebece9; --muted: #a3a6a2; --line: #3d3f41; --blue: #86c4e6;
+    --t-screen: #1C1612; --t-ink: #F2ECE3; --t-muted: #B8ACA2; --t-line: rgba(242, 236, 227, 0.18); --t-fill: #29211B;
+    --t-caramel: #E9B45A; --t-btn-bg: #E9B45A; --t-btn-fg: #1C1612; --t-shadow: rgba(0, 0, 0, 0.4);
+    --miel: #E9B45A; --sur-miel: #1C1612; --miel-bord: #E9B45A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --page: #141516; --sheet: #1d1e20; --ink: #ebece9; --muted: #a3a6a2; --line: #3d3f41; --blue: #86c4e6;
+  --t-screen: #1C1612; --t-ink: #F2ECE3; --t-muted: #B8ACA2; --t-line: rgba(242, 236, 227, 0.18); --t-fill: #29211B;
+  --t-caramel: #E9B45A; --t-btn-bg: #E9B45A; --t-btn-fg: #1C1612; --t-shadow: rgba(0, 0, 0, 0.4);
+  --miel: #E9B45A; --sur-miel: #1C1612; --miel-bord: #E9B45A;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--page); color: var(--ink); font-family: var(--font-ui); font-size: 16px; line-height: 1.45; margin: 0; }
+.wrap { max-width: 1160px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 56px; display: grid; gap: 40px; }
+button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+/* En-tête de la planche */
+.top { display: grid; gap: 14px; }
+.topline { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
+.kicker { font-family: var(--font-note); font-size: 0.78rem; color: var(--blue); }
+h1 { font-family: var(--ft); font-size: 1.9rem; line-height: 1.15; margin: 0; text-wrap: balance; }
+.lede { margin: 0; max-width: 64ch; font-size: 1.06rem; }
+.rules { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.9rem; color: var(--muted); max-width: 80ch; }
+.rules li::before { content: "· "; color: var(--blue); }
+.theme { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; background: var(--sheet); padding: 3px; gap: 2px; }
+.theme button { font: inherit; font-size: 0.85rem; border: 0; background: transparent; color: var(--ink); border-radius: 999px; padding: 6px 12px; cursor: pointer; min-height: 36px; }
+.theme button[aria-pressed="true"] { background: var(--ink); color: var(--sheet); font-weight: 700; }
+
+/* Sections */
+section.opt { display: grid; gap: 16px; border-top: 1px solid var(--line); padding-top: 22px; }
+.sec-hd { display: grid; gap: 4px; max-width: 70ch; }
+.sec-hd .code { font-family: var(--font-note); font-size: 0.78rem; color: var(--blue); }
+.sec-hd h2 { margin: 0; font-family: var(--ft); font-size: 1.45rem; line-height: 1.2; text-wrap: balance; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.badge { font-family: var(--font-note); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--blue); border: 1.5px solid var(--blue); border-radius: 4px; padding: 1px 6px; }
+.sec-hd p { margin: 0; color: var(--muted); }
+.row { display: flex; flex-wrap: wrap; gap: 28px 20px; align-items: flex-start; }
+.row.four { max-width: 744px; }
+.cell { flex: 0 1 352px; min-width: 0; display: grid; gap: 8px; }
+.cap { font-family: var(--font-note); font-size: 0.76rem; color: var(--muted); }
+.cap b { color: var(--blue); font-weight: 500; }
+.verdict { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 12px; max-width: 78ch; font-size: 0.98rem; }
+.verdict .k { font-family: var(--font-note); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding-top: 3px; }
+.verdict .plus { color: var(--ink); }
+.measure { font-family: var(--font-note); font-size: 0.76rem; color: var(--muted); max-width: 90ch; margin: 0; }
+.sr-line { font-size: 0.92rem; color: var(--muted); margin: 0; max-width: 78ch; }
+.sr-line i { color: var(--ink); }
+.today { display: flex; flex-wrap: wrap; gap: 24px 32px; align-items: flex-start; }
+.issues { flex: 1 1 300px; min-width: 0; max-width: 60ch; margin: 0; padding-left: 1.1em; display: grid; gap: 8px; font-size: 0.97rem; }
+.issues b { font-weight: 700; }
+.note-d { border-left: 3px solid var(--blue); padding-left: 12px; max-width: 72ch; font-size: 0.95rem; margin: 0; }
+
+/* ---------- Le téléphone (univers La Tablée) ---------- */
+.phone { width: 100%; max-width: 352px; border: 2px solid var(--t-ink); border-radius: 28px; background: var(--t-screen); color: var(--t-ink);
+  font-family: var(--fb); font-size: 16px; line-height: 1.35; padding: 8px 0 6px; display: flex; flex-direction: column; overflow: hidden; }
+.statusbar { display: flex; justify-content: space-between; font-family: var(--font-note); font-size: 0.72rem; color: var(--t-muted); padding: 0 16px 4px; }
+.screen { height: 519px; display: flex; flex-direction: column; min-height: 0; }
+.body { flex: 1; min-height: 0; overflow: hidden; padding: 4px 14px 10px; display: flex; flex-direction: column; gap: 10px; position: relative; }
+.body::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 28px; background: linear-gradient(transparent, var(--t-screen)); pointer-events: none; }
+.bottom { padding: 8px 14px 0; display: grid; gap: 8px; }
+.btn1 { font: inherit; font-weight: 700; width: 100%; background: var(--t-btn-bg); color: var(--t-btn-fg); border: 0; border-radius: 12px; padding: 12px; text-align: center; }
+.btn2 { font: inherit; width: 100%; background: transparent; color: var(--t-ink); border: 1.5px solid var(--t-ink); border-radius: 12px; padding: 8px; text-align: center; }
+.tabbar { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--t-line); padding-top: 7px; }
+.tab { display: grid; justify-items: center; gap: 3px; font-size: 0.78rem; color: var(--t-muted); }
+.tab::before { content: ""; width: 18px; height: 18px; border: 3px double currentColor; border-radius: 50%; }
+.tab.on { color: var(--t-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.hd { font-family: var(--ft); font-weight: 700; font-size: 1.3rem; line-height: 1.2; }
+.label { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--t-muted); }
+.small { font-size: 0.85rem; color: var(--t-muted); }
+.small u { text-underline-offset: 2px; }
+.q { font-weight: 700; font-size: 1rem; }
+.p { font-size: 1rem; }
+.ttl { font-family: var(--ft); font-weight: 700; font-size: 1.3rem; line-height: 1.25; text-wrap: balance; }
+.lines { display: grid; gap: 2px; font-size: 1rem; }
+.big { font-family: var(--ft); font-weight: 700; font-size: 1.8rem; line-height: 1.15; text-wrap: balance; }
+.opts { display: grid; gap: 6px; }
+.o { background: var(--t-fill); border: 1px solid var(--t-line); border-radius: 12px; padding: 9px 10px; font-size: 1rem; }
+.o.on { background: var(--t-ink); color: var(--t-screen); border-color: var(--t-ink); }
+.banner, .box, .guess { background: var(--t-fill); border-top: 6px double var(--t-caramel); border-radius: 14px; box-shadow: 0 1px 2px var(--t-shadow), 0 6px 16px var(--t-shadow); }
+.banner { padding: 10px 12px; font-size: 0.95rem; }
+.box { padding: 10px; display: grid; gap: 8px; }
+.box .lk { text-decoration: underline; text-underline-offset: 3px; }
+.guess { padding: 10px; display: grid; gap: 8px; }
+.guess .ans { font-weight: 700; font-size: 0.95rem; }
+.guess .why { font-style: italic; font-size: 0.88rem; }
+.guess .row2 { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; }
+.guess .pass { text-decoration: underline; text-underline-offset: 3px; font-size: 0.92rem; }
+.guess.passed { opacity: 0.6; }
+.faces { display: flex; gap: 8px; align-items: flex-start; min-width: 0; }
+.face { display: grid; justify-items: center; gap: 2px; font-size: 0.72rem; text-align: center; }
+.dot { width: 34px; height: 34px; border-radius: 50%; border: 4px double var(--t-ink); background: var(--t-fill); display: grid; place-items: center; font-family: var(--ft); font-style: italic; font-weight: 500; font-size: 0.9rem; }
+.face.on .dot { background: var(--t-ink); color: var(--t-screen); }
+.face.off { opacity: 0.35; }
+
+/* Le repère actuel (maquettes finales) */
+.steps { display: flex; gap: 14px; font-size: 0.82rem; color: var(--t-muted); }
+.steps .on { color: var(--t-ink); font-weight: 700; }
+.steps .strike { text-decoration: line-through; }
+
+/* Option A : deux étapes nommées, et sur quoi chacune porte */
+.repA { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding-top: 2px; }
+.stp { display: grid; grid-template-columns: 22px minmax(0, 1fr); column-gap: 8px; row-gap: 0; align-items: start; min-width: 0; }
+.rd { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 0.75rem; font-weight: 700; line-height: 1; margin-top: 0; grid-row: 1 / span 2; }
+.rd svg { display: block; }
+.vb { font-size: 1rem; font-weight: 500; line-height: 1.3; }
+.ob { font-size: 0.8125rem; line-height: 1.25; color: var(--t-muted); }
+.tr { grid-column: 1 / -1; height: 4px; border-radius: 2px; margin-top: 7px; }
+.s-cours .rd, .s-fait .rd { background: var(--miel); color: var(--sur-miel); border: 1.5px solid var(--miel-bord); }
+.s-avenir .rd, .s-rien .rd { background: transparent; color: var(--t-muted); border: 1.5px solid var(--t-muted); }
+.s-cours .vb { font-weight: 700; color: var(--t-ink); }
+.s-fait .vb { color: var(--t-ink); }
+.s-avenir .vb, .s-rien .vb { color: var(--t-muted); }
+.s-cours .tr, .s-fait .tr { background: var(--miel); border: 1px solid var(--miel-bord); }
+.s-avenir .tr, .s-rien .tr { background: transparent; border: 1px solid var(--t-muted); }
+
+/* Option B : une phrase qui dit où tu en es */
+.repB { display: grid; gap: 1px; }
+.repB .e { font-size: 0.8125rem; color: var(--t-muted); }
+.repB .ph { font-size: 1rem; font-weight: 700; color: var(--t-ink); line-height: 1.3; }
+
+/* Option C : le repère actuel, agrandi et en mots */
+.repC { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 8px; row-gap: 0; font-size: 0.9375rem; color: var(--t-ink); line-height: 1.35; }
+.repC .ar { color: var(--t-muted); }
+.repC b { font-weight: 700; }
+
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="topline">
+      <span class="kicker">Direction artistique · retour du 11 octobre · écrans 2.1, 2.3, 5.12 et 2.5</span>
+      <div class="theme" role="group" aria-label="Thème de la page">
+        <button type="button" id="th-system" data-theme-set="system" aria-pressed="true">Système</button>
+        <button type="button" id="th-light" data-theme-set="light" aria-pressed="false">Clair</button>
+        <button type="button" id="th-dark" data-theme-set="dark" aria-pressed="false">Sombre</button>
+      </div>
+    </div>
+    <h1>Le repère <span style="white-space:nowrap">« Deviner · Répondre »</span></h1>
+    <p class="lede">Vous comparez trois façons de montrer où l'on en est entre deviner ses proches et donner son avis, posées sur les mêmes écrans, à la largeur d'un iPhone SE. Pour choisir, regardez chaque écran deux secondes, comme dans le métro, et gardez celle qui vous dit tout de suite ce que vous faites, et sur quoi.</p>
+    <ul class="rules" aria-label="Règles communes aux trois options">
+      <li>Jamais touchable : ni bouton, ni soulignement</li>
+      <li>L'état se lit à la forme et à la graisse, pas à la seule couleur</li>
+      <li>Une seule teinte, le miel, à une seule intensité</li>
+      <li>Texte du repère : contraste d'au moins 4,5 pour 1</li>
+      <li>Textes, réponses et prénoms inventés pour la maquette</li>
+      <li>Téléphones dessinés à 320 px de contenu, comme un iPhone SE ; ils rétrécissent sur un écran plus étroit</li>
+    </ul>
+  </header>
+
+  <section class="opt" aria-labelledby="h-today">
+    <div class="sec-hd">
+      <span class="code">Aujourd'hui · pour mémoire</span>
+      <h2 id="h-today">Le repère actuel, sur l'écran 2.1</h2>
+    </div>
+    <div class="today">
+      <div class="cell" data-screen="2.1" data-rep="actuel" data-state="deviner"></div>
+      <ol class="issues">
+        <li><b>Trop petit, trop pâle :</b> c'est le plus petit texte de l'écran, en gris, sous l'en-tête. On le voit en dernier.</li>
+        <li><b>Des ronds ambigus :</b> plein peut dire « fait » ou « ici » ; vide, « à venir » ou « sauté ». Et ils ressemblent à des cases à cocher.</li>
+        <li><b>Le verbe sans son objet :</b> deviner quoi ? répondre à quoi ?</li>
+        <li><b>Le barré se lit comme un échec</b> les jours où il n'y a rien à deviner (5.12).</li>
+        <li><b>Il disparaît</b> avant la fin de Répondre, et on ne voit jamais « tout est fait ».</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="opt" aria-labelledby="h-a">
+    <div class="sec-hd">
+      <span class="code">Option A</span>
+      <h2 id="h-a">Deux étapes nommées, et sur quoi chacune porte <span class="badge">Recommandée par UX</span></h2>
+      <p>Une bande sur toute la largeur, en deux moitiés : un rond numéroté, le verbe, ce sur quoi il porte, un trait dessous.</p>
+    </div>
+    <div class="row">
+      <div class="cell" data-screen="2.1" data-rep="A" data-state="deviner"></div>
+      <div class="cell" data-screen="2.3" data-rep="A" data-state="repondre"></div>
+      <div class="cell" data-screen="5.12" data-rep="A" data-state="rien"></div>
+    </div>
+    <div class="verdict">
+      <span class="k">Bien</span><span class="plus">On voit les deux étapes d'un coup d'œil, et c'est la seule option qui dit hier ou aujourd'hui, les autres ou toi.</span>
+      <span class="k">Coûte</span><span class="plus">C'est la plus haute des trois : sur 2.1, la première carte descend d'une trentaine de pixels.</span>
+    </div>
+    <p class="sr-line">Lecteur d'écran, sur 2.1 : <i>« Étape 1 sur 2, deviner les réponses d'hier : en cours. Étape 2 sur 2, répondre au texte du jour : à venir. »</i></p>
+    <p class="measure">Mesuré à 320 px de contenu : repère de 50 px de haut. Sur 2.1, la première carte commence à 185 px du haut de l'écran, contre 153 px aujourd'hui (+32 px).</p>
+  </section>
+
+  <section class="opt" aria-labelledby="h-b">
+    <div class="sec-hd">
+      <span class="code">Option B</span>
+      <h2 id="h-b">Une phrase qui dit où tu en es</h2>
+      <p>Pas de dessin : une petite ligne « Étape 1 sur 2 », puis une phrase en gras qui dit ce que tu fais.</p>
+    </div>
+    <div class="row">
+      <div class="cell" data-screen="2.1" data-rep="B" data-state="deviner"></div>
+      <div class="cell" data-screen="2.3" data-rep="B" data-state="repondre"></div>
+      <div class="cell" data-screen="5.12" data-rep="B" data-state="rien"></div>
+    </div>
+    <div class="verdict">
+      <span class="k">Bien</span><span class="plus">La plus claire sur le sens.</span>
+      <span class="k">Coûte</span><span class="plus">On ne voit jamais les deux étapes ensemble, « Étape 1 sur 2 » fait un peu formulaire, et les cartes descendent d'une vingtaine de pixels.</span>
+    </div>
+    <p class="measure">Mesuré à 320 px de contenu : repère de 39 px de haut. Sur 2.1, la première carte commence à 174 px du haut de l'écran, contre 153 px aujourd'hui (+21 px).</p>
+  </section>
+
+  <section class="opt" aria-labelledby="h-c">
+    <div class="sec-hd">
+      <span class="code">Option C</span>
+      <h2 id="h-c">Le repère actuel, agrandi et en mots</h2>
+      <p>Même place, une ligne plus grande, couleur encre ; des mots à la place des ronds, l'étape en cours en gras.</p>
+    </div>
+    <div class="row">
+      <div class="cell" data-screen="2.1" data-rep="C" data-state="deviner"></div>
+      <div class="cell" data-screen="2.3" data-rep="C" data-state="repondre"></div>
+      <div class="cell" data-screen="5.12" data-rep="C" data-state="rien"></div>
+    </div>
+    <div class="verdict">
+      <span class="k">Bien</span><span class="plus">Le changement le moins coûteux.</span>
+      <span class="k">Coûte</span><span class="plus">Il ne dit toujours ni hier ni aujourd'hui, ni les autres ni toi.</span>
+    </div>
+    <p class="measure">Mesuré à 320 px de contenu : repère de 20 px de haut. Sur 2.1, la première carte commence à 155 px du haut de l'écran, contre 153 px aujourd'hui (+2 px).</p>
+  </section>
+
+  <section class="opt" aria-labelledby="h-25">
+    <div class="sec-hd">
+      <span class="code">Variante · écran 2.5</span>
+      <h2 id="h-25">« En attendant 18h », sans et avec le repère « tout fait »</h2>
+      <p>Aujourd'hui, le repère n'apparaît pas sur cet écran. L'y ajouter dit clairement que la journée est finie, mais change un écran validé.</p>
+    </div>
+    <div class="row four">
+      <div class="cell" data-screen="2.5" data-rep="none" data-state="fini"></div>
+      <div class="cell" data-screen="2.5" data-rep="A" data-state="fini"></div>
+      <div class="cell" data-screen="2.5" data-rep="B" data-state="fini"></div>
+      <div class="cell" data-screen="2.5" data-rep="C" data-state="fini"></div>
+    </div>
+    <p class="note-d">Ajouter le repère sur 2.5 est une exception à D-022 (rien ne change avant la bêta), comme le reste de ce repère. Les mots de l'état « tout fait » (« fait », « Tout est fait pour aujourd'hui ») et, pour l'option C sur 5.12, « Deviner : rien hier » sont des propositions de la Direction artistique, que l'UX doit relire. Sur 5.12, le repère et la bannière « Rien à deviner aujourd'hui. » se répètent : UX dira lequel des deux reste.</p>
+  </section>
+</div>
+
+<script>
+(function () {
+  var CHECK = '<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2.4 6.4l2.4 2.4 4.8-5.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var NAMES = { A: "Agathe", N: "Nassim", O: "Odile", V: "Valentin" };
+
+  /* ---------- Les repères ---------- */
+  function stepA(n, verb, obj, st, srObj) {
+    var mark = st === "fait" ? CHECK : st === "rien" ? "–" : String(n);
+    var objText = st === "fait" ? "fait" : obj;
+    return '<div class="stp s-' + st + '" aria-hidden="true"><span class="rd">' + mark + '</span><span class="vb">' + verb + '</span><span class="ob">' + objText + '</span><span class="tr"></span></div>';
+  }
+  var SR_STATE = { cours: "en cours", fait: "fait", avenir: "à venir", rien: "rien à deviner aujourd'hui" };
+  function repA(state) {
+    var s1 = { deviner: "cours", repondre: "fait", rien: "rien", fini: "fait" }[state];
+    var s2 = { deviner: "avenir", repondre: "cours", rien: "cours", fini: "fait" }[state];
+    var o1 = state === "rien" ? "rien hier" : "les réponses d'hier";
+    var sr = "Étape 1 sur 2, deviner les réponses d'hier : " + SR_STATE[s1] + ". Étape 2 sur 2, répondre au texte du jour : " + SR_STATE[s2] + ".";
+    return '<div class="repA" data-rep-el><span class="vh">' + sr + '</span>' + stepA(1, "Deviner", o1, s1) + stepA(2, "Répondre", "le texte du jour", s2) + '</div>';
+  }
+  function repB(state) {
+    var t = {
+      deviner: ["Étape 1 sur 2", "Devine qui a répondu quoi, hier"],
+      repondre: ["Étape 2 sur 2", "À toi : le texte du jour"],
+      rien: ["Rien à deviner hier", "À toi : le texte du jour"],
+      fini: ["2 étapes sur 2", "Tout est fait pour aujourd'hui"]
+    }[state];
+    return '<div class="repB" data-rep-el><span class="e">' + t[0] + '</span><span class="ph">' + t[1] + '</span></div>';
+  }
+  function repC(state) {
+    var t = {
+      deviner: [["Deviner : en cours", 1], ["Répondre : à venir", 0]],
+      repondre: [["Deviner : fait", 0], ["Répondre : en cours", 1]],
+      rien: [["Deviner : rien hier", 0], ["Répondre : en cours", 1]],
+      fini: [["Deviner : fait", 0], ["Répondre : fait", 0]]
+    }[state];
+    function part(p) { return p[1] ? "<b>" + p[0] + "</b>" : "<span>" + p[0] + "</span>"; }
+    return '<div class="repC" data-rep-el>' + part(t[0]) + '<span class="ar" aria-hidden="true">→</span>' + part(t[1]) + '</div>';
+  }
+  function repActuel(state) {
+    var d = { deviner: ["on", "●"], repondre: ["done", "✓"], rien: ["strike", "○"] }[state];
+    var r = state === "deviner" ? ["off", "○"] : ["on", "●"];
+    return '<div class="steps" data-rep-el><span class="' + d[0] + '">Deviner ' + d[1] + '</span><span>·</span><span class="' + r[0] + '">Répondre ' + r[1] + '</span></div>';
+  }
+  function rep(kind, state) {
+    if (kind === "A") return repA(state);
+    if (kind === "B") return repB(state);
+    if (kind === "C") return repC(state);
+    if (kind === "actuel") return repActuel(state);
+    return "";
+  }
+
+  /* ---------- Les morceaux d'écran ---------- */
+  function face(k, st) { return '<div class="face ' + (st || "") + '"><span class="dot">' + k + '</span><span>' + NAMES[k] + '</span></div>'; }
+  function guess(a, faces, opt) {
+    opt = opt || {};
+    return '<div class="guess' + (opt.passed ? " passed" : "") + '" data-card><div class="ans">' + a + '</div>' +
+      (opt.why ? '<div class="why">' + opt.why + '</div>' : "") +
+      (opt.btn ? '<div class="btn2">' + opt.btn + '</div>' : "") +
+      '<div class="row2"><div class="faces">' + faces.map(function (f) { return face(f[0], f[1]); }).join("") + '</div><span class="pass">' + (opt.passed ? "Passée" : "Passer") + '</span></div></div>';
+  }
+  var POS = ["Très défavorable", "Défavorable", "Neutre", "Favorable", "Très favorable"];
+  function pos(sel) { return '<div class="opts">' + POS.map(function (x, i) { return '<div class="o' + (sel === i ? " on" : "") + '">' + x + '</div>'; }).join("") + '</div>'; }
+  function tabs() { return '<div class="tabbar"><span class="tab on">Aujourd\'hui</span><span class="tab">Le Cercle</span><span class="tab">Moi</span></div>'; }
+  var LABEL = '<div class="label">Un vrai texte de l\'Assemblée nationale · auteur masqué</div>';
+
+  var SCREENS = {
+    "2.1": { name: "Deviner en cours", time: "08:10", btn: "Valider", body: function (r) {
+      return '<div class="hd">Aujourd\'hui · jeudi</div>' + r +
+        '<div class="label">Famille</div>' +
+        '<div class="small">Hier : Fontaines d\'eau dans les parcs · <u>Relire</u></div>' +
+        '<div class="q">À qui sont ces réponses ?</div>' +
+        guess("Favorable · « L'été, chacun doit pouvoir boire dehors. »", [["A", "off"], ["N"], ["O", "on"], ["V"]]) +
+        guess("Défavorable · raison cachée", [["A", "on"], ["N"], ["O", "off"], ["V"]], { why: "Ta devinette : « Ce n'est pas à l'État de payer ça. »", btn: "Devine aussi pourquoi" }) +
+        guess("Neutre · « C'est aux communes de décider. »", [["A", "off"], ["N"], ["O", "off"], ["V"]], { passed: true });
+    } },
+    "2.3": { name: "Répondre en cours, Deviner fait", time: "08:11", btn: "Suivant", body: function (r) {
+      return r + LABEL +
+        '<div class="ttl" data-card>Un piano en libre accès dans chaque grande gare</div>' +
+        '<div class="lines"><span>Les grandes gares installeraient un piano que chacun peut jouer.</span><span>La commune en assurerait l\'entretien.</span><span>L\'essai durerait deux ans.</span></div>' +
+        '<div class="q">Ton avis ?</div>' + pos(3);
+    } },
+    "5.12": { name: "Rien à deviner", time: "08:10", btn: "Suivant", body: function (r) {
+      return '<div class="hd">Aujourd\'hui · vendredi</div>' + r +
+        '<div class="banner" data-card>Rien à deviner aujourd\'hui.</div>' + LABEL +
+        '<div class="ttl">Un banc tous les 200 mètres en ville</div>' +
+        '<div class="lines"><span>Les villes moyennes installeraient un banc au moins tous les 200 mètres.</span><span>L\'État en paierait la moitié.</span><span>La mesure serait évaluée après cinq ans.</span></div>' +
+        '<div class="q">Ton avis ?</div>' + pos(null);
+    } },
+    "2.5": { name: "En attendant 18h", time: "08:12", btn: null, body: function (r) {
+      return '<div class="hd">Aujourd\'hui · jeudi</div>' + r +
+        '<div class="box" data-card><div class="label">Ta phrase du jour</div><div class="p">Aujourd\'hui, tu as fait passer la précaution avant l\'innovation.</div><span class="p lk">Voir mon portrait</span></div>' +
+        '<div class="big">Révélation dans 9 h 48</div>' +
+        '<div class="small">Déjà joué aujourd\'hui :</div>' +
+        '<div class="faces">' + face("N") + face("O") + '</div>';
+    } }
+  };
+  var REP_NAME = { actuel: "repère actuel", A: "option A", B: "option B", C: "option C", none: "sans repère (validé)" };
+
+  function phone(id, kind, state) {
+    var s = SCREENS[id];
+    var bottom = (s.btn ? '<div class="btn1">' + s.btn + '</div>' : "") + tabs();
+    return '<div class="phone" role="img" aria-label="Écran ' + id + ', ' + s.name + ', ' + REP_NAME[kind] + '">' +
+      '<div class="statusbar" aria-hidden="true"><span>' + s.time + '</span><span>▮▮▮ ◔</span></div>' +
+      '<div class="screen"><div class="body">' + s.body(rep(kind, state)) + '</div><div class="bottom">' + bottom + '</div></div></div>';
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-screen]"), function (cell) {
+    var id = cell.dataset.screen, kind = cell.dataset.rep, state = cell.dataset.state;
+    var cap = '<div class="cap"><b>' + id + '</b> · ' + SCREENS[id].name + (id === "2.5" ? " · " + REP_NAME[kind] : "") + '</div>';
+    cell.innerHTML = cap + phone(id, kind, state);
+  });
+
+  /* ---------- Typographie française : espaces insécables avant : ? ! » et après « ---------- */
+  var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, { acceptNode: function (n) {
+    return n.parentNode.closest("script, style") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; } });
+  var n;
+  while ((n = walker.nextNode())) {
+    n.nodeValue = n.nodeValue.replace(/« /g, "«\u00A0").replace(/ ([»:?!;])/g, "\u00A0$1");
+  }
+
+  /* ---------- Thème ---------- */
+  var root = document.documentElement;
+  function setTheme(v) {
+    if (v === "light" || v === "dark") root.setAttribute("data-theme", v); else root.removeAttribute("data-theme");
+    Array.prototype.forEach.call(document.querySelectorAll("[data-theme-set]"), function (b) { b.setAttribute("aria-pressed", b.dataset.themeSet === (v || "system") ? "true" : "false"); });
+  }
+  var saved = null;
+  try { saved = localStorage.getItem("repere-theme"); } catch (e) {}
+  setTheme(saved || "system");
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-theme-set]");
+    if (!b) return;
+    setTheme(b.dataset.themeSet);
+    try { localStorage.setItem("repere-theme", b.dataset.themeSet); } catch (err) {}
+  });
+})();
+</script>
