@@ -312,7 +312,7 @@ Les trois travaux sur papier : les règles chiffrées (`docs/etape-6/regles.md`)
 - **Les mots d'UX qui manquent** (D-052) : le cercle complet (règle 1) ; le lien expiré (règle 2) ; le changement de pseudo en rejoignant un autre cercle (règle 15) ; la mention d'un texte sorti des portraits (règle 20).
 - **Constats de la simulation, à suivre en bêta** (`docs/etape-6/regles.md`, section 9) : le cercle de trois est fragile (il s'endort souvent, l'avis du cercle n'y paraît qu'un soir sur deux) et ses titres faciles ; avec R8, une manche d'un cercle de trois peut n'avoir qu'un visage proposé (piste, à ne trancher qu'avec les mesures de la bêta : servir ce proche dans le cercle de trois) ; Le Sans-Faute reste hors d'atteinte dès cinq membres (R7 prévoit d'y revenir à mi-bêta). D-006 tient.
 - **Le critère du camp, en bêta** (D-053, point 1) : la mesure auprès de volontaires hors du jeu, qui ignorent le vote (pas des données de joueurs) ; le lot servi mélange les auteurs (plan de construction, travail 2 et partie 5).
-- **Le texte d'épreuve SO2**, qui visait une nationalité, est en cours de remplacement (D-053, point 2 ; Contenu).
+- **Le texte d'épreuve SO2**, qui visait une nationalité, est remplacé (`docs/etape-6/tensions.md`, version 4 ; D-053, point 2).
 - **Les deux mots nouveaux, en bêta** (D-053, point 3) : « l'indépendance » au sens personnel ou territorial, « le privé » sur un texte d'école.
 
 ## Annexe · Les maquettes à reprendre à l'étape 6

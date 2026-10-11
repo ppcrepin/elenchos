@@ -17,7 +17,7 @@
 
 **Étape 5 : faite (D-042 à D-046).** Les dix choix de fabrication sont tranchés, en quatorze QCM (à partir de `docs/etape-5-choix.md`). Les documents qui en dépendent sont mis à jour et validés (D-046) : `docs/produit.md`, `docs/onboarding.md` (le compte, D-035), ce plan et la feuille de route.
 
-**Étape 6 : en cours** depuis le 11 octobre 2026, avec votre accord (D-051). Les trois travaux sur papier sont faits : les règles et les exigences de protection des données (D-052), les quatre tensions jamais essayées (D-053 ; le texte d'épreuve SO2 est en cours de remplacement). Le suivant est le travail 4, le test du message de 18h, premier code de l'étape.
+**Étape 6 : en cours** depuis le 11 octobre 2026, avec votre accord (D-051). Les trois travaux sur papier sont faits : les règles et les exigences de protection des données (D-052), les quatre tensions jamais essayées (D-053 ; le texte d'épreuve SO2, qui visait une nationalité, est remplacé (`docs/etape-6/tensions.md`, version 4)). Le suivant est le travail 4, le test du message de 18h, premier code de l'étape.
 
 ## 2. Avant l'étape 6 : ce qui la conditionne
 
@@ -81,7 +81,7 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - On produit leurs libellés et leurs phrases, et deux textes d'épreuve pour chacune.
 - Fini quand (réécrit par D-053, point 1, qui modifie la version validée avec D-046, « un modèle ne devine pas le camp de l'auteur ») : les deux classements concordent ; nos textes ne font pas deviner le camp de l'auteur mieux que l'intitulé officiel seul, ce qui se mesure en bêta auprès de volontaires hors du jeu, qui ignorent le vote (pas des données de joueurs ; partie 5) ; et le lot servi mélange les auteurs. Raison : un modèle trouve le camp 8 fois sur 8 avec nos textes comme avec le seul intitulé, de mémoire ou par la mesure.
 - Vous : vous lisez les huit textes.
-- **État : fait** (`docs/etape-6/tensions.md`, D-053). Les mots des valeurs sont confirmés, deux changent (D-053, point 3) ; jamais un texte qui vise une nationalité (D-053, point 2) : le texte d'épreuve SO2, qui en visait une, est en cours de remplacement (Contenu). Reste pour la bêta : la mesure du camp par des volontaires.
+- **État : fait** (`docs/etape-6/tensions.md`, D-053). Les mots des valeurs sont confirmés, deux changent (D-053, point 3) ; jamais un texte qui vise une nationalité (D-053, point 2) : le texte d'épreuve SO2, qui en visait une, est remplacé (`docs/etape-6/tensions.md`, version 4). Reste pour la bêta : la mesure du camp par des volontaires.
 
 **3. Exigences de protection des données**, remises avant d'écrire le code.
 - L'e-mail est séparé des réponses.
