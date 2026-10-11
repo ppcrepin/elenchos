@@ -406,6 +406,10 @@ Livrable : le dessin final de « La citation » (`docs/maquettes/logo-final.html
 
 **L'étape 3 est terminée**, sauf la vérification du nom par un conseil, en cours en parallèle (D-047).
 
+### D-051 — Accord pour commencer l'étape 6 · Décidé (11 octobre 2026)
+
+Le porteur donne l'accord explicite que demandent D-001 et D-046 : **l'étape 6 (construire) commence**, par les trois travaux sur papier du plan de construction (partie 4) : préparer les règles (Game design), les quatre tensions jamais essayées (Contenu avec Game design), les exigences de protection des données (Back-end avec Juridique). Le test du message de 18h, premier code de l'étape, suit. Option non retenue : attendre, par exemple l'avis du conseil sur le nom (qui se fait en parallèle, D-047). Rappels : chaque dépense est présentée avant d'être engagée (D-042) ; agents seuls, le porteur valide en jouant (D-043) ; aucun agent n'accède à des données réelles de joueurs (D-048).
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique : **tranché, D-042** (gratuit, contribution libre à l'ouverture) · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
