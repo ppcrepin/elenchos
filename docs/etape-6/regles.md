@@ -158,9 +158,12 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 
 **Règle 5 · Pause, sommeil, effacement.**
 - **Pause.** Un membre qui n'a répondu à aucun des 7 derniers textes est en pause, à partir de 18h le jour de jeu où se ferme le septième. Sa prochaine réponse l'en sort. En pause, il reçoit toujours le message de 18h (D-029) et son visage reste proposé dans Deviner (D-011).
-- **Sommeil.** À chaque 18h, un cercle qui compte moins de 3 membres hors pause s'endort : pas de manche le jour suivant, pas de titres si le cercle dort le dimanche à 18h. Il se réveille à 18h, dès qu'il compte de nouveau 3 membres hors pause. On répond toujours, et le vote et les auteurs tombent toujours (E1).
+- **Sommeil.** À chaque 18h, un cercle qui compte moins de 3 membres hors pause s'endort : pas de manche le jour suivant. Il se réveille à 18h, dès qu'il compte de nouveau 3 membres hors pause. Les titres du dimanche tombent si le cercle était éveillé pendant le jour de jeu du dimanche (proposé). On répond toujours, et le vote et les auteurs tombent toujours (E1).
 - **Effacement.** Un compte qui n'ouvre pas le jeu pendant 365 jours est effacé. Un e-mail part 30 jours avant, une seule fois. Toute ouverture du jeu remet le compteur à zéro (D-045).
-- **Exemple.** « Amis » compte Léa, Marie et Hugo. Léa ne répond plus à partir d'un lundi. Le dimanche suivant, à 18h, elle n'a répondu à aucun des 7 derniers textes : elle est en pause. Le cercle n'a plus que 2 membres hors pause et s'endort ; il n'a pas de manche le lundi, et il n'a pas eu de titres ce dimanche. Le mercredi à 8h, Léa répond ; à 18h, le cercle se réveille, et la manche du jeudi a lieu.
+- **Exemple.** « Amis » compte Léa, Marie et Hugo. Léa ne répond plus à partir d'un lundi.
+  - Le dimanche suivant, à 18h, les titres de la semaine tombent : le cercle était éveillé ce jour-là.
+  - À cette même heure, Léa n'a répondu à aucun des 7 derniers textes : elle est en pause. Le cercle n'a plus que 2 membres hors pause et s'endort : pas de manche le lundi.
+  - Le mercredi à 8h, Léa répond. À 18h, le cercle se réveille, et la manche du jeudi a lieu.
 - *Source : règle 5 ; D-010 (point 3), D-029, D-045. Dans les cercles simulés : 53 % des cercles de trois s'endorment au moins une fois en douze semaines, 3 % des cercles de cinq, aucun de dix.*
 
 ### Le jour
@@ -211,7 +214,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
   - la ligne suit le côté du milieu : favorable, « Ton cercle, lui, l'aurait adopté. » ; défavorable, « … l'aurait rejeté. » ; neutre, ou deux côtés différents au milieu, « Ton cercle, lui, était partagé. » ;
   - la réponse du joueur n'est jamais marquée (lecture d'UX de la maquette 2.7a).
 - **Pourquoi trois, et non six (position d'UX).** Dans un cercle de trois ou quatre, chacun reçoit déjà toutes les réponses des autres en cartes : le graphique n'y apprend rien de plus. Avec un seuil de six, aucun cercle de trois à cinq ne verrait jamais l'avis que vous avez choisi (D-025). Juridique proposait aussi trois.
-- **« Partagé » pour un cercle tout entier neutre.** UX objectait que ce serait faux. Nous gardons les trois lignes de D-025 : « être partagé » veut aussi dire hésiter entre deux avis, et le cas reste rare (1 % des soirs à trois, 0,2 % à cinq, jamais à dix dans nos cercles simulés).
+- **« Partagé » pour un cercle tout entier neutre.** UX objectait que ce serait faux. Nous gardons les trois lignes de D-025 : « être partagé » veut aussi dire hésiter entre deux avis, et le cas reste rare (0,6 % des soirs où l'avis s'affiche à trois, 0,2 % à cinq, jamais à dix dans nos cercles simulés).
 - **Exemples.** J1 (« rejeté »), J2 (« adopté »), J3 (nombre pair, « partagé »), J6 (sous le seuil).
 - *Source : règle 10 ; D-010, D-011, D-025 ; R10, E1 (D-030).*
 
@@ -228,7 +231,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 - **Le Mystère** : la plus forte part d'erreurs du cercle sur ses cartes de la semaine, passes exclues, avec au moins 6 tentatives et au moins 1 erreur. Désigner un jumeau n'est jamais une erreur. À égalité, le plus d'erreurs ; puis un tirage.
 - **Le Fidèle** : tous ceux qui ont répondu aux 7 textes de la semaine, réponses en retard comprises. Un membre arrivé en cours de semaine ne peut pas l'avoir cette semaine-là (lettre de la règle 12 : « les sept jours » ; proposé, l'essai 2 faisait autrement par convention).
 - **La surprise de la semaine** : parmi les textes de ses sept manches, la plus forte part d'attributions fausses, passes exclues, avec au moins 4 attributions et au moins 1 fausse. À égalité, le plus d'erreurs ; puis un tirage.
-- **Titre sans titulaire** : il n'apparaît pas (R6). Pas de titres si le cercle dort le dimanche à 18h (règle 5).
+- **Titre sans titulaire** : il n'apparaît pas (R6). Pas de titres si le cercle a dormi pendant le jour de jeu du dimanche (règle 5).
 - **Exemple.** J7.
 - *Source : règle 12 ; R6 (D-030) ; D-024. Dans les cercles simulés de cinq, Le Devin manque moins d'une semaine sur mille, Le Mystère et la surprise une sur cinq cents ; à trois, Le Mystère manque une semaine sur dix et la surprise plus d'une sur huit.*
 
@@ -239,7 +242,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 - **Le Pont** (par cercle) : on regarde les textes « partagés », ceux où les autres membres ont donné au moins un avis favorable et un défavorable ; il en faut au moins 6. Le Pont a répondu Neutre sur au moins 1/4 d'entre eux, et les Neutre y faisaient au plus un tiers des réponses.
 - **Le Mesuré** (pour toute la personne) : Neutre sur au moins 1/3 de ses réponses.
 - **Le Tranché** (pour toute la personne) : « Très … » sur au moins 1/2 de ses réponses.
-- **Garder un tempérament.** Une fois obtenu, il se garde tant que la part reste au moins aux 4/5 du seuil, et que les conditions de « Qui » restent remplies (proposé). Sans cette marge, un joueur sur six changerait de tempérament chaque semaine dans un cercle de trois.
+- **Garder un tempérament.** Une fois obtenu, il se garde tant que la part reste au moins aux 4/5 du seuil, et que les conditions de « Qui » restent remplies (proposé). Sans cette marge, les tempéraments changeraient d'une semaine à l'autre presque deux fois plus souvent.
 - **Affichage.** Sous un visage : ceux de ce cercle, après les titres, un par ligne, dans l'ordre L'Original, Le Pont, Le Mesuré, Le Tranché. Dans Moi : tous, avec le nom du cercle pour L'Original et Le Pont (R9).
 - **Exemple.** J9.
 - *Source : règle 13 ; R9 (D-030) ; projet §4 ; seuils et marge proposés (section 5). Le Pont se juge texte par texte, et non tension par tension comme l'écrit le §4 : précision signalée en section 8.*
@@ -284,7 +287,10 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 - **Le calcul.** Centre c = (2 + Σwπ) / (4 + W). Largeur ℓ = max(19/20 − 7/80 × W ; 1/4).
 - **Net dès W ≥ 8** (proposé ; l'essai prenait 10, section 5). La largeur atteint alors son plancher : un curseur net se dessine comme un point.
 - Si la bêta ne fait circuler que quatre tensions, le seuil passe à 14 pour garder les trois mois (section 5).
-- **Exemple.** Marie, tension précaution / innovation : 9 réponses, dont 7 arbitrages nets vers l'innovation, 1 penchant vers la précaution, 1 neutre. W = 7 + 1/2 = 15/2 ; Σwπ = 7 ; c = 9/23 + … soit c = (2 + 7) / (4 + 15/2) = 18/23 ; ℓ = 19/20 − 7/80 × 15/2 = 47/160. Pas encore net. Une réponse de plus, arbitrage net vers l'innovation : W = 17/2, c = 19/25, net (J8).
+- **Exemple.** Marie, tension précaution / innovation (pôle 1 : l'innovation), 9 réponses : 6 arbitrages nets vers l'innovation, 1 vers la précaution, 1 penchant vers l'innovation, 1 neutre.
+  - W = 6 + 1 + 1/2 = 15/2 ; Σwπ = 6 + 1/2 = 13/2.
+  - c = (2 + 13/2) / (4 + 15/2) = 17/23 ; ℓ = 19/20 − 7/80 × 15/2 = 47/160. Pas encore net.
+  - Une réponse de plus, arbitrage net vers l'innovation : W = 17/2, Σwπ = 15/2, c = 19/25. Net : c'est son curseur de J8.
 - *Source : règle 17 ; essais, `simulation.md` §5.1 et §5.2 ; seuil calé en section 5.*
 
 **Règle 18 · Les phrases et la barre.**
@@ -599,7 +605,7 @@ Les textes A, C, F et G ont un argument inattendu de chaque côté (croisé ou p
 - À 12h, Marie pose Inès sur la première carte et Thomas sur la deuxième, puis ferme l'appli sans toucher « Valider ». La manche reste un brouillon.
 - Paul, lui, a validé sa manche à 14h : elle est figée.
 - Thomas n'a pas ouvert Deviner de la journée. Sa manche n'a pas de cartes ; à 18h, sa révélation commence au vote.
-- Marie joue « Amis » à 12h05 : elle pose Léa sur la carte unique, « R1 », valide. Juste, et la raison aussi.
+- Marie joue « Amis » à 12h05 : elle pose Léa sur la carte unique, « R1 », valide. Juste, et la raison aussi. Un seul visage était proposé : seul le « pourquoi » restait à deviner. C'est la conséquence de R8 dans un cercle de trois (section 9).
 - **À 18h, la manche de Marie se ferme telle quelle.**
 
 | Carte | État à 18h | Verdict | Point |
@@ -661,11 +667,11 @@ Les textes A, C, F et G ont un argument inattendu de chaque côté (croisé ou p
 
 | Auteur des cartes | Tentatives (passes exclues) | Erreurs | Part |
 |---|---|---|---|
-| Thomas | 18 | 5 | 5/18 |
-| Marie | 20 | 5 | 1/4 |
-| Hugo | 18 | 4 | 2/9 |
-| Inès | 16 | 6 | 3/8 |
-| Paul | 8 | 3 | 3/8 |
+| Thomas | 15 | 4 | 4/15 |
+| Marie | 16 | 4 | 1/4 |
+| Hugo | 16 | 4 | 1/4 |
+| Inès | 18 | 6 | 1/3 |
+| Paul | 15 | 5 | 1/3 |
 
 | Texte deviné | A | B | C | D | E | F | G |
 |---|---|---|---|---|---|---|---|
@@ -677,7 +683,7 @@ Les textes A, C, F et G ont un argument inattendu de chaque côté (croisé ou p
 
 **Les titres** (à 18h, après la révélation).
 - **Le Devin** : Marie et Paul ont 14 points. Raisons cachées trouvées : Marie 4, Paul 3. **Marie.**
-- **Le Mystère** : Inès et Paul ont la même part, 3/8 ; Inès a plus d'erreurs (6 contre 3). **Inès.**
+- **Le Mystère** : tous ont au moins 6 tentatives et 1 erreur. Inès et Paul ont la plus forte part, 1/3 ; Inès a plus d'erreurs (6 contre 5). **Inès.**
 - **Le Fidèle** : réponses aux textes B à H. Thomas n'a pas répondu à C, Hugo à G. Inès a répondu à F à 18h04, accepté. **Marie, Inès, Paul.**
 - **La surprise de la semaine** : D et E ont la même part, 1/2 ; D a plus d'erreurs (5 contre 4). **Le texte D.**
 - **Le Sans-Faute** : personne. Hugo n'a fait aucune erreur, mais il a passé deux cartes.
@@ -700,7 +706,7 @@ Les textes A, C, F et G ont un argument inattendu de chaque côté (croisé ou p
 
 **Deviner (texte K, Famille ; S, s = 0, favorable sert la sécurité).**
 - Raisons de K : R1 pour, sécurité ; R2 pour, sécurité ; R3 contre, liberté ; R4 contre, liberté.
-- Réponses : Thomas TD · R3 ; Hugo F · R1 ; Inès F · R1 ; Paul D · R3.
+- Réponses : Thomas TD · R3 ; Hugo F · R1 ; Inès F · R2 ; Paul D · R3. Aucune n'est identique à une autre.
 - Curseurs S vus par Marie (entrée et textes révélés, règle 19) :
   - Thomas : W = 9, Σwπ = 8, c = 10/13, net ;
   - Hugo : W = 13/2, Σwπ = 1, c = 2/7, flou ;
@@ -724,7 +730,9 @@ Les textes A, C, F et G ont un argument inattendu de chaque côté (croisé ou p
 - **Pas de Côté.** Il est annoncé dans « Famille » à 18h, à la révélation de K, après les auteurs. Il reste sous le visage de Paul jusqu'aux titres de dimanche.
 - Après K : W = 13, c = 3/17 ; |3/17 − 1/2| ≈ 0,32 < 7/20. Il faudra d'autres réponses de sécurité avant qu'un nouveau Pas de Côté soit possible sur S.
 
-**La barre de Marie.** Sa réponse du jour est sa soixantième, entrée comprise. La barre est pleine ; elle se montre pleine à la prochaine ouverture de Moi, puis disparaît.
+**Répondre (texte N ; L, s = 0, favorable sert la décision locale).**
+- Marie : F · R1, un arbitrage net vers la décision locale. Son curseur L passe de W = 7, Σwπ = 1 (c = 3/11) à W = 8, Σwπ = 1 (c = 1/4) : **il devient net.**
+- C'est sa soixantième réponse, entrée comprise. **La barre est pleine** ; elle se montre pleine à la prochaine ouverture de Moi, puis disparaît.
 
 **Moi, chez Marie** (son portrait complet, ce mardi soir).
 
@@ -739,7 +747,7 @@ Les textes A, C, F et G ont un argument inattendu de chaque côté (croisé ou p
 | 7 | souveraineté / ouverture | 3/2 | 4/11 | flou, ℓ = 131/160 |
 | 8 | État / marché | 0 | 1/2 | flou, ℓ = 19/20 |
 
-Le curseur L est devenu net ce mardi (W passé de 7 à 8).
+Son curseur P est net depuis la semaine 9.
 
 ### J9 · Semaine 13, dimanche : une tension devenue nette, les tempéraments
 
@@ -763,9 +771,7 @@ Le curseur L est devenu net ce mardi (W passé de 7 à 8).
 
 ### J10 · Semaine 14 : un départ, une arrivée, un texte corrigé
 
-**Lundi.** Paul est Le Devin de la semaine 13 ; le titre s'affiche sous son visage. Marie répond au texte M (P, s = 1) : F · R1, un arbitrage net vers l'innovation. Son curseur P passe de W = 15/2 à 17/2.
-
-*Pour que ce cas se suive seul, on suppose qu'avant M ce curseur valait W = 15/2, Σwπ = 13/2.*
+**Lundi.** Paul est Le Devin de la semaine 13 ; le titre s'affiche sous son visage. Tous répondent au texte M.
 
 **Mardi, 11h : Paul quitte « Famille ».**
 - Sa réponse à M part avec lui. Sa carte, dans la manche de Marie sur M, disparaît : elle ne comptera ni juste ni fausse.
@@ -781,11 +787,11 @@ Le curseur L est devenu net ce mardi (W passé de 7 à 8).
 - Elle répond au texte du mercredi, ouvert jusqu'à 18h. Jeudi, sa carte peut être servie, et son visage est proposé.
 - Elle ne peut pas être Le Fidèle de la semaine 14.
 
-**Jeudi : le texte M est corrigé** (une de ses trois lignes décrivait mal la mesure).
-- Erratum daté au registre. M sort de tous les portraits.
-- Le curseur P de Marie revient à W = 15/2, Σwπ = 13/2 : c = 17/23, ℓ = 47/160. **Il n'est plus net.**
-- La barre de Marie garde son cran. Les points, l'avis du cercle et Le Fidèle ne changent pas.
-- Dimanche, si P redevient net d'ici là, la phrase dira de nouveau « devenue nette ».
+**Jeudi : le texte N de J8 est corrigé** (une de ses trois lignes décrivait mal la mesure ; l'erreur est trouvée neuf jours après).
+- Erratum daté au registre. N sort de tous les portraits.
+- Marie n'a pas répondu à d'autres textes L depuis. Son curseur L revient à W = 7, Σwπ = 1 : c = 3/11, ℓ = 27/80. **Il n'est plus net.**
+- Sa barre reste pleine (elle ne recule jamais). Les points de la manche sur N, l'avis du cercle sur N et Le Fidèle de la semaine 13 ne changent pas.
+- Si L redevient net un jour, la phrase du dimanche dira de nouveau « devenue nette ».
 
 ---
 
