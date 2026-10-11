@@ -1,6 +1,6 @@
 # Les quatre tensions jamais essayées
 
-*Étape 6, travail 2 du plan de construction (partie 4) : Égalité/Mérite, Solidarité/Responsabilité, État/Marché, Souveraineté/Ouverture. Rédaction : Contenu, avec le regard de Game design, le 11 octobre 2026. Données : open data de l'Assemblée nationale (copie locale, 16e et 17e législatures, votes jusqu'au 2 octobre 2026), lues comme des données. Aucune donnée de joueur (D-048). État du document : version 2. Les contrôles indépendants ont tourné : vérification des fiches, deux annotations à l'aveugle, test du camp avec son témoin. Leurs corrections sont appliquées. La réannotation à l'aveugle des onze raisons et des quatre lignes changées est préparée et n'a pas encore tourné. Ce document n'est pas encore passé par Cohérence ni par le Vérificateur.*
+*Étape 6, travail 2 du plan de construction (partie 4) : Égalité/Mérite, Solidarité/Responsabilité, État/Marché, Souveraineté/Ouverture. Rédaction : Contenu, avec le regard de Game design, le 11 octobre 2026. Données : open data de l'Assemblée nationale (copie locale, 16e et 17e législatures, votes jusqu'au 2 octobre 2026), lues comme des données. Aucune donnée de joueur (D-048). État du document : version 3. Les contrôles indépendants ont tourné : vérification des fiches, deux annotations à l'aveugle, test du camp avec son témoin, puis réannotation à l'aveugle de tout ce qui a changé (aucun écart). Cohérence a relu la version 2 (compatible avec réserves) ; ses points sont appliqués. Le Vérificateur reste à passer.*
 
 ---
 
@@ -9,21 +9,21 @@
 **Ce qui a été fait.**
 - Les quatre tensions ont leurs **mots** et leurs **phrases**, sur le modèle des quatre tensions déjà essayées (section 1).
 - **Huit textes d'épreuve**, deux par tension, ont été tirés de vrais votes de l'Assemblée. Ils ont été écrits avec la méthode des deux essais (section 2). Dans chaque tension, un texte a été adopté et l'autre rejeté : quatre et quatre sur le lot.
-- Chaque texte a quatre vraies raisons de députés, de quatre groupes différents : deux « pour », deux « contre ». Les 32 extraits ont été retrouvés mot pour mot dans les comptes rendus. Dans 31 cas sur 32, l'orateur a voté dans le sens de sa raison ; la députée restante n'a pas pris part au vote, et sa fiche le dit.
+- Chaque texte a quatre vraies raisons de députés : deux « pour » (des députés favorables à la mesure), deux « contre ». Elles viennent de quatre groupes différents, sauf SR2 : trois groupes et une non-inscrite, admise par un arbitrage de l'orchestrateur (section 6). Les 32 extraits ont été retrouvés mot pour mot dans les comptes rendus. Dans 31 cas sur 32, l'orateur a voté dans le sens de sa raison ; la députée restante n'a pas pris part au vote, et sa fiche le dit.
 - Les contrôles indépendants ont tourné sur d'autres modèles que celui qui a écrit (section 4).
 
 **Ce que les contrôles ont donné.**
-- **Annotation** : les deux annotateurs retrouvent la tension et le sens des huit textes. Ils lisent autrement 6 raisons sur 32. Les six ont été réécrites ou remplacées.
+- **Annotation** : les deux annotateurs retrouvent la tension et le sens des huit textes. Ils lisent autrement 6 raisons sur 32 : cinq ont été réécrites ou remplacées, la sixième a changé de catégorie sans changer de texte. Une seconde annotation à l'aveugle de tout ce qui a changé (onze raisons, sept textes) ne laisse aucun écart.
 - **Vérification des fiches** : deux fiches prêtes, cinq à retoucher, une bloquante. Le texte voté sur les drapeaux des mairies (SO1) imposait aussi le portrait du Président, la devise et la Déclaration des droits de l'homme ; ses lignes ne le disaient pas. C'est corrigé.
-- **Camp de l'auteur** : le modèle le trouve 8 fois sur 8 avec nos textes, et aussi 8 fois sur 8 avec le seul intitulé officiel du vote. Il dit avoir reconnu les votes de mémoire ou lu la mesure. Aucune de nos raisons ne l'a aidé. Le critère du plan ne peut donc pas être tenu tel qu'il est écrit : c'est la question 1.
+- **Camp de l'auteur** (les groupes qui ont voté comme le groupe de l'auteur) : le modèle le trouve 8 fois sur 8 avec nos textes, et aussi 8 fois sur 8 avec le seul intitulé officiel du vote. Il dit avoir reconnu les votes de mémoire ou lu la mesure. Aucune de nos raisons ne l'a aidé. Sur des votes passés, le critère du plan ne peut donc pas être tenu tel qu'il est écrit : c'est la question 1.
 - **Vote deviné** : 8 sur 8 avec nos textes, 7 sur 8 avec l'intitulé seul, là encore de mémoire. Ce test ne dit donc rien de nos formes (section 4.2).
-- **Mots des valeurs** : les deux annotateurs jugent que « la souveraineté » et « le marché » sont des mots de camp, et que « l'ouverture » sonne comme une qualité. Ils proposent les mêmes remplaçants : « l'indépendance » et « le privé ». C'est la question 3.
+- **Mots des valeurs** : les deux annotateurs jugent que « la souveraineté » et « le marché » sont des mots de camp, et que « l'ouverture » sonne comme une qualité. Ils proposent les mêmes remplaçants pour les deux premiers : « l'indépendance » et « le privé ». C'est la question 3.
 
 **Ce que vous avez à regarder : les huit textes, section 2** (environ dix minutes). Lisez-les comme un joueur : le titre, les trois lignes, les quatre raisons. Puis le bloc « À 18h » dit le vote et qui a dit quoi.
 
 **Ce qui n'est pas encore fini, franchement.**
-- La réannotation à l'aveugle des raisons et des lignes changées est prête. L'orchestrateur la fera passer à deux annotateurs (convention 7).
 - Trois documents n'ont pas pu être récupérés : le site de l'Assemblée répondait « service indisponible ». Ce sont l'amendement no 183 sur le RSA (SR1), les amendements du texte sur les prix agricoles (EP2) et le texte de commission sur ArcelorMittal (EP1). Les lignes de ces trois textes restent vérifiées sur les comptes rendus de séance.
+- Le Vérificateur n'a pas encore fait sa passe.
 
 **Trois questions pour vous**, en QCM, en fin de document : le critère du camp (1), les textes qui visent une nationalité (2), deux mots des valeurs (3).
 
@@ -31,7 +31,7 @@
 
 ## 1. Les mots des valeurs et les phrases (proposé)
 
-La règle E2 (D-030) prévoit un mot par valeur, toujours le même. Elle renvoie à l'étape 6 la confirmation des mots de ces quatre tensions, « avec leurs textes d'épreuve ». Elle fixe aussi trois critères de Contenu : aucune valeur qui sonne comme une qualité face à un défaut, aucune qui soit le mot d'un camp, aucun mot partagé entre deux tensions.
+La règle E2 (D-030) prévoit un mot par valeur, toujours le même. Elle renvoie à l'étape 6 la confirmation des mots de ces quatre tensions, « avec leurs textes d'épreuve ». Elle fixe aussi trois critères de Contenu : aucune valeur qui sonne comme une qualité face à un défaut, aucune qui soit le mot d'un camp, aucun mot partagé entre deux tensions. Ces mots servent partout : dans les phrases du jeu et dans le nom des curseurs du portrait (`projet.md` §5 ; maquettes finales, D-014). Si un mot change, il change aux deux endroits.
 
 **Les mots d'E2, et le jugement des deux annotateurs** (partie C de l'annotation à l'aveugle) :
 
@@ -43,11 +43,12 @@ La règle E2 (D-030) prévoit un mot par valeur, toujours le même. Elle renvoie
 | SO | la souveraineté | l'ouverture | oui, pour les deux : « l'ouverture » (son contraire implicite est « la fermeture ») | oui, pour les deux : « la souveraineté » | « l'indépendance », pour les deux |
 
 **Ce que Contenu et Game design en tirent (proposé).**
-- **SO et EP** : deux annotateurs sur deux relèvent le même défaut et proposent le même mot. Notre propre règle (section 4.1) dit alors de proposer un autre mot. Nous recommandons « l'indépendance » et « le privé ». C'est la question 3, parce que cela modifie E2.
+- **« La souveraineté » et « le marché »** : deux annotateurs sur deux relèvent le même défaut et proposent le même mot. Le critère annoncé avant l'annotation (section 4.1) dit alors de proposer un autre mot. Nous recommandons « l'indépendance » et « le privé ». C'est la question 3, parce que cela modifie E2.
+- **« L'ouverture »** : nous ne proposons pas de remplaçant. Aucun mot trouvé ne couvre aussi bien l'Europe, le commerce et l'immigration sans être lui-même un mot de camp. « La coopération » ne dit rien de l'immigration, « l'accueil » rien du commerce ni de l'Europe, « la mondialisation » est un mot de camp. Remplacer « la souveraineté » par « l'indépendance » atténue le défaut sans le corriger : les deux pôles sonnent alors comme des qualités, ce que l'annotateur 2 appelle « rééquilibrer la paire ». C'est à vérifier en bêta.
 - **SR** : les deux avis se contredisent. L'un change « responsabilité individuelle », l'autre « solidarité collective ». L'annotateur 2 note que le marquage des deux mots « s'annule à peu près ». Nous gardons les mots d'E2.
 - **EM** : rien à changer. L'annotateur 2 relève que EM et SR sont des tensions voisines (« égalité » près de « solidarité », « mérite » près de « responsabilité »). Aucun mot ne supprime ce voisinage. Ce qui le limite : les phrases nomment toujours les deux pôles, sauf la phrase de penchant.
 
-**Les phrases**, dans la forme des tensions déjà essayées (règles 18, R1, R2). Les exemples SO et EP sont écrits avec les mots recommandés. Avec les mots actuels, ils restent valables en remplaçant les mots.
+**Les phrases**, dans la forme des tensions déjà essayées (règles 18, R1, R2). Les exemples SO et EP sont écrits avec les mots recommandés ; avec les mots actuels, on lit par exemple « Aujourd'hui, tu as fait passer l'État avant le marché. »
 
 | Cas | Exemple |
 |---|---|
@@ -60,16 +61,16 @@ La règle E2 (D-030) prévoit un mot par valeur, toujours le même. Elle renvoie
 | Dimanche, à égalité | « Cette semaine, entre indépendance et ouverture, tu as penché autant d'un côté que de l'autre. » |
 
 - **Contractions** : « à le » devient « au » (« au mérite », « au privé »).
-- **Après « Entre »**, la forme courte, comme pour « local et national » à l'essai. Pour SR, « solidarité et responsabilité » évite une phrase de 111 caractères. Dans le reste de la phrase, les mots restent entiers (« … tu as le plus souvent choisi la responsabilité individuelle. »).
+- **Après « Entre »**, la forme courte, comme pour « local et national » à l'essai. C'est une convention d'essai (`docs/essai/simulation.md` §5.5), pas encore une règle du produit : E2 ne fixe qu'un libellé par valeur. Elle est à confirmer pour le produit (section 6). Pour SR, « solidarité et responsabilité » évite une phrase de 111 caractères. Dans le reste de la phrase, les mots restent entiers (« … tu as le plus souvent choisi la responsabilité individuelle. »).
 - **Longueur** : les phrases SR sont les plus longues. Exemple, à 100 caractères : « Aujourd'hui, tu as donné du poids à la solidarité collective comme à la responsabilité individuelle. » Elles tiendront sur trois lignes d'iPhone au lieu de deux. UX et la Direction artistique le vérifieront à l'écran (travail 7) ; aucun mot ne change pour autant.
-- **Dans les raisons**, le mot d'une valeur n'est jamais employé comme valeur (E2). Aucune des 32 raisons n'écrit « égalité », « mérite », « solidarité », « responsabilité », « État », « marché », « souveraineté » ni « ouverture ». Aucune n'écrit non plus « privé » ni « indépendance ». Le contrôle de forme le vérifie (section 3). Ces mots restent permis dans le titre et les lignes quand ils décrivent un fait (« L'État deviendrait propriétaire… »).
+- **Dans les raisons**, le mot d'une valeur n'est jamais employé comme valeur (E2). Aucune des 32 raisons n'emploie comme valeur « égalité », « mérite », « solidarité », « responsabilité », « État », « marché », « souveraineté » ou « ouverture », ni « privé » ou « indépendance ». « Conseil d'État » (SR2) et « États-Unis » (SO1) sont des noms propres. Le contrôle de forme le vérifie (section 3). Ces mots restent permis dans le titre et les lignes quand ils décrivent un fait (« L'État deviendrait propriétaire… »).
 - *Un mot partagé entre deux tensions ?* Aucun, avec les mots actuels comme avec les mots recommandés. Deux voisinages restent à surveiller. D'abord, « l'indépendance », lue seule dans la phrase de penchant, peut s'entendre au sens personnel (« tu as penché vers l'indépendance ») ; la phrase suit le texte du jour, qui donne le contexte. Ensuite, « la sécurité » (Sécurité/Liberté) est proche des textes de responsabilité qui parlent de délinquance (SR2).
 
 ---
 
 ## 2. Les huit textes à lire
 
-Chaque texte est montré comme le joueur le verrait avant de répondre : le titre, les trois lignes, les quatre raisons. Dans le jeu, l'ordre des raisons serait tiré au sort ; ici, les deux « pour » viennent d'abord. Le bloc **À 18h** dit ce que la révélation montrerait. Les mots exacts de la ligne du vote seront écrits par UX.
+Chaque texte est montré comme le joueur le verrait avant de répondre : le titre, les trois lignes, les quatre raisons. Les raisons « pour » sont celles de députés favorables à la mesure, les raisons « contre » celles de députés opposés ; le joueur, lui, répond « Favorable » ou « Défavorable » et choisit une raison. Dans le jeu, l'ordre des raisons serait tiré au sort une fois par texte, le même pour tous ; ici, les deux « pour » viennent d'abord. Le bloc **À 18h** dit ce que la révélation montrerait. Les mots exacts de la ligne du vote seront écrits par UX, et le décompte des voix n'est pas montré : il reste à trancher (E4).
 
 Pour chaque texte, deux repères internes, jamais montrés au joueur :
 - la **tension** ;
@@ -163,7 +164,7 @@ Raisons :
 3. Contrôler les prix a provoqué des pénuries dans plusieurs pays.
 4. Ce texte serait inopérant face à une inflation née de crises mondiales.
 
-> **À 18h** · Texte rejeté, le 30 novembre 2023, à six voix près (162 pour, 168 contre). Déposé par Manuel Bompard, député La France insoumise. Raisons : 1. Sophie Taillé-Polian (Écologiste) ; 2. Grégoire de Fournas (Rassemblement National) ; 3. Guillaume Kasbarian (Renaissance) ; 4. Anne-Laure Babault (Démocrate).
+> **À 18h** · Texte rejeté, le 30 novembre 2023. Déposé par Manuel Bompard, député La France insoumise. Raisons : 1. Sophie Taillé-Polian (Écologiste) ; 2. Grégoire de Fournas (Rassemblement National) ; 3. Guillaume Kasbarian (Renaissance) ; 4. Anne-Laure Babault (Démocrate).
 
 ### Souveraineté / Ouverture
 
@@ -214,14 +215,35 @@ La chaîne est celle des deux essais (`docs/essai/simulation-2.md`, annexe A, A.
 
 **Le choix des votes.**
 - Votes publics de la 16e et de la 17e législature, déjà votés (E11).
-- Aucun texte, aucun dossier ni aucune mesure des deux lots des essais (vérifié sur les numéros de scrutin).
-- Un vote adopté et un rejeté par tension : quatre et quatre sur le lot (D-028).
-- Des objets variés : quatre textes entiers, deux amendements (un adopté, un rejeté), un article central, une résolution. Un seul titre commence par « Supprimer » (EM2, présentation B, phrase fixe en ligne 3).
+- Aucun texte, aucun dossier ni aucune mesure des deux lots des essais. C'est vérifié de trois façons :
+  - par les numéros de scrutin ;
+  - par les numéros des textes ;
+  - par les mesures elles-mêmes : aucune des huit n'apparaît dans les fichiers des essais (`docs/essai`, lots compris).
+  
+  Cinq des comptes rendus de séance utilisés apparaissent aussi dans les fichiers de travail des essais, pour d'autres textes discutés le même jour.
+- Un vote adopté et un rejeté par tension : quatre et quatre sur le lot (D-028). Le sort qui compte est celui que le joueur lit à 18h. EM2 est « rejeté », parce que l'amendement de suppression a été rejeté. SR2 est « rejeté », parce que l'article est tombé.
+- Des objets variés : quatre textes entiers, deux amendements (un adopté, un rejeté), un article central, une résolution.
 - Des auteurs de groupes variés : Socialistes, Ensemble pour la République, Les Républicains (deux fois), Rassemblement National, La France insoumise (deux fois), Renaissance. Sans ce mélange, le test du camp ne voudrait rien dire.
-- Le sens : EM et SO ont un texte dans chaque sens. SR et EP ont leurs deux textes dans le même sens (responsabilité, État). C'est faute de stock : voir le constat 5.2.
+- Le sens :
+  - EM et SO ont un texte dans chaque sens ;
+  - EP a ses deux textes dans le même sens (l'État), faute de stock dans les votes relus (constat 5.2) ;
+  - SR a aussi ses deux textes dans le même sens (la responsabilité), mais le stock dans l'autre sens n'a pas été mesuré.
+  
+  La règle E9 (autant de textes dans chaque sens sur huit semaines) vaut pour le lot servi, pas pour ces huit textes d'épreuve.
+- La fenêtre « textes récents » (`projet.md` §8) vaut elle aussi pour le lot servi. Cinq textes d'épreuve datent de 2023 : ils ont été choisis pour éprouver les tensions, pas pour être servis.
+
+**Les titres, et un écart à la chaîne.** Un seul titre commence par « Supprimer » : EM2, un amendement de suppression servi tel quel (présentation B, phrase fixe en ligne 3). La convention d'essai 13 (A.7) veut que tout titre dont la mesure retire quelque chose commence par « Supprimer ». Deux titres s'en écartent :
+- **SR2**, « Suspendre les allocations… » : la mesure suspend le plus souvent, et ne supprime que pour un crime. « Supprimer » aurait été inexact.
+- **SO2**, « Mettre fin à l'accord… » : « Supprimer l'accord » ne se dit pas d'un traité. « Dénoncer », le mot juridique, se lisait mal seul (« dénoncer les Algériens »).
+
+Ces trois titres de retrait (EM2, SR2, SO2) sont trois des quatre textes rejetés du lot. Sur huit textes, c'est sous le seuil de la règle D-041. Sur un lot servi, ce serait exactement la forme qui annonce le vote : à surveiller au travail 10.
 
 **Les raisons (D-034).**
-- Six textes ont un inattendu de chaque côté. Deux n'en ont aucun, EP1 et SO1, par la règle interne d'A.7 (points 6 et 10). Dans chacun, un inattendu a été mal lu à l'aveugle, et le débat n'offrait pas d'autre inattendu du même côté. Sur le lot, cela fait six croisés, six pratiques (pôle « aucun ») et vingt attendus.
+- *Les mots de cette section.*
+  - Une raison **attendue** défend son côté au nom de la valeur qu'on attend de ce côté.
+  - Une raison **inattendue** est de deux sortes. Elle est **croisée** quand elle défend son côté au nom de la valeur d'en face. Elle est **pratique** quand elle ne parle d'aucune des deux valeurs (coût, faisabilité, droit) ; on note alors « pôle aucun ».
+  - La règle interne d'A.7 (points 6 et 10) : un inattendu de chaque côté, ou aucun.
+- Six textes ont un inattendu de chaque côté. Deux n'en ont aucun, EP1 et SO1, par la règle interne d'A.7 : dans chacun, un inattendu a été mal lu à l'aveugle, et le débat n'offrait pas d'autre inattendu du même côté. Sur le lot, cela fait six croisés, six pratiques et vingt attendus.
 - Chaque raison vient d'un orateur de la séance, sur la mesure votée (règle 8 d'A.7).
 - Les 32 votes personnels ont été relus dans le fichier du scrutin. Trente et un vont dans le sens de la raison. Sophie Ricourt Vaginay (EM1) n'a pas pris part au vote. La convention 1 l'admet, car aucun autre orateur « contre » d'un autre groupe ne portait cet argument.
 - Répartition par groupe, sur 32 raisons :
@@ -233,14 +255,14 @@ La chaîne est celle des deux essais (`docs/essai/simulation-2.md`, annexe A, A.
   - Horizons, UDR, Socialistes, Écologistes : 2 chacun ;
   - Droite Républicaine, Gauche démocrate et républicaine, LIOT : 1 chacun ;
   - une non-inscrite, hors du compte.
-- Les Démocrates sont surreprésentés : ce sont souvent eux qui portent l'argument croisé. Sur un lot servi, la règle de D-044 (deux tiers à quatre tiers de la part égale, sur douze semaines) l'interdirait. Sur huit textes d'épreuve, elle ne s'applique pas.
+- Sur un lot servi, la règle de D-044 (deux tiers à quatre tiers de la part égale, sur douze semaines) interdirait deux choses. D'abord, la surreprésentation des Démocrates, qui portent souvent l'argument croisé. Ensuite, la sous-représentation des groupes à une seule raison (Droite Républicaine, Gauche démocrate et républicaine, LIOT). Sur huit textes d'épreuve, la règle ne s'applique pas.
 
 **Les contrôles mécaniques, refaits après les corrections.**
 - Les 32 extraits sont présents mot pour mot à la ligne citée du compte rendu (script).
 - Forme (script) :
   - titres de 43 à 58 caractères, sans deux-points ;
   - lignes de 52 à 90 caractères ;
-  - raisons de 8 à 12 mots, une phrase, un point final, sans le mot d'une valeur de leur tension.
+  - raisons de 8 à 12 mots, une phrase, un point final, sans le mot d'une valeur de leur tension employé comme valeur.
 - Vote, date et sort ont été relevés dans le fichier de chaque scrutin. Les votes des deux nouveaux orateurs aussi : Fabien Di Filippo (EM2) et Mathieu Lefèvre (SO1) ont voté « pour ».
 - **L'étape « le Sénat devait encore voter »** est confirmée pour les quatre textes concernés :
   - EM1 et SO1 : le dossier législatif ouvert les montre transmis au Sénat ;
@@ -260,7 +282,7 @@ La chaîne est celle des deux essais (`docs/essai/simulation-2.md`, annexe A, A.
 
 **Les contrôles indépendants**, passés en sessions séparées, tous chez le même fournisseur (D-044) :
 1. **Vérification indépendante des fiches** : six contrôles par fiche, sur Claude Fable 5.1 (D-036).
-2. **Annotation à l'aveugle par deux annotateurs** : Claude Sonnet 5.5, puis Claude Fable 5.1, chacun dans sa session. Ils ne voyaient que les titres, les lignes et les raisons mélangées. Ils choisissaient parmi les huit tensions, pas seulement parmi les quatre nouvelles. Une partie C leur faisait juger les mots des valeurs.
+2. **Annotation à l'aveugle par deux annotateurs**, puis réannotation de ce qui a changé : Claude Sonnet 5.5 et Claude Fable 5.1, chacun dans sa session. Ils ne voyaient que les titres, les lignes et les raisons mélangées. Ils choisissaient parmi les huit tensions, pas seulement parmi les quatre nouvelles. Une partie C leur faisait juger les mots des valeurs.
 3. **Test du camp** sur Claude Fable 5.1, avec un témoin (section 4.2).
 
 Les dossiers, les clés et les scripts de comparaison sont dans l'espace de travail de l'équipe.
@@ -272,10 +294,11 @@ Les dossiers, les clés et les scripts de comparaison sont dans l'espace de trav
 ### 4.1 Les deux classements concordent
 
 - **Critère** : pour chaque texte, les deux annotateurs retrouvent la tension et le sens de la fiche. Pour chaque raison, ils retrouvent son côté et son pôle.
-- **Écarts** : toute raison mal lue est réécrite, ou remplacée par un autre orateur du même débat, puis réannotée (convention 7). Un texte dont la tension n'est pas retrouvée est remplacé.
+- **Écarts** : toute raison mal lue est réécrite, ou remplacée par un autre orateur du même débat, puis repasse à l'aveugle, comme à l'essai (A.7, point 10). Un texte dont la tension n'est pas retrouvée est remplacé.
 - **Inattendus** : si le côté d'un inattendu n'est pas retrouvé du premier coup, on prend un autre inattendu du même côté. S'il n'y en a pas, aucun inattendu des deux côtés (A.7, points 6 et 10).
+- **Les mots des valeurs** (partie C), critère annoncé avant l'annotation : si les deux annotateurs jugent qu'un mot sonne comme une qualité face à un défaut, ou comme le mot d'un camp, Contenu et UX proposent un autre mot. Ce changement toucherait E2 et reviendrait vers vous (question 3).
 
-**Résultats.**
+**Résultats de la première annotation.**
 
 | Contrôle | Tension et sens (8 textes) | Côté et pôle (32 raisons) |
 |---|---|---|
@@ -294,26 +317,26 @@ Les dossiers, les clés et les scripts de comparaison sont dans l'espace de trav
 | EP1, raison 2 (pour, pratique) | L'annotateur 1 la lit « contre » (« coûterait »). Le devin du camp a, lui, compté « trois contre, un pour ». | Par la règle ci-dessus, remplacée par une attendue du même orateur : « L'industrie doit cesser d'être un objet de spéculation comme un autre. » |
 | SO1, raison 2 (pour, croisée) | L'annotateur 1 lit « ouverture » : « la France exerce son pouvoir à travers l'Europe ». | Pas d'autre inattendu « pour ». Donc aucun inattendu des deux côtés. La raison 2 devient l'attendue de l'auteur : « Seuls, nous ne pourrions pas exister entre les États-Unis et la Chine. » La raison 4 (pratique) devient une attendue du même orateur : « Nous n'avons pas de double allégeance : seul le peuple français décide. » |
 
-**Les points à risque annoncés** se sont comportés ainsi : SR2 et EM2 ont gardé leur tension chez les deux annotateurs. L'annotateur 1 a noté qu'ils pouvaient se discuter (SR2 avec Sécurité/Liberté, EM2 avec Solidarité/Responsabilité). EM1, raison 2 (croisé subtil), a été bien lue par les deux. SO1, raison 2, ne l'a pas été.
+**Les points à risque annoncés** se sont comportés ainsi :
+- SR2 et EM2 ont gardé leur tension chez les deux annotateurs. L'annotateur 1 a noté qu'ils pouvaient se discuter : SR2 avec Sécurité/Liberté, EM2 avec Solidarité/Responsabilité.
+- EM1, raison 2 (croisé subtil), a été bien lue par les deux.
+- SO1, raison 2, ne l'a pas été.
 
-**Ce qui reste à faire : la réannotation** (convention 7). Le dossier est limité à ce qui a changé :
-- les onze raisons réécrites ou remplacées ;
-- les sept textes qui les portent, avec leur titre et leurs lignes actuels ;
-- la tension et le sens redemandés pour ces sept textes, dont les quatre aux lignes ou au titre changés (SR1, SR2, SO1, SO2).
+**La réannotation.** Un second dossier à l'aveugle ne contenait que ce qui avait changé. On y trouvait les onze raisons réécrites ou remplacées : les six écarts ci-dessus, plus les corrections de la vérification (EM1, raison 1 ; EM2, raisons 1 et 3 ; SR2, raison 1 ; SO2, raison 2). Il contenait aussi les sept textes qui les portent, avec leur titre et leurs lignes actuels ; la tension et le sens étaient redemandés pour les sept.
 
-L'orchestrateur le fera passer à deux annotateurs. Les corrections de la vérification touchent aussi des raisons qui n'avaient pas d'écart : EM1, raison 1 ; EM2, raisons 1 et 3 ; SR2, raison 1 ; SO2, raison 2. Elles sont dans le même dossier.
+| Réannotation (onze raisons, sept textes) | Tension et sens | Côté et pôle |
+|---|---|---|
+| Annotateur 1 (Sonnet 5.5) | 7/7 | 11/11 |
+| Annotateur 2 (Fable 5.1) | 7/7 | 11/11 |
 
-| Réannotation (onze raisons, sept textes) | Résultat |
-|---|---|
-| Annotateur 1 | à venir |
-| Annotateur 2 | à venir |
+**Les deux classements concordent avec les fiches.** Le critère de la section 4.1 est tenu.
 
 ### 4.2 Un modèle ne devine pas le camp de l'auteur
 
 **Le test.** Un modèle a reçu les huit textes comme le joueur les voit avant 18h : titre, lignes, raisons. Il devait nommer le groupe de l'auteur, parmi les groupes de la législature.
-- Il « trouve le camp » s'il nomme un groupe qui a voté comme le groupe de l'auteur à ce scrutin. Cette définition ne range aucun groupe à gauche ni à droite (D-044, point 3).
+- Il « trouve le camp » s'il nomme un groupe qui a voté comme le groupe de l'auteur à ce scrutin. Cette définition ne range aucun groupe à gauche ni à droite : c'est le même principe que D-044, point 3.
 - Le hasard varie d'un texte à l'autre, selon le nombre de groupes de ce camp : de 2 sur 10 (SR2) à 8 sur 11 (EM1). Sur les huit, le hasard seul donne en moyenne 3,7 camps trouvés.
-- **Critère** : le camp n'est « pas deviné » si le modèle ne fait pas mieux que le hasard au seuil de 5 %, soit au plus 6 camps trouvés sur 8.
+- **Seuil** (calcul de Contenu, le plan n'en donne pas) : le camp n'est « pas deviné » si le modèle ne fait pas mieux que le hasard au seuil de 5 %, soit au plus 6 camps trouvés sur 8.
 - **Le témoin** : le même modèle, dans une autre session, ne recevait que l'intitulé officiel de chaque vote, sans auteur. Il donne ce que la mesure seule laisse deviner.
 
 **Résultats.**
@@ -328,35 +351,40 @@ L'orchestrateur le fera passer à deux annotateurs. Les corrections de la vérif
 **Ce que cela montre.**
 - **Le camp est deviné, avec ou sans nos mots.** Le modèle fait aussi bien sur l'intitulé nu que sur nos textes : 8 sur 8 des deux côtés. Dans ses deux sessions, il explique lui-même d'où viennent ses réponses :
   - de sa mémoire des votes réels (accord de 1968, ArcelorMittal, RSA, prix agricoles) ;
-  - sinon, de la mesure elle-même (une nationalisation vient de la gauche).
+  - sinon, de la mesure elle-même (selon lui, une nationalisation vient de certains groupes plutôt que d'autres).
   
   Il écrit : « Dans aucun cas une raison précise ne m'a trahi l'auteur. » Sur les deux textes qu'il ne connaissait pas (SO1, EM2), il dit que les lignes et les raisons ne lui donnaient « presque rien ». Il a trouvé le camp quand même, mais avec sa confiance la plus basse, sur des camps larges.
 - **Ce que cela ne montre pas.** À 8 sur 8 des deux côtés, le test n'a plus de marge : il ne pourrait pas voir un signal venu de nos mots, même s'il existait. Il ne prouve donc pas l'innocence de nos textes. Il prouve seulement qu'un modèle capable, sur des votes qu'il connaît, trouve le camp sans nous.
-- **Conséquence.** Le critère du plan, « un modèle ne devine pas le camp de l'auteur », ne peut pas être tenu sur des votes passés, quelle que soit l'écriture. Un critère qui juge nos seuls mots demande des lecteurs qui ignorent le vote : de vraies personnes en bêta, ou un modèle sur des votes postérieurs à ses connaissances. C'est la question 1.
+- **Conséquence.** Sur des votes passés, le critère du plan, « un modèle ne devine pas le camp de l'auteur », ne peut probablement pas être tenu, quelle que soit l'écriture. Juger nos seuls mots demande des lecteurs qui ignorent le vote : des lecteurs volontaires, ou un modèle sur des votes postérieurs à ses connaissances. C'est la question 1.
 
 **Le vote, et la règle « une forme n'annonce jamais le vote » (D-041).**
 - Le modèle a aussi parié sur le vote : 8 sur 8 avec nos textes, 7 sur 8 avec l'intitulé seul. Il s'est trompé sur EP1 avec l'intitulé seul ; avec nos textes, il a dit se souvenir de l'adoption.
-- **Ce test ne dit rien de nos formes.** Il mesure la mémoire du modèle. Le « devin du vote » de D-041 n'a de sens que sur des votes que le modèle ne peut pas connaître, c'est-à-dire postérieurs à ses données. C'est le cas du flux quotidien. Ce n'est pas le cas des textes d'archive : textes d'entrée, réserve, textes d'épreuve. C'est une première réponse, provisoire, à la question que D-044 (point 2) pose à Contenu. Elle se confirmera au travail 10, sur un lot entier.
-- **Un signal utile quand même.** Le devin a compté « trois raisons contre, une pour » sur EP1, à cause d'une raison « pour » qui se lisait « contre » (le coût de la nationalisation). Il a noté que ce déséquilibre apparent pouvait faire deviner un rejet. Une raison dont le côté est ambigu peut donc annoncer un faux vote : c'est la même faute que l'annotation a relevée, et elle est corrigée.
-- **Le lot respecte D-041.** Huit premiers mots de titre différents, un seul « Supprimer », une seule phrase fixe, un seul objet nommé dans les lignes (« La résolution »). Chaque forme apparaît une fois : en dessous du seuil de trois occurrences en quatre semaines. Ce lot est trop petit pour éprouver la règle. À surveiller au travail 10 : les résolutions (article 34-1) sont souvent rejetées, et « La résolution… » en ligne 1 pourrait devenir une forme qui annonce le vote.
+- **Ce test ne dit rien de nos formes.** Il mesure la mémoire du modèle.
+  - Le « devin du vote » de D-041 n'a de sens que sur des votes que le modèle ne peut pas connaître, c'est-à-dire postérieurs à ses données. C'est le cas du flux quotidien.
+  - Ce n'est pas le cas des textes d'archive : textes d'entrée, réserve, textes d'épreuve.
+  - C'est une première réponse, provisoire, à la question que D-044 (point 2) pose à Contenu (section 6). Elle se confirmera au travail 10, sur un lot entier.
+- **Un signal utile quand même.** Le devin a compté « trois raisons contre, une pour » sur EP1, à cause d'une raison « pour » qui se lisait « contre » (le coût de la nationalisation). Il a noté que ce déséquilibre apparent pouvait faire deviner un rejet. Une raison dont le côté est ambigu peut donc annoncer un faux vote. C'est la même faute que l'annotation a relevée, et elle est corrigée.
+- **Le lot n'est pas concerné par D-041**, faute d'occurrences. Il compte huit premiers mots de titre différents, un seul « Supprimer » et une seule phrase fixe. Deux objets sont nommés dans les lignes, chacun une fois : « Cet amendement » (EM2) et « La résolution » (SO2). Chaque forme reste sous le seuil de trois occurrences en quatre semaines. Ce lot est trop petit pour éprouver la règle. Deux choses sont à surveiller au travail 10 :
+  - les titres de retrait (section 3) ;
+  - « La résolution… » en ligne 1 : les résolutions (article 34-1) sont souvent rejetées.
 
 ---
 
 ## 5. Ce que l'épreuve apprend
 
 ### 5.1 Pour le jeu (regard de Game design)
-- **Le joueur devinera souvent l'auteur avant 18h** sur ces quatre tensions : la mesure le dit, et le test du camp le confirme. Ce n'est pas grave pour le jeu : la question du jour porte sur ce que *lui* pense, puis sur ce qu'ont pensé ses proches, pas sur l'auteur. Mais la révélation de l'auteur perd de sa surprise.
+- **Le joueur devinera souvent l'auteur avant 18h** sur ces quatre tensions : la mesure le dit, et le test du camp le confirme. L'effet est à tester en bêta. La question du jour porte sur ce que *lui* pense, puis sur ce qu'ont pensé ses proches, pas sur l'auteur. Mais la révélation de l'auteur perd de sa surprise.
   - À 90 secondes, rien ne change.
   - Sur une semaine, la surprise de 18h repose davantage sur les proches et sur le vote.
   - Sur trois mois, un joueur qui verrait toujours venir l'auteur pourrait se sentir « rangé ». Le questionnaire de bêta le demande déjà : « le jeu t'a-t-il rangé dans un camp ? » (plan, partie 5).
-- **Les raisons croisées font le jeu de ces tensions.** Exemples : « Ce concours fait vivre la promesse de réussir par son talent. », dit *pour* des places réservées ; « Un boulanger fournit plus d'efforts pour le pays que de grands héritiers. », dit *contre* la suppression d'un impôt. Elles empêchent la raison de trahir le camp, et elles nourrissent l'écran « qui et pourquoi ». Mais l'annotation montre leur fragilité : sur sept croisés, trois ont été mal lus par l'un des deux annotateurs (EM1, SR1, SO1). Un croisé mal lu fausse le portrait. Il vaut mieux deux attendues qu'un croisé douteux, comme la règle d'A.7 le prévoit.
-- **La surprise du vote est réelle.**
-  - EP2 a été rejeté à six voix près.
-  - EM1, déposé par une députée socialiste, a été adopté avec les groupes du centre et la Droite Républicaine, le Rassemblement National votant contre.
-  - Le Rassemblement National a voté pour EP2, déposé par La France insoumise.
+- **Les raisons croisées font le jeu de ces tensions.** Exemples : « Ce concours fait vivre la promesse de réussir par son talent. », dit *pour* des places réservées ; « Un boulanger fournit plus d'efforts pour le pays que de grands héritiers. », dit *contre* la suppression d'un impôt. Elles empêchent la raison de trahir le camp, et elles nourrissent l'écran « qui et pourquoi ». Mais l'annotation montre leur fragilité : sur les sept croisés de la version 1, trois ont été mal lus par l'un des deux annotateurs (EM1, SR1, SO1). Un croisé mal lu fausse le portrait. Il vaut mieux deux attendues qu'un croisé douteux, comme la règle d'A.7 le prévoit.
+- **La surprise du vote est réelle** (fichiers des scrutins 840 et 3101) :
+  - EP2 a été rejeté de peu ;
+  - EM1, déposé par une députée Socialistes et apparentés, a été adopté. La majorité des groupes Rassemblement National et UDR a voté contre, et celle de La France insoumise s'est abstenue ;
+  - sur EP2, déposé par La France insoumise, la majorité du groupe Rassemblement National a voté pour.
 
 ### 5.2 Pour la chaîne des textes (travail 10)
-- **Le déséquilibre du stock.** Dans les votes relus, les mesures où « favorable » sert le mérite, ou le marché, sont rares. Elles passent presque toujours par un amendement qui supprime un article, et souvent un seul groupe les défend. Or la règle E9 demande, sur huit semaines, autant de textes dans un sens que dans l'autre pour chaque tension. La mesure est à faire au travail 10 : sur un an de votes, combien de textes servables par tension et par sens, avec deux orateurs « pour » et deux « contre » de quatre groupes ? Si EP ou EM n'ont presque rien dans un sens, la question vous reviendrait, comme D-044 le prévoit pour l'égalité entre groupes.
+- **Le déséquilibre du stock.** Dans les votes relus, les mesures où « favorable » sert le mérite, ou le marché, sont rares. Elles passent presque toujours par un amendement qui supprime un article, et souvent un seul groupe les défend. Or la règle E9 demande, sur huit semaines, autant de textes dans un sens que dans l'autre pour chaque tension. La mesure est à faire au travail 10 : sur un an de votes, combien de textes servables par tension et par sens, avec deux orateurs « pour » et deux « contre » de quatre groupes ? Si EP, EM ou SR n'ont presque rien dans un sens, la question vous reviendrait, comme D-044 le prévoit pour l'égalité entre groupes.
 - **Lire le texte voté, pas le texte déposé.** Sur SO1, les lignes décrivaient les drapeaux. Le texte voté imposait aussi le portrait du Président, la devise et la Déclaration des droits de l'homme : trois articles ajoutés en séance, juste avant le vote. Le joueur aurait voté sur un texte qui n'était pas celui du scrutin. La chaîne doit lire le texte adopté, ou à défaut la liste des amendements adoptés jusqu'au vote. L'open data donne ces textes (point d'accès `dyn/opendata/<identifiant>.html`) ; il a répondu ici quand les pages du site ne répondaient pas.
 - **Le groupe à la date de l'acte (E5).** Sur SO2, le groupe socialiste avait changé d'identifiant le 19 octobre 2023. Le fichier du scrutin du 7 décembre le rangeait encore sous l'ancien. La chaîne doit prendre le groupe dans le mandat de l'orateur, à la date de la séance, pas dans le fichier du scrutin.
 - **Le nom du groupe UDR.** En février 2025, l'open data imprime ce groupe sous son seul sigle ; en novembre 2025, sous son nom entier. La liste fermée des groupes (E5) devra prendre le nom officiel publié au Journal officiel, pas le libellé du fichier, avec sa source.
@@ -366,26 +394,40 @@ L'orchestrateur le fera passer à deux annotateurs. Les corrections de la vérif
 
 ## 6. Décisions touchées
 
-- **Aucune n'est modifiée par ce document tant que vous n'avez pas répondu.** Les mots des valeurs restent ceux d'E2 (D-030) jusqu'à votre réponse à la question 3. La règle D-041 est respectée sur le lot (section 4.2).
-- **La question 1, si vous choisissez la première option, modifierait le « Fini quand » du travail 2.** Il est écrit dans `docs/plan-construction.md`, partie 4, validé avec D-046. Le critère « un modèle ne devine pas le camp de l'auteur » deviendrait « nos textes ne laissent pas deviner le camp mieux que la mesure seule ». Une règle sur le lot servi s'y ajouterait.
-- **La question 2, selon votre réponse, préciserait ce que couvre la tension Souveraineté/Ouverture** (`projet.md` §5). Elle ne modifierait aucune décision : l'immigration n'a jamais été écartée ; seule la laïcité l'a été.
-- **La question 3, si vous choisissez l'une des deux premières options, modifierait E2 (D-030).** Elle modifierait aussi la règle 16 de `docs/produit.md`, qui reprend les libellés : « l'indépendance » au lieu de « la souveraineté », et, selon l'option, « le privé » au lieu de « le marché ». E2 prévoyait que ces mots se confirment à l'étape 6. Ce changement est l'usage prévu de cette confirmation, mais il change un texte validé.
-- **Arbitrage de l'orchestrateur, sans décision modifiée** : SR2 garde trois groupes et une non-inscrite. D-044 et la règle 7 admettent un non-inscrit, hors du compte de l'égalité entre groupes.
+- **Aucune n'est modifiée par ce document tant que vous n'avez pas répondu.**
+  - Les mots des valeurs restent ceux d'E2 (D-030) jusqu'à votre réponse à la question 3.
+  - Le décompte des voix sous le vote n'est pas montré dans la section 2 : E4 reste ouvert.
+- **La question 1, option 1, modifierait le « Fini quand » du travail 2.** Il est écrit dans `docs/plan-construction.md`, partie 4, et a été validé avec D-046. Le critère « un modèle ne devine pas le camp de l'auteur » deviendrait « nos textes ne laissent pas deviner le camp mieux que la mesure seule ». Elle touche aussi deux autres textes :
+  - le mélange des auteurs sur le lot servi précise la « chaîne aveugle aux partis » de `projet.md` §8, à côté de la règle d'égalité entre groupes (D-044, point 3) ;
+  - la mesure par des lecteurs qui ignorent le vote s'ajoute aux deux questionnaires de la partie 5 du plan. Ces lecteurs sont des volontaires recrutés hors du jeu : ce ne sont pas des données de joueurs, et la liste fermée de D-042 (point 2) n'est pas touchée.
+  
+  L'option 3 toucherait `projet.md` §8, la règle E9 et le point bloquant du plan avant l'ouverture, « Les huit tensions en circulation ».
+- **La question 2.**
+  - L'option 1 ne modifie aucune décision : l'immigration n'a jamais été écartée ; seule la laïcité l'a été (`projet.md` §5).
+  - Les options 2 et 3 ajouteraient une exclusion de contenu à `projet.md` §8 (« On prend tous les scrutins… »), sur le modèle de la laïcité. Ce serait une précision du §8, pas une modification.
+- **La question 3, options 1 ou 2, modifierait E2 (D-030)**, ainsi que tous les endroits qui reprennent ces libellés :
+  - la règle 16 de `docs/produit.md` ;
+  - les noms des tensions de `projet.md` §5 (« 6. Souveraineté ↔ Ouverture », « 7. État ↔ Marché ») ;
+  - la liste des huit tensions des maquettes finales validées (D-014).
+  
+  Un seul libellé par valeur (E2) : le nom du curseur change avec les phrases. E2 prévoyait que ces mots se confirment à l'étape 6. Ce changement est l'usage prévu de cette confirmation, mais il change des textes validés : il demanderait une entrée au journal des décisions.
+- **Précision d'E2, sans décision modifiée** : la forme courte après « Entre » (« solidarité et responsabilité ») est une convention d'essai, proposée ici pour le produit (section 1).
+- **D-044, point 2 : première réponse de Contenu, provisoire.** Le devin du vote (D-041) garde un sens sur le flux quotidien, fait de votes postérieurs aux connaissances du modèle. Il n'en a pas sur les textes d'archive, dont les trois textes d'entrée : pour eux, nous proposons de contrôler la règle de forme sur le lot, par le seul décompte des formes, sans devin. À confirmer au travail 10.
+- **Arbitrage de l'orchestrateur, pas décision du porteur** : SR2 garde trois groupes et une non-inscrite. Il s'appuie sur D-044 et la règle 7 du produit, qui admettent un non-inscrit hors du compte de l'égalité entre groupes. Aucune entrée du journal ne le porte ; une lecture stricte du §8 (« 4 groupes différents ») demanderait de reprendre SR2.
 
 ---
 
 ## 7. Limites et doutes
 
-- **La réannotation n'a pas tourné.** Les onze raisons et les quatre lignes changées n'ont été lues que par leur rédacteur. Le dossier est prêt (section 4.1).
 - **Trois textes restent vérifiés sur les comptes rendus seulement** : SR1, EP1 et EP2 (section 3, « Les documents qui manquent »). Sur SO1, le texte adopté a montré ce que les comptes rendus cachaient. Le même risque existe, en plus petit, pour ces trois-là.
-- **SR2 compte trois groupes et une non-inscrite.** L'orchestrateur l'admet (D-044, règle 7 du produit). Une lecture stricte du §8 demanderait quatre groupes. Le seul autre orateur possible, Josiane Corneloup (Les Républicains), n'a pas voté.
+- **SR2 compte trois groupes et une non-inscrite**, par arbitrage de l'orchestrateur (section 6). Le seul autre orateur possible, Josiane Corneloup (Les Républicains), n'a pas voté.
 - **Le test du camp était à son plafond.** Il ne prouve ni l'innocence de nos mots, ni leur faute (section 4.2). Huit textes, c'est peu, et le modèle connaissait la plupart des votes.
 - **Un seul fournisseur** (D-044) : l'annotateur, le devin du camp et le rédacteur partagent une partie de leurs angles morts. Deux modèles d'annotation donnent deux regards, pas deux regards indépendants. Les jugements de la partie C sont des avis de modèles sur des mots ; seuls de vrais joueurs diront comment ces mots sonnent.
-- **SO2 est un texte lourd** pour une table de famille : il vise les ressortissants d'un pays, et le débat a porté sur la mémoire coloniale. Les lignes ne décrivent que la règle, et le titre dit maintenant « Mettre fin à » : seul, « Dénoncer l'accord… sur la venue des Algériens » pouvait se lire « dénoncer les Algériens ». Mais la révélation de 18h, avec le nom de l'auteur, peut blesser un proche concerné. D'où la question 2.
+- **SO2 est un texte lourd** pour une table de famille. Il vise les ressortissants d'un pays : le titre et la ligne 2 nomment les Algériens. Le débat a porté sur la mémoire coloniale. Les lignes décrivent la règle, sans jugement sur ces ressortissants. Le titre dit maintenant « Mettre fin à » : seul, « Dénoncer l'accord… sur la venue des Algériens » pouvait se lire « dénoncer les Algériens ». Mais la révélation de 18h, avec le nom de l'auteur, peut blesser un proche concerné. D'où la question 2.
 - **Ce qui ne peut se tester qu'avec de vraies personnes** (bêta, étape 7) :
-  - si les mots des valeurs sonnent juste à 15 ans comme à 70, et si « l'indépendance » lue seule s'entend bien au sens national ;
+  - si les mots des valeurs sonnent juste à 15 ans comme à 70, si « l'indépendance » lue seule s'entend bien au sens national, et si « l'ouverture » sonne encore comme une qualité face à son contraire ;
   - si un joueur se sent rangé quand il devine l'auteur ;
-  - si un lecteur qui ignore le vote devine le camp mieux avec nos textes qu'avec l'intitulé seul (le vrai test de nos mots) ;
+  - si un lecteur qui ignore le vote devine le camp mieux avec nos textes qu'avec l'intitulé seul (le vrai test de nos mots, auprès de volontaires hors du jeu) ;
   - si la phrase SR, longue, se lit ;
   - si un texte comme SO2 met mal à l'aise à table.
   
@@ -398,22 +440,22 @@ L'orchestrateur le fera passer à deux annotateurs. Les corrections de la vérif
 **Question 1 · Camp deviné**
 *D'où elle vient* : le plan (partie 4, travail 2) dit « fini quand un modèle ne devine pas le camp de l'auteur ». Le modèle a trouvé le camp 8 fois sur 8 avec nos textes, et 8 fois sur 8 avec le seul intitulé du vote. Il dit l'avoir fait de mémoire ou par la mesure, jamais par nos raisons (section 4.2).
 *La question* : quel critère retient-on pour dire que nos textes ne trahissent pas l'auteur ?
-1. **Juger nos seuls mots (Recommandé)** — nos textes ne doivent pas faire deviner mieux que l'intitulé seul ; on le mesure en bêta sur des lecteurs qui ignorent le vote, et la chaîne mélange les auteurs sur le lot servi : c'est la seule part qui dépend de nous.
-2. **Exiger le hasard pur** — on garde le critère tel quel ; aucun vote passé connu d'un modèle ne le passe, et il faudrait écarter presque tous les textes de ces quatre tensions.
-3. **Écarter les textes révélateurs** — on ne sert, dans ces quatre tensions, que des mesures sans camp évident ; le stock serait très mince et penché vers les textes consensuels.
+1. **Juger nos seuls mots (Recommandé)** — nos textes ne font pas deviner mieux que l'intitulé seul (mesuré en bêta auprès de volontaires hors du jeu), et le lot servi mélange les auteurs : c'est la part qui dépend de nous.
+2. **Exiger le hasard pur** — le critère du plan reste, et garantit le plus de surprise ; mais un modèle connaît probablement la plupart des votes passés, et il faudrait écarter beaucoup de textes de ces quatre tensions.
+3. **Écarter les textes révélateurs** — on ne sert, dans ces tensions, que des mesures sans camp évident ; l'auteur surprend davantage, mais le stock serait probablement mince et plus consensuel.
 
 **Question 2 · Nationalités**
-*D'où elle vient* : dans les votes relus, Souveraineté/Ouverture, c'est surtout l'Europe et l'immigration. SO2 vise les ressortissants d'un pays ; ses lignes ne décrivent que la règle (section 7).
+*D'où elle vient* : dans les votes relus, Souveraineté/Ouverture, c'est surtout l'Europe et l'immigration. SO2 vise les ressortissants d'un pays : son titre et sa ligne 2 nomment les Algériens. Ses lignes décrivent la règle, sans jugement sur ces ressortissants (section 7).
 *La question* : le jeu peut-il servir un texte d'immigration qui vise une nationalité ?
-1. **Oui, avec mots neutres (Recommandé)** — le texte réel est servi, ses lignes ne décrivent que la règle et jamais une population ; on suit le malaise en bêta.
+1. **Oui, en décrivant la règle (Recommandé)** — le texte réel est servi tel qu'il a été voté ; ses lignes décrivent la règle et nomment le pays, sans jugement ; on suit le malaise en bêta.
 2. **Jamais une nationalité visée** — l'immigration reste, mais seulement par des règles générales ; SO2 serait remplacé.
-3. **Aucun texte d'immigration** — la tension se limite à l'Europe et au commerce ; elle aurait très peu de textes, souvent presque unanimes.
+3. **Aucun texte d'immigration** — la tension se limite à l'Europe et au commerce ; elle aurait probablement peu de textes, souvent presque unanimes.
 
 **Question 3 · Deux mots**
-*D'où elle vient* : E2 (D-030) fixe un mot par valeur et renvoie à l'étape 6 la confirmation des mots de ces quatre tensions. Les deux annotateurs, chacun de son côté, jugent « la souveraineté » et « le marché » comme des mots de camp. Ils jugent « l'ouverture » comme une qualité face à un défaut. Ils proposent les mêmes remplaçants (section 1). Exemples : « Aujourd'hui, tu as fait passer l'État avant le privé. » ; « Entre indépendance et ouverture, tu choisis le plus souvent l'ouverture. »
+*D'où elle vient* : E2 (D-030) fixe un mot par valeur, le même dans les phrases et sur les curseurs, et renvoie à l'étape 6 la confirmation des mots de ces quatre tensions. Les deux annotateurs, chacun de son côté, jugent « la souveraineté » et « le marché » comme des mots de camp, et proposent les mêmes remplaçants. Ils jugent aussi « l'ouverture » comme une qualité face à un défaut (son contraire implicite est « la fermeture »). Aucune option ne remplace « l'ouverture » : nous n'avons pas trouvé de mot qui couvre l'Europe, le commerce et l'immigration sans être un mot de camp (section 1). Les options 1 et 2 atténuent ce défaut sans le corriger, parce que « l'indépendance » sonne aussi comme une qualité. Exemples, avec les mots actuels : « Aujourd'hui, tu as fait passer l'État avant le marché. » ; « Entre souveraineté et ouverture, tu choisis le plus souvent l'ouverture. » Avec les mots proposés : « Aujourd'hui, tu as fait passer l'État avant le privé. » ; « Entre indépendance et ouverture, tu choisis le plus souvent l'ouverture. »
 *La question* : change-t-on deux mots des valeurs ?
-1. **Indépendance et privé (Recommandé)** — « l'indépendance » remplace « la souveraineté », « le privé » remplace « le marché » : deux annotateurs sur deux, mêmes mots ; cela modifie E2 et la règle 16 du produit.
-2. **Indépendance seulement** — on change le mot qui cumule les deux défauts relevés (camp, et face à une qualité) ; « le marché » reste.
+1. **Indépendance et privé (Recommandé)** — les deux mots de camp sont remplacés, comme le proposent les deux annotateurs ; cela modifie E2, la règle 16, `projet.md` §5 et les maquettes.
+2. **Indépendance seulement** — on change le mot de camp « la souveraineté » ; « le marché » et « l'ouverture » restent.
 3. **Garder les mots actuels** — E2 reste tel quel ; la bêta dira si les phrases penchent, au risque de les avoir servies d'ici là.
 
 ---
