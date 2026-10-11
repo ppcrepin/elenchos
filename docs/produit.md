@@ -70,7 +70,7 @@ Trois onglets : **Aujourd'hui · Le Cercle · Moi**.
 - **« Et Thomas ? »** : deviner l'avis de celui qui invite, puis la révélation immédiate (sa réponse, le vote, les auteurs).
 - **Bilan d'entrée** : « 2 sur 3 » ; à 0 ou 1 sur 3, la phrase des surprises prend la place du grand nombre (« Thomas a réussi à te surprendre deux fois. », E10). Trois curseurs encore flous et, si elle y prend place, la barre du portrait (D-026 lève le « jamais » de la maquette 1.7 ; sa place se fixe à l'étape 6 avec ce qu'elle annonce au bout).
 - **Compte** : pseudo, puis trois voies au choix : Apple, Google, ou l'e-mail avec son code à six chiffres (D-035 ; le jeu ne demande qu'un identifiant et l'adresse e-mail, jamais le nom ni la photo) ; le créateur nomme ensuite son cercle. Le pseudo ne peut pas être celui d'un autre membre du cercle (E7).
-- **Le nom expliqué** (D-040) : sur l'écran du compte, donc une fois l'entrée jouée (« après la première devinette », au moment de l'inscription), un court texte explique le nom, Elenchos (ἔλεγχος, l'examen socratique), et le principe du jeu. À écrire une fois le nom vérifié (D-013), par le circuit complet, dans la promesse (D-002) et le ton de La Tablée (D-012) ; sa place sur l'écran se dessine à l'étape 6.
+- **Le nom expliqué** (D-040) : sur l'écran du compte, donc une fois l'entrée jouée (« après la première devinette », au moment de l'inscription), un court texte explique le nom, Elenchos (ἔλεγχος, l'examen socratique), et le principe du jeu. Le texte est choisi (D-049, proposition A de `docs/histoire-du-nom.md`) : « Pourquoi Elenchos ? ἔλεγχος — Elenchos, en grec, c'est l'examen de Socrate : questionner pour mettre à l'épreuve ce qu'on croit savoir. Ici, tu mets à l'épreuve ce que tu crois savoir de tes proches. Chaque jour, tu devines. À 18h, le cercle découvre qui avait dit quoi. » Il s'affiche à la création du compte seulement ; sa place sur l'écran se dessine à l'étape 6.
 - **Le cercle, à l'arrivée** (D-006, étape 6 de `docs/onboarding.md`) : si une manche est ouverte, elle se joue tout de suite ; sinon, la question du jour. Au compte à rebours de 18h, le geste d'ajout à l'écran d'accueil (iPhone) ou l'accord pour le message de 18h, jamais avant la première révélation (D-005, repris par D-043, point 1). Défaut connu, gardé (D-039) : ce jour-là, le nouveau venu devine des réponses à un texte qu'il n'a jamais lu. La part des nouveaux qui finissent leur premier Deviner et sa durée le suivent en bêta (section 8).
 - **Inviter** : un message et un lien prêts, un par proche.
 
@@ -236,7 +236,7 @@ Cinq mesures internes (proposé), jamais montrées aux joueurs, sur ce que les j
 3. **L'ordre des cartes** (D-038) : la carte « qui et pourquoi » toujours en dernier, son « pourquoi » après le visage ; exception à D-022 limitée à cet ordre (règle 9, Deviner).
 4. **Le premier jour du nouveau venu** (D-039) : rien ne change ; le défaut est dit et mesuré en bêta (sections 5 et 8).
 5. **Le plaisir de deviner** (D-039) : il se jugera en bêta, avec de vrais proches ; D-031 tient (section 8).
-6. **Le texte qui explique le nom** (D-040) : sur l'écran du compte, après la première devinette ; écrit une fois le nom vérifié (D-013) (section 5, Compte).
+6. **Le texte qui explique le nom** (D-040) : sur l'écran du compte, après la première devinette ; texte choisi, D-049 (section 5, Compte).
 
 ## Questions de fond, tranchées à l'étape 5 (11 octobre 2026)
 
@@ -260,7 +260,7 @@ Les autres choix touchent la fabrication et le cadre, pas les règles du jeu ; i
 - **L'ordre des cartes, cas non dits** (D-038 est écrite pour trois cartes) : manche à deux cartes (cercle de trois) ou à une seule ; toutes les cartes servies en « aucune » (pas de carte à raison cachée ce jour-là ?) ; visage passé ou changé après le choix du « pourquoi ». À fixer avec Game design.
 - **Le mot « curseurs nets » dans le texte de l'état « portrait pas encore formé » (5.11)** : D-038 ne change que l'étiquette de la barre ; le bilan du second essai (section 1.1) juge ce mot peu adapté aux joueurs ; à relire par UX à l'étape 6.
 - **Le repère de la journée, au dessin** (D-038) : les ronds numérotés, qui rappellent les étapes d'un paiement en ligne ; sur « Rien à deviner aujourd'hui » (5.12), la redite entre le repère (« rien hier ») et la bannière (« aujourd'hui ») : UX dira lequel reste ; les mots de l'état « tout fait » (2.5), à relire par UX ; le repère sur la raison (2.4) et « En attendant 18h » (2.5), selon les mots retenus (réserves de la Direction artistique).
-- **Le texte qui explique le nom** (D-040) : à écrire une fois le nom vérifié (fin de l'étape 3, D-013), par le circuit complet (UX, Direction artistique, Cohérence, Vérificateur) ; sa place sur l'écran du compte (avant ou après le pseudo et les trois voies), à l'étape 6.
+- **Le texte qui explique le nom** (D-040) : écrit et choisi (D-049) ; sa place sur l'écran du compte (en tête, tant que les trois voies restent visibles sans faire défiler, proposé dans `docs/histoire-du-nom.md`), à l'étape 6 ; si le conseil écartait le nom, il serait à refaire (D-047).
 - **La règle de forme du vote** (D-041) : confiée à Contenu, qui en a décrit l'application à l'étape 5 ; à l'étape 6, Contenu dira si le pari sur le vote garde un sens chez le même fournisseur (D-044, point 2) ; la ligne du vote d'un amendement de suppression adopté, à voir avec UX.
 - **La mention IA** (D-044, point 1) : son emplacement et ses mots (UX, étape 6), validés par l'avocat avant la bêta. Et une question de jeu que la procédure de correction ne règle pas encore (relevé par Game design) : si un texte déjà servi est corrigé, que deviennent les réponses, les cartes à deviner, les points et la phrase du portrait de ce jour-là ? À fixer à l'étape 6 avec Contenu et Back-end, avant la bêta.
 - **L'effacement à 12 mois** (D-045, point 1) : le texte de l'e-mail, la phrase de « Qui, durée, droits » (Juridique) et celle des Réglages (UX, étape 6), relus par l'avocat.
@@ -312,7 +312,7 @@ Les maquettes finales (D-014) ne sont pas redessinées maintenant (D-022). Voici
 - 2.1, 2.3, 5.8 et 5.12 : le repère de la journée, deux étapes nommées, à la place de « Deviner ● · Répondre ○ » ; 2.4 et 2.5 selon les mots retenus ; caché par la feuille 2.2 (D-038 ; modifie D-014 ; exception à D-022 pour ce seul élément).
 - 2.1 : dans l'exemple, la carte à raison cachée, au milieu, passe en dernier, et son « pourquoi » se choisit une fois son visage posé (D-038 ; modifie D-014 ; exception à D-022 limitée à cet ordre).
 - 1.8, 5.7, 5.14 : les trois voies du compte, Apple, Google ou l'e-mail (D-035, 9 octobre).
-- 1.8 : le court texte qui explique le nom, sa place sur l'écran (D-040) ; le texte s'écrit une fois le nom vérifié (D-013).
+- 1.8 : le court texte qui explique le nom, sa place sur l'écran (D-040) ; texte choisi, D-049.
 
 **Depuis l'étape 5 (11 octobre 2026)**
 - 1.3 : « Qui, durée, droits » annonce l'effacement après 12 mois sans ouvrir le jeu (D-045).

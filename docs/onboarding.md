@@ -18,7 +18,7 @@ L'invitant ne fait rien de plus que sa propre entrée ; c'est l'invitée qui dev
    - « Continuer avec Apple » ou « Continuer avec Google » : un toucher, Face ID ou le choix du compte, et c'est fait ;
    - « Recevoir un code par e-mail » : le code à six chiffres, sans bloquer le jeu.
 
-   Sur iPhone et iPad, Apple d'abord ; ailleurs, Google (proposé). Le jeu ne demande à Apple ou à Google qu'un identifiant et l'adresse e-mail, jamais le nom ni la photo. Sur un autre appareil, Marie se reconnecte par la même voie. Le même écran porte le court texte qui explique le nom (D-040), écrit une fois le nom vérifié. Les règles à tenir avant la bêta sont plus bas, dans « Le compte : ce qui se tient avant la bêta ».
+   Sur iPhone et iPad, Apple d'abord ; ailleurs, Google (proposé). Le jeu ne demande à Apple ou à Google qu'un identifiant et l'adresse e-mail, jamais le nom ni la photo. Sur un autre appareil, Marie se reconnecte par la même voie. Le même écran porte, à la création du compte seulement, le court texte qui explique le nom (D-040 ; texte choisi, D-049 : « Pourquoi Elenchos ? … À 18h, le cercle découvre qui avait dit quoi. »). Les règles à tenir avant la bêta sont plus bas, dans « Le compte : ce qui se tient avant la bêta ».
 6. **Le cercle.** Si une manche est ouverte, elle la joue tout de suite ; sinon, la question du jour. Au compte à rebours de 18h : le geste d'ajout à l'écran d'accueil (iPhone) ou la notification (D-005, repris par D-043). Elle peut inviter à son tour (§3).
 
 ## Parcours de Thomas (créateur)
