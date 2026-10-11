@@ -378,6 +378,13 @@ Le porteur valide la mise à jour de `docs/produit.md`, `docs/onboarding.md`, `d
 
 **Fin de l'étape 5** de la feuille de route. L'étape 6 (construire) commence avec l'accord explicite du porteur (D-001). Démarches à son nom qui l'accompagnent : la vérification du nom par un conseil en propriété industrielle (D-013, D-043), le compte développeur Apple (D-035, D-042), le devis d'un avocat (D-044).
 
+### D-047 — Logo et histoire du nom tout de suite ; logo final fait par l'équipe · Décidé (11 octobre 2026)
+
+Demande du porteur, avant de construire : créer le logo et « la petite histoire autour d'Elenchos » (D-040), et connaître la plateforme de construction (proposition en cours, Back-end avec Front-end). Il signale aussi qu'il a déjà un compte développeur Apple (démarche de D-046 faite) et considère la question de l'avocat comme réglée de son côté (D-044 inchangé : deux relectures, délégué avant l'ouverture).
+
+1. **Le logo et le texte qui explique le nom se font maintenant ; la vérification du nom par un conseil en propriété industrielle se fait en parallèle.** Options non retenues : la recherche déjà faite suffit ; le conseil d'abord. **Modifie D-013 et D-014** (« avant le logo : le porteur vérifie que le nom est libre » ; « le logo attend la vérification du nom ») **et D-040** (« le texte s'écrit une fois le nom vérifié ») : l'ordre est levé, la vérification reste due (D-043, point 4). Risque dit au porteur : les bases INPI et européennes n'ont pas été consultées par l'équipe, et une revue savante porte le nom *Elenchos* depuis 1980 ; si le conseil trouve un obstacle, logo et texte sont à refaire.
+2. **Le logo final est fait par l'équipe (Direction artistique), sans graphiste.** Options non retenues : l'équipe propose et un graphiste finalise (recommandée) ; un graphiste d'emblée. **Modifie D-011 et D-014** (« le logo ensuite, avec un graphiste ») et la feuille de route (étape 3). Limite dite au porteur : un logo typographique propre est à la portée de l'équipe ; un vrai travail de graphiste, non. Le logo suit l'univers La Tablée (D-012) et ses trois règles communes (aucune couleur ne distingue une position ; une seule teinte, jamais deux qui forment un drapeau ; rien qui évoque un parti).
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique : **tranché, D-042** (gratuit, contribution libre à l'ouverture) · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
