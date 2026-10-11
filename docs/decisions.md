@@ -397,6 +397,15 @@ Livrables : `docs/maquettes/logo.html` (quatre pistes, Direction artistique) et 
 2. **Texte du nom : la proposition A**, à l'écran du compte, à la création du compte seulement :
    « **Pourquoi Elenchos ?** ἔλεγχος — Elenchos, en grec, c'est l'examen de Socrate : questionner pour mettre à l'épreuve ce qu'on croit savoir. Ici, tu mets à l'épreuve ce que tu crois savoir de tes proches. Chaque jour, tu devines. À 18h, le cercle découvre qui avait dit quoi. » (42 mots). Options non retenues : B (le mot seul), C (prononciation et promesse). Exécute D-040. Sa place exacte et les règles d'écran de `docs/histoire-du-nom.md` restent des propositions, à confirmer à l'étape 6 ; à tester en bêta : la compréhension du mot et de Socrate, la lecture par Marie juste après l'entrée, l'effet sur les abandons de l'écran du compte (D-041).
 
+### D-050 — Logo final validé ; une seule paire de guillemets dans le logo complet · Décidé (11 octobre 2026)
+
+Livrable : le dessin final de « La citation » (`docs/maquettes/logo-final.html`, fichiers dans `docs/identite/logo/`, règles dans son `LISEZMOI.md`), par la Direction artistique, relu par Cohérence puis par le Vérificateur (OK avec corrections mineures, appliquées).
+
+1. **Dans le logo complet, une seule paire de guillemets, celle du symbole : « ◎ » Elenchos.** Le mot seul garde ses guillemets : « Elenchos ». Option non retenue : deux paires, « ◎ » « Elenchos ». **Précise D-049** (« le mot « Elenchos » entre guillemets ») pour le seul logo complet.
+2. **Le dessin final est validé**, avec le réglage « le rond domine » (rond creux nettement plus grand que les guillemets ; guillemets dans la teinte d'accent, caramel le jour et miel le soir ; rond dans l'encre des visages ; répartition des couleurs inversée par rapport à la piste montrée, ce que la page dit), trois dessins selon la taille et les règles d'usage du `LISEZMOI.md`. Restent des propositions, à confirmer à l'étape 6 : l'icône « jour » par défaut, le mot dans l'en-tête de l'écran 1.2, l'image d'aperçu du lien d'invitation (D-014). À tester en bêta : ce qu'évoque l'icône à 60 et 32 px (boutons de lecture, cible, œil, diffusion en direct), le miel (D-012). Non faits : les formats des boutiques (D-043). Le logo est à refaire si le conseil écarte le nom (D-047).
+
+**L'étape 3 est terminée**, sauf la vérification du nom par un conseil, en cours en parallèle (D-047).
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique : **tranché, D-042** (gratuit, contribution libre à l'ouverture) · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
