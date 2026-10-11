@@ -2,11 +2,11 @@
 
 *Validé par le porteur le 4 octobre 2026 (D-006). Remplace le §7 de `docs/projet.md`. Source de vérité au même rang que `docs/vision.md` ; en cas d'écart, `docs/produit.md` l'emporte (`CLAUDE.md`). Issu du circuit : UX, Game design, Juridique → synthèse → Cohérence + Vérificateur. Thomas crée le cercle, Marie est invitée.*
 
-*Mis à jour le 11 octobre 2026, à la clôture de l'étape 5, par UX. Le compte (étape 5 du parcours) reprend D-035 : Apple, Google ou l'e-mail, avec les six règles de Juridique ; la phrase sur la connexion Apple « obligatoire » sur l'App Store est corrigée. « Qui, durée, droits » annonce l'effacement à 12 mois (D-045) ; la mention IA (D-044) est placée dans le parcours. Les phrases que D-010 et D-011 avaient remplacées sont alignées, et la dernière section passe du prototype manuel, qui n'a pas eu lieu, à la bêta. Les autres décisions qui touchent l'entrée sont décrites dans `docs/produit.md`, section 5, « L'entrée » : la barre du portrait (D-026, D-038), le jumeau (D-024), l'avis du cercle (D-025), la part de « aucune » (D-027), le premier jour du nouveau venu (D-039). Chaque ajout cite sa décision ; « (proposé) » signale une proposition d'UX. Relecture : Cohérence (compatible avec réserves, corrigées), puis le Vérificateur (verdict : à compléter).*
+*Mis à jour le 11 octobre 2026, à la clôture de l'étape 5, par UX. Le compte (étape 5 du parcours) reprend D-035 : Apple, Google ou l'e-mail, avec les six règles de Juridique ; la phrase sur la connexion Apple « obligatoire » sur l'App Store est corrigée. « Qui, durée, droits » annonce l'effacement à 12 mois (D-045) ; la mention IA (D-044) est placée dans le parcours. Les phrases que D-010 et D-011 avaient remplacées sont alignées, et la dernière section passe du prototype manuel, qui n'a pas eu lieu, à la bêta. Les autres décisions qui touchent l'entrée sont décrites dans `docs/produit.md`, section 5, « L'entrée » : la barre du portrait (D-026, D-038), le jumeau (D-024), l'avis du cercle (D-025), la part de « aucune » (D-027), le premier jour du nouveau venu (D-039). Chaque ajout cite sa décision ; « (proposé) » signale une proposition d'UX. Relecture : Cohérence (compatible avec réserves, corrigées), puis le Vérificateur (OK avec corrections mineures, appliquées).*
 
 ## Principe
 
-L'invitant ne fait rien de plus que sa propre entrée ; c'est l'invitée qui devine. À la création d'un cercle, le système fixe trois textes d'archive clivants, identiques pour tous ceux qui rejoindront ce cercle (Game design propose une tension différente par texte, à vérifier sur les archives) ; au moins un des trois est un texte rejeté (D-028). Ils comptent pour les curseurs, ni pour les scores ni pour les titres.
+L'invitant ne fait rien de plus que sa propre entrée ; c'est l'invitée qui devine. À la création d'un cercle, le système fixe trois textes d'archive clivants, identiques pour tous ceux qui rejoindront ce cercle (Game design propose une tension différente par texte, à vérifier sur les archives) ; au moins un des trois est un texte rejeté (D-028). Ils comptent pour les curseurs, pas pour les scores ni pour les titres.
 
 ## Parcours de Marie (invitée)
 
@@ -44,7 +44,7 @@ Tant que le cercle n'a pas trois membres, Thomas est prévenu à chaque arrivée
 ## « Qui, durée, droits »
 
 C'est le lien de la carte de consentement (étape 3). Ses mots sont écrits par Juridique à l'étape 6, avant la bêta, et relus par l'avocat (D-044). En plus des points déjà notés dans `docs/produit.md` (le jumeau, D-024 ; l'avis du cercle, D-025 ; la part de « aucune », D-027), il dit :
-- **ce qu'apprennent Apple ou Google** quand on se connecte par eux : que la personne a un compte Elenchos, et quand elle s'y connecte ; jamais ses réponses ni son cercle (D-035) ;
+- **ce qu'apprennent Apple ou Google** quand on se connecte par eux : que la personne a un compte Elenchos, et quand elle s'y connecte ; jamais ses réponses ni son cercle (`docs/essai/retours-du-8-octobre.md`, partie 3 ; D-035) ;
 - **la durée** : un compte qui n'ouvre pas le jeu pendant 12 mois est effacé, après un e-mail envoyé 30 jours avant ; toute ouverture du jeu remet le compteur à zéro. La durée est rappelée dans les Réglages (D-045). Le texte de l'e-mail s'écrit à l'étape 6 (UX) et passe chez l'avocat.
 
 Les autres durées, dont celle des réponses d'un invité qui ne crée pas de compte (7 jours au plus), sont des propositions de Juridique, à caler dans l'analyse d'impact et à faire valider par l'avocat (D-045).

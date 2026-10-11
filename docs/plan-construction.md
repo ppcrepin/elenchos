@@ -2,7 +2,7 @@
 
 *Synthèse de l'orchestrateur, 5 octobre 2026, à partir des plans de Back-end, Front-end, Contenu, Juridique et Game design (avec UX). Relue par Cohérence puis par le Vérificateur (« OK avec corrections », appliquées). Elle complète `docs/feuille-de-route.md`. Les durées ne sont données que lorsqu'un spécialiste peut les justifier. Les points de droit viennent de l'agent Juridique : il n'est pas avocat, et il a vérifié une partie des faits dans des sources secondaires ; un avocat relira avant la bêta, puis avant l'ouverture (D-044).*
 
-*Mis à jour le 11 octobre 2026, à la clôture de l'étape 5, par Back-end (avec Front-end) : vos dix choix de fabrication (D-042 à D-045) remplacent la description des options ; la partie 4 suit la branche que vous avez choisie, des agents seuls (D-043) ; les coûts suivent vos choix, dépense par dépense (D-042) ; une première fourchette de durée de construction est donnée, avec ses hypothèses. Ce plan ne décide rien de lui-même : ce qui n'est pas dans une décision est marqué « (proposé) ». Le code ne commence qu'avec votre accord explicite (D-001). Relecture : Cohérence (compatible avec réserves, corrigées), puis le Vérificateur (verdict : à compléter).*
+*Mis à jour le 11 octobre 2026, à la clôture de l'étape 5, par Back-end (avec Front-end) : vos dix choix de fabrication (D-042 à D-045) remplacent la description des options ; la partie 4 suit la branche que vous avez choisie, des agents seuls (D-043) ; les coûts suivent vos choix, dépense par dépense (D-042) ; une première fourchette de durée de construction est donnée, avec ses hypothèses. Ce plan ne décide rien de lui-même : ce qui n'est pas dans une décision est marqué « (proposé) ». Le code ne commence qu'avec votre accord explicite (D-001). Relecture : Cohérence (compatible avec réserves, corrigées), puis le Vérificateur (OK avec corrections mineures, appliquées).*
 
 ## 1. Où on en est
 
@@ -105,8 +105,8 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - Vous : les comptes (hébergeur, domaine, e-mail) sont à votre nom (D-042).
 
 **6. Horloge du jeu** : 18h, dimanche, pause, remise à zéro du lundi, changements d'heure, et le compteur des 12 mois sans ouverture, que toute ouverture du jeu remet à zéro (D-045).
-- Elle tient l'exigence « rien ne se calcule à 18h pile » (D-043). Comment (proposé, Back-end) : chaque devinette est jugée au moment où elle est faite ; l'avis du cercle porte sur des réponses closes la veille ; seuls les titres du dimanche se calculent à 18h, en quelques secondes, et ce calcul peut être relancé sans risque. Cela ferait une exception à l'exigence de D-043, à vous soumettre ; sinon, il faut trouver un calcul anticipé.
-- Fini quand : tout calcul rejoué donne le même résultat, et la révélation de 18h ne dépend d'aucun calcul lancé à 18h (hormis, si vous acceptez cette exception à D-043, les titres du dimanche).
+- Elle tient l'exigence « rien ne se calcule à 18h pile » (D-043). Comment (proposé, Back-end) : chaque devinette est jugée au moment où elle est faite ; l'avis du cercle porte sur des réponses closes la veille ; seuls les titres du dimanche se calculent à 18h, en quelques secondes, et ce calcul peut être relancé sans risque. Cela ferait une exception à l'exigence de D-043. Back-end cherchera d'abord un calcul anticipé, par exemple des totaux tenus à jour à chaque devinette et seulement rendus visibles à 18h ; vous ne serez sollicité que s'il n'en existe pas (proposé).
+- Fini quand : tout calcul rejoué donne le même résultat, et la révélation de 18h ne dépend d'aucun calcul lancé à 18h.
 
 **7. Les écrans** : les 51 écrans validés, le catalogue des éléments graphiques, le jeu du jour, la révélation, l'entrée et l'invitation, Le Cercle et Moi.
 - Les maquettes touchées par les décisions sont reprises (`docs/produit.md`, annexe), dont les trois voies du compte (1.8, 5.7, 5.14 ; D-035).
@@ -228,7 +228,7 @@ Des repères chiffrés vous seront proposés en QCM avant la bêta. Ils éclaire
 
 ### Les coûts, selon vos choix
 
-Le budget s'engage dépense par dépense (D-042) : chaque dépense vous est présentée au moment où elle se présente, avec son montant estimé et ce qui en dépend. Cette partie est désormais la vue d'ensemble des coûts, tenue à jour (D-042, point 4), pour limiter le risque de s'arrêter à mi-chemin ; elle remplace, comme vue d'ensemble, le tableau de `docs/etape-5-choix.md`.
+Le budget s'engage dépense par dépense (D-042) : chaque dépense vous est présentée au moment où elle se présente, avec son montant estimé et ce qui en dépend. Cette partie est désormais la vue d'ensemble des coûts, tenue à jour (D-042, point 4, qui nommait le tableau de `docs/etape-5-choix.md` ; cette partie le remplace, ce que le journal consignera à la validation), pour limiter le risque de s'arrêter à mi-chemin ; elle remplace, comme vue d'ensemble, le tableau de `docs/etape-5-choix.md`.
 
 Tous les montants sont des estimations de l'équipe, sauf mention contraire ; aucun n'est un devis. Ils reprennent le tableau de `docs/etape-5-choix.md` (« Ce que ça coûte »), recalculé selon vos réponses.
 
@@ -237,6 +237,7 @@ Tous les montants sont des estimations de l'équipe, sauf mention contraire ; au
 | Dépense | Quand | Montant | Ce qui en dépend |
 |---|---|---|---|
 | Recherche du nom par un conseil en propriété industrielle | Maintenant | Quelques centaines d'euros ; 300 à 800 € (lecture de Back-end : la ligne de l'étape 5, sans le dépôt de la marque) | Le logo, le texte de D-040, l'adresse définitive |
+| Logo, avec un graphiste (D-011, D-013) | Après la vérification du nom, avant la bêta | Non chiffré : dépend du graphiste que vous choisirez ; devis présenté avant (D-042) | L'icône définitive, figée avant la bêta |
 | Compte développeur Apple | Début de l'étape 6 | 99 € par an (sources de 2020-2021, à revérifier) | La connexion Apple, le premier test (travail 4) |
 | Un téléphone Android d'essai, si vous l'achetez (proposé ; votre iPhone sert déjà) | Début de l'étape 6 | 100 à 200 € | Le test du message de 18h, les écrans sur Android |
 | Hébergement, e-mails et sonde de 18h02, sur six mois | Dès le socle (travail 5) | 200 à 600 € | Tout le jeu |
@@ -254,7 +255,10 @@ Vérification : la somme des lignes donne 3 049 à 9 149 €. Par rapport aux 7 
 Ce total ne compte pas :
 - votre abonnement Claude pour les agents, que l'équipe ne connaît pas ; avec des agents seuls, c'est lui qui paie la construction et l'entretien ;
 - votre temps ;
-- les durées de six mois d'hébergement : une hypothèse de calcul. Si la construction dure plus, quelques dizaines d'euros par mois s'ajoutent.
+- le logo (non chiffré, ci-dessus) ;
+- le prêt ou la location des téléphones du test de 18h (travail 4), non chiffré.
+
+Les six mois d'hébergement sont une hypothèse de calcul, pas une estimation de durée : si la construction dure plus, quelques dizaines d'euros par mois s'ajoutent.
 
 **Pour l'ouverture, environ 8 400 à 21 500 €** (lecture de Back-end, à partir des lignes de l'étape 5) :
 - l'audit de sécurité : 3 000 à 10 000 € ;
@@ -280,7 +284,7 @@ S'y ajouteraient, selon la réponse à la question de la structure (D-043) : une
 - si une consultation de la CNIL est nécessaire, elle prend 8 semaines, prolongeables ;
 - avant la publication sur Google Play, un compte personnel impose un test fermé de 14 jours avec 12 personnes (vérifié) ; un compte au nom d'une société demande un numéro d'entreprise qui peut prendre jusqu'à 30 jours.
 
-**La construction (étape 6), jusqu'à l'entrée en bêta, boutiques exclues : environ 3 à 6 mois.** Cette fourchette ne compte ni le travail 14 (boutiques) ni la bêta ; elle compte la chaîne des textes, avec sa marche à blanc, et la première relecture de l'avocat (hypothèses ci-dessous). Estimation de Back-end et Front-end, à faible confiance. Ce n'est ni un engagement ni une date.
+**La construction (étape 6), jusqu'à l'entrée en bêta, boutiques exclues : environ 3 à 6 mois.** Cette fourchette ne compte ni le travail 14 (boutiques) ni la bêta ; elle compte la chaîne des textes, avec sa marche à blanc, et la première relecture de l'avocat (hypothèses ci-dessous). Ordre de grandeur donné par Back-end et Front-end, à faible confiance. Ce n'est ni un engagement ni une date, et ce n'est pas une date de sortie : la bêta, la question de la structure et les boutiques s'ajoutent, et ne sont pas estimables (plus bas).
 - Pourquoi on peut l'estimer maintenant : vos choix ont retenu le chemin le plus court avant la bêta sur les trois points qui l'empêchaient (le lien d'abord, des agents seuls, des textes tout automatiques).
 - Sur quoi elle repose :
   - les essais : des agents ont construit et contrôlé chacune des deux pages ; la préparation du second essai était annoncée à « au moins sept à huit jours avant le premier jour » (D-033) ;
@@ -292,8 +296,9 @@ S'y ajouteraient, selon la réponse à la question de la structure (D-043) : une
   - vous validez un livrable en quelques jours, et des sessions d'agents sont ouvertes régulièrement (un agent ne travaille que si une session est ouverte, D-036) ;
   - le test du message de 18h et la connexion depuis l'icône réussissent du premier coup ;
   - aucune consultation de la CNIL n'est nécessaire ;
-  - l'égalité entre groupes tient sur le stock réel.
-- Ce qui l'allongerait : une consultation de la CNIL (8 semaines au moins) ; une question qui vous revient (connexion depuis l'icône, égalité entre groupes) ; un avocat qui demande de refaire la carte de consentement ; une chaîne des textes qui ne passe pas son banc d'essai.
+  - l'égalité entre groupes tient sur le stock réel ;
+  - vos propres démarches (compte Apple, conseil, devis d'avocat) sont faites au début de l'étape : elles sont sur le chemin critique.
+- Ce qui l'allongerait : une consultation de la CNIL (8 semaines au moins) ; une question qui vous revient (connexion depuis l'icône, égalité entre groupes) ; un avocat qui demande de refaire la carte de consentement ; une chaîne des textes qui ne passe pas son banc d'essai. La borne basse suppose que toutes les hypothèses tiennent en même temps ; qu'une seule tombe, et on est vers la borne haute ou au-delà.
 - Pourquoi la confiance est faible : l'équipe n'a jamais construit de serveur ni de vraie connexion, et les estimations des agents se sont déjà écartées du réel (la page du second essai pesait 700 Ko au lieu des 340 à 550 Ko annoncés).
 - L'équipe recalera cette fourchette après les trois travaux sur papier et le test du message de 18h, quand un premier morceau de serveur existera.
 
