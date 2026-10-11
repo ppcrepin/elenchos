@@ -2,7 +2,7 @@
 
 *Synthèse de l'orchestrateur, 5 octobre 2026, à partir des plans de Back-end, Front-end, Contenu, Juridique et Game design (avec UX). Relue par Cohérence puis par le Vérificateur (« OK avec corrections », appliquées). Elle complète `docs/feuille-de-route.md`. Les durées ne sont données que lorsqu'un spécialiste peut les justifier. Les points de droit viennent de l'agent Juridique : il n'est pas avocat, et il a vérifié une partie des faits dans des sources secondaires ; un avocat relira avant la bêta, puis avant l'ouverture (D-044).*
 
-*Mis à jour le 11 octobre 2026, à la clôture de l'étape 5, par Back-end (avec Front-end) : vos dix choix de fabrication (D-042 à D-045) remplacent la description des options ; la partie 4 suit la branche que vous avez choisie, des agents seuls (D-043) ; les coûts suivent vos choix, dépense par dépense (D-042) ; une première fourchette de durée de construction est donnée, avec ses hypothèses. Ce plan ne décide rien de lui-même : ce qui n'est pas dans une décision est marqué « (proposé) ». Le code ne commence qu'avec votre accord explicite (D-001).*
+*Mis à jour le 11 octobre 2026, à la clôture de l'étape 5, par Back-end (avec Front-end) : vos dix choix de fabrication (D-042 à D-045) remplacent la description des options ; la partie 4 suit la branche que vous avez choisie, des agents seuls (D-043) ; les coûts suivent vos choix, dépense par dépense (D-042) ; une première fourchette de durée de construction est donnée, avec ses hypothèses. Ce plan ne décide rien de lui-même : ce qui n'est pas dans une décision est marqué « (proposé) ». Le code ne commence qu'avec votre accord explicite (D-001). Relecture : Cohérence (compatible avec réserves, corrigées), puis le Vérificateur (verdict : à compléter).*
 
 ## 1. Où on en est
 
@@ -13,7 +13,7 @@
 - Ce qu'ils n'ont pas prouvé : un serveur, de vrais comptes, la connexion Apple ou Google, le message de 18h, la sécurité des données, les boutiques. Rien ne quittait votre iPhone.
 - Le plaisir de deviner de vrais proches se jugera en bêta (D-039).
 
-**Étape 5 : faite.** Les dix choix de fabrication sont tranchés, en quatorze QCM (D-042 à D-045, à partir de `docs/etape-5-choix.md`). Les documents qui en dépendent sont mis à jour : `docs/produit.md`, `docs/onboarding.md` (le compte, D-035), ce plan et la feuille de route.
+**Étape 5 : choix tranchés (D-042 à D-045) ; documents de clôture en validation par le porteur.** Les dix choix de fabrication sont tranchés, en quatorze QCM (à partir de `docs/etape-5-choix.md`). Les documents qui en dépendent sont mis à jour et vous sont soumis : `docs/produit.md`, `docs/onboarding.md` (le compte, D-035), ce plan et la feuille de route.
 
 **Étape 6 : la prochaine**, avec votre accord (partie 2).
 
@@ -43,9 +43,9 @@ Vous les avez tranchés le 11 octobre 2026. Le détail des options, des faits (v
 6. **L'engagement « ni vente, ni exploitation, ni publicité » : confirmé**, dans les conditions d'utilisation et la politique de confidentialité, avec une liste fermée des usages permis (D-042 ; détail dans `docs/produit.md`, section 6).
 7. **Les durées** (D-045) :
    - un compte qui n'ouvre pas le jeu pendant 12 mois est effacé, après un e-mail envoyé 30 jours avant. C'est le seul message qui parle d'une absence : une exception à « aucune relance » (D-010, point 3) et à D-029 ;
-   - les titres de qui quitte un cercle ou efface tout restent sous « un ancien membre ».
+   - les titres de qui quitte un cercle ou efface tout restent sous « un ancien membre ». À l'effacement d'un compte inactif, un visage disparaît du Cercle sans message (D-010, point 3, « rien de visible »).
    - Les autres durées sont des propositions de Juridique, à caler dans l'analyse d'impact.
-8. **Avocat et délégué à la protection des données : deux relectures**, avant la bêta et avant l'ouverture ; un délégué nommé avant l'ouverture ; avant la bêta, une décision écrite dit pourquoi il n'est pas encore obligatoire (D-044).
+8. **Avocat et délégué à la protection des données : deux relectures**, avant la bêta et avant l'ouverture ; un délégué nommé avant l'ouverture ; avant la bêta, une décision écrite dit pourquoi il n'est pas encore obligatoire ; vous ne pouvez pas être votre propre délégué (D-044).
 9. **Modèle économique et budget** (D-042) :
    - le jeu est gratuit ; vous le financez jusqu'à l'ouverture ; à l'ouverture, une contribution libre, sans aucun avantage dans le jeu, sous les cinq règles de l'argent. Cela ferme le point ouvert §11.3 ;
    - le budget s'engage dépense par dépense : voir la partie 6.
@@ -81,7 +81,7 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 
 **3. Exigences de protection des données**, remises avant d'écrire le code.
 - L'e-mail est séparé des réponses.
-- Rien de personnel dans les messages ni dans les journaux techniques.
+- Rien de personnel dans les messages ni dans les journaux techniques, à une exception près : l'annonce d'arrivée faite au créateur d'un cercle cite un prénom, et son texte est à revoir avec Juridique (`docs/etape-5-choix.md`, choix 5).
 - Aucun outil de mesure extérieur.
 - Tous les prestataires qui touchent aux joueurs sont européens (D-043).
 - Aucune donnée de joueur ne part vers un fournisseur d'IA : la chaîne des textes n'a aucun accès à la base des joueurs (D-043 ; la séparation, proposé).
@@ -94,7 +94,7 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 **4. Test du message de 18h** : une page nue, cinq téléphones, trois soirs (D-005).
 - Sur les mêmes téléphones, il vérifie aussi la connexion Google ou Apple depuis l'icône, et la reconnexion après l'ajout de l'icône (Front-end, `docs/etape-5-choix.md`). S'ils échouent, la question vous reviendra, comme D-035 le prévoit.
 - Il faut avant lui le compte développeur Apple, à votre nom (partie 2).
-- Les cinq téléphones : l'équipe n'en a aucun. Votre iPhone, l'Android d'essai (partie 6), et trois autres, prêtés ou loués, à réunir au début de l'étape (proposé).
+- Les cinq téléphones : l'équipe n'en a aucun. Votre iPhone, un Android d'essai si vous l'achetez (proposé, partie 6), et trois autres, prêtés ou loués, à réunir au début de l'étape (proposé).
 - Fini quand : le message arrive vers 18h sur les cinq téléphones, trois soirs de suite, et la connexion tient depuis l'icône.
 - Vous : vous le recevez sur votre téléphone, et vous vous connectez depuis l'icône.
 
@@ -105,8 +105,8 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - Vous : les comptes (hébergeur, domaine, e-mail) sont à votre nom (D-042).
 
 **6. Horloge du jeu** : 18h, dimanche, pause, remise à zéro du lundi, changements d'heure, et le compteur des 12 mois sans ouverture, que toute ouverture du jeu remet à zéro (D-045).
-- Elle tient l'exigence « rien ne se calcule à 18h pile » (D-043). Comment (proposé, Back-end) : chaque devinette est jugée au moment où elle est faite ; l'avis du cercle porte sur des réponses closes la veille ; seuls les titres du dimanche se calculent à 18h, en quelques secondes, et ce calcul peut être relancé sans risque.
-- Fini quand : tout calcul rejoué donne le même résultat, et la révélation de 18h ne dépend d'aucun calcul lancé à 18h (hormis, si la proposition est retenue, les titres du dimanche).
+- Elle tient l'exigence « rien ne se calcule à 18h pile » (D-043). Comment (proposé, Back-end) : chaque devinette est jugée au moment où elle est faite ; l'avis du cercle porte sur des réponses closes la veille ; seuls les titres du dimanche se calculent à 18h, en quelques secondes, et ce calcul peut être relancé sans risque. Cela ferait une exception à l'exigence de D-043, à vous soumettre ; sinon, il faut trouver un calcul anticipé.
+- Fini quand : tout calcul rejoué donne le même résultat, et la révélation de 18h ne dépend d'aucun calcul lancé à 18h (hormis, si vous acceptez cette exception à D-043, les titres du dimanche).
 
 **7. Les écrans** : les 51 écrans validés, le catalogue des éléments graphiques, le jeu du jour, la révélation, l'entrée et l'invitation, Le Cercle et Moi.
 - Les maquettes touchées par les décisions sont reprises (`docs/produit.md`, annexe), dont les trois voies du compte (1.8, 5.7, 5.14 ; D-035).
@@ -127,7 +127,7 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - Sur iPhone, l'ordre entre la création du compte et l'ajout de l'icône, pour éviter une seconde connexion, se règle ici avec UX (proposé, Front-end).
 - L'e-mail envoyé 30 jours avant l'effacement d'un compte inactif : texte écrit par UX, relu par l'avocat (D-045).
 - Fini quand : on passe du lien au compte en moins de trois minutes.
-- Vous : vous vous invitez depuis l'Android d'essai.
+- Vous : vous vous invitez depuis un Android d'essai, si vous en achetez un (proposé).
 
 **10. Chaîne des textes.**
 - On construit le relevé quotidien de l'open data, la sélection et le calendrier, la rédaction, la vérification, le registre public.
@@ -162,7 +162,7 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - Les lignes rouges sont vérifiées écran par écran, ainsi que l'accessibilité et la présence de la mention IA (D-044).
 - Vous : vous jouez une journée.
 
-**14. Boutiques**, après la bêta et avant l'ouverture (D-043).
+**14. Boutiques**, avant l'ouverture au public (D-043). Le calendrier exact, dont le test fermé de Google, est à fixer (proposé).
 - La question de la structure vous revient avant ce chantier (D-042, D-043) : en nom propre, l'App Store est probablement fermé (règle 5.1.1 (ix) d'Apple).
 - Fiches de confidentialité, suppression du compte dans l'application, marge pour un refus d'Apple.
 - Chez Google, un compte personnel doit faire tester l'application par 12 personnes pendant 14 jours avant de la publier (vérifié, `docs/etape-5-choix.md`).
@@ -228,7 +228,7 @@ Des repères chiffrés vous seront proposés en QCM avant la bêta. Ils éclaire
 
 ### Les coûts, selon vos choix
 
-Le budget s'engage dépense par dépense (D-042) : chaque dépense vous est présentée au moment où elle se présente, avec son montant estimé et ce qui en dépend. Cette partie garde la vue d'ensemble, pour limiter le risque de s'arrêter à mi-chemin.
+Le budget s'engage dépense par dépense (D-042) : chaque dépense vous est présentée au moment où elle se présente, avec son montant estimé et ce qui en dépend. Cette partie est désormais la vue d'ensemble des coûts, tenue à jour (D-042, point 4), pour limiter le risque de s'arrêter à mi-chemin ; elle remplace, comme vue d'ensemble, le tableau de `docs/etape-5-choix.md`.
 
 Tous les montants sont des estimations de l'équipe, sauf mention contraire ; aucun n'est un devis. Ils reprennent le tableau de `docs/etape-5-choix.md` (« Ce que ça coûte »), recalculé selon vos réponses.
 
@@ -238,7 +238,7 @@ Tous les montants sont des estimations de l'équipe, sauf mention contraire ; au
 |---|---|---|---|
 | Recherche du nom par un conseil en propriété industrielle | Maintenant | Quelques centaines d'euros ; 300 à 800 € (lecture de Back-end : la ligne de l'étape 5, sans le dépôt de la marque) | Le logo, le texte de D-040, l'adresse définitive |
 | Compte développeur Apple | Début de l'étape 6 | 99 € par an (sources de 2020-2021, à revérifier) | La connexion Apple, le premier test (travail 4) |
-| Un téléphone Android d'essai (votre iPhone sert déjà) | Début de l'étape 6 | 100 à 200 € | Le test du message de 18h, les écrans sur Android |
+| Un téléphone Android d'essai, si vous l'achetez (proposé ; votre iPhone sert déjà) | Début de l'étape 6 | 100 à 200 € | Le test du message de 18h, les écrans sur Android |
 | Hébergement, e-mails et sonde de 18h02, sur six mois | Dès le socle (travail 5) | 200 à 600 € | Tout le jeu |
 | Deux ou trois adresses web | Après la vérification du nom, avant la bêta | 50 à 150 € par an | L'icône et l'abonnement au message, liés à l'adresse |
 | Chaîne des textes : 56 à 84 textes d'avance, puis un par jour de bêta, environ 150 en tout | Travail 10, puis la bêta | 300 à 2 300 € (prix des modèles non vérifiés) | Les textes de la bêta |
@@ -280,10 +280,10 @@ S'y ajouteraient, selon la réponse à la question de la structure (D-043) : une
 - si une consultation de la CNIL est nécessaire, elle prend 8 semaines, prolongeables ;
 - avant la publication sur Google Play, un compte personnel impose un test fermé de 14 jours avec 12 personnes (vérifié) ; un compte au nom d'une société demande un numéro d'entreprise qui peut prendre jusqu'à 30 jours.
 
-**La construction (étape 6) : environ 3 à 6 mois.** Estimation de Back-end et Front-end, à faible confiance. Ce n'est ni un engagement ni une date.
-- Pourquoi on peut l'estimer maintenant : vos choix ont retenu le chemin le plus court sur les trois points qui l'empêchaient (le lien d'abord, des agents seuls, des textes tout automatiques).
+**La construction (étape 6), jusqu'à l'entrée en bêta, boutiques exclues : environ 3 à 6 mois.** Cette fourchette ne compte ni le travail 14 (boutiques) ni la bêta ; elle compte la chaîne des textes, avec sa marche à blanc, et la première relecture de l'avocat (hypothèses ci-dessous). Estimation de Back-end et Front-end, à faible confiance. Ce n'est ni un engagement ni une date.
+- Pourquoi on peut l'estimer maintenant : vos choix ont retenu le chemin le plus court avant la bêta sur les trois points qui l'empêchaient (le lien d'abord, des agents seuls, des textes tout automatiques).
 - Sur quoi elle repose :
-  - les essais : des agents ont construit et contrôlé chacune des deux pages en quelques jours ;
+  - les essais : des agents ont construit et contrôlé chacune des deux pages ; la préparation du second essai était annoncée à « au moins sept à huit jours avant le premier jour » (D-033) ;
   - les trois travaux sur papier et le test du message de 18h en parallèle : deux à trois semaines ;
   - le serveur, les comptes, le moteur et les écrans : la plus grosse part, jamais faite par l'équipe ;
   - la chaîne des textes, menée en même temps, avec sa marche à blanc ;
@@ -303,7 +303,7 @@ S'y ajouteraient, selon la réponse à la question de la structure (D-043) : une
 
 **Ce que vos choix concentrent sur vous.** Ce sont les choix que vous avez faits ; ce qui suit dit seulement ce qu'ils vous demanderont, pour que rien ne vous surprenne.
 - **Le soir.** Vous êtes le seul recours humain, le dimanche compris (D-043). L'exigence « rien ne se calcule à 18h pile » et la procédure d'une page rendent la permanence légère, sans la supprimer. Les jours où vous n'êtes pas joignable vers 18h, un message peut partir en retard.
-- **Les vrais téléphones.** Des agents ne peuvent pas tenir un téléphone ni écouter le lecteur d'écran d'un iPhone (VoiceOver). Les essais sur appareil reposent sur vous et sur l'Android d'essai : le premier test, le petit écran, le très grand texte, VoiceOver (Front-end).
+- **Les vrais téléphones.** Des agents ne peuvent pas tenir un téléphone ni écouter le lecteur d'écran d'un iPhone (VoiceOver). Les essais sur appareil reposent sur vous et, si vous l'achetez (proposé), sur un Android d'essai : le premier test, le petit écran, le très grand texte, VoiceOver (Front-end).
 - **La responsabilité.** En nom propre, vous êtes responsable des données et des textes publiés (D-042, D-044), sur vos biens personnels. Une erreur d'un texte automatique peut viser un député nommé à 18h : la procédure de correction doit être rodée dès la bêta.
 - **La relecture.** Le code qui garde des opinions et les textes ne sont relus que par des modèles, ceux des textes chez un seul fournisseur (D-043, D-044).
 - **Le changement de structure.** Si une structure est créée avant les boutiques, elle devient responsable des données à votre place : il faudrait prévenir chaque joueur et probablement redemander son accord (à confirmer par l'avocat, D-042).

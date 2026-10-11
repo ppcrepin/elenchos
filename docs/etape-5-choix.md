@@ -425,6 +425,8 @@ Ces points découlent de vos réponses ou relèvent du métier des spécialistes
 
 ## Ce que ça coûte, en ordres de grandeur
 
+*Depuis les choix du porteur (D-042 à D-045), la vue d'ensemble tenue à jour est la partie 6 de `docs/plan-construction.md` ; ce tableau garde les coûts des options recommandées, pour mémoire.*
+
 Tous ces montants sont des estimations de l'équipe, sauf mention contraire. Aucun n'est un devis. Les lignes marquées « lecture de l'orchestrateur » sont des chiffres que les spécialistes n'avaient pas donnés tels quels.
 
 **Jusqu'à la fin de la bêta, avec les options recommandées** (somme faite par l'orchestrateur). Les durées (six mois d'hébergement, quatre à cinq mois de relecteur) sont une hypothèse de calcul, pas une estimation du délai de construction, qui reste inconnu :

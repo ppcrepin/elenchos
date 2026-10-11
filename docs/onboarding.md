@@ -2,7 +2,7 @@
 
 *Validé par le porteur le 4 octobre 2026 (D-006). Remplace le §7 de `docs/projet.md`. Source de vérité au même rang que `docs/vision.md` ; en cas d'écart, `docs/produit.md` l'emporte (`CLAUDE.md`). Issu du circuit : UX, Game design, Juridique → synthèse → Cohérence + Vérificateur. Thomas crée le cercle, Marie est invitée.*
 
-*Mis à jour le 11 octobre 2026, à la clôture de l'étape 5, par UX. Le compte (étape 5 du parcours) reprend D-035 : Apple, Google ou l'e-mail, avec les six règles de Juridique ; la phrase sur la connexion Apple « obligatoire » sur l'App Store est corrigée. « Qui, durée, droits » annonce l'effacement à 12 mois (D-045) ; la mention IA (D-044) est placée dans le parcours. Les phrases que D-010 et D-011 avaient remplacées sont alignées, et la dernière section passe du prototype manuel, qui n'a pas eu lieu, à la bêta. Les autres décisions qui touchent l'entrée sont décrites dans `docs/produit.md`, section 5, « L'entrée » : la barre du portrait (D-026, D-038), le jumeau (D-024), l'avis du cercle (D-025), la part de « aucune » (D-027), le premier jour du nouveau venu (D-039). Chaque ajout cite sa décision ; « (proposé) » signale une proposition d'UX.*
+*Mis à jour le 11 octobre 2026, à la clôture de l'étape 5, par UX. Le compte (étape 5 du parcours) reprend D-035 : Apple, Google ou l'e-mail, avec les six règles de Juridique ; la phrase sur la connexion Apple « obligatoire » sur l'App Store est corrigée. « Qui, durée, droits » annonce l'effacement à 12 mois (D-045) ; la mention IA (D-044) est placée dans le parcours. Les phrases que D-010 et D-011 avaient remplacées sont alignées, et la dernière section passe du prototype manuel, qui n'a pas eu lieu, à la bêta. Les autres décisions qui touchent l'entrée sont décrites dans `docs/produit.md`, section 5, « L'entrée » : la barre du portrait (D-026, D-038), le jumeau (D-024), l'avis du cercle (D-025), la part de « aucune » (D-027), le premier jour du nouveau venu (D-039). Chaque ajout cite sa décision ; « (proposé) » signale une proposition d'UX. Relecture : Cohérence (compatible avec réserves, corrigées), puis le Vérificateur (verdict : à compléter).*
 
 ## Principe
 
@@ -25,21 +25,21 @@ L'invitant ne fait rien de plus que sa propre entrée ; c'est l'invitée qui dev
 
 Le même début, sans compte : trois textes, la carte de consentement au premier texte, révélation immédiate texte par texte, esquisse. Puis le compte, comme Marie (pseudo, puis Apple, Google ou l'e-mail, D-035), et le nom du cercle. Puis « Inviter » : un lien et le message pré-écrits, un toucher par personne, avec la phrase : « Tu envoies tes 3 réponses à la personne que tu invites. Ce lien est pour elle seule. » C'est son consentement explicite, base légale de ce que Marie verra (Juridique). Le service ne contacte jamais un non-membre : Thomas transmet lui-même.
 
-Tant que le cercle n'a pas trois membres, Thomas est prévenu à chaque arrivée (« Marie a trouvé 2 de tes 3 réponses. », D-011) ; dès trois membres, tout passe par le message de 18h (D-006, exception au §2 bornée). Comme le message de 18h, cette annonce est acheminée par Apple ou Google, et elle cite un prénom : son texte est à revoir avec Juridique (`docs/etape-5-choix.md`, choix 5). Seul, il répond chaque soir et la révélation de 18h lui arrive comme aux autres (tout tombe à 18h : D-010, lecture A de C-006). À deux : il devine à son tour les trois réponses de Marie, sur le même écran. À trois : le cercle est lancé.
+Tant que le cercle n'a pas trois membres, Thomas est prévenu à chaque arrivée (« Marie a trouvé 2 de tes 3 réponses. », D-011) ; dès trois membres, tout passe par le message de 18h (D-006, exception au §2 bornée). Comme le message de 18h, cette annonce est acheminée par Apple ou Google si elle passe par une notification (le canal n'est pas fixé), et elle cite un prénom : son texte est à revoir avec Juridique (`docs/etape-5-choix.md`, choix 5). Seul, il répond chaque soir et la révélation de 18h lui arrive comme aux autres (tout tombe à 18h : D-010, lecture A de C-006). À deux : il devine à son tour les trois réponses de Marie, sur le même écran. À trois : le cercle est lancé.
 
 ## Le compte : ce qui se tient avant la bêta
 
 **Les six règles de Juridique** (D-035 ; `docs/essai/retours-du-8-octobre.md`, partie 3), relues par l'avocat avant la bêta (D-044) :
 1. L'e-mail reste toujours possible, aussi visible que les deux boutons.
-2. Le jeu ne demande qu'un identifiant et l'adresse e-mail : ni le nom, ni la photo. Le pseudo reste libre.
+2. Le jeu ne demande qu'un identifiant et l'adresse e-mail : ni le nom, ni la photo. Le pseudo reste libre, et jamais pré-rempli avec le nom d'Apple ou de Google.
 3. Rien d'Apple ni de Google n'est chargé avant le toucher.
 4. Seul un compte personnel est accepté. Un compte Google d'employeur ou de lycée est refusé, sinon l'employeur verrait que la personne joue à un jeu sur la politique ; l'e-mail reste proposé. Une mention « compte personnel » le dit avant le toucher (`docs/essai/simulation-2.md`).
-5. Supprimer son compte coupe aussi le lien avec Apple ou Google.
+5. Supprimer son compte coupe aussi le lien avec Apple ou Google. Un compte devenu inaccessible est effacé après un délai court (proposition de Juridique, à fixer dans l'analyse d'impact et à valider par l'avocat).
 6. Une phrase de plus dans « Qui, durée, droits » (section suivante).
 
 **À vérifier au premier test de l'étape 6**, sur de vrais téléphones, avec le message de 18h : la connexion Apple ou Google depuis l'icône de l'écran d'accueil, et la reconnexion après l'ajout de l'icône. Si elles ne tiennent pas, la question revient au porteur (D-035).
 
-**Sur l'App Store, quand les boutiques viendront** (D-043), la connexion Apple n'est pas obligatoire : la règle 4.8 d'Apple, vérifiée le 11 octobre 2026, demande seulement une option de connexion équivalente, qui protège la vie privée. La connexion Apple, déjà retenue, en tient lieu en pratique. Cela corrige la parenthèse de D-006, arbitrage 1 (« Sign in with Apple alors obligatoire ») ; rien ne change sur le fond (`docs/etape-5-choix.md`, « Ce qui sera réglé sans vous poser de question »).
+**Sur l'App Store, quand les boutiques viendront** (D-043), la connexion Apple n'est pas obligatoire : la règle 4.8 d'Apple, vérifiée le 11 octobre 2026, demande seulement une option de connexion équivalente, qui protège la vie privée. La connexion Apple, déjà retenue, en tient lieu en pratique. C'est une correction de fait de la parenthèse de D-006, arbitrage 1 (« Sign in with Apple alors obligatoire »), consignée au journal avec la validation de ce document ; rien ne change sur le fond (`docs/etape-5-choix.md`, « Ce qui sera réglé sans vous poser de question »).
 
 ## « Qui, durée, droits »
 
@@ -69,4 +69,4 @@ Le prototype manuel prévu ici n'a pas eu lieu : le porteur a fait deux essais s
 - la carte de consentement est-elle lue avant la première réponse ;
 - « 2 sur 3 » lance-t-il la conversation ;
 - le créateur invite-t-il deux personnes ;
-- la mention IA, visible dès le premier texte, entame-t-elle la confiance (`docs/etape-5-choix.md`, « Limites »).
+- la mention IA, visible dès le premier texte (proposée), entame-t-elle la confiance (`docs/etape-5-choix.md`, « Limites »).
