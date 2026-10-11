@@ -2,7 +2,7 @@
 
 *Étape 6, travail 3 de `docs/plan-construction.md` (partie 4). Back-end, avec le regard de Juridique, 11 octobre 2026. Juridique n'est pas avocat : les points de droit sont à confirmer par l'avocat (D-044). Aucune donnée réelle de joueur n'existe ni n'a servi (D-048) : les exemples sont inventés. Ce document ne décide rien de lui-même : ce qui n'est écrit dans aucune décision est marqué « (proposé) ».*
 
-**Comment lire les faits.** « De mémoire » : ce que savent les agents, à vérifier. « À vérifier » : un fait à établir avant de s'en servir. Le reste découle de vos décisions ou de documents déjà validés, cités à chaque fois.
+**Comment lire les faits.** « De mémoire » : ce que savent les agents, à vérifier. « À vérifier » : un fait à établir avant de s'en servir. Le reste découle de vos décisions ou de documents déjà validés, cités à chaque fois. Les moyens techniques de la partie 3 (rôles de base de données, empreintes, vues, chiffrement, numéros tirés au hasard) sont des propositions de Back-end, sauf ceux qu'une décision impose ; les règles qui ont une conséquence visible pour un joueur ou pour vous sont, en plus, marquées « (proposé) » une à une.
 
 ---
 
@@ -11,75 +11,61 @@
 **Ce qui a été fait.** Chaque exigence du plan (travail 3), celles de vos décisions D-042, D-043, D-045 et D-048, et les quatre règles de la limite 3 de `docs/plateforme.md` sont écrites ici comme des règles vérifiables : **43 exigences** (partie 3). Pour chacune, le test automatique qui la prouvera dans le code est décrit, avec le travail où il sera construit. Quatre outils de test servent partout (partie 2). Ce qu'aucun programme ne peut prouver, par exemple qu'un prestataire est vraiment européen, est dit franchement et confié à un contrôle humain (partie 3, fin).
 
 **Ce que vous regardez : « qui voit quoi » (partie 1).** Un tableau : pour chaque donnée d'un joueur, qui la voit. Trois choses à retenir :
-- **les réponses ne sont vues que du cercle**, selon les règles du jeu. Personne de l'équipe ne les lit : ni vous, ni les agents ;
-- **vous détenez les clés de la version en ligne** : techniquement, vous pourriez tout lire. L'engagement est de ne pas le faire, et aucun écran ne vous montre une réponse. Scalingo, comme tout hébergeur, garde tout, sans s'en servir ;
+- **les réponses ne sont vues que du cercle**, selon les règles du jeu. Aucun écran ne les montre à l'équipe : ni à vous, ni aux agents ;
+- **vous détenez les clés de la version en ligne** : techniquement, vous pourriez tout lire. L'engagement est de ne pas le faire, et aucun écran ne vous montre une réponse. Scalingo, comme tout hébergeur, garde tout ; un contrat doit lui interdire de s'en servir (à vérifier avant de signer) ;
 - **sur la version d'aperçu, où vous validez en jouant, l'équipe voit ce que vous saisissez.** Vos vraies opinions n'ont rien à y faire : une bande le rappellera sur chaque écran, et une connexion d'essai vous évitera d'y mettre votre compte Apple (proposé, P-20).
 
-**Ce qui vous revient : une question, à la fin.** Les agents peuvent-ils lire des totaux et des journaux techniques qui ne contiennent aucune donnée de joueur ? D-027 nommait Contenu parmi les lecteurs de la part de « aucune » ; `docs/plateforme.md` (limite 3) vous en a fait le seul lecteur en attendant l'avis de Juridique. Cet avis est : oui, sous conditions. Mais la réponse fixe la frontière d'une garantie que vous donnez aux joueurs (« aucune donnée de joueur vers un fournisseur d'IA », D-043) : elle vous revient.
+**Ce qui vous revient : une question, à la fin.** Que peuvent lire les agents, parmi des chiffres et des journaux de la version en ligne que nous jugeons ne contenir aucune donnée de joueur (à confirmer par l'avocat) ? Quatre options, de D-027 tel qu'il est décidé (Contenu lit la part de « aucune », rien d'autre ne va aux agents) jusqu'à « vous seul ». Nous recommandons D-027 tel quel : c'est le seul usage décidé qui demande qu'un agent lise un chiffre. La réponse fixe la frontière d'une garantie que vous donnez aux joueurs (« aucune donnée de joueur vers un fournisseur d'IA », D-043) : elle vous revient.
 
-**À part** : les points pour l'avocat (partie 5) et ceux de l'analyse d'impact (partie 6). Aucune décision n'est modifiée ; les précisions sont listées en partie 7.
+**À part** : les points pour l'avocat (partie 5) et ceux de l'analyse d'impact (partie 6). Aucune décision n'est modifiée sans le dire : la partie 7 liste ce que ce document touche selon votre réponse (D-027, D-048), ce qu'il propose et qui touche une décision (D-045 et D-010 pour l'e-mail d'avant effacement, D-043 pour l'acheminement des messages), et ce qu'il précise.
 
 ---
 
 ## 1. Qui voit quoi
 
-L'exemple suit Marie, membre d'un cercle avec Thomas, Paul et Hugo.
+*Cette partie se lit seule ; les règles qui la prouvent sont en partie 3.*
 
-**Comment lire les cases.** « oui » : voit la donnée elle-même. « non » : ne la voit jamais. « total » : seulement noyée dans un chiffre d'ensemble, jamais à son nom. « Q » : selon votre réponse à la question de la fin. Les numéros renvoient aux notes sous le tableau.
+**Les mots.**
+- **Scalingo** : l'hébergeur français où tourne le jeu (D-048). Il garde la base de données : tout ce que le jeu enregistre.
+- **Scaleway** : le service français qui envoie nos e-mails et garde une copie de secours de la base.
+- **Les agents** : les assistants d'IA qui construisent le jeu. Ils travaillent chez un fournisseur américain d'IA, qui voit tout ce qu'ils voient.
+- **Chiffré** : illisible sans la clé. **Un total** : un chiffre sur beaucoup de joueurs, jamais rattaché à un nom.
+- **La version d'aperçu** : une copie du jeu, remplie de données inventées, où vous validez en jouant.
 
-| Donnée de Marie | Marie | Son cercle | Vous | Les agents | Scalingo | Apple et Google | Le fournisseur d'IA |
+**Le tableau** suit Marie, membre d'un cercle avec Thomas, Paul et Hugo. « aucun écran » : pourrait techniquement la lire, mais aucun écran ne la montre. « total » : seulement dans un total. « Q » : selon votre réponse à la question de la fin. « — » : sans objet. Les chiffres renvoient aux notes.
+
+| Ce que le jeu garde de Marie | Marie | Son cercle | Vous (1) | Les agents | Scalingo (7) | Apple et Google (8) | Le fournisseur d'IA |
 |---|---|---|---|---|---|---|---|
-| Son adresse e-mail | oui | non | non (1) | non | oui (2) | s'ils sont sa voie de compte (3) | non |
-| Son pseudo et son rond | oui | oui | non (1) | non | oui (2) | non (4) | non |
-| Sa voie de compte (Apple, Google ou e-mail) | oui | non | total | total, Q | oui (2) | la leur | total, Q |
-| Sa réponse du jour : position et raison | oui | le lendemain sans son nom, à 18h en partie avec (5) | non (1) | non | oui (2) | non | non |
-| Ses devinettes et ses points | oui | ses titres seulement (6) | total | total, Q | oui (2) | non | total, Q |
-| Son portrait : curseurs et tempéraments | oui | oui | non (1) | non | oui (2) | non | non |
-| Sa barre « Ton portrait se dessine » | oui | non | non | non | oui (2) | non | non |
-| Si elle a joué aujourd'hui | oui | oui (7) | total | total, Q | oui (2) | non | total, Q |
-| Son accord (la carte de consentement) | oui | non | sur demande d'une autorité (8) | non | oui (2) | non | non |
-| Ses gestes : ouvertures, durées, écrans ouverts | sur demande (9) | non | total | total, Q | oui (2) | non | total, Q |
-| Si sa raison était « aucune » | oui | comme sa réponse | total par texte (10) | Contenu, total, Q | oui (2) | non | total, Q |
-| Son adresse internet, le modèle de son téléphone | non | non | non | non | oui (11) | à la connexion par eux, et pour le message de 18h | non |
-| Les journaux de notre programme (rien d'elle dedans, P-07) | non | non | oui | en cas d'incident, Q | oui | non | Q |
-
-**Les agents et le fournisseur d'IA vont ensemble.** Les agents travaillent chez un fournisseur américain d'IA : tout ce qu'ils voient, il le voit. La chaîne qui écrit les textes tourne chez le même fournisseur, mais ne lit que les données publiques de l'Assemblée (D-043, D-044).
+| Son adresse e-mail | oui | non | aucun écran | non | oui | si elle se connecte par eux | non |
+| Son pseudo | oui | oui | aucun écran | non | oui | non (2) | non |
+| Sa réponse : position et raison | oui | en partie (3) | aucun écran | non | oui | non | non |
+| Son portrait, ses tempéraments, ses titres | oui | oui | aucun écran | non | oui | non | non |
+| Sa barre « Ton portrait se dessine » | oui | non | aucun écran | non | oui | non | non |
+| Ses devinettes et ses points | oui | non (4) | total | Q | oui | non | Q |
+| Ses gestes : ouvertures, durées, a joué ou non | oui | « a déjà joué » (5) | total | Q | oui | non | Q |
+| Si sa raison était « aucune » | oui | en partie (3) | total (6) | Contenu, total (6) | oui | non | Contenu, total (6) |
+| Son adresse internet, son téléphone | — | non | non | non | oui | pour la connexion et le message de 18h | non |
+| Les journaux techniques du jeu, sans rien d'elle | — | non | oui | Q | oui | non | Q |
 
 **Les notes.**
-1. Vous détenez les clés de la version en ligne : techniquement, vous pourriez tout lire. L'engagement : aucun écran d'administration ne montre une réponse, un pseudo ni une adresse (P-42) ; vous n'ouvrez la base que pour une restauration ou un incident (D-048), et chaque ouverture laisse une trace. Comme joueur, vous voyez vos propres cercles, comme tout membre.
-2. Scalingo garde tout, comme tout hébergeur, et ne s'en sert pas : un contrat le lui interdit (RGPD, art. 28), et c'est une société française (D-043, D-048). Le chiffrement de l'adresse et des réponses (P-02) protège les copies, par exemple une sauvegarde volée ; il ne protège pas contre l'hébergeur lui-même, qui garde aussi la clé.
-3. Si Marie se connecte par Apple ou Google, ils connaissent déjà son adresse. Ils apprennent qu'elle a un compte Elenchos et quand elle s'y connecte, jamais ses réponses ni son cercle (`docs/onboarding.md`). Si elle masque son adresse chez Apple, nos e-mails passent par un relais d'Apple (`docs/plateforme.md`, limite 5).
-4. L'annonce d'arrivée faite à Thomas cite le pseudo de Marie (« Marie a trouvé 2 de tes 3 réponses. … »). Sur le web, le contenu d'une notification est chiffré jusqu'au téléphone : Apple et Google l'acheminent sans pouvoir le lire (de mémoire, norme du web ; à vérifier au travail 4). Dans les applications des boutiques, ce n'est plus vrai : à revoir au travail 14 (P-06).
-5. Le lendemain, pendant Deviner, ses proches voient sa réponse sur une carte, sans son nom. À 18h, un proche apprend qu'elle était de Marie si la carte lui était servie, ou s'il l'a désignée comme jumelle (D-024) ; l'avis du cercle compte sa position dans la répartition (D-025). Ses autres réponses, le cercle ne les voit jamais (maquette 2.7c), sauf ce que la répartition laisse déduire dans un petit cercle (D-025).
-6. Le cercle voit ses titres. Thomas, qui l'a invitée, voit son score d'entrée (« 2 de tes 3 réponses »). Personne ne voit ses devinettes une à une.
-7. « Hugo et Inès ont déjà joué » (écran 2.5). Personne ne voit qu'elle est en pause (D-010, D-011), mais le total de l'avis du cercle peut laisser voir qu'un membre n'a pas répondu (D-025).
-8. La preuve de son accord sert seulement à montrer, si la CNIL ou un juge le demande, qu'elle l'a donné. Elle figure dans son export (P-36).
-9. Ses gestes servent aux mesures de `docs/produit.md` (section 8). Ils sont gardés sous un identifiant sans nom, 13 mois au plus, puis seulement en totaux (proposé par Juridique, D-045, dernier alinéa). Marie peut les obtenir (droit d'accès).
-10. La part de « aucune » de chaque texte, sur tous les joueurs à la fois, au-dessus de 30 réponses, jamais par cercle ni par personne, jamais publiée (D-027).
-11. Les journaux de Scalingo notent l'adresse internet de chaque visite, comme ceux de tout hébergeur. Les nôtres ne la notent pas (P-07).
+1. Vous détenez les clés : techniquement, vous pourriez tout lire. L'engagement (proposé) : aucun écran ne vous montre une réponse, un pseudo ni une adresse ; vous n'ouvrez la base que pour une restauration ou un incident (D-048), et chaque ouverture laisse une trace.
+2. Exception : l'annonce faite au créateur d'un cercle à chaque arrivée cite le pseudo de qui arrive. Sur le web, Apple et Google l'acheminent chiffrée, sans la lire (de mémoire, à vérifier au test de 18h).
+3. Le lendemain, pendant Deviner, ses proches voient sa réponse sur une carte, sans nom. À 18h, chacun apprend qu'elle était de Marie si la carte lui était servie ; le graphique de l'avis du cercle compte sa position, presque nom par nom dans un petit cercle (D-025). Ses autres réponses restent cachées.
+4. Le cercle voit les titres que valent ses devinettes, jamais les devinettes une à une. Thomas, qui l'a invitée, voit son score d'entrée.
+5. Jamais qu'un membre est en pause (D-010, D-011) ; mais le total de l'avis du cercle peut laisser voir qu'un membre n'a pas répondu (D-025).
+6. La part de « aucune » de chaque texte, sur tous les joueurs, au-dessus de 30 réponses, jamais par cercle ni par personne, jamais publiée : vous et Contenu la lisez (D-027), sauf si vous choisissez « Vous seul » à la question.
+7. Un contrat doit interdire à Scalingo de se servir de ce qu'il garde (RGPD, art. 28 ; à vérifier avant de signer). Le chiffrement protège les copies, par exemple une sauvegarde volée, pas contre l'hébergeur, qui garde aussi la clé.
+8. Apple et Google apprennent, si Marie se connecte par eux, qu'elle a un compte Elenchos et quand elle s'y connecte ; jamais ses réponses ni son cercle.
 
-**Les autres, en une ligne chacun.**
-- **Scaleway** (groupe français) envoie nos e-mails : il voit l'adresse et le contenu (le code, l'e-mail d'avant effacement), jamais une réponse. Il garde aussi une copie de nos sauvegardes, chiffrée par nous : il ne peut pas la lire (P-13).
-- **La sonde de 18h02** voit seulement si le site répond et si les messages sont partis.
-- **GitHub** garde le code, sans aucune donnée de joueur ni mot de passe (P-17).
-- **La messagerie** par laquelle Thomas invite Marie (WhatsApp, iMessage…) voit le texte de l'invitation et le lien, jamais une réponse ; l'aperçu du lien ne montre rien (P-29).
-- **Le fournisseur de la boîte mail** de Marie (Gmail, Orange…) voit qu'un e-mail d'Elenchos est arrivé, et le code qu'il contient.
-- **Marie, avant d'entrer dans le cercle**, voit les trois réponses d'entrée de Thomas, par son lien personnel : c'est la seule exception à « rien ne sort du cercle » (D-006).
+**Les autres.** Scaleway voit l'adresse et le contenu de nos e-mails (le code, l'avertissement avant effacement), jamais une réponse ; sa copie de la base est chiffrée par nous. La boîte mail de Marie (Gmail, Orange…) voit qu'un e-mail d'Elenchos est arrivé. La messagerie par laquelle Thomas invite Marie voit l'invitation, jamais une réponse. La sonde qui vérifie à 18h02 que les messages sont partis, et GitHub, qui garde le code, ne voient aucune donnée de joueur. Enfin, Marie, avant d'entrer, voit les trois réponses d'entrée de Thomas, par son lien personnel : la seule exception à « rien ne sort du cercle » (D-006).
 
-### Une réponse, du mardi au jeudi
+**Une réponse, du mardi au jeudi.** Mardi, Marie répond « Défavorable · Ça coûte trop cher » ; la réponse part chez Scalingo, chiffrée.
+- **De mardi 18h à mercredi 18h**, Paul la voit sur une carte, sans nom. Son téléphone ne reçoit rien qui la relie à Marie, pas même un code caché.
+- **Mercredi 18h**, Paul apprend que c'était Marie ; le graphique du cercle compte un « défavorable ».
+- **Jeudi**, elle compte dans un seul total, la part de « aucune » du texte, lue par vous et par Contenu (D-027).
+- **Si Marie efface tout**, sa réponse disparaît tout de suite de la base, et des copies de secours en un mois environ (proposé, à vérifier). Ses titres restent sous « un ancien membre » (D-045).
 
-Mardi, Marie répond « Défavorable · Ça coûte trop cher ».
-- **Mardi.** Son téléphone l'envoie ; le serveur, chez Scalingo, la garde chiffrée. Personne d'autre ne la voit. Sa phrase du jour s'affiche pour elle seule.
-- **De mardi 18h à mercredi 18h**, pendant Deviner, Paul voit une carte « Défavorable · Ça coûte trop cher », sans nom. Son téléphone ne reçoit rien qui dise qu'elle est de Marie, pas même un code caché qu'un curieux pourrait lire (P-26).
-- **Mercredi, 18h.** Paul apprend que c'était Marie. Le graphique de l'avis du cercle compte un « défavorable ». Apple et Google acheminent le message de 18h, chiffré, qui ne dit rien de Marie.
-- **Jeudi.** La réponse entre dans un seul total qui sorte du cercle : la part de « aucune » du texte, sur tous les joueurs. Comme sa raison n'est pas « aucune », elle n'y compte que dans le nombre de réponses. Vous lisez ce total (et Contenu, si vous répondez oui à la question).
-- **Si Marie efface tout.** Sa réponse disparaît tout de suite de la base, et des sauvegardes à la fin de leur rotation, 30 jours pour la copie chez Scaleway (proposé, P-32). Ses titres restent dans l'histoire du cercle, sous « un ancien membre » (D-045).
-
-### Ce que l'équipe voit de vous
-
-- **Dans la version en ligne**, vous êtes un joueur comme un autre : les agents ne voient ni vos réponses, ni votre adresse, ni votre cercle (D-048, limite 3).
-- **Dans la version d'aperçu**, les agents voient tout ce que vous saisissez, puisqu'ils y cherchent les défauts. Proposé (P-20) : une bande sur chaque écran, « Version d'aperçu : l'équipe voit ce que tu saisis ici. » ; une connexion d'essai, pour ne pas y mettre votre compte Apple ; une remise à zéro chaque semaine. Répondez-y comme vous voulez, sans y mettre vos opinions.
-- **Au test du message de 18h** (travail 4), les téléphones prêtés ne laissent que leur abonnement au message, effacé à la fin (P-43).
+**Ce que l'équipe voit de vous.** Dans la version en ligne, rien : vous êtes un joueur comme un autre (D-048). Dans la version d'aperçu, les agents voient tout ce que vous saisissez : une bande le rappellera, et une connexion d'essai vous évitera d'y mettre votre compte Apple (proposé). N'y mettez pas vos vraies opinions.
 
 ---
 
@@ -124,7 +110,7 @@ Les usages permis sont quatre : faire tourner le jeu ; compter la part de « auc
 ### B. Rien de personnel qui sorte
 
 **P-05. Les messages ne contiennent rien de personnel, à une exception près.** *Plan, travail 3 ; D-043.*
-Le message de 18h, sous ses formes (E1), ne cite personne et ne dit rien d'une réponse. Les e-mails (le code, l'avertissement avant effacement) ne citent ni le pseudo, ni le cercle, ni une réponse, ni ce qui a été manqué (D-045). Seule exception : l'annonce d'arrivée faite au créateur d'un cercle cite le pseudo de qui arrive (D-006, D-011). La liste des messages est fermée : un message nouveau ne part pas sans son test.
+Le message de 18h, sous ses formes (E1), ne cite personne et ne dit rien d'une réponse. Les e-mails (le code, l'avertissement avant effacement) ne citent ni le pseudo, ni le cercle, ni une réponse, ni ce qui a été manqué (D-045). Seule exception : l'annonce d'arrivée faite au créateur d'un cercle cite le pseudo de qui arrive (D-006, D-011 ; le plan et `docs/produit.md` disent « prénom » : c'est le pseudo, E7, une précision). La liste des messages est fermée : un message nouveau ne part pas sans son test.
 *Test.* Traceur : chaque modèle de message est rendu dans chacune de ses formes avec les valeurs du traceur ; aucune n'y apparaît, sauf le code dans l'e-mail du code et le pseudo de qui arrive dans l'annonce d'arrivée. Un modèle sans test fait échouer la vérification. *Travaux 4 et 9.*
 
 **P-06. Sur le web, le contenu d'une notification est chiffré jusqu'au téléphone.** *Proposé ; condition de l'exception de P-05.*
@@ -141,7 +127,7 @@ Ce que le téléphone demande au serveur ne met dans l'adresse ni identifiant, n
 
 **P-09. Aucun outil de mesure, d'erreurs ou de publicité extérieur ; aucune ressource chargée ailleurs.** *Plan, travail 3 ; D-042 ; `docs/plateforme.md`, annexe A.*
 Les polices, les images et le code sont servis par le jeu lui-même. Les mesures et les erreurs passent par notre serveur.
-*Test.* Relevé du réseau sur tous les écrans : le téléphone ne contacte que l'adresse du jeu, plus Apple ou Google sur l'écran du compte après le toucher (P-10). La page déclare au navigateur qu'elle refuse tout chargement venu d'ailleurs (en-tête de sécurité vérifié par le test). La liste des bibliothèques du projet ne contient aucun outil de mesure connu (liste d'exclusion). *Travail 7.*
+*Test.* Relevé du réseau sur tous les écrans : le téléphone ne contacte que l'adresse du jeu, plus Apple ou Google sur l'écran du compte après le toucher (P-10), et le service d'acheminement des messages que le navigateur contacte lui-même quand le joueur accepte le message de 18h. La page déclare au navigateur qu'elle refuse tout chargement venu d'ailleurs (en-tête de sécurité vérifié par le test). La liste des bibliothèques du projet ne contient aucun outil de mesure connu (liste d'exclusion). *Travail 7.*
 
 **P-10. Rien d'Apple ni de Google n'est chargé avant le toucher.** *`docs/onboarding.md`, règle 3 du compte ; D-035.*
 *Test.* Relevé du réseau : avant le toucher sur « Continuer avec Apple » ou « Continuer avec Google », aucune demande vers Apple ni Google ; après le toucher, seulement vers celui qui a été choisi. *Travail 9.*
@@ -153,8 +139,8 @@ La mémoire du téléphone garde la session, les réglages d'affichage et, le te
 ### C. Les prestataires
 
 **P-12. Tout prestataire qui touche aux joueurs est européen, par son siège et son contrôle ; deux exceptions seulement.** *D-043, point 3 ; D-048 ; `docs/plateforme.md`, limite 1.*
-Un registre des prestataires, dans le dépôt, dit pour chacun : siège, contrôle, lieu des machines, sous-traitants qui détiennent des données, date du contrat de sous-traitance (RGPD, art. 28), date de la dernière vérification. Les seules exceptions hors d'Europe sont la connexion par Apple ou Google et l'acheminement des messages par Apple ou Google (D-043).
-*Test.* Le serveur ne peut joindre que les adresses du registre (liste fermée appliquée à ses sorties) ; le relevé du réseau du serveur le vérifie sur une partie simulée. Un programme vérifie que le registre ne contient, hors d'Europe, que les deux exceptions. **Ce qu'aucun test ne prouve** : que le siège, le contrôle et les sous-traitants sont bien ceux du registre. C'est un contrôle humain, avant de signer, puis une fois par an (proposé), et l'avocat relit les contrats (D-044). *Travail 5.*
+Un registre des prestataires, dans le dépôt, dit pour chacun : siège, contrôle, lieu des machines, sous-traitants qui détiennent des données, date du contrat de sous-traitance (RGPD, art. 28), date de la dernière vérification. Les seules exceptions hors d'Europe sont celles de D-043 : la connexion par Apple ou Google, et l'acheminement des messages de 18h par le service propre au téléphone ou au navigateur (Apple et Google ; de mémoire aussi Mozilla pour Firefox et Microsoft pour Edge ; liste à vérifier au travail 4).
+*Test.* Le serveur ne peut joindre que les adresses du registre (liste fermée appliquée à ses sorties) ; le relevé du réseau du serveur le vérifie sur une partie simulée. Un programme vérifie que le registre ne contient, hors d'Europe, que ces deux sortes d'exceptions. **Ce qu'aucun test ne prouve** : que le siège, le contrôle et les sous-traitants sont bien ceux du registre. C'est un contrôle humain, avant de signer, puis une fois par an (proposé), et l'avocat relit les contrats (D-044). *Travail 5.*
 
 **P-13. La copie des sauvegardes chez Scaleway est chiffrée par nous avant de partir.** *`docs/plateforme.md`, annexe A (copie chez Scaleway, proposé).*
 Scaleway garde une copie qu'il ne peut pas lire : la clé reste chez nous.
@@ -174,7 +160,7 @@ Les mots de passe de la version en ligne n'existent que dans les réglages de Sc
 *Test.* À chaque changement, une recherche de secrets parcourt tout l'historique du dépôt. L'inventaire des réglages des outils de vérification ne contient aucun nom de réglage de la version en ligne. *Travail 5.*
 
 **P-17. Le dépôt ne contient aucune donnée de joueur.** *D-048 ; `docs/plateforme.md`, annexe F.*
-Le dépôt public ne garde que du code, des documents et des données inventées. Proposé : le code de la version en ligne reste public, comme aujourd'hui. Il ne contient ni secret ni donnée ; sa publication montre que les promesses sont tenues ; la sécurité ne repose pas sur son secret (P-26 la prouve par des tests).
+Le dépôt public ne garde que du code, des documents et des données inventées. Proposé, en réponse à la question de l'annexe F de `docs/plateforme.md` : le code de la version en ligne peut rester dans le dépôt public. Il ne contient ni secret ni donnée ; sa publication montre que les promesses sont tenues ; la sécurité ne repose pas sur son secret (P-26 la prouve par des tests).
 *Test.* Recherche de secrets (P-16) ; toute adresse e-mail présente dans le dépôt est au domaine réservé `exemple.invalid`. *Travail 5.*
 
 **P-18. La restauration se répète sur des données inventées ; avec de vraies données, c'est votre geste seul.** *`docs/plateforme.md`, limite 3 ; plan, travail 5.*
@@ -185,21 +171,25 @@ Chaque base porte, dès sa création, une marque : « inventée » ou « réelle
 *Test.* Démarrage de l'aperçu sur une base « réelle » simulée : refusé. Restauration croisée : refusée. Inventaire de la base d'aperçu : aucune adresse hors du domaine réservé. *Travail 5.*
 
 **P-20. Ce que vous saisissez sur l'aperçu est visible de l'équipe, et l'écran le dit.** *`docs/plateforme.md`, limite 3 (vos réponses sont des données de joueur) ; proposé.*
-Une bande sur chaque écran de l'aperçu : « Version d'aperçu : l'équipe voit ce que tu saisis ici. » Une connexion d'essai, sans Apple ni Google, existe sur l'aperçu seulement ; les vraies connexions s'y essaient avec des comptes créés pour le test. L'aperçu est remis à zéro chaque semaine.
+Une bande sur chaque écran de l'aperçu : « Version d'aperçu : l'équipe voit ce que tu saisis ici. » Une connexion d'essai, sans Apple ni Google, existe sur l'aperçu seulement ; les vraies connexions s'y essaient avec des comptes créés pour le test. L'aperçu est remis à zéro chaque semaine. Il ne contient que des données inventées ou d'essai : ce ne sont pas des données de joueur, et la garantie de D-043 n'est pas en jeu, à condition que vous n'y mettiez pas vos vraies opinions.
 *Test.* Relevé de tous les écrans de l'aperçu : la bande est présente. La connexion d'essai répond sur l'aperçu et est refusée dans la configuration de la version en ligne. *Travail 7.*
 
-**P-21. Ce que les agents peuvent lire de la version en ligne : seulement des totaux et des journaux sans donnée de joueur, si vous le décidez.** *Question de la fin ; D-027 ; D-048 ; `docs/plateforme.md`, limite 3.*
-Si vous répondez oui : un rapport est produit dans la version en ligne. Il ne contient que des totaux au-dessus des seuils (30 réponses pour la part de « aucune », D-027 ; groupes de 10 joueurs au moins pour les gestes, proposé) et, en cas d'incident, des extraits de nos journaux (P-07). Vous le lisez, puis vous le donnez ; les agents n'ont jamais d'accès direct. Jamais les journaux de Scalingo, qui contiennent des adresses internet. Si vous répondez non : vous êtes le seul lecteur, et ce rapport reste à vous.
-*Test.* Sur une base inventée, chaque chiffre du rapport porte sur un groupe au-dessus du seuil, ou est remplacé par « — » ; le traceur n'y apparaît pas ; réponses inversées : le rapport est identique, sauf la part de « aucune », qui dépend des raisons par nature. *Travail 12.*
+**P-21. Ce que les agents peuvent lire de la version en ligne dépend de votre réponse à la question de la fin.** *D-027 ; D-043, point 3 ; D-048 ; `docs/plateforme.md`, limite 3.*
+Quatre niveaux, dans l'ordre de la question :
+1. D-027 tel quel : Contenu lit la part de « aucune », texte par texte, au-dessus de 30 réponses ; rien d'autre ne va aux agents ;
+2. en plus, les totaux des mesures de la bêta (gestes, justesse, part des Mystère), sur des groupes de 10 joueurs au moins (proposé) ;
+3. en plus, en cas d'incident, des extraits de nos journaux (P-07), jamais ceux de Scalingo, qui contiennent des adresses internet ;
+4. rien : vous êtes le seul lecteur.
 
-### E. Les usages permis
+Quel que soit le niveau, un rapport est produit dans la version en ligne ; vous le lisez, puis vous le donnez ; les agents n'ont jamais d'accès direct. La procédure d'incident reste jouable sans ouvrir de session d'agents (plan, travail 12).
+*Test.* Sur une base inventée, chaque chiffre du rapport porte sur un groupe au-dessus du seuil, ou est remplacé par « — » ; le traceur n'y apparaît pas ; le rapport ne contient que les rubriques du niveau choisi. Réponses inversées : le rapport est identique, sauf la part de « aucune » et les totaux de justesse et de Mystère, qui dépendent des réponses par nature (P-39). *Travail 12.*
 
 **P-22. Quatre usages, quatre rôles de base de données.** *D-042, point 2.*
-Le jeu, les comptes, les mesures et la sécurité se connectent chacun sous leur rôle. Chaque rôle ne peut lire que les champs de son usage sur la carte des données.
+Le jeu, les comptes, les mesures et la sécurité se connectent chacun sous leur rôle. Chaque rôle ne peut lire que les champs de son usage sur la carte des données. Les mesures validées qui dépendent des réponses de tous, la justesse et la part des Mystère (`docs/produit.md`, section 8 ; D-041), sont calculées par le rôle du jeu, qui lit déjà les réponses pour jouer ; il les dépose déjà totalisées, au-dessus du seuil, là où le rôle des mesures les lit.
 *Test.* Un programme lit les droits réels de chaque rôle dans la base d'essai et les compare à la carte : un droit en trop fait échouer la vérification. *Travail 5.*
 
 **P-23. Les réponses ne servent qu'à jouer et à compter la part de « aucune ».** *D-027 ; D-042, point 2.*
-Le rôle des mesures ne lit pas les réponses. Il ne lit qu'une vue, c'est-à-dire une fenêtre préparée par la base, qui donne pour chaque texte deux nombres : réponses et « aucune ». La vue ne répond qu'après la révélation du texte et au-dessus de 30 réponses (seuil à fixer dans l'analyse d'impact, D-027). Le compte est fait une fois, puis figé : il ne bouge plus si un joueur efface ses réponses ensuite, pour qu'on ne puisse pas retrouver une raison par différence entre deux comptes. Aucune ligne par cercle ni par personne n'existe.
+Le rôle des mesures ne lit pas les réponses. Il ne lit qu'une vue, c'est-à-dire une fenêtre préparée par la base, qui donne pour chaque texte deux nombres : réponses et « aucune ». La vue ne répond qu'après la révélation du texte et au-dessus de 30 réponses (seuil à fixer dans l'analyse d'impact, D-027). Le compte est fait une fois, puis figé (proposé) : il ne bouge plus si un joueur efface ses réponses ensuite, pour qu'on ne puisse pas retrouver une raison par différence entre deux comptes. Aucune ligne par cercle ni par personne n'existe.
 *Test.* Sous le rôle des mesures, la lecture de la table des réponses est refusée. Avec l'horloge simulée, la vue ne donne rien avant la révélation, rien sous 30 réponses, et le même chiffre avant et après l'effacement d'un joueur. La table des comptes n'a que trois colonnes : texte, réponses, « aucune ». *Travail 12.*
 
 **P-24. L'argent ne se croise jamais avec les réponses.** *D-042, point 3, règles 2 et 4. À construire avant l'ouverture, pas avant la bêta (rien n'est demandé aux joueurs de la bêta).*
@@ -227,21 +217,27 @@ L'avis du cercle se calcule cercle par cercle. Le seul croisement permis entre c
 *Test.* Un joueur présent dans deux cercles : chaque graphique de l'avis du cercle ne compte que les réponses de son cercle. Droits des rôles : seul le rôle des mesures lit au-delà d'un cercle, et seulement par la vue de P-23. *Travaux 5 et 8.*
 
 **P-29. L'invitation ne montre les réponses d'entrée de Thomas qu'à une personne, une fois.** *D-006 ; `docs/onboarding.md`.*
-Le jeton du lien est tiré au hasard, gardé seulement sous forme d'empreinte, placé après le « # » (P-08). Ouvrir le lien montre le premier texte, rien de Thomas. Le lien est lié à Marie à sa première réponse enregistrée ; ensuite, ouvert ailleurs, il dit qu'il a déjà servi. Il expire au bout de 7 jours (proposé, à confirmer par UX). Les réponses de Thomas n'arrivent qu'une à une, après la devinette de Marie sur chaque texte. Le consentement de Thomas à les envoyer est enregistré avec l'invitation (P-35).
-*Test.* Des ouvertures sans la partie après le « # » (robots d'aperçu) ne reçoivent aucune donnée de Thomas et laissent le lien intact. La première réponse lie le lien ; un autre appareil est refusé ; après 7 jours, le lien est refusé. La réponse de Thomas sur un texte n'est jamais envoyée avant la devinette correspondante. *Travail 9.*
+Le jeton du lien est tiré au hasard, gardé seulement sous forme d'empreinte, placé après le « # » (P-08). Ouvrir le lien montre le premier texte, rien de Thomas. Le lien est lié à Marie à sa première réponse enregistrée (proposé) ; ensuite, ouvert ailleurs, il dit qu'il a déjà servi. Cas déjà relevé par le plan (partie 7) : Marie ouvre le lien dans le navigateur de sa messagerie, répond, puis rouvre le jeu dans Safari, et tomberait sur « déjà servi ». La parade se règle avec UX avant le travail 9. Il expire au bout de 7 jours (proposé, à confirmer par UX). Les réponses de Thomas n'arrivent qu'une à une, après la devinette de Marie sur chaque texte. Le consentement de Thomas à les envoyer est enregistré avec l'invitation (P-35).
+*Test.* Des ouvertures sans la partie après le « # » (robots d'aperçu) ne reçoivent aucune donnée de Thomas et laissent le lien intact. La première réponse lie le lien ; un autre appareil est refusé ; après 7 jours, le lien est refusé. La réponse de Thomas sur un texte n'est jamais envoyée avant la devinette correspondante. Le cas de la messagerie suit la parade retenue avec UX. *Travail 9.*
 
 ### G. Les durées
 
-**P-30. Un compte qui n'ouvre pas le jeu pendant 12 mois est effacé ; un seul e-mail, 30 jours avant.** *D-045, point 1.*
-Précisions proposées :
+**P-30. Un compte qui n'ouvre pas le jeu pendant 12 mois est effacé, après un e-mail 30 jours avant ; un compte devenu inaccessible l'est plus tôt.** *D-045, point 1 ; `docs/onboarding.md`, règle 5 du compte.*
+Précisions proposées, qui ne changent pas la règle :
 - « ouvrir le jeu », c'est afficher un écran du jeu à un joueur connecté. Recevoir le message de 18h ne compte pas ; un rafraîchissement en arrière-plan non plus ;
-- 12 mois se comptent de date à date, à l'heure de Paris ; un compte ouvert pour la dernière fois le 29 février est effacé le 28 février suivant, à la même heure ;
-- l'e-mail part 30 jours avant, une fois par période d'inactivité ; une ouverture remet le compteur à zéro, et une nouvelle période peut donner un nouvel e-mail ;
-- l'effacement a lieu même si l'e-mail n'a pas pu partir ; il se fait comme « Tout effacer » (P-38), sans aucun message au cercle (D-045).
-*Test.* Horloge simulée, J étant le jour de l'effacement : à J − 31, rien ; à J − 30, un e-mail ; de J − 29 à J − 1, aucun second e-mail ; une ouverture à J − 20 remet tout à zéro ; sans ouverture, effacement le jour J, aucun message au cercle, visage absent du Cercle. Un compte en pause qui reçoit chaque soir le message de 18h (D-029) est quand même effacé au bout de 12 mois. Cas du 29 février. *Travail 6.*
+- 12 mois se comptent de date à date, à l'heure de Paris ; un compte ouvert pour la dernière fois le 29 février arrive à échéance le 28 février suivant ; l'effacement a lieu à la première passe qui suit l'échéance (P-31).
+
+Précisions proposées qui touchent une décision (partie 7 ; soumises à l'avocat, partie 5) :
+- si l'e-mail n'a pas pu partir (adresse refusée, relais d'Apple coupé), l'effacement a lieu quand même. D-045 dit « après un e-mail envoyé » ; sans cette précision, un compte dont l'adresse ne marche plus ne serait jamais effacé ;
+- une ouverture remet le compteur à zéro ; si le joueur redevient inactif, cette nouvelle période donne un nouvel e-mail. D-045 et la règle 5 disent « une seule fois » : nous le lisons « une fois par période d'inactivité », ce qui élargit l'exception à « aucune relance » (D-010, point 3 ; D-029).
+
+**Le compte devenu inaccessible** (proposé ; `docs/onboarding.md`, règle 5 du compte, qui renvoie le délai à l'analyse d'impact) : un compte dont la seule voie de connexion, Apple ou Google, a été coupée de leur côté (le joueur a supprimé son compte chez eux, ou retiré l'accès à Elenchos), sans adresse e-mail qui marche. Apple et Google préviennent le serveur de ces événements (de mémoire, à vérifier au travail 9). Le compte est effacé 30 jours après (proposé), sauf reconnexion entre-temps.
+
+Dans tous les cas, l'effacement se fait comme « Tout effacer » (P-38), sans aucun message au cercle (D-045).
+*Test.* Horloge simulée, J étant le jour de l'échéance : à J − 31, rien ; à J − 30, un e-mail ; de J − 29 à J − 1, aucun second e-mail ; une ouverture à J − 20 remet tout à zéro, et une nouvelle période donne un nouvel e-mail ; sans ouverture, effacement à la première passe après l'échéance, aucun message au cercle, visage absent du Cercle ; une adresse refusée n'empêche pas l'effacement. Un compte en pause qui reçoit chaque soir le message de 18h (D-029) est quand même effacé. Cas du 29 février. Compte inaccessible : un faux avis d'Apple « accès retiré » ; le compte est là au 29e jour, effacé au 31e ; une reconnexion entre-temps annule. *Travaux 6 et 9.*
 
 **P-31. Chaque durée de la carte des données est tenue, par un effacement quotidien.** *D-045, dernier alinéa ; durées proposées par Juridique (`docs/etape-5-choix.md`).*
-Un programme d'effacement passe chaque jour. Il peut être relancé sans risque : une seconde passe ne change rien. Il ne tourne jamais entre 17 h 30 et 18 h 30 (proposé), pour ne pas charger le serveur à l'heure du rendez-vous.
+Un programme d'effacement passe chaque jour pour les échéances : inactivité, compte inaccessible, durées de la carte. « Tout effacer », lui, agit tout de suite, à la demande (P-33). Le programme peut être relancé sans risque : une seconde passe ne change rien. Il ne tourne jamais entre 17 h 30 et 18 h 30 (proposé), pour ne pas charger le serveur à l'heure du rendez-vous.
 *Test.* Pour chaque ligne de la carte (partie 4) : une donnée créée, puis l'horloge avancée jusqu'à la veille de son terme, la donnée est là ; au lendemain de son terme, elle n'y est plus ; une seconde passe ne change rien. *Travail 6.*
 
 **P-32. Un effacement atteint aussi les sauvegardes.** *Plan, travail 3 (« l'effacement est réel ») ; `docs/plateforme.md`, annexe A.*
@@ -249,13 +245,13 @@ Un compte effacé disparaît des sauvegardes à la fin de leur rotation : 30 jou
 *Test.* Sur une base inventée : sauvegarde, effacement d'un compte, restauration de la sauvegarde, rejeu du journal : le compte et son traceur ont disparu. Le journal est vidé après son terme (horloge simulée). *Travail 5.*
 
 **P-33. L'effacement est tout de suite effectif dans la base.** *Plan, travail 3.*
-« Tout effacer » agit en quelques minutes dans la base ; seules les sauvegardes suivent le délai de P-32, et « Qui, durée, droits » le dit.
-*Test.* Fait partie du test de P-38 : le traceur a disparu de la base au plus tard à la passe suivante, sans attendre le lendemain. *Travail 5.*
+« Tout effacer » est un effacement immédiat, fait à la demande, sans attendre la passe quotidienne ; seules les sauvegardes suivent le délai de P-32, et « Qui, durée, droits » le dit.
+*Test.* Fait partie du test de P-38 : le traceur a disparu de la base dès la fin de la demande. *Travail 5.*
 
 ### H. Le consentement prouvé
 
 **P-34. Aucune réponse n'est enregistrée sans un accord enregistré avant elle.** *Plan, travail 3 ; RGPD, art. 7.1 et 9.2.a ; `docs/onboarding.md`, étape 3.*
-L'accord garde : la version de la carte, une empreinte de son texte exact, la date et l'heure, et la déclaration « 15 ans et plus ». C'est la base elle-même qui refuse une réponse sans accord. L'accord d'un invité qui n'a pas encore de compte suit l'invité : il passe à son compte à la création. Si la carte change de façon importante, une version marquée « nouvel accord » bloque la réponse suivante jusqu'au nouvel accord (proposé). Refuser n'enregistre rien.
+L'accord garde : la version de la carte, une empreinte de son texte exact, la date et l'heure, et la déclaration « 15 ans et plus ». C'est la base elle-même qui refuse une réponse sans accord. L'accord d'un invité qui n'a pas encore de compte suit l'invité : il passe à son compte à la création (proposé). Si la carte change de façon importante, une version marquée « nouvel accord » bloque la réponse suivante jusqu'au nouvel accord (proposé). Refuser n'enregistre rien.
 *Test.* Écrire une réponse sans accord : refusé par la base. Changer la version marquée « nouvel accord » : la réponse suivante est refusée tant que l'accord n'est pas redonné. Un invité qui crée son compte : son accord y est rattaché, avec sa date d'origine. Traceur : après un refus de la carte, aucune ligne n'existe nulle part. *Travaux 5 et 9.*
 
 **P-35. L'accord de Thomas à envoyer ses trois réponses est enregistré avec l'invitation.** *D-006 (« Thomas y consent explicitement en envoyant ») ; `docs/onboarding.md`.*
@@ -272,18 +268,18 @@ Ses réponses n'apparaissent plus dans ce cercle ; ses titres passés y restent,
 *Test.* Après le départ, plus aucune demande d'un membre de ce cercle ne renvoie un traceur du partant ; ses titres s'affichent sous « un ancien membre » ; son portrait est inchangé. *Travail 8.*
 
 **P-38. « Tout effacer » efface tout et coupe le lien avec Apple ou Google.** *Plan, travail 3 ; D-045, point 2 ; `docs/onboarding.md`, règle 5 du compte ; RGPD, art. 17.*
-Partent : le compte, l'adresse, le lien avec Apple ou Google (révoqué chez eux quand ils le permettent), les réponses, les devinettes, le portrait, la barre, les abonnements au message, les gestes gardés sous son identifiant, les sessions. Restent : ses titres passés, sous « un ancien membre », et les totaux déjà anonymes (P-23). Aucun message au cercle.
-*Test.* Traceur : après l'effacement, recherche dans toute la base d'essai : seules restent les mentions « un ancien membre ». Un faux Apple et un faux Google enregistrent la demande de révocation. Aucun message n'est mis en file pour le cercle. L'ancienne session est refusée. *Travaux 5 et 9.*
+Partent : le compte, l'adresse, le lien avec Apple ou Google (révoqué chez eux quand ils le permettent), les réponses, les devinettes, le portrait, la barre, les abonnements au message, les gestes gardés sous son identifiant, les sessions. Restent : ses titres passés, sous « un ancien membre », et les totaux déjà anonymes (P-23) ; et, si l'avocat l'admet, la preuve de son accord (partie 5, point 3) et l'identifiant tiré au hasard du journal des effacements (P-32 ; partie 5, point 4). Aucun message au cercle.
+*Test.* Traceur : après l'effacement, recherche dans toute la base d'essai : seules restent les mentions « un ancien membre » et, selon l'avis de l'avocat, la preuve de l'accord et la ligne du journal des effacements, qui ne contiennent ni adresse, ni pseudo, ni réponse. Un faux Apple et un faux Google enregistrent la demande de révocation. Aucun message n'est mis en file pour le cercle. L'ancienne session est refusée. *Travaux 5 et 9.*
 
 ### J. Les mesures
 
-**P-39. On mesure des gestes, jamais des avis.** *`docs/produit.md`, section 8 ; règle de Juridique des essais.*
-Un geste gardé ne porte ni position, ni raison, ni tension, ni texte. Règle des essais, reprise : un chiffre qui changerait si le joueur avait répondu autrement n'est jamais gardé (seule exception : la part de « aucune », P-23).
-*Test.* Réponses inversées : la réserve des gestes est identique octet pour octet. Le format d'un geste n'a aucun champ de position, de raison, de tension ni de texte (comparaison avec la carte). *Travail 12.*
+**P-39. On mesure des gestes ; un chiffre qui dépend des avis n'est jamais donné texte par texte.** *`docs/produit.md`, section 8 ; D-041 ; règle de Juridique des essais.*
+Un geste gardé ne porte ni position, ni raison, ni tension. La durée de l'écran de la raison n'est jamais gardée sous l'identifiant d'un joueur (P-40). Règle des essais, reprise telle quelle : un chiffre qui changerait si le joueur avait répondu autrement n'est jamais donné texte par texte (seule exception : la part de « aucune », D-027, P-23). Les mesures validées qui dépendent des réponses de tous, la justesse (mesure 5, lue contre le hasard de chaque manche) et la part des Mystère allant à un membre arrivé depuis moins de deux semaines (D-041), restent calculables : le rôle du jeu les calcule (P-22), et elles ne sortent qu'en totaux, sur des groupes au-dessus du seuil, jamais texte par texte ni par personne.
+*Test.* Réponses inversées : la réserve des gestes est identique octet pour octet ; dans le rapport des mesures, seuls changent les totaux de justesse et de Mystère, qui n'ont aucune ligne par texte ni par personne. Le format d'un geste n'a aucun champ de position, de raison ni de tension (comparaison avec la carte). *Travail 12.*
 
 **P-40. La durée de l'écran de la raison est comptée sur tous les joueurs, jamais par personne, par jour ni par texte.** *`docs/produit.md`, section 8 (condition de Juridique : jamais croisée avec la tension).*
-Un jour, tous les joueurs répondent au même texte, qui touche une seule tension : une durée gardée par jour serait donc croisée avec la tension. Elle s'additionne dans un relevé par semaine, sans identifiant ni texte.
-*Test.* Le relevé n'a ni champ de joueur, ni de texte, ni de jour ; réponses inversées : identique. *Travail 12.*
+Un jour, tous les joueurs répondent au même texte, qui touche une seule tension : une durée gardée par jour serait donc croisée avec la tension. Elle se range dans un histogramme par tranches de durée (par exemple de 0 à 2 secondes, de 2 à 5, et ainsi de suite), un par semaine, sans identifiant ni texte ; la durée médiane que demande `docs/produit.md` se lit sur cet histogramme.
+*Test.* Le relevé n'a ni champ de joueur, ni de texte, ni de jour ; sur un cas construit, la médiane lue est la bonne ; réponses inversées : identique. *Travail 12.*
 
 ### K. La sécurité de base
 
@@ -298,8 +294,8 @@ Vos écrans à vous : le stock de textes, les alertes, les totaux de P-21 et P-2
 ### L. Le premier code : le test du message de 18h
 
 **P-43. Le test du message de 18h ne garde que ce qu'il teste.** *Plan, travail 4 ; D-005.*
-La page nue du test n'enregistre que les abonnements au message et l'heure de réception ; aucune réponse, aucun pseudo. Les téléphones prêtés n'y laissent aucune donnée de leurs propriétaires : connexion avec vos comptes ou des comptes créés pour le test. Une note d'une page leur dit ce qui est gardé et quand c'est effacé (proposé). Tout est effacé à la fin des trois soirs.
-*Test.* La base du test n'a que les champs prévus (comparaison avec sa carte). Le programme d'effacement de fin de test est joué, puis la base est vérifiée vide. *Travail 4.*
+La page nue du test n'enregistre que les abonnements au message et l'heure de réception ; aucune réponse, aucun pseudo. Les téléphones prêtés n'y laissent aucune donnée de leurs propriétaires : connexion avec vos comptes ou des comptes créés pour le test. Une note d'une page leur dit ce qui est gardé et quand c'est effacé (proposé). La connexion Apple ou Google, essayée sur les mêmes téléphones (plan, travail 4), renvoie un identifiant et une adresse : ils ne sont gardés que le temps de la session d'essai, puis effacés avec le reste. Le relevé du réseau de P-10 s'applique dès ce test. Tout est effacé à la fin des trois soirs.
+*Test.* La base du test n'a que les champs prévus (comparaison avec sa carte). Le programme d'effacement de fin de test est joué, puis la base est vérifiée vide : ni abonnement, ni identifiant, ni adresse. Relevé du réseau sur la page du test. *Travail 4.*
 
 ### Ce qu'aucun test ne prouve
 
@@ -325,11 +321,13 @@ Première version, à compléter au travail 5 avec le modèle de données, puis 
 | Portrait, barre, tempéraments | 1 | Recalculés depuis les réponses | Comme les réponses | Juridique, proposé |
 | Titres passés | 1 | Scalingo | Tant que le cercle existe, sous « un ancien membre » après un départ ; un cercle sans membre est effacé avec son histoire | D-045, point 2 ; cercle vide : proposé |
 | Réponses d'un invité qui ne crée pas de compte | 1 | Scalingo | 7 jours au plus | Juridique, proposé |
-| Lien d'invitation (empreinte) | 1 | Scalingo | Jusqu'à son usage, 7 jours au plus | Proposé, à confirmer par UX |
+| Lien d'invitation (empreinte) | 1 | Scalingo | Jusqu'à son usage, 7 jours au plus | Proposé, à confirmer par UX ; distinct des 7 jours de la ligne précédente |
 | Code à six chiffres | 1 | Scalingo | 15 minutes | Juridique, proposé |
 | Abonnement au message de 18h | 1 | Scalingo | Jusqu'au retrait, à l'effacement, ou au refus du service d'acheminement | Proposé |
 | Preuve de l'accord | 1 | Scalingo | Tant que le compte existe ; après, question pour l'avocat | Juridique, proposé |
-| Gestes, sous un identifiant sans nom | 3 | Scalingo | 13 mois au plus, puis seulement en totaux | Juridique, proposé |
+| Gestes, sous un identifiant sans nom (jamais la durée de l'écran de la raison) | 3 | Scalingo | 13 mois au plus, puis seulement en totaux | Juridique, proposé |
+| Histogramme de la durée de l'écran de la raison, par semaine | 3 | Scalingo | Sans limite : anonyme | Proposé (P-40) |
+| Compte devenu inaccessible | 1 | Scalingo | Effacé 30 jours après la coupure chez Apple ou Google | Proposé (P-30) ; délai à fixer dans l'analyse d'impact |
 | Totaux des gestes | 3 | Scalingo | Sans limite : anonymes | Proposé |
 | Comptes de la part de « aucune » | 2 | Scalingo | Sans limite : anonymes | Juridique, proposé |
 | Journaux de notre programme, sans donnée de joueur | 4 | Scalingo | 6 mois | Juridique, proposé (repère de la CNIL, de mémoire) |
@@ -360,6 +358,9 @@ Première version, à compléter au travail 5 avec le modèle de données, puis 
 11. **Le registre des traitements** (art. 30) : obligatoire ici malgré la petite taille, puisque des données sensibles sont traitées (de mémoire). La carte des données en est la base.
 12. **Les mineurs de 15 à 17 ans** : la déclaration suffit-elle encore, la loi étant en cours de réécriture (plan, partie 7) ?
 13. **Les députés** sont aussi des personnes concernées : leurs noms et leurs arguments, rendus publics par eux (art. 9.2.e), sont révélés à 18h et gardés au registre public. Quelles obligations envers eux (information, rectification d'une citation mal rendue) ?
+14. **L'e-mail d'avant effacement** (P-30) : effacer un compte inactif même si l'e-mail n'a pas pu partir, alors que D-045 dit « après un e-mail envoyé » ; envoyer un nouvel e-mail à chaque nouvelle période d'inactivité, alors que D-045 dit « une seule fois ».
+15. **Le compte devenu inaccessible** (P-30) : sa définition et le délai de 30 jours proposé (`docs/onboarding.md`, règle 5 du compte).
+16. **La durée de l'écran de la raison** : la mesure, comptée par semaine en histogramme, sans joueur ni texte (P-40), est à valider avec l'analyse d'impact, comme le demande `docs/produit.md` (section 8 ; D-044, point 4).
 
 ---
 
@@ -375,7 +376,7 @@ Les risques à y décrire, avec la parade déjà prévue. L'analyse est obligato
 6. **Le téléphone partagé ou prêté, l'adresse e-mail partagée** en famille : un proche peut ouvrir le jeu d'un autre, ou recevoir son code. Parade partielle : P-11 ; le reste est à observer en bêta.
 7. **L'hébergeur garde la clé** (note 2) : le chiffrement protège les copies, pas contre Scalingo. Parade : contrat, prestataire français.
 8. **Vous, seul administrateur, en nom propre** : vous pouvez tout lire, et la perte de la clé perdrait les données. Parade : aucun écran ne montre une réponse ; trace des ouvertures ; copie de la clé hors ligne (P-02).
-9. **Le fournisseur d'IA** voit le code, et peut-être des totaux (question de la fin) ; le code qui garde des opinions n'est relu que par des modèles (D-043). Parade : P-14 à P-21 ; audit de sécurité avant l'ouverture (plan, partie 5).
+9. **Le fournisseur d'IA** voit le code, et peut-être des totaux (question de la fin) ; le code qui garde des opinions n'est relu que par des modèles (D-043). Parade : P-14 à P-21 ; audit de sécurité avant l'ouverture (plan, partie 5). Mais la bêta gardera de vraies opinions avant cet audit, qui n'est exigé qu'avant l'ouverture.
 10. **Retrouver quelqu'un par les totaux** : par différence entre deux comptes, ou dans un petit groupe de la bêta (40 à 80 joueurs). Parade : seuils, compte figé (P-23), gestes sans avis (P-39, P-40).
 11. **La durée des réponses** : tant que le compte existe, sans limite pour un joueur actif. Est-ce nécessaire au portrait, ou faut-il une limite ?
 12. **La période électorale** : une fuite pendant une campagne aurait un poids particulier. Parade : P-02, P-13, procédure de fuite (art. 33 et 34).
@@ -386,14 +387,25 @@ Les risques à y décrire, avec la parade déjà prévue. L'analyse est obligato
 
 ## 7. Décisions antérieures touchées
 
-**Aucune décision n'est modifiée.** Ce document applique D-006, D-024 à D-027, D-035, D-042, D-043, D-045 et D-048. Précisions, toutes signalées :
-- **D-027 et `docs/plateforme.md`, limite 3** : D-027 nomme Contenu lecteur de la part de « aucune » ; la limite 3 vous en avait fait le seul lecteur, en attendant l'avis de Juridique. L'avis est donné (P-21), et la question de la fin tranche. La réponse recommandée garde D-027 tel quel ; « Non, vous seul » modifierait D-027.
-- **D-043, point 3, et D-048** : « donnée de joueur » est lue comme toute donnée qui se rapporte à un joueur, même sous un identifiant tiré au hasard. Un total au-dessus d'un seuil, et un journal sans identifiant ni adresse internet, n'en sont pas (lecture de Juridique, à confirmer par l'avocat, partie 5, point 2). Rien n'est changé tant que vous n'avez pas répondu.
-- **`docs/produit.md`, section 8 (D-041)** : la durée de l'écran de la raison n'est gardée ni par jour ni par texte (P-40). C'est l'application de la condition de Juridique (« jamais croisée avec la tension »), puisqu'un jour n'a qu'un texte et une tension.
-- **D-006 et `docs/onboarding.md`** : le lien d'invitation « expire » ; durée proposée, 7 jours ; il est lié à l'invitée à sa première réponse (P-29), à confirmer par UX.
-- **D-011 et D-014 (l'annonce d'arrivée)** : le texte validé peut rester dans la notification sur le web, puisque son contenu est chiffré jusqu'au téléphone (P-06). C'est la revue que demandait le plan (travail 3). La question reviendra au passage aux boutiques (travail 14).
-- **D-045, point 1** : « ouvrir le jeu » et « 12 mois » sont précisés (P-30), sans rien changer à la règle.
-- **`docs/plateforme.md`, annexe F** : le code reste public (P-17, proposé), comme le prévoyait cette annexe : « à voir avec Juridique et Back-end, sans question à vous ».
+Ce document applique D-006, D-010, D-024 à D-027, D-035, D-041 à D-045 et D-048. Il ne modifie aucune décision de lui-même. Voici ce qu'il touche ou précise.
+
+**Touchées selon votre réponse à la question :**
+- **D-027** (« lue par le porteur et Contenu seulement ») : la première option le garde à la lettre ; la deuxième et la troisième l'élargissent (d'autres agents que Contenu liraient, et d'autres chiffres que la part de « aucune ») ; « Vous seul » le restreint (Contenu ne lit plus).
+- **D-048** (« en cas d'incident sur la version en ligne, c'est le porteur qui regarde ») : la troisième option le touche : vous regardez toujours, mais les agents reçoivent des extraits de journaux. Les trois autres le laissent intact.
+- **D-043, point 3, et D-048** : la deuxième et la troisième option reposent sur une lecture de Juridique, à confirmer par l'avocat (partie 5, point 2) : un total au-dessus d'un seuil, ou un journal sans identifiant ni adresse internet, n'est pas une « donnée de joueur ».
+
+**Proposées, et qui touchent une décision :**
+- **D-045, point 1, D-010 (point 3) et D-029** (P-30) : l'effacement d'un compte inactif a lieu même si l'e-mail n'a pas pu partir, alors que D-045 dit « après un e-mail envoyé » ; un nouvel e-mail part à chaque nouvelle période d'inactivité, alors que D-045 et la règle 5 disent « une seule fois », ce qui élargit l'exception à « aucune relance ». Soumis à l'avocat (partie 5, point 14).
+- **D-043, point 3** (P-12) : l'exception pour l'acheminement des messages est reprise mot pour mot, pour le service propre à chaque téléphone ou navigateur, pas seulement Apple et Google ; la liste est à vérifier au travail 4.
+- **`docs/onboarding.md`, règle 5 du compte** (P-30) : le compte devenu inaccessible est défini, avec un délai proposé de 30 jours, à fixer dans l'analyse d'impact.
+
+**Précisions, qui ne changent rien :**
+- **`docs/produit.md`, section 8, et D-041** : toutes les mesures validées restent calculables. La justesse et la part des Mystère sont calculées par le rôle du jeu et ne sortent qu'en totaux (P-22, P-39). La durée médiane de l'écran de la raison se lit sur un histogramme par semaine, jamais par jour ni par texte (P-40) : c'est l'application de la condition de Juridique (« jamais croisée avec la tension »), puisqu'un jour n'a qu'un texte et qu'un texte n'a qu'une tension (règles 6 et 16).
+- **D-043, point 3, et la version d'aperçu** (P-20) : l'aperçu ne contient que des données inventées ou d'essai ; ce ne sont pas des données de joueur, et la garantie donnée aux joueurs n'est pas touchée, à condition que vous n'y mettiez pas vos vraies opinions.
+- **D-006 et `docs/onboarding.md`** (P-29) : le lien « expire » ; 7 jours proposés ; le lien est rattaché à l'invitée à sa première réponse ; à confirmer par UX.
+- **D-011 et D-014, l'annonce d'arrivée** (P-06) : le texte validé peut rester dans la notification sur le web, son contenu y étant chiffré jusqu'au téléphone (proposé ; de mémoire, à vérifier au travail 4). C'est la revue que demandait le plan (travail 3). Elle cite le pseudo de qui arrive, que le plan et `docs/produit.md` appellent « prénom » (E7). La question revient au passage aux boutiques (travail 14).
+- **D-045, point 1** (P-30) : « ouvrir le jeu » et « 12 mois » sont précisés.
+- **`docs/plateforme.md`, annexe F** (P-17) : en réponse à la question de cette annexe, le code de la version en ligne peut rester public (proposé).
 
 ---
 
@@ -418,7 +430,8 @@ Les risques à y décrire, avec la parade déjà prévue. L'analyse est obligato
 ## La question
 
 **Agents**
-Les agents, donc le fournisseur d'IA chez qui ils travaillent, peuvent-ils lire des totaux et des journaux techniques qui ne contiennent aucune donnée de joueur ? Conditions de la première option (P-21) : un rapport que vous leur donnez, jamais un accès ; des totaux au-dessus des seuils ; nos journaux seulement, jamais ceux de Scalingo ; la règle écrite dans « Qui, durée, droits ».
-- **Oui, sous conditions (Recommandé)** : D-027 nomme déjà Contenu, et sans cela vous lisez seul les mesures de la bêta et chaque incident.
-- **Totaux seulement** : Contenu lit les totaux ; les journaux restent à vous seul, même en cas d'incident.
-- **Non, vous seul** : la garantie la plus simple à dire aux joueurs, mais elle modifie D-027 et fait de vous le seul lecteur.
+Que peuvent lire les agents, donc le fournisseur d'IA chez qui ils travaillent, parmi des chiffres et des journaux de la version en ligne que nous jugeons ne contenir aucune donnée de joueur (à confirmer par l'avocat) ? Dans tous les cas : un rapport que vous leur donnez, jamais un accès ; des totaux au-dessus des seuils ; la règle écrite dans « Qui, durée, droits » (P-21).
+- **D-027 tel quel (Recommandé)** : Contenu lit la part de « aucune », seul chiffre qu'un usage décidé lui confie ; rien d'autre ne part vers le fournisseur d'IA, le minimum que demande le RGPD (art. 5.1.c) ; ni D-027 ni D-048 ne changent.
+- **Aussi les totaux des mesures** : les agents lisent aussi les totaux des gestes, de la justesse et des Mystère ; cela élargit D-027 (plus de lecteurs, plus de chiffres) et laisse D-048 intact.
+- **Aussi des extraits de journaux** : en plus, en cas d'incident, des extraits de nos journaux ; cela élargit D-027 et touche D-048, puisque les agents reçoivent une partie de ce que vous regardez.
+- **Vous seul** : rien de la version en ligne ne va aux agents ; cela restreint D-027, Contenu ne lisant plus la part de « aucune », et laisse D-048 intact.
