@@ -24,13 +24,13 @@ Rien de ce document ne lance la construction. Le code commence à l'étape 6, av
 |---|---|---|---|
 | 1 | Qui porte le service (choix 1) | **Une société que vous créez seul (SASU)** | Apple et Google l'acceptent, votre responsabilité est limitée, tous les modèles économiques restent possibles. |
 | 1 | L'engagement « ni vente, ni exploitation, ni publicité » (choix 6) | **Oui, écrit partout** | Dans les conditions, les statuts et une clause qui suit les données si Elenchos est racheté. |
-| 1 | Qui paie le jeu (choix 9a) | **Gratuit, une contribution libre à l'ouverture** | Un jeu entier pour tous. Vous financez jusqu'à l'ouverture, puis on peut donner, sans rien recevoir dans le jeu. |
+| 1 | Qui paie le jeu (choix 9a) | **Gratuit, une contribution libre à l'ouverture** | Un jeu entier pour tous. Vous financez jusqu'à l'ouverture, puis on peut donner, sans rien recevoir dans le jeu. Répondre vaut aussi validation des cinq règles de l'argent. |
 | 1 | Comment engager le budget (choix 9b) | **Par tranches, à chaque jalon** | Vous ne payez l'ouverture qu'après avoir vu de vrais cercles jouer. |
 | 2 | Lien ou application (choix 2) | **Le lien d'abord, puis les deux boutiques** | C'est D-005 tel quel. On joue sans rien installer pendant la bêta, l'App Store arrive avant l'ouverture. |
 | 2 | Qui code (choix 3) | **Des agents et un développeur** | Les agents construisent, comme aux essais. Une personne relit le code sensible, tient de vrais téléphones et répare le soir. |
-| 2 | Où vivent les données (choix 5) | **Chez des prestataires européens seulement** | Même coût à notre taille. Aucune loi étrangère n'atteint les opinions. |
+| 2 | Où vivent les données (choix 5) | **Chez des prestataires européens seulement** | Même coût à notre taille. Aucune loi étrangère ne s'applique directement aux opinions. |
 | 2 | Marque et adresse (choix 10) | **Vérifier le nom maintenant (dans tous les cas), déposer la marque avant la bêta** | Le nom circule dès la bêta, avec une adresse déjà figée : il doit être protégé avant. |
-| 3 | Qui valide les textes (choix 4a) | **Un relecteur extérieur valide chaque texte** | Aucun lot des essais n'est passé sans correction. Extérieur, pour que vous gardiez la surprise du jeu. |
+| 3 | Qui valide les textes (choix 4a) | **Un relecteur extérieur valide chaque texte** | Aucun lot des essais n'est passé sans correction. Extérieur, pour que vous gardiez la surprise du jeu. Modifie votre §8 (« production entièrement automatisée »). |
 | 3 | Chez combien de fournisseurs d'IA (choix 4b) | **Deux fournisseurs différents** | Celui qui vérifie ne partage pas les angles morts de celui qui écrit. C'est votre §8. |
 | 3 | La place des groupes de députés (choix 4c) | **L'égalité, avec une marge** | Chaque groupe est entendu autant. La règle la plus simple à défendre, en campagne aussi. |
 | 3 | Avocat et délégué à la protection des données (choix 8) | **Deux relectures, délégué nommé avant l'ouverture** | L'avocat relit ce que signent les testeurs avant la bêta, puis tout avant l'ouverture. |
@@ -67,11 +67,11 @@ Rien de ce document ne lance la construction. Le code commence à l'étape 6, av
    - À savoir : vous pouvez modifier seul les statuts d'une SASU. Ce qu'ils promettent ne vous lie donc que si c'est aussi écrit dans les conditions d'utilisation (choix 6).
 2. **Une association.**
    - Elle donne : l'engagement peut être inscrit dans son objet, et personne ne peut la racheter. Apple peut la dispenser de l'abonnement annuel si elle est reconnue sans but lucratif et ne vend rien dans l'application (vérifié, page d'Apple).
-   - Elle coûte : il faut au moins deux fondateurs (de mémoire).
+   - Elle exige : au moins deux fondateurs (de mémoire).
    - Elle rend plus difficile : de vendre quoi que ce soit (choix 9).
 3. **Vous, en nom propre.**
    - Elle donne : rien à créer, aucun frais.
-   - Elle coûte : l'App Store est probablement fermé. Apple demande qu'une application « qui demande des informations sensibles » soit soumise par une personne morale, pas par un particulier (règle 5.1.1 (ix), vérifié ; Apple ne dit pas si les opinions politiques en font partie). Vous répondez sur vos biens personnels : les sanctions du règlement sur les données vont jusqu'à 20 M€ (art. 83). Chez Google, un compte personnel doit faire tester l'application par 12 personnes pendant 14 jours avant de la publier (vérifié).
+   - Elle coûte : l'App Store est probablement fermé. Apple demande qu'une application « qui demande des informations sensibles » soit soumise par une personne morale, pas par un particulier (règle 5.1.1 (ix), vérifié ; Apple ne dit pas si les opinions politiques en font partie). Vous répondez sur vos biens personnels : les sanctions du règlement sur les données vont jusqu'à 20 M€ (art. 83) : un plafond légal sans rapport avec un petit service, mais qui pèserait sur vos biens. Chez Google, un compte personnel doit faire tester l'application par 12 personnes pendant 14 jours avant de la publier (vérifié).
    - Elle oblige ensuite : passer plus tard à une société change le responsable des données. Il faudrait prévenir chaque joueur, et probablement redemander son accord (à confirmer par l'avocat).
 
 **Ce qui fait pencher.** La bêta n'est pas un « prototype entre amis » : de vraies opinions seront gardées sur un serveur. La structure qui porte le service doit donc exister avant la bêta, et en pratique avant l'étape 6, à cause du compte Apple.
@@ -91,8 +91,8 @@ Rien de ce document ne lance la construction. Le code commence à l'étape 6, av
 **Les options.**
 1. **Oui, écrit partout (recommandé).** L'engagement figure à quatre endroits.
    - Dans les conditions d'utilisation et la politique de confidentialité.
-   - Dans les statuts (choix 1).
-   - Dans une **clause de rachat**. Si Elenchos change de mains, les réponses ne suivent que si le repreneur reprend l'engagement mot pour mot. Chaque joueur est prévenu au moins 30 jours avant et peut tout effacer. Sinon, tout est effacé. Même règle en cas de faillite. C'est la seule exception à « ni vente » : les réponses ne passent à un tiers qu'à cette condition.
+   - Dans les statuts, s'il y a une société ou une association (choix 1). Pour une SASU, dont vous changez seul les statuts, ce sont les conditions d'utilisation et la clause de rachat qui lient vraiment.
+   - Dans une **clause de rachat**. Si Elenchos change de mains, les réponses ne suivent que si le repreneur reprend l'engagement mot pour mot. Chaque joueur est prévenu au moins 30 jours avant et peut tout effacer. Si le repreneur refuse l'engagement, toutes les réponses sont effacées. Même règle en cas de faillite. C'est la seule exception à « ni vente » : les réponses ne passent à un tiers qu'à cette condition.
    - Avec une **liste fermée des usages permis** : faire tourner le jeu, compter la part de « aucune » (D-027), les mesures sur les gestes (`produit.md` §8), la sécurité. Tout le reste est exclu : vente, location, partage même en chiffres globaux (partis, instituts de sondage, chercheurs), publicité ciblée, entraînement d'une IA sur les réponses, publicité et contenus sponsorisés.
    - Coût : une clause à faire rédiger par l'avocat.
 2. **Oui, dans les conditions d'utilisation seulement.** Chaque joueur peut l'invoquer. Mais une mise à jour des conditions peut l'affaiblir, et rien ne lie un repreneur au-delà de la loi.
@@ -130,7 +130,7 @@ Rien de ce document ne lance la construction. Le code commence à l'étape 6, av
 - **Franchement, aucun modèle compatible avec le §9 ne promet de faire vivre une équipe.** Estimation de Game design : à 10 000 joueurs, si 1 à 2 % donnent 2 à 3 € par mois, la recette serait de 200 à 600 € par mois avant commission. C'est l'ordre de grandeur de l'hébergement. Cela ne paie ni le développeur, ni le relecteur des textes, ni l'avocat.
 - Demander de l'argent aux 40 à 80 joueurs de la bêta rapporterait presque rien et fausserait la mesure du rendez-vous.
 
-**Les règles de l'argent** (proposées par Game design, qui en écrivait douze ; l'orchestrateur les a regroupées en cinq, sans en retirer). **Répondre au choix 9a vaut validation de ces règles**, qui entreront dans `produit.md` §6. Les règles 2 à 4 ne servent que si des joueurs paient (option 1). L'option 3 obligerait à réécrire la règle 1 sur le portrait :
+**Les règles de l'argent** (proposées par Game design, qui en écrivait douze ; l'orchestrateur les a regroupées en cinq, sans en retirer). **Répondre au choix 9a vaut validation de ces règles**, qui entreront dans `produit.md` §6. Les règles 2 à 4 ne servent que si des joueurs paient (options 1 et 3). L'option 3 obligerait à réécrire la règle 1 sur le portrait :
 1. Ne deviennent jamais payants : jouer, entrer, inviter ; rien qui aide à deviner ou à gagner (indice, seconde chance, passe en plus, titre) ; le rendez-vous de 18h et le rattrapage d'un jour manqué ; le portrait (ni l'accélérer, ni le débloquer) ; ce qu'on voit d'un proche ; un quatrième cercle ; ses propres données (voir, emporter, effacer). Ce qui est gratuit à l'ouverture le reste.
 2. Personne dans le cercle ne sait qui paie : ni badge, ni couleur, ni mention. Exemple : si le rond de serviette de Paul avait un liseré doré parce qu'il donne, Inès, qui n'a pas de revenu, le verrait à chaque révélation.
 3. On ne demande jamais d'argent dans le message de 18h, sous forme de relance, pendant les 90 secondes de la journée, ni juste après une réussite.
@@ -210,7 +210,7 @@ Dans les deux cas, cela fait cinq ou six gestes. La différence est que le premi
    - Elle oblige : à écrire un code « ordinaire », qu'une personne peut reprendre.
 2. **Des agents seuls**, que vous validez en jouant.
    - Elle donne : le moins cher et le plus rapide.
-   - Elle coûte : vous êtes le seul recours humain, y compris un dimanche à 18h05. Le code qui garde des opinions n'est relu que par des modèles, qui partagent une partie de leurs angles morts. Un agent ne travaille que si une session est ouverte, et une limite d'utilisation peut tomber à 17h50, comme le 10 octobre (D-036).
+   - Elle coûte : vous êtes le seul recours humain, y compris un dimanche à 18h05. Le code qui garde des opinions n'est relu que par des modèles, qui partagent une partie de leurs angles morts. Un agent ne travaille que si une session est ouverte, et une limite d'utilisation peut tomber n'importe quand, y compris à 17h50 : le 10 octobre, une limite a coupé quatre tâches d'un coup (D-036).
 3. **Un prestataire, agence ou indépendant, qui construit et entretient.**
    - Elle donne : un responsable unique, par contrat, rodé aux boutiques.
    - Elle coûte : 50 000 à 150 000 € pour construire (estimation très large, sans devis), avant de savoir si le jeu plaît. Les échanges sont plus lents, et la méthode de preuve des essais est à lui imposer par contrat.
@@ -233,12 +233,12 @@ Dans les deux cas, cela fait cinq ou six gestes. La différence est que le premi
 
 **Les options.**
 1. **Des prestataires européens seulement (recommandé).** Cela vise le siège de l'entreprise, pas seulement l'emplacement de ses serveurs.
-   - Elle donne : un hébergeur français « clé en main », des sauvegardes chez un second prestataire européen, un service d'e-mail européen, les polices servies par le jeu lui-même. Aucun outil américain de suivi ni de mesure. Les noms (par exemple Scalingo, Clever Cloud, Scaleway, OVHcloud, Brevo) sont de mémoire, à choisir à l'étape 6. Aucune loi étrangère ne peut atteindre les opinions, et l'engagement public tient en une phrase : « Tout est chez des prestataires européens ; seuls Apple et Google voient la connexion et l'acheminement des messages, jamais une réponse. »
+   - Elle donne : un hébergeur français « clé en main », des sauvegardes chez un second prestataire européen, un service d'e-mail européen, les polices servies par le jeu lui-même. Aucun outil américain de suivi ni de mesure. Les noms (par exemple Scalingo, Clever Cloud, Scaleway, OVHcloud, Brevo) sont de mémoire, à choisir à l'étape 6. Aucune loi étrangère d'accès aux données ne s'applique directement, et l'engagement public tient en une phrase : « Toutes les données des joueurs sont chez des prestataires européens ; seuls Apple et Google voient la connexion et l'acheminement des messages, jamais une réponse. »
    - Elle coûte : à peu près le même prix à notre taille, et quelques jours de travail en plus pour construire la connexion.
 2. **Mixte : les réponses et les comptes en Europe, le reste libre** (e-mail, suivi des erreurs). C'est un peu plus simple. Mais le service américain qui envoie le code par e-mail apprend déjà qui joue à un jeu politique, et l'engagement du choix 6 devra nommer ces exceptions.
 3. **Des prestataires américains, serveurs en Europe.** C'est le plus rapide à monter, une à deux semaines gagnées (estimation), et c'est légal aujourd'hui. Mais une loi américaine permet aux autorités des États-Unis d'exiger les données, même stockées en Europe (de mémoire). Et le cadre qui autorise ces échanges est contesté devant la Cour de justice de l'Union, sans date d'arrêt connue (vérifié, sources secondaires) : s'il tombe, il faut déménager dans l'urgence.
 
-**Ce qui reste hors d'Europe dans tous les cas.** La connexion par Apple ou Google (D-035), et l'acheminement des messages de 18h. Ce message existe en quelques formes selon ce qui attend le joueur (E1) et ne cite aucun nom. Seule exception : l'annonce envoyée au créateur d'un cercle de moins de trois membres, à chaque arrivée (« Marie a trouvé 2 de tes 3 réponses », D-006), dont le texte est à revoir avec Juridique. Dans une application Android, Google peut lire le texte des messages (Back-end, de mémoire).
+**Ce qui reste hors d'Europe dans tous les cas.** La connexion par Apple ou Google (D-035), et l'acheminement des messages de 18h. Ce message existe en quelques formes selon ce qui attend le joueur (règle E1 du bilan, D-030) et ne cite aucun nom. Seule exception : l'annonce envoyée au créateur d'un cercle de moins de trois membres, à chaque arrivée (« Marie a trouvé 2 de tes 3 réponses », D-006), dont le texte est à revoir avec Juridique. Dans une application Android, Google peut lire le texte des messages (Back-end, de mémoire).
 
 **Une garantie à écrire quelle que soit l'option.** Aucune donnée de joueur n'est jamais envoyée à un fournisseur d'IA. La chaîne des textes ne lit que les données publiques de l'Assemblée.
 
@@ -279,7 +279,7 @@ Dans les trois options, la recherche par un conseil se fait maintenant (D-013) ;
 
 **Les options.**
 1. **Un relecteur extérieur valide chaque texte (recommandé).** La chaîne prépare et vérifie. Une personne extérieure au projet, par exemple un journaliste ou un documentaliste parlementaire, lit chaque texte avec ses sources à côté, puis accepte ou renvoie. Elle travaille par lot chaque semaine, quatre semaines à l'avance.
-   - Elle donne : l'erreur est arrêtée avant de partir. La mention « écrit par une IA » n'est probablement plus nécessaire (à confirmer par l'avocat). Et vous gardez la surprise du jeu.
+   - Elle donne : une chance de plus d'arrêter une erreur avant qu'elle parte (un relecteur peut aussi se tromper). La mention « écrit par une IA » n'est probablement plus nécessaire (à confirmer par l'avocat). Et vous gardez la surprise du jeu.
    - Elle coûte : environ 10 minutes par texte, soit 1 à 2 heures par semaine (estimation). Payé, cela ferait 200 à 500 € par mois (non vérifié).
    - Garde-fou : le relecteur voit le dossier sans noms ni groupes. Il ne choisit pas les textes, la sélection reste mécanique, et toute retouche repasse par les vérificateurs. Il s'engage par écrit à ne rien dire des textes à venir.
 2. **Vous validez chaque texte.** Même garde-fou, sans frais. Mais vous connaîtrez le sujet et le vote quatre semaines avant de jouer : vos propres parties perdent leur suspense. Vous aviez jugé sans gravité les sujets du lot caché cités par erreur, parce que vous n'aviez pas lu les textes (D-037) ; ici, vous les liriez tous.
@@ -329,7 +329,7 @@ Dans les trois options, la recherche par un conseil se fait maintenant (D-013) ;
 
 **Ce qui fait pencher.**
 - Contre chaque option, on trouve une accusation de parti pris. Seule l'égalité se défend en une phrase.
-- Le repère français le plus proche est la règle des temps de parole de l'Arcom (de mémoire). À la fin d'une campagne présidentielle, elle passe à l'égalité stricte. Si le jeu est ouvert au printemps 2027, l'égalité sera la norme du moment.
+- Le repère français le plus proche est la règle des temps de parole de l'Arcom (de mémoire). À la fin d'une campagne présidentielle, elle passe à l'égalité stricte. Si l'ouverture tombait pendant la campagne présidentielle de 2027, l'égalité serait la norme du moment.
 - Dans tous les cas, la règle ne range jamais un groupe à gauche ou à droite : ce classement serait lui-même une prise de position.
 - La faisabilité reste à prouver sur le stock réel des votes, à l'étape 6.
 
@@ -415,6 +415,8 @@ Ces points découlent de vos réponses ou relèvent du métier des spécialistes
 - **La règle « une forme n'annonce jamais le vote »** (D-041). Un programme compte les formes de chaque lot : le premier mot du titre, le type d'objet (« amendement », « article »), la négation, les tournures répétées. Dès qu'une forme revient trois fois en quatre semaines, elle doit couvrir des textes adoptés et des textes rejetés. Sinon, on réécrit la forme, ou on déplace le texte dans le calendrier, sans jamais changer un fait. Un modèle d'un autre fournisseur parie aussi sur le vote sans le connaître. S'il fait nettement mieux que le hasard, on cherche la forme qui le trahit.
 - **Le registre public, hors du jeu.** Pour chaque texte, à partir du 18h de sa révélation, celui où le vote et les auteurs tombent dans le jeu (D-010), jamais avant : le lien du scrutin, les extraits sourcés des quatre raisons, les corrections datées. Il publie aussi la méthode et des chiffres sur le contenu seulement : la répartition par groupe, la part d'adoptés et de rejetés. Jamais un chiffre sur les joueurs, jamais un texte à venir.
 
+**Les phrases d'écran citées dans ce document** (Réglages du choix 7a, mention IA éventuelle) sont des exemples : UX les écrira à l'étape 6, et Game design relira l'effet des choix 7a et 7b sur le Cercle et l'historique des titres.
+
 **Le premier test de l'étape 6** (Front-end). Le test du message de 18h, sur de vrais téléphones, vérifiera aussi la connexion Google ou Apple depuis l'icône et la reconnexion après l'ajout de l'icône. S'ils échouent, la question vous reviendra, comme D-035 le prévoit.
 
 **Une correction à faire dans `docs/onboarding.md`**, lors de sa mise à jour pour D-035. Il dit que la connexion Apple devient obligatoire sur l'App Store. La règle actuelle d'Apple (4.8, vérifiée) demande seulement une option de connexion équivalente, qui protège la vie privée. Cela ne change rien sur le fond : vous avez retenu Apple de toute façon.
@@ -425,13 +427,13 @@ Ces points découlent de vos réponses ou relèvent du métier des spécialistes
 
 Tous ces montants sont des estimations de l'équipe, sauf mention contraire. Aucun n'est un devis. Les lignes marquées « lecture de l'orchestrateur » sont des chiffres que les spécialistes n'avaient pas donnés tels quels.
 
-**Jusqu'à la fin de la bêta, avec les options recommandées** (somme faite par l'orchestrateur) :
+**Jusqu'à la fin de la bêta, avec les options recommandées** (somme faite par l'orchestrateur). Les durées (six mois d'hébergement, quatre à cinq mois de relecteur) sont une hypothèse de calcul, pas une estimation du délai de construction, qui reste inconnu :
 
 | Poste | Montant |
 |---|---|
 | Création de la SASU et première année de comptabilité | 800 à 1 750 € |
 | Compte développeur Apple | 99 € par an (sources de 2020-2021, à revérifier) |
-| Hébergement, e-mails et sonde de 18h, sur environ six mois | 200 à 600 € |
+| Hébergement, e-mails et sonde (le programme qui vérifie à 18h01 que tout est parti), sur six mois | 200 à 600 € |
 | Un téléphone Android de test (votre iPhone sert déjà) | 100 à 200 € |
 | Deux ou trois adresses web (lecture de l'orchestrateur) | 50 à 150 € par an |
 | Recherche du nom par un conseil, puis marque française | 600 à 1 100 € |
