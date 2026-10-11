@@ -369,6 +369,15 @@ Réponses du porteur aux QCM 13 et 14 de `docs/etape-5-choix.md`. Avec D-042 à 
 
 Les autres durées de conservation du document (invité sans compte, code par e-mail, journaux, sauvegardes, mesures sur les gestes, part de « aucune », preuve du consentement) sont des propositions de Juridique, à caler dans l'analyse d'impact et à faire valider par l'avocat (D-044).
 
+### D-046 — Documents de clôture de l'étape 5 validés · Décidé (11 octobre 2026)
+
+Le porteur valide la mise à jour de `docs/produit.md`, `docs/onboarding.md`, `docs/plan-construction.md` et `docs/feuille-de-route.md`, qui transcrivent D-042 à D-045, avec les propositions de l'équipe qui y sont marquées « (proposé) ». Rédaction : Game design, UX, Back-end avec Front-end ; relecture : Cohérence (compatible avec réserves, corrigées), puis le Vérificateur (OK avec corrections mineures, appliquées). Option non retenue : relire d'abord. Sont consignés avec cette validation :
+- **une correction de fait de D-006, arbitrage 1** : la parenthèse « Sign in with Apple alors obligatoire sur l'App Store » est inexacte ; la règle 4.8 actuelle d'Apple (vérifiée le 11 octobre 2026) demande seulement une option de connexion équivalente qui protège la vie privée. Rien ne change sur le fond : la connexion Apple est retenue dès les premiers joueurs (D-035) ;
+- **la vue d'ensemble des coûts** tenue à jour (D-042, point 4) est désormais la partie 6 de `docs/plan-construction.md`, qui remplace le tableau de `docs/etape-5-choix.md` (gardé pour mémoire, aux options recommandées) ;
+- **une première durée** : la construction, jusqu'à l'entrée en bêta, boutiques exclues, est un ordre de grandeur de 3 à 6 mois, à faible confiance, ni engagement ni date de sortie, à recaler après les travaux sur papier et le test du message de 18h (plan, partie 6).
+
+**Fin de l'étape 5** de la feuille de route. L'étape 6 (construire) commence avec l'accord explicite du porteur (D-001). Démarches à son nom qui l'accompagnent : la vérification du nom par un conseil en propriété industrielle (D-013, D-043), le compte développeur Apple (D-035, D-042), le devis d'un avocat (D-044).
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique : **tranché, D-042** (gratuit, contribution libre à l'ouverture) · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.

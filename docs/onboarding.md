@@ -39,7 +39,7 @@ Tant que le cercle n'a pas trois membres, Thomas est prévenu à chaque arrivée
 
 **À vérifier au premier test de l'étape 6**, sur de vrais téléphones, avec le message de 18h : la connexion Apple ou Google depuis l'icône de l'écran d'accueil, et la reconnexion après l'ajout de l'icône. Si elles ne tiennent pas, la question revient au porteur (D-035).
 
-**Sur l'App Store, quand les boutiques viendront** (D-043), la connexion Apple n'est pas obligatoire : la règle 4.8 d'Apple, vérifiée le 11 octobre 2026, demande seulement une option de connexion équivalente, qui protège la vie privée. La connexion Apple, déjà retenue, en tient lieu en pratique. C'est une correction de fait de la parenthèse de D-006, arbitrage 1 (« Sign in with Apple alors obligatoire »), consignée au journal avec la validation de ce document ; rien ne change sur le fond (`docs/etape-5-choix.md`, « Ce qui sera réglé sans vous poser de question »).
+**Sur l'App Store, quand les boutiques viendront** (D-043), la connexion Apple n'est pas obligatoire : la règle 4.8 d'Apple, vérifiée le 11 octobre 2026, demande seulement une option de connexion équivalente, qui protège la vie privée. La connexion Apple, déjà retenue, en tient lieu en pratique. C'est une correction de fait de la parenthèse de D-006, arbitrage 1 (« Sign in with Apple alors obligatoire »), consignée au journal (D-046) ; rien ne change sur le fond (`docs/etape-5-choix.md`, « Ce qui sera réglé sans vous poser de question »).
 
 ## « Qui, durée, droits »
 

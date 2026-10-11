@@ -13,7 +13,7 @@
 - Ce qu'ils n'ont pas prouvé : un serveur, de vrais comptes, la connexion Apple ou Google, le message de 18h, la sécurité des données, les boutiques. Rien ne quittait votre iPhone.
 - Le plaisir de deviner de vrais proches se jugera en bêta (D-039).
 
-**Étape 5 : choix tranchés (D-042 à D-045) ; documents de clôture en validation par le porteur.** Les dix choix de fabrication sont tranchés, en quatorze QCM (à partir de `docs/etape-5-choix.md`). Les documents qui en dépendent sont mis à jour et vous sont soumis : `docs/produit.md`, `docs/onboarding.md` (le compte, D-035), ce plan et la feuille de route.
+**Étape 5 : faite (D-042 à D-046).** Les dix choix de fabrication sont tranchés, en quatorze QCM (à partir de `docs/etape-5-choix.md`). Les documents qui en dépendent sont mis à jour et validés (D-046) : `docs/produit.md`, `docs/onboarding.md` (le compte, D-035), ce plan et la feuille de route.
 
 **Étape 6 : la prochaine**, avec votre accord (partie 2).
 
@@ -228,7 +228,7 @@ Des repères chiffrés vous seront proposés en QCM avant la bêta. Ils éclaire
 
 ### Les coûts, selon vos choix
 
-Le budget s'engage dépense par dépense (D-042) : chaque dépense vous est présentée au moment où elle se présente, avec son montant estimé et ce qui en dépend. Cette partie est désormais la vue d'ensemble des coûts, tenue à jour (D-042, point 4, qui nommait le tableau de `docs/etape-5-choix.md` ; cette partie le remplace, ce que le journal consignera à la validation), pour limiter le risque de s'arrêter à mi-chemin ; elle remplace, comme vue d'ensemble, le tableau de `docs/etape-5-choix.md`.
+Le budget s'engage dépense par dépense (D-042) : chaque dépense vous est présentée au moment où elle se présente, avec son montant estimé et ce qui en dépend. Cette partie est désormais la vue d'ensemble des coûts, tenue à jour (D-042, point 4, qui nommait le tableau de `docs/etape-5-choix.md` ; cette partie le remplace, consigné par D-046), pour limiter le risque de s'arrêter à mi-chemin ; elle remplace, comme vue d'ensemble, le tableau de `docs/etape-5-choix.md`.
 
 Tous les montants sont des estimations de l'équipe, sauf mention contraire ; aucun n'est un devis. Ils reprennent le tableau de `docs/etape-5-choix.md` (« Ce que ça coûte »), recalculé selon vos réponses.
 
