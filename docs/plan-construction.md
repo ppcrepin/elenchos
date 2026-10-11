@@ -6,7 +6,7 @@
 
 ## 1. Où on en est
 
-**Étapes 1 à 3 : faites.** Le produit est défini (`docs/produit.md`, D-010), dessiné (D-011) et habillé (univers La Tablée D-012, nom de travail Elenchos D-013, maquettes finales D-014). Reste la fin de l'étape 3 : la vérification du nom par un conseil en propriété industrielle (D-013, D-043), puis le logo avec un graphiste.
+**Étapes 1 à 3 : faites.** Le produit est défini (`docs/produit.md`, D-010), dessiné (D-011) et habillé (univers La Tablée D-012, nom de travail Elenchos D-013, maquettes finales D-014). Reste la fin de l'étape 3 : la vérification du nom par un conseil en propriété industrielle (D-013, D-043), et le logo, fait par l'équipe en parallèle (D-047).
 
 **Étape 4 : faite.** Deux essais joués par vous seul, avec quatre personnages simulés, sur votre iPhone, depuis une icône de l'écran d'accueil (D-015 à D-019, D-031 à D-033). Bilans écrits, règles tranchées (D-022 à D-030, D-038 à D-040), produit mis à jour (D-041).
 - Ce que les essais ont prouvé : des agents savent construire l'interface au niveau demandé ; les deux pages ont tenu sur votre iPhone sans incident technique.
@@ -237,7 +237,7 @@ Tous les montants sont des estimations de l'équipe, sauf mention contraire ; au
 | Dépense | Quand | Montant | Ce qui en dépend |
 |---|---|---|---|
 | Recherche du nom par un conseil en propriété industrielle | Maintenant | Quelques centaines d'euros ; 300 à 800 € (lecture de Back-end : la ligne de l'étape 5, sans le dépôt de la marque) | Le logo, le texte de D-040, l'adresse définitive |
-| Logo, avec un graphiste (D-011, D-013) | Après la vérification du nom, avant la bêta | Non chiffré : dépend du graphiste que vous choisirez ; devis présenté avant (D-042) | L'icône définitive, figée avant la bêta |
+| Logo, fait par l'équipe (D-047) | En cours, avant la bêta | Aucun frais (pas de graphiste, D-047) | L'icône définitive, figée avant la bêta |
 | Compte développeur Apple | Début de l'étape 6 | 99 € par an (sources de 2020-2021, à revérifier) | La connexion Apple, le premier test (travail 4) |
 | Un téléphone Android d'essai, si vous l'achetez (proposé ; votre iPhone sert déjà) | Début de l'étape 6 | 100 à 200 € | Le test du message de 18h, les écrans sur Android |
 | Hébergement, e-mails et sonde de 18h02, sur six mois | Dès le socle (travail 5) | 200 à 600 € | Tout le jeu |
@@ -255,7 +255,6 @@ Vérification : la somme des lignes donne 3 049 à 9 149 €. Par rapport aux 7 
 Ce total ne compte pas :
 - votre abonnement Claude pour les agents, que l'équipe ne connaît pas ; avec des agents seuls, c'est lui qui paie la construction et l'entretien ;
 - votre temps ;
-- le logo (non chiffré, ci-dessus) ;
 - le prêt ou la location des téléphones du test de 18h (travail 4), non chiffré.
 
 Les six mois d'hébergement sont une hypothèse de calcul, pas une estimation de durée : si la construction dure plus, quelques dizaines d'euros par mois s'ajoutent.
