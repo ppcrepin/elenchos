@@ -54,7 +54,7 @@ L'équipe propose la version « jour » comme icône de l'application, parce que
 ## Limites
 
 - **Ressemblances :** nous ne pouvons pas vérifier de façon exhaustive qu'aucun logo existant ne ressemble à celui-ci. Le conseil devrait chercher aussi les marques figuratives proches.
-- **Boutons de lecture :** le dessin réduit cette lecture, il ne la supprime pas. Un rond plus grand peut aussi faire penser à une cible ou à un œil. À vérifier en bêta.
+- **Boutons de lecture :** le dessin réduit cette lecture, il ne la supprime pas. Un rond plus grand peut aussi faire penser à une cible, à un œil ou à l'icône « diffusion en direct ». À vérifier en bêta.
 - **Le miel :** qu'il n'évoque aucun parti est encore à vérifier (D-012), en bêta.
-- **Pas un travail de graphiste (D-047) :** corrections optiques faites à l'œil sur des captures d'ordinateur, pas sur un iPhone ; impression non couverte.
+- **Pas un travail de graphiste (D-047) :** corrections optiques faites à l'œil sur des captures d'ordinateur, pas sur un iPhone ; impression non couverte. Non vérifié : l'icône « jour » sur un fond d'écran clair d'iPhone, où le lin sans contour peut se fondre.
 - **Boutiques, non faites (D-043) :** icône 1024 px, variantes sombre et teintée, calques de l'effet de verre d'iOS 26, icône adaptative et icône d'une seule couleur d'Android.
