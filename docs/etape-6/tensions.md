@@ -19,7 +19,7 @@
 **Trois constats, avant même les contrôles.**
 1. **Le camp de l'auteur se devine souvent à la mesure elle-même.** Une nationalisation vient rarement de la droite. Aucune écriture ne peut le cacher. Le test du camp est donc construit pour séparer ce qui vient de la mesure de ce qui viendrait de nos mots (section 4). C'est l'objet de la question 1.
 2. **Le stock est déséquilibré.** Dans les votes relus, les mesures où « favorable » sert le mérite, ou le marché, sont rares. Elles passent presque toujours par un amendement qui supprime un article, et elles ne sont souvent défendues que par un seul groupe. Or la règle E9 demande, sur huit semaines, autant de textes dans un sens que dans l'autre pour chaque tension. Les deux textes État/Marché vont donc dans le même sens. Il faudra le vérifier sur tout le stock au travail 10.
-3. **Souveraineté/Ouverture, c'est surtout l'immigration et l'Europe.** Les votes sur le commerce (Mercosur, CETA) sont presque unanimes. Restent l'Europe et l'immigration, dont un texte qui vise une nationalité. C'est l'objet de la question 2.
+3. **Souveraineté/Ouverture, c'est surtout l'immigration et l'Europe.** Les votes sur le commerce (Mercosur, CETA) réunissent presque tout l'hémicycle. Restent l'Europe et l'immigration, dont un texte qui vise une nationalité. C'est l'objet de la question 2.
 
 **Deux questions pour vous**, en QCM, en fin de document.
 
@@ -212,7 +212,7 @@ La chaîne est celle des deux essais (`docs/essai/simulation-2.md`, annexe A, A.
 
 **Les contrôles mécaniques, faits.**
 - Les 32 extraits sont présents mot pour mot à la ligne citée du compte rendu (script).
-- Forme : titres de 43 à 59 caractères, sans deux-points ; lignes de 52 à 89 caractères ; raisons de 8 à 12 mots, une phrase, un point final, sans le mot d'une valeur de leur tension (script).
+- Forme : titres de 43 à 58 caractères, sans deux-points ; lignes de 52 à 89 caractères ; raisons de 8 à 12 mots, une phrase, un point final, sans le mot d'une valeur de leur tension (script).
 - Vote, date et sort relevés dans le fichier de chaque scrutin. L'étape « le Sénat devait encore voter » n'a pas pu être confirmée dans la copie locale des dossiers, incomplète : c'est au relevé en double de le faire (section 4).
 
 **Les contrôles indépendants, préparés et pas encore passés.**
@@ -271,7 +271,7 @@ Les dossiers, les clés et les scripts de comparaison sont dans l'espace de trav
 ### 5.1 Pour le jeu (regard de Game design)
 - **Le joueur devinera parfois l'auteur avant 18h.** Ce n'est pas grave pour le jeu : la question du jour porte sur ce que *lui* pense, puis sur ce qu'ont pensé ses proches, pas sur l'auteur. Mais la révélation de l'auteur perd de sa surprise sur ces quatre tensions. À 90 secondes, rien ne change. Sur une semaine, la surprise de 18h repose davantage sur les proches et sur le vote. Sur trois mois, un joueur qui verrait toujours venir l'auteur pourrait se sentir « rangé ». Le questionnaire de bêta le demande déjà : « le jeu t'a-t-il rangé dans un camp ? » (plan, partie 5).
 - **Les raisons croisées font le jeu de ces tensions.** Exemples : « Ce concours fait vivre la promesse de réussir par son talent. », dit *pour* des places réservées ; « Un boulanger fournit plus d'efforts pour le pays que de grands héritiers. », dit *contre* la suppression d'un impôt. Elles empêchent la raison de trahir le camp, et elles nourrissent l'écran « qui et pourquoi ». Elles freinent aussi le portrait (D-034, réglage au travail 1).
-- **La surprise du vote est réelle** : EP2 a été rejeté à six voix près. EM1, une mesure de gauche, a été adoptée avec le centre, et le Rassemblement National a voté contre. Le Rassemblement National a voté pour EP2.
+- **La surprise du vote est réelle** : EP2 a été rejeté à six voix près. EM1, déposé par une députée socialiste, a été adopté avec les groupes du centre et la Droite Républicaine, le Rassemblement National votant contre ; le Rassemblement National a voté pour EP2, déposé par La France insoumise.
 
 ### 5.2 Pour la chaîne des textes (travail 10)
 - **Le déséquilibre du stock** (constat 2) est une mesure à faire au travail 10, comme celle de l'égalité entre groupes. La question : sur un an de votes, combien de textes servables par tension et par sens, avec deux orateurs « pour » et deux « contre » de quatre groupes ? Si EP ou EM n'ont presque rien dans un sens, la règle E9 (D-030) ne tiendra pas sur huit semaines. La question vous reviendrait alors, comme D-044 le prévoit pour l'égalité entre groupes.
@@ -311,7 +311,7 @@ Les dossiers, les clés et les scripts de comparaison sont dans l'espace de trav
 3. **Écarter les textes révélateurs** — on ne sert, dans ces quatre tensions, que des mesures sans camp évident ; le stock serait très mince et penché vers les textes consensuels.
 
 **Question 2 · Nationalités**
-*D'où elle vient* : dans le stock relu, Souveraineté/Ouverture, c'est surtout l'Europe et l'immigration. SO2 vise les ressortissants d'un pays (section 7).
+*D'où elle vient* : dans les votes relus, Souveraineté/Ouverture, c'est surtout l'Europe et l'immigration. SO2 vise les ressortissants d'un pays (section 7).
 *La question* : le jeu peut-il servir un texte d'immigration qui vise une nationalité ?
 1. **Oui, avec mots neutres (Recommandé)** — le texte réel est servi, ses lignes ne décrivent que la règle et jamais une population ; on suit le malaise en bêta.
 2. **Jamais une nationalité visée** — l'immigration reste, mais seulement par des règles générales ; SO2 serait remplacé.
@@ -427,6 +427,7 @@ Format des fiches des essais (A.7, convention 15), avec les chemins de la copie 
   - Lignes : décision du préfet, part des allocations « qui concerne l'enfant condamné », retrait définitif pour un crime, maintien si les parents ont agi de façon responsable (N016:483-485).
 - Doutes :
   - Frontière avec Sécurité/Liberté (délinquance) : c'est le texte le plus fragile du lot pour la tension (section 4.1).
+  - Trois groupes et une non-inscrite : D-044 admet un non-inscrit, hors du compte de l'égalité entre groupes, mais le §8 demande « quatre groupes différents ». Si la vérification lit le §8 strictement, la raison 1 doit venir d'un quatrième groupe ; le seul candidat, Josiane Corneloup (Les Républicains), n'a pas voté.
   - Le seul orateur Les Républicains « pour » (Josiane Corneloup, N016:554-568) n'a pas voté ; la non-inscrite a voté. D'où le choix de la raison 1.
   - Raison 2 : l'auteur du texte est l'orateur. Un annotateur peut lire « responsabilité » plutôt que « aucun ».
 
