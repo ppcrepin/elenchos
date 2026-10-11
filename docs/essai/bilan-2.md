@@ -11,7 +11,7 @@
 5. **Vous avez laissé de côté, exprès, six des huit questions de fin.** Nous avons trop demandé. Nous n'en tirons rien, nous ne rouvrons aucune décision à cause de ce silence, et nous ne les reposons pas.
 6. **Vos trois retours oraux du 11 octobre** donnent trois questions : l'étiquette de la barre du portrait, le repère « Deviner · Répondre » (la Direction artistique a dessiné les trois options sur une page), et l'ordre des cartes dans Deviner (la plus difficile en dernier).
 7. **Le « Supprimer » annonce le vote.** Quatre des cinq titres qui commencent par « Supprimer » sont rejetés, et tout amendement de suppression servi l'est par construction. Une règle de forme est à confier à Contenu.
-8. **Les mécaniques nouvelles tournent sans accroc, mais l'essai montre presque rien de ce qu'elles font au joueur.** Les trois titres de semaine et le badge rare Le Sans-Faute ont tous été décidés par le cadre de l'essai, Le Mystère deux fois pour le nouveau venu. Moi a été ouvert 5 fois, toujours pendant les sauts.
+8. **Les mécaniques nouvelles tournent sans accroc, mais l'essai ne montre presque rien de ce qu'elles font au joueur.** Les trois titres de semaine et le badge rare Le Sans-Faute ont tous été décidés par le cadre de l'essai, Le Mystère deux fois pour le nouveau venu. Moi a été ouvert 5 fois, toujours pendant les sauts.
 9. **Le premier jour du nouveau venu a un défaut propre** : il devine des réponses à un texte qu'il n'a jamais lu. C'est la question 4.
 10. **Ce que l'essai ne pouvait pas dire** : un seul joueur, une séance, des personnages inventés. Rien sur de vrais proches, un vrai nouveau venu, l'habitude ou le rendez-vous de 18h.
 
