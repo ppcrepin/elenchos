@@ -3,7 +3,7 @@
 *Référence de la plateforme retenue (D-048). Back-end, avec Front-end, 11 octobre 2026, révisé après la relecture de Cohérence et votre décision. Il répond à votre question « sur quelle plateforme, Supabase ou autre » (D-047). Aucune ligne de code avant votre accord pour l'étape 6 (D-001).*
 
 **Comment lire les faits.**
-- **Vérifié** : lu le 11 octobre 2026 sur une page officielle, telle que la restitue un moteur de recherche (l'ouverture directe des sites était bloquée). Sources en fin de document.
+- **Vérifié** : lu le 11 octobre 2026 sur une page officielle, telle que la restitue un moteur de recherche (l'ouverture directe des sites était bloquée), sauf deux pages ouvertes par l'orchestrateur, signalées dans les sources. Sources en fin de document.
 - **Relevé (source tierce)** : lu sur un site qui n'est pas celui de l'entreprise concernée.
 - **De mémoire** : ce que savent les agents, à confirmer.
 - **Estimation** : l'avis chiffré de l'équipe, pas un devis.
@@ -17,7 +17,7 @@
 **Un exemple.** Marie touche l'icône d'Elenchos sur son iPhone. Le jeu, chez Scalingo, lit ses cercles dans la base de données. Elle est reconnue par son compte Apple. Paul, lui, s'est inscrit par e-mail : son code à six chiffres est parti par Scaleway. À 18h, notre serveur leur envoie le message.
 
 **Ce que vous aurez à faire.**
-- Ouvrir à votre nom (D-042) trois comptes : Scalingo, Scaleway et la sonde, un service extérieur qui vérifie à 18h02 que les messages sont partis. Le nom de domaine s'achète après la vérification du nom (D-043, D-047). Votre compte Apple est ouvert (D-047).
+- Ouvrir à votre nom (D-042) trois comptes : Scalingo, Scaleway et la sonde, un service extérieur qui vérifie à 18h02 que les messages sont partis ; plus tard, pour les boutiques, la location d'un Mac (annexe A). Le nom de domaine s'achète après la vérification du nom (D-043, D-047). Votre compte Apple est ouvert (D-047).
 - Valider en jouant. Le code des agents part seul vers la **version d'aperçu**, une fois les tests passés. Il n'entre dans la **version en ligne**, celle des joueurs, qu'après votre validation, et jamais de 15h à 19h ni le dimanche (D-043).
 - En cas d'incident, regarder vous-même la version en ligne, avec la procédure d'une page (D-043). Vous seul en détenez les mots de passe (proposé).
 
@@ -28,9 +28,9 @@
 
 C'est du même ordre que la ligne « hébergement, e-mails et sonde » du plan (partie 6), mais cela commence plus tôt, au test du message de 18h (travail 4). Chaque dépense vous sera présentée au moment venu (D-042).
 
-**Si un soir ça tombe.** À 18h02, la sonde vous alerte. La révélation, préparée d'avance, s'affiche à 18h dans le jeu même si le message tarde (travail 6). Il reste les trois cas du plan (partie 4), et un quatrième :
+**Si un soir ça tombe.** À 18h02, la sonde vous alerte. La révélation, préparée d'avance, s'affiche à 18h dans le jeu même si le message tarde (travail 6, horloge du jeu). Il reste les trois cas du plan (partie 4), et un quatrième :
 - **Scalingo est en panne** : on attend, rien n'est perdu.
-- **Une mise en ligne est fautive** : les mises en ligne sont interdites de 15h à 19h et le dimanche ; un geste revient à la version précédente, et le travail 5 vérifiera que vous pouvez le faire seul.
+- **Une mise en ligne est fautive** : les mises en ligne sont interdites de 15h à 19h et le dimanche ; un geste revient à la version précédente, et le travail 5 (socle et données) vérifiera que vous pouvez le faire seul.
 - **L'envoi a échoué** : un seul geste le relance, conçu pour ne pas envoyer deux fois.
 - **La base est perdue ou abîmée** : on la restaure depuis une sauvegarde. Avec de vraies données, c'est un geste à vous seul (limite 3). La procédure d'une page le couvre ; le travail 5 vérifiera que vous le réussissez seul.
 
@@ -88,9 +88,10 @@ Supabase est un « tout-en-un » très apprécié : base de données, connexion 
 
 ## Décisions antérieures touchées
 
-Aucune n'est modifiée ; ce document applique D-005, D-035, D-042, D-043, D-045, D-047 et D-048. Quatre précisions :
+Aucune n'est modifiée ; ce document applique D-005, D-027, D-035, D-042, D-043, D-045, D-047 et D-048. Cinq précisions :
 - **D-043, point 3, étendu aux agents qui codent**, avec les quatre règles de la limite 3 (consigné par D-048 ; à relire par Juridique) ;
 - **D-043, « siège et contrôle »**, lu comme couvrant les sous-traitants qui détiennent les données (limite 1) ;
+- **D-027 (part de « aucune »)** nomme Contenu comme lecteur ; en attendant l'avis de Juridique, vous en êtes le seul lecteur (limite 3) ;
 - **le plan, partie 6** : l'hébergement commence au travail 4, non au travail 5 ;
 - **le plan, travail 5** : l'hébergeur est choisi par D-048 ; les noms cités de mémoire à l'étape 5 sont vérifiés, et Brevo est écarté.
 
@@ -104,7 +105,7 @@ Aucune n'est modifiée ; ce document applique D-005, D-035, D-042, D-043, D-045,
 
 **Où sont gardées les données.** Une base de données PostgreSQL, la plus courante pour ce type de service, gérée par Scalingo. Elle garde les comptes, les cercles, les réponses et les titres.
 - **Le cloisonnement des cercles est imposé par la base elle-même** (plan, travail 5). La base refuse de montrer une réponse à qui n'est pas du cercle, même si une requête oublie son filtre, à condition que le programme lui transmette la bonne identité (de mémoire, fonction standard de PostgreSQL).
-- **Les sauvegardes.** Scalingo sauvegarde chaque jour et permet de revenir à n'importe quel moment des sept derniers jours (vérifié pour la base simple ; à confirmer pour la base avec secours). En plus, une copie chiffrée part chaque nuit chez Scaleway (proposé) : même une perte totale chez Scalingo ne perd pas le jeu.
+- **Les sauvegardes.** Scalingo sauvegarde chaque jour (vérifié). Le retour à n'importe quel instant des sept derniers jours est, de mémoire, réservé à la base avec secours : à confirmer sur la page des sauvegardes avant de compter dessus en construction. En plus, une copie chiffrée part chaque nuit chez Scaleway (proposé) : même une perte totale chez Scalingo ne coûterait au plus qu'une journée de réponses.
 - **Leur durée de conservation.** Un compte effacé doit disparaître aussi des sauvegardes (plan, travail 3 : « l'effacement est réel »). La copie chez Scaleway serait gardée 30 jours (proposé, à confirmer) ; la durée des sauvegardes de Scalingo est à confirmer. Les deux sont à caler avec Juridique dans l'analyse d'impact (D-045, dernier alinéa).
 - **On peut déménager.** Une base PostgreSQL s'exporte et se réinstalle ailleurs, chez Clever Cloud ou Scaleway, en quelques jours de travail (estimation).
 
@@ -118,7 +119,7 @@ Aucune n'est modifiée ; ce document applique D-005, D-035, D-042, D-043, D-045,
 - **La sonde**, chez un autre prestataire, vérifie à 18h02 que les messages sont partis et que le site répond ; sinon, elle vous prévient (plan, travail 12). Exemple : Hyperping, présenté comme français (relevé, source tierce). Elle ne reçoit aucune donnée de joueur.
 - Sur iPhone, depuis iOS 18.4, Apple propose une forme de notification web plus robuste, réservée aux icônes de l'écran d'accueil (vérifié). Le test du travail 4 dira laquelle des deux formes on garde.
 
-**Les e-mails** (le code, l'avertissement avant effacement) : l'envoi d'e-mails de Scaleway, gratuit jusqu'à 300 e-mails par mois, puis 0,25 € les 1 000 (vérifié). Pendant la bêta, zéro euro.
+**Les e-mails** (le code, l'avertissement avant effacement) : l'envoi d'e-mails de Scaleway, gratuit jusqu'à 300 e-mails par mois, puis 0,25 € les 1 000 (vérifié). Pendant la bêta, zéro ou quelques centimes.
 
 **Le passage aux boutiques** (D-005, D-043). Le même code, « emballé » dans une application pour l'App Store et Google Play.
 - L'emballage : Capacitor, un outil libre et courant (de mémoire). Ce n'est pas un prestataire : aucune donnée ne passe par ses auteurs.
@@ -175,13 +176,13 @@ Si la base de 512 Mo ne suffit pas en bêta, la base avec secours de 1 Go ajoute
 - **Les tests automatiques** : partout.
 - **Le repli** : Clever Cloud, si Scalingo venait à manquer (D-048).
 
-C'est l'outillage le plus courant : un développeur pourra le reprendre (D-043).
+C'est un outillage parmi les plus courants : un développeur pourra le reprendre (D-043).
 
 ## D. Les autres options examinées
 
 **Un cloud européen « en briques »** (tout chez Scaleway ou OVHcloud : serveurs, base gérée, e-mails, stockage). Prix à l'unité bas (vérifié pour Scaleway). Mais il faut assembler et régler soi-même ce que Scalingo fournit d'un bloc : le réseau, les droits d'accès, la mise en ligne, les versions de la base. Cela fait un ou deux jours d'entretien de plus par mois (estimation). En bêta, il ne coûte pas moins (50 à 110 €, estimation) ; à 10 000 joueurs, l'écart est de 0 à 20 € par mois (150 à 280 €, estimation). Il ne vaut l'entretien en plus que si le jeu devenait très gros.
 
-**Clever Cloud**, le repli. Société française, à Nantes. Il possède ses machines à Paris et publie la liste de ses sous-traitants (vérifié). Scalingo l'emporte de peu : sa base avec secours est décrite clairement (vérifié), et ses machines sont chez 3DS Outscale, qualifié SecNumCloud, le label de sécurité de l'Agence nationale de la sécurité des systèmes d'information (vérifié). Les deux fonctionnent de la même façon ; passer de l'un à l'autre prend quelques jours (estimation). L'icône des joueurs et leur abonnement au message sont liés à l'adresse du jeu, pas à l'hébergeur : tant que le nom de domaine reste à votre nom, un déménagement ne se voit pas (de mémoire).
+**Clever Cloud**, le repli. Société française, à Nantes. Il possède ses machines à Paris et publie la liste de ses sous-traitants (vérifié). Scalingo l'emporte de peu : sa base avec secours est décrite clairement (vérifié), et ses machines sont chez 3DS Outscale, hébergeur qui détient, de mémoire, la qualification SecNumCloud pour certaines offres (label de sécurité de l'Agence nationale de la sécurité des systèmes d'information) ; les formules retenues ici n'en relèvent probablement pas, à confirmer. C'est un signe de sérieux de l'hébergeur, pas une garantie pour le jeu. Les deux fonctionnent de la même façon ; passer de l'un à l'autre prend quelques jours (estimation). L'icône des joueurs et leur abonnement au message sont liés à l'adresse du jeu, pas à l'hébergeur : tant que le nom de domaine reste à votre nom, un déménagement ne se voit pas (de mémoire).
 
 **Nhost**, suédois, mais qui loge son service chez Amazon (relevé, source tierce) : écarté par notre lecture de D-043 (partie 5, limite 1).
 
@@ -229,7 +230,7 @@ C'est l'outillage le plus courant : un développeur pourra le reprendre (D-043).
 - Brevo : [lieu de stockage des données](https://help.brevo.com/hc/en-us/articles/360001005510-Data-storage-location) ; [levée de décembre 2025, CFNews](https://www.cfnews.net/Acces-libre/Brevo-convertit-un-LBO-bis-550697) ; [French Tech Journal](https://www.frenchtechjournal.com/brevos-eu500m-deal-delivers-historic-liquidity-event-for-french-tech/).
 - Supabase : [tarifs](https://supabase.com/pricing) (formule Pro, mise en sommeil de la formule gratuite ; vérifié par l’orchestrateur) ; [régions](https://supabase.com/docs/guides/platform/regions) ; [RGPD](https://supabase.com/docs/guides/security/gdpr-compliance) ; [auto-hébergement](https://supabase.com/docs/guides/self-hosting.md) ; [mise à jour en auto-hébergement, WZ-IT](https://wz-it.com/en/knowledge/supabase/update-self-hosted/) ; [siège, Sacra](https://sacra.com/c/supabase/).
 - Nhost et Eurobase : [European Purpose, Nhost](https://europeanpurpose.com/tool/nhost) ; [Eurobase, comparatif](https://eurobase.app/blog/managed-eu-alternatives-to-supabase-2026) ; [Eurobase, Indie Hackers](https://www.indiehackers.com/STGim).
-- Notifications web sur iPhone : [WebKit, Safari 18.4](https://webkit.org/blog/16574/digital-credentials-api/) ; [WebKit, Declarative Web Push](https://webkit.org/?p=16535).
+- Notifications web sur iPhone : [WebKit, Declarative Web Push](https://webkit.org/?p=16535).
 - Connexion : [Better Auth, code par e-mail](https://better-auth.com/docs/plugins/email-otp.md).
 - Emballage : [forum Ionic, notifications Capacitor](https://forum.ionicframework.com/t/capacitor-push-notifications/239316).
 - Sonde : [annuaire des services européens de surveillance](https://european-alternatives.eu/category/uptime-monitoring-services) ; [prix d'Hyperping, Toolradar](https://toolradar.com/tools/hyperping/pricing).
