@@ -4,7 +4,7 @@
 
 *Mis à jour le 11 octobre 2026, à la clôture de l'étape 5, par Back-end (avec Front-end) : vos dix choix de fabrication (D-042 à D-045) remplacent la description des options ; la partie 4 suit la branche que vous avez choisie, des agents seuls (D-043) ; les coûts suivent vos choix, dépense par dépense (D-042) ; une première fourchette de durée de construction est donnée, avec ses hypothèses. Ce plan ne décide rien de lui-même : ce qui n'est pas dans une décision est marqué « (proposé) ». Le code ne commence qu'avec votre accord explicite (D-001). Relecture : Cohérence (compatible avec réserves, corrigées), puis le Vérificateur (OK avec corrections mineures, appliquées).*
 
-*Le 11 octobre 2026, après les trois travaux sur papier de l'étape 6 : leur état (faits : D-052, D-053) ; le « Fini quand » du travail 2, réécrit selon D-053 (point 1) ; la mesure du camp par des volontaires et les trois comptes de mi-bêta, ajoutés à la bêta (partie 5) ; ce que lisent les agents (travail 12, D-052, point 3). Relecture : Cohérence, puis le Vérificateur (en cours).*
+*Le 11 octobre 2026, après les trois travaux sur papier de l'étape 6 : leur état (faits : D-052, D-053) ; le « Fini quand » du travail 2, réécrit selon D-053 (point 1) ; la mesure du camp par des volontaires et les trois comptes de mi-bêta, ajoutés à la bêta (partie 5) ; ce que lisent les agents (travail 12, D-052, point 3). Relecture : Cohérence (compatible avec réserves, corrigées), puis le Vérificateur (OK avec corrections mineures, appliquées).*
 
 ## 1. Où on en est
 
@@ -26,7 +26,7 @@
 **Trois démarches à votre nom** (vous portez le service en nom propre, D-042). Chacune vous sera présentée avec son montant avant d'être engagée (D-042, dépense par dépense) :
 - **La vérification du nom par un conseil en propriété industrielle, dès maintenant** (D-013, D-043). Elle débloque le logo, le texte qui explique le nom (D-040) et l'adresse web définitive, qui doit être figée avant la bêta. Quelques centaines d'euros (estimation).
 - **Le compte développeur Apple, au début de l'étape 6** (D-035, D-042). Il faut l'avoir avant le test du message de 18h (travail 4), qui essaie la connexion Apple. Environ 99 € par an (sources de 2020-2021, à revérifier).
-- **Le devis d'un avocat spécialisé en données personnelles** (D-044). Sa première relecture se fait avant la bêta ; demander le devis dès le début de l'étape 6 permet de la placer dans le calendrier (proposé).
+- **Le devis d'un avocat spécialisé en données personnelles** (D-044 ; vous l'avez pris en charge, D-047). Sa première relecture se fait avant la bêta.
 
 Ces démarches ne bloquent pas toutes la même chose : sans compte Apple, le premier test ne peut pas se faire ; sans vérification du nom, ni le logo ni l'adresse définitive ; sans avocat, pas de bêta.
 

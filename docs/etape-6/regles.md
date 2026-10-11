@@ -918,7 +918,7 @@ Son curseur P est net depuis la semaine 9.
 **À vérifier avec de vraies personnes (bêta).**
 - La justesse réelle, toujours lue contre le hasard de chaque manche (D-041), et l'écart entre cercles de 3, 5 et 10.
 - Le Sans-Faute : tombe-t-il, et dans quels cercles (R7) ?
-- Si vous retenez les trois comptes (question 2) : le moment du premier curseur net, la part des joueurs qui ont chaque tempérament, la fréquence du Pas de Côté.
+- Avec les trois comptes (D-052, point 2) : le moment du premier curseur net, la part des joueurs qui ont chaque tempérament, la fréquence du Pas de Côté.
 - Par le questionnaire (QCM) : les tempéraments se comprennent-ils sans explication ? Le Pas de Côté est-il bien reçu, ou vécu comme un reproche ? La barre fait-elle revenir, et sa disparition passe-t-elle inaperçue ? Sans curseur net, lit-on « chacun à son rythme » comme un reproche ? La ligne sous « Valider » fait-elle hésiter à valider ?
 - Le cercle de trois : combien s'endorment, combien grandissent ?
 
