@@ -325,6 +325,10 @@ Questions 4 et 5 de `docs/essai/bilan-2.md`. **Décisions :**
 - **Le plaisir de deviner de vrais proches se jugera en bêta (étape 7).** D-031 tient : pas de soirée avec de vrais proches avant la construction. Constat dit franchement : deux essais avec des personnages simulés ont donné la même réponse (justesse au niveau du hasard, « Deviner a été un passage »), et la construction se fera avant de savoir si le cœur de la promesse (D-002) plaît. Option recommandée par Game design, non retenue : une soirée courte sur papier avec quatre à six vrais proches avant la construction.
 - **Fin de l'étape 4** : le second essai est joué et son bilan rendu ; restent la mise à jour de `docs/produit.md` (D-038, D-039, mesures de bêta proposées par le bilan, règle de forme du vote à confier à Contenu) et la feuille de route.
 
+### D-040 — Un court texte qui explique le nom et fait entrer dans l'univers · Décidé (11 octobre 2026)
+
+Idée du porteur : après la première devinette, au moment de l'inscription, un court texte qui explique le mot Elenchos (ἔλεγχος, l'examen socratique) et le principe du jeu. **Décision : l'idée est retenue ; son emplacement (l'écran du compte, après la première devinette de l'entrée, D-006, D-035) entre dès maintenant dans `docs/produit.md` ; le texte s'écrit une fois le nom vérifié (fin de l'étape 3, D-013).** Options non retenues : l'écrire tout de suite, ou ne pas l'ajouter. Le texte passera par le circuit complet (UX, Direction artistique, Cohérence, Vérificateur) et respectera la promesse (D-002) et le ton de La Tablée (D-012).
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
