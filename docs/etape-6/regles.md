@@ -6,7 +6,7 @@
 
 **Ce que nous avons fait.**
 - Chaque règle du jeu a maintenant ses chiffres et un exemple joué (section 3).
-- Sur les vingt points que vos décisions laissaient à l'étape 6, dix-neuf sont fermés ; le vingtième (les voix sous le vote) reste une recommandation, à trancher par UX et Contenu (section 4).
+- Sur les vingt points laissés à l'étape 6 (par vos décisions, par le second essai, ou relevés en écrivant), dix-neuf sont fermés, avec l'accord d'UX sur « Valider » et de Contenu et Back-end sur la règle 20 ; le vingtième (les voix sous le vote) reste une recommandation, à trancher par UX et Contenu (section 4).
 - Une règle nouvelle, la règle 20, dit ce que devient un texte corrigé après coup (D-044).
 - Les réglages ont été calés sur 600 cercles simulés de 3, 5 et 10 joueurs inventés, pendant douze semaines, avec des contrôles à 4 et 7 joueurs (section 5).
 - Dix journées jouées à la main servent de corrigé : le code devra retrouver exactement les mêmes résultats (section 6).
@@ -16,7 +16,7 @@
 **Les réglages qui comptent.**
 - **Un curseur devient net un peu plus tôt que dans les essais.** C'est ce qui tient votre promesse : « environ trois mois pour trois ou quatre curseurs nets » (règle 18). Avec le seuil des essais, un joueur régulier n'en aurait qu'un ou deux à trois mois, et près d'un sur cinq aucun à douze semaines.
 - **La barre du portrait se remplit en 60 réponses**, soit environ trois mois à cinq réponses par semaine, puis s'efface. Elle n'annonce aucune arrivée (D-038).
-- **Le Pas de Côté devient vraiment rare** : environ un joueur sur trente dans ses trois premiers mois, puis à peu près un par mois dans un cercle de cinq.
+- **Le Pas de Côté devient vraiment rare** : deux à trois joueurs sur cent dans leurs trois premiers mois, puis à peu près un par mois dans un cercle de cinq.
 - **Les tempéraments s'ajustent à la taille du cercle** : à trois, être « seul de son avis » arrive par simple hasard. Dès six membres, L'Original n'est plus « seul de son avis » à la lettre, mais du côté d'au plus un tiers du cercle (précision du §4 et de la règle 13).
 - **L'avis du cercle s'affiche dès trois réponses.**
 
@@ -27,19 +27,20 @@
 
 **Décisions touchées.**
 - Une modification : une exception à D-011 (un nouveau venu n'est pas proposé dans Deviner pour un texte fermé avant son arrivée).
+- Une ligne d'écran ajoutée sous « Valider », à la demande d'UX (touche D-014).
 - Quatre précisions qui s'écartent de la lettre d'un texte validé : la barre (D-026, dans le cadre de D-038), Le Pont et L'Original (§4, règle 13), la phrase du dimanche (R2).
 - Une règle nouvelle : la règle 20 (précise D-044, point 1).
 - Le reste précise des règles sans en changer aucune (section 8).
 
 **Deux questions pour vous, à la fin** (section 7) :
 - valider ces règles d'un geste, comme les règles de détail du bilan (D-030) ;
-- ajouter ou non aux mesures de la bêta trois comptes tirés du jeu, sans lesquels le réglage de mi-bêta se ferait à l'aveugle. Ils sortent de la liste fermée des usages (D-042) : c'est à vous d'en décider.
+- ajouter ou non aux mesures de la bêta trois comptes tirés du jeu ; sans eux, le réglage de mi-bêta se ferait sans mesure pour le portrait, Le Pas de Côté et les tempéraments. Leur calcul lit des opinions (avis de Juridique) et n'en garde que des totaux ; ils sortent de la liste fermée des usages (D-042) et de D-027 : c'est à vous d'en décider.
 
 ---
 
 ## 1. Ce que vit un cercle type en trois mois
 
-*Pour vous. Le cercle « Famille » : Thomas, Marie, Hugo, Inès et Paul. Les chiffres entre parenthèses viennent de nos 200 cercles simulés de cinq joueurs inventés. Un joueur « régulier » répond au moins cinq jours sur sept ; c'est le cas de deux joueurs simulés sur trois.*
+*Pour vous. Le cercle « Famille » : Thomas, Marie, Hugo, Inès et Paul. Tous les chiffres de cette section viennent de nos 200 cercles simulés de cinq joueurs inventés. Un joueur « régulier » répond au moins cinq jours sur sept ; c'est le cas de deux joueurs simulés sur trois.*
 
 *Trois mots, pour lire sans le reste : une **carte**, c'est la réponse d'un proche à deviner ; un **curseur net**, c'est une tension sur laquelle le jeu commence à vous connaître ; les **tempéraments** (L'Original, souvent à contre-courant du cercle ; Le Pont, au milieu quand le cercle se partage ; Le Mesuré, souvent neutre ; Le Tranché, souvent « Très … ») décrivent une manière de répondre sur deux mois.*
 
@@ -59,7 +60,7 @@ Rien n'est encore net. Dans Moi, la barre « Ton portrait se dessine » avance d
 
 Vers la huitième semaine, chez un joueur régulier, le premier curseur devient net (pour la moitié d'entre eux, entre les semaines 7 et 9). Le dimanche qui suit, sa phrase change de forme : « Entre précaution et innovation, tu choisis le plus souvent l'innovation. » Dans Le Cercle, son initiale apparaît sur cette barre.
 
-Le même dimanche arrivent les premiers tempéraments, qui demandent deux mois de réponses. À douze semaines, parmi ceux qui ont assez joué (vingt réponses en deux mois), un sur deux en a au moins un : Le Pont ou L'Original, chacun environ un sur cinq ; Le Mesuré, un sur sept ; Le Tranché, un sur dix.
+Le même dimanche arrivent les premiers tempéraments, qui demandent deux mois de réponses. À douze semaines, un joueur sur deux (parmi ceux qui ont au moins vingt réponses) a un tempérament. Les plus fréquents : L'Original et Le Pont ; les plus rares : Le Mesuré, puis Le Tranché.
 
 ### Le troisième mois : on se reconnaît
 
@@ -67,7 +68,7 @@ Vers la neuvième ou dixième semaine, la barre d'un joueur régulier est pleine
 
 À douze semaines, un joueur régulier a trois curseurs nets (deux à quatre pour la moitié d'entre eux). Les autres restent flous, et c'est vrai : on sait peu de chose de lui sur ces tensions. Marie touche le visage de Hugo : leurs portraits superposés, proches sur trois tensions, éloignés sur une. De quoi en parler au prochain repas.
 
-Le Pas de Côté reste rare : il faut un curseur très net, puis une réponse franchement contraire. Dans les trois premiers mois, environ un joueur sur trente le reçoit ; ensuite, à peu près un par mois dans un cercle de cinq.
+Le Pas de Côté reste rare : il faut un curseur très net, puis une réponse franchement contraire. Dans les trois premiers mois, deux à trois joueurs sur cent le reçoivent ; ensuite, à peu près un par mois dans un cercle de cinq.
 
 Le Sans-Faute, lui, n'est jamais tombé dans nos cercles de cinq : sept jours sans une erreur ni une carte passée, sur une vingtaine de cartes, c'est hors de portée de nos joueurs inventés.
 
@@ -207,8 +208,9 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 - **Laquelle.** Elle est tirée au sort parmi les cartes servies dont la raison n'est pas « aucune » (D-038). Si toutes sont « aucune », il n'y a pas de carte « qui et pourquoi » ce jour-là (proposé).
 - **Son ordre.** Les autres cartes viennent d'abord, dans un ordre tiré au sort ; elle vient en dernier. Une manche à deux cartes la met en second. Une manche d'une seule carte est cette carte (proposé ; D-038 était écrite pour trois cartes).
 - **Le geste.** Son « pourquoi » se choisit parmi les quatre raisons du texte, une fois son visage posé (D-038). Changer de visage garde le « pourquoi ». Retirer le visage ou passer la carte l'efface (proposé, comme dans l'essai : une raison va avec une personne).
-- **Valider** (proposé par Game design ; **à confirmer par UX**). Valider enregistre la manche telle qu'elle est ; ensuite, rien ne change, et le repère de la journée passe à « fait ». Avant Valider, la manche est un brouillon gardé à chaque geste. À 18h, un brouillon compte tel qu'il est (règle 10). Le mot « Valider » des maquettes reste (D-014).
-  - **Désaccord nommé** (R10, D-030) : UX jugeait qu'avec la fermeture à 18h, Valider ne fige plus rien et devient un « Suivant », ce qui touche D-014 ; Game design le veut figeant, comme dans l'essai. Raisons de Game design : « fait » dans le repère (D-038) doit vouloir dire fait ; un bouton qui fige décourage de changer ses cartes après avoir demandé aux proches ce qu'ils ont répondu ; et le mot validé reste exact.
+- **Valider** (proposé). Valider enregistre la manche telle qu'elle est ; ensuite, rien ne change, et le repère de la journée passe à « fait ». Avant Valider, la manche est un brouillon gardé à chaque geste. À 18h, un brouillon compte tel qu'il est (règle 10). Le mot « Valider » des maquettes reste (D-014).
+  - **Désaccord levé par UX, avec une condition.** Au bilan (R10, D-030), UX jugeait qu'avec la fermeture à 18h, Valider ne figeait plus rien et devenait un « Suivant » ; Game design le voulait figeant, comme dans l'essai : « fait » dans le repère (D-038) doit vouloir dire fait, un bouton qui fige décourage de changer ses cartes après avoir demandé aux proches ce qu'ils ont répondu, et le mot validé reste exact. UX s'y range, à une condition : le dire avant le geste.
+  - **Sous le bouton, une ligne** (mots d'UX) : « Une fois validé, tu ne peux plus changer. » Elle ajoute une ligne à l'écran Deviner (touche D-014, section 8).
 - **Passer** ne coûte rien, sauf pour Le Sans-Faute (règle 14).
 - **Exemples.** J1, J4 (une carte), J5 (manche non validée à 18h), J6 (deux cartes).
 - *Source : règle 9 ; D-038 ; R10 (D-030) ; D-022.*
@@ -224,7 +226,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
   - on range les n réponses de TD à TF. Si n est impair, la mention du milieu est celle de rang (n + 1)/2. Si n est pair, on marque les deux du milieu, ou une seule si elles sont égales ;
   - la ligne suit le côté du milieu : favorable, « Ton cercle, lui, l'aurait adopté. » ; défavorable, « … l'aurait rejeté. » ; neutre, ou deux côtés différents au milieu, « Ton cercle, lui, était partagé. » ;
   - la réponse du joueur n'est jamais marquée (lecture d'UX de la maquette 2.7a).
-- **Pourquoi trois, et non six (position d'UX).** Dans un cercle de trois ou quatre, chacun reçoit déjà toutes les réponses des autres en cartes : le graphique n'y apprend rien de plus. Avec un seuil de six, aucun cercle de trois à cinq ne verrait jamais l'avis que vous avez choisi (D-025). Juridique proposait aussi trois. Ce seuil va dans les points relus par l'avocat avant la bêta, comme D-025 le demande.
+- **Pourquoi trois, et non six comme le proposait UX.** Dans un cercle de trois ou quatre, chacun reçoit déjà toutes les réponses des autres en cartes : le graphique n'y apprend rien de plus. Avec un seuil de six, aucun cercle de trois à cinq ne verrait jamais l'avis que vous avez choisi (D-025). Juridique proposait aussi trois. Ce seuil va dans les points relus par l'avocat avant la bêta, comme D-025 le demande.
 - **« Partagé » pour un cercle tout entier neutre.** UX objectait que ce serait faux. Nous gardons les trois lignes de D-025 : « être partagé » veut aussi dire hésiter entre deux avis, et le cas reste rare (0,6 % des soirs où l'avis s'affiche à trois, 0,2 % à cinq, jamais à dix dans nos cercles simulés).
 - **Exemples.** J1 (« rejeté »), J2 (« adopté »), J3 (nombre pair, « partagé »), J6 (sous le seuil).
 - *Source : règle 10 ; D-010, D-011, D-025 ; R10, E1 (D-030).*
@@ -244,7 +246,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 - **La surprise de la semaine** : parmi les textes de ses sept manches, la plus forte part d'attributions fausses, passes exclues, avec au moins 4 attributions et au moins 1 fausse. À égalité, le plus d'erreurs ; puis un tirage.
 - **Titre sans titulaire** : il n'apparaît pas (R6). Pas de titres si le cercle a dormi pendant le jour de jeu du dimanche (règle 5).
 - **Exemple.** J7.
-- *Source : règle 12 ; R6 (D-030) ; D-024. Dans les cercles simulés de cinq, Le Devin manque moins d'une semaine sur mille, Le Mystère et la surprise une sur cinq cents ; à trois, Le Mystère manque une semaine sur dix et la surprise plus d'une sur huit.*
+- *Source : règle 12 ; R6 (D-030) ; D-024. Dans les cercles simulés de cinq, Le Devin manque moins d'une semaine sur mille, Le Mystère une sur mille, la surprise une sur cinq cents ; à trois, Le Mystère manque une semaine sur dix et la surprise plus d'une sur huit.*
 
 **Règle 13 · Les tempéraments.**
 - **Quand.** Chaque dimanche, au moment des titres, sur les 56 derniers jours de jeu (deux mois).
@@ -254,7 +256,8 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 - **Le Mesuré** (pour toute la personne) : Neutre sur au moins 1/3 de ses réponses.
 - **Le Tranché** (pour toute la personne) : « Très … » sur au moins 1/2 de ses réponses.
 - **Garder un tempérament.** Une fois obtenu, il se garde tant que la part reste au moins aux 4/5 du seuil, et que les conditions de « Qui » restent remplies (proposé). Sans cette marge, les tempéraments changeraient d'une semaine à l'autre presque deux fois plus souvent.
-- **Affichage.** Sous un visage : ceux de ce cercle, après les titres, un par ligne, dans l'ordre L'Original, Le Pont, Le Mesuré, Le Tranché. Dans Moi : tous, avec le nom du cercle pour L'Original et Le Pont (R9).
+- **Affichage.** Sous un visage, après les titres, un par ligne, dans l'ordre L'Original, Le Pont, Le Mesuré, Le Tranché : L'Original et Le Pont de ce cercle, et Le Mesuré et Le Tranché de la personne, qui s'affichent donc sous son visage dans chacun de ses cercles (lecture de R9, proposé). Dans Moi : tous, avec le nom du cercle pour L'Original et Le Pont (R9).
+- **Pour le code, L'Original** : ses réponses Neutre comptent dans le total de ses réponses, mais ne sont jamais « de son côté » ; un texte où il a répondu Neutre ne le rend donc jamais Original.
 - **Exemple.** J9.
 - *Source : règle 13 ; R9 (D-030) ; projet §4 ; seuils et marge proposés (section 5). Le Pont se juge texte par texte, et non tension par tension comme l'écrit le §4 ; L'Original n'est plus « seul » à la lettre dès six membres : deux précisions signalées en section 8.*
 
@@ -274,7 +277,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 **Règle 15 · L'entrée.**
 - **Chiffres.** Trois textes, fixés à la création du cercle, identiques pour tous ceux qui y entrent, d'une tension différente chacun (proposé, `docs/onboarding.md`), dont au moins un texte rejeté (D-028). Ils comptent pour le portrait et la barre (3 crans), jamais pour les points ni les titres.
 - **Pas de phrase du jour à l'entrée** : la révélation immédiate en tient lieu (proposé, conforme au parcours validé, `docs/onboarding.md`).
-- **Un joueur déjà inscrit qui rejoint un autre cercle** relève le défi comme tout invité : il répond aux trois textes de ce cercle et devine celui qui l'invite (proposé ; D-030 renvoyait ce point à l'étape 6). S'il avait déjà répondu à l'un de ces textes, sa réponse est reprise, sans compter deux fois. Il ne recrée pas de compte. Si son pseudo est déjà pris dans ce cercle, on lui demande d'en changer ; le nouveau vaut pour tous ses cercles, car le pseudo reste celui du compte (proposé ; mots : UX). Un pseudo propre à chaque cercle serait plus doux, mais créerait une donnée nouvelle ; nous ne le proposons pas. S'il a déjà trois cercles, le lien le lui dit.
+- **Un joueur déjà inscrit qui rejoint un autre cercle** relève le défi comme tout invité : il répond aux trois textes de ce cercle et devine celui qui l'invite (proposé ; D-030 renvoyait ce point à l'étape 6). S'il avait déjà répondu à l'un de ces textes, sa réponse est reprise, sans compter deux fois. Il ne recrée pas de compte. Si son pseudo est déjà pris dans ce cercle, on lui demande d'en changer ; le nouveau vaut pour tous ses cercles, car le pseudo reste celui du compte (proposé ; mots : UX). Ses proches des cercles où il est déjà le verront changer de nom. Un pseudo propre à chaque cercle serait plus doux, mais créerait une donnée nouvelle ; nous ne le proposons pas. S'il a déjà trois cercles, le lien le lui dit.
 - **Exemple.** Hugo, déjà dans « Famille », est invité par Léa dans « Amis ». Il répond aux trois textes d'« Amis » ; il avait déjà répondu au deuxième dans « Famille », et sa réponse y est reprise telle quelle. Puis il devine Léa. Sa barre avance de 2 crans, pas de 3.
 - *Source : règle 15 ; D-006 ; D-028 ; D-030.*
 
@@ -319,8 +322,8 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
   - 60 crans, un par réponse, entrée comprise ; elle ne recule jamais et ne porte aucune date ;
   - 60 réponses, c'est environ trois mois à cinq réponses par semaine, un peu plus de deux mois pour qui répond chaque jour ;
   - à 60 réponses, plus de trois joueurs réguliers sur quatre ont déjà un curseur net (section 5) ;
-  - pleine, elle se montre pleine une fois, à la prochaine ouverture de Moi, avec une ligne qui ne promet rien (mots : UX ; par exemple « Ton portrait continue de se préciser à chaque réponse. »), puis elle disparaît ;
-  - avec elle disparaît l'état « portrait pas encore formé » et sa phrase « Il faut environ trois mois pour les premiers curseurs nets » (5.11), qui serait fausse chez qui a 60 réponses sans curseur net (environ 5 % des joueurs nuancés) ; Moi montre alors les curseurs tels qu'ils sont (proposé ; ce qui s'affiche à la place : UX) ;
+  - pleine, elle se montre pleine une fois, à la prochaine ouverture de Moi, avec une ligne qui ne promet rien (mots d'UX, proposés) : « Ta barre est pleine. Ton portrait, lui, continue. » Puis elle disparaît ;
+  - avec elle disparaît l'état « portrait pas encore formé » et sa phrase « Il faut environ trois mois pour les premiers curseurs nets » (5.11), qui serait fausse chez qui a 60 réponses sans curseur net (environ 5 % des joueurs nuancés) ; Moi montre alors les curseurs tels qu'ils sont. S'il n'y a encore aucun curseur net, une seule ligne au-dessus d'eux (mots d'UX, proposés) : « Tes curseurs se précisent à chaque réponse, chacun à son rythme. » Elle ne promet aucune arrivée (D-038), ne tire aucune conclusion sur le joueur, et disparaît au premier curseur net ;
   - elle ne saute pas au plein au premier curseur net, comme dans l'essai 2 : un cran par réponse, sans exception ;
   - elle n'est visible que du joueur (D-026).
 - **Exemples.** J5 (les quatre phrases du jour) ; J7 (phrase de la semaine) ; J8 (barre pleine) ; J9 (tension devenue nette).
@@ -334,16 +337,20 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 - **Exemple.** J8 (ordre des curseurs de Marie dans Moi).
 - *Source : règle 19 ; D-010 (lecture A, dont découle la première puce), D-024, D-026 ; R12 (D-030).*
 
-**Règle 20 · Un texte corrigé après coup** (proposé ; question ouverte par la procédure de correction de D-044).
+**Règle 20 · Un texte corrigé après coup** (proposé ; question ouverte par la procédure de correction de D-044 ; confirmée par Contenu et Back-end, avec leurs corrections).
 - **Erreur sur le vote, un auteur, une date** (ce qu'on apprend à 18h) : un erratum daté au registre, et la fiche du texte le dit. Rien ne change dans le jeu.
 - **Erreur sur ce à quoi on a répondu** (les trois lignes, ou une raison qui trahit son auteur) : le texte sort du portrait.
   - Les réponses restent, mais ne comptent plus dans aucun curseur.
   - Dans l'Historique, la phrase du jour de ce texte porte une mention (mots : UX).
   - Tout le reste tient : cartes, points, titres, Le Fidèle, l'avis du cercle, la barre (elle ne recule jamais, D-026).
   - Raison : on a deviné ce que les proches avaient répondu, et cela reste vrai ; seul le lien entre la réponse et une valeur est faussé.
-- **Ce que veut dire « le texte est remplacé »** (D-044, point 1) : le texte faux est retiré du stock et du portrait, et un texte corrigé ou un autre texte prend sa place dans le calendrier à venir. Rien n'est échangé dans une journée déjà ouverte : on ne rouvre pas les réponses d'un texte, et une manche en cours garde ses cartes.
+- **Erreur sur le lien entre une raison et une valeur** (son étiquette, jamais montrée au joueur) : le texte reste dans le portrait ; les curseurs sont recalculés avec la bonne étiquette.
+- **Ce que veut dire « le texte est remplacé »** (D-044, point 1), selon le moment (Contenu) :
+  - **erreur trouvée avant que le texte soit servi** (il est encore dans les quatre semaines d'avance) : on met à sa place sa version corrigée, si elle repasse toute la chaîne, sinon un texte de la réserve ; on revérifie alors les équilibres de la période (adoptés et rejetés, D-028 ; égalité entre groupes, D-044, point 3 ; règle de forme, D-041) ;
+  - **erreur trouvée après l'ouverture du texte** : rien n'est remplacé dans le jeu. Le texte corrigé n'est jamais resservi, puisque son vote et ses auteurs ont été révélés. « Remplacé » ne vaut que pour le registre : la version corrigée y est publiée, l'ancienne reste visible avec l'erratum daté. L'Historique montre ce que le joueur a lu, avec la mention prévue. On ne rouvre pas les réponses, et une manche en cours garde ses cartes.
+- **Quand** (Back-end) : le retrait des portraits s'applique hors de 15h–19h et jamais le dimanche, comme une mise en ligne, pour ne jamais croiser les titres du dimanche ni la révélation préparée d'avance, qui ne bougent pas. Le recalcul rejoue toutes les réponses ; il peut être relancé sans changer le résultat. Une réponse arrivée après le retrait, même en retard (règle 6), en est exclue aussi.
 - **Exemple.** J10.
-- *Source : D-044 (point 1) ; `docs/produit.md`, « Ce que ces décisions laissent à régler », point de Game design. Règle nouvelle, absente des 19 règles de `produit.md`, où elle entrera ; à confirmer par Contenu et Back-end.*
+- *Source : D-044 (point 1) ; `docs/produit.md`, « Ce que ces décisions laissent à régler », point de Game design. Règle nouvelle, absente des 19 règles de `produit.md`, où elle entrera. Confirmée par Contenu et Back-end, qui en ont précisé le moment, le cas de l'étiquette et le sens de « remplacé ».*
 
 ---
 
@@ -357,11 +364,11 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 | Ce que la barre annonce au bout, jusqu'à quand elle s'affiche | D-026, D-038 | 60 réponses ; pleine une fois, puis effacée ; rien de promis | Règle 18 |
 | Le seuil du Pas de Côté | R11 | Net et \|c − 1/2\| ≥ 7/20 | Règle 14 |
 | Ce que devient Le Pas de Côté après son annonce | Constat essai 2 | Il vit comme un titre, comme Le Sans-Faute | Règle 14 |
-| Le mot « Valider » | R10, D-022 | Il fige la manche ; le mot reste (désaccord d'UX nommé, à confirmer par UX) | Règle 9 |
+| Le mot « Valider » | R10, D-022 | Il fige la manche ; le mot reste ; une ligne d'UX sous le bouton (désaccord levé par UX) | Règle 9 |
 | L'ordre des cartes : deux cartes, une carte, toutes « aucune », visage changé ou retiré | D-038 | Cas fermés un par un | Règle 9 |
 | L'avis du cercle : seuil, règle de la ligne, réponse du joueur | D-025 | 3 réponses ; médiane ; jamais marquée | Règle 10 |
 | « Quelques minutes » après 18h | R10 | Jusqu'à 18h10 si Répondre était affiché avant 18h | Règle 6 |
-| Un texte corrigé après coup | D-044 | Il sort du portrait, le reste tient | Règle 20 |
+| Un texte corrigé après coup | D-044 | Il sort du portrait, le reste tient ; moment et sens de « remplacé » fixés avec Contenu et Back-end | Règle 20 |
 | « Un ancien membre » : deux anciens membres ; un titulaire qui part | D-045 | Indistincts ; titre non redonné ; carte retirée | Règle 4 |
 | Un joueur déjà inscrit rejoint un autre cercle | D-030 | Il relève le défi ; réponses déjà données reprises | Règle 15 |
 | Un nouveau venu proposé pour un texte d'avant son arrivée | Constat essai 2 | Non proposé (exception à D-011) | Règle 8 |
@@ -374,7 +381,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 | Le hasard d'une manche | D-041 | Formule et exemple | Règle 11 |
 | Les voix sous le vote | E4 | **Recommandation, non fermée.** Aucune voix sous le vote ; le lien officiel, donné à 18h, les montre. Position d'UX, que Game design partage : la révélation n'a pas besoin d'un décompte de plus pour être jouée. Contenu proposait les voix. À trancher par UX et Contenu, dont c'est le domaine | — |
 
-Dix-neuf points sur vingt sont fermés ; le vingtième est une recommandation.
+Dix-neuf points sur vingt sont fermés : douze viennent de vos décisions, quatre du second essai, trois ont été relevés en écrivant. « Valider » et la règle 20 sont fermés avec l'accord d'UX, de Contenu et de Back-end. Le vingtième, les voix sous le vote, reste une recommandation.
 
 Restent hors de ce travail, parmi ce que `docs/produit.md` laisse à régler :
 - les libellés des quatre tensions jamais essayées (travail 2, `docs/etape-6/tensions.md`) ;
@@ -472,19 +479,26 @@ Le plan prévoit un seul lot de réglages, à mi-parcours de la bêta (`docs/pla
 
 **Ce qui ne se mesure pas sans vous.** Le seuil de netteté, Le Pas de Côté et les tempéraments se calculent à partir des positions et des raisons. Les compter, même tous joueurs confondus, est un usage des opinions qui n'est pas dans la liste fermée (D-042, point 2 ; D-027 : la part de « aucune » est le seul usage interne des opinions). Nous les retirons donc des repères, sauf si vous en décidez autrement (section 7, question 2).
 
-**Les trois comptes que nous vous proposons d'ajouter**, réduits à des événements du jeu qui ne disent rien du sens des réponses (ni pour ou contre, ni quelle valeur, ni quelle tension) :
+**Les trois comptes que nous vous proposons d'ajouter :**
 1. le nombre de Pas de Côté annoncés, par mois ;
 2. le nombre de tempéraments en cours, pour chacun des quatre, rapporté au nombre de joueurs qui peuvent en avoir ;
 3. la part des joueurs qui ont au moins un curseur net, à 40, 60 et 80 réponses.
 
-Conditions, calquées sur D-027 : comptés sur tous les joueurs à la fois, jamais par cercle ni par personne, jamais croisés avec une autre donnée ; rien sous 30 joueurs ; seuls les comptes sont gardés ; lus par l'équipe pour le réglage seulement ; jamais publiés ; avis de Juridique et de l'avocat avant la bêta.
+**Ce qu'en dit Juridique.** Ce sont des traitements de données d'opinions politiques (RGPD, art. 9), non par leur résultat, mais par leur calcul : pour compter, le jeu lit les positions de personnes identifiées. Le Mesuré et Le Tranché sont couverts aussi : ils disent l'intensité d'une opinion, pas son sens, et la Cour de justice de l'Union lit l'art. 9 largement. Les totaux, eux, ne disent rien du sens des réponses (ni pour ou contre, ni quelle valeur, ni quelle tension) et sont anonymes s'ils respectent les seuils. Juridique n'est pas avocat.
+
+**Conditions** (celles de D-027, plus quatre de Juridique) :
+- comptés sur tous les joueurs à la fois, jamais par cercle ni par personne, jamais croisés avec une autre donnée ; seuls les comptes sont gardés ; lus par l'équipe pour le réglage seulement ; jamais publiés ;
+- **consentement dès le premier joueur** : « régler les seuils du jeu » est écrit dans la carte de consentement ou dans « Qui, durée, droits » dès le premier joueur de la bêta ; sinon il faudrait redemander l'accord de tous (le consentement ne s'étend pas par « compatibilité », art. 6.4) ;
+- **accord séparé, ou réglage « Ne pas compter mes réponses »**, selon ce que dira l'avocat (comme pour D-027) ; le réglage évite de conditionner le jeu à ce traitement (art. 7.4) ;
+- **seuil de 30 joueurs par groupe compté**, et non sur la bêta entière : par exemple les joueurs qui peuvent avoir un tempérament, ou ceux qui ont atteint 80 réponses. Avec une bêta de 40 à 80 joueurs, certains comptes resteront donc vides ;
+- **l'analyse d'impact** les inclut, avec une durée de conservation et la liste de qui les lit.
 
 **Ce que chacun permettrait de recaler** (repères proposés) :
 - le seuil de netteté, si la part des joueurs avec un curseur net à 60 réponses s'écarte nettement de « plus de trois sur quatre » ;
 - Le Pas de Côté, s'il en tombe plus d'un par mois pour cinq joueurs ;
 - les tempéraments, si l'un d'eux sort de la fourchette d'un joueur éligible sur dix à un sur quatre.
 
-**Sans ces comptes**, les seuils restent ceux de la simulation jusqu'à l'ouverture, réglés à l'aveugle. La seule autre source serait le questionnaire de la bêta (QCM, sans texte libre), qui dit ce que les joueurs ressentent, pas ce que le jeu leur a donné.
+**Sans ces comptes**, le réglage de mi-bêta se fait sans mesure pour le portrait, Le Pas de Côté et les tempéraments : leurs seuils restent ceux de la simulation jusqu'à l'ouverture. La justesse, Le Sans-Faute, Le Devin et Le Mystère se mesurent toujours, et le questionnaire de la bêta (QCM, sans texte libre) dit ce que les joueurs ressentent, pas ce que le jeu leur a donné. En échange, aucun nouvel usage des opinions, et rien de plus à faire relire par l'avocat.
 
 ---
 
@@ -820,7 +834,7 @@ Son curseur P est net depuis la semaine 9.
 - Elle répond au texte du mercredi, ouvert jusqu'à 18h. Jeudi, sa carte peut être servie, et son visage est proposé.
 - Elle ne peut pas être Le Fidèle de la semaine 14.
 
-**Jeudi : le texte N de J8 est corrigé** (une de ses trois lignes décrivait mal la mesure ; l'erreur est trouvée neuf jours après).
+**Jeudi : le texte N de J8 est corrigé** (une de ses trois lignes décrivait mal la mesure ; l'erreur est trouvée neuf jours après, le texte a déjà été servi). Le retrait est appliqué à 10h, hors de 15h–19h. N n'est pas resservi : sa version corrigée va au registre, avec l'erratum.
 - Erratum daté au registre. N sort de tous les portraits.
 - Marie n'a pas répondu à d'autres textes L depuis. Son curseur L revient à W = 7, Σwπ = 1 : c = 3/11, ℓ = 27/80. **Il n'est plus net.**
 - Sa barre reste pleine (elle ne recule jamais). Les points de la manche sur N, l'avis du cercle sur N et Le Fidèle de la semaine 13 ne changent pas.
@@ -832,14 +846,14 @@ Son curseur P est net depuis la semaine 9.
 
 **Question 1 · Règles** — Validez-vous ces règles chiffrées, d'un geste, comme les règles de détail du bilan (D-030) ?
 
-- **Valider tout (Recommandé)** — Ferme 19 points sur 20, modifie D-011, précise quatre textes validés et ajoute la règle 20 (section 8).
+- **Valider tout (Recommandé)** — Ferme 19 points sur 20, modifie D-011, ajoute une ligne d'écran (D-014), précise quatre textes validés et ajoute la règle 20 (section 8).
 - **Valider, sauf l'exception** — Tout, sauf D-011 : le nouveau venu reste proposé sur un texte d'avant son arrivée.
 - **Relire d'abord** — Vous lisez les sections 3 et 8, puis vous répondez.
 
-**Question 2 · Mesures** — Ajoutez-vous aux mesures de la bêta les trois comptes tirés du jeu (section 5) : Pas de Côté par mois, tempéraments en cours, joueurs avec un curseur net à 40, 60 et 80 réponses ?
+**Question 2 · Mesures** — Ajoutez-vous aux mesures de la bêta les trois comptes tirés du jeu (section 5) : Pas de Côté par mois, tempéraments en cours, joueurs avec un curseur net à 40, 60 et 80 réponses ? Leur calcul lit des opinions (art. 9) et n'en garde que des totaux.
 
-- **Ajouter les trois comptes (Recommandé)** — Sans eux, le réglage de mi-bêta se fait à l'aveugle ; tous joueurs confondus, jamais publiés, après avis de Juridique et de l'avocat. Élargit la liste fermée (D-042).
-- **Ne rien ajouter** — La liste fermée reste intacte ; les seuils restent ceux de la simulation jusqu'à l'ouverture.
+- **Ajouter les trois comptes (Recommandé)** — Sans eux, pas de réglage mesuré du portrait, du Pas de Côté ni des tempéraments. Juridique : le calcul lit des opinions, mais n'en garde que des totaux anonymes ; c'est acceptable si la carte de consentement le dit dès le premier joueur et si l'avocat valide. Élargit la liste fermée (D-042) et D-027.
+- **Ne rien ajouter** — Cohérent avec D-027 et D-042 ; justesse, titres et questionnaire se mesurent déjà. Juridique : aucun nouvel usage des opinions, donc rien à ajouter à la carte ni à l'analyse d'impact.
 
 ---
 
@@ -847,7 +861,8 @@ Son curseur P est net depuis la semaine 9.
 
 **Modifiée, explicitement.**
 - **D-011** (« au Deviner, tous les autres membres sont proposés, y compris ceux en pause »). Seconde exception, après R8 : un membre arrivé après la fermeture d'un texte n'est pas proposé sur ce texte (règle 8). Il ne pouvait pas y avoir répondu ; le proposer offrirait à tous une élimination gratuite, et ne cache rien, puisque son arrivée est connue du cercle. La raison de D-011 (ne jamais montrer qui a décroché) tient : un membre en pause reste proposé.
-- **Si vous ajoutez les trois comptes (question 2)** : D-042, point 2 (liste fermée des usages), et D-027 (« seul usage interne des opinions ») reçoivent une seconde exception, limitée au réglage du jeu. `produit.md` §6 et §8 sont à mettre à jour.
+- **Si vous ajoutez les trois comptes (question 2)** : D-042, point 2 (liste fermée des usages), et D-027 (« seul usage interne des opinions ») reçoivent une seconde exception, limitée au réglage du jeu ; une phrase s'ajoute à « Qui, durée, droits » (D-006). `produit.md` §6 et §8 sont à mettre à jour.
+- **D-014** (maquettes finales) : une ligne sous « Valider » sur l'écran Deviner, « Une fois validé, tu ne peux plus changer. » (condition d'UX, règle 9).
 
 **Précisées, en s'écartant de la lettre d'un texte validé.**
 - **D-026 et D-038 (la barre)** : D-026 disait « jusqu'aux premiers curseurs nets ». La barre va jusqu'à 60 réponses, curseur net ou non, comme D-038 l'admet (une barre pleine sans curseur net). Avec elle disparaît l'état « portrait pas encore formé » (5.11). Le « seuil des trois mois » ne change pas.
@@ -856,16 +871,17 @@ Son curseur P est net depuis la semaine 9.
 - **R2 (D-030)** : la phrase « Cette semaine, ton portrait est encore flou » ne s'écrit plus chez un joueur qui a déjà un curseur net.
 
 **Règle nouvelle.**
-- **Règle 20, un texte corrigé après coup** : précise D-044, point 1 (« texte remplacé ») ; il sort du portrait, le reste tient. Absente des 19 règles de `produit.md`, elle y entrera ; à confirmer par Contenu et Back-end.
+- **Règle 20, un texte corrigé après coup** : précise D-044, point 1 (« texte remplacé ») ; il sort du portrait, le reste tient ; « remplacé » ne vaut dans le jeu que pour un texte pas encore servi. Absente des 19 règles de `produit.md`, elle y entrera. Confirmée par Contenu et Back-end.
 
 **Précisées, sans s'écarter d'un texte validé.**
-- **R10 (D-030)** : « quelques minutes » devient 18h10. « Valider » fige la manche (le mot de D-014 reste) : c'est la position de Game design ; UX en avait une autre (règle 9), à confirmer par UX.
+- **R10 (D-030)** : « quelques minutes » devient 18h10. « Valider » fige la manche (le mot de D-014 reste) : le désaccord du bilan est levé par UX, avec la ligne sous le bouton (règle 9).
 - **R11 (D-030)** : seuil fixé ; Le Pas de Côté vit comme un titre.
 - **Règle 12 (D-010)** : Le Fidèle demande les sept textes de la semaine, y compris pour un nouveau venu. C'est la lettre de la règle ; l'essai 2 faisait autrement, par convention.
 - **Règle 4 (D-010) et D-045** : sort d'une carte, d'une attribution et d'un titre quand quelqu'un part.
 - **Règle 19 (D-010)** : le cercle voit les curseurs d'après les seules réponses révélées (lecture A, reprise de l'essai).
 - **D-025** : seuil de 3 réponses et règle de la ligne, proposés. La position d'UX, six réponses, est nommée en règle 10. Le seuil passe chez l'avocat avant la bêta.
 - **D-045** : « 12 mois » ; un seul e-mail par période d'inactivité.
+- **Règle 18 et écran 5.11** : la phrase de la barre pleine et la ligne de Moi sans curseur net, proposées par UX.
 
 **Recommandation, non fermée** : les voix sous le vote (E4), à trancher par UX et Contenu.
 
@@ -888,14 +904,14 @@ Son curseur P est net depuis la semaine 9.
 - **R8 dans un cercle de trois** : quand un proche présent dans deux de mes cercles est servi ailleurs, la manche d'un cercle de trois peut n'avoir qu'un visage proposé pour une carte (J5). Le point est alors gagné sans choix ; seul le « pourquoi » reste à deviner. Cela touche le « choix binaire » que D-006 promet aux cercles de trois. Piste, à ne trancher qu'avec les mesures de la bêta : dans ce cas, servir le proche dans le cercle de trois.
 - **Le Sans-Faute** est hors d'atteinte dès cinq membres dans nos cercles, et presque banal à trois. R7 prévoit d'y revenir à mi-bêta ; une règle qui ne dépend pas de la taille du cercle reste à trouver.
 - **Le Pas de Côté s'annonce à tout le cercle.** Il apprend à tous que la réponse de Paul allait contre son curseur, donc son côté sur ce texte, même à ceux qui n'avaient pas sa carte. Le §4 (« annoncés au cercle ») l'a voulu ; c'est une fuite du même ordre que l'avis du cercle (D-025). À ajouter à « Qui, durée, droits » et aux points pour l'avocat (section 10).
-- **Retirer un texte corrigé du portrait** peut faire perdre un curseur net (J10). C'est honnête, mais déroutant si cela arrive souvent : c'est un argument de plus pour une chaîne des textes fiable.
+- **Retirer un texte corrigé du portrait** peut faire perdre un curseur net (J10). C'est honnête, mais déroutant si cela arrive souvent : c'est un argument de plus pour une chaîne des textes fiable. À mesurer en bêta (Contenu et Back-end).
 - **Le seuil 8** fait arriver le premier curseur net vers deux mois. La phrase de 5.11 (« environ trois mois pour les premiers curseurs nets ») reste vraie en gros, puisque les trois ou quatre premiers arrivent vers trois mois. UX la relit déjà à l'étape 6.
 
 **À vérifier avec de vraies personnes (bêta).**
 - La justesse réelle, toujours lue contre le hasard de chaque manche (D-041), et l'écart entre cercles de 3, 5 et 10.
 - Le Sans-Faute : tombe-t-il, et dans quels cercles (R7) ?
 - Si vous retenez les trois comptes (question 2) : le moment du premier curseur net, la part des joueurs qui ont chaque tempérament, la fréquence du Pas de Côté.
-- Par le questionnaire (QCM) : les tempéraments se comprennent-ils sans explication ? Le Pas de Côté est-il bien reçu, ou vécu comme un reproche ? La barre fait-elle revenir, et sa disparition passe-t-elle inaperçue ? « Valider » est-il compris ?
+- Par le questionnaire (QCM) : les tempéraments se comprennent-ils sans explication ? Le Pas de Côté est-il bien reçu, ou vécu comme un reproche ? La barre fait-elle revenir, et sa disparition passe-t-elle inaperçue ? Sans curseur net, lit-on « chacun à son rythme » comme un reproche ? La ligne sous « Valider » fait-elle hésiter à valider ?
 - Le cercle de trois : combien s'endorment, combien grandissent ?
 
 ---
@@ -907,6 +923,17 @@ Son curseur P est net depuis la semaine 9.
 - **Le Pas de Côté** (règle 14) : il apprend à tout le cercle le côté d'une réponse. À ajouter aux points pour l'avocat (partie 5), au même rang que la répartition de l'avis du cercle, et à « Qui, durée, droits ».
 - **Le seuil de l'avis du cercle** : 3 réponses (règle 10), proposé ; `donnees.md` dit encore « seuil minimal à fixer ». À ajouter aux points pour l'avocat (D-025).
 - **Le pseudo** (règle 15) : il reste un seul champ du compte ; rien à changer à P-27 si ce choix est validé.
-- **Les trois comptes de la question 2** : s'ils sont retenus, à ajouter à P-22 et P-39, avec leurs conditions (section 5) et leurs tests (jamais par cercle ni par personne, rien sous 30 joueurs, seuls les comptes gardés).
 - **L'effacement à 12 mois** : un seul e-mail par période d'inactivité, comme le lit déjà P-30.
-- **La règle 20** : retirer un texte des portraits demande de garder, pour chaque réponse, le texte auquel elle répond, et de pouvoir recalculer un curseur sans elle.
+- **La règle 20** (Contenu et Back-end) :
+  - un champ « retiré des portraits le … » sur le texte, à inscrire sur la carte des données (P-04) ;
+  - le recalcul rejoue toutes les réponses (test de P-04 a) et peut être relancé sans changer le résultat ;
+  - à ajouter à P-04 a : « appliqué hors de 15h–19h et jamais le dimanche, recalcul relançable sans risque » ;
+  - les réponses arrivées après le retrait, même en retard, sont exclues aussi ;
+  - une étiquette fausse (raison ↔ valeur) se corrige par un recalcul, sans retrait ;
+  - la chaîne ne touche jamais la base des joueurs : le retrait passe dans le sens chaîne → jeu (D-043 tient).
+- **Les trois comptes de la question 2**, s'ils sont retenus (Juridique) : à ajouter à P-22 et P-39, avec leurs tests :
+  - jamais par cercle ni par personne, jamais croisés, seuls les comptes gardés ;
+  - **seuil de 30 joueurs par groupe compté** (pas sur la bêta entière) ;
+  - **consentement dès le premier joueur de la bêta** (carte ou « Qui, durée, droits » : « régler les seuils du jeu ») ; sinon nouvel accord de tous (P-34) ;
+  - accord séparé, ou réglage « Ne pas compter mes réponses », selon l'avocat ;
+  - analyse d'impact : durée de conservation et liste de qui les lit, alignée sur P-21.
