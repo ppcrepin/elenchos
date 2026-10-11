@@ -1,6 +1,6 @@
 # Logo Elenchos : fichiers maîtres
 
-La piste « La citation » (D-049) : des guillemets autour d'un rond de serviette, et le mot « Elenchos » entre guillemets. Dessin de l'équipe (D-047). Présentation complète, avec le réglage qui l'éloigne des boutons de lecture : `docs/maquettes/logo-final.html`.
+**Dessin final proposé, à valider par le porteur.** La piste « La citation » (D-049) : des guillemets autour d'un rond de serviette, et le mot « Elenchos » entre guillemets. Le mot seul garde ses guillemets. Pour le logo complet, l'équipe propose une seule paire, celle du symbole, pour éviter quatre guillemets à la suite ; la variante à la lettre de D-049 (le mot aussi entre guillemets) est fournie à côté, en attendant le choix. Dessin de l'équipe (D-047). Présentation complète : `docs/maquettes/logo-final.html`.
 
 **Le nom reste un nom de travail, en cours de vérification (D-013, D-043). S'il est écarté, ces fichiers sont à refaire (D-047).**
 
@@ -8,7 +8,8 @@ La piste « La citation » (D-049) : des guillemets autour d'un rond de serviett
 
 Toutes les lettres sont des tracés tirés d'Alegreya (licence SIL OFL ; à notre lecture, cet usage est permis dans un logo, à confirmer par le conseil). Aucune police à installer.
 
-- `svg/elenchos-logo-complet-<couleur>.svg` : symbole + mot, sans guillemets autour du mot.
+- `svg/elenchos-logo-complet-<couleur>.svg` : symbole + mot, une seule paire de guillemets (proposition de l'équipe).
+- `svg/elenchos-logo-complet-deux-paires-<couleur>.svg` : symbole + « Elenchos », à la lettre de D-049.
 - `svg/elenchos-symbole-<couleur>.svg` : le symbole, grand dessin (48 px de large et plus).
 - `svg/elenchos-symbole-petite-taille-<couleur>.svg` : le symbole pour 24 à 47 px de large.
 - `svg/elenchos-mot-<couleur>.svg` : « Elenchos », guillemets compris.
@@ -27,7 +28,9 @@ Les fichiers sans fond sont transparents. Les icônes ont un fond plein et des a
 | `soir` | miel `#E9B45A` | lin du soir `#F2ECE3` | soir `#1C1612` |
 | `brou`, `lin`, `noir`, `blanc` | une seule couleur | une seule couleur | clair pour brou et noir, sombre pour lin et blanc |
 
-L'icône de l'application est la version « jour ». La version « soir » est prévue pour le mode sombre de l'iPhone, plus tard (proposé).
+Par rapport à la page des pistes, la répartition est inversée : les guillemets (la parole) passent en couleur d'accent, le rond (la personne) en encre.
+
+L'équipe propose la version « jour » comme icône de l'application, parce que le lin et le brou sont la palette principale de La Tablée (proposé, à décider à l'étape 6). La version « soir » servirait au mode sombre de l'iPhone, plus tard (proposé).
 
 ## Zone de protection et tailles minimales
 
@@ -42,7 +45,16 @@ L'icône de l'application est la version « jour ». La version « soir » est p
 - Changer le rapport entre guillemets et rond, ou les écarter.
 - Mettre le rond en couleur d'accent, ou les guillemets en encre (sauf versions d'une couleur).
 - Ajouter une seconde teinte : ni rouge, ni bleu, ni tricolore, ni fond miel plein (D-012).
-- Doubler les guillemets : le logo complet n'en met pas autour du mot.
+- Poser le symbole et le mot côte à côte hors du logo complet.
 - Recomposer le mot avec une police : toujours partir de ces fichiers.
 - Ombre, dégradé, contour, déformation, rotation.
 - Poser à côté un drapeau, un hémicycle, une urne ou une balance.
+- Poser le symbole juste à côté d'un vrai visage du jeu : son rond d'encre ressemble à celui d'un proche sans initiale (à régler à l'étape 6).
+
+## Limites
+
+- **Ressemblances :** nous ne pouvons pas vérifier de façon exhaustive qu'aucun logo existant ne ressemble à celui-ci. Le conseil devrait chercher aussi les marques figuratives proches.
+- **Boutons de lecture :** le dessin réduit cette lecture, il ne la supprime pas. Un rond plus grand peut aussi faire penser à une cible ou à un œil. À vérifier en bêta.
+- **Le miel :** qu'il n'évoque aucun parti est encore à vérifier (D-012), en bêta.
+- **Pas un travail de graphiste (D-047) :** corrections optiques faites à l'œil sur des captures d'ordinateur, pas sur un iPhone ; impression non couverte.
+- **Boutiques, non faites (D-043) :** icône 1024 px, variantes sombre et teintée, calques de l'effet de verre d'iOS 26, icône adaptative et icône d'une seule couleur d'Android.
