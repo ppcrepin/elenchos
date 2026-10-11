@@ -2,6 +2,8 @@
 
 *Étape 6, travail 1 du plan de construction (`docs/plan-construction.md`, partie 4, « Préparer les règles »). Rédaction : Game design, 11 octobre 2026. Sources relues : `docs/decisions.md` (D-001 à D-051), `docs/projet.md`, `docs/produit.md`, `docs/vision.md`, `docs/onboarding.md`, `docs/plan-construction.md` (parties 4 à 7), et dans `docs/essai/` les spécifications, bilans et fichiers de calcul des deux essais. Prénoms, textes et réponses sont fictifs. Les cercles simulés sont faits de joueurs inventés : aucune donnée réelle de joueur n'existe ni n'a servi (D-048). Ce document propose ; ce qui n'est écrit dans aucune décision est marqué « (proposé) ». Aucun code applicatif : les simulations sont de l'outillage de travail, gardé hors du dépôt.*
 
+*État, 11 octobre 2026 : **validé par le porteur (D-052)**. Les deux questions de la section 7 sont répondues : les règles sont validées d'un geste (D-052, point 1) et les trois comptes de mi-bêta sont ajoutés aux mesures (D-052, point 2). Ce qui était marqué « (proposé) » est donc décidé, sauf ce qui reste « à confirmer » (le lien de 7 jours, par UX) et les mots laissés à UX ; les passages écrits au conditionnel sur les trois comptes (sections 5, 8, 9 et 10) se lisent désormais au présent. Les mots des valeurs des tensions 6 et 7 suivent D-053 (point 3) : « l'indépendance » et « le privé » remplacent « la souveraineté » et « le marché » ; Souveraineté/Ouverture (SO) et État/Marché (EP) restent des noms de code internes, jamais des libellés à l'écran. Aucun chiffre n'a changé. Report dans `docs/produit.md` : fait le même jour.*
+
 ## En bref
 
 **Ce que nous avons fait.**
@@ -32,7 +34,7 @@
 - Une règle nouvelle : la règle 20 (précise D-044, point 1).
 - Le reste précise des règles sans en changer aucune (section 8).
 
-**Deux questions pour vous, à la fin** (section 7) :
+**Deux questions pour vous, à la fin** (section 7), **répondues le 11 octobre 2026 (D-052)** : règles validées ; trois comptes ajoutés.
 - valider ces règles d'un geste, comme les règles de détail du bilan (D-030) ;
 - ajouter ou non aux mesures de la bêta trois comptes tirés du jeu ; sans eux, le réglage de mi-bêta se ferait sans mesure pour le portrait, Le Pas de Côté et les tempéraments. Leur calcul lit des opinions (avis de Juridique) et n'en garde que des totaux ; ils sortent de la liste fermée des usages (D-042) et de D-027 : c'est à vous d'en décider.
 
@@ -122,7 +124,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 
 **Tirages.** « Au hasard » veut dire un tirage équitable, fait une fois, gardé avec la journée, pour qu'une journée se rejoue à l'identique (proposé ; la méthode est à Back-end). Dans les journées de la section 6, les tirages sont donnés comme des entrées.
 
-**Les tensions**, dans leur ordre fixe (règle 16) : 1 sécurité / liberté (S) ; 2 égalité / mérite ; 3 solidarité collective / responsabilité individuelle ; 4 précaution / innovation (P) ; 5 tradition / changement (T) ; 6 souveraineté / ouverture ; 7 État / marché ; 8 décision locale / décision nationale (L). Le pôle 0 est la première valeur. Les textes des exemples ne portent que sur les quatre tensions déjà essayées. Le tableau « Moi » de J8 nomme aussi les quatre autres, par leur nom de tension ; les libellés de leurs valeurs dans les phrases sont l'objet du travail 2 (`docs/etape-6/tensions.md`) et restent provisoires ici.
+**Les tensions**, dans leur ordre fixe (règle 16) : 1 sécurité / liberté (S) ; 2 égalité / mérite ; 3 solidarité collective / responsabilité individuelle ; 4 précaution / innovation (P) ; 5 tradition / changement (T) ; 6 indépendance / ouverture ; 7 État / privé ; 8 décision locale / décision nationale (L). Le pôle 0 est la première valeur. Les textes des exemples ne portent que sur les quatre tensions déjà essayées. Le tableau « Moi » de J8 nomme aussi les quatre autres, avec leurs libellés de valeurs, confirmés par le travail 2 (`docs/etape-6/tensions.md`) et par D-053 (point 3) : « l'indépendance » et « le privé » remplacent « la souveraineté » et « le marché ». Les noms de code des tensions 6 et 7, Souveraineté/Ouverture et État/Marché, servent d'identifiants internes, jamais de libellés à l'écran.
 
 ---
 
@@ -384,7 +386,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 Dix-neuf points sur vingt sont fermés : douze viennent de vos décisions, quatre du second essai, trois ont été relevés en écrivant. « Valider » et la règle 20 sont fermés avec l'accord d'UX, de Contenu et de Back-end. Le vingtième, les voix sous le vote, reste une recommandation.
 
 Restent hors de ce travail, parmi ce que `docs/produit.md` laisse à régler :
-- les libellés des quatre tensions jamais essayées (travail 2, `docs/etape-6/tensions.md`) ;
+- les libellés des quatre tensions jamais essayées (travail 2, `docs/etape-6/tensions.md`) ; confirmés depuis par D-053 ;
 - la faisabilité de l'égalité entre groupes sur le stock réel (D-044, point 3 ; la règle 7 n'en donne qu'un exemple théorique) ;
 - la règle de forme du vote (D-041, Contenu) ;
 - les mots des écrans, dont la mention IA, l'e-mail d'avant effacement et le mot « curseurs nets » de 5.11 (UX) ;
@@ -781,7 +783,7 @@ Les textes A, C, F et G ont un argument inattendu de chaque côté (croisé ou p
 - Marie : F · R1, un arbitrage net vers la décision locale. Son curseur L passe de W = 7, Σwπ = 1 (c = 3/11) à W = 8, Σwπ = 1 (c = 1/4) : **il devient net.**
 - C'est sa soixantième réponse, entrée comprise. **La barre est pleine** ; elle se montre pleine à la prochaine ouverture de Moi, puis disparaît.
 
-**Moi, chez Marie** (son portrait complet, ce mardi soir ; les noms des tensions 2, 3, 6 et 7 sont ceux de la règle 16, leurs libellés de valeurs viennent du travail 2).
+**Moi, chez Marie** (son portrait complet, ce mardi soir ; les tensions 2, 3, 6 et 7 portent les libellés de la règle 16, confirmés par D-053).
 
 | Rang | Tension | W | c | État |
 |---|---|---|---|---|
@@ -791,8 +793,8 @@ Les textes A, C, F et G ont un argument inattendu de chaque côté (croisé ou p
 | 4 | tradition / changement | 5 | 4/9 | flou, ℓ = 41/80 |
 | 5 | solidarité collective / responsabilité individuelle | 3 | 3/7 | flou, ℓ = 11/16 |
 | 6 | égalité / mérite | 2 | 1/2 | flou, ℓ = 31/40 |
-| 7 | souveraineté / ouverture | 3/2 | 4/11 | flou, ℓ = 131/160 |
-| 8 | État / marché | 0 | 1/2 | flou, ℓ = 19/20 |
+| 7 | indépendance / ouverture | 3/2 | 4/11 | flou, ℓ = 131/160 |
+| 8 | État / privé | 0 | 1/2 | flou, ℓ = 19/20 |
 
 Son curseur P est net depuis la semaine 9.
 
@@ -844,16 +846,22 @@ Son curseur P est net depuis la semaine 9.
 
 ## 7. Questions pour vous
 
+*Répondues par le porteur le 11 octobre 2026 (D-052). Les questions sont gardées telles qu'elles ont été posées ; la réponse suit chacune.*
+
 **Question 1 · Règles** — Validez-vous ces règles chiffrées, d'un geste, comme les règles de détail du bilan (D-030) ?
 
 - **Valider tout (Recommandé)** — Ferme 19 points sur 20, modifie D-011, ajoute une ligne d'écran (D-014), précise quatre textes validés et ajoute la règle 20 (section 8).
 - **Valider, sauf l'exception** — Tout, sauf D-011 : le nouveau venu reste proposé sur un texte d'avant son arrivée.
 - **Relire d'abord** — Vous lisez les sections 3 et 8, puis vous répondez.
 
+**Réponse (D-052, point 1) : valider tout.** Les règles chiffrées sont décidées, avec l'exception à D-011, la ligne sous « Valider » (D-014), les quatre précisions et la règle 20 de la section 8. Dix-neuf points sur vingt sont fermés ; les voix sous le vote restent ouvertes (E4). Tous les réglages reposent sur des joueurs simulés et seront recalés au bilan de mi-bêta.
+
 **Question 2 · Mesures** — Ajoutez-vous aux mesures de la bêta les trois comptes tirés du jeu (section 5) : Pas de Côté par mois, tempéraments en cours, joueurs avec un curseur net à 40, 60 et 80 réponses ? Leur calcul lit des opinions (art. 9) et n'en garde que des totaux.
 
 - **Ajouter les trois comptes (Recommandé)** — Sans eux, pas de réglage mesuré du portrait, du Pas de Côté ni des tempéraments. Juridique : le calcul lit des opinions, mais n'en garde que des totaux anonymes ; c'est acceptable si la carte de consentement le dit dès le premier joueur et si l'avocat valide. Élargit la liste fermée (D-042) et D-027.
 - **Ne rien ajouter** — Cohérent avec D-027 et D-042 ; justesse, titres et questionnaire se mesurent déjà. Juridique : aucun nouvel usage des opinions, donc rien à ajouter à la carte ni à l'analyse d'impact.
+
+**Réponse (D-052, point 2) : ajouter les trois comptes.** Ils élargissent la liste fermée des usages (D-042, point 2 : « régler les seuils du jeu ») et D-027. Conditions de Juridique, toutes retenues : totaux seulement, jamais par cercle ni par personne, jamais croisés ; seuil de 30 joueurs par groupe compté ; jamais publiés ; dits sur la carte de consentement ou dans « Qui, durée, droits » dès le premier joueur de la bêta (D-006) ; accord séparé ou réglage « Ne pas compter mes réponses » selon l'avocat ; inclus dans l'analyse d'impact (D-044). Les agents peuvent lire ces totaux, dans un rapport que vous leur donnez, jamais par un accès (D-052, point 3 ; `docs/etape-6/donnees.md`, P-21).
 
 ---
 

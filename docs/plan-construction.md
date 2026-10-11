@@ -4,6 +4,8 @@
 
 *Mis à jour le 11 octobre 2026, à la clôture de l'étape 5, par Back-end (avec Front-end) : vos dix choix de fabrication (D-042 à D-045) remplacent la description des options ; la partie 4 suit la branche que vous avez choisie, des agents seuls (D-043) ; les coûts suivent vos choix, dépense par dépense (D-042) ; une première fourchette de durée de construction est donnée, avec ses hypothèses. Ce plan ne décide rien de lui-même : ce qui n'est pas dans une décision est marqué « (proposé) ». Le code ne commence qu'avec votre accord explicite (D-001). Relecture : Cohérence (compatible avec réserves, corrigées), puis le Vérificateur (OK avec corrections mineures, appliquées).*
 
+*Le 11 octobre 2026, après les trois travaux sur papier de l'étape 6 : leur état (faits : D-052, D-053) ; le « Fini quand » du travail 2, réécrit selon D-053 (point 1) ; la mesure du camp par des volontaires et les trois comptes de mi-bêta, ajoutés à la bêta (partie 5) ; ce que lisent les agents (travail 12, D-052, point 3). Relecture : Cohérence, puis le Vérificateur (en cours).*
+
 ## 1. Où on en est
 
 **Étapes 1 à 3 : faites.** Le produit est défini (`docs/produit.md`, D-010), dessiné (D-011) et habillé (univers La Tablée D-012, nom de travail Elenchos D-013, maquettes finales D-014). Reste la fin de l'étape 3 : la vérification du nom par un conseil en propriété industrielle (D-013, D-043), Le logo est fait et validé (D-049, D-050 ; fichiers dans `docs/identite/logo/`).
@@ -15,7 +17,7 @@
 
 **Étape 5 : faite (D-042 à D-046).** Les dix choix de fabrication sont tranchés, en quatorze QCM (à partir de `docs/etape-5-choix.md`). Les documents qui en dépendent sont mis à jour et validés (D-046) : `docs/produit.md`, `docs/onboarding.md` (le compte, D-035), ce plan et la feuille de route.
 
-**Étape 6 : la prochaine**, avec votre accord (partie 2).
+**Étape 6 : en cours** depuis le 11 octobre 2026, avec votre accord (D-051). Les trois travaux sur papier sont faits : les règles et les exigences de protection des données (D-052), les quatre tensions jamais essayées (D-053 ; le texte d'épreuve SO2 est en cours de remplacement). Le suivant est le travail 4, le test du message de 18h, premier code de l'étape.
 
 ## 2. Avant l'étape 6 : ce qui la conditionne
 
@@ -73,11 +75,13 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - Une dizaine de journées sont jouées à la main ; le code devra les reproduire.
 - Fini quand : aucune règle n'est sans cas chiffré.
 - Vous : vous voyez « ce que vit un cercle type en trois mois ».
+- **État : fait** (`docs/etape-6/regles.md`, validé par D-052, point 1 ; reporté dans `docs/produit.md`). Dix-neuf des vingt points laissés à l'étape 6 sont fermés ; les voix sous le vote restent ouvertes (E4). Les réglages reposent sur des joueurs simulés et se recalent à mi-bêta.
 
-**2. Les quatre tensions jamais essayées** (Égalité/Mérite, Solidarité/Responsabilité, État/Marché, Souveraineté/Ouverture).
+**2. Les quatre tensions jamais essayées** (Égalité/Mérite, Solidarité/Responsabilité, État/Marché, Souveraineté/Ouverture : noms de code internes ; à l'écran, les valeurs des deux dernières s'appellent « l'État » et « le privé », « l'indépendance » et « l'ouverture », D-053, point 3).
 - On produit leurs libellés et leurs phrases, et deux textes d'épreuve pour chacune.
-- Fini quand : les deux classements concordent, et un modèle ne devine pas le camp de l'auteur.
+- Fini quand (réécrit par D-053, point 1, qui modifie la version validée avec D-046, « un modèle ne devine pas le camp de l'auteur ») : les deux classements concordent ; nos textes ne font pas deviner le camp de l'auteur mieux que l'intitulé officiel seul, ce qui se mesure en bêta auprès de volontaires hors du jeu, qui ignorent le vote (pas des données de joueurs ; partie 5) ; et le lot servi mélange les auteurs. Raison : un modèle trouve le camp 8 fois sur 8 avec nos textes comme avec le seul intitulé, de mémoire ou par la mesure.
 - Vous : vous lisez les huit textes.
+- **État : fait** (`docs/etape-6/tensions.md`, D-053). Les mots des valeurs sont confirmés, deux changent (D-053, point 3) ; jamais un texte qui vise une nationalité (D-053, point 2) : le texte d'épreuve SO2, qui en visait une, est en cours de remplacement (Contenu). Reste pour la bêta : la mesure du camp par des volontaires.
 
 **3. Exigences de protection des données**, remises avant d'écrire le code.
 - L'e-mail est séparé des réponses.
@@ -90,6 +94,7 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - Le consentement est prouvé, et l'effacement est réel.
 - Fini quand : chaque exigence a son test automatique.
 - Vous : vous lisez « qui voit quoi ».
+- **État : fait sur papier** (`docs/etape-6/donnees.md` ; vos deux réponses, D-052, points 2 et 3). Chaque exigence a son test décrit ; chaque test sera construit au travail que le document indique.
 
 **4. Test du message de 18h** : une page nue, cinq téléphones, trois soirs (D-005).
 - Sur les mêmes téléphones, il vérifie aussi la connexion Google ou Apple depuis l'icône, et la reconnexion après l'ajout de l'icône (Front-end, `docs/etape-5-choix.md`). S'ils échouent, la question vous reviendra, comme D-035 le prévoit.
@@ -151,7 +156,8 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - Vous : vous signez l'analyse d'impact.
 
 **12. Mesures et exploitation.**
-- On mesure ce que les joueurs font, jamais ce qu'ils pensent, plus la seule exception de la part de « aucune » (D-027).
+- On mesure ce que les joueurs font, jamais ce qu'ils pensent, sauf deux exceptions, en totaux : la part de « aucune » (D-027) et les trois comptes de mi-bêta (D-052, point 2).
+- Les agents lisent la part de « aucune » et les totaux des mesures de la bêta, dans un rapport que vous leur donnez, jamais par un accès ; aucun journal ne leur va (D-052, point 3 ; `docs/etape-6/donnees.md`, P-21).
 - Une alerte part à 18h02 si les messages ne sont pas partis ; un seul geste relance l'envoi (D-043). La sonde qui vérifie est chez un second prestataire, et l'alerte part aussi si le site ne répond pas (proposé, Back-end).
 - La procédure d'incident d'une page (D-043) dit, pour chacun des trois cas de panne, quoi regarder et quoi toucher, sans avoir à ouvrir une session d'agents (proposé).
 - Fini quand : une alerte d'essai est reçue, et vous avez joué la procédure une fois à blanc.
@@ -199,14 +205,16 @@ Votre document (§11.4) tolérait de reporter le juridique pour « un prototype 
   - la part des codes par e-mail qui n'arrivent pas, ou arrivent dans les indésirables (Back-end) ;
   - les textes corrigés après publication (D-044) ;
   - la durée de vie des cercles ;
-  - le plaisir de deviner, et les autres mesures de `docs/produit.md` §8.
+  - le plaisir de deviner, et les autres mesures de `docs/produit.md` §8 ;
+  - les trois comptes de mi-bêta, en totaux, pour le réglage : Pas de Côté par mois, tempéraments en cours, part des joueurs avec au moins un curseur net à 40, 60 et 80 réponses (D-052, point 2 ; `docs/produit.md` §8).
+- La mesure du camp, à part du jeu : des lecteurs volontaires, recrutés hors du jeu et qui ignorent le vote, devinent-ils le camp de l'auteur mieux avec nos textes qu'avec l'intitulé officiel seul ? Ce ne sont pas des données de joueurs (D-053, point 1 ; travail 2).
 - Deux questionnaires courts, en QCM et sans texte libre (une opinion pourrait s'y glisser). Ils portent sur :
   - la clarté des textes ;
   - la carte de consentement ;
   - l'univers et le nom ;
   - « le jeu t'a-t-il rangé dans un camp ? » ;
   - « une révélation t'a-t-elle mis mal à l'aise avec un proche ? ».
-- Un seul lot de réglages, à mi-parcours.
+- Un seul lot de réglages, à mi-parcours, appuyé sur les trois comptes (D-052, point 2).
 
 **Avant l'ouverture au public (bloquant).**
 - Aucune ligne rouge franchie.
@@ -315,7 +323,7 @@ S'y ajouteraient, selon la réponse à la question de la structure (D-043) : une
 
 **Les autres points.**
 - **Le message de 18h sur iPhone.** Le lien étant retenu, la bêta mesure le geste d'ajout de l'icône avec les critères de D-005, avant le passage aux boutiques.
-- **Les quatre tensions jamais essayées** sont les plus proches du clivage gauche-droite. Elles seront éprouvées avant la bêta (travail 2).
+- **Les quatre tensions jamais essayées** sont les plus proches du clivage gauche-droite. Elles ont été éprouvées sur papier (travail 2, D-053) ; la bêta dira si nos textes trahissent le camp (mesure par des volontaires) et comment se lisent « l'indépendance » (au sens personnel ou territorial) et « le privé » (sur un texte d'école) (D-053).
 - **Le nom et l'icône.** Le nom circule sans protection pendant la bêta, puisque la marque est déposée après (D-043), alors que l'adresse et l'icône sont figées avant elle. Si le nom échoue, chaque joueur devra réinstaller l'icône (Front-end).
 - **Les liens ouverts dans une messagerie.** Certaines messageries ouvrent les liens dans leur propre navigateur. Un invité qui choisit « Plus tard » à l'écran du code peut alors perdre sa partie en rouvrant le jeu dans Safari. À voir avec UX avant le travail 9 (Front-end).
 - **Le calendrier électoral.** Selon la durée réelle de la construction, la bêta pourrait se tenir pendant la campagne présidentielle de 2027. Juridique dira avant la bêta si cela change quelque chose pour une bêta fermée (proposé).
@@ -326,6 +334,6 @@ S'y ajouteraient, selon la réponse à la question de la structure (D-043) : une
   - la règle 18 et le §5 : trois mois pour les premiers curseurs nets, un seuil à recaler (Game design) ;
   - la règle 14, Le Sans-Faute : presque impossible tel qu'il est écrit (Game design) ;
   - « Tout effacer », si la loi oblige à garder certaines données d'identification (question pour l'avocat, Juridique).
-- **Les règles restées ouvertes** sont listées dans `docs/produit.md` (« Ce que ces décisions laissent à régler ») ; elles se ferment au travail 1.
+- **Les règles restées ouvertes** sont listées dans `docs/produit.md` (« Ce que ces décisions laissent à régler ») ; le travail 1 en a fermé dix-neuf sur vingt (D-052) ; restent les voix sous le vote (E4).
 
 Les plans détaillés de chaque spécialiste sont gardés par l'orchestrateur, et repris au début de l'étape 6.
