@@ -4,16 +4,16 @@
 
 ## En bref
 
-1. **La durée tient.** 15 min 25 s en tout, en une seule matinée. Une journée complète a pris 59 s en médiane, pour 90 s visées ; Deviner 9 s, Répondre 11,5 s. Le premier Deviner a pris 1 min 37 s, et la première séance, entrée comprise, 5 min 51 s.
+1. **La durée tient.** 15 min 25 s en tout, en une seule séance. Une journée complète a pris 59 s en médiane, pour 90 s visées ; Deviner 9 s, Répondre 11,5 s. Le premier Deviner a pris 1 min 37 s, et la première séance, entrée comprise, 5 min 51 s.
 2. **Votre justesse est au niveau du hasard, pour la deuxième fois.** 4 cartes justes sur 15, quand le hasard en donne 4,5 en moyenne et que 4 est son résultat le plus probable. Le lecteur des curseurs, un repère haut, en trouve 52 %.
 3. **Deviner a été un passage, pas un jeu.** Trois cartes en 5 à 10 secondes ; « Deviner » n'a jamais été votre moment préféré. Ce qui vous a retenu, c'est la révélation (3 fois sur 5), même sans point et même sans carte.
 4. **Le Cercle n'a été ouvert qu'une fois**, pendant le premier saut, alors que vous le désignez comme ce qui vous a le plus servi pour deviner. La raison cachée, elle, a été trouvée pour la première fois sur les deux essais (jour 3).
 5. **Vous avez laissé de côté, exprès, six des huit questions de fin.** Nous avons trop demandé. Nous n'en tirons rien, nous ne rouvrons aucune décision à cause de ce silence, et nous ne les reposons pas.
 6. **Vos trois retours oraux du 11 octobre** donnent trois questions : l'étiquette de la barre du portrait, le repère « Deviner · Répondre » (la Direction artistique a dessiné les trois options sur une page), et l'ordre des cartes dans Deviner (la plus difficile en dernier).
-7. **Le « Supprimer » annonce le vote.** Quatre des cinq titres qui commencent par « Supprimer » sont rejetés, et toute suppression servie l'est par construction. Une règle de forme est à confier à Contenu.
-8. **Les mécaniques nouvelles tournent sans accroc, mais l'essai montre presque rien de ce qu'elles font au joueur.** Les quatre titres de semaine ont tous été décidés par le cadre de l'essai, Le Mystère deux fois pour le nouveau venu. Moi a été ouvert 5 fois, toujours pendant les sauts.
+7. **Le « Supprimer » annonce le vote.** Quatre des cinq titres qui commencent par « Supprimer » sont rejetés, et tout amendement de suppression servi l'est par construction. Une règle de forme est à confier à Contenu.
+8. **Les mécaniques nouvelles tournent sans accroc, mais l'essai montre presque rien de ce qu'elles font au joueur.** Les trois titres de semaine et le badge rare Le Sans-Faute ont tous été décidés par le cadre de l'essai, Le Mystère deux fois pour le nouveau venu. Moi a été ouvert 5 fois, toujours pendant les sauts.
 9. **Le premier jour du nouveau venu a un défaut propre** : il devine des réponses à un texte qu'il n'a jamais lu. C'est la question 4.
-10. **Ce que l'essai ne pouvait pas dire** : un seul joueur, une matinée, des personnages inventés. Rien sur de vrais proches, un vrai nouveau venu, l'habitude ou le rendez-vous de 18h.
+10. **Ce que l'essai ne pouvait pas dire** : un seul joueur, une séance, des personnages inventés. Rien sur de vrais proches, un vrai nouveau venu, l'habitude ou le rendez-vous de 18h.
 
 **Les cinq questions posées en fin** (section 10). Ce bilan ne décide rien.
 1. L'étiquette de la barre du portrait.
@@ -155,7 +155,7 @@ Les trois options y sont appliquées aux écrans 2.1, 2.3 et 5.12, avec la varia
    - *À 90 secondes* : on s'échauffe sur deux cartes simples ; la dernière est le défi du jour.
    - *À une semaine* : le rythme devient fixe et s'apprend sans explication, comme ces jeux du jour dont les grilles vont du facile au difficile.
    - *À trois mois* : rien ne s'use, puisque le contenu change chaque jour. Le risque est qu'on prenne l'habitude de passer la dernière carte. À mesurer en bêta : la part des passes sur la carte à raison cachée.
-   - **Ce qu'elle modifie** : une ligne s'ajoute à la règle 9 et à l'écran Deviner de `produit.md` (D-010) ; l'exemple de la maquette 2.1 change (D-014). Ce n'est pas un redessin, mais une règle d'écran, comme la ligne de D-024 ; D-022 admet expressément ce genre de règle. L'ordre tiré au sort et la carte cachée en dernière place n'étaient que des conventions d'essai, pas des décisions.
+   - **Ce qu'elle modifie** : une ligne s'ajoute à la règle 9 et à l'écran Deviner de `produit.md` (D-010) ; l'exemple de la maquette 2.1 change (D-014). D-022 laisse passer les petites règles d'écran décidées ailleurs, comme la ligne de D-024. Celle-ci en est une, mais elle change aussi l'exemple de la maquette 2.1, que D-022 garde telle quelle : c'est une exception, limitée à cet ordre, puisque c'est vous qui le demandez. L'ordre tiré au sort et la carte cachée en dernière place n'étaient que des conventions d'essai, pas des décisions.
 2. **La carte « qui et pourquoi » vient toujours en dernier ; le reste ne change pas.** L'ordre est corrigé de la même façon, mais le « pourquoi » peut se choisir avant ou après le visage. Elle modifie les mêmes points, sauf le geste.
 3. **Rien avant la bêta.** L'ordre reste tiré au sort, et on regarde en bêta. C'est D-022 à la lettre ; aucune décision touchée. Votre remarque reste notée.
 4. **Une vraie échelle en trois marches (le côté, puis l'argument, puis les deux) : une mécanique nouvelle, à concevoir à part avec tout le circuit de relecture.** Par exemple : deviner d'abord le côté d'un proche nommé, puis qui, puis qui et pourquoi. Elle change `projet.md` §2 (la carte montre la position et la raison), les règles 8 et 9 et l'écran 2.1, et elle allonge la manche. Game design ne la recommande pas pour aujourd'hui : si c'est ce que vous vouliez dire, elle ne se règle pas par une ligne d'écran.
@@ -181,7 +181,7 @@ Les trois options y sont appliquées aux écrans 2.1, 2.3 et 5.12, avec la varia
 | Clôture | 34 s | |
 | **Tout l'essai** | **15 min 25 s** | |
 
-- **Une seule matinée.** Toutes les ouvertures tombent entre 9h et 10h, avec « Jours écoulés : 0 » partout, et la page est restée en version 1.
+- **Une seule séance.** Sans attente : « Jours écoulés : 0 » partout, et la page est restée en version 1.
 - **Le dévoilement et la copie du carnet ne sont pas comptés.** La séance s'arrête au dernier toucher.
 - **Jour 7 : un écart de 7 secondes expliqué.** La copie du jour 7 indique 52 s, le carnet final 59 s. La copie a été faite avant le toucher « Aller au jour suivant ». Les 7 secondes sont probablement celles de la page de copie : ce n'est pas une anomalie.
 
@@ -206,7 +206,7 @@ Aucune question ne portait sur la durée cette fois.
 - **Une réponse en 9 ou 10 s laisse peu de temps pour lire.** Un texte de l'essai fait un titre, trois lignes d'environ 85 caractères et quatre raisons d'une douzaine de mots : un peu moins d'une centaine de mots. Lus en entier, cela prend de l'ordre de 20 s (estimation d'UX, sur une lecture silencieuse courante). Les réponses de 30 et 37 s montrent que certains textes ont été lus de près. UX n'en dit pas plus : la durée d'un texte dit l'hésitation, jamais la réponse.
 
   Pour le produit, la conséquence est réelle : l'argument inattendu (D-034) ne sert que s'il est lu. La question de fin sur les raisons est restée vide, on ne sait donc pas s'il l'a été.
-- **Le portrait du second dimanche repose surtout sur le rattrapage.** Neuf de ses seize réponses ont été données d'affilée, en une douzaine de secondes chacune, et comptées triple (D-033). Ce n'est pas un jugement sur vos réponses, mais sur leurs conditions. Game design en tire les conséquences pour le portrait (section 5).
+- **Le portrait du second dimanche repose surtout sur le rattrapage.** Neuf de ses seize réponses ont été données d'affilée, en une douzaine de secondes chacune, et comptées triple (facteur 3 de l'essai, `simulation-2.md` §5 ; D-033). Ce n'est pas un jugement sur vos réponses, mais sur leurs conditions. Game design en tire les conséquences pour le portrait (section 5).
 - **L'entrée et la promesse de « 2 minutes ».** Le message d'invitation promet « 2 minutes » (`docs/onboarding.md`). Vous connaissez ces écrans, et l'entrée vous a pris 2 min 22 s. Ensuite, comme le prévoit l'onboarding (étape 6 : « Si une manche est ouverte, elle la joue tout de suite »), sont venus Deviner et Répondre : la première séance a duré 5 min 51 s. Un vrai invité, qui découvre tout, sera plus lent (hypothèse). C'est l'origine de la question 4 (section 10).
 
 ---
@@ -254,12 +254,12 @@ Aucune question ne portait sur la durée cette fois.
 - **L'entrée à 0 sur 3 était prévue par construction.** Valentin a été fait pour que sa vie ne laisse pas deviner ses valeurs, et il avait été le moins deviné du premier essai (0 sur 10). Dans le jeu, celui qui invite est quelqu'un qu'on connaît. D-023 tient.
 - **Ce que cela dit, franchement.** Deux essais avec des personnages simulés ont donné la même réponse sur le plaisir de deviner. Un troisième la redonnerait. La question de la promesse (D-002) ne se tranchera qu'avec de vrais proches (D-031 le disait). C'est l'objet de la question 5 (section 10).
 
-### Ce que valent vos titres, et ce qu'ils vous disent
+### Ce que valent vos titres et le badge rare
 
 | Titre | Semaine 1 | Semaine 2 | Ce qui l'a décidé |
 |---|---|---|---|
 | Le Devin | Nassim | Nassim | Les sauts : vous pouviez marquer au plus 9 points, puis 3, quand un personnage pouvait en marquer 3 par jour. Vous en avez marqué 2, puis 2. |
-| Le Mystère | vous | vous | Les personnages ne vous connaissaient que par quelques cartes révélées. Sur vos cartes, ils se sont trompés 12 fois sur 17 la première semaine, contre environ une fois sur deux entre eux. |
+| Le Mystère | vous | vous | Les personnages ne vous connaissaient que par quelques cartes révélées. Sur tout l'essai, ils vous ont deviné 11 fois sur 45, contre environ une fois sur deux entre eux. |
 | Le Fidèle | Nassim et vous | Agathe, Nassim, Valentin et vous | Le rattrapage des sauts exigeait une réponse à chaque texte. |
 | Le Sans-Faute | personne | personne | Impossible pour vous : il faut des cartes révélées au moins cinq jours de la semaine, vous en aviez 3, puis 1. |
 
@@ -270,9 +270,9 @@ Aucune question ne portait sur la durée cette fois.
 ### « Sur tout l'essai », bien lu
 - **« Quand un personnage devinait la réponse d'un autre personnage : 53 fois sur 111 »** (48 %). Ce sont les automates entre eux, avec trois mois d'histoire. Au premier essai, ils en étaient à 46 %. Ils restent sous une carte sur deux parce que c'est le réglage : environ une réponse sur cinq est donnée exprès contre le profil, et les cartes servies sont choisies parmi les plus inattendues. Dans ce réglage, la marge où l'habileté compte va de 30 % (le hasard) à environ 50 % (le lecteur des curseurs).
 - **« Quand un personnage devinait l'une de vos réponses : 11 fois sur 45 »** (24 %).
-  - Ce ne sont pas vos devinettes : ce sont celles des automates sur vous. Au premier dimanche, ils en étaient à 5 sur 17 ; après, clôture comprise, à 6 sur 28.
+  - Ce ne sont pas vos devinettes : ce sont celles des automates sur vous.
   - 24 %, c'est le niveau du hasard. Pour eux, vous êtes resté un inconnu. C'est la source mécanique de vos deux Mystère.
-  - Le joueur simulé, lui, était deviné par les personnages 36 %, puis 42 % du temps. Les automates ne lisent que le côté de vos cartes déjà révélées, et vos réponses d'une semaine ont moins bien annoncé celles de la suivante que les siennes. Or il est réglé pour garder la même valeur quatre fois sur cinq ; un humain qui répond texte par texte, et non tension par tension, fait autrement.
+  - Le joueur simulé, lui, était deviné par les personnages 36 %, puis 42 % du temps. Les automates ne lisent que le côté de vos cartes déjà révélées. Le joueur simulé est réglé pour garder la même valeur quatre fois sur cinq ; un humain qui répond texte par texte, et non tension par tension, fait autrement.
   - Ce chiffre ne dit rien de vos valeurs. L'écart est fragile : 45 tentatives seulement. Nous n'allons pas plus loin (D-016).
 
 ---
@@ -350,7 +350,7 @@ Aucune question ne portait sur la durée cette fois.
 | **Portrait accéléré** (D-033) | Moi a été ouvert 5 fois, toutes pendant les sauts, en répondant d'affilée (4 fois au premier, 1 au second). C'est le seul écran que vous ayez ouvert de vous-même, en dehors d'une visite au Cercle. Le portrait attire au moment où l'on répond. | Ce que vous y avez vu (D-016) ; si un curseur est devenu net ; s'il vous ressemblait (question laissée de côté). On ne sait pas non plus si vous ouvriez le portrait, l'Historique ou vos titres. Le portrait reposait sur 16 réponses, dont neuf données d'affilée lors des sauts, en quelques secondes chacune : dire s'il serait juste pour un vrai joueur est hors de portée (limite de D-033). |
 | **Barre du portrait** (D-026) | Elle était forcément pleine à la fin du second saut : 16 réponses, entrée comprise. | Si elle l'a été plus tôt (cela dépend de vos réponses) ; si vous l'avez remarquée ou comprise (question laissée de côté). La question de D-026, ce que la barre annonce au bout, reste entière pour l'étape 6. |
 | **Raisons inattendues** (D-034) | Elles étaient vraiment dans le lot : 17 textes sur 18 avaient un argument inattendu de chaque côté (chiffre 14 ; le lot était choisi, donc ce chiffre surestime ce que les débats offrent). Répondre n'a pas ralenti (voir la section 2). La raison cachée a été trouvée pour la première fois. | Si les raisons vous ont paru plus nuancées (question laissée de côté). La part d'arguments inattendus que vous avez choisis : ce sont vos réponses, on ne la calcule pas. |
-| **Avis du cercle** (D-025) | Il s'est affiché à chaque révélation lue (seuil de trois réponses toujours atteint, chiffre 8). La révélation a été votre moment préféré trois fois, dont une sans aucune carte. | La part de l'avis du cercle dans ce plaisir (question laissée de côté ; le carnet n'en garde rien, règle de Juridique). Surtout, son risque : lire « tu es le seul défavorable » au sein de sa propre famille. Des personnages inventés ne peuvent pas faire ressentir cela. Cela reste à lever avant la bêta (Juridique, avocat). |
+| **Avis du cercle** (D-025) | Il s'est affiché à chaque révélation lue (seuil de trois réponses, convention d'essai (D-032), toujours atteint, chiffre 8 ; le seuil du produit reste à fixer avant la bêta (D-025)). La révélation a été votre moment préféré trois fois, dont une sans aucune carte. | La part de l'avis du cercle dans ce plaisir (question laissée de côté ; le carnet n'en garde rien, règle de Juridique). Surtout, son risque : lire « tu es le seul défavorable » au sein de sa propre famille. Des personnages inventés ne peuvent pas faire ressentir cela. Cela reste à lever avant la bêta (Juridique, avocat). |
 | **Jumeau** (D-024) | Il a joué deux fois : à T1, deux cartes identiques servies ensemble ; à T6, Agathe avait donné la même réponse qu'une carte servie sans être servie elle-même. À lui seul, il fait monter le hasard de 3,75 à 4,5 cartes justes sur 15 (de 25 % à 30 %). Vos 4 cartes justes tombent toutes dans ces deux manches ; avec si peu de cartes, ce peut être le hasard. Le carnet ne porte jamais « juste par la même réponse » : le message « … avait répondu la même chose » ne vous a jamais été montré. | Si la ligne qui dit la règle vous a paru claire (question laissée de côté). |
 | **Le Pas de Côté** | Il ne vous était possible qu'une fois, à la révélation du jour 14, et seulement si votre curseur sécurité-liberté était déjà net (chiffre 15). Aucun personnage n'en a fait (chiffre 13). | S'il est arrivé. Le carnet l'exclut, et nous ne le cherchons pas. Le badge reste non éprouvé, comme au premier essai. |
 | **Tempéraments** | Vous ne pouviez pas en avoir : il faut 56 jours de présence et 20 réponses. Ceux des personnages étaient affichés sous leur visage dès l'arrivée : L'Original et Le Tranché pour Odile, Le Pont pour Valentin. | S'ils aident à deviner : Le Cercle a été ouvert une seule fois. |
@@ -404,7 +404,7 @@ Dans le lot en préparation, les titres en « Retirer… » étaient tous rejet�
 - **Le vrai problème n'est pas le verbe, c'est la forme.**
   - Un amendement de suppression rejeté est servi comme amendement (présentation B), avec la phrase fixe « Cet amendement supprimerait tout l'article qui prévoit ces mesures. »
   - Un amendement de suppression adopté est servi comme l'article supprimé, donc « rejeté » (présentation A).
-  - Toute suppression servie est donc rejetée, par construction. Dans ce lot, cela fait 5 des 10 rejets ; la phrase fixe annonce le rejet 4 fois sur 4. Avec D-028 (au moins un tiers de rejets), ce sera dans le jeu une source majeure de rejets.
+  - Tout amendement de suppression servi est donc rejeté, par construction. Dans ce lot, cela fait 5 des 10 rejets : T9, T10, T12 et T14 en présentation B, et T5 en présentation A. La phrase fixe annonce le rejet 4 fois sur 4. T3, le seul « Supprimer » adopté, est un article, pas un amendement de suppression. Avec D-028 (au moins un tiers de rejets), ce sera dans le jeu une source majeure de rejets.
 - **Un second indice possible, à vérifier.** Parmi les votes servis sur un amendement, 1 seul adopté sur 9 (E1). Ce n'est un indice pour le joueur que si les trois lignes disent « amendement » : la phrase fixe le dit toujours, les autres lignes, nous ne l'avons pas vérifié.
 
 ### Lecture
@@ -416,7 +416,7 @@ Dans le lot en préparation, les titres en « Retirer… » étaient tous rejet�
 
 ## 8. Ce que l'essai ne pouvait pas dire
 
-- **Une seule matinée.** Moins d'une heure, environ quinze minutes de jeu, « Jours écoulés : 0 » partout. Rien sur l'habitude, le retour du lendemain, le message de 18h, ni Le Fidèle au sens du produit. Rien non plus sur la durée d'une journée vécue comme un rendez-vous, au fil de vrais jours.
+- **Une seule séance.** Moins d'une heure, environ quinze minutes de jeu, « Jours écoulés : 0 » partout. Rien sur l'habitude, le retour du lendemain, le message de 18h, ni Le Fidèle au sens du produit. Rien non plus sur la durée d'une journée vécue comme un rendez-vous, au fil de vrais jours.
 - **Pas de vrais proches.** Des personnages inventés, devinés par des automates. L'essai ne dit pas si deviner plaît avec de vrais proches, ni ce que vivrait quelqu'un que sa famille devine mal, semaine après semaine.
 - **Pas un vrai nouveau venu.**
   - Vous connaissiez les personnages et leurs profils depuis le premier dévoilement, le projet, et le plan des sauts, que vous aviez choisi.
@@ -440,7 +440,7 @@ Dans le lot en préparation, les titres en « Retirer… » étaient tous rejet�
 Ce sont des constats, des mesures et des propositions, pas des décisions. Chaque point dit la décision qu'il toucherait. Les points 1 à 8 viennent de Game design ; les points 9 à 12 (onboarding et étape 5) et 13 à 18 (produit) viennent d'UX.
 
 **1. L'ordre des cartes dans Deviner** : section 1.3, question 3.
-*Décisions touchées : selon l'option, la règle 9 et l'écran Deviner de `produit.md` (D-010) et l'exemple de la maquette 2.1 (D-014) ; D-022 est tenu. Option 3 (rien avant la bêta) : aucune. Option 4 : voir la section 11.*
+*Décisions touchées : selon l'option, la règle 9 et l'écran Deviner de `produit.md` (D-010) et l'exemple de la maquette 2.1 (D-014) ; exception à D-022 pour les options 1 et 2. Option 3 (rien avant la bêta) : aucune. Option 4 : voir la section 11.*
 
 **2. Lire la justesse contre le hasard de chaque manche.** Avec la règle du jumeau, le hasard n'est pas d'une carte sur quatre (30 % ici), et il change d'une manche à l'autre. La mesure « plaisir de deviner » (`produit.md` §8, mesure 5, seuils « fixés plus tard ») serait toujours lue contre le hasard des manches réellement jouées, calculé comme le chiffre 7. Repère de cet essai : hasard 30 %, lecteur des curseurs environ 50 %.
 *Aucune décision touchée* : cela précise une mesure interne.
@@ -467,7 +467,7 @@ Ce sont des constats, des mesures et des propositions, pas des décisions. Chaqu
 *Aucune décision touchée.*
 
 **8. La prochaine preuve du plaisir de deviner** : question 5.
-*Décision touchée : D-031, si l'option recommandée est retenue.*
+*Décision touchée : D-031, si l'option recommandée est retenue, et D-007 et D-015, que D-031 reprend.*
 
 **9. Réécrire l'étape 5 de `docs/onboarding.md`, « Le compte »** (D-035). Proposition :
 
@@ -476,7 +476,7 @@ Ce sont des constats, des mesures et des propositions, pas des décisions. Chaqu
 La phrase « Google/Apple pourront être ajoutés en option en phase 2 » disparaît. La fin « : un pseudo, ton e-mail. » aussi : elle est devenue fausse, et l'essai l'a déjà retirée.
 *Décision touchée : D-035 appliquée (elle modifie déjà D-006, arbitrage 1).*
 
-**10. Remplacer « Ce que le prototype manuel teste »** dans `docs/onboarding.md`. Le prototype manuel n'aura pas lieu (D-007, puis D-015 et D-031). À la place : « Ce que les essais ont montré, ce que la bêta mesure ».
+**10. Remplacer « Ce que le prototype manuel teste »** dans `docs/onboarding.md`. Le prototype manuel avec un cercle réel n'est pas retenu (D-007, repris par D-015) ; D-031 laisse une soirée avec de vrais proches possible plus tard. À la place : « Ce que les essais ont montré, ce que la bêta mesure ».
 *Décision touchée : aucune nouvelle ; on aligne le texte sur D-015 et D-031.*
 
 **11. Deux indicateurs de plus** pour l'onboarding :
@@ -484,13 +484,13 @@ La phrase « Google/Apple pourront être ajoutés en option en phase 2 » dispar
 - la durée de la première séance d'un invité, défi compris.
 
 Ce sont deux gestes, jamais des opinions.
-*Décision touchée : la liste d'indicateurs de D-006.*
+*Décision touchée : la liste d'indicateurs de `docs/onboarding.md` (D-006).*
 
 **12. Pour l'étape 5 de la feuille de route (choix de fabrication).** Rien de neuf pour « lien ou application » (D-005, suspendu), sauf ceci : la voie que vous avez choisie, Google, est celle à vérifier en premier depuis l'icône de l'écran d'accueil (D-035).
 *Aucune décision touchée.*
 
 **13. L'étiquette de la barre** (section 1.1, question 1).
-*Décision touchée : aucune.*
+*Décision touchée : D-026 : ce que la barre annonce au bout est laissé à l'étape 6 ; les étiquettes 1 à 3 n'annoncent aucune arrivée et en tranchent donc une partie. `produit.md` règle 18 et « Mon portrait » (« jusqu'aux premiers curseurs nets ») seraient alors à ajuster. L'étiquette elle-même était une convention d'essai (`simulation-2.md` §7.15).*
 
 **14. Le repère « Deviner · Répondre »** (section 1.2, question 2).
 *Décisions touchées : D-014 (écrans 2.1, 2.3, 5.8, 5.12, et 2.4 et 2.5 si l'on y ajoute le repère) ; exception à D-022 pour ce seul élément.*
@@ -526,7 +526,7 @@ Cinq questions de fond. Chacune dit d'où elle vient et ce qu'elle touche.
 ### Question 1 · L'étiquette de la barre du portrait
 
 *D'où elle vient : votre remarque orale du 11 octobre (section 1.1). Elle s'insère dans Moi › Portrait (D-026).*
-*Ce qu'elle touche : aucune décision, l'étiquette étant une convention d'essai (`simulation-2.md` §7.15). La forme de ce que la barre annonce au bout reste pour l'étape 6.*
+*Ce qu'elle touche : D-026 : ce que la barre annonce au bout est laissé à l'étape 6 ; les étiquettes 1 à 3 n'annoncent aucune arrivée et en tranchent donc une partie. `produit.md` règle 18 et « Mon portrait » (« jusqu'aux premiers curseurs nets ») seraient alors à ajuster. L'étiquette elle-même était une convention d'essai (`simulation-2.md` §7.15).*
 
 Quelle étiquette pour la barre ?
 - **« Ton portrait se dessine » (Recommandé)** : vraie à tout moment, même barre pleine sans curseur net, et dans la suite de « Ton portrait commence ».
@@ -547,7 +547,7 @@ Comment montrer où l'on en est entre deviner et répondre ?
 ### Question 3 · Dans Deviner, dans quel ordre viennent les cartes ?
 
 *D'où elle vient : votre retour oral du 11 octobre (section 1.3).*
-*Ce qu'elle touche : la règle 9 et l'écran Deviner de `produit.md`, que D-022 garde tels quels jusqu'à la bêta ; l'exemple de la maquette 2.1 (D-014). L'option 4 touche en plus `projet.md` §2 et les règles 8 et 9.*
+*Ce qu'elle touche : la règle 9 et l'écran Deviner de `produit.md`, que D-022 garde tels quels jusqu'à la bêta ; l'exemple de la maquette 2.1 (D-014) et, pour les options 1 et 2, une exception à D-022. L'option 4 touche en plus `projet.md` §2 et les règles 8 et 9.*
 
 - **La carte « qui et pourquoi » toujours en dernier, et son « pourquoi » après le visage (Recommandé)** : du plus simple au plus difficile, sans règle de jeu nouvelle ni redessin.
 - **La carte « qui et pourquoi » toujours en dernier, rien d'autre** : corrige l'ordre et laisse le geste tel qu'il est.
@@ -557,22 +557,17 @@ Comment montrer où l'on en est entre deviner et répondre ?
 ### Question 4 · Le premier jour du nouveau venu
 
 *D'où elle vient : la section 4 de ce bilan, et un constat d'UX noté avant l'essai. Elle s'insère dans l'étape 6 de l'onboarding (« Si une manche est ouverte, elle la joue tout de suite », D-006).*
-*Ce qu'elle touche : l'option recommandée, D-006 (étape 6 de `docs/onboarding.md`) ; la deuxième option, D-023, D-022 et D-014 (écran 2.1) ; la troisième, aucune décision. Réserve : l'effet de l'option recommandée sur les points et les titres de la première semaine reste à confirmer par Game design.*
+*Ce qu'elle touche : l'option recommandée, D-006 (étape 6 de `docs/onboarding.md`) ; son texte d'écran existe déjà (`produit.md` §5, « Rien à deviner pour l'instant. Réponds : à 18h, ton cercle pourra te deviner. ») mais n'a jamais été dessiné, la maquette 1.12 portant la variante des cercles de deux ; la deuxième option, D-023, D-022 et D-014 (écran 2.1) ; la troisième, aucune décision. Réserve : l'effet de l'option recommandée sur les points et les titres de la première semaine reste à confirmer par Game design.*
 
 Le jour de son arrivée, un nouveau venu devine des réponses à un texte qu'il n'a jamais lu. Que fait-on ?
-- **Il répond seulement, et devine dès le lendemain, sur le texte auquel il a répondu (Recommandé)** :
-  - son premier Deviner porte sur un texte qu'il a lu ;
-  - sa première séance raccourcit d'environ une minute et demie ;
-  - le jeu suit le même ordre que l'entrée ;
-  - l'écran existe déjà (1.12 : « Rien à deviner pour l'instant. Réponds : à 18h, ton cercle pourra te deviner. ») ;
-  - prix : une manche de moins dans sa première semaine.
+- **Il répond seulement, et devine dès le lendemain, sur le texte auquel il a répondu (Recommandé)** : son premier Deviner porte sur un texte qu'il a lu et sa première séance raccourcit d'environ une minute et demie (estimation), au prix d'une manche de moins dans sa première semaine.
 - **Il garde la manche, avec les trois lignes du texte d'hier au-dessus des cartes, ce jour-là seulement** : il devine en connaissant le texte, mais c'est une aide au nouveau venu, que D-023 a écartée, et un changement de 2.1 (D-014, D-022).
 - **Rien ne change, on mesure en bêta** : la part de nouveaux qui finissent leur premier Deviner et sa durée sont déjà prévues (`produit.md` §8), mais le défaut reste certain, puisque le texte n'a jamais été lu.
 
 ### Question 5 · Comment savoir si deviner ses proches plaît, cœur de la promesse ?
 
 *D'où elle vient : deux essais avec des personnages simulés donnent la même réponse (section 3).*
-*Ce qu'elle touche : D-031, qui écartait « pour l'instant » de vrais proches. À regrouper avec la décision de fin d'essai, si elle est posée.*
+*Ce qu'elle touche : D-031, qui écartait « pour l'instant » de vrais proches ; D-007 et D-015, que D-031 reprend. À regrouper avec la décision de fin d'essai, si elle est posée.*
 
 - **Une soirée courte avec quatre à six vrais proches, sur papier, avant la construction (Recommandé)** : c'est la seule façon de répondre avant de construire ; quelques textes suffisent, sans rien fabriquer.
 - **Attendre la bêta (étape 7)** : rien à organiser maintenant, mais on construit avant de savoir si le cœur du jeu plaît.
@@ -584,14 +579,14 @@ Le jour de son arrivée, un nouveau venu devine des réponses à un texte qu'il 
 
 Fusion des listes de Game design et d'UX, sans doublon.
 
-- **Question 1 (étiquette de la barre)** : aucune. L'étiquette était une convention d'essai (`simulation-2.md` §7.15). « Se dessine » rappelle une option écartée par D-026 (étapes nommées) sans la réintroduire : l'étiquette ne change jamais.
+- **Question 1 (étiquette de la barre)** : D-026 : ce que la barre annonce au bout est laissé à l'étape 6 ; les étiquettes 1 à 3 n'annoncent aucune arrivée et en tranchent donc une partie. `produit.md` règle 18 et « Mon portrait » (« jusqu'aux premiers curseurs nets ») seraient alors à ajuster. L'étiquette elle-même était une convention d'essai (`simulation-2.md` §7.15). « Se dessine » rappelle une option écartée par D-026 (étapes nommées) sans la réintroduire : l'étiquette ne change jamais.
 - **Question 2 (repère)** : D-014 (écrans 2.1, 2.3, 5.8, 5.12 ; 2.4 et 2.5 si l'on y ajoute le repère) ; exception à D-022 limitée à ce repère.
-- **Question 3 (ordre des cartes), options 1 et 2** : une ligne s'ajoute à la règle 9 et à l'écran Deviner de `produit.md` (D-010) ; l'exemple de la maquette 2.1 change (D-014). D-022 est tenu : c'est une règle d'écran, pas un redessin, comme la ligne de D-024. L'option 1 fixe en plus le geste « pourquoi après le visage », qui n'était qu'une convention d'UX de l'essai. La carte à raison cachée tirée au sort remplace une convention d'essai (fichier caché, §4.4), pas une décision. Option 3 : aucune. **Option 4** (échelle en trois marches) : `projet.md` §2, les règles 8 et 9 et l'écran 2.1 (D-010, D-014), avec une manche plus longue ; mécanique nouvelle, à concevoir à part.
+- **Question 3 (ordre des cartes), options 1 et 2** : une ligne s'ajoute à la règle 9 et à l'écran Deviner de `produit.md` (D-010) ; l'exemple de la maquette 2.1 change (D-014). Exception à D-022 limitée à cet ordre, puisque c'est vous qui le demandez. L'option 1 fixe en plus le geste « pourquoi après le visage », qui n'était qu'une convention d'UX de l'essai. La carte à raison cachée tirée au sort remplace une convention d'essai (fichier caché, §4.4), pas une décision. Option 3 : aucune. **Option 4** (échelle en trois marches) : `projet.md` §2, les règles 8 et 9 et l'écran 2.1 (D-010, D-014), avec une manche plus longue ; mécanique nouvelle, à concevoir à part.
 - **Question 4 (premier jour du nouveau venu)** : option recommandée, D-006 (étape 6 de `docs/onboarding.md`) ; deuxième option, D-023, D-022 et D-014 (écran 2.1) ; troisième option, aucune.
-- **Question 5 (plaisir de deviner)**, option 1 : rouvre D-031 (« un test sur moi et des utilisateurs virtuels pour l'instant »).
+- **Question 5 (plaisir de deviner)**, option 1 : rouvre D-031 (« un test sur moi et des utilisateurs virtuels pour l'instant »), et touche D-007 et D-015 (essai seul, joueurs simulés), que D-031 reprend.
 - **Point 5 du chapitre 9** (étape 6) : la règle 12 (D-010) pour Le Fidèle du nouveau venu.
 - **Point 4** : aucune aujourd'hui ; R6 (D-030) seulement si la mesure le demande plus tard.
-- **`docs/onboarding.md`** : application de D-035, qui modifie déjà D-006, arbitrage 1 ; section « prototype manuel » alignée sur D-015 et D-031 ; indicateurs de D-006 complétés.
+- **`docs/onboarding.md`** : application de D-035, qui modifie déjà D-006, arbitrage 1 ; section « prototype manuel » alignée sur D-015 et D-031 ; indicateurs de `docs/onboarding.md` (D-006) complétés.
 - **Mesures de bêta ajoutées** (points 2, 3 et 17) : elles complètent `produit.md` §8 (D-010 ; mesures de D-022 et D-023), sur des gestes seulement. La durée de 2.4 est à confirmer par Juridique.
 - **Points 6 et 18** : aucune. Le point 6 complète D-028 et le vérificateur d'orientation de `projet.md` §8 ; les questionnaires de la bêta ne sont pas une décision (`plan-construction.md`).
 - **D-021** : non invoquée. UX recommande de ne poser aucune question de ressenti, donc de ne pas la reposer.
@@ -602,7 +597,7 @@ Fusion des listes de Game design et d'UX, sans doublon.
 
 ## 12. Limites et doutes
 
-- **Un seul joueur**, l'auteur du projet, qui connaissait les personnages, le plan et l'accroc du premier essai, et qui a joué toute la partie en une heure (11 octobre 2026, 9h-10h) face à des personnages inventés devinés par des automates. Tous les chiffres viennent d'une seule matinée. Cela ne dit rien de vrais proches, de l'habitude ni du rendez-vous de 18h.
+- **Un seul joueur**, l'auteur du projet, qui connaissait les personnages, le plan et l'accroc du premier essai, et qui a joué toute la partie en une heure face à des personnages inventés devinés par des automates. Tous les chiffres viennent d'une seule séance. Cela ne dit rien de vrais proches, de l'habitude ni du rendez-vous de 18h.
 - **Quinze cartes** : tout chiffre de justesse est fragile. L'écart entre 11 sur 45 et le joueur simulé l'est aussi.
 - **Ce que nous n'avons pas lu.** Nous n'avons pas ouvert `detail-manches-porteur.txt` : l'ordre et les auteurs exacts des cartes ne sont pas cités. Le hasard par manche est recalculé à partir du fichier scellé et des chiffres constants 3, 4, 6 et 7 ; la somme redonne exactement 9/2, mais ce calcul n'a pas été refait par un second programme.
 - **« Pas de message du jumeau »** se déduit de l'absence du verdict « juste par la même réponse » dans le carnet. Front-end doit confirmer que des cartes identiques servies ensemble s'écrivent bien « juste » simple.
