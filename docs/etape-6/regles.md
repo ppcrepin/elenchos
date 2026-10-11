@@ -479,7 +479,7 @@ Le plan prévoit un seul lot de réglages, à mi-parcours de la bêta (`docs/pla
 
 **Ce qui se mesure déjà, sans rien ajouter** (mesures sur des gestes, permises par la liste fermée de D-042) : la justesse contre le hasard (D-041), donc la fréquence des Sans-Faute (R7), et les titres de la semaine qui ne dépendent que des devinettes (Le Devin, Le Mystère).
 
-**Ce qui ne se mesure pas sans vous.** Le seuil de netteté, Le Pas de Côté et les tempéraments se calculent à partir des positions et des raisons. Les compter, même tous joueurs confondus, est un usage des opinions qui n'est pas dans la liste fermée (D-042, point 2 ; D-027 : la part de « aucune » est le seul usage interne des opinions). Nous les retirons donc des repères, sauf si vous en décidez autrement (section 7, question 2).
+**Ce qui ne se mesure pas sans vous.** Le seuil de netteté, Le Pas de Côté et les tempéraments se calculent à partir des positions et des raisons. Les compter, même tous joueurs confondus, est un usage des opinions qui n'est pas dans la liste fermée (D-042, point 2 ; D-027 : la part de « aucune » est le seul usage interne des opinions). Ils sont retenus (D-052, point 2).
 
 **Les trois comptes que nous vous proposons d'ajouter :**
 1. le nombre de Pas de Côté annoncés, par mois ;
@@ -869,7 +869,7 @@ Son curseur P est net depuis la semaine 9.
 
 **Modifiée, explicitement.**
 - **D-011** (« au Deviner, tous les autres membres sont proposés, y compris ceux en pause »). Seconde exception, après R8 : un membre arrivé après la fermeture d'un texte n'est pas proposé sur ce texte (règle 8). Il ne pouvait pas y avoir répondu ; le proposer offrirait à tous une élimination gratuite, et ne cache rien, puisque son arrivée est connue du cercle. La raison de D-011 (ne jamais montrer qui a décroché) tient : un membre en pause reste proposé.
-- **Si vous ajoutez les trois comptes (question 2)** : D-042, point 2 (liste fermée des usages), et D-027 (« seul usage interne des opinions ») reçoivent une seconde exception, limitée au réglage du jeu ; une phrase s'ajoute à « Qui, durée, droits » (D-006). `produit.md` §6 et §8 sont à mettre à jour.
+- **Les trois comptes sont ajoutés (D-052, point 2)** : D-042, point 2 (liste fermée des usages), et D-027 (« seul usage interne des opinions ») reçoivent une seconde exception, limitée au réglage du jeu ; une phrase s'ajoute à « Qui, durée, droits » (D-006). `produit.md` §6 et §8 sont à mettre à jour.
 - **D-014** (maquettes finales) : une ligne sous « Valider » sur l'écran Deviner, « Une fois validé, tu ne peux plus changer. » (condition d'UX, règle 9).
 
 **Précisées, en s'écartant de la lettre d'un texte validé.**
@@ -888,7 +888,7 @@ Son curseur P est net depuis la semaine 9.
 - **Règle 4 (D-010) et D-045** : sort d'une carte, d'une attribution et d'un titre quand quelqu'un part.
 - **Règle 19 (D-010)** : le cercle voit les curseurs d'après les seules réponses révélées (lecture A, reprise de l'essai).
 - **D-025** : seuil de 3 réponses et règle de la ligne, proposés. La position d'UX, six réponses, est nommée en règle 10. Le seuil passe chez l'avocat avant la bêta.
-- **D-045** : « 12 mois » ; un seul e-mail par période d'inactivité.
+- **D-045** : « 12 mois » ; un seul e-mail par période d'inactivité ; `docs/etape-6/donnees.md` (P-30) y voit un élargissement de l'exception à « aucune relance » : soumis à l'avocat.
 - **Règle 18 et écran 5.11** : la phrase de la barre pleine et la ligne de Moi sans curseur net, proposées par UX.
 
 **Recommandation, non fermée** : les voix sous le vote (E4), à trancher par UX et Contenu.

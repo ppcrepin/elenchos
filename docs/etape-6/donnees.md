@@ -112,7 +112,7 @@ Le pseudo reste un seul champ du compte, le même dans tous ses cercles. Si un j
 *Test.* La base n'a qu'un champ pseudo, rattaché au compte, aucun rattaché à un cercle (comparaison avec la carte des données). *Travail 9.*
 
 **P-04. Chaque donnée gardée figure sur la carte des données, avec un usage de la liste fermée.** *D-042, point 2 ; plan, travail 11 (carte des données).*
-Les usages permis sont quatre : faire tourner le jeu ; compter la part de « aucune » (D-027) ; les mesures sur les gestes ; la sécurité. Un cinquième, régler les seuils du jeu, s'y ajoute : vous avez ajouté les trois comptes de mi-bêta (D-052, point 2 ; P-22 a). Un champ sans ligne sur la carte n'a pas le droit d'exister.
+Les usages permis sont cinq : faire tourner le jeu ; compter la part de « aucune » (D-027) ; les mesures sur les gestes ; la sécurité ; régler les seuils du jeu, par les trois comptes de mi-bêta (D-052, point 2 ; P-22 a). Un champ sans ligne sur la carte n'a pas le droit d'exister.
 *Test.* À chaque changement de code, un programme compare les tables réelles de la base d'essai à la carte : tout champ absent de la carte, ou sans usage, fait échouer la vérification. *Travail 5, puis à chaque changement.*
 
 **P-04 a. Un texte corrigé après coup peut sortir des portraits.** *Règle 20 de `docs/etape-6/regles.md` (proposé, confirmée par Contenu et Back-end) ; D-044, point 1.*
@@ -195,12 +195,12 @@ Ce que les agents peuvent lire de la version en ligne (votre réponse à « La q
 Un rapport est produit dans la version en ligne ; vous le lisez, puis vous le donnez ; les agents n'ont jamais d'accès direct. Ces totaux sont jugés sans donnée de joueur, à confirmer par l'avocat (partie 5, point 2). La règle est écrite dans « Qui, durée, droits ». La procédure d'incident reste jouable sans ouvrir de session d'agents (plan, travail 12).
 *Test.* Sur une base inventée, chaque chiffre du rapport porte sur un groupe au-dessus de son seuil, ou est remplacé par « — » ; le traceur n'y apparaît pas ; le rapport ne contient que les rubriques permises (part de « aucune », totaux des mesures, trois comptes), aucune ligne de journal. Réponses inversées : le rapport est identique, sauf la part de « aucune », les totaux de justesse et de Mystère et les trois comptes, qui dépendent des réponses par nature (P-39, P-39 a). *Travail 12.*
 
-**P-22. Quatre usages, quatre rôles de base de données.** *D-042, point 2.*
-Le jeu, les comptes, les mesures et la sécurité se connectent chacun sous leur rôle. Chaque rôle ne peut lire que les champs de son usage sur la carte des données. Les mesures validées qui dépendent des réponses de tous, la justesse et la part des Mystère (`docs/produit.md`, section 8 ; D-041), sont calculées par le rôle du jeu, qui lit déjà les réponses pour jouer ; il les dépose déjà totalisées, au-dessus du seuil, là où le rôle des mesures les lit.
+**P-22. Cinq usages, quatre rôles de base de données.** *D-042, point 2.*
+Le jeu, les comptes, les mesures et la sécurité se connectent chacun sous leur rôle. Chaque rôle ne peut lire que les champs de son usage sur la carte des données. Les mesures validées qui dépendent des réponses de tous, la justesse et la part des Mystère (`docs/produit.md`, section 8 ; D-041), sont calculées par le rôle du jeu, qui lit déjà les réponses pour jouer ; il les enregistre déjà totalisées, au-dessus du seuil, là où le rôle des mesures les lit. Le cinquième usage (les trois comptes, P-22 a) est lu sous le rôle des mesures.
 *Test.* Un programme lit les droits réels de chaque rôle dans la base d'essai et les compare à la carte : un droit en trop fait échouer la vérification. *Travail 5.*
 
 **P-22 a. Trois comptes pour le réglage de mi-bêta.** *D-052, point 2 ; `docs/etape-6/regles.md`, section 5 et question 2 ; seconde exception à la liste fermée (D-042, point 2) et à D-027.*
-Le rôle du jeu calcule trois comptes et les dépose déjà totalisés, là où le rôle des mesures les lit : le nombre de Pas de Côté annoncés, par mois ; le nombre de tempéraments en cours, pour chacun des quatre, rapporté au nombre de joueurs qui peuvent en avoir ; la part des joueurs qui ont au moins un curseur net à 40, 60 et 80 réponses. Le rôle des mesures ne lit toujours ni les réponses, ni les curseurs. Vous les lisez, et les agents aussi, dans le rapport que vous leur donnez (P-21 ; D-052, point 3).
+Le rôle du jeu calcule trois comptes et les enregistre déjà totalisés, là où le rôle des mesures les lit : le nombre de Pas de Côté annoncés, par mois ; le nombre de tempéraments en cours, pour chacun des quatre, rapporté au nombre de joueurs qui peuvent en avoir ; la part des joueurs qui ont au moins un curseur net à 40, 60 et 80 réponses. Le rôle des mesures ne lit toujours ni les réponses, ni les curseurs. Vous les lisez, et les agents aussi, dans le rapport que vous leur donnez (P-21 ; D-052, point 3).
 
 **P-23. Les réponses ne servent qu'à jouer, à compter la part de « aucune » et aux trois comptes de mi-bêta (P-22 a).** *D-027 ; D-042, point 2 ; D-052, point 2.*
 Le rôle des mesures ne lit pas les réponses. Il ne lit qu'une vue, c'est-à-dire une fenêtre préparée par la base, qui donne pour chaque texte deux nombres : réponses et « aucune ». La vue ne répond qu'après la révélation du texte et au-dessus de 30 réponses (seuil à fixer dans l'analyse d'impact, D-027). Le compte est fait une fois, puis figé (proposé) : il ne bouge plus si un joueur efface ses réponses ensuite, pour qu'on ne puisse pas retrouver une raison par différence entre deux comptes. Aucune ligne par cercle ni par personne n'existe.
@@ -230,7 +230,7 @@ Ce que le téléphone reçoit au sujet d'un autre membre suit une liste fermée 
 Un curseur envoyé à un autre membre se calcule d'après l'entrée et les réponses déjà révélées, jamais d'après une réponse pas encore devinée : sinon, un curseur qui bouge avant 18h trahirait la réponse du jour. Le joueur, dans Moi, voit tout son portrait.
 *Test.* Horloge simulée : avant 18h, le curseur de Marie reçu par Paul est identique, octet pour octet, que Marie ait répondu favorable, défavorable ou pas encore répondu au texte du jour ; à 18h, il change selon la réponse révélée. *Travail 8.*
 
-**P-28. Aucun calcul ne réunit plusieurs cercles, sauf des totaux internes : la part de « aucune », les mesures et les trois comptes de mi-bêta.** *§9 ; D-025 ; D-027 ; D-052, point 2 ; règle 3 (R8).*
+**P-28. Aucun calcul ne réunit plusieurs cercles, sauf des totaux internes : la part de « aucune » (D-027), les mesures validées (D-041, P-39) et les trois comptes de mi-bêta (D-052, point 2).** *§9 ; D-025 ; D-027 ; D-052, point 2 ; règle 3 (R8).*
 L'avis du cercle se calcule cercle par cercle. Le seul croisement permis entre cercles est celui de la règle 3 : une personne n'est proposée qu'une fois par jour.
 *Test.* Un joueur présent dans deux cercles : chaque graphique de l'avis du cercle ne compte que les réponses de son cercle. Droits des rôles : seul le rôle des mesures lit au-delà d'un cercle, et seulement des totaux (la vue de P-23, les dépôts de P-22 et P-22 a). *Travaux 5 et 8.*
 
@@ -247,7 +247,7 @@ Précisions proposées, qui ne changent pas la règle :
 
 Précisions proposées qui touchent une décision (partie 7 ; soumises à l'avocat, partie 5) :
 - si l'e-mail n'a pas pu partir (adresse refusée, relais d'Apple coupé), l'effacement a lieu quand même. D-045 dit « après un e-mail envoyé » ; sans cette précision, un compte dont l'adresse ne marche plus ne serait jamais effacé ;
-- une ouverture remet le compteur à zéro ; si le joueur redevient inactif, cette nouvelle période donne un nouvel e-mail. D-045 et la règle 5 disent « une seule fois » : nous le lisons « une fois par période d'inactivité », comme Game design (`docs/etape-6/regles.md`), ce qui élargit l'exception à « aucune relance » (D-010, point 3 ; D-029).
+- une ouverture remet le compteur à zéro ; si le joueur redevient inactif, cette nouvelle période donne un nouvel e-mail. D-045 et la règle 5 disent « une seule fois » : nous le lisons « une fois par période d'inactivité », comme Game design (`docs/etape-6/regles.md`), ce qui élargit l'exception à « aucune relance » (D-010, point 3 ; D-029). Game design la reprend (`regles.md`, règle 5), validée avec D-052 point 1 ; elle reste soumise à l'avocat.
 
 **Le compte devenu inaccessible** (proposé ; `docs/onboarding.md`, règle 5 du compte, qui renvoie le délai à l'analyse d'impact) : un compte dont la seule voie de connexion, Apple ou Google, a été coupée de leur côté (le joueur a supprimé son compte chez eux, ou retiré l'accès à Elenchos), sans adresse e-mail qui marche. Apple et Google préviennent le serveur de ces événements (de mémoire, à vérifier au travail 9). Le compte est effacé 30 jours après (proposé), sauf reconnexion entre-temps.
 
@@ -420,7 +420,7 @@ Les risques à y décrire, avec la parade déjà prévue. L'analyse est obligato
 
 ## 7. Décisions antérieures touchées
 
-Ce document applique D-006, D-010, D-024 à D-027, D-035, D-041 à D-045 et D-048. Il ne modifie aucune décision de lui-même. Voici ce qu'il touche ou précise.
+Ce document applique D-006, D-010, D-024 à D-027, D-035, D-041 à D-045, D-048 et D-052. Il ne modifie aucune décision de lui-même. Voici ce qu'il touche ou précise.
 
 **Touchées par vos réponses (D-052) :**
 - **D-027** (« lue par le porteur et Contenu seulement ») : élargie par D-052, point 3 ; d'autres agents que Contenu lisent, et d'autres chiffres que la part de « aucune » : les totaux des mesures de la bêta, dans un rapport que vous leur donnez (P-21).
@@ -470,6 +470,6 @@ Ce document applique D-006, D-010, D-024 à D-027, D-035, D-041 à D-045 et D-04
 **Agents**
 Que peuvent lire les agents, donc le fournisseur d'IA chez qui ils travaillent, parmi des chiffres et des journaux de la version en ligne que nous jugeons ne contenir aucune donnée de joueur (à confirmer par l'avocat) ? Deux décisions sont en jeu : D-027 (la part de « aucune » est lue par vous et par Contenu, rien d'autre) et D-048 (en cas d'incident sur la version en ligne, c'est vous qui regardez). Dans tous les cas : un rapport que vous leur donnez, jamais un accès ; des totaux au-dessus des seuils ; la règle écrite dans « Qui, durée, droits » (P-21). Chaque option comprend la précédente, sauf la dernière.
 - **Seulement la part de « aucune » (Recommandé)** : D-027 tel qu'il est décidé, seul usage décidé qui demande qu'un agent lise un chiffre ; ni D-027 ni D-048 ne changent. Coût : vous lisez seul les mesures de la bêta et les journaux ; un défaut visible seulement avec de vraies données sera plus long à comprendre.
-- **Aussi les totaux des mesures** (retenue, D-052, point 3) : l'équipe lit avec vous le bilan de la bêta (gestes, justesse, Mystère, par groupes de 10 au moins ; avec D-052, point 2, aussi les trois comptes de mi-bêta, par groupes de 30 au moins). Élargit D-027 (d'autres agents que Contenu, d'autres chiffres) ; D-048 intact.
+- **Aussi les totaux des mesures** (retenue, D-052, point 3) : l'équipe lit avec vous le bilan de la bêta (gestes, justesse, Mystère, par groupes de 10 au moins (chiffre de l'option, que D-052 ne reprend pas : « au-dessus des seuils » ; proposé) ; avec D-052, point 2, aussi les trois comptes de mi-bêta, par groupes de 30 au moins). Élargit D-027 (d'autres agents que Contenu, d'autres chiffres) ; D-048 intact.
 - **Aussi des extraits de journaux** : en plus, en cas d'incident, des extraits de nos journaux, jamais ceux de Scalingo ; un incident se comprend plus vite. Élargit D-027 et touche D-048 : vous regardez toujours, mais les agents reçoivent une partie de ce que vous regardez.
 - **Vous seul** : rien de la version en ligne ne va aux agents. Restreint D-027 : Contenu ne lit plus la part de « aucune », vous repérez seul les textes mal écrits ; D-048 intact.

@@ -98,7 +98,7 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 
 **4. Test du message de 18h** : une page nue, cinq téléphones, trois soirs (D-005).
 - Sur les mêmes téléphones, il vérifie aussi la connexion Google ou Apple depuis l'icône, et la reconnexion après l'ajout de l'icône (Front-end, `docs/etape-5-choix.md`). S'ils échouent, la question vous reviendra, comme D-035 le prévoit.
-- Il faut avant lui le compte développeur Apple, à votre nom (partie 2).
+- Il faut avant lui le compte développeur Apple, à votre nom (déjà ouvert, D-047 ; partie 2).
 - Les cinq téléphones : l'équipe n'en a aucun. Votre iPhone, un Android d'essai si vous l'achetez (proposé, partie 6), et trois autres, prêtés ou loués, à réunir au début de l'étape (proposé).
 - Fini quand : le message arrive vers 18h sur les cinq téléphones, trois soirs de suite, et la connexion tient depuis l'icône.
 - Vous : vous le recevez sur votre téléphone, et vous vous connectez depuis l'icône.
@@ -180,7 +180,7 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - La construction et la vérification finale sont terminées.
 - Des textes sont prêts d'avance pour toute la bêta, y compris la réserve des trois textes d'entrée : 56 à 84 textes (Contenu).
 - L'analyse d'impact existe, au moins en version bêta.
-- L'avocat a fait sa première relecture (D-044) : la carte de consentement, « Qui, durée, droits », les conditions d'utilisation avec l'engagement (D-042), l'analyse d'impact en version bêta, les contrats des prestataires, les points de D-024, D-025, D-027 et D-035, et la mention IA.
+- L'avocat a fait sa première relecture (D-044) : la carte de consentement, « Qui, durée, droits », les conditions d'utilisation avec l'engagement (D-042), l'analyse d'impact en version bêta, les contrats des prestataires, les points de D-024, D-025, D-027, D-035 et D-052 (trois comptes de mi-bêta, totaux lus par les agents, Pas de Côté annoncé au cercle), et la mention IA.
 - Une décision écrite dit pourquoi un délégué n'est pas encore obligatoire (D-044).
 - La mention IA est en place, et la procédure de correction des textes est prête (D-044).
 - La procédure d'incident d'une page est écrite, et vous l'avez jouée à blanc (D-043).
