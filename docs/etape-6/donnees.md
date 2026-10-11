@@ -104,9 +104,17 @@ La position et la raison de chaque réponse, et l'adresse e-mail, sont chiffrée
 À Apple ou Google, le jeu ne demande qu'un identifiant et l'adresse e-mail : jamais le nom, ni la photo. Aucune date de naissance : « 15 ans et plus » est une déclaration sur la carte de consentement. Le pseudo n'est jamais prérempli avec le nom donné par Apple ou Google.
 *Test.* La demande envoyée à Apple et à Google ne contient que les autorisations « identifiant » et « e-mail » (lecture de la demande produite). La base n'a aucun champ nom, photo ni date de naissance (comparaison avec la carte des données). Après un retour simulé d'Apple qui fournit un nom, le champ pseudo est vide. *Travail 9.*
 
+**P-03 a. Un seul pseudo par compte.** *Règle 15 de `docs/etape-6/regles.md` (proposé).*
+Le pseudo reste un seul champ du compte, le même dans tous ses cercles. Si un joueur qui rejoint un autre cercle doit en changer (pseudo déjà pris), le nouveau vaut partout. Un pseudo propre à chaque cercle créerait une donnée de plus : il n'est pas proposé. P-27 n'a rien à changer.
+*Test.* La base n'a qu'un champ pseudo, rattaché au compte, aucun rattaché à un cercle (comparaison avec la carte des données). *Travail 9.*
+
 **P-04. Chaque donnée gardée figure sur la carte des données, avec un usage de la liste fermée.** *D-042, point 2 ; plan, travail 11 (carte des données).*
 Les usages permis sont quatre : faire tourner le jeu ; compter la part de « aucune » (D-027) ; les mesures sur les gestes ; la sécurité. Un champ sans ligne sur la carte n'a pas le droit d'exister.
 *Test.* À chaque changement de code, un programme compare les tables réelles de la base d'essai à la carte : tout champ absent de la carte, ou sans usage, fait échouer la vérification. *Travail 5, puis à chaque changement.*
+
+**P-04 a. Un texte corrigé après coup peut sortir des portraits.** *Règle 20 de `docs/etape-6/regles.md` (proposé) ; D-044, point 1.*
+Chaque réponse garde le texte auquel elle répond, et un curseur doit pouvoir se recalculer sans les réponses à un texte retiré. Le reste ne bouge pas : les réponses restent dans l'Historique, et les cartes, les points, les titres, Le Fidèle, l'avis du cercle et la barre tiennent.
+*Test.* Sur une base inventée, on retire un texte des portraits : chaque curseur est égal à celui qu'on obtient en rejouant toutes les réponses sauf celles de ce texte ; les points, les titres et la barre sont inchangés ; les réponses sont toujours dans l'Historique. *Travail 8.*
 
 ### B. Rien de personnel qui sorte
 
@@ -189,6 +197,9 @@ Quel que soit le niveau, un rapport est produit dans la version en ligne ; vous 
 Le jeu, les comptes, les mesures et la sécurité se connectent chacun sous leur rôle. Chaque rôle ne peut lire que les champs de son usage sur la carte des données. Les mesures validées qui dépendent des réponses de tous, la justesse et la part des Mystère (`docs/produit.md`, section 8 ; D-041), sont calculées par le rôle du jeu, qui lit déjà les réponses pour jouer ; il les dépose déjà totalisées, au-dessus du seuil, là où le rôle des mesures les lit.
 *Test.* Un programme lit les droits réels de chaque rôle dans la base d'essai et les compare à la carte : un droit en trop fait échouer la vérification. *Travail 5.*
 
+**P-22 a. Trois comptes pour le réglage de mi-bêta, si la question « Mesures » de `docs/etape-6/regles.md` est acceptée.** *`docs/etape-6/regles.md`, section 5 et question 2 ; seconde exception à la liste fermée (D-042, point 2) et à D-027, si elle est acceptée.*
+Le rôle du jeu calcule alors trois comptes et les dépose déjà totalisés, là où le rôle des mesures les lit : le nombre de Pas de Côté annoncés, par mois ; le nombre de tempéraments en cours, pour chacun des quatre, rapporté au nombre de joueurs qui peuvent en avoir ; la part des joueurs qui ont au moins un curseur net à 40, 60 et 80 réponses. Le rôle des mesures ne lit toujours ni les réponses, ni les curseurs. Si la question est refusée, rien de tout cela n'existe.
+
 **P-23. Les réponses ne servent qu'à jouer et à compter la part de « aucune ».** *D-027 ; D-042, point 2.*
 Le rôle des mesures ne lit pas les réponses. Il ne lit qu'une vue, c'est-à-dire une fenêtre préparée par la base, qui donne pour chaque texte deux nombres : réponses et « aucune ». La vue ne répond qu'après la révélation du texte et au-dessus de 30 réponses (seuil à fixer dans l'analyse d'impact, D-027). Le compte est fait une fois, puis figé (proposé) : il ne bouge plus si un joueur efface ses réponses ensuite, pour qu'on ne puisse pas retrouver une raison par différence entre deux comptes. Aucune ligne par cercle ni par personne n'existe.
 *Test.* Sous le rôle des mesures, la lecture de la table des réponses est refusée. Avec l'horloge simulée, la vue ne donne rien avant la révélation, rien sous 30 réponses, et le même chiffre avant et après l'effacement d'un joueur. La table des comptes n'a que trois colonnes : texte, réponses, « aucune ». *Travail 12.*
@@ -213,6 +224,10 @@ Avant 18h, aucune réponse envoyée au téléphone ne contient le vote, un auteu
 Ce que le téléphone reçoit au sujet d'un autre membre suit une liste fermée : pseudo, rond, curseurs, tempéraments, titres, « déjà joué », cartes révélées selon les règles, ses surprises. Jamais : l'adresse, la voie de compte, la barre du portrait (D-026), la pause (D-010, D-011), ses autres cercles.
 *Test.* Chaque réponse du serveur au sujet d'un autre membre est comparée à la liste fermée : un champ en trop fait échouer le test. Un membre en pause et un membre actif qui n'a pas répondu ce jour-là produisent, pour les autres, des réponses identiques. Réponses inversées : ce qu'un proche reçoit avant 18h est identique. *Travail 7.*
 
+**P-27 a. Le cercle voit les curseurs d'après les seules réponses révélées.** *Règle 19 de `docs/etape-6/regles.md` (lecture A, proposé ; conséquence de D-010).*
+Un curseur envoyé à un autre membre se calcule d'après l'entrée et les réponses déjà révélées, jamais d'après une réponse pas encore devinée : sinon, un curseur qui bouge avant 18h trahirait la réponse du jour. Le joueur, dans Moi, voit tout son portrait.
+*Test.* Horloge simulée : avant 18h, le curseur de Marie reçu par Paul est identique, octet pour octet, que Marie ait répondu favorable, défavorable ou pas encore répondu au texte du jour ; à 18h, il change selon la réponse révélée. *Travail 8.*
+
 **P-28. Aucun calcul ne réunit plusieurs cercles, sauf la part de « aucune », interne.** *§9 ; D-025 ; D-027 ; règle 3 (R8).*
 L'avis du cercle se calcule cercle par cercle. Le seul croisement permis entre cercles est celui de la règle 3 : une personne n'est proposée qu'une fois par jour.
 *Test.* Un joueur présent dans deux cercles : chaque graphique de l'avis du cercle ne compte que les réponses de son cercle. Droits des rôles : seul le rôle des mesures lit au-delà d'un cercle, et seulement par la vue de P-23. *Travaux 5 et 8.*
@@ -230,7 +245,7 @@ Précisions proposées, qui ne changent pas la règle :
 
 Précisions proposées qui touchent une décision (partie 7 ; soumises à l'avocat, partie 5) :
 - si l'e-mail n'a pas pu partir (adresse refusée, relais d'Apple coupé), l'effacement a lieu quand même. D-045 dit « après un e-mail envoyé » ; sans cette précision, un compte dont l'adresse ne marche plus ne serait jamais effacé ;
-- une ouverture remet le compteur à zéro ; si le joueur redevient inactif, cette nouvelle période donne un nouvel e-mail. D-045 et la règle 5 disent « une seule fois » : nous le lisons « une fois par période d'inactivité », ce qui élargit l'exception à « aucune relance » (D-010, point 3 ; D-029).
+- une ouverture remet le compteur à zéro ; si le joueur redevient inactif, cette nouvelle période donne un nouvel e-mail. D-045 et la règle 5 disent « une seule fois » : nous le lisons « une fois par période d'inactivité », comme Game design (`docs/etape-6/regles.md`), ce qui élargit l'exception à « aucune relance » (D-010, point 3 ; D-029).
 
 **Le compte devenu inaccessible** (proposé ; `docs/onboarding.md`, règle 5 du compte, qui renvoie le délai à l'analyse d'impact) : un compte dont la seule voie de connexion, Apple ou Google, a été coupée de leur côté (le joueur a supprimé son compte chez eux, ou retiré l'accès à Elenchos), sans adresse e-mail qui marche. Apple et Google préviennent le serveur de ces événements (de mémoire, à vérifier au travail 9). Le compte est effacé 30 jours après (proposé), sauf reconnexion entre-temps.
 
@@ -277,6 +292,10 @@ Partent : le compte, l'adresse, le lien avec Apple ou Google (révoqué chez eux
 **P-39. On mesure des gestes ; un chiffre qui dépend des avis n'est jamais donné texte par texte.** *`docs/produit.md`, section 8 ; D-041 ; règle de Juridique des essais.*
 Un geste gardé ne porte ni position, ni raison, ni tension. La durée de l'écran de la raison n'est jamais gardée sous l'identifiant d'un joueur (P-40). Règle des essais, reprise telle quelle : un chiffre qui changerait si le joueur avait répondu autrement n'est jamais donné texte par texte (seule exception : la part de « aucune », D-027, P-23). Les mesures validées qui dépendent des réponses de tous, la justesse (mesure 5, lue contre le hasard de chaque manche) et la part des Mystère allant à un membre arrivé depuis moins de deux semaines (D-041), restent calculables : le rôle du jeu les calcule (P-22), et elles ne sortent qu'en totaux, sur des groupes au-dessus du seuil, jamais texte par texte ni par personne.
 *Test.* Réponses inversées : la réserve des gestes est identique octet pour octet ; dans le rapport des mesures, seuls changent les totaux de justesse et de Mystère, qui n'ont aucune ligne par texte ni par personne. Le format d'un geste n'a aucun champ de position, de raison ni de tension (comparaison avec la carte). *Travail 12.*
+
+**P-39 a. Les trois comptes de mi-bêta, si la question « Mesures » de `docs/etape-6/regles.md` est acceptée.** *`docs/etape-6/regles.md`, section 5 ; conditions calquées sur D-027.*
+Comptés sur tous les joueurs à la fois, jamais par cercle ni par personne, jamais croisés avec une autre donnée ; rien sous 30 joueurs ; seuls les comptes sont gardés ; lus pour le réglage seulement ; jamais publiés ; avis de Juridique et de l'avocat avant la bêta.
+*Test.* Chaque table de compte n'a ni colonne de cercle ni colonne de personne ; sous 30 joueurs, rien n'est déposé ; aucune liste de joueurs n'est gardée derrière un compte ; le registre public n'en reçoit rien. *Travail 12, si la question est acceptée.*
 
 **P-40. La durée de l'écran de la raison est comptée sur tous les joueurs, jamais par personne, par jour ni par texte.** *`docs/produit.md`, section 8 (condition de Juridique : jamais croisée avec la tension).*
 Un jour, tous les joueurs répondent au même texte, qui touche une seule tension : une durée gardée par jour serait donc croisée avec la tension. Elle se range dans un histogramme par tranches de durée (par exemple de 0 à 2 secondes, de 2 à 5, et ainsi de suite), un par semaine, sans identifiant ni texte ; la durée médiane que demande `docs/produit.md` se lit sur cet histogramme.
@@ -362,6 +381,8 @@ Première version, à compléter au travail 5 avec le modèle de données, puis 
 14. **L'e-mail d'avant effacement** (P-30) : effacer un compte inactif même si l'e-mail n'a pas pu partir, alors que D-045 dit « après un e-mail envoyé » ; envoyer un nouvel e-mail à chaque nouvelle période d'inactivité, alors que D-045 dit « une seule fois ».
 15. **Le compte devenu inaccessible** (P-30) : sa définition et le délai de 30 jours proposé (`docs/onboarding.md`, règle 5 du compte).
 16. **La durée de l'écran de la raison** : la mesure, comptée par semaine en histogramme, sans joueur ni texte (P-40), est à valider avec l'analyse d'impact, comme le demande `docs/produit.md` (section 8 ; D-044, point 4).
+17. **Le seuil de l'avis du cercle** (D-025) : 3 réponses, proposé (règle 10 de `docs/etape-6/regles.md`) ; en dessous, ni ligne, ni graphique. D-025 demande que ce seuil passe par l'avocat avant la bêta.
+18. **Le Pas de Côté** (règle 14 de `docs/etape-6/regles.md`) : annoncé à tout le cercle, il lui apprend le côté d'une réponse du jour, contraire au penchant net du joueur. Il est à examiner au même rang que la répartition de l'avis du cercle (D-025), et à dire dans « Qui, durée, droits ».
 
 ---
 
@@ -370,7 +391,7 @@ Première version, à compléter au travail 5 avec le modèle de données, puis 
 Les risques à y décrire, avec la parade déjà prévue. L'analyse est obligatoire ici (données sensibles, profilage, joueurs de 15 à 17 ans ; plan, travail 11).
 
 1. **Le portrait vu par le cercle** (règle 19) : des curseurs sur huit tensions sont un profil politique, montré à des personnes qui connaissent le joueur. Parade : seulement le cercle, aucun chiffre d'accord, la barre pour soi seul (D-026).
-2. **La répartition de l'avis du cercle** (D-025) : dans un petit cercle, elle se lit nom par nom. Parade : seuil minimal à fixer avant la bêta ; justification de la minimisation (art. 5.1.c et 25), déjà demandée par D-025.
+2. **La répartition de l'avis du cercle** (D-025) : dans un petit cercle, elle se lit nom par nom. Parade : un seuil minimal, proposé à 3 réponses (règle 10 de `docs/etape-6/regles.md`), à valider par l'avocat (partie 5, point 17) ; justification de la minimisation (art. 5.1.c et 25), déjà demandée par D-025.
 3. **La révélation entre proches** : un avis découvert à 18h peut froisser une famille. Parade : aucune mise en scène du désaccord, sauf D-025 ; question du questionnaire de bêta (« une révélation t'a-t-elle mis mal à l'aise ? »).
 4. **Un adolescent dans un cercle familial** : pression pour répondre comme ses parents, ou peur d'être deviné. Parade : à concevoir ; c'est une question éthique autant que juridique (D-025 le demande déjà).
 5. **Les captures d'écran** font sortir des réponses du cercle. Aucune parade technique : la politique de confidentialité le dit.
