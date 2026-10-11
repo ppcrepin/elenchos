@@ -13,9 +13,9 @@
 **Ce que vous regardez : la section 1, « Ce que vit un cercle type en trois mois ».** Deux pages, sans calcul.
 
 **Les réglages qui comptent.**
-- **Un curseur devient net un peu plus tôt que dans les essais.** C'est ce qui tient votre promesse : « environ trois mois pour trois ou quatre curseurs nets » (règle 18). Avec le seuil des essais, un joueur régulier n'en aurait qu'un ou deux à trois mois, et un sur cinq aucun.
+- **Un curseur devient net un peu plus tôt que dans les essais.** C'est ce qui tient votre promesse : « environ trois mois pour trois ou quatre curseurs nets » (règle 18). Avec le seuil des essais, un joueur régulier n'en aurait qu'un ou deux à trois mois, et près d'un sur cinq aucun à douze semaines.
 - **La barre du portrait se remplit en 60 réponses**, soit environ trois mois à cinq réponses par semaine, puis s'efface. Elle n'annonce aucune arrivée (D-038).
-- **Le Pas de Côté devient vraiment rare** : environ un joueur sur quarante dans ses trois premiers mois, puis à peu près un par mois dans un cercle de cinq.
+- **Le Pas de Côté devient vraiment rare** : environ un joueur sur trente dans ses trois premiers mois, puis à peu près un par mois dans un cercle de cinq.
 - **Les tempéraments s'ajustent à la taille du cercle** : à trois, être « seul de son avis » arrive par simple hasard.
 - **L'avis du cercle s'affiche dès trois réponses.**
 
@@ -24,7 +24,7 @@
 - **Le Sans-Faute n'est jamais tombé dans nos cercles de cinq ou dix, et il est tombé dans sept cercles de trois sur dix.** La règle R7 prévoit déjà d'y revenir à mi-bêta. De vrais proches devinent sans doute mieux que nos joueurs inventés ; on verra.
 - **Ce sont des joueurs inventés.** La simulation vérifie que les règles tiennent ensemble et règle leurs seuils. Elle ne dit rien du plaisir de deviner de vrais proches (D-039).
 
-**Décisions touchées.** Une exception à D-011 : un nouveau venu n'est pas proposé dans Deviner pour un texte fermé avant son arrivée. Trois précisions : la barre (D-026, dans le cadre de D-038), Le Pont (§4), la phrase du dimanche (R2). Tout le reste précise des règles sans en changer aucune (section 8).
+**Décisions touchées.** Une exception à D-011 : un nouveau venu n'est pas proposé dans Deviner pour un texte fermé avant son arrivée. Trois précisions qui s'écartent de la lettre d'un texte validé : la barre (D-026, dans le cadre de D-038), Le Pont (§4), la phrase du dimanche (R2). Le reste précise des règles sans en changer aucune (section 8).
 
 **Une seule question pour vous, à la fin** (section 7) : valider ces règles d'un geste, comme les règles de détail du bilan (D-030).
 
@@ -50,7 +50,7 @@ Rien n'est encore net. Dans Moi, la barre « Ton portrait se dessine » avance d
 
 Vers la huitième semaine, chez un joueur régulier, le premier curseur devient net (pour la moitié d'entre eux, entre les semaines 7 et 9). Le dimanche qui suit, sa phrase change de forme : « Entre précaution et innovation, tu choisis le plus souvent l'innovation. » Dans Le Cercle, son initiale apparaît sur cette barre.
 
-Le même dimanche arrivent les premiers tempéraments, qui demandent deux mois de réponses. À douze semaines, un membre sur deux en a au moins un : Le Pont ou L'Original, chacun environ un membre sur cinq ; Le Mesuré, un sur sept ; Le Tranché, un sur dix.
+Le même dimanche arrivent les premiers tempéraments, qui demandent deux mois de réponses. À douze semaines, parmi ceux qui ont assez joué (vingt réponses en deux mois), un sur deux en a au moins un : Le Pont ou L'Original, chacun environ un sur cinq ; Le Mesuré, un sur sept ; Le Tranché, un sur dix.
 
 ### Le troisième mois : on se reconnaît
 
@@ -58,7 +58,7 @@ Vers la neuvième ou dixième semaine, la barre d'un joueur régulier est pleine
 
 À douze semaines, un joueur régulier a trois curseurs nets (deux à quatre pour la moitié d'entre eux). Les autres restent flous, et c'est vrai : on sait peu de chose de lui sur ces tensions. Marie touche le visage de Hugo : leurs portraits superposés, proches sur trois tensions, éloignés sur une. De quoi en parler au prochain repas.
 
-Le Pas de Côté reste rare : il faut un curseur très net, puis une réponse franchement contraire. Dans les trois premiers mois, environ un joueur sur quarante le reçoit ; ensuite, à peu près un par mois dans un cercle de cinq.
+Le Pas de Côté reste rare : il faut un curseur très net, puis une réponse franchement contraire. Dans les trois premiers mois, environ un joueur sur trente le reçoit ; ensuite, à peu près un par mois dans un cercle de cinq.
 
 Le Sans-Faute, lui, n'est jamais tombé dans nos cercles de cinq : sept jours sans une erreur ni une carte passée, sur une vingtaine de cartes, c'est hors de portée de nos joueurs inventés.
 
@@ -129,7 +129,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 
 **Règle 2 · Inviter.**
 - **Chiffres.** Un lien par personne, à usage unique, valable 7 jours (proposé, en accord avec les 7 jours de conservation des réponses d'un invité proposés par Juridique, `docs/onboarding.md`).
-- **Exemple.** Thomas invite Paul un mardi. Paul ouvre le lien le mardi suivant à 19h : il a expiré, Thomas doit en envoyer un autre.
+- **Exemple.** Thomas invite Paul un mardi à 10h. Paul ouvre le lien le mardi suivant à 19h : il a expiré, Thomas doit en envoyer un autre.
 - *Source : règle 2 ; D-006.*
 
 **Règle 3 · Plusieurs cercles.**
@@ -199,7 +199,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 - **Le geste.** Son « pourquoi » se choisit parmi les quatre raisons du texte, une fois son visage posé (D-038). Changer de visage garde le « pourquoi ». Retirer le visage ou passer la carte l'efface (proposé, comme dans l'essai : une raison va avec une personne).
 - **Valider** enregistre la manche telle qu'elle est ; ensuite, rien ne change, et le repère de la journée passe à « fait » (proposé ; R10 renvoyait ce point à l'étape 6). Avant Valider, la manche est un brouillon gardé à chaque geste. À 18h, un brouillon compte tel qu'il est (règle 10). Le mot « Valider » des maquettes reste (D-014).
 - **Passer** ne coûte rien, sauf pour Le Sans-Faute (règle 14).
-- **Exemples.** J1, J4 (une carte), J5 (manche non validée à 18h).
+- **Exemples.** J1, J4 (une carte), J5 (manche non validée à 18h), J6 (deux cartes).
 - *Source : règle 9 ; D-038 ; R10 (D-030) ; D-022.*
 
 ### La révélation, les points, les titres
@@ -253,7 +253,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
   - une réponse du jour qui est un arbitrage net (w = 1) ;
   - elle va vers le pôle opposé au penchant de son curseur sur cette tension, tel qu'il était juste avant : toutes ses réponses précédentes, entrée comprise ;
   - ce curseur est net (W ≥ 8) et penche très clairement : |c − 1/2| ≥ 7/20, c'est-à-dire c ≥ 17/20 ou c ≤ 3/20 (proposé ; l'essai prenait 1/5) ;
-  - concrètement, il faut au moins dix arbitrages nets d'un même côté, sans presque aucun écart, puis une réponse franchement contraire ;
+  - concrètement, il faut au moins dix arbitrages nets d'un même côté, sans aucun écart, puis une réponse franchement contraire ; avec un seul écart, il faut quinze arbitrages du même côté ;
   - il vaut pour tout membre, sur les textes du jour, jamais l'entrée ;
   - il est annoncé dans chacun de ses cercles, à la révélation de ce texte, après les auteurs ; plusieurs le même soir sont possibles ;
   - ensuite, il vit comme un titre, comme Le Sans-Faute (proposé ; R11 ne disait rien).
@@ -270,7 +270,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 ### Le portrait
 
 **Règle 16 · Les tensions.**
-- **Chiffres.** Huit tensions, chaque texte en touche une. Sur 8 semaines, pour chaque tension, autant de textes où « favorable » sert une valeur que l'autre (E9, règle de Contenu). Un libellé par valeur, toujours le même ; ceux des quatre tensions jamais essayées viennent du travail 2.
+- **Chiffres.** Huit tensions, chaque texte en touche une. Sur 8 semaines, pour chaque tension, autant de textes où « favorable » sert une valeur que l'autre, à un texte près quand leur nombre est impair (E9, règle de Contenu ; « à un près » proposé). Un libellé par valeur, toujours le même ; ceux des quatre tensions jamais essayées viennent du travail 2.
 - **Exemple.** Sur 8 semaines, la tension précaution / innovation reçoit 7 textes : 4 où être favorable sert l'innovation, 3 où il sert la précaution. Un joueur qui approuve tout ne voit donc pas son curseur pencher pour cette seule raison.
 - *Source : règle 16 ; E2, E9 (D-030).*
 
@@ -307,7 +307,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 - **La barre « Ton portrait se dessine »** (proposé, dans le cadre de D-026 et D-038) :
   - 60 crans, un par réponse, entrée comprise ; elle ne recule jamais et ne porte aucune date ;
   - 60 réponses, c'est environ trois mois à cinq réponses par semaine, un peu plus de deux mois pour qui répond chaque jour ;
-  - à 60 réponses, environ trois joueurs réguliers sur quatre ont déjà un curseur net (section 5) ;
+  - à 60 réponses, plus de trois joueurs réguliers sur quatre ont déjà un curseur net (section 5) ;
   - pleine, elle se montre pleine une fois, à la prochaine ouverture de Moi, avec une ligne qui ne promet rien (mots : UX ; par exemple « Ton portrait continue de se préciser à chaque réponse. »), puis elle disparaît ;
   - elle ne saute pas au plein au premier curseur net, comme dans l'essai 2 : un cran par réponse, sans exception ;
   - elle n'est visible que du joueur (D-026).
@@ -391,10 +391,10 @@ Joueurs réguliers (au moins 5 réponses sur 7), curseurs nets selon le seuil :
 |---|---|---|---|---|
 | 7 | 4 (3 à 5) | 5 | 0 % | 42 ; semaine 7 |
 | **8** | **3 (2 à 4)** | **4** | **2 %** | **50 ; semaine 8** |
-| 9 | 2 (1 à 3) | 3 | 7 % | 57 ; semaine 9 |
+| 9 | 2 (1 à 3) | 3 | 7 % | 57 ; vers la semaine 9 |
 | 10 (essais) | 1 (1 à 2) | 2 | 18 % | 64 ; semaine 10 |
 
-- **La cible** est celle de la règle 18 et du §5 : « environ trois mois pour trois ou quatre curseurs nets ; les autres restent flous plus longtemps ». Seul le seuil 8 la tient : 3 nets à 12 semaines, 4 à 13. Avec 10, un joueur régulier sur cinq n'aurait aucun curseur net à trois mois. C'était l'objection de D-026, vécue.
+- **La cible** est celle de la règle 18 et du §5 : « environ trois mois pour trois ou quatre curseurs nets ; les autres restent flous plus longtemps ». Seul le seuil 8 la tient : 3 nets à 12 semaines, 4 à 13. Avec 10, près d'un joueur régulier sur cinq n'aurait aucun curseur net à douze semaines. C'était l'objection de D-026, vécue.
 - **Le joueur nuancé** (argument inattendu une fois sur deux) n'a aucun curseur net à 12 semaines dans 5 % des cas avec le seuil 8, contre 44 % avec 10.
 - **Le joueur irrégulier** a en moyenne 0,8 curseur net à 12 semaines avec le seuil 8. Le portrait suit le nombre de réponses, pas le calendrier.
 - **La phrase de l'état « portrait pas encore formé »** (« Il faut environ trois mois pour les premiers curseurs nets », 5.11) reste vraie en gros : le premier curseur net arrive vers deux mois, les trois ou quatre premiers vers trois mois. UX relit déjà ce texte à l'étape 6.
@@ -402,20 +402,20 @@ Joueurs réguliers (au moins 5 réponses sur 7), curseurs nets selon le seuil :
 ### La barre : pourquoi 60
 
 - Chez les joueurs réguliers, le premier curseur net arrive après 50 réponses (moitié centrale : 43 à 56).
-- 60 réponses : à ce moment, environ trois joueurs réguliers sur quatre ont un curseur net. Le chiffre tient aussi la cible de « environ trois mois » de la règle 18 pour un joueur à cinq réponses par semaine (12 semaines × 5 = 60).
+- 60 réponses : à ce moment, plus de trois joueurs réguliers sur quatre ont déjà un curseur net. Le chiffre tient aussi la cible de « environ trois mois » de la règle 18 pour un joueur à cinq réponses par semaine (12 semaines × 5 = 60).
 - Elle est pleine en semaine 9 ou 10 chez un joueur régulier.
 
 ### Le Pas de Côté : pourquoi 7/20
 
-Sur 26 semaines, cercles de cinq :
+Sur 26 semaines, 120 cercles de cinq (et, pour la colonne des 12 semaines, les 600 cercles du réglage final) :
 
 | Condition sur le curseur | Joueurs touchés en 12 semaines | Par cercle de cinq et par mois, après 3 mois |
 |---|---|---|
-| Net, \|c − 1/2\| ≥ 1/5 (essai) | 37 % | 6,2 |
-| Net, \|c − 1/2\| ≥ 3/10 | 15 % | 2,9 |
-| **Net, \|c − 1/2\| ≥ 7/20** | **4 %** | **1,1** |
+| Net, \|c − 1/2\| ≥ 1/5 (essai) | 27 % | 5,6 |
+| Net, \|c − 1/2\| ≥ 3/10 | 15 % | 2,7 |
+| **Net, \|c − 1/2\| ≥ 7/20** | **2 à 4 %** | **1,0** |
 
-Avec le seuil de l'essai, un joueur sur trois aurait un « badge rare » dès les trois premiers mois. Avec 7/20, il reste un événement : environ un par mois dans un cercle de cinq une fois les curseurs formés. Ce chiffre dépend de ce qu'on ignore : la fréquence avec laquelle de vrais joueurs répondent contre leur penchant (dans nos joueurs inventés, environ une réponse sur dix est un arbitrage net contraire).
+Avec le seuil de l'essai, un joueur sur quatre aurait un « badge rare » dès les trois premiers mois. Avec 7/20, il reste un événement : environ un par mois dans un cercle de cinq une fois les curseurs formés. Ce chiffre dépend de ce qu'on ignore : la fréquence avec laquelle de vrais joueurs répondent contre leur penchant (dans nos joueurs inventés, environ une réponse sur dix est un arbitrage net contraire).
 
 ### Les tempéraments : pourquoi des seuils par taille
 
@@ -429,21 +429,21 @@ Part des joueurs éligibles qui ont chaque tempérament à 12 semaines, avec les
 | 7 | 27 % | 19 % | 16 % | 8 % | 52 % | 9 % |
 | 10 | 26 % | 18 % | 15 % | 11 % | 52 % | 9 % |
 
-- **L'Original.** Avec un seul seuil (3/10, celui de l'essai), il allait à 42 % des membres d'un cercle de trois, et à personne dans un cercle de dix : à trois, être seul de son avis arrive par hasard une fois sur trois ; à dix, presque jamais. D'où « au plus un tiers du cercle » au lieu de « seul », et un seuil qui baisse avec la taille.
-- **Le Pont.** « Seul au milieu » (essai) ne marchait pas non plus à dix : le seuil « au plus un tiers de Neutre » le remplace.
-- **La marge de 4/5** divise presque par deux les changements d'une semaine à l'autre (de 25 % à 13 % par joueur et par semaine à trois ; de 16-17 % à 9 % à cinq et à dix).
+- **L'Original.** Avec la définition et le seuil de l'essai (seul de son côté, sur 3/10 de ses réponses), il allait à 42 % des membres d'un cercle de trois, et à personne dans un cercle de dix : à trois, être seul de son avis arrive par hasard une fois sur trois ; à dix, presque jamais. D'où « au plus un tiers du cercle » au lieu de « seul » (c'est la même chose à trois, quatre et cinq membres), et un seuil qui baisse avec la taille.
+- **Le Pont.** Au seuil de l'essai (1/8), il allait à plus d'un membre sur trois dans les cercles de trois et de cinq. Le seuil passe à 1/4. « Seul au milieu » devient « les Neutre font au plus un tiers des réponses » : la même chose à trois et quatre membres, et une règle qui reste possible à dix.
+- **La marge de 4/5** rend les changements d'une semaine à l'autre 1,6 à 1,9 fois moins fréquents, selon la taille du cercle (essai sur des seuils voisins).
 - **La cible** (proposé) : chaque tempérament chez un joueur éligible sur dix à un sur quatre ; un joueur sur deux avec au moins un. Un tempérament que tout le monde a ne décrit plus personne.
 
 ### Le reste, vérifié
 
 - **Titres.** Le Devin et Le Mystère tournent (4,2 et 4,5 titulaires différents sur 5 en douze semaines). Les minimums de R6 ne vident presque jamais un titre dès cinq membres.
-- **Le Sans-Faute.** Jamais à 5, 7 ou 10 membres ; 6 % des cercles de 4 ; 70 % des cercles de 3, où deux cartes et deux visages en font presque un pile ou face. R7 tient : l'équipe vous fera une proposition à mi-bêta s'il n'est jamais tombé. Un Sans-Faute à cinq demande une vingtaine de cartes justes de suite : avec trois cartes justes sur quatre, ce serait une semaine sur soixante-dix environ.
+- **Le Sans-Faute.** Jamais à 5, 7 ou 10 membres ; 6 % des cercles de 4 ; 70 % des cercles de 3, où deux cartes et deux visages en font presque un pile ou face. R7 tient : l'équipe vous fera une proposition à mi-bêta s'il n'est jamais tombé. À cinq, il demande 15 à 21 cartes justes de suite ; même avec trois cartes justes sur quatre, ce serait entre une semaine sur 75 et une sur 400.
 - **L'avis du cercle.** Réparti entre « adopté », « rejeté » et « partagé » sans pencher : la règle du milieu est symétrique.
 - **Les cartes.** Deux réponses identiques servies ensemble restent rares dès cinq membres, grâce au remplacement (R4).
 
 ### Si la bêta ne fait circuler que quatre tensions
 
-Chaque tension reçoit alors deux fois plus de textes, et le seuil 8 donnerait 3 curseurs nets sur 4 dès six semaines. Pour garder « environ trois mois », le seuil passerait à 14 (2 à 3 nets sur 4 à 12-13 semaines, simulés). Le seuil se recale chaque fois que le nombre de tensions en circulation change (proposé).
+Chaque tension reçoit alors deux fois plus de textes : avec le seuil 8, un joueur régulier aurait plus de trois curseurs nets sur quatre à douze semaines. Pour garder « environ trois mois », le seuil passerait vers 14 : deux à trois nets sur quatre à 12-13 semaines, dans des cercles de cinq simulés. Le seuil se recale chaque fois que le nombre de tensions en circulation change (proposé).
 
 ### Ce qui se recale au réglage de mi-bêta
 
@@ -604,7 +604,6 @@ Les textes A, C, F et G ont un argument inattendu de chaque côté (croisé ou p
 **Ce qui se passe.**
 - À 12h, Marie pose Inès sur la première carte et Thomas sur la deuxième, puis ferme l'appli sans toucher « Valider ». La manche reste un brouillon.
 - Paul, lui, a validé sa manche à 14h : elle est figée.
-- Thomas n'a pas ouvert Deviner de la journée. Sa manche n'a pas de cartes ; à 18h, sa révélation commence au vote.
 - Marie joue « Amis » à 12h05 : elle pose Léa sur la carte unique, « R1 », valide. Juste, et la raison aussi. Un seul visage était proposé : seul le « pourquoi » restait à deviner. C'est la conséquence de R8 dans un cercle de trois (section 9).
 - **À 18h, la manche de Marie se ferme telle quelle.**
 
@@ -635,6 +634,7 @@ Les textes A, C, F et G ont un argument inattendu de chaque côté (croisé ou p
 - « Famille » : Thomas, Paul. La réponse d'Inès, arrivée après 18h, n'est pas servie ; celle de Hugo est dans « Amis ».
 - « Famille » a donc deux cartes. Carte « qui et pourquoi », tirée : Thomas, en second. Ordre : Paul, puis Thomas.
 - Visages proposés dans « Famille » : Thomas, Inès, Paul.
+- Hugo, lui, n'ouvre pas le jeu ce samedi. Sa manche n'a jamais été ouverte : elle n'a pas de cartes, et à 18h sa révélation commence au vote de F, auquel il avait répondu (R10, E1). Il ne répond pas non plus à G.
 
 | Cercle | Carte | Marie pose | Verdict | Point |
 |---|---|---|---|---|
@@ -659,9 +659,9 @@ Les textes A, C, F et G ont un argument inattendu de chaque côté (croisé ou p
 
 | Devineur | Jours avec cartes | Justes | Erreurs | Passes | Raisons cachées trouvées |
 |---|---|---|---|---|---|
-| Thomas | 5 (pas joué mardi ; Deviner jamais ouvert vendredi) | 9 | 4 | 0 | 2 |
+| Thomas | 6 (pas joué mardi) | 9 | 4 | 0 | 2 |
 | Marie | 7 | 14 | 5 | 1 | 4 |
-| Hugo | 6 (pas joué samedi) | 11 | 0 | 2 | 2 |
+| Hugo | 6 (pas joué samedi : manche jamais ouverte) | 11 | 0 | 2 | 2 |
 | Inès | 7 | 9 | 8 | 1 | 1 |
 | Paul | 7 | 14 | 6 | 0 | 3 |
 
@@ -760,8 +760,8 @@ Son curseur P est net depuis la semaine 9.
 | Membre | Réponses | Mesure | Seuil | Résultat |
 |---|---|---|---|---|
 | Thomas | 19 | — | il faut 20 réponses | aucun ; il perd ceux qu'il avait |
-| Marie | 50 | Le Pont : Neutre peu partagé sur 7 des 31 textes partagés, 7/31 ≈ 0,23 | 1/4 pour l'obtenir, 1/5 pour le garder | **Le Pont, gardé** (obtenu en semaine 11) |
-| Paul | 52 | dans un tiers ou moins du cercle sur 14 de 52 textes, 14/52 ≈ 0,27 | 1/4 (cinq membres) | **L'Original** |
+| Marie | 50 | Le Pont : Neutre, avec au plus un tiers de Neutre, sur 7 des 31 textes partagés ; 7/31 ≈ 0,23 | 1/4 pour l'obtenir, 1/5 pour le garder | **Le Pont, gardé** (obtenu en semaine 11) |
+| Paul | 52 | L'Original : son côté réunit au plus un tiers des réponses sur 14 de ses 52 textes ; 14/52 ≈ 0,27 | 1/4 (cinq membres) | **L'Original** |
 | Hugo | 47 | « Très … » sur 24 de 47, ≈ 0,51 | 1/2 | **Le Tranché** |
 | Inès | 44 | Neutre sur 15 de 44, ≈ 0,34 | 1/3 | **Le Mesuré** |
 
