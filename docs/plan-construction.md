@@ -8,7 +8,7 @@
 
 *Le 12 octobre 2026, après D-054 : le travail 4 (test du message de 18h) est préparé et validé (`docs/etape-6/test-18h.md`), et se fait sur cinq iPhone ; le jeu se joue sur iPhone seulement, et l'application ira sur l'App Store seul (D-054, point 3, qui modifie D-005). Sont mis à jour : l'état (partie 1), le choix 2 (partie 3), les travaux 4, 7, 9 et 14, la bêta (partie 5), les coûts (partie 6 : l'Android d'essai et le compte Google Play retirés, nouveau total), les durées et les points d'attention (partie 7). Les critères de passage aux boutiques de D-005 qui comparaient iPhone et Android tombent (partie 5). Report de D-054 relu par Cohérence (compatible avec réserves, corrigées), puis par le Vérificateur (OK avec corrections, appliquées).*
 
-*Le 12 octobre 2026, après l'avis de Juridique sur Scalingo (quatre constats vérifiés ce jour ; rapport de Cohérence, ligne A3) : l'essai de 30 jours demande une carte bancaire, et la facturation démarre seule ensuite ; le test du message de 18h ne coûte donc 0 € que si l'essai est supprimé avant le 30e jour (travail 4, partie 6). C'est un fait corrigé, comme D-046 l'a fait pour D-006, non un changement de décision. La question de la carte est posée au porteur (D-055). Le travail 5 note aussi les journaux et les sauvegardes de Scalingo.*
+*Le 12 octobre 2026, après l'avis de Juridique sur Scalingo (quatre constats vérifiés ce jour ; rapport de Cohérence, ligne A3) : l'essai de 30 jours demande une carte bancaire, et la facturation démarre seule ensuite ; le test du message de 18h ne coûte donc 0 € que si l'essai est supprimé avant le 30e jour (travail 4, partie 6). C'est un fait corrigé, comme D-046 l'a fait pour D-006, non un changement de décision. La carte est donnée, avec deux garde-fous (D-055) : la date de fin d'essai est notée le jour de l'ouverture du compte, et la suite vous est présentée avec son montant au plus tard une semaine avant. Le travail 5 note aussi les journaux et les sauvegardes de Scalingo.*
 
 ## 1. Où on en est
 
@@ -21,7 +21,7 @@
 
 **Étape 5 : faite (D-042 à D-046).** Les dix choix de fabrication sont tranchés, en quatorze QCM (à partir de `docs/etape-5-choix.md`). Les documents qui en dépendent sont mis à jour et validés (D-046) : `docs/produit.md`, `docs/onboarding.md` (le compte, D-035), ce plan et la feuille de route.
 
-**Étape 6 : en cours** depuis le 11 octobre 2026, avec votre accord (D-051). Les trois travaux sur papier sont faits : les règles et les exigences de protection des données (D-052), les quatre tensions jamais essayées (D-053 ; le texte d'épreuve SO2, qui visait une nationalité, est remplacé (`docs/etape-6/tensions.md`, version 4)). Le travail 4, le test du message de 18h, premier code de l'étape, est préparé et validé (`docs/etape-6/test-18h.md`, D-054) : il peut maintenant être construit, sur cinq iPhone.
+**Étape 6 : en cours** depuis le 11 octobre 2026, avec votre accord (D-051). Les trois travaux sur papier sont faits : les règles et les exigences de protection des données (D-052), les quatre tensions jamais essayées (D-053 ; le texte d'épreuve SO2, qui visait une nationalité, est remplacé (`docs/etape-6/tensions.md`, version 4)). Le travail 4, le test du message de 18h, premier code de l'étape, est préparé et validé (`docs/etape-6/test-18h.md`, D-054). Son code (`test-18h/`) et les pas-à-pas (`docs/etape-6/test-18h-pas-a-pas.md`) sont écrits et relus : la relecture comprend la revue du code, Cohérence, Juridique, UX et le Vérificateur, le 12 octobre 2026. Prochaine étape : vos démarches, puis la mise en ligne après votre feu vert écrit (D-054).
 
 ## 2. Avant l'étape 6 : ce qui la conditionne
 
@@ -29,7 +29,7 @@
 
 **Trois démarches à votre nom** (vous portez le service en nom propre, D-042). Chacune vous sera présentée avec son montant avant d'être engagée (D-042, dépense par dépense) :
 - **La vérification du nom par un conseil en propriété industrielle, dès maintenant** (D-013, D-043). Elle débloque le logo, le texte qui explique le nom (D-040) et l'adresse web définitive, qui doit être figée avant la bêta. Quelques centaines d'euros (estimation).
-- **Le compte développeur Apple, au début de l'étape 6** (D-035, D-042). Il faut l'avoir avant le test du message de 18h (travail 4), qui essaie la connexion Apple. Environ 99 € par an (sources de 2020-2021, à revérifier).
+- **Le compte développeur Apple : déjà ouvert (D-047).** Il fallait l'avoir avant le test du message de 18h (travail 4), qui essaie la connexion Apple (D-035, D-042). Ses 99 € par an restent comptés : c'est un abonnement annuel (sources de 2020-2021, à revérifier).
 - **Le devis d'un avocat spécialisé en données personnelles** (D-044 ; vous l'avez pris en charge, D-047). Sa première relecture se fait avant la bêta.
 
 Ces démarches ne bloquent pas toutes la même chose : sans compte Apple, le premier test ne peut pas se faire ; sans vérification du nom, ni le logo ni l'adresse définitive ; sans avocat, pas de bêta.
@@ -105,10 +105,10 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - Il faut avant lui le compte développeur Apple, à votre nom (déjà ouvert, D-047 ; partie 2).
 - Les cinq téléphones : l'équipe n'en a aucun. Votre iPhone et quatre iPhone prêtés par des proches, sur des versions d'iOS variées, toutes en 16.4 ou plus récent ; aucun Android, aucun achat (D-054, point 3) ; la location est écartée (`docs/etape-6/test-18h.md`, partie 2).
 - Si Apple ou Google refuse l'adresse de test de Scalingo, la question vous revient avant l'achat d'un nom de domaine (D-054, point 2).
-- **L'essai de Scalingo demande une carte bancaire** (avis de Juridique, vérifié le 12 octobre 2026 ; corrige un « sans carte » de `docs/plateforme.md`). Rien n'est facturé pendant les 30 jours ; ensuite la facturation démarre seule si une application ou une base existe encore. Pour ne rien payer, il faut tout supprimer avant le 30e jour : l'effacement du test, base supprimée (avis de Juridique), y pourvoit ; ce que le socle créera ensuite sera facturé. La question de la carte est posée au porteur (D-055).
+- **L'essai de Scalingo demande une carte bancaire** (avis de Juridique, vérifié le 12 octobre 2026 ; corrige un « sans carte » de `docs/plateforme.md`). Rien n'est facturé pendant les 30 jours ; ensuite la facturation démarre seule si une application ou une base existe encore. Pour ne rien payer, il faut tout supprimer avant le 30e jour : l'effacement du test, base supprimée (avis de Juridique), y pourvoit ; ce que le socle créera ensuite sera facturé. La carte est donnée, avec deux garde-fous (D-055) : la date de fin d'essai est notée le jour de l'ouverture du compte, et la suite vous est présentée avec son montant au plus tard une semaine avant.
 - Fini quand : le message arrive vers 18h sur les cinq téléphones, trois soirs de suite, et la connexion tient depuis l'icône.
 - Vous : vous le recevez sur votre téléphone, et vous vous connectez depuis l'icône.
-- **État : préparé et validé** (`docs/etape-6/test-18h.md`, D-054, point 1), avec la branche `mise-en-ligne`, la note aux prêteurs et l'effacement ; **construction autorisée par la validation**.
+- **État : code et pas-à-pas écrits et relus** (code : `test-18h/` ; pas-à-pas : `docs/etape-6/test-18h-pas-a-pas.md` ; préparation validée dans `docs/etape-6/test-18h.md`, D-054, point 1, avec la branche `mise-en-ligne`, la note aux prêteurs et l'effacement). La relecture comprend la revue du code, Cohérence, Juridique, UX et le Vérificateur, le 12 octobre 2026. Prochaine étape : vos démarches, puis la mise en ligne après votre feu vert écrit (D-054).
 
 **5. Socle et données.**
 - Hébergement et sauvegardes chiffrées, chez des prestataires européens (D-043). Leurs noms se choisissent ici. Ceux cités à l'étape 5 (Scalingo, Clever Cloud, Scaleway, OVHcloud, Brevo) sont des exemples donnés de mémoire.
@@ -255,7 +255,7 @@ Tous les montants sont des estimations de l'équipe, sauf mention contraire ; au
 |---|---|---|---|
 | Recherche du nom par un conseil en propriété industrielle | Maintenant | Quelques centaines d'euros ; 300 à 800 € (lecture de Back-end : la ligne de l'étape 5, sans le dépôt de la marque) | Le logo, le texte de D-040, l'adresse définitive |
 | Logo, fait par l'équipe (D-047) | Fait (D-050) | Aucun frais (pas de graphiste, D-047) | L'icône définitive, figée avant la bêta |
-| Compte développeur Apple | Début de l'étape 6 | 99 € par an (sources de 2020-2021, à revérifier) | La connexion Apple, le premier test (travail 4) |
+| Compte développeur Apple | Déjà ouvert (D-047) ; renouvelé chaque année | 99 € par an (sources de 2020-2021, à revérifier) | La connexion Apple, le premier test (travail 4) |
 | Hébergement, e-mails et sonde de 18h02, sur six mois | Dès le test du message de 18h (travail 4), les 30 premiers jours sans facture : essai avec carte demandée, facturation automatique ensuite si une application ou une base existe encore (avis de Juridique, 12 octobre 2026 ; `docs/etape-6/test-18h.md`, partie 4) | 200 à 600 € | Tout le jeu |
 | Deux ou trois adresses web | Après la vérification du nom, avant la bêta | 50 à 150 € par an | L'icône et l'abonnement au message, liés à l'adresse |
 | Chaîne des textes : 56 à 84 textes d'avance, puis un par jour de bêta, environ 150 en tout | Travail 10, puis la bêta | 300 à 2 300 € (prix des modèles non vérifiés) | Les textes de la bêta |
@@ -271,7 +271,7 @@ Vérification : la somme des lignes donne 2 949 à 8 949 € ; la ligne « Un t�
 Ce total ne compte pas :
 - votre abonnement Claude pour les agents, que l'équipe ne connaît pas ; avec des agents seuls, c'est lui qui paie la construction et l'entretien ;
 - votre temps ;
-- le test du message de 18h (travail 4), qui coûte 0 € si l'essai de Scalingo est supprimé avant le 30e jour (carte demandée à l'ouverture, facturation automatique sinon : avis de Juridique, 12 octobre 2026 ; question posée au porteur, D-055) : quatre iPhone prêtés, aucun achat, la location écartée (D-054). Seul un nom de domaine d'environ 10 € s'y ajouterait, si Apple ou Google refuse l'adresse de Scalingo, et après votre réponse (D-054, point 2).
+- le test du message de 18h (travail 4), qui coûte 0 € si l'essai de Scalingo est supprimé avant le 30e jour (carte demandée à l'ouverture, facturation automatique sinon : avis de Juridique, 12 octobre 2026 ; carte donnée, avec deux garde-fous, D-055) : quatre iPhone prêtés, aucun achat, la location écartée (D-054). Seul un nom de domaine d'environ 10 € s'y ajouterait, si Apple ou Google refuse l'adresse de Scalingo, et après votre réponse (D-054, point 2).
 
 Les six mois d'hébergement sont une hypothèse de calcul, pas une estimation de durée : si la construction dure plus, quelques dizaines d'euros par mois s'ajoutent.
 
@@ -327,7 +327,7 @@ S'y ajouteraient, selon la réponse à la question de la structure (D-043) : une
 - **La responsabilité.** En nom propre, vous êtes responsable des données et des textes publiés (D-042, D-044), sur vos biens personnels. Une erreur d'un texte automatique peut viser un député nommé à 18h : la procédure de correction doit être rodée dès la bêta.
 - **La relecture.** Le code qui garde des opinions et les textes ne sont relus que par des modèles, ceux des textes chez un seul fournisseur (D-043, D-044).
 - **Le changement de structure.** Si une structure est créée avant l'App Store, elle devient responsable des données à votre place : il faudrait prévenir chaque joueur et probablement redemander son accord (à confirmer par l'avocat, D-042).
-- **Le budget, dépense par dépense.** Il reste souple, mais il n'y a pas d'enveloppe : la vue d'ensemble de la partie 6 est mise à jour à chaque dépense. Une exception de fait : l'essai de Scalingo s'engage seul au 30e jour si rien n'est supprimé (carte demandée) ; la date de fin d'essai est à noter le jour de l'ouverture, et la suite vous est présentée une semaine avant (garde-fou proposé par Juridique, 12 octobre 2026).
+- **Le budget, dépense par dépense.** Il reste souple, mais il n'y a pas d'enveloppe : la vue d'ensemble de la partie 6 est mise à jour à chaque dépense. Une exception de fait : l'essai de Scalingo s'engage seul au 30e jour si rien n'est supprimé (carte demandée) ; la date de fin d'essai est à noter le jour de l'ouverture, et la suite vous est présentée une semaine avant (deux garde-fous, D-055, d'après l'avis de Juridique du 12 octobre 2026).
 
 **Les autres points.**
 - **Le message de 18h sur iPhone.** Le lien étant retenu, la bêta mesure le geste d'ajout de l'icône avec les critères de D-005 qui restent après D-054 (partie 5), avant le passage à l'App Store. Ces critères sont proposés : D-054 fait tomber ceux de D-005 qui comparent iPhone et Android ; reste, selon la lecture de l'équipe, le critère d'UX (moins de deux iPhone sur trois font le geste) et celui de Game design (sans icône, on joue moins souvent avant 18h). À confirmer (`docs/produit.md`, « Ce que ces décisions laissent à régler »).
