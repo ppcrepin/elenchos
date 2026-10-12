@@ -1,8 +1,8 @@
 # Le test du message de 18h : préparation
 
-*Étape 6, travail 4 de `docs/plan-construction.md` (partie 4). Back-end et Front-end, 12 octobre 2026. Document de préparation : aucune ligne de code n'est écrite avant votre accord sur ce document (D-001, D-051). Ce qui n'est écrit dans aucune décision est marqué « (proposé) ». Avis de Juridique intégré ; relecture : Cohérence (compatible avec réserves, corrigées), puis le Vérificateur (OK avec corrections mineures, appliquées).*
+*Étape 6, travail 4 de `docs/plan-construction.md` (partie 4). Back-end et Front-end, 12 octobre 2026. Document de préparation : aucune ligne de code n'est écrite avant votre accord sur ce document (D-001, D-051). Ce qui n'est écrit dans aucune décision est marqué « (proposé) ». Avis de Juridique intégré ; relecture : Cohérence (compatible avec réserves, corrigées), puis le Vérificateur (OK avec corrections mineures, appliquées) (depuis D-054, ces « (proposé) » sont validés ; voir l'état ci-dessous).*
 
-*État, 12 octobre 2026 : **validé (D-054)**, en entier ; les « (proposé) » de la version validée le sont avec elle. Mis à jour le même jour pour vos réponses : l'iPhone seulement (D-054, point 3), donc cinq iPhone, aucun Android, aucun achat ; si l'adresse de Scalingo est refusée, la question du domaine vous revient avant tout achat (D-054, point 2). Les deux questions de l'« En bref » sont retirées, puisque tranchées. Android écarté par D-054 : la version validée prévoyait trois Android (un Galaxy acheté, un Xiaomi et une autre marque prêtés) ; ces passages sont retirés. Ce que cette mise à jour ajoute sans décision de votre part est marqué « (application de D-054) ».*
+*État, 12 octobre 2026 : **validé (D-054)**, en entier ; les « (proposé) » de la version validée le sont avec elle. Mis à jour le même jour pour vos réponses : l'iPhone seulement (D-054, point 3), donc cinq iPhone, aucun Android, aucun achat ; si l'adresse de Scalingo est refusée, la question du domaine vous revient avant tout achat (D-054, point 2). Les deux questions de l'« En bref » sont retirées, puisque tranchées. Android écarté par D-054 : la version validée prévoyait trois Android (un Galaxy acheté, un Xiaomi et une autre marque prêtés) ; ces passages sont retirés. Ce que cette mise à jour ajoute sans décision de votre part est marqué « (proposé) » quand c'est un choix de l'équipe, « (application de D-054) » quand c'est la seule conséquence directe.*
 
 **Comment lire les faits.**
 - **Vérifié** : lu le 12 octobre 2026 sur la page officielle du prestataire, soit ouverte directement, soit telle que la restitue un moteur de recherche (l'ouverture directe de plusieurs sites est bloquée depuis l'environnement). Les sources, et la manière dont chacune a été lue, sont en fin de document.
@@ -18,7 +18,7 @@
 
 **Vous faites**, à votre nom, sans mot de passe confié (D-048), environ 4 h 30 : ouvrir Scalingo, régler Google et Apple, installer chez quatre proches qui gardent leur iPhone (« prêteurs »), puis deux minutes par soir.
 
-**Dépenses : 0 €.** Scalingo 0 € (essai) ; prêts 0 € ; aucun téléphone acheté (D-054, point 3). Si Apple ou Google refuse l'adresse de Scalingo, un nom de domaine (environ 10 €) vous est d'abord présenté, et rien n'est acheté sans votre réponse (D-054, point 2). Durée : 8 à 10 jours.
+**Dépenses : 0 €.** Scalingo 0 € (essai) ; prêts 0 € ; aucun téléphone acheté (D-054, point 3). Si Apple ou Google refuse l'adresse de Scalingo, un nom de domaine (environ 10 €) vous est d'abord présenté, et rien n'est acheté sans votre réponse (D-054, point 2). Durée : 8 à 10 jours à partir du jour 0, au plus tôt le 13 octobre (partie 7).
 
 **Validés avec ce document (D-054, point 1)** : une copie à part du code pour la mise en ligne, la branche `mise-en-ligne`, jamais de 15h à 19h ni le dimanche (inscrite dans `CLAUDE.md`, partie 3) ; une note aux prêteurs, avant ; l'effacement le lendemain du soir 3, sauf un tableau sans nom gardé jusqu'au 20 novembre 2026 (partie 5).
 
@@ -104,7 +104,7 @@ On relève aussi le nom du service d'acheminement de chaque téléphone, jamais 
 
 ### Cinq iPhone, aux versions d'iOS variées (D-054)
 
-Le jeu se joue sur iPhone seulement (D-054, point 3) : le test se fait sur cinq iPhone, le vôtre et quatre prêtés. Aucun Android, aucun achat. Les versions d'iOS ci-dessous sont celles que l'équipe vous demande de chercher chez vos proches (application de D-054) ; toutes reçoivent les messages, puisqu'elles sont en iOS 16.4 ou plus récent.
+Le jeu se joue sur iPhone seulement (D-054, point 3) : le test se fait sur cinq iPhone, le vôtre et quatre prêtés. Aucun Android, aucun achat. Les versions d'iOS ci-dessous sont celles que l'équipe vous demande de chercher chez vos proches (proposé) ; toutes reçoivent les messages, puisqu'elles sont en iOS 16.4 ou plus récent.
 
 | | Téléphone | Version d'iOS cherchée | Pourquoi lui | Connexion essayée |
 |---|---|---|---|---|
@@ -120,7 +120,7 @@ Les cinq téléphones sont testés page installée : sur iPhone, c'est la seule 
 
 Pourquoi ce mélange :
 - **Le partage en France** (relevé, StatCounter, août 2026) : Apple fait environ 36 % des téléphones ; presque tous les autres sont des Android, qui ne peuvent pas jouer (D-054).
-- **Des versions différentes.** Sur iPhone, le risque vient d'Apple, le même pour tous à version égale. Il change d'une version d'iOS à l'autre : 16.4, la première qui reçoit les messages ; 18.4, la seconde forme de message (plus bas) ; 26, l'icône ouverte d'office comme une application (de mémoire). Il change aussi avec les réglages de chacun (Concentration, Résumé programmé, mode Économie d'énergie). Cinq versions, ou presque, le montrent mieux que deux.
+- **Des versions différentes.** Sur iPhone, le risque vient d'Apple, le même pour tous à version égale. Il change d'une version d'iOS à l'autre : 16.4, la première qui reçoit les messages ; 18.4, la seconde forme de message (plus bas) ; 26, l'icône ouverte d'office comme une application (de mémoire). Il change aussi avec les réglages de chacun (Concentration, Résumé programmé, mode Économie d'énergie). Quatre versions différentes au mieux, selon ce que vous trouvez, montrent mieux que deux.
 - Sur votre iPhone, l'icône des essais (D-019) n'est pas touchée : l'adresse est différente.
 
 ### Ce qu'il faut savoir de l'iPhone
@@ -254,7 +254,7 @@ On applique P-43 et P-10 (`docs/etape-6/donnees.md`) : la page du test ne garde 
 **Les SMS des prêteurs (proposé, avis de Juridique).** Ce sont des données des prêteurs, que vous traitez pour le test. Trois précautions :
 - des SMS individuels, jamais un groupe : un groupe ferait connaître les prêteurs entre eux, avec leurs numéros, et un groupe WhatsApp ajouterait un prestataire américain ;
 - le soir même, vous reportez le « vu » dans le tableau, en trois cases ;
-- le 21 octobre, vous effacez seulement les messages du test, pas le reste de votre conversation avec chaque proche, qui relève de votre vie privée. Une ancienne sauvegarde de votre téléphone peut encore en garder une copie : risque accepté, vu le contenu.
+- le lendemain du soir 3 (au plus tôt le 21 octobre), vous effacez seulement les messages du test, pas le reste de votre conversation avec chaque proche, qui relève de votre vie privée. Une ancienne sauvegarde de votre téléphone peut encore en garder une copie : risque accepté, vu le contenu.
 
 **La copie dans la conversation des agents, franchement.** Les agents ne reçoivent que des lignes sans nom, avec le « vu » en trois cases (partie 3, points 6 et 7). Pour eux et pour le fournisseur d'IA, elles ne se relient à personne : aucun d'eux ne sait qui a quel téléphone ; Juridique les juge acceptables à cette condition. Vous seul savez qui a quel téléphone : cette correspondance n'est écrite nulle part ailleurs que chez vous (jamais dans la conversation ni dans le dépôt), et vous l'effacez le 20 novembre avec votre copie du tableau (étape 7). Ensuite, les lignes restées dans l'historique de travail ne se relient plus à personne, pour personne (proposé).
 
@@ -262,7 +262,7 @@ Un prêteur qui se retire en cours de test : on efface sa ligne le jour même. L
 
 ### La note pour les prêteurs
 
-Rédigée par Juridique, puis relue par lui avec les additions de Back-end et Front-end (avis du 12 octobre 2026), validée avec ce document (D-054). Le texte ci-dessous est sa version définitive, reprise mot pour mot : relue par Juridique ; un geste ajouté après sa relecture, sur avis du Vérificateur (« lire le message sans le toucher ») ; deux retouches de fait après D-054, sur des iPhone seulement : « par Apple » au lieu de « par Apple ou Google », et « (ou Désinstaller) » retiré (application de D-054 ; à relire par Juridique avec les mots exacts, plus bas). Elle vouvoie, parce qu'une même note sert à plusieurs lecteurs ; vous pouvez tutoyer dans le message qui l'accompagne. Votre iPhone n'a pas besoin de note.
+Rédigée par Juridique, puis relue par lui avec les additions de Back-end et Front-end (avis du 12 octobre 2026) ; validée dans cette version par D-054, avec un geste ajouté après la relecture de Juridique, sur avis du Vérificateur (« lire le message sans le toucher »). Le texte ci-dessous reprend cette version, avec deux retouches de fait faites ensuite pour l'iPhone seulement : « par Apple » au lieu de « par Apple ou Google », et « (ou Désinstaller) » retiré. **Ce geste et ces deux retouches doivent être relus par Juridique avant la remise de la note.** Elle vouvoie, parce qu'une même note sert à plusieurs lecteurs ; vous pouvez tutoyer dans le message qui l'accompagne. Votre iPhone n'a pas besoin de note.
 
 > **Test du message de 18h**
 >
@@ -287,7 +287,7 @@ Restent à remplir :
 - [N], la durée des journaux de Scalingo (démarche 2). Sans ce chiffre, la note ne peut pas être remise : c'est une condition bloquante ;
 - vos coordonnées.
 
-Les dates entre crochets suivent le calendrier proposé de la partie 7 (effacement le mercredi 21 octobre 2026, tableau gardé jusqu'au 20 novembre 2026) : elles bougent avec votre accord. [Test 18h] est le nom proposé de l'icône. Le chemin « Réglages, Notifications » est celui que décrit Apple. Juridique et Front-end vérifient les mots exacts sur chaque téléphone, selon sa version d'iOS. « Google » reste juste dans la note : la connexion Google s'essaie sur les iPhone prêtés, avec le compte de test (partie 2) ; seul le message ne passe que par Apple (de mémoire, à confirmer par le test, partie 1).
+Le [21 octobre 2026] est la date du calendrier au plus tôt (partie 7) : elle bouge avec le jour 0. Le [20 novembre 2026] est fixé par D-054 (point 1). [Test 18h] est le nom proposé de l'icône. Le chemin « Réglages, Notifications » est celui que décrit Apple. Juridique et Front-end vérifient les mots exacts sur chaque téléphone, selon sa version d'iOS. « Google » reste juste dans la note : la connexion Google s'essaie sur les iPhone prêtés, avec le compte de test (partie 2) ; seul le message ne passe que par Apple (de mémoire, à confirmer par le test, partie 1).
 
 ### L'avis de Juridique : ce qui bloque, ce qui ne bloque pas
 
@@ -350,23 +350,25 @@ Trois morceaux, plus une page de résultats.
 
 ## 7. Calendrier
 
-Votre accord est donné le lundi 12 octobre 2026 (D-054). Le calendrier, validé avec ce document, part du lendemain :
+Votre accord est donné le lundi 12 octobre 2026 (D-054). Le calendrier ci-dessous est celui du **plus tôt possible**, pas une date promise. Le jour 0 est le premier jour où trois choses sont réunies : le code a passé le circuit complet et vous avez donné le feu vert écrit la veille de la mise en ligne (D-054, point 1) ; Scalingo a répondu sur la durée de ses journaux ; les quatre prêteurs sont trouvés. Les jours suivants se comptent depuis le jour 0.
 
 | Jour | Vous | L'équipe |
 |---|---|---|
-| J0, mardi 13 | Lecture des pas-à-pas ; premiers messages aux prêteurs (les versions d'iOS cherchées) | Pas-à-pas des démarches 2 à 4 |
-| J1, mercredi 14 | Démarches 2, 3 et 4 (environ 2 h), dont la question à Scalingo sur ses journaux ; appel des prêteurs | Construction de la page, du service et de la mesure |
-| J2–J3, jeudi 15 et vendredi 16 | Envoi de la note aux prêteurs, dès que Scalingo a donné la durée de ses journaux ; si l'adresse de Scalingo est refusée, la question du domaine vous revient (D-054, point 2), et le calendrier glisse de quelques jours | Tests, Cohérence, Vérificateur ; mise en ligne avant 15h le vendredi ; vous installez T1 et le vérifiez par un message d'essai |
-| J4, samedi 17 | Séance d'installation ; à 18h, soir 0 (répétition) | Correction éventuelle avant 15h |
-| J5, dimanche 18 | Soir 1 | Aucune mise en ligne (D-043) |
-| J6, lundi 19 | Soir 2 | Correction éventuelle avant 15h |
-| J7, mardi 20 | Soir 3 (chacun : un redémarrage avant 18h) | — |
-| J8, mercredi 21 | Effacement ; vous nous copiez le tableau | Bilan, par le circuit habituel |
+| J0 (au plus tôt le mardi 13) | Lecture des pas-à-pas ; premiers messages aux prêteurs (les versions d'iOS cherchées) | Pas-à-pas des démarches 2 à 4 |
+| J1 (au plus tôt le mercredi 14) | Démarches 2, 3 et 4 (environ 2 h), dont la question à Scalingo sur ses journaux ; appel des prêteurs | Construction de la page, du service et de la mesure |
+| J2–J3 (au plus tôt le jeudi 15 et le vendredi 16) | Votre feu vert écrit, la veille de la mise en ligne ; envoi de la note aux prêteurs, dès que Scalingo a donné la durée de ses journaux ; si l'adresse de Scalingo est refusée, la question du domaine vous revient (D-054, point 2), et le calendrier glisse de quelques jours | Tests, Cohérence, Vérificateur ; mise en ligne avant 15h le J3 ; vous installez T1 et le vérifiez par un message d'essai |
+| J4 (au plus tôt le samedi 17) | Séance d'installation ; à 18h, soir 0 (répétition) | Correction éventuelle avant 15h |
+| J5 (au plus tôt le dimanche 18) | Soir 1 | Aucune mise en ligne (D-043) |
+| J6 (au plus tôt le lundi 19) | Soir 2 | Correction éventuelle avant 15h |
+| J7 (au plus tôt le mardi 20) | Soir 3 (chacun : un redémarrage avant 18h) | — |
+| J8 (au plus tôt le mercredi 21) | Effacement ; vous nous copiez le tableau | Bilan, par le circuit habituel |
 | Vendredi 20 novembre | Effacement de votre copie du tableau et de la liste « qui a quel téléphone » (D-054) | — |
 
-Le calendrier n'est pas décalé : pour que le soir 1 (dimanche, sans mise en ligne possible) ne découvre pas un défaut, T1 reçoit déjà un message à 18h le vendredi 16, et le samedi après 19h reste ouvert à une correction (choix de l'équipe, sur proposition du Vérificateur).
+Pour que le soir 1 (J5, un dimanche au plus tôt, sans mise en ligne possible) ne découvre pas un défaut, T1 reçoit déjà un message à 18h le J3 (vendredi 16 au plus tôt), et le J4 après 19h reste ouvert à une correction (choix de l'équipe, sur proposition du Vérificateur).
 
-**Huit jours si tout passe, dix avec un soir ajouté.** Le plan disait « environ une semaine ». Tout se tient avant le changement d'heure du dimanche 25 octobre. Ce changement est couvert par un test automatique, pas par un vrai soir.
+**Huit jours si tout passe, dix avec un soir ajouté, comptés depuis le jour 0.** Le plan disait « environ une semaine ». Au plus tôt, tout se tient avant le changement d'heure du dimanche 25 octobre. Ce changement est couvert par un test automatique, pas par un vrai soir.
+
+Le soir 0 ne peut avoir lieu qu'une fois la page en ligne depuis la veille au moins. Aucune mise en ligne le dimanche ni de 15h à 19h (D-043).
 
 ---
 

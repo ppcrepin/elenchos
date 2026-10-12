@@ -19,7 +19,7 @@
 
 **Étape 5 : faite (D-042 à D-046).** Les dix choix de fabrication sont tranchés, en quatorze QCM (à partir de `docs/etape-5-choix.md`). Les documents qui en dépendent sont mis à jour et validés (D-046) : `docs/produit.md`, `docs/onboarding.md` (le compte, D-035), ce plan et la feuille de route.
 
-**Étape 6 : en cours** depuis le 11 octobre 2026, avec votre accord (D-051). Les trois travaux sur papier sont faits : les règles et les exigences de protection des données (D-052), les quatre tensions jamais essayées (D-053 ; le texte d'épreuve SO2, qui visait une nationalité, est remplacé (`docs/etape-6/tensions.md`, version 4)). Le travail 4, le test du message de 18h, premier code de l'étape, est préparé et validé (`docs/etape-6/test-18h.md`, D-054) : il est en cours de construction, sur cinq iPhone.
+**Étape 6 : en cours** depuis le 11 octobre 2026, avec votre accord (D-051). Les trois travaux sur papier sont faits : les règles et les exigences de protection des données (D-052), les quatre tensions jamais essayées (D-053 ; le texte d'épreuve SO2, qui visait une nationalité, est remplacé (`docs/etape-6/tensions.md`, version 4)). Le travail 4, le test du message de 18h, premier code de l'étape, est préparé et validé (`docs/etape-6/test-18h.md`, D-054) : il peut maintenant être construit, sur cinq iPhone.
 
 ## 2. Avant l'étape 6 : ce qui la conditionne
 
@@ -105,7 +105,7 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - Si Apple ou Google refuse l'adresse de test de Scalingo, la question vous revient avant l'achat d'un nom de domaine (D-054, point 2).
 - Fini quand : le message arrive vers 18h sur les cinq téléphones, trois soirs de suite, et la connexion tient depuis l'icône.
 - Vous : vous le recevez sur votre téléphone, et vous vous connectez depuis l'icône.
-- **État : préparé et validé** (`docs/etape-6/test-18h.md`, D-054, point 1), avec la branche `mise-en-ligne`, la note aux prêteurs et l'effacement ; **en cours de construction**.
+- **État : préparé et validé** (`docs/etape-6/test-18h.md`, D-054, point 1), avec la branche `mise-en-ligne`, la note aux prêteurs et l'effacement ; **construction autorisée par la validation**.
 
 **5. Socle et données.**
 - Hébergement et sauvegardes chiffrées, chez des prestataires européens (D-043). Leurs noms se choisissent ici. Ceux cités à l'étape 5 (Scalingo, Clever Cloud, Scaleway, OVHcloud, Brevo) sont des exemples donnés de mémoire.
@@ -135,7 +135,7 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - Le compte et la demande du message de 18h viennent après la première révélation (condition 1 de D-005, repris par D-043).
 - Sur iPhone, l'ordre entre la création du compte et l'ajout de l'icône, pour éviter une seconde connexion, se règle ici avec UX (proposé, Front-end).
 - L'e-mail envoyé 30 jours avant l'effacement d'un compte inactif : texte écrit par UX, relu par l'avocat (D-045).
-- Un lien d'invitation ouvert sur un Android s'arrête à la page qui dit que le jeu se joue seulement sur iPhone : rien n'est gardé de la personne, et le lien reste valable (D-054 ; `docs/onboarding.md`).
+- Un lien d'invitation ouvert sur un Android s'arrête à la page qui dit que le jeu se joue seulement sur iPhone : rien n'est gardé de la personne dans la base du jeu (seuls restent les journaux techniques de l'hébergeur, comme pour toute page : `docs/etape-6/donnees.md`, P-07 et P-08), et le lien reste valable (D-054 ; `docs/onboarding.md`).
 - Fini quand : on passe du lien au compte en moins de trois minutes.
 - Vous : vous jouez l'entrée d'un invité sur votre iPhone, du lien au compte. (L'invitation depuis un Android d'essai, proposée avant D-054, est retirée.)
 
@@ -205,7 +205,7 @@ Votre document (§11.4) tolérait de reporter le juridique pour « un prototype 
 - Ce qu'on mesure :
   - l'entrée : les invités finissent-ils les trois textes, puis créent-ils leur compte, et par quelle voie (D-041) ?
   - le rendez-vous : combien répondent cinq jours sur sept ? combien ouvrent le jeu dans l'heure qui suit 18h ?
-  - les critères de D-005 sur l'ajout de l'icône, puisque le lien est retenu (D-043). Celui qui comparait le retour des iPhone et des Android tombe (D-054, point 3). Restent, selon notre lecture, puisqu'ils ne comparent pas iPhone et Android : moins de deux iPhone sur trois font le geste malgré le guidage (UX) ; après deux semaines, les membres sans icône jouent moins souvent avant 18h que ceux qui reçoivent le message (Game design). Ce sont désormais les critères de passage à l'App Store ;
+  - les critères de D-005 sur l'ajout de l'icône, puisque le lien est retenu (D-043). Celui qui comparait le retour des iPhone et des Android tombe (D-054, point 3). Restent, selon notre lecture, puisqu'ils ne comparent pas iPhone et Android : moins de deux iPhone sur trois font le geste malgré le guidage (UX) ; après deux semaines, les membres sans icône jouent moins souvent avant 18h que ceux qui reçoivent le message (Game design). Ce seraient alors les critères de passage à l'App Store (lecture de l'équipe, à confirmer : D-054 ne dit que « ceux qui comparent iPhone et Android tombent ») ;
   - la part des liens d'invitation qui s'arrêtent sur la page « iPhone seulement » (proposé, `docs/produit.md`, « Ce que ces décisions laissent à régler ») ;
   - la part des codes par e-mail qui n'arrivent pas, ou arrivent dans les indésirables (Back-end) ;
   - les textes corrigés après publication (D-044) ;
@@ -292,7 +292,7 @@ S'y ajouteraient, selon la réponse à la question de la structure (D-043) : une
 - le test du message de 18h prend environ une semaine : huit à dix jours selon sa préparation validée (`docs/etape-6/test-18h.md`, partie 7) ;
 - la bêta dure 8 à 12 semaines ;
 - si une consultation de la CNIL est nécessaire, elle prend 8 semaines, prolongeables ;
-- chez Apple, un compte au nom d'une société demande un numéro d'entreprise (D-U-N-S) qui peut prendre jusqu'à 30 jours (`docs/etape-5-choix.md`). Le test fermé de 14 jours avec 12 personnes, imposé par Google Play, tombe avec lui (D-054).
+- chez Apple, un compte au nom d'une société demande un numéro d'entreprise (D-U-N-S) qui peut prendre jusqu'à 30 jours (`docs/etape-5-choix.md`). Le test fermé de 14 jours avec 12 personnes, imposé par Google Play, tombe avec Google Play (D-054).
 
 **La construction (étape 6), jusqu'à l'entrée en bêta, App Store exclu : environ 3 à 6 mois.** Cette fourchette ne compte ni le travail 14 (l'App Store) ni la bêta ; elle compte la chaîne des textes, avec sa marche à blanc, et la première relecture de l'avocat (hypothèses ci-dessous). Ordre de grandeur donné par Back-end et Front-end, à faible confiance. Ce n'est ni un engagement ni une date, et ce n'est pas une date de sortie : la bêta, la question de la structure et l'App Store s'ajoutent, et ne sont pas estimables (plus bas).
 - Pourquoi on peut l'estimer maintenant : vos choix ont retenu le chemin le plus court avant la bêta sur les trois points qui l'empêchaient (le lien d'abord, des agents seuls, des textes tout automatiques).
@@ -318,7 +318,7 @@ S'y ajouteraient, selon la réponse à la question de la structure (D-043) : une
 
 **Ce que vos choix concentrent sur vous.** Ce sont les choix que vous avez faits ; ce qui suit dit seulement ce qu'ils vous demanderont, pour que rien ne vous surprenne.
 - **Le soir.** Vous êtes le seul recours humain, le dimanche compris (D-043). L'exigence « rien ne se calcule à 18h pile » et la procédure d'une page rendent la permanence légère, sans la supprimer. Les jours où vous n'êtes pas joignable vers 18h, un message peut partir en retard.
-- **Les vrais téléphones.** Des agents ne peuvent pas tenir un téléphone ni écouter le lecteur d'écran d'un iPhone (VoiceOver). Les essais sur appareil (le premier test, le petit écran, le très grand texte, VoiceOver) reposent sur vous et votre iPhone, et, pour le premier test, sur les iPhone prêtés ; l'Android d'essai, proposé avant D-054, est retiré (Front-end).
+- **Les vrais téléphones.** Des agents ne peuvent pas tenir un téléphone ni écouter le lecteur d'écran d'un iPhone (VoiceOver). Les essais sur appareil (le premier test, le petit écran, le très grand texte, VoiceOver) reposent sur vous et votre iPhone, et, pour le premier test, sur les iPhone prêtés ; l'Android d'essai, proposé avant D-054, est retiré (D-054).
 - **L'iPhone seulement** (D-054, point 3). Deux téléphones sur trois en France sont des Android : la plupart des cercles compteront des proches qui ne peuvent pas jouer. Une page le leur dit. La bêta dira combien d'invitations s'arrêtent là (proposé, partie 5).
 - **La responsabilité.** En nom propre, vous êtes responsable des données et des textes publiés (D-042, D-044), sur vos biens personnels. Une erreur d'un texte automatique peut viser un député nommé à 18h : la procédure de correction doit être rodée dès la bêta.
 - **La relecture.** Le code qui garde des opinions et les textes ne sont relus que par des modèles, ceux des textes chez un seul fournisseur (D-043, D-044).
@@ -326,7 +326,7 @@ S'y ajouteraient, selon la réponse à la question de la structure (D-043) : une
 - **Le budget, dépense par dépense.** Il reste souple, mais il n'y a pas d'enveloppe : la vue d'ensemble de la partie 6 est mise à jour à chaque dépense.
 
 **Les autres points.**
-- **Le message de 18h sur iPhone.** Le lien étant retenu, la bêta mesure le geste d'ajout de l'icône avec les critères de D-005 qui restent après D-054 (partie 5), avant le passage à l'App Store.
+- **Le message de 18h sur iPhone.** Le lien étant retenu, la bêta mesure le geste d'ajout de l'icône avec les critères de D-005 qui restent après D-054 (partie 5), avant le passage à l'App Store. Ces critères sont proposés : D-054 fait tomber ceux de D-005 qui comparent iPhone et Android ; reste, selon la lecture de l'équipe, le critère d'UX (moins de deux iPhone sur trois font le geste) et celui de Game design (sans icône, on joue moins souvent avant 18h). À confirmer (`docs/produit.md`, « Ce que ces décisions laissent à régler »).
 - **Les quatre tensions jamais essayées** sont les plus proches du clivage gauche-droite. Elles ont été éprouvées sur papier (travail 2, D-053) ; la bêta dira si nos textes trahissent le camp (mesure par des volontaires) et comment se lisent « l'indépendance » (au sens personnel ou territorial) et « le privé » (sur un texte d'école) (D-053).
 - **Le nom et l'icône.** Le nom circule sans protection pendant la bêta, puisque la marque est déposée après (D-043), alors que l'adresse et l'icône sont figées avant elle. Si le nom échoue, chaque joueur devra réinstaller l'icône (Front-end).
 - **Les liens ouverts dans une messagerie.** Certaines messageries ouvrent les liens dans leur propre navigateur. Un invité qui choisit « Plus tard » à l'écran du code peut alors perdre sa partie en rouvrant le jeu dans Safari. À voir avec UX avant le travail 9 (Front-end).

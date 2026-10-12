@@ -59,9 +59,9 @@ Les autres durées, dont celle des réponses d'un invité qui ne crée pas de co
 
 Le jeu se joue sur iPhone seulement (D-054, point 3). Ailleurs, le parcours s'arrête dès l'ouverture du lien, avant le premier texte : ni texte, ni carte de consentement, ni compte.
 
-- **Sur un Android, téléphone ou tablette** (D-054) : une page dit que le jeu se joue seulement sur iPhone. Elle n'a pas d'autre action. Elle ne garde rien de la personne et ne consomme pas le lien, qui n'est lié à l'invitée qu'à sa première réponse enregistrée (`docs/etape-6/donnees.md`, P-29) : il reste valable ses 7 jours, sur un iPhone (proposé). Thomas n'en est pas averti ; pour lui, Marie n'est simplement pas encore arrivée. Ses mots : `docs/produit.md`, section 5, « Sur un autre appareil qu'un iPhone » (proposé, mots d'UX).
-- **Sur un ordinateur ou un iPad** (proposé) : une page dit que le jeu se joue sur iPhone, avec un code à viser avec l'iPhone pour y ouvrir le même lien. Rien n'est gardé de la personne, et le lien n'est pas consommé. Raisons et mots : `docs/produit.md`, section 5.
-- **Thomas, s'il crée un cercle depuis un Android**, voit la même page à sa première ouverture, sans la ligne sur l'invitation.
+- **Sur un Android, téléphone ou tablette** (D-054) : une page dit que le jeu se joue seulement sur iPhone. Elle n'a pas d'autre action. Elle ne garde rien de la personne dans la base du jeu (seuls restent les journaux techniques de l'hébergeur, comme pour toute page : `docs/etape-6/donnees.md`, P-07 et P-08) et ne consomme pas le lien, qui n'est lié à l'invitée qu'à sa première réponse enregistrée (`docs/etape-6/donnees.md`, P-29) : il reste valable ses 7 jours, sur un iPhone (proposé). Thomas n'en est pas averti ; pour lui, Marie n'est simplement pas encore arrivée (proposé). Ses mots : `docs/produit.md`, section 5, « Sur un autre appareil qu'un iPhone » (proposé, mots d'UX).
+- **Sur un ordinateur ou un iPad** (proposé) : une page dit que le jeu se joue sur iPhone, avec un code à viser avec l'iPhone pour y ouvrir le même lien. Rien n'est gardé de la personne dans la base du jeu (seuls restent les journaux techniques de l'hébergeur, comme pour toute page : `docs/etape-6/donnees.md`, P-07 et P-08), et le lien n'est pas consommé. Raisons et mots : `docs/produit.md`, section 5.
+- **Thomas, s'il crée un cercle depuis un Android**, voit la même page à sa première ouverture, sans la ligne sur l'invitation (proposé).
 
 Restent à régler, listés dans `docs/produit.md` (« Ce que ces décisions laissent à régler ») : prévenir Thomas avant qu'il invite que le jeu se joue sur iPhone, sans toucher au message d'invitation validé ; un iPhone trop ancien pour recevoir le message de 18h (avant iOS 16.4).
 
@@ -75,7 +75,7 @@ Quinze ans et plus en v1, par déclaration dans la carte de consentement (pas de
 
 ## Indicateurs
 
-Part d'invités qui finissent les trois textes ; part de créateurs qui envoient au moins deux invitations ; part d'invités qui créent le compte après la révélation ; part qui font le geste d'ajout à l'écran d'accueil (D-005). Depuis D-041 : la voie de compte choisie (Apple, Google ou l'e-mail), et la part d'invités qui quittent l'écran du compte sans en choisir aucune ; la durée de la première séance d'un invité, défi compris. Depuis D-054 (proposé) : la part des liens ouverts qui s'arrêtent sur une page « iPhone seulement », par sorte d'appareil (Android, ordinateur, iPad), en simple total, sans rien garder de la personne.
+Part d'invités qui finissent les trois textes ; part de créateurs qui envoient au moins deux invitations ; part d'invités qui créent le compte après la révélation ; part qui font le geste d'ajout à l'écran d'accueil (D-005). Depuis D-041 : la voie de compte choisie (Apple, Google ou l'e-mail), et la part d'invités qui quittent l'écran du compte sans en choisir aucune ; la durée de la première séance d'un invité, défi compris. Depuis D-054 (proposé) : la part des liens ouverts qui s'arrêtent sur une page « iPhone seulement », par sorte d'appareil (Android, ordinateur, iPad), en simple total, sans rien garder de la personne dans la base.
 
 ## Ce que la bêta devra montrer
 
