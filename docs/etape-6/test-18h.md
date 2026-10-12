@@ -263,19 +263,19 @@ Un prêteur qui se retire en cours de test : on efface sa ligne le jour même. L
 
 ### La note pour les prêteurs
 
-Version définitive de Juridique (avis du 12 octobre 2026, après les constats sur Scalingo), reprise mot pour mot, avec un seul ajout de l'orchestrateur dans « Installé » : le message de répétition du jour de l'installation y est annoncé. Elle vouvoie, parce qu'une même note sert à plusieurs lecteurs ; vous pouvez tutoyer dans le message qui l'accompagne. Votre iPhone n'a pas besoin de note. **Elle n'attend plus la réponse de Scalingo** : la durée la plus longue de ses journaux, un an, est documentée et écrite dans la note.
+Version définitive de Juridique (avis du 12 octobre 2026, après les constats sur Scalingo), reprise mot pour mot ; sa dernière retouche annonce les deux messages du jour de l'installation. Elle vouvoie, parce qu'une même note sert à plusieurs lecteurs ; vous pouvez tutoyer dans le message qui l'accompagne. Votre iPhone n'a pas besoin de note. **Elle n'attend plus la réponse de Scalingo** : la durée la plus longue de ses journaux, un an, est documentée et écrite dans la note.
 
 > **Test du message de 18h**
 >
 > Je prépare, en mon nom propre, un jeu : Elenchos.
 >
-> **Installé.** Une page de test en icône, sans jeu ni question. Le jour de l'installation, deux messages d'essai (« Test, message d'essai », puis « Test, répétition » vers 18h). Puis trois soirs, vers 18h, « Test, soir 1 sur 3 », « 2 sur 3 », « 3 sur 3 » ; si un soir doit être refait, « Test, soir ajouté ».
+> **Installé.** Une page de test en icône, sans jeu ni question. Des messages commençant par « Test » : deux le jour de l'installation, puis un vers 18h, trois soirs.
 >
-> **À faire.** Ne pas ouvrir l'icône avant le soir 3 ; lire le message sans appuyer dessus. Chaque soir, un SMS : « vu à 18h… », « rien vu » ou « éteint ». Le jour 3, éteindre et rallumer avant 18h ; après le message, ouvrir l'icône et me dire si elle affiche « connecté ».
+> **À faire.** Ne pas ouvrir l'icône avant le soir 3 ; lire les messages sans appuyer dessus. Chaque soir, un SMS : « vu à 18h… », « rien vu » ou « éteint ». Le jour 3, éteindre et rallumer avant 18h ; après le message, ouvrir l'icône et me dire si elle affiche « connecté ».
 >
-> **Gardé.** L'adresse technique du téléphone et l'heure de réception, sous « téléphone [n] », avec sa version d'iOS, jamais votre nom. J'essaie la connexion Google avec un compte de test, jamais le vôtre.
+> **Gardé.** L'adresse technique du téléphone et l'heure de réception, sous « téléphone [n] », avec sa version d'iOS, jamais votre nom. Connexion Google : un compte de test, jamais le vôtre.
 >
-> **Où.** Chez Scalingo, hébergeur, en France. Le message passe, chiffré, par Apple.
+> **Où.** Chez Scalingo, hébergeur, en France. Les messages passent, chiffrés, par Apple.
 >
 > **Jusqu'à quand.** Le [21 octobre 2026], j'efface ce que je garde, SMS compris, sauf le tableau des heures, sans nom, gardé jusqu'au [20 novembre 2026] pour le bilan ; je vous le confirme. L'hébergeur garde un an, par obligation légale, la trace des connexions (adresse internet, heure) ; je ne peux pas l'effacer.
 >
@@ -283,7 +283,7 @@ Version définitive de Juridique (avis du 12 octobre 2026, après les constats s
 >
 > **Vos droits.** Ce test repose sur mon intérêt à préparer le jeu. Vous pouvez arrêter, ou faire effacer ce que je garde : [prénom, téléphone, e-mail]. Recours : la CNIL (cnil.fr).
 
-*Relue par Juridique le 12 octobre 2026, après les constats sur Scalingo.*
+*Relue par Juridique le 12 octobre 2026 (dernière retouche : les messages du jour de l'installation).*
 
 Restent à remplir : [n], par téléphone ; les deux dates ; [Test 18h] ; vos coordonnées.
 

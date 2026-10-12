@@ -34,7 +34,8 @@ function fichiers(dossier: string): string[] {
 
 const SECRETS: [string, RegExp][] = [
   ['clé privée', /-----BEGIN (EC |RSA )?PRIVATE KEY-----[\s\\n]*[A-Za-z0-9+/=]{60,}/],
-  ['adresse de base avec mot de passe', /postgres(ql)?:\/\/[^\s:@/'"`]+:[^\s@/'"`]+@/],
+  // Un vrai mot de passe de base (Scalingo en donne de 64 caractères) ; les adresses d'exemple des tests n'en ont pas.
+  ['adresse de base avec mot de passe', /postgres(ql)?:\/\/[^\s:@/'"`]+:[^\s@/'"`]{8,}@/],
   ['secret Google', /GOCSPX-[A-Za-z0-9_-]{10,}/],
   ['variable secrète remplie', /^(SECRET_SESSION|CODES_ESSAI|CODE_ACCES_PORTEUR|VAPID_CLE_PRIVEE|GOOGLE_SECRET_CLIENT|APPLE_CLE_PRIVEE)=\S{8,}/m],
 ];
