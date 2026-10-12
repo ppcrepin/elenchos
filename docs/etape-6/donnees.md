@@ -4,6 +4,8 @@
 
 *État, 11 octobre 2026 : le porteur a répondu à « La question » et à la question « Mesures » de `docs/etape-6/regles.md` (D-052). Les agents peuvent lire, outre la part de « aucune », les totaux des mesures de la bêta, par groupes au-dessus des seuils, dans un rapport que vous leur donnez, jamais par un accès ; aucun journal ne leur va (D-052, point 3). Les trois comptes de mi-bêta sont décidés (D-052, point 2) : P-22 a et P-39 a valent sans condition, et l'usage 5 de la carte des données existe. Les passages touchés sont mis à jour (En bref, partie 1, P-04, P-21, P-22 a, P-23, P-28, P-39 a, parties 4 à 8, « La question ») ; le reste ne change pas.*
 
+*État, 12 octobre 2026 (D-054) : le jeu se joue sur iPhone seulement (D-054, point 3). Le message de 18h ne passe donc plus que par le service d'Apple ; Google ne reste hors d'Europe que pour la connexion. P-06, P-12, le tableau et la note 2 de la partie 1, la partie 5 (point 7) et la partie 7 sont mis à jour. Le test du message de 18h est validé (D-054, point 1) : P-43, sa ligne de la carte des données (partie 4) et P-21 reçoivent les précisions de `docs/etape-6/test-18h.md`. Le reste ne change pas.*
+
 **Comment lire les faits.** « De mémoire » : ce que savent les agents, à vérifier. « À vérifier » : un fait à établir avant de s'en servir. Le reste découle de vos décisions ou de documents déjà validés, cités à chaque fois. Les moyens techniques de la partie 3 (rôles de base de données, empreintes, vues, chiffrement, numéros tirés au hasard) sont des propositions de Back-end, sauf ceux qu'une décision impose ; les règles qui ont une conséquence visible pour un joueur ou pour vous sont, en plus, marquées « (proposé) » une à une.
 
 ---
@@ -47,12 +49,12 @@
 | Ses devinettes et ses points | oui | non (4) | total | rapport | oui | non | rapport |
 | Ses gestes : ouvertures, durées, a joué ou non | oui | « a déjà joué » (5) | total | rapport | oui | non | rapport |
 | Si sa raison était « aucune » | oui | en partie (3) | total (6) | rapport (6) | oui | non | rapport (6) |
-| Son adresse internet, et l'adresse technique où son téléphone reçoit le message de 18h | — | non | non | non | oui | pour la connexion et le message de 18h | non |
+| Son adresse internet, et l'adresse technique où son téléphone reçoit le message de 18h | — | non | non | non | oui | Apple : pour la connexion et le message de 18h ; Google : pour la connexion seulement (D-054) | non |
 | Les journaux techniques du jeu, sans rien d'elle | — | non | oui | non | oui | non | non |
 
 **Les notes.**
 1. Vous détenez les clés : techniquement, vous pourriez tout lire. L'engagement (proposé) : aucun écran d'administration ne vous montre une réponse, un pseudo ni une adresse ; vous n'ouvrez la base que pour une restauration ou un incident (D-048), et chaque ouverture laisse une trace.
-2. Exception : l'annonce faite au créateur d'un cercle à chaque arrivée cite le pseudo de qui arrive. Sur le web, Apple et Google l'acheminent chiffrée, sans la lire (de mémoire, à vérifier au test de 18h).
+2. Exception : l'annonce faite au créateur d'un cercle à chaque arrivée cite le pseudo de qui arrive. Sur le web, Apple l'achemine chiffrée, sans la lire (de mémoire, à vérifier au test de 18h) ; le jeu se jouant sur iPhone seulement, Apple est le seul service d'acheminement (D-054).
 3. Le lendemain, pendant Deviner, ses proches voient sa réponse sur une carte, sans nom. À 18h, chacun apprend qu'elle était de Marie si la carte lui était servie, ou s'il a désigné Marie sur une carte d'un proche qui avait répondu exactement la même chose (D-024). Le graphique de l'avis du cercle compte sa position chaque jour, presque nom par nom dans un petit cercle (D-025). Sa raison, elle, reste cachée hors de ces deux cas.
 4. Le cercle voit les titres que valent ses devinettes, jamais les devinettes une à une. Thomas, qui l'a invitée, voit son score d'entrée.
 5. Jamais qu'un membre est en pause (D-010, D-011) ; mais le total de l'avis du cercle peut laisser voir qu'un membre n'a pas répondu (D-025).
@@ -126,7 +128,7 @@ Le message de 18h, sous ses formes (E1), ne cite personne et ne dit rien d'une r
 *Test.* Traceur : chaque modèle de message est rendu dans chacune de ses formes avec les valeurs du traceur ; aucune n'y apparaît, sauf le code dans l'e-mail du code et le pseudo de qui arrive dans l'annonce d'arrivée. Un modèle sans test fait échouer la vérification. *Travaux 4 et 9.*
 
 **P-06. Sur le web, le contenu d'une notification est chiffré jusqu'au téléphone.** *Proposé ; condition de l'exception de P-05.*
-Le serveur refuse d'envoyer une notification dont le contenu ne serait pas chiffré pour le seul téléphone destinataire. C'est ce qui permet de garder le texte validé de l'annonce d'arrivée (D-011, D-014) : Apple et Google l'acheminent sans le lire. Au passage aux boutiques (travail 14), ce n'est plus vrai d'emblée : soit on chiffre nous-mêmes le contenu dans l'application, soit l'annonce perd le pseudo dans la notification et le garde à l'écran. Le choix se fera à ce moment-là.
+Le serveur refuse d'envoyer une notification dont le contenu ne serait pas chiffré pour le seul téléphone destinataire. C'est ce qui permet de garder le texte validé de l'annonce d'arrivée (D-011, D-014) : Apple, seul service d'acheminement sur iPhone (D-054), l'achemine sans le lire. Au passage à l'App Store (travail 14 ; l'App Store seul, D-054), ce n'est plus vrai d'emblée : soit on chiffre nous-mêmes le contenu dans l'application, soit l'annonce perd le pseudo dans la notification et le garde à l'écran. Le choix se fera à ce moment-là.
 *Test.* Le module d'envoi, appelé sans chiffrement, refuse. Un faux service d'acheminement reçoit les envois d'une partie simulée : le traceur n'y apparaît jamais en clair. Au travail 4, sur de vrais iPhone, on vérifie que la forme de notification retenue garde ce chiffrement (de mémoire pour la forme récente d'Apple). *Travail 4.*
 
 **P-07. Les journaux de notre programme ne contiennent aucune donnée de joueur.** *Plan, travail 3 ; D-048.*
@@ -151,7 +153,7 @@ La mémoire du téléphone garde la session, les réglages d'affichage et, le te
 ### C. Les prestataires
 
 **P-12. Tout prestataire qui touche aux joueurs est européen, par son siège et son contrôle ; deux exceptions seulement.** *D-043, point 3 ; D-048 ; `docs/plateforme.md`, limite 1.*
-Un registre des prestataires, dans le dépôt, dit pour chacun : siège, contrôle, lieu des machines, sous-traitants qui détiennent des données, date du contrat de sous-traitance (RGPD, art. 28), date de la dernière vérification. Les seules exceptions hors d'Europe sont celles de D-043 : la connexion par Apple ou Google, et l'acheminement des messages de 18h par le service propre au téléphone ou au navigateur (Apple et Google ; de mémoire aussi Mozilla pour Firefox et Microsoft pour Edge ; liste à vérifier au travail 4).
+Un registre des prestataires, dans le dépôt, dit pour chacun : siège, contrôle, lieu des machines, sous-traitants qui détiennent des données, date du contrat de sous-traitance (RGPD, art. 28), date de la dernière vérification. Les seules exceptions hors d'Europe sont celles de D-043 : la connexion par Apple ou Google, et l'acheminement des messages de 18h par le service propre au téléphone. Le jeu se jouant sur iPhone seulement (D-054), ce service est celui d'Apple, quel que soit le navigateur de l'iPhone (de mémoire, à confirmer au travail 4) ; ceux de Google, de Mozilla (Firefox) et de Microsoft (Edge), cités avant D-054, sortent de la liste.
 *Test.* Le serveur ne peut joindre que les adresses du registre (liste fermée appliquée à ses sorties) ; le relevé du réseau du serveur le vérifie sur une partie simulée. Un programme vérifie que le registre ne contient, hors d'Europe, que ces deux sortes d'exceptions. **Ce qu'aucun test ne prouve** : que le siège, le contrôle et les sous-traitants sont bien ceux du registre. C'est un contrôle humain, avant de signer, puis une fois par an (proposé), et l'avocat relit les contrats (D-044). *Travail 5.*
 
 **P-13. La copie des sauvegardes chez Scaleway est chiffrée par nous avant de partir.** *`docs/plateforme.md`, annexe A (copie chez Scaleway, proposé).*
@@ -186,11 +188,11 @@ Chaque base porte, dès sa création, une marque : « inventée » ou « réelle
 Une bande sur chaque écran de l'aperçu : « Version d'aperçu : l'équipe voit ce que tu saisis ici. » (texte d'écran écrit par Back-end, à faire relire par UX au travail 7 avec les autres écrans jamais dessinés). Une connexion d'essai, sans Apple ni Google, existe sur l'aperçu seulement ; les vraies connexions s'y essaient avec des comptes créés pour le test. L'aperçu est remis à zéro chaque semaine. Il ne contient que des données inventées ou d'essai : ce ne sont pas des données de joueur, et la garantie de D-043 n'est pas en jeu, à condition que vous n'y mettiez pas vos vraies opinions.
 *Test.* Relevé de tous les écrans de l'aperçu : la bande est présente. La connexion d'essai répond sur l'aperçu et est refusée dans la configuration de la version en ligne. *Travail 7.*
 
-**P-21. Les agents lisent la part de « aucune » et les totaux des mesures de la bêta, dans un rapport que vous leur donnez ; jamais un accès, jamais un journal.** *D-052, point 3 (qui élargit D-027) ; D-043, point 3 ; D-048 ; `docs/plateforme.md`, limite 3.*
+**P-21. Les agents lisent la part de « aucune » et les totaux des mesures de la bêta, dans un rapport que vous leur donnez ; jamais un accès, jamais un journal.** *D-052, point 3 (qui élargit D-027) ; D-043, point 3 ; D-048 ; `docs/plateforme.md`, limite 3 ; précisé par D-054, point 1.*
 Ce que les agents peuvent lire de la version en ligne (votre réponse à « La question », deuxième option) :
 - la part de « aucune », texte par texte, au-dessus de 30 réponses (D-027) ;
 - les totaux des mesures de la bêta : gestes, justesse, part des Mystère, et les trois comptes de mi-bêta (P-22 a), par groupes au-dessus des seuils : 10 joueurs au moins pour les gestes, la justesse et les Mystère (proposé), 30 pour les trois comptes (D-052, point 2) ;
-- rien d'autre : aucun extrait de journal, ni des nôtres (P-07) ni de ceux de Scalingo. En cas d'incident, c'est vous qui regardez (D-048 intact).
+- rien d'autre : aucun extrait de journal, ni des nôtres (P-07) ni de ceux de Scalingo. En cas d'incident, c'est vous qui regardez (D-048 intact). Seule précision (D-054, point 1) : quand une installation échoue, vous pouvez nous copier le message d'erreur de la **fabrication** chez Scalingo, qui ne contient aucune donnée ; jamais un journal de l'application en marche (`docs/etape-6/test-18h.md`, partie 3, point 5).
 
 Un rapport est produit dans la version en ligne ; vous le lisez, puis vous le donnez ; les agents n'ont jamais d'accès direct. Ces totaux sont jugés sans donnée de joueur, à confirmer par l'avocat (partie 5, point 2). La règle est écrite dans « Qui, durée, droits ». La procédure d'incident reste jouable sans ouvrir de session d'agents (plan, travail 12).
 *Test.* Sur une base inventée, chaque chiffre du rapport porte sur un groupe au-dessus de son seuil, ou est remplacé par « — » ; le traceur n'y apparaît pas ; le rapport ne contient que les rubriques permises (part de « aucune », totaux des mesures, trois comptes), aucune ligne de journal. Réponses inversées : le rapport est identique, sauf la part de « aucune », les totaux de justesse et de Mystère et les trois comptes, qui dépendent des réponses par nature (P-39, P-39 a). *Travail 12.*
@@ -320,9 +322,9 @@ Vos écrans à vous : le stock de textes, les alertes, les totaux de P-21 et P-2
 
 ### L. Le premier code : le test du message de 18h
 
-**P-43. Le test du message de 18h ne garde que ce qu'il teste.** *Plan, travail 4 ; D-005.*
-La page nue du test n'enregistre que les abonnements au message et l'heure de réception ; aucune réponse, aucun pseudo. Les téléphones prêtés n'y laissent aucune donnée de leurs propriétaires : connexion avec vos comptes ou des comptes créés pour le test. Une note d'une page leur dit ce qui est gardé et quand c'est effacé (proposé). La connexion Apple ou Google, essayée sur les mêmes téléphones (plan, travail 4), renvoie un identifiant et une adresse : ils ne sont gardés que le temps de la session d'essai, puis effacés avec le reste. Le relevé du réseau de P-10 s'applique dès ce test. Tout est effacé à la fin des trois soirs.
-*Test.* La base du test n'a que les champs prévus (comparaison avec sa carte). Le programme d'effacement de fin de test est joué, puis la base est vérifiée vide : ni abonnement, ni identifiant, ni adresse. Relevé du réseau sur la page du test. *Travail 4.*
+**P-43. Le test du message de 18h ne garde que ce qu'il teste.** *Plan, travail 4 ; D-005 ; précisé par D-054, point 1 (`docs/etape-6/test-18h.md`, partie 5).*
+La page nue du test, sur cinq iPhone (D-054, point 3), n'enregistre que les abonnements au message, l'étiquette de chaque téléphone (son numéro, sa marque et la version de son système, jamais un nom) et les heures (envoi, réponse du service d'acheminement, réception notée par le serveur) ; aucune réponse, aucun pseudo, jamais l'heure à laquelle un prêteur ouvre l'icône. Un abonnement n'est accepté qu'avec un code d'essai, cinq au plus. Les téléphones prêtés n'y laissent aucune donnée de leurs propriétaires : jamais le compte d'un prêteur ; Apple seulement sur votre iPhone, ou avec un compte Apple de test. Une note d'une page, remise avant l'installation, leur dit ce qui est gardé et quand c'est effacé. La connexion Apple ou Google, essayée sur les mêmes téléphones (plan, travail 4), renvoie un identifiant et une adresse : l'identifiant n'est gardé que sous forme d'empreinte, le temps du test ; l'adresse est lue, notée « reçue », puis jetée. Le relevé du réseau de P-10 s'applique dès ce test. Tout est effacé le lendemain du troisième soir, et vérifié. Seule exception : un tableau d'heures par téléphone numéroté, sans adresse ni nom, gardé jusqu'au 20 novembre 2026 pour le bilan, puis effacé avec la liste « qui a quel téléphone », qui n'est écrite que chez vous.
+*Test.* La base du test n'a que les champs prévus (comparaison avec sa carte) ; aucun champ d'adresse e-mail. Sans code d'essai, ou au sixième, l'abonnement est refusé. Le programme d'effacement de fin de test est joué, puis la base est vérifiée vide : ni abonnement, ni identifiant, ni adresse. Relevé du réseau sur la page du test. *Travail 4.*
 
 ### Ce qu'aucun test ne prouve
 
@@ -366,7 +368,7 @@ Première version, à compléter au travail 5 avec le modèle de données, puis 
 | Copie chiffrée des sauvegardes | 4 | Scaleway | 30 jours | `docs/plateforme.md`, proposé |
 | Journal des effacements, identifiants seuls | 4 | Scalingo | Plus longue rotation des sauvegardes, plus 5 jours | Proposé (P-32) |
 | Version d'aperçu | — | Scalingo | Aucune donnée réelle ; remise à zéro chaque semaine | Proposé (P-19, P-20) |
-| Test du message de 18h | 1 | Scalingo | Effacé à la fin des trois soirs | Proposé (P-43) |
+| Test du message de 18h | 1 | Scalingo | Effacé le lendemain du troisième soir, et vérifié ; seul le tableau d'heures par téléphone numéroté, sans adresse ni nom, est gardé jusqu'au 20 novembre 2026, puis effacé avec la liste « qui a quel téléphone », écrite chez vous seul | D-054, point 1 (P-43) |
 
 ---
 
@@ -380,7 +382,7 @@ Première version, à compléter au travail 5 avec le modèle de données, puis 
 4. **Le journal des effacements** (P-32) : garder les identifiants de comptes effacés pendant la plus longue rotation des sauvegardes, plus 5 jours, pour que l'effacement survive à une restauration, est-ce admis ?
 5. **Les durées proposées** de la partie 4, toutes, et la durée des réponses tant que le compte existe.
 6. **Les contrats** avec Scalingo et Scaleway (art. 28), leurs sous-traitants, et la lecture « siège et contrôle » de D-043 appliquée aux sous-traitants (`docs/plateforme.md`, limite 1).
-7. **L'annonce d'arrivée** qui cite un pseudo : admise telle quelle sur le web, puisque chiffrée jusqu'au téléphone ? Que faire dans les applications des boutiques (P-06) ?
+7. **L'annonce d'arrivée** qui cite un pseudo : admise telle quelle sur le web, puisque chiffrée jusqu'au téléphone ? Que faire dans l'application de l'App Store, seule boutique depuis D-054 (P-06) ?
 8. **Le relais d'Apple** pour l'e-mail d'avant effacement, et Apple et Google comme responsables distincts pour leur service de connexion : ce que « Qui, durée, droits » doit en dire.
 9. **Le statut d'hébergeur** (pseudos et noms de cercle) : une obligation de garder des données d'identification, de mémoire issue d'un décret d'octobre 2021, limiterait-elle « Tout effacer » ? (Déjà noté au plan, partie 7.)
 10. **L'export** (P-36) : ce qu'il doit contenir (art. 15 et 20), et si les devinettes que d'autres ont faites sur Marie sont aussi ses données.
@@ -428,16 +430,21 @@ Ce document applique D-006, D-010, D-024 à D-027, D-035, D-041 à D-045, D-048 
 - **D-043, point 3, et D-048** : la réponse repose sur une lecture de Juridique, à confirmer par l'avocat (partie 5, point 2) : un total au-dessus d'un seuil n'est pas une « donnée de joueur ».
 - **D-042, point 2, et D-027** (D-052, point 2 ; P-22 a, P-39 a) : les trois comptes deviennent une seconde exception à la liste fermée des usages (usage 5, « régler les seuils du jeu ») et à « seul usage interne des opinions » (D-027) ; la carte de consentement ou « Qui, durée, droits » doit le dire dès le premier joueur de la bêta.
 
+**Touchées par vos réponses du 12 octobre 2026 (D-054) :**
+- **D-005, modifié par D-054, point 3** (l'iPhone seulement, l'App Store seul) : le message de 18h ne passe plus que par Apple (P-06, P-12, partie 1) ; Google ne sort d'Europe que pour la connexion (D-035). D-043 tient : ses deux exceptions restent, l'une plus étroite.
+- **P-43 et la carte des données, précisés par D-054, point 1** : comptes de test seulement, codes d'essai, champs fixés, adresse e-mail jetée, effacement le lendemain du troisième soir et vérifié, tableau sans nom gardé jusqu'au 20 novembre 2026.
+- **P-21, précisé par D-054, point 1** : le message d'erreur de la fabrication chez Scalingo, sans donnée, peut être copié aux agents ; D-048 et D-052 (point 3) tiennent.
+
 **Proposées, et qui touchent une décision :**
 - **D-045, point 1, D-010 (point 3) et D-029** (P-30) : l'effacement d'un compte inactif a lieu même si l'e-mail n'a pas pu partir, alors que D-045 dit « après un e-mail envoyé » ; un nouvel e-mail part à chaque nouvelle période d'inactivité, alors que D-045 et la règle 5 disent « une seule fois », ce qui élargit l'exception à « aucune relance ». Soumis à l'avocat (partie 5, point 14).
 - **`docs/onboarding.md`, règle 5 du compte** (P-30) : le compte devenu inaccessible est défini, avec un délai proposé de 30 jours, à fixer dans l'analyse d'impact.
 
 **Précisions, qui ne changent rien :**
-- **D-043, point 3** (P-12) : l'exception pour l'acheminement des messages est reprise mot pour mot, pour le service propre à chaque téléphone ou navigateur, pas seulement Apple et Google ; la liste est à vérifier au travail 4.
+- **D-043, point 3** (P-12) : l'exception pour l'acheminement des messages est reprise mot pour mot, pour le service propre au téléphone ; depuis D-054 (l'iPhone seulement), c'est celui d'Apple, à confirmer au travail 4.
 - **`docs/produit.md`, section 8, et D-041** : toutes les mesures validées restent calculables. La justesse et la part des Mystère sont calculées par le rôle du jeu et ne sortent qu'en totaux (P-22, P-39). La durée médiane de l'écran de la raison se lit sur un histogramme par semaine, jamais par jour ni par texte (P-40) : c'est l'application de la condition de Juridique (« jamais croisée avec la tension »), puisqu'un jour n'a qu'un texte et qu'un texte n'a qu'une tension (règles 6 et 16).
 - **D-043, point 3, et la version d'aperçu** (P-20) : l'aperçu ne contient que des données inventées ou d'essai ; ce ne sont pas des données de joueur, et la garantie donnée aux joueurs n'est pas touchée, à condition que vous n'y mettiez pas vos vraies opinions.
 - **D-006 et `docs/onboarding.md`** (P-29) : le lien « expire » ; 7 jours proposés ; le lien est rattaché à l'invitée à sa première réponse ; à confirmer par UX.
-- **D-011 et D-014, l'annonce d'arrivée** (P-06) : le texte validé peut rester dans la notification sur le web, son contenu y étant chiffré jusqu'au téléphone (proposé ; de mémoire, à vérifier au travail 4). C'est la revue que demandait le plan (travail 3). Elle cite le pseudo de qui arrive, que le plan et `docs/produit.md` appellent « prénom » (E7). La question revient au passage aux boutiques (travail 14).
+- **D-011 et D-014, l'annonce d'arrivée** (P-06) : le texte validé peut rester dans la notification sur le web, son contenu y étant chiffré jusqu'au téléphone (proposé ; de mémoire, à vérifier au travail 4). C'est la revue que demandait le plan (travail 3). Elle cite le pseudo de qui arrive, que le plan et `docs/produit.md` appellent « prénom » (E7). La question revient au passage à l'App Store (travail 14 ; D-054).
 - **D-045, point 1** (P-30) : « ouvrir le jeu » et « 12 mois » sont précisés.
 - **D-044, point 1, règle 20 de `docs/etape-6/regles.md`** (P-04 a) : un texte corrigé après coup sort des portraits, par un recalcul relançable, hors de 15h–19h et jamais le dimanche ; l'avis passe de la chaîne au jeu, jamais l'inverse : D-043 tient.
 - **D-010, règle 19 (lecture A) et règle 15 (un seul pseudo)** de `docs/etape-6/regles.md` (P-27 a, P-03 a) : propositions de Game design, reprises ici avec leur test.

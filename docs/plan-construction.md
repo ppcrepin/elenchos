@@ -6,6 +6,8 @@
 
 *Le 11 octobre 2026, après les trois travaux sur papier de l'étape 6 : leur état (faits : D-052, D-053) ; le « Fini quand » du travail 2, réécrit selon D-053 (point 1) ; la mesure du camp par des volontaires et les trois comptes de mi-bêta, ajoutés à la bêta (partie 5) ; ce que lisent les agents (travail 12, D-052, point 3). Relecture : Cohérence (compatible avec réserves, corrigées), puis le Vérificateur (OK avec corrections mineures, appliquées).*
 
+*Le 12 octobre 2026, après D-054 : le travail 4 (test du message de 18h) est préparé et validé (`docs/etape-6/test-18h.md`), et se fait sur cinq iPhone ; le jeu se joue sur iPhone seulement, et l'application ira sur l'App Store seul (D-054, point 3, qui modifie D-005). Sont mis à jour : l'état (partie 1), le choix 2 (partie 3), les travaux 4, 7, 9 et 14, la bêta (partie 5), les coûts (partie 6 : l'Android d'essai et le compte Google Play retirés, nouveau total), les durées et les points d'attention (partie 7). Les critères de passage aux boutiques de D-005 qui comparaient iPhone et Android tombent (partie 5).*
+
 ## 1. Où on en est
 
 **Étapes 1 à 3 : faites.** Le produit est défini (`docs/produit.md`, D-010), dessiné (D-011) et habillé (univers La Tablée D-012, nom de travail Elenchos D-013, maquettes finales D-014). Reste la fin de l'étape 3 : la vérification du nom par un conseil en propriété industrielle (D-013, D-043), Le logo est fait et validé (D-049, D-050 ; fichiers dans `docs/identite/logo/`).
@@ -17,7 +19,7 @@
 
 **Étape 5 : faite (D-042 à D-046).** Les dix choix de fabrication sont tranchés, en quatorze QCM (à partir de `docs/etape-5-choix.md`). Les documents qui en dépendent sont mis à jour et validés (D-046) : `docs/produit.md`, `docs/onboarding.md` (le compte, D-035), ce plan et la feuille de route.
 
-**Étape 6 : en cours** depuis le 11 octobre 2026, avec votre accord (D-051). Les trois travaux sur papier sont faits : les règles et les exigences de protection des données (D-052), les quatre tensions jamais essayées (D-053 ; le texte d'épreuve SO2, qui visait une nationalité, est remplacé (`docs/etape-6/tensions.md`, version 4)). Le suivant est le travail 4, le test du message de 18h, premier code de l'étape.
+**Étape 6 : en cours** depuis le 11 octobre 2026, avec votre accord (D-051). Les trois travaux sur papier sont faits : les règles et les exigences de protection des données (D-052), les quatre tensions jamais essayées (D-053 ; le texte d'épreuve SO2, qui visait une nationalité, est remplacé (`docs/etape-6/tensions.md`, version 4)). Le travail 4, le test du message de 18h, premier code de l'étape, est préparé et validé (`docs/etape-6/test-18h.md`, D-054) : il est en cours de construction, sur cinq iPhone.
 
 ## 2. Avant l'étape 6 : ce qui la conditionne
 
@@ -34,8 +36,8 @@ Ces démarches ne bloquent pas toutes la même chose : sans compte Apple, le pre
 
 Vous les avez tranchés le 11 octobre 2026. Le détail des options, des faits (vérifiés, de mémoire ou estimés) et des limites qui vous ont été dites est dans `docs/etape-5-choix.md`.
 
-1. **Qui porte le service : vous, en nom propre** (D-042). Comptes, contrats, marque, adresse et responsabilité éditoriale sont à votre nom. L'App Store demandera probablement une structure : cette question vous reviendra avant le chantier des boutiques (D-043).
-2. **Lien ou application : le lien d'abord, puis les deux boutiques avant l'ouverture au public** (D-043). D-005 est repris tel quel, sa suspension (D-009) est levée. Le compte Apple sert dès les premiers joueurs, pour la connexion Apple sur le web.
+1. **Qui porte le service : vous, en nom propre** (D-042). Comptes, contrats, marque, adresse et responsabilité éditoriale sont à votre nom. L'App Store demandera probablement une structure : cette question vous reviendra avant le chantier de l'App Store (D-043 ; l'App Store seul, D-054).
+2. **Lien ou application : le lien d'abord, puis les deux boutiques avant l'ouverture au public** (D-043). D-005 est repris tel quel, sa suspension (D-009) est levée. Le compte Apple sert dès les premiers joueurs, pour la connexion Apple sur le web. **Modifié le 12 octobre 2026 par D-054 (point 3) : le jeu se joue sur iPhone seulement ; l'App Store seul remplace les deux boutiques, sans compte Google Play.** Un proche sur Android ne peut pas jouer : une page le lui dit.
 3. **Qui code : des agents seuls.** Vous validez en jouant, et vous êtes le seul recours humain, y compris le soir (D-043). Ce que ce choix impose : partie 4.
 4. **La production des textes** (D-044) :
    - tout automatique, avec une mention visible qui dit que les textes sont rédigés avec une IA, et une procédure de correction rodée dès la bêta ; vous êtes le responsable éditorial ;
@@ -96,12 +98,14 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - Vous : vous lisez « qui voit quoi ».
 - **État : fait sur papier** (`docs/etape-6/donnees.md` ; vos deux réponses, D-052, points 2 et 3). Chaque exigence a son test décrit ; chaque test sera construit au travail que le document indique.
 
-**4. Test du message de 18h** : une page nue, cinq téléphones, trois soirs (D-005).
+**4. Test du message de 18h** : une page nue, cinq iPhone, trois soirs (D-005 ; cinq iPhone, D-054).
 - Sur les mêmes téléphones, il vérifie aussi la connexion Google ou Apple depuis l'icône, et la reconnexion après l'ajout de l'icône (Front-end, `docs/etape-5-choix.md`). S'ils échouent, la question vous reviendra, comme D-035 le prévoit.
 - Il faut avant lui le compte développeur Apple, à votre nom (déjà ouvert, D-047 ; partie 2).
-- Les cinq téléphones : l'équipe n'en a aucun. Votre iPhone, un Android d'essai si vous l'achetez (proposé, partie 6), et trois autres, prêtés ou loués, à réunir au début de l'étape (proposé).
+- Les cinq téléphones : l'équipe n'en a aucun. Votre iPhone et quatre iPhone prêtés par des proches, sur des versions d'iOS variées, toutes en 16.4 ou plus récent ; aucun Android, aucun achat (D-054, point 3) ; la location est écartée (`docs/etape-6/test-18h.md`, partie 2).
+- Si Apple ou Google refuse l'adresse de test de Scalingo, la question vous revient avant l'achat d'un nom de domaine (D-054, point 2).
 - Fini quand : le message arrive vers 18h sur les cinq téléphones, trois soirs de suite, et la connexion tient depuis l'icône.
 - Vous : vous le recevez sur votre téléphone, et vous vous connectez depuis l'icône.
+- **État : préparé et validé** (`docs/etape-6/test-18h.md`, D-054, point 1), avec la branche `mise-en-ligne`, la note aux prêteurs et l'effacement ; **en cours de construction**.
 
 **5. Socle et données.**
 - Hébergement et sauvegardes chiffrées, chez des prestataires européens (D-043). Leurs noms se choisissent ici. Ceux cités à l'étape 5 (Scalingo, Clever Cloud, Scaleway, OVHcloud, Brevo) sont des exemples donnés de mémoire.
@@ -115,12 +119,12 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 
 **7. Les écrans** : les 51 écrans validés, le catalogue des éléments graphiques, le jeu du jour, la révélation, l'entrée et l'invitation, Le Cercle et Moi.
 - Les maquettes touchées par les décisions sont reprises (`docs/produit.md`, annexe), dont les trois voies du compte (1.8, 5.7, 5.14 ; D-035).
-- Quelques écrans jamais dessinés sont dessinés à leur tour : réglages (avec la durée de 12 mois, D-045), code reçu par e-mail, réveil d'un cercle, quitter un cercle, la vraie page « Qui, durée, droits », l'emplacement de la mention IA (D-044).
+- Quelques écrans jamais dessinés sont dessinés à leur tour : réglages (avec la durée de 12 mois, D-045), code reçu par e-mail, réveil d'un cercle, quitter un cercle, la vraie page « Qui, durée, droits », l'emplacement de la mention IA (D-044), la page qui dit à un proche sur Android que le jeu se joue seulement sur iPhone (D-054), et celle d'un ordinateur ou d'un iPad (proposé, `docs/produit.md`, section 5).
 - Fini quand :
   - chaque écran est posé à côté de sa maquette ;
   - la boucle quotidienne dure environ 90 secondes ;
   - rien de la révélation n'arrive dans le téléphone avant 18h.
-- Vous : vous validez les nouveaux écrans, comme en D-011 et D-014, puis vous jouez sur un lien d'aperçu.
+- Vous : vous validez les nouveaux écrans, comme en D-011 et D-014, puis vous jouez sur un lien d'aperçu, sur votre iPhone. La page vue sur Android est vérifiée par les tests automatiques, qui se font passer pour un Android (aucun Android à vous, D-054).
 
 **8. Moteur de calcul** : cartes, points, titres, badges, portrait, phrases ; « un ancien membre » dans l'historique des titres (D-045).
 - Fini quand : il donne les mêmes résultats que le programme de contrôle de l'essai, plus des cas à plusieurs cercles.
@@ -131,8 +135,9 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - Le compte et la demande du message de 18h viennent après la première révélation (condition 1 de D-005, repris par D-043).
 - Sur iPhone, l'ordre entre la création du compte et l'ajout de l'icône, pour éviter une seconde connexion, se règle ici avec UX (proposé, Front-end).
 - L'e-mail envoyé 30 jours avant l'effacement d'un compte inactif : texte écrit par UX, relu par l'avocat (D-045).
+- Un lien d'invitation ouvert sur un Android s'arrête à la page qui dit que le jeu se joue seulement sur iPhone : rien n'est gardé de la personne, et le lien reste valable (D-054 ; `docs/onboarding.md`).
 - Fini quand : on passe du lien au compte en moins de trois minutes.
-- Vous : vous vous invitez depuis un Android d'essai, si vous en achetez un (proposé).
+- Vous : vous jouez l'entrée d'un invité sur votre iPhone, du lien au compte. (L'invitation depuis un Android d'essai, proposée avant D-054, est retirée.)
 
 **10. Chaîne des textes.**
 - On construit le relevé quotidien de l'open data, la sélection et le calendrier, la rédaction, la vérification, le registre public.
@@ -168,11 +173,10 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - Les lignes rouges sont vérifiées écran par écran, ainsi que l'accessibilité et la présence de la mention IA (D-044).
 - Vous : vous jouez une journée.
 
-**14. Boutiques**, avant l'ouverture au public (D-043). Le calendrier exact, dont le test fermé de Google, est à fixer (proposé).
+**14. L'App Store**, avant l'ouverture au public (D-043 ; l'App Store seul, D-054). Le calendrier exact est à fixer (proposé).
 - La question de la structure vous revient avant ce chantier (D-042, D-043) : en nom propre, l'App Store est probablement fermé (règle 5.1.1 (ix) d'Apple).
 - Fiches de confidentialité, suppression du compte dans l'application, marge pour un refus d'Apple.
-- Chez Google, un compte personnel doit faire tester l'application par 12 personnes pendant 14 jours avant de la publier (vérifié, `docs/etape-5-choix.md`).
-- Vous : vous ouvrez le compte Google.
+- Google Play n'est plus prévu (D-054, point 3) : ni compte Google Play, ni test fermé de 14 jours avec 12 personnes.
 
 ## 5. Étape 7 : bêta, puis lancement
 
@@ -197,11 +201,12 @@ Votre document (§11.4) tolérait de reporter le juridique pour « un prototype 
   - des joueurs présents dans plusieurs cercles ;
   - des jeunes de 15 à 25 ans ;
   - des familles de plusieurs générations ;
-  - environ la moitié des joueurs sur iPhone.
+  - tous les joueurs sur iPhone, puisque le jeu ne se joue que là (D-054) ; la plupart des cercles compteront des proches sur Android, qui ne peuvent pas jouer, et les créateurs recrutés le savent d'avance (proposé).
 - Ce qu'on mesure :
   - l'entrée : les invités finissent-ils les trois textes, puis créent-ils leur compte, et par quelle voie (D-041) ?
   - le rendez-vous : combien répondent cinq jours sur sept ? combien ouvrent le jeu dans l'heure qui suit 18h ?
-  - les critères de D-005 sur l'ajout de l'icône, puisque le lien est retenu (D-043) ;
+  - les critères de D-005 sur l'ajout de l'icône, puisque le lien est retenu (D-043). Celui qui comparait le retour des iPhone et des Android tombe (D-054, point 3). Restent, selon notre lecture, puisqu'ils ne comparent pas iPhone et Android : moins de deux iPhone sur trois font le geste malgré le guidage (UX) ; après deux semaines, les membres sans icône jouent moins souvent avant 18h que ceux qui reçoivent le message (Game design). Ce sont désormais les critères de passage à l'App Store ;
+  - la part des liens d'invitation qui s'arrêtent sur la page « iPhone seulement » (proposé, `docs/produit.md`, « Ce que ces décisions laissent à régler ») ;
   - la part des codes par e-mail qui n'arrivent pas, ou arrivent dans les indésirables (Back-end) ;
   - les textes corrigés après publication (D-044) ;
   - la durée de vie des cercles ;
@@ -228,7 +233,7 @@ Votre document (§11.4) tolérait de reporter le juridique pour « un prototype 
 - Les mentions légales et les conditions d'utilisation en ligne.
 - La marque déposée (D-043).
 - La contribution libre et les cinq règles de l'argent, avec la liste publique des organisations qui financent le jeu (D-042).
-- Les deux boutiques conformes, après la question de la structure (D-043).
+- L'App Store conforme, après la question de la structure (D-043 ; l'App Store seul, D-054).
 
 Des repères chiffrés vous seront proposés en QCM avant la bêta. Ils éclaireront votre décision sans la prendre (esprit de D-008). Attention au calendrier : si le jeu est ouvert pendant la présidentielle (avril-mai 2027, dates à confirmer), la loi impose une règle de publication pour la veille et le jour du vote.
 
@@ -240,21 +245,20 @@ Le budget s'engage dépense par dépense (D-042) : chaque dépense vous est pré
 
 Tous les montants sont des estimations de l'équipe, sauf mention contraire ; aucun n'est un devis. Ils reprennent le tableau de `docs/etape-5-choix.md` (« Ce que ça coûte »), recalculé selon vos réponses.
 
-**Jusqu'à la fin de la bêta, environ 3 000 à 9 000 €**, dans l'ordre où les dépenses se présentent :
+**Jusqu'à la fin de la bêta, environ 2 900 à 8 900 €**, dans l'ordre où les dépenses se présentent (total recalculé le 12 octobre 2026 : l'Android d'essai est retiré, D-054) :
 
 | Dépense | Quand | Montant | Ce qui en dépend |
 |---|---|---|---|
 | Recherche du nom par un conseil en propriété industrielle | Maintenant | Quelques centaines d'euros ; 300 à 800 € (lecture de Back-end : la ligne de l'étape 5, sans le dépôt de la marque) | Le logo, le texte de D-040, l'adresse définitive |
 | Logo, fait par l'équipe (D-047) | Fait (D-050) | Aucun frais (pas de graphiste, D-047) | L'icône définitive, figée avant la bêta |
 | Compte développeur Apple | Début de l'étape 6 | 99 € par an (sources de 2020-2021, à revérifier) | La connexion Apple, le premier test (travail 4) |
-| Un téléphone Android d'essai, si vous l'achetez (proposé ; votre iPhone sert déjà) | Début de l'étape 6 | 100 à 200 € | Le test du message de 18h, les écrans sur Android |
-| Hébergement, e-mails et sonde de 18h02, sur six mois | Dès le socle (travail 5) | 200 à 600 € | Tout le jeu |
+| Hébergement, e-mails et sonde de 18h02, sur six mois | Dès le test du message de 18h (travail 4), les 30 premiers jours gratuits (`docs/etape-6/test-18h.md`, partie 4) | 200 à 600 € | Tout le jeu |
 | Deux ou trois adresses web | Après la vérification du nom, avant la bêta | 50 à 150 € par an | L'icône et l'abonnement au message, liés à l'adresse |
 | Chaîne des textes : 56 à 84 textes d'avance, puis un par jour de bêta, environ 150 en tout | Travail 10, puis la bêta | 300 à 2 300 € (prix des modèles non vérifiés) | Les textes de la bêta |
 | Avocat, première relecture | Fin du travail 11, avant la bêta | 2 000 à 5 000 € (« quelques milliers » selon Juridique ; fourchette : lecture de l'orchestrateur) | La bêta (bloquant) |
-| **Total** | | **environ 3 000 à 9 000 €** | |
+| **Total** | | **environ 2 900 à 8 900 €** | |
 
-Vérification : la somme des lignes donne 3 049 à 9 149 €. Par rapport aux 7 000 à 21 000 € des options recommandées, vos choix retirent :
+Vérification : la somme des lignes donne 2 949 à 8 949 € ; la ligne « Un téléphone Android d'essai, 100 à 200 € » est retirée (D-054, point 3), et le compte Google Play ne sera pas ouvert (plus bas). Par rapport aux 7 000 à 21 000 € des options recommandées, vos choix retirent :
 - la création d'une société et sa comptabilité (en nom propre, D-042) ;
 - le développeur qui relisait le code sensible (agents seuls, D-043) ;
 - le relecteur des textes (tout automatique, D-044) ;
@@ -263,35 +267,34 @@ Vérification : la somme des lignes donne 3 049 à 9 149 €. Par rapport aux 7 
 Ce total ne compte pas :
 - votre abonnement Claude pour les agents, que l'équipe ne connaît pas ; avec des agents seuls, c'est lui qui paie la construction et l'entretien ;
 - votre temps ;
-- le prêt ou la location des téléphones du test de 18h (travail 4), non chiffré.
+- le test du message de 18h (travail 4), qui coûte 0 € : quatre iPhone prêtés, aucun achat, la location écartée (D-054). Seul un nom de domaine d'environ 10 € s'y ajouterait, si Apple ou Google refuse l'adresse de Scalingo, et après votre réponse (D-054, point 2).
 
 Les six mois d'hébergement sont une hypothèse de calcul, pas une estimation de durée : si la construction dure plus, quelques dizaines d'euros par mois s'ajoutent.
 
-**Pour l'ouverture, environ 8 400 à 21 500 €** (lecture de Back-end, à partir des lignes de l'étape 5) :
+**Pour l'ouverture, environ 8 400 à 21 500 €** (lecture de Back-end, à partir des lignes de l'étape 5 ; inchangé à l'arrondi après le retrait du compte Google Play, 25 $, D-054) :
 - l'audit de sécurité : 3 000 à 10 000 € ;
 - la seconde relecture par l'avocat : 2 000 à 5 000 € ;
 - le délégué à la protection des données : quelques milliers d'euros par an (2 000 à 5 000 €, même lecture) ;
 - la marque française, 270 €, puis européenne, 1 050 € (vérifié, sources secondaires). Déposée dans les six mois qui suivent la française, l'européenne garde sa date (de mémoire) ;
-- le compte Google : 25 $ une fois ;
 - le test de charge du pic de 18h : quelques dizaines d'euros.
 
-S'y ajouteraient, selon la réponse à la question de la structure (D-043) : une société coûte environ 200 à 250 € à créer (vérifié, sources secondaires), puis 600 à 1 500 € de comptabilité par an. Et sur la contribution libre payée dans une application, Apple ou Google prennent une commission, de l'ordre de 15 % pour un petit éditeur (de mémoire).
+S'y ajouteraient, selon la réponse à la question de la structure (D-043) : une société coûte environ 200 à 250 € à créer (vérifié, sources secondaires), puis 600 à 1 500 € de comptabilité par an. Et sur la contribution libre payée dans l'application, Apple prend une commission, de l'ordre de 15 % pour un petit éditeur (de mémoire).
 
 **Ensuite, chaque mois :**
 - la chaîne des textes : environ 100 à 700 € ;
 - l'hébergement, les e-mails et la sonde : 60 à 190 € pour 1 000 joueurs, 150 à 400 € pour 10 000 ;
 - le compte Apple, 99 € par an, et le délégué, quelques milliers d'euros par an ;
-- l'entretien : deux à quatre jours de travail par mois (estimation de Back-end : mises à jour de sécurité, changements d'iOS, règles des boutiques, format des données de l'Assemblée). Avec des agents seuls, il ne fait pas de facture, mais il prend des sessions d'agents et votre temps de validation.
+- l'entretien : deux à quatre jours de travail par mois (estimation de Back-end : mises à jour de sécurité, changements d'iOS, règles de l'App Store, format des données de l'Assemblée). Avec des agents seuls, il ne fait pas de facture, mais il prend des sessions d'agents et votre temps de validation.
 
 ### Les durées
 
 **Délais justifiés :**
-- le test du message de 18h prend environ une semaine ;
+- le test du message de 18h prend environ une semaine : huit à dix jours selon sa préparation validée (`docs/etape-6/test-18h.md`, partie 7) ;
 - la bêta dure 8 à 12 semaines ;
 - si une consultation de la CNIL est nécessaire, elle prend 8 semaines, prolongeables ;
-- avant la publication sur Google Play, un compte personnel impose un test fermé de 14 jours avec 12 personnes (vérifié) ; un compte au nom d'une société demande un numéro d'entreprise qui peut prendre jusqu'à 30 jours.
+- chez Apple, un compte au nom d'une société demande un numéro d'entreprise (D-U-N-S) qui peut prendre jusqu'à 30 jours (`docs/etape-5-choix.md`). Le test fermé de 14 jours avec 12 personnes, imposé par Google Play, tombe avec lui (D-054).
 
-**La construction (étape 6), jusqu'à l'entrée en bêta, boutiques exclues : environ 3 à 6 mois.** Cette fourchette ne compte ni le travail 14 (boutiques) ni la bêta ; elle compte la chaîne des textes, avec sa marche à blanc, et la première relecture de l'avocat (hypothèses ci-dessous). Ordre de grandeur donné par Back-end et Front-end, à faible confiance. Ce n'est ni un engagement ni une date, et ce n'est pas une date de sortie : la bêta, la question de la structure et les boutiques s'ajoutent, et ne sont pas estimables (plus bas).
+**La construction (étape 6), jusqu'à l'entrée en bêta, App Store exclu : environ 3 à 6 mois.** Cette fourchette ne compte ni le travail 14 (l'App Store) ni la bêta ; elle compte la chaîne des textes, avec sa marche à blanc, et la première relecture de l'avocat (hypothèses ci-dessous). Ordre de grandeur donné par Back-end et Front-end, à faible confiance. Ce n'est ni un engagement ni une date, et ce n'est pas une date de sortie : la bêta, la question de la structure et l'App Store s'ajoutent, et ne sont pas estimables (plus bas).
 - Pourquoi on peut l'estimer maintenant : vos choix ont retenu le chemin le plus court avant la bêta sur les trois points qui l'empêchaient (le lien d'abord, des agents seuls, des textes tout automatiques).
 - Sur quoi elle repose :
   - les essais : des agents ont construit et contrôlé chacune des deux pages ; la préparation du second essai était annoncée à « au moins sept à huit jours avant le premier jour » (D-033) ;
@@ -315,14 +318,15 @@ S'y ajouteraient, selon la réponse à la question de la structure (D-043) : une
 
 **Ce que vos choix concentrent sur vous.** Ce sont les choix que vous avez faits ; ce qui suit dit seulement ce qu'ils vous demanderont, pour que rien ne vous surprenne.
 - **Le soir.** Vous êtes le seul recours humain, le dimanche compris (D-043). L'exigence « rien ne se calcule à 18h pile » et la procédure d'une page rendent la permanence légère, sans la supprimer. Les jours où vous n'êtes pas joignable vers 18h, un message peut partir en retard.
-- **Les vrais téléphones.** Des agents ne peuvent pas tenir un téléphone ni écouter le lecteur d'écran d'un iPhone (VoiceOver). Les essais sur appareil reposent sur vous et, si vous l'achetez (proposé), sur un Android d'essai : le premier test, le petit écran, le très grand texte, VoiceOver (Front-end).
+- **Les vrais téléphones.** Des agents ne peuvent pas tenir un téléphone ni écouter le lecteur d'écran d'un iPhone (VoiceOver). Les essais sur appareil (le premier test, le petit écran, le très grand texte, VoiceOver) reposent sur vous et votre iPhone, et, pour le premier test, sur les iPhone prêtés ; l'Android d'essai, proposé avant D-054, est retiré (Front-end).
+- **L'iPhone seulement** (D-054, point 3). Deux téléphones sur trois en France sont des Android : la plupart des cercles compteront des proches qui ne peuvent pas jouer. Une page le leur dit. La bêta dira combien d'invitations s'arrêtent là (proposé, partie 5).
 - **La responsabilité.** En nom propre, vous êtes responsable des données et des textes publiés (D-042, D-044), sur vos biens personnels. Une erreur d'un texte automatique peut viser un député nommé à 18h : la procédure de correction doit être rodée dès la bêta.
 - **La relecture.** Le code qui garde des opinions et les textes ne sont relus que par des modèles, ceux des textes chez un seul fournisseur (D-043, D-044).
-- **Le changement de structure.** Si une structure est créée avant les boutiques, elle devient responsable des données à votre place : il faudrait prévenir chaque joueur et probablement redemander son accord (à confirmer par l'avocat, D-042).
+- **Le changement de structure.** Si une structure est créée avant l'App Store, elle devient responsable des données à votre place : il faudrait prévenir chaque joueur et probablement redemander son accord (à confirmer par l'avocat, D-042).
 - **Le budget, dépense par dépense.** Il reste souple, mais il n'y a pas d'enveloppe : la vue d'ensemble de la partie 6 est mise à jour à chaque dépense.
 
 **Les autres points.**
-- **Le message de 18h sur iPhone.** Le lien étant retenu, la bêta mesure le geste d'ajout de l'icône avec les critères de D-005, avant le passage aux boutiques.
+- **Le message de 18h sur iPhone.** Le lien étant retenu, la bêta mesure le geste d'ajout de l'icône avec les critères de D-005 qui restent après D-054 (partie 5), avant le passage à l'App Store.
 - **Les quatre tensions jamais essayées** sont les plus proches du clivage gauche-droite. Elles ont été éprouvées sur papier (travail 2, D-053) ; la bêta dira si nos textes trahissent le camp (mesure par des volontaires) et comment se lisent « l'indépendance » (au sens personnel ou territorial) et « le privé » (sur un texte d'école) (D-053).
 - **Le nom et l'icône.** Le nom circule sans protection pendant la bêta, puisque la marque est déposée après (D-043), alors que l'adresse et l'icône sont figées avant elle. Si le nom échoue, chaque joueur devra réinstaller l'icône (Front-end).
 - **Les liens ouverts dans une messagerie.** Certaines messageries ouvrent les liens dans leur propre navigateur. Un invité qui choisit « Plus tard » à l'écran du code peut alors perdre sa partie en rouvrant le jeu dans Safari. À voir avec UX avant le travail 9 (Front-end).

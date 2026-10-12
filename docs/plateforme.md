@@ -2,6 +2,8 @@
 
 *Référence de la plateforme retenue (D-048). Back-end, avec Front-end, 11 octobre 2026, révisé après la relecture de Cohérence et votre décision. Il répond à votre question « sur quelle plateforme, Supabase ou autre » (D-047). Aucune ligne de code avant votre accord pour l'étape 6 (D-001).*
 
+*État, 12 octobre 2026 : D-048 inchangé. Mis à jour pour D-054 (point 3), qui modifie D-005 : le jeu se joue sur iPhone seulement, et l'application ira sur l'App Store seul, sans Google Play. Ce qui parlait d'Android et de Google Play est retiré ou corrigé : la limite 4, l'acheminement des messages, le passage à l'App Store et ses messages, ce qui sort d'Europe, le compte Google, l'annexe C. Le reste ne change pas.*
+
 **Comment lire les faits.**
 - **Vérifié** : lu le 11 octobre 2026 sur une page officielle, telle que la restitue un moteur de recherche (l'ouverture directe des sites était bloquée), sauf deux pages ouvertes par l'orchestrateur, signalées dans les sources. Sources en fin de document.
 - **Relevé (source tierce)** : lu sur un site qui n'est pas celui de l'entreprise concernée.
@@ -17,7 +19,7 @@
 **Un exemple.** Marie touche l'icône d'Elenchos sur son iPhone. Le jeu, chez Scalingo, lit ses cercles dans la base de données. Elle est reconnue par son compte Apple. Paul, lui, s'est inscrit par e-mail : son code à six chiffres est parti par Scaleway. À 18h, notre serveur leur envoie le message.
 
 **Ce que vous aurez à faire.**
-- Ouvrir à votre nom (D-042) trois comptes : Scalingo, Scaleway et la sonde, un service extérieur qui vérifie à 18h02 que les messages sont partis ; plus tard, pour les boutiques, la location d'un Mac (annexe A). Le nom de domaine s'achète après la vérification du nom (D-043, D-047). Votre compte Apple est ouvert (D-047).
+- Ouvrir à votre nom (D-042) trois comptes : Scalingo, Scaleway et la sonde, un service extérieur qui vérifie à 18h02 que les messages sont partis ; plus tard, pour l'App Store, la location d'un Mac (annexe A). Le nom de domaine s'achète après la vérification du nom (D-043, D-047). Votre compte Apple est ouvert (D-047).
 - Valider en jouant. Le code des agents part seul vers la **version d'aperçu**, une fois les tests passés. Il n'entre dans la **version en ligne**, celle des joueurs, qu'après votre validation, et jamais de 15h à 19h ni le dimanche (D-043).
 - En cas d'incident, regarder vous-même la version en ligne, avec la procédure d'une page (D-043). Vous seul en détenez les mots de passe (proposé).
 
@@ -80,7 +82,7 @@ Supabase est un « tout-en-un » très apprécié : base de données, connexion 
    - **vos propres réponses** dans la version en ligne sont des données de joueur : elles ne se montrent pas aux agents.
 
    Le prix : un défaut qui n'apparaît qu'avec les vraies données sera plus long à comprendre.
-4. **Le test du message de 18h** (travail 4 ; D-005) dira si le message arrive sur iPhone depuis l'icône et sur Android, quelle forme de notification garder sur iPhone, si l'abonnement tient après des jours sans ouvrir l'icône, et si la connexion Apple ou Google tient depuis l'icône (D-035).
+4. **Le test du message de 18h** (travail 4 ; D-005 ; sur cinq iPhone, D-054) dira si le message arrive sur iPhone depuis l'icône, quelle forme de notification garder, si l'abonnement tient après des jours sans ouvrir l'icône, et si la connexion Apple ou Google tient depuis l'icône (D-035).
 5. **L'adresse masquée d'Apple.** Un joueur qui masque son adresse reçoit nos e-mails par un relais d'Apple : l'avertissement avant effacement (D-045) passera par Apple (de mémoire). À dire dans « Qui, durée, droits ».
 6. **Les coûts.** À 10 000 joueurs, on suppose que la moitié ouvrent le jeu dans les cinq minutes après 18h. La location d'un Mac pour fabriquer la version iPhone (annexe A) est une dépense nouvelle, à ajouter au plan (partie 6), non chiffrée.
 
@@ -88,7 +90,7 @@ Supabase est un « tout-en-un » très apprécié : base de données, connexion 
 
 ## Décisions antérieures touchées
 
-Aucune n'est modifiée ; ce document applique D-005, D-027, D-035, D-042, D-043, D-045, D-047 et D-048. Cinq précisions :
+Aucune n'est modifiée par ce document ; il applique D-005 (modifié depuis par D-054 : l'iPhone seulement, l'App Store seul), D-027, D-035, D-042, D-043, D-045, D-047, D-048 et D-054. Cinq précisions :
 - **D-043, point 3, étendu aux agents qui codent**, avec les quatre règles de la limite 3 (consigné par D-048 ; à relire par Juridique) ;
 - **D-043, « siège et contrôle »**, lu comme couvrant les sous-traitants qui détiennent les données (limite 1) ;
 - **D-027 (part de « aucune »)** nomme Contenu comme lecteur ; en attendant l'avis de Juridique, vous en êtes le seul lecteur (limite 3) ;
@@ -112,7 +114,7 @@ Aucune n'est modifiée ; ce document applique D-005, D-027, D-035, D-042, D-043,
 **Comment on se connecte.** Les trois voies de D-035 : Apple, Google, ou l'e-mail avec un code à six chiffres. La connexion est écrite dans notre propre programme, avec une bibliothèque libre et courante ; Better Auth, par exemple, gère le code par e-mail, Apple et Google (vérifié). Les comptes restent dans notre base, en Europe. Apple et Google ne voient que le moment de la connexion (D-043). Les services de connexion tout faits (Auth0, Clerk, Firebase, Supabase) sont écartés : ce sont des sociétés américaines (de mémoire). C'est le surcoût de « quelques jours de travail » déjà annoncé (plan, travail 9).
 
 **Comment part le message de 18h.**
-- Sur le web, notre serveur confie le message au service d'acheminement du téléphone : celui d'Apple pour un iPhone, celui de Google pour un Android sous Chrome. C'est inévitable, et accepté (D-043). Le contenu d'une notification web est chiffré jusqu'au téléphone : Apple et Google ne peuvent pas le lire (de mémoire, norme du web). L'envoi est gratuit (de mémoire).
+- Sur le web, notre serveur confie le message au service d'acheminement du téléphone : celui d'Apple, puisque le jeu se joue sur iPhone seulement (D-054). C'est inévitable, et accepté (D-043). Le contenu d'une notification web est chiffré jusqu'au téléphone : Apple ne peut pas le lire (de mémoire, norme du web). L'envoi est gratuit (de mémoire).
 - Pas de service d'envoi intermédiaire comme OneSignal ou Firebase, qui verrait passer la liste des joueurs.
 - La révélation est préparée d'avance et seulement rendue visible à 18h ; la manière se fixe au travail 6. À 18h, un petit programme qui tourne en permanence et tient l'horloge envoie les messages, en une à deux minutes pour 10 000 joueurs (estimation). Pour les titres du dimanche, que le plan calcule aujourd'hui à 18h, l'exigence « rien ne se calcule à 18h pile » (D-043) reste à prouver (travail 6).
 - On n'utilise pas l'outil d'horaires de Scalingo : il ne descend pas sous dix minutes d'intervalle et peut, rarement, sauter une exécution (vérifié).
@@ -121,15 +123,15 @@ Aucune n'est modifiée ; ce document applique D-005, D-027, D-035, D-042, D-043,
 
 **Les e-mails** (le code, l'avertissement avant effacement) : l'envoi d'e-mails de Scaleway, gratuit jusqu'à 300 e-mails par mois, puis 0,25 € les 1 000 (vérifié). Pendant la bêta, zéro ou quelques centimes.
 
-**Le passage aux boutiques** (D-005, D-043). Le même code, « emballé » dans une application pour l'App Store et Google Play.
+**Le passage à l'App Store** (D-005, D-043 ; l'App Store seul, sans Google Play, D-054). Le même code, « emballé » dans une application pour l'App Store.
 - L'emballage : Capacitor, un outil libre et courant (de mémoire). Ce n'est pas un prestataire : aucune donnée ne passe par ses auteurs.
 - Le serveur, la base et les comptes ne changent pas.
-- **Les messages, eux, changent de régime.** Dans une application, le message passe par le service d'Apple ou de Google, qui peut en lire le texte, contrairement au web (de mémoire ; pour Android, déjà dit à l'étape 5). Sur iPhone, Capacitor utilise directement le service d'Apple, sans Firebase (relevé, forum Ionic) ; sur Android, il passe par le service de Google, Firebase Cloud Messaging (de mémoire). Le message ne cite aucun nom, sauf l'annonce d'arrivée faite au créateur d'un cercle (plan, travail 3), dont le texte est à revoir avec Juridique. Chiffrer nous-mêmes le texte dans l'application reste possible (de mémoire), à examiner au travail 14.
+- **Les messages, eux, changent de régime.** Dans une application, le message passe par le service d'Apple, qui peut en lire le texte, contrairement au web (de mémoire). Capacitor utilise directement le service d'Apple, sans Firebase (relevé, forum Ionic). Le message ne cite aucun nom, sauf l'annonce d'arrivée faite au créateur d'un cercle (plan, travail 3), dont le texte est à revoir avec Juridique. Chiffrer nous-mêmes le texte dans l'application reste possible (de mémoire), à examiner au travail 14.
 - La fabrication de la version iPhone demande un Mac. On loue une machine en ligne le temps de la fabrication (de mémoire). Elle voit le code, jamais une donnée de joueur.
-- Ne dépendent pas de la plateforme : la question de la structure avant l'App Store (D-042, D-043) et le test fermé de 14 jours chez Google (plan, travail 14).
+- Ne dépend pas de la plateforme : la question de la structure avant l'App Store (D-042, D-043). Le test fermé de 14 jours chez Google tombe avec Google Play (D-054).
 
 **Ce qui sort d'Europe.**
-- Touchant aux joueurs, et accepté par D-043 : la connexion par Apple ou Google ; l'acheminement des messages de 18h (illisible sur le web, lisible dans les applications, ci-dessus).
+- Touchant aux joueurs, et accepté par D-043 : la connexion par Apple ou Google ; l'acheminement des messages de 18h, par Apple seul depuis D-054 (illisible sur le web, lisible dans l'application, ci-dessus).
 - Sans toucher aux joueurs : le code, sur GitHub (société américaine), sans aucune donnée de joueur ni mot de passe ; l'avocat le verra dans la liste des prestataires (D-044). Les sessions des agents, chez un fournisseur américain d'IA, sans aucune donnée de joueur (partie 5, limite 3).
 
 ## B. Les coûts, poste par poste
@@ -164,7 +166,7 @@ Si la base de 512 Mo ne suffit pas en bêta, la base avec secours de 1 Go ajoute
 - Supabase : formule Pro à 25 $ par mois ; formule gratuite mise en sommeil après une semaine sans activité (vérifié).
 - Clever Cloud : plus petit serveur 6 € par mois, puis 16 € (grille officielle de 2023 ; actualité non vérifiée).
 - Scaleway : plus petite base gérée environ 11 € HT par mois (calcul de l'équipe sur le tarif horaire vérifié) ; serveurs à la demande facturés à la seconde, avec une part gratuite chaque mois (vérifié).
-- Compte développeur Apple : environ 99 € par an (de mémoire ; déjà ouvert, D-047). Compte Google : 25 $ une fois (vérifié à l'étape 5).
+- Compte développeur Apple : environ 99 € par an (de mémoire ; déjà ouvert, D-047). Compte Google Play : plus prévu (D-054).
 
 ## C. Ce que l'équipe décide sans vous (D-009)
 
@@ -172,7 +174,7 @@ Si la base de 512 Mo ne suffit pas en bêta, la base avec secours de 1 Go ajoute
 - **L'interface** : React, en application web installable.
 - **La base** : PostgreSQL, avec le cloisonnement des cercles imposé par la base.
 - **La connexion** : une bibliothèque libre, par exemple Better Auth.
-- **L'emballage pour les boutiques** : Capacitor.
+- **L'emballage pour l'App Store** : Capacitor.
 - **Les tests automatiques** : partout.
 - **Le repli** : Clever Cloud, si Scalingo venait à manquer (D-048).
 
