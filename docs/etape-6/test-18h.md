@@ -212,7 +212,7 @@ Environ **deux heures trois quarts** de démarches, plus la séance d'installati
 
 Par rapport au plan (partie 6) :
 - la ligne « Android, 100 à 200 € » est retirée (D-054, point 3) ;
-- l'hébergement commence au travail 4, non au travail 5 comme la ligne du plan (partie 6) le disait ; gratuit, comme `docs/plateforme.md` le disait ;
+- l'hébergement commence au travail 4, non au travail 5 comme la ligne du plan (partie 6) le disait d'abord ; le plan le dit maintenant (« dès le test du message de 18h ») ; gratuit, comme `docs/plateforme.md` le disait ;
 - le prêt des téléphones, « non chiffré » dans le plan, coûte 0 € ;
 - le domaine neutre (environ 10 €), s'il est acheté, **s'ajoute** à la ligne « adresses web » du plan, qui vise les adresses définitives.
 

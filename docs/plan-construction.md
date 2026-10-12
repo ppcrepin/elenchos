@@ -149,7 +149,7 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - La procédure de correction (erratum daté au registre, texte remplacé) est construite ici, pour être rodée dès la bêta (D-044).
 - La règle d'égalité entre groupes (D-044) est vérifiée sur le stock réel des votes. Si elle ne tient pas, la question vous reviendra.
 - La règle « une forme n'annonce jamais le vote » (D-041) est appliquée comme Contenu l'a décrite (`docs/etape-5-choix.md`). Le modèle qui parie sur le vote tourne chez le même fournisseur : Contenu dira si ce contrôle garde un sens (D-044).
-- Puis une marche à blanc : la chaîne tourne chaque jour sans rien publier, et remplit l'avance de quatre semaines de textes, plus une réserve (Contenu).
+- Puis une marche à blanc : la chaîne tourne chaque jour sans rien publier, et remplit l'avance de quatre semaines de textes, plus une réserve (Contenu). Avant la bêta, 56 à 84 textes doivent être prêts (partie 5) : quatre semaines font 28 textes. L'écart entre les deux chiffres est signalé, pas tranché.
 - Fini quand : toutes les erreurs plantées exprès dans un jeu de textes d'épreuve sont trouvées, ou chaque oubli est expliqué.
 - Vous : vous validez la page « Méthode ».
 
@@ -271,6 +271,7 @@ Vérification : la somme des lignes donne 2 949 à 8 949 € ; la ligne « Un t�
 Ce total ne compte pas :
 - votre abonnement Claude pour les agents, que l'équipe ne connaît pas ; avec des agents seuls, c'est lui qui paie la construction et l'entretien ;
 - votre temps ;
+- la location d'un Mac en ligne, nécessaire pour fabriquer l'application de l'App Store (`docs/plateforme.md`, annexe A, limite 6), non chiffrée ;
 - le test du message de 18h (travail 4), qui coûte 0 € si l'essai de Scalingo est supprimé avant le 30e jour (carte demandée à l'ouverture, facturation automatique sinon : avis de Juridique, 12 octobre 2026 ; carte donnée, avec deux garde-fous, D-055) : quatre iPhone prêtés, aucun achat, la location écartée (D-054). Seul un nom de domaine d'environ 10 € s'y ajouterait, si Apple ou Google refuse l'adresse de Scalingo, et après votre réponse (D-054, point 2).
 
 Les six mois d'hébergement sont une hypothèse de calcul, pas une estimation de durée : si la construction dure plus, quelques dizaines d'euros par mois s'ajoutent.

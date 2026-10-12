@@ -96,7 +96,7 @@ Aucune n'est modifiée par ce document ; il applique D-005 (modifié depuis par 
 - **D-043, point 3, étendu aux agents qui codent**, avec les quatre règles de la limite 3 (consigné par D-048 ; à relire par Juridique) ;
 - **D-043, « siège et contrôle »**, lu comme couvrant les sous-traitants qui détiennent les données (limite 1) ;
 - **D-027 (part de « aucune »)** nomme Contenu comme lecteur ; en attendant l'avis de Juridique, vous en êtes le seul lecteur (limite 3) ;
-- **le plan, partie 6** : l'hébergement commence au travail 4, non au travail 5 ;
+- **le plan, partie 6** : l'hébergement commence au travail 4, non au travail 5 comme le plan le disait d'abord ; le plan le dit maintenant (« dès le test du message de 18h ») ;
 - **le plan, travail 5** : l'hébergeur est choisi par D-048 ; les noms cités de mémoire à l'étape 5 sont vérifiés, et Brevo est écarté.
 
 ---
