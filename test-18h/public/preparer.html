@@ -1,0 +1,40 @@
+<!doctype html>
+<!-- JETABLE (test du message de 18h) : la page où le porteur fabrique ses codes et ses clés, dans son navigateur.
+     Rien n'est envoyé au serveur : tout est tiré au hasard par le navigateur, puis copié par le porteur chez Scalingo.
+     Mots provisoires, à revoir par UX. -->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Préparer le test</title>
+<link rel="stylesheet" href="/style.css">
+<script src="/preparer.js" defer></script>
+</head>
+<body class="porteur">
+<main>
+  <h1>Préparer le test</h1>
+  <p>Cette page fabrique vos codes et vos clés <strong>dans votre navigateur</strong>. Rien n’est envoyé au serveur ni à l’équipe. Si vous rechargez la page, tout change : ne la rechargez qu’avant d’avoir collé quoi que ce soit chez Scalingo.</p>
+
+  <h2>1. Vos codes et la clé des messages</h2>
+  <p><button type="button" id="fabriquer">Fabriquer</button></p>
+  <div id="resultat" hidden>
+    <p>Lignes à coller chez Scalingo (onglet Environment, édition en bloc) :</p>
+    <pre class="valeurs" id="lignes"></pre>
+    <p><button type="button" id="copier-lignes">Copier ces lignes</button></p>
+    <p>À garder aussi pour vous, dans un endroit sûr (un gestionnaire de mots de passe, par exemple) :</p>
+    <ul id="a-garder"></ul>
+    <p>Ne les envoyez jamais à l’équipe.</p>
+  </div>
+
+  <h2>2. La clé d’Apple (fichier .p8)</h2>
+  <p>Choisissez le fichier .p8 téléchargé chez Apple. Il est lu par votre navigateur et mis sur une seule ligne, sans quitter votre ordinateur.</p>
+  <input type="file" id="fichier-p8" accept=".p8,text/plain">
+  <div id="resultat-p8" hidden>
+    <pre class="valeurs" id="ligne-p8"></pre>
+    <p><button type="button" id="copier-p8">Copier cette ligne</button></p>
+  </div>
+  <p id="erreur-p8" class="alerte" hidden></p>
+</main>
+</body>
+</html>

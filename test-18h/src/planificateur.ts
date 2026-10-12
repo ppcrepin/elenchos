@@ -62,6 +62,8 @@ export function contenuDuMessage(forme: Forme, titre: string, idEnvoi: string, a
 
 type LigneAbonnement = { telephone: number; adresse: string; cle_p256dh: string; cle_auth: string; systeme: string | null };
 
+const versAbonnement = (l: LigneAbonnement) => ({ adresse: l.adresse, p256dh: l.cle_p256dh, auth: l.cle_auth });
+
 export type Planificateur = {
   tic(): Promise<void>;
   demarrer(): void;
@@ -125,7 +127,7 @@ export function creerPlanificateur(d: DependancesPlanificateur): Planificateur {
     );
     if (pris.rowCount !== 1) return; // déjà envoyé, par ce serveur ou par un autre
     const titre = titreDuSoir(creneau.soir.numero) + (creneau.forme === 'declarative' ? SUFFIXE_SECONDE_FORME : '');
-    const res = await d.envoyeur.envoyer(ab, contenuDuMessage(creneau.forme, titre, id, d.adressePublique), OPTIONS_18H);
+    const res = await d.envoyeur.envoyer(versAbonnement(ab), contenuDuMessage(creneau.forme, titre, id, d.adressePublique), OPTIONS_18H);
     await noterReponse(id, ab, res);
     d.journal.ecrire({ evenement: 'envoi', detail: 'creneau', statut: res.code ?? 0 });
   }
@@ -209,7 +211,7 @@ export function creerPlanificateur(d: DependancesPlanificateur): Planificateur {
         `INSERT INTO envoi (id, telephone, nature, forme, envoye_a) VALUES ($1, $2, 'essai', 'classique', $3)`,
         [id, telephone, d.horloge.maintenant()],
       );
-      const res = await d.envoyeur.envoyer(ab, contenuDuMessage('classique', TITRE_ESSAI, id, d.adressePublique), OPTIONS_18H);
+      const res = await d.envoyeur.envoyer(versAbonnement(ab), contenuDuMessage('classique', TITRE_ESSAI, id, d.adressePublique), OPTIONS_18H);
       await noterReponse(id, ab, res);
       d.journal.ecrire({ evenement: 'envoi', detail: 'essai', statut: res.code ?? 0 });
       return 'envoye';

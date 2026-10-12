@@ -1,0 +1,52 @@
+<!doctype html>
+<!-- JETABLE (test du message de 18h). Mots provisoires, à revoir par UX. Aucun contenu politique (condition de Juridique). -->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Test 18h">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#F2EEE8">
+<title>Test 18h</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="stylesheet" href="/style.css">
+<script src="/app.js" defer></script>
+</head>
+<body>
+<main>
+  <h1>Test du message de 18h</h1>
+
+  <ul class="etat" aria-live="polite">
+    <li>Ouverte depuis l’icône : <strong id="etat-icone">…</strong></li>
+    <li>Messages : <strong id="etat-messages">…</strong></li>
+    <li>Connexion : <strong id="etat-connexion">…</strong></li>
+  </ul>
+
+  <p id="aide" class="aide" hidden></p>
+
+  <section class="actions">
+    <button type="button" id="recevoir">Recevoir le message de 18h</button>
+
+    <form id="form-code" hidden>
+      <label for="code">Code d’essai</label>
+      <input id="code" name="code" autocomplete="off" autocapitalize="none" spellcheck="false" required>
+      <button type="submit">Valider le code</button>
+    </form>
+
+    <button type="button" id="autoriser" hidden>Autoriser les messages</button>
+
+    <a class="bouton" id="apple" href="/connexion/apple">Continuer avec Apple</a>
+    <a class="bouton" id="google" href="/connexion/google">Continuer avec Google</a>
+
+    <form id="form-sortie" method="post" action="/deconnexion" hidden>
+      <button type="submit" class="discret">Se déconnecter</button>
+    </form>
+  </section>
+</main>
+</body>
+</html>
