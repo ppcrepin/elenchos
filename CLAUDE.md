@@ -65,6 +65,8 @@ Après chaque commit, pousser la branche de travail **et** `main` sur GitHub, po
 
 Exception (D-019) : la branche `gh-pages` ne porte que les pages publiées de l'essai (page-test comprise), l'image de leur icône (`essai/apple-touch-icon.png`) et un fichier `.nojekyll` ; elle est poussée à part, jamais fusionnée dans `main`, jamais réécrite pendant l'essai. Les fichiers sources de ces pages suivent la règle normale (branche de travail et `main`).
 
+Ajout (D-054) : la branche `mise-en-ligne` est celle d'où Scalingo installe. Elle ne reçoit que des versions déjà sur `main`, en avance rapide, jamais de 15h à 19h ni le dimanche (D-043), et seulement après le feu vert écrit du porteur, donné la veille ; elle n'est jamais fusionnée ailleurs et ne réécrit rien.
+
 ## Après chaque arbitrage du porteur
 
 L'orchestrateur ajoute une entrée datée dans `docs/decisions.md` (format décrit en tête du fichier), puis commit. C'est ce qui rend les agents constants d'une session à l'autre.
