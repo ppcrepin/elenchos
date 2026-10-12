@@ -1,6 +1,6 @@
 # Le test du message de 18h : préparation
 
-*Étape 6, travail 4 de `docs/plan-construction.md` (partie 4). Back-end et Front-end, 12 octobre 2026. Document de préparation : aucune ligne de code n'est écrite avant votre accord sur ce document (D-001, D-051). Ce qui n'est écrit dans aucune décision est marqué « (proposé) ».*
+*Étape 6, travail 4 de `docs/plan-construction.md` (partie 4). Back-end et Front-end, 12 octobre 2026. Document de préparation : aucune ligne de code n'est écrite avant votre accord sur ce document (D-001, D-051). Ce qui n'est écrit dans aucune décision est marqué « (proposé) ». Avis de Juridique intégré ; relecture : Cohérence (compatible avec réserves, corrigées), puis le Vérificateur (OK avec corrections mineures, appliquées).*
 
 **Comment lire les faits.**
 - **Vérifié** : lu le 12 octobre 2026 sur la page officielle du prestataire, soit ouverte directement, soit telle que la restitue un moteur de recherche (l'ouverture directe de plusieurs sites est bloquée depuis l'environnement). Les sources, et la manière dont chacune a été lue, sont en fin de document.
@@ -12,30 +12,22 @@
 
 ## En bref
 
-**Ce que le test vérifie.** Une page nue, en icône sur cinq téléphones, reçoit-elle le message vers 18h, trois soirs de suite ? La connexion Google ou Apple marche-t-elle depuis l'icône ? Premier code : tout le jeu repose sur ce rendez-vous. En cas d'échec, la question vous revient (D-035).
+**Le test.** Page nue en icône sur cinq téléphones : le message arrive-t-il vers 18h trois soirs de suite, et la connexion Google ou Apple tient-elle depuis l'icône ? Premier code : tout le jeu en dépend. Sinon, question pour vous (D-035).
 
-**Ce que vous faites**, à votre nom, sans nous confier de mot de passe (D-048), environ quatre heures et demie : ouvrir l'essai de Scalingo, régler les connexions Google et Apple (nos pas-à-pas), trouver trois prêteurs, installer, puis deux minutes chaque soir.
+**Vous faites**, à votre nom, sans mot de passe confié (D-048), environ 4 h 30 : ouvrir Scalingo, régler Google et Apple, installer chez trois proches qui gardent leur téléphone (« prêteurs »), puis deux minutes par soir.
 
-**Les dépenses** :
-- Scalingo, 0 € (essai gratuit) ;
-- Android d'essai, 130 à 150 € (proposé) ;
-- prêts, 0 € ;
-- domaine, environ 10 €, en cas de refus.
+**Dépenses** : Scalingo 0 € (essai) ; Android 130 à 150 € (proposé) ; prêts 0 € ; domaine environ 10 €, si refus. **Total recommandé : 130 à 160 €. Sans Android : 0 à 10 €.** Durée : 8 à 10 jours.
 
-**Total : 130 à 160 € recommandé (0 € sans Android).**
-
-**Durée** : huit à dix jours.
-
-**Ce que vous validez en plus** : une copie du projet réservée à la mise en ligne, qui ne reçoit que ce qui est déjà validé (partie 3).
+**Vous validez aussi** : une copie à part du code pour la mise en ligne, hors 15h-19h et dimanche (ajout à `CLAUDE.md`, partie 3) ; une note aux prêteurs, avant ; l'effacement le lendemain du soir 3, sauf un tableau sans nom gardé un mois (partie 5).
 
 **Android**
 Acheter un Android d'essai ?
-- **Galaxy A07, environ 140 € (Recommandé)** : un Android français sur deux est un Samsung.
-- **Galaxy A17, environ 200 €** : plus durable, inutile ici.
-- **Non, emprunter seulement** : un quatrième prêteur, aucun Android pour les travaux 7 et 9.
+- **Galaxy A07, environ 140 € (Recommandé)** : un Android sur deux est un Samsung.
+- **Galaxy A17, environ 200 €** : plus durable ; seulement s'il coûte autant.
+- **Non, emprunter seulement** : un quatrième prêteur ; rien pour les travaux 7 et 9.
 
 **Domaine**
-Si Apple ou Google refuse l'adresse Scalingo ?
+Si l'adresse Scalingo est refusée ?
 - **Domaine neutre, environ 10 € (Recommandé)** : reprise le jour même.
 - **Me redemander d'abord** : quelques jours perdus.
 - **Tester sans Apple ni Google** : le plan exige la connexion.
@@ -66,7 +58,7 @@ Sur votre seul iPhone (T1), la connexion Apple s'essaie ensuite, directement dep
 
 **Soir 1.** À 18h00, le serveur envoie le message aux cinq téléphones.
 
-**Soir 2.** Personne n'a rouvert l'icône depuis la veille : c'est exprès. On vérifie que l'abonnement tient sans qu'on ouvre l'icône (`docs/plateforme.md`, limite 4).
+**Soir 2.** Personne n'a rouvert l'icône depuis la veille : c'est exprès. On vérifie que l'abonnement tient sans qu'on ouvre l'icône (`docs/plateforme.md`, limite 4). Toucher le message l'ouvrirait : la page est donc faite pour qu'un toucher sur le message ne fasse rien, et la note demande de le lire sans le toucher (proposé).
 
 **Soir 3.** Même règle. En plus, chacun éteint puis rallume son téléphone avant 18h (proposé), comme il arrive dans la vraie vie ; après 18h, ce redémarrage fausserait la mesure. Après le message, on ouvre enfin l'icône : est-on toujours connecté, trois jours plus tard ?
 
@@ -78,7 +70,7 @@ Pour chaque téléphone et chaque soir, la page de résultats, que vous seul ouv
 1. **L'heure d'envoi** par notre serveur, et la réponse du service d'acheminement : celui d'Apple pour un iPhone, celui de Google pour Chrome.
 2. **L'heure de réception** : à l'arrivée du message, le téléphone le dit au serveur, qui note l'heure. On ne garde pas l'heure du téléphone lui-même : ce serait un champ de plus, et la précision gagnée (quelques secondes) ne change rien pour un rendez-vous « vers 18h ».
 3. **L'écart à 18h00**, en secondes.
-4. **« Vu »** : le prêteur vous envoie un SMS chaque soir (« vu à 18h01 », ou « rien vu »). Vous le reportez le soir même, en trois cases seulement : « à l'heure (avant 18h05) », « plus tard » ou « rien vu », jamais à la minute (avis de Juridique) : l'heure exacte où quelqu'un regarde son téléphone est un renseignement sur sa vie. Recevoir et voir sont deux choses différentes : un iPhone réglé en « Résumé programmé » reçoit le message à 18h, mais ne le montre qu'à l'heure du résumé.
+4. **« Vu »** : le prêteur vous envoie un SMS chaque soir (« vu à 18h01 », ou « rien vu »). Vous le reportez le soir même, en trois cases seulement : « à l'heure (avant 18h05) », « plus tard » ou « rien vu » (un SMS « éteint » laisse la case vide : le soir ne compte pas), jamais à la minute (avis de Juridique) : l'heure exacte où quelqu'un regarde son téléphone est un renseignement sur sa vie. Recevoir et voir sont deux choses différentes : un iPhone réglé en « Résumé programmé » reçoit le message à 18h, mais ne le montre qu'à l'heure du résumé.
 
 Exemple de ligne : « T4 · Xiaomi · Android 14 · soir 2 · envoyé 18:00:01 · accepté · reçu 18:00:09 · écart 9 s · vu : plus tard (SMS) ». Le « vu » vient du SMS et n'entre pas dans la base.
 
@@ -126,6 +118,8 @@ On relève aussi le nom du service d'acheminement de chaque téléphone (Apple, 
 | T4 | **Un Xiaomi, Redmi ou POCO prêté** | Android 10 au moins | Deuxième marque Android en France, connue pour couper les applications en arrière-plan | Google, avec le compte de test |
 | T5 | **Un autre Android prêté**, d'une autre marque (Google Pixel, Motorola, Oppo, OnePlus…), ancien si possible | Android 10 au moins | Un Android sans les couches de Samsung ni de Xiaomi, ou un ancien | Google, avec le compte de test |
 
+Les cinq téléphones sont testés page installée, comme le plan le demande ; tester T5 sans icône (le canal Android de D-005) aurait retiré un Android sur trois à ce que le plan doit prouver : l'équipe ne le retient pas, la bêta mesurera ce canal (choix de l'équipe, sur proposition du Vérificateur).
+
 Pourquoi ce mélange :
 - **Le partage en France** (relevé, StatCounter, août 2026) : Apple environ 36 %, Samsung environ 32 %, Xiaomi environ 12 %. Avec T1, T3 et T4, on couvre environ quatre téléphones sur cinq.
 - **Deux iPhone, pas plus.** Sur iPhone, le risque vient d'Apple, le même pour tous ; deux versions d'iOS suffisent à le voir. Sur votre iPhone, l'icône des essais (D-019) n'est pas touchée : l'adresse est différente.
@@ -140,7 +134,7 @@ Pourquoi ce mélange :
 - Aucun abonnement développeur Apple n'est nécessaire pour envoyer ces messages (vérifié, Apple). Votre compte développeur ne sert qu'à la connexion Apple.
 - **Depuis iOS 18.4**, Apple propose une seconde forme de message, qui s'affiche même si le code de la page ne tourne pas (vérifié, WebKit). `docs/plateforme.md` (limite 4) attend du test le choix entre les deux formes. Proposé :
   - la forme classique sur les cinq téléphones, les trois soirs : c'est elle qui permet de mesurer la réception ;
-  - la seconde forme, essayée en plus sur votre iPhone au soir 3, s'il est en iOS 18.4 ou plus récent. On y vérifie aussi que le contenu reste chiffré (P-06, `donnees.md`).
+  - la seconde forme, essayée en plus sur votre iPhone au soir 3, s'il est en iOS 18.4 ou plus récent, dix minutes après l'autre (18h10), pour ne pas brouiller la mesure (choix de l'équipe, sur proposition du Vérificateur). On y vérifie aussi que le contenu reste chiffré (P-06, `donnees.md`).
 
   Un point pèse sur le choix : la bêta doit mesurer « message de 18h reçu » (`docs/produit.md`, section 8). Or, dans la seconde forme, le téléphone ne prévient le serveur que si Apple réveille le code de la page. Apple le prévoit avec une option, mais nous n'avons pas pu vérifier qu'elle est livrée (relevé, présentation d'Apple de juin 2025).
 
@@ -149,7 +143,7 @@ Pourquoi ce mélange :
 - On utilise **Chrome** sur les trois Android (proposé). Sur un Samsung, le navigateur par défaut est souvent Samsung Internet : on installe la page depuis Chrome. Samsung Internet et Firefox ne sont pas couverts par ce test (limite).
 - **Depuis Android 13**, le téléphone demande en plus l'autorisation d'afficher les notifications de Chrome lui-même (vérifié, Android).
 - **Le mode veille d'Android** laisse passer un message envoyé en « priorité haute », réservé aux messages qui s'affichent (vérifié, Android). C'est ce qu'on envoie. Un message web en urgence « haute » prend ce chemin (de mémoire).
-- **Samsung** : une application « en veille prolongée » ne reçoit plus ses notifications ; on le voit dans Paramètres › Notifications (vérifié, aide de Samsung). Le test dit si Chrome y tombe en trois jours d'usage normal.
+- **Samsung** : une application « en veille prolongée » ne reçoit plus ses notifications ; on le règle, de mémoire, dans Paramètres › Batterie › Limites d'utilisation en arrière-plan › Applications en veille prolongée (aide de Samsung lue par moteur ; chemin exact à confirmer sur l'appareil). Le test dit si Chrome y tombe en trois jours d'usage normal.
 - **Xiaomi** : les réglages « Économiseur de batterie » de l'application (choisir « Aucune restriction ») et « Démarrage automatique » sont souvent cités comme causes de messages perdus (relevé, sources tierces ; noms variables selon les versions).
 - **Huawei récents** (depuis 2019 environ) : sans les services de Google, Chrome n'y reçoit pas de message (de mémoire). À ne pas prendre pour T5.
 
@@ -159,7 +153,7 @@ Pourquoi ce mélange :
 - **Ce qu'ils reçoivent** : la note de Juridique (partie 5), remise avant qu'on touche à leur téléphone. C'est une condition bloquante.
 - **Ce qu'ils font** :
   1. une installation d'environ quinze minutes avec vous, en personne de préférence ;
-  2. ne pas ouvrir l'icône avant le message du soir 3, et éteindre puis rallumer le téléphone une fois ce jour-là, avant 18h ;
+  2. ne pas ouvrir l'icône ni toucher le message avant le soir 3, et éteindre puis rallumer le téléphone une fois ce jour-là, avant 18h ;
   3. vers 18h, garder le téléphone allumé et connecté, comme d'habitude ;
   4. chaque soir, un SMS : « vu à 18h… », « rien vu » ou « éteint » ; au soir 3, ouvrir l'icône et dire si elle montre « connecté » ;
   5. à la fin, supprimer l'icône.
@@ -175,7 +169,7 @@ Tout est à votre nom (D-042). L'équipe vous donne, pour chaque démarche, un p
 **Comment l'équipe met le test en ligne sans vos mots de passe.**
 1. Les agents écrivent le code et le déposent sur GitHub, dans votre dépôt public : le code ne contient aucun secret ni aucune donnée.
 2. Vous liez une fois Scalingo à ce dépôt. Scalingo installe alors lui-même chaque nouvelle version, après que les tests automatiques sont passés : Scalingo attend leur résultat avant d'installer (vérifié, Scalingo).
-3. Les secrets (clé Apple, code secret Google, votre code d'accès à la page de résultats) sont saisis par vous, dans les réglages de l'application chez Scalingo. Ils n'apparaissent nulle part ailleurs ; une recherche automatique de secrets dans le dépôt le vérifie (P-16).
+3. Les secrets (clé Apple, code secret Google, votre code d'accès à la page de résultats, les cinq codes d'essai, et la clé qui signe nos envois vers Apple et Google, créée par vous d'un geste selon le pas-à-pas) sont saisis par vous, dans les réglages de l'application chez Scalingo. Ils n'apparaissent nulle part ailleurs ; une recherche automatique de secrets dans le dépôt le vérifie (P-16).
 4. Les agents n'ont aucun accès à Scalingo, ni à Apple, ni à Google, et n'ouvrent pas la page du test en ligne.
 5. Si une installation échoue, vous nous copiez le message d'erreur de la **fabrication** chez Scalingo (pas un journal de l'application en marche) : il ne contient aucune donnée de prêteur.
 6. **En cas de panne pendant le test** (un message qui ne part pas, une page qui ne répond pas), c'est vous qui regardez, comme D-048 le prévoit. Les agents ne reçoivent qu'un relevé du type « téléphone 4 : reçu à 18h01 » ou « non reçu », sans adresse ni abonnement. Jamais les journaux de l'application en marche (D-052, point 3 ; avis de Juridique, retenu).
@@ -189,7 +183,7 @@ Le test est traité comme la version en ligne (`docs/plateforme.md`, §1) : les 
 |---|---|---|---|---|---|
 | 1 | Trouver trois prêteurs (partie 2) et leur envoyer la note | Les cinq téléphones | 30 min de messages | 0 € | La liste des modèles qui conviennent, la note (Juridique) |
 | 2 | Commander l'Android d'essai, si vous dites oui | T3, puis travaux 7 et 9 | 10 min ; livraison sous 1 à 3 jours (estimation) | Question « Android » | Le modèle exact |
-| 3 | **Scalingo** : créer le compte avec la double vérification de connexion (P-16), accepter le contrat de sous-traitance des données et vérifier qu'il couvre l'essai gratuit, créer l'application du test (région Paris) et sa base d'essai, lier le dépôt GitHub, saisir votre code d'accès aux résultats et les cinq codes d'essai. Demander à Scalingo combien de temps il garde ses journaux et ses sauvegardes après suppression : ce chiffre va dans la note aux prêteurs. Lui demander aussi la liste de ses sous-traitants (`docs/plateforme.md`, limite 1 ; P-12) : elle va au registre des prestataires | L'hébergeur choisi (D-048) ; l'essai gratuit commence à l'ouverture | 45 min, plus la réponse de Scalingo | 0 € pendant 30 jours (vérifié) | Le pas-à-pas, la question écrite pour Scalingo, le nom de la branche, l'adresse de la page (du type `elenchos-test-18h.osc-fr1.scalingo.io`) |
+| 3 | **Scalingo** : créer le compte (double vérification, P-16), accepter le contrat de sous-traitance, créer l'application du test (région Paris) et sa base d'essai, lier le dépôt GitHub, saisir vos codes. Poser deux questions écrites à Scalingo : la durée de ses journaux et sauvegardes après suppression (le [N] de la note) et la liste de ses sous-traitants (P-12). Vérifier que le contrat couvre l'essai gratuit. Détail dans le pas-à-pas. | L'hébergeur choisi (D-048) ; l'essai gratuit commence à l'ouverture | 45 min, plus la réponse de Scalingo | 0 € pendant 30 jours (vérifié) | Le pas-à-pas, la question écrite pour Scalingo, le nom de la branche, l'adresse de la page (du type `elenchos-test-18h.osc-fr1.scalingo.io`) |
 | 4 | **Google** : dans la console Google Cloud, créer un projet, l'écran d'accord en mode « Test », n'y ajouter que le compte de test, créer l'identifiant « application Web » avec l'adresse de retour donnée, saisir son code secret chez Scalingo ; créer un compte Google de test (Google peut demander un numéro de téléphone, de mémoire) | La connexion Google (D-035) | 40 min, compte de test compris | 0 € (de mémoire : aucun moyen de paiement demandé pour la connexion) | Le pas-à-pas, l'adresse de retour exacte |
 | 5 | **Apple** : dans votre compte développeur, créer l'identifiant d'application (avec « Se connecter avec Apple » coché), l'identifiant de service avec le domaine et l'adresse de retour, la clé privée (téléchargeable une seule fois) ; saisir chez Scalingo la clé, son numéro, votre numéro d'équipe et l'identifiant de service | La connexion Apple (D-035) ; votre compte est déjà ouvert (D-047) | 40 min | 0 € de plus | Le pas-à-pas, les valeurs à saisir |
 | 6 | Remettre la note à chaque prêteur, puis la séance d'installation (partie 1, soir 0) | Mettre les cinq téléphones en route | Environ 1 h 15, déplacements non comptés | 0 € | La liste de contrôle, une page d'aide à l'installation (textes d'UX) |
@@ -206,7 +200,7 @@ Environ **deux heures trois quarts** de démarches, plus la séance d'installati
   - De mémoire, un identifiant d'application suffit, sans app publiée.
   - **Réponse : probablement oui, non vérifié en pratique.** On le saura en cinq minutes, à la démarche 5. Sinon : question « Domaine ».
 - **Le mode « Test » de la console Google suffit-il pour cinq téléphones ?**
-  - **Oui.** En mode « Test », seuls les comptes Google ajoutés à la liste peuvent se connecter, cent au plus, et leur accord expire sept jours après qu'ils l'ont donné (vérifié). La limite porte sur les comptes, pas sur les téléphones : un seul compte, celui du test, sert sur les cinq ; le test dure trois soirs. Ce mode protège aussi les prêteurs : Google refuse tout compte qui n'est pas sur la liste.
+  - **Oui.** En mode « Test », seuls les comptes Google ajoutés à la liste peuvent se connecter, cent au plus, et leur connexion peut devoir être refaite au bout de sept jours (vérifié). La limite porte sur les comptes, pas sur les téléphones : un seul compte, celui du test, sert sur les cinq ; le test dure trois soirs. Ce mode protège aussi les prêteurs : Google refuse tout compte qui n'est pas sur la liste.
   - Un écran « application non validée par Google » peut s'afficher ; il suffit de continuer (de mémoire).
   - Google exige que l'adresse de retour soit en « https » et sur une extension publique (vérifié). Pour l'ouverture au public, il faut en plus prouver que le domaine est à soi (relevé, source tierce). Ce sera la vraie adresse du jeu, achetée après la vérification du nom (D-043, D-047).
   - `scalingo.io` n'est pas sur la liste publique des extensions partagées (vérifié). Google le traite donc comme un domaine ordinaire, qui n'est pas à vous. En mode « Test », nous pensons que cela passe (non vérifié). Sinon : question « Domaine ».
@@ -219,10 +213,10 @@ Environ **deux heures trois quarts** de démarches, plus la séance d'installati
 |---|---|---|---|---|---|
 | **Hébergement Scalingo pendant le test** | **0 €** | Vérifié le 12 octobre 2026 (Scalingo) : essai de 30 jours sans carte bancaire. Il comprend une application de 5 conteneurs au plus et une base de données dans sa plus petite formule | Démarche 3 | Tout le test | Pas de test : la question vous revient |
 | Suite de l'hébergement, après les 30 jours | Environ 26 € par mois (vérifié le 11 octobre, `docs/plateforme.md`) | Hors test : présentée au moment venu (D-042) | Environ 30 jours après l'ouverture du compte | La construction (travail 5) | Sans moyen de paiement, l'application est arrêtée, puis ses données effacées 30 jours plus tard (vérifié) |
-| **Android d'essai** (proposé) | **130 à 150 €** pour un Galaxy A07 de 128 Go ; environ 170 à 200 € pour un Galaxy A17 | Relevé chez des revendeurs, octobre 2026 (Powerplanet ; Phonandroid, 4 août 2026 : A17 conseillé à 199 €). La boutique de Samsung n'a pas pu être lue | Démarche 2, dès votre accord | T3, puis les écrans sur Android (travail 7) et votre invitation depuis un Android (travail 9) | Un quatrième prêteur (un Android) ; pas d'Android à vous pour la suite |
+| **Android d'essai** (proposé) | **130 à 150 €** pour un Galaxy A07 de 128 Go ; environ 170 à 200 € pour un Galaxy A17 | Relevé chez des revendeurs, octobre 2026 (Powerplanet ; Phonandroid, 4 août 2026 : A17 conseillé à 199 €, mais l'article le montre en promotion sous 135 €). La boutique de Samsung n'a pas pu être lue. Le jour de la commande, l'équipe vous donne les deux prix réels (D-042) : si l'A17 est au prix de l'A07, prenez l'A17 | Démarche 2, dès votre accord | T3, puis les écrans sur Android (travail 7) et votre invitation depuis un Android (travail 9) | Un quatrième prêteur (un Android) ; pas d'Android à vous pour la suite |
 | **Prêt de trois téléphones** | **0 €** | Proposé | Démarche 1 | T2, T4, T5 | Sans prêteur : un reconditionné, présenté avec son prix |
 | Location de téléphones | Écartée | Relevé : offres au mois, avec engagement | — | — | — |
-| **Nom de domaine** | **0 €** a priori ; **environ 10 €** par an si Apple ou Google refuse l'adresse de Scalingo | Estimation, non vérifiée. Un domaine neutre, sans le nom du jeu, chez un bureau d'enregistrement européen (D-043) | Seulement si un refus survient | La connexion Apple ou Google | Question « Domaine » |
+| **Nom de domaine** | **0 €** a priori ; **environ 10 €** par an si Apple ou Google refuse l'adresse de Scalingo | Estimation, non vérifiée. Un domaine neutre, sans le nom du jeu, chez un bureau d'enregistrement européen (D-043) | Seulement si un refus survient | La connexion Apple ou Google ; environ 30 minutes de réglage en plus chez Scalingo (pas-à-pas ; certificat automatique, de mémoire) | Question « Domaine » |
 | Compte développeur Apple | 0 € de plus | Déjà ouvert (D-047) | — | La connexion Apple | — |
 | Console Google | 0 € | De mémoire | Démarche 4 | La connexion Google | — |
 | **Total du test** | 0 € sans Android ; 130 à 150 € avec le Galaxy A07 ; **160 €** si Apple ou Google refuse l'adresse de Scalingo ; jusqu'à 210 € avec le Galaxy A17 et le domaine. Hors total : un téléphone reconditionné (150 à 250 €) si un prêteur manque, présenté avec son prix le moment venu. | | | | |
@@ -266,20 +260,20 @@ On applique P-43 et P-10 (`docs/etape-6/donnees.md`) : la page du test ne garde 
 4. Vous retirez l'accès du test dans le compte Google de test, puis vous supprimez ce compte. Sur votre iPhone, vous retirez le lien dans « Se connecter avec Apple ».
 5. Vous retirez l'adresse du test du projet Google et de l'identifiant de service Apple. Les deux restent pour la suite : la connexion du jeu (travail 9) les reprendra (proposé).
 6. Vous écrivez une ligne datée, « effacé le …, vérifié », et vous le confirmez à chaque prêteur, comme la note le promet, et vous supprimez les messages du test dans vos SMS (ci-dessous).
-7. Le [20 novembre 2026] (proposé) : vous effacez votre copie du tableau, et vous l'écrivez sur la même ligne datée.
+7. Le [20 novembre 2026] (proposé) : vous effacez votre copie du tableau et la liste « qui a quel téléphone », et vous l'écrivez sur la même ligne datée.
 
 **Les SMS des prêteurs (proposé, avis de Juridique).** Ce sont des données des prêteurs, que vous traitez pour le test. Trois précautions :
 - des SMS individuels, jamais un groupe : un groupe ferait connaître les prêteurs entre eux, avec leurs numéros, et un groupe WhatsApp ajouterait un prestataire américain ;
 - le soir même, vous reportez le « vu » dans le tableau, en trois cases ;
 - le 21 octobre, vous effacez seulement les messages du test, pas le reste de votre conversation avec chaque proche, qui relève de votre vie privée. Une ancienne sauvegarde de votre téléphone peut encore en garder une copie : risque accepté, vu le contenu.
 
-**La copie dans la conversation des agents, franchement.** Les agents ne reçoivent que des lignes sans nom, avec le « vu » en trois cases (partie 3, points 6 et 7). Pour eux et pour le fournisseur d'IA, ces lignes ne se relient à personne : aucun d'eux ne sait qui a quel téléphone. Mais elles restent dans l'historique de travail après le 20 novembre. C'est accepté, selon l'avis de Juridique.
+**La copie dans la conversation des agents, franchement.** Les agents ne reçoivent que des lignes sans nom, avec le « vu » en trois cases (partie 3, points 6 et 7). Pour eux et pour le fournisseur d'IA, elles ne se relient à personne : aucun d'eux ne sait qui a quel téléphone ; Juridique les juge acceptables à cette condition. Vous seul savez qui a quel téléphone : cette correspondance n'est écrite nulle part ailleurs que chez vous (jamais dans la conversation ni dans le dépôt), et vous l'effacez le 20 novembre avec votre copie du tableau (étape 7). Ensuite, les lignes restées dans l'historique de travail ne se relient plus à personne, pour personne (proposé).
 
 Un prêteur qui se retire en cours de test : on efface sa ligne le jour même. Le test n'atteint alors plus « cinq téléphones, trois soirs », et vous décidez s'il faut reprendre (avis de Juridique).
 
 ### La note pour les prêteurs
 
-Rédigée par Juridique, puis relue par lui avec les additions de Back-end et Front-end (avis du 12 octobre 2026). Le texte ci-dessous est sa version définitive, reprise mot pour mot. Elle vouvoie, parce qu'une même note sert à plusieurs lecteurs ; vous pouvez tutoyer dans le message qui l'accompagne. Vos téléphones n'ont pas besoin de note.
+Rédigée par Juridique, puis relue par lui avec les additions de Back-end et Front-end (avis du 12 octobre 2026). Le texte ci-dessous est sa version définitive, reprise mot pour mot : relue par Juridique ; un geste ajouté après sa relecture, sur avis du Vérificateur (« lire le message sans le toucher »). Elle vouvoie, parce qu'une même note sert à plusieurs lecteurs ; vous pouvez tutoyer dans le message qui l'accompagne. Vos téléphones n'ont pas besoin de note.
 
 > **Test du message de 18h**
 >
@@ -287,7 +281,7 @@ Rédigée par Juridique, puis relue par lui avec les additions de Back-end et Fr
 >
 > **Installé.** Une page de test en icône, sans jeu ni question. Trois soirs, vers 18h, un message « Test, soir 1 sur 3 ».
 >
-> **À faire.** Ne pas ouvrir l'icône avant le soir 3. Chaque soir, un SMS : « vu à 18h… », « rien vu » ou « éteint ». Le jour 3, éteindre et rallumer avant 18h ; après le message, ouvrir l'icône et me dire si elle affiche « connecté ».
+> **À faire.** Ne pas ouvrir l'icône avant le soir 3 ; lire le message sans le toucher. Chaque soir, un SMS : « vu à 18h… », « rien vu » ou « éteint ». Le jour 3, éteindre et rallumer avant 18h ; après le message, ouvrir l'icône et me dire si elle affiche « connecté ».
 >
 > **Gardé.** L'adresse technique du téléphone et l'heure de réception, sous « téléphone [n] », avec sa marque et la version de son système, jamais votre nom. J'essaie la connexion Google avec un compte créé pour le test, jamais le vôtre.
 >
@@ -347,7 +341,7 @@ Les dates entre crochets suivent le calendrier proposé de la partie 7 (effaceme
 Trois morceaux, plus une page de résultats.
 
 1. **La page.** Elle s'installe sur l'écran d'accueil, demande l'autorisation des messages après un toucher, reçoit le message et prévient le serveur de sa réception. Elle offre « Continuer avec Apple » et « Continuer avec Google ».
-2. **Le service qui envoie à 18h.** Un petit programme tourne en permanence chez Scalingo et tient l'horloge, à l'heure de Paris, changements d'heure compris (vérifiés par un test automatique sur une horloge simulée). À 18h, il envoie le message, chiffré pour chaque téléphone (P-06), en « urgence haute ». S'il redémarre à 18h00 et 30 secondes, il voit que l'envoi n'a pas eu lieu et le fait, sans jamais envoyer deux fois.
+2. **Le service qui envoie à 18h.** Un petit programme tourne en permanence chez Scalingo et tient l'horloge, à l'heure de Paris, changements d'heure compris (vérifiés par un test automatique sur une horloge simulée). À 18h, il envoie le message, chiffré pour chaque téléphone (P-06), en « urgence haute ». S'il redémarre à 18h00 et 30 secondes, il voit que l'envoi n'a pas eu lieu et le fait ; il est conçu pour ne jamais envoyer deux fois, et un test automatique le vérifie.
 3. **La mesure.** Les heures, la page de résultats, réservée à vous par votre code d'accès, les cinq codes d'essai, le bouton d'essai immédiat et « Tout effacer ».
 
 **Jetable** : la page elle-même et ses textes, la page de résultats, l'application et la base du test chez Scalingo.
@@ -380,6 +374,8 @@ Exemple, si vous donnez votre accord le mardi 13 octobre 2026 (proposé) :
 | J7, mardi 20 | Soir 3 (chacun : un redémarrage avant 18h) | — |
 | J8, mercredi 21 | Effacement ; vous nous copiez le tableau | Bilan, par le circuit habituel |
 | Vendredi 20 novembre | Effacement de votre copie du tableau (proposé) | — |
+
+Le calendrier n'est pas décalé : pour que le soir 1 (dimanche, sans mise en ligne possible) ne découvre pas un défaut, T1 reçoit déjà un message à 18h le vendredi 16, et le samedi après 19h reste ouvert à une correction (choix de l'équipe, sur proposition du Vérificateur).
 
 **Huit jours si tout passe, dix avec un soir ajouté.** Le plan disait « environ une semaine ». Tout se tient avant le changement d'heure du dimanche 25 octobre. Ce changement est couvert par un test automatique, pas par un vrai soir.
 
@@ -438,6 +434,7 @@ Précisions, signalées :
 - **Plan, travail 4, « prêtés ou loués »** : la location est écartée (proposé), faute d'offre à la semaine.
 - **Plan, partie 6** : le prêt des téléphones, « non chiffré », coûte 0 €. La ligne Android est tenue.
 - **`docs/plateforme.md`, limite 4** : le choix entre les deux formes de message sur iPhone est proposé ici (partie 2). Il sera tranché au bilan du test, sans question à vous, sauf si le test contredit le besoin de mesurer la réception.
+- **D-052, point 3, et P-21** (`docs/etape-6/donnees.md`, « aucun extrait de journal… de ceux de Scalingo ») : précisé pour le seul message d'erreur de la **fabrication** chez Scalingo, sans donnée, que vous pouvez nous copier (partie 3, point 5) ; jamais un journal de l'application en marche.
 - **`docs/etape-6/donnees.md`, P-12** : la liste des services d'acheminement est relevée pendant le test.
 - **`CLAUDE.md`, règle de poussée** : une branche de mise en ligne s'ajoute (partie 3). Elle ne reçoit que des versions déjà sur `main`, n'est jamais fusionnée ailleurs et ne réécrit rien. C'est un ajout à la règle, de même nature que la branche `gh-pages` (D-019). Il vous revient : en validant ce document, vous l'acceptez, et nous l'inscrivons dans `docs/decisions.md` et `CLAUDE.md`.
 - **D-014** : le message du test, « Test, soir n sur 3 », n'est pas un message du jeu. Les textes validés ne sont ni employés ni changés.
