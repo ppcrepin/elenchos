@@ -40,16 +40,28 @@ export function creerDepot(pool: pg.Pool) {
       return r.rowCount === 1;
     },
 
+    /** Retrouve le compte par l'empreinte de l'identifiant, ou le crée. Les numéros se suivent sans trou (1, 2, 3…) :
+     *  on cherche d'abord, pour ne pas consommer un numéro à chaque reconnexion. */
     async compte(fournisseur: Fournisseur, empreinte: string, emailRecu: boolean): Promise<number> {
-      const r = await pool.query<{ numero: number }>(
-        `INSERT INTO compte (fournisseur, empreinte, email_recu) VALUES ($1, $2, $3)
-         ON CONFLICT (fournisseur, empreinte) DO UPDATE SET email_recu = compte.email_recu OR EXCLUDED.email_recu
-         RETURNING numero`,
+      const existant = await pool.query<{ numero: number }>(
+        `UPDATE compte SET email_recu = email_recu OR $3 WHERE fournisseur = $1 AND empreinte = $2 RETURNING numero`,
         [fournisseur, empreinte, emailRecu],
       );
-      const numero = r.rows[0]?.numero;
-      if (numero === undefined) throw new Error('compte introuvable');
-      return numero;
+      const deja = existant.rows[0]?.numero;
+      if (deja !== undefined) return deja;
+      const cree = await pool.query<{ numero: number }>(
+        `INSERT INTO compte (fournisseur, empreinte, email_recu) VALUES ($1, $2, $3)
+         ON CONFLICT (fournisseur, empreinte) DO NOTHING RETURNING numero`,
+        [fournisseur, empreinte, emailRecu],
+      );
+      const numero = cree.rows[0]?.numero;
+      if (numero !== undefined) return numero;
+      const r = await pool.query<{ numero: number }>(
+        'SELECT numero FROM compte WHERE fournisseur = $1 AND empreinte = $2', [fournisseur, empreinte],
+      );
+      const trouve = r.rows[0]?.numero;
+      if (trouve === undefined) throw new Error('compte introuvable');
+      return trouve;
     },
 
     async compteExiste(numero: number, fournisseur: Fournisseur): Promise<boolean> {
