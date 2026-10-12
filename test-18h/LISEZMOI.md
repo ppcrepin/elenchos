@@ -45,10 +45,10 @@ Un seul processus Node (`Procfile` : `web: node src/principal.ts`) :
 | `APPLE_ID_EQUIPE`, `APPLE_ID_CLE` | numéro d'équipe et numéro de la clé (10 caractères chacun) | compte développeur Apple |
 | `APPLE_CLE_PRIVEE` | le fichier .p8, mis sur une ligne par `/preparer` (base64), ou collé tel quel | compte développeur Apple |
 | `ADRESSE_PUBLIQUE` | facultatif : sinon `https://$APP.$REGION_NAME.scalingo.io` | — |
-| `SCALINGO_POSTGRESQL_URL` | la base ; ajoutée par Scalingo avec la base | Scalingo |
+| `SCALINGO_POSTGRESQL_URL` | la base ; ajoutée par Scalingo avec la base (`sslmode=prefer`). Sans `sslmode`, la connexion est chiffrée quand même ; jamais de repli en clair | Scalingo |
 | `PORT`, `CONTAINER`, `APP`, `REGION_NAME`, `SOURCE_VERSION` | posées par Scalingo | Scalingo |
 | `IGNORER_HORAIRES=oui` | **en local seulement** : lève la garde des horaires ; refusée chez Scalingo et sur GitHub | l'agent, sur sa machine |
-| `BASE_DE_TEST_URL` | **tests seulement** : un PostgreSQL jetable | l'agent, sur sa machine ; GitHub |
+| `BASE_DE_TEST_URL` | **tests seulement** : un PostgreSQL jetable, avec `?sslmode=disable` s'il n'offre pas TLS (sans `sslmode`, la connexion exige TLS, comme chez Scalingo) | l'agent, sur sa machine ; GitHub |
 | `NAVIGATEUR_CHEMIN` | **tests seulement** : le Chromium (ou Chrome) du test navigateur ; par défaut celui de l'environnement des agents | l'agent ; GitHub (`/usr/bin/google-chrome`) |
 | `JOURNAL_BASE_DE_TEST` | **tests seulement** : le fichier journal du PostgreSQL local, lu par le test de la condition 6 | l'agent, sur sa machine |
 
@@ -96,7 +96,7 @@ cd test-18h
 npm ci
 # un PostgreSQL jetable ; ici, celui de l'environnement des agents :
 #   su postgres -c "/usr/lib/postgresql/16/bin/pg_ctl -D <dossier> -o '-p 54329 -c listen_addresses=127.0.0.1' start"
-export BASE_DE_TEST_URL=postgresql://postgres@127.0.0.1:54329/postgres
+export BASE_DE_TEST_URL='postgresql://postgres@127.0.0.1:54329/postgres?sslmode=disable'   # base locale sans TLS : à dire explicitement
 IGNORER_HORAIRES=oui npm test      # 15h-19h et dimanche : la garde échoue sans cette variable, c'est voulu
 JOURNAL_BASE_DE_TEST=<dossier>/log npm run test:journal-base   # condition 6 : lit le journal du PostgreSQL local
 npm run controle                    # types, secrets (fichiers et historique), journaux, adresses, noms de modèles

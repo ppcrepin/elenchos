@@ -37,7 +37,7 @@ La page du test n'est pas le jeu. Elle tient sur un écran et dit seulement troi
 - si les messages sont autorisés ;
 - si l'on est connecté, et par qui (Apple ou Google), sans jamais afficher l'adresse e-mail.
 
-On y trouve trois boutons : « Recevoir le message de 18h », « Continuer avec Apple » et « Continuer avec Google ». Ses textes sont écrits par UX (proposé). Le message lui-même est neutre, sur les cinq téléphones : « Test, soir 1 sur 3 » (puis 2, puis 3), comme le demande Juridique dans son avis du 12 octobre 2026. Ce n'est pas un texte du jeu (D-014) : un texte qui ressemble au jeu pourrait inquiéter ou intriguer l'entourage d'un prêteur, sur l'écran verrouillé. La page ne montre aucun texte de l'Assemblée et ne recueille aucun avis : c'est une condition bloquante de Juridique (partie 5).
+On y trouve trois boutons : « Recevoir le message de 18h », « Continuer avec Apple » et « Continuer avec Google ». Ses textes sont écrits par Front-end et relus mot à mot par UX (12 octobre 2026). Le message lui-même est neutre, sur les cinq téléphones : « Test, soir 1 sur 3 » (puis 2, puis 3), comme le demande Juridique dans son avis du 12 octobre 2026. Ce n'est pas un texte du jeu (D-014) : un texte qui ressemble au jeu pourrait inquiéter ou intriguer l'entourage d'un prêteur, sur l'écran verrouillé. La page ne montre aucun texte de l'Assemblée et ne recueille aucun avis : c'est une condition bloquante de Juridique (partie 5).
 
 ### Le calendrier du test
 
@@ -52,7 +52,7 @@ Sur votre seul iPhone (T1), la connexion Apple s'essaie ensuite, directement dep
 
 **Soir 1.** À 18h00, le serveur envoie le message aux cinq téléphones.
 
-**Soir 2.** Personne n'a rouvert l'icône depuis la veille : c'est exprès. On vérifie que l'abonnement tient sans qu'on ouvre l'icône (`docs/plateforme.md`, limite 4). Toucher le message l'ouvrirait : la page est donc faite pour qu'un toucher sur le message ne fasse rien, et la note demande de le lire sans le toucher (proposé).
+**Soir 2.** Personne n'a rouvert l'icône depuis la veille : c'est exprès. On vérifie que l'abonnement tient sans qu'on ouvre l'icône (`docs/plateforme.md`, limite 4). Toucher le message l'ouvrirait : la page est faite pour qu'un toucher sur le message n'ouvre rien d'elle-même ; mais iOS peut ouvrir l'icône de lui-même au toucher, et la seconde forme l'ouvre toujours : la note demande donc de le lire sans appuyer dessus (proposé).
 
 **Soir 3.** Même règle. En plus, chacun éteint puis rallume son téléphone avant 18h (proposé), comme il arrive dans la vraie vie ; après 18h, ce redémarrage fausserait la mesure. Après le message, on ouvre enfin l'icône : est-on toujours connecté, trois jours plus tard ?
 
@@ -158,7 +158,7 @@ Tout est à votre nom (D-042). L'équipe vous donne, pour chaque démarche, un p
 
 **Comment l'équipe met le test en ligne sans vos mots de passe.**
 1. Les agents écrivent le code et le déposent sur GitHub, dans votre dépôt public : le code ne contient aucun secret ni aucune donnée.
-2. Vous liez une fois Scalingo à ce dépôt, sur la seule branche `mise-en-ligne`, jamais `main` (D-054, point 1). Scalingo installe alors lui-même chaque nouvelle version, après que les tests automatiques sont passés : il attend le succès de la vérification sur GitHub (`.github/workflows/test-18h.yml` : contrôle du code, tous les tests, avec une base jetable et un vrai navigateur), et sa propre fabrication relance la garde des horaires et les tests sans base (vérifié, documentation de Scalingo).
+2. Vous liez une fois Scalingo à ce dépôt, sur la seule branche `mise-en-ligne`, jamais `main` (D-054, point 1). Scalingo installe alors lui-même chaque nouvelle version, après que les tests automatiques sont passés : il attend le succès de la vérification sur GitHub (`.github/workflows/test-18h.yml` : contrôle du code, tous les tests sauf celui du journal de la base, joué en local avant chaque mise en ligne, avec une base jetable et un vrai navigateur), et sa propre fabrication relance la garde des horaires et les tests sans base (vérifié, documentation de Scalingo).
 3. Les secrets (clé Apple, code secret Google, votre code d'accès à la page de résultats, les cinq codes d'essai, et la clé qui signe nos envois vers Apple, créée par vous d'un geste selon le pas-à-pas) sont saisis par vous, dans les réglages de l'application chez Scalingo. Ils n'apparaissent nulle part ailleurs ; une recherche automatique de secrets dans le dépôt le vérifie (P-16).
 4. Les agents n'ont aucun accès à Scalingo, ni à Apple, ni à Google, et n'ouvrent pas la page du test en ligne.
 5. Si une installation échoue, vous nous copiez le message d'erreur de la **fabrication** chez Scalingo (pas un journal de l'application en marche) : il ne contient aucune donnée de prêteur.
@@ -227,7 +227,7 @@ On applique P-43 et P-10 (`docs/etape-6/donnees.md`) : la page du test ne garde 
 | Ce qui est gardé | Pourquoi | Où | Jusqu'à quand |
 |---|---|---|---|
 | L'abonnement au message de chaque téléphone : l'adresse technique où son service d'acheminement le joint, et ses clés de chiffrement | Envoyer le message | Base du test, chez Scalingo | Fin du test |
-| L'étiquette du téléphone : son numéro, sa marque et la version de son système (« T4 · iPhone · iOS 26 »), jamais un nom | Lire les résultats par version d'iOS ; la marque est toujours « iPhone » (D-054) | Idem | Fin du test |
+| L'étiquette du téléphone : son numéro et la version de son système (« T4 · iOS 26 » ; « iPhone » est ajouté à l'affichage, pas gardé), jamais un nom | Lire les résultats par version d'iOS ; la marque est toujours « iPhone » (D-054) | Idem | Fin du test |
 | Les heures : envoi, réponse du service d'acheminement, réception notée par le serveur | La mesure | Idem | Fin du test. Puis le tableau par téléphone numéroté (marque, système, heures, « vu » en trois cases), sans adresse ni nom, jusqu'au [20 novembre 2026], pour le bilan, puis effacé. Seul reste le bilan chiffré, sans heure par téléphone. |
 | La connexion : l'identifiant renvoyé par Apple ou Google, gardé sous forme d'empreinte, et « adresse e-mail reçue : oui ou non » | Vérifier qu'on retrouve le même compte en se reconnectant | Idem | Fin du test |
 
@@ -269,7 +269,7 @@ Version définitive de Juridique (avis du 12 octobre 2026, après les constats s
 >
 > Je prépare, en mon nom propre, un jeu : Elenchos.
 >
-> **Installé.** Une page de test en icône, sans jeu ni question. Le jour de l'installation, puis trois soirs, vers 18h, un message « Test, soir 1 sur 3 ».
+> **Installé.** Une page de test en icône, sans jeu ni question. Le jour de l'installation, deux messages d'essai (« Test, message d'essai », puis « Test, répétition » vers 18h). Puis trois soirs, vers 18h, « Test, soir 1 sur 3 », « 2 sur 3 », « 3 sur 3 » ; si un soir doit être refait, « Test, soir ajouté ».
 >
 > **À faire.** Ne pas ouvrir l'icône avant le soir 3 ; lire le message sans appuyer dessus. Chaque soir, un SMS : « vu à 18h… », « rien vu » ou « éteint ». Le jour 3, éteindre et rallumer avant 18h ; après le message, ouvrir l'icône et me dire si elle affiche « connecté ».
 >

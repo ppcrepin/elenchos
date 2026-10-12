@@ -36,7 +36,7 @@ Il vous faut quatre proches, **majeurs**, avec un iPhone **qui n'est qu'à eux**
 Si une version manque, prenez la plus proche ; le plus important est T2, et des versions différentes d'un téléphone à l'autre. **Sous 16.4, le téléphone ne convient pas** : il ne peut pas recevoir le message.
 
 **Message type à vos proches** (à tutoyer ou vouvoyer selon vous) :
-> Je teste en ce moment un petit service sur iPhone. Pourrais-tu me prêter ton iPhone un quart d'heure samedi, puis le garder comme d'habitude trois soirs ? Il recevrait vers 18h un message « Test, soir 1 sur 3 ». Rien sur ton compte, rien de ta vie : je t'envoie une note d'une page qui explique tout avant. Pour savoir si ton iPhone convient : Réglages › Général › Informations, la ligne « Version d'iOS ». Tu me dis le chiffre ?
+> Je teste en ce moment un petit service sur iPhone. Pourrais-tu me prêter ton iPhone un quart d'heure samedi, puis le garder comme d'habitude trois soirs ? Il recevrait, trois soirs vers 18h, un message « Test, soir 1 sur 3 », « 2 sur 3 », « 3 sur 3 » (et deux messages d'essai le jour où on l'installe). Rien sur ton compte, rien de ta vie : je t'envoie une note d'une page qui explique tout avant. Pour savoir si ton iPhone convient : Réglages › Général › Informations, la ligne « Version d'iOS ». Tu me dis le chiffre ?
 
 **Ce que vous notez, chez vous seulement** (jamais dans la conversation ni dans le dépôt) : qui a quel téléphone (T2 à T5). Vous effacerez cette liste le 20 novembre.
 
@@ -62,7 +62,7 @@ Ce jour-là, vous préparez tout chez Scalingo **sauf** la mise en ligne, qui at
 1. Ouvrez `https://auth.scalingo.com/users/sign_up`.
 2. Choisissez **Personal**.
 3. Tapez votre adresse e-mail, puis un mot de passe fort, propre à Scalingo (rangez-le dans votre gestionnaire).
-4. Touchez **Sign up with email**. (L'autre bouton, « Sign up with GitHub », marche aussi ; l'e-mail garde les deux comptes séparés.)
+4. **Avant de toucher le bouton, faites une capture d'écran de cet écran, où vous acceptez les conditions de Scalingo** (c'est votre preuve pour 2.3 ; rangez-la chez vous). Puis touchez **Sign up with email**. (L'autre bouton, « Sign up with GitHub », marche aussi ; l'e-mail garde les deux comptes séparés.)
 5. **Si l'écran vous laisse entrer dans le tableau de bord avant la carte, faites d'abord 2.2** (double vérification), puis revenez ici. Sinon, continuez et faites 2.2 tout de suite après (à vérifier sur l'écran).
 6. Remplissez votre **profil de facturation** (à votre nom, D-042) et ajoutez la carte : c'est ce qui démarre l'essai. **Notez la date de fin d'essai.**
 
@@ -73,7 +73,7 @@ Ce jour-là, vous préparez tout chez Scalingo **sauf** la mise en ligne, qui at
 4. **Copiez les codes de secours** dans votre gestionnaire. Ne sautez pas ce point. Puis **Confirm**.
 
 ### 2.3 Le contrat de sous-traitance (RGPD, art. 28 ; condition bloquante de Juridique)
-Cherchez dans votre compte une page **Data Processing Agreement** (ou « DPA », « contrat de sous-traitance ») et acceptez-la. **À vérifier sur l'écran** : nous n'avons pas trouvé où elle se trouve dans le tableau de bord. D'après Juridique, le contrat s'applique probablement d'office avec le contrat principal. **Gardez une preuve** : une capture de l'écran d'acceptation des conditions à l'inscription, ou la réponse écrite de Scalingo à la question 4 de 2.9. Sans l'une ou l'autre, aucune donnée n'entre dans la base (parties 6 et 7).
+Cherchez dans votre compte une page **Data Processing Agreement** (ou « DPA », « contrat de sous-traitance ») et acceptez-la. **À vérifier sur l'écran** : nous n'avons pas trouvé où elle se trouve dans le tableau de bord. D'après Juridique, le contrat s'applique probablement d'office avec le contrat principal. **Votre preuve** : la capture faite en 2.1 (étape 4), ou la réponse écrite de Scalingo à la question 4 de 2.9. Sans l'une ou l'autre, aucune donnée n'entre dans la base (parties 6 et 7).
 
 ### 2.4 Lier Scalingo à GitHub (sans rien installer)
 1. Ouvrez `https://dashboard.scalingo.com/account/integrations`.
@@ -237,15 +237,15 @@ Il en va de même pour chaque correction ensuite : l'équipe ne pousse rien sur 
 ### 6.1 Brancher la branche et installer (dès que l'équipe a poussé)
 1. Application `elenchos-test-18h`, onglet **Deploy › Configuration**.
 2. Dépôt `ppcrepin/elenchos` ; branche **`mise-en-ligne`** ; **Automatic deployments** : activé.
-3. Si rien ne démarre seul : sous-menu **Manual deployment**, branche `mise-en-ligne`, lancez.
+3. Si rien ne démarre seul dans les dix minutes : dites-le-nous d'abord (nous voyons si la vérification GitHub est passée). Ensuite seulement : sous-menu **Manual deployment**, branche `mise-en-ligne`, lancez.
 4. Attendez la fin (quelques minutes). **Si la fabrication échoue**, copiez-nous son message d'erreur (la fenêtre de fabrication du déploiement en échec), rien d'autre.
 
 **Pas avant 15h ? Pas un dimanche ?** Si vous faites ceci entre 15h et 19h ou un dimanche, la fabrication échoue avec le message « Horaires : aucune installation de 15h à 19h ni le dimanche » : c'est voulu. Recommencez avant 15h ou après 19h, un autre jour que le dimanche.
 
 ### 6.2 Fabriquer vos codes et la clé des messages (5 minutes)
 1. Sur votre ordinateur, ouvrez `https://elenchos-test-18h.osc-fr1.scalingo.io/preparer`.
-2. Touchez **Fabriquer**. La page tire au hasard, **dans votre navigateur**, cinq lignes : le secret de session, les **cinq codes d'essai** (T1 à T5), **votre code d'accès** aux résultats, et la clé des messages (publique et privée). Rien n'est envoyé au serveur.
-3. Plus bas, la page liste les codes T1 à T5 et votre code d'accès : **copiez-les dans votre gestionnaire de mots de passe**, avec leur numéro de téléphone.
+2. Touchez **Fabriquer les codes**. La page tire au hasard, **dans votre navigateur**, cinq lignes : le secret de session, les **cinq codes d'essai** (T1 à T5), **votre code d'accès** aux résultats, et la clé des messages (publique et privée). Rien n'est envoyé au serveur.
+3. Plus bas, la page liste les codes T1 à T5 et votre code d'accès : **copiez-les dans votre gestionnaire de mots de passe**, avec le numéro du téléphone (T1 à T5), jamais le nom d'un prêteur.
 4. **Copier ces lignes**, puis, chez Scalingo, onglet **Environment**, édition en bloc : collez les cinq lignes à la suite des autres (à vérifier sur l'écran ; sinon, ajoutez-les une par une : le nom avant le « = », la valeur après). Enregistrez : l'application redémarre.
 5. Si la clé Apple n'a pas pu être collée en 4.5 : section 2 de la même page, choisissez le fichier .p8, copiez la ligne obtenue, ajoutez-la de la même façon.
 6. Fermez la page. Ne la rechargez pas avant d'avoir tout collé : chaque chargement tire d'autres valeurs.
@@ -258,7 +258,7 @@ Ne nous envoyez jamais ces valeurs. Si l'une d'elles fuit, recommencez 6.2 (les 
 3. Section **Calendrier des envois** : les dates de `SOIRS`, avec « (aujourd'hui) » sur le bon jour.
 
 ### 6.4 Votre iPhone (T1)
-**Avant de mettre la moindre donnée dans la base (votre iPhone compris) : le contrat de sous-traitance de Scalingo est accepté (2.3) et Scalingo a confirmé par écrit qu'il couvre l'essai gratuit (2.9, question 4). Sinon, ne continuez pas et dites-le-nous.** Juridique accepte aussi, comme preuve, la capture de l'écran d'acceptation des conditions à l'inscription (2.3).
+**Avant de mettre la moindre donnée dans la base (votre iPhone compris), vous détenez l'une de ces deux preuves que le contrat de sous-traitance de Scalingo couvre l'essai gratuit (condition 4 de Juridique) : la capture d'écran faite à l'inscription (2.1, étape 4), ou la réponse écrite de Scalingo à la question 4 de 2.9. Sans l'une ni l'autre, ne continuez pas et dites-le-nous.**
 
 Suivez la fiche de la partie 7 pour votre iPhone, avec le code T1, **puis la connexion Apple** (7.3). Puis, sur la page de résultats : **Message d'essai** sur la ligne T1. À 18h00, votre iPhone reçoit « Test, répétition » : regardez la ligne dans le tableau vers 18h05.
 
@@ -268,7 +268,7 @@ Si l'écran de Google ou d'Apple refuse l'adresse de Scalingo, arrêtez et dites
 
 ## 7. Démarche 5 — La séance d'installation (J4, environ 15 minutes par téléphone)
 
-**Avant de mettre la moindre donnée dans la base (votre iPhone compris) : le contrat de sous-traitance de Scalingo est accepté (2.3) et Scalingo a confirmé par écrit qu'il couvre l'essai gratuit (2.9, question 4). Sinon, ne continuez pas et dites-le-nous.** Juridique accepte aussi, comme preuve, la capture de l'écran d'acceptation des conditions à l'inscription (2.3).
+**Avant de mettre la moindre donnée dans la base (votre iPhone compris), vous détenez l'une de ces deux preuves que le contrat de sous-traitance de Scalingo couvre l'essai gratuit (condition 4 de Juridique) : la capture d'écran faite à l'inscription (2.1, étape 4), ou la réponse écrite de Scalingo à la question 4 de 2.9. Sans l'une ni l'autre, ne continuez pas et dites-le-nous.**
 
 **Avant de toucher au téléphone** : la note a été remise (condition bloquante), le prêteur est majeur, le téléphone n'est qu'à lui.
 
@@ -301,7 +301,7 @@ Depuis l'icône, **après** l'abonnement avec le code T1 (le bouton n'apparaît 
 
 1. Ouvrez la page de résultats (votre code d'accès vous est redemandé toutes les douze heures).
 2. Pour chaque téléphone, la ligne du soir : **Réponse du service** « accepté », une heure **Reçu**, l'**Écart** en secondes et un **Résultat** (à l'heure avant 18h02, acceptable avant 18h05, en retard jusqu'à 18h30, manqué au-delà).
-3. Lisez les SMS des prêteurs. Dans la zone **À copier pour l'équipe**, chaque ligne finit par « vu : ___ » : dans **votre** copie, collée ailleurs, remplacez-le le soir même : « vu à 18h03 » donne « à l'heure », « vu à 18h20 » donne « plus tard », « rien vu » reste « rien vu » ; pour « éteint », effacez « ___ » sans rien écrire (le soir ne compte pas). Jamais l'heure exacte du SMS.
+3. Lisez les SMS des prêteurs. Collez les lignes « À copier » dans votre note personnelle, puis, le soir même, remplacez « ___ » par l'une de trois mentions : « à l'heure » (SMS avant 18h05), « plus tard » (SMS après 18h05), « rien vu ». Pour « éteint », effacez « ___ » et laissez vide : le soir ne compte pas. Jamais l'heure exacte du SMS.
 4. **Si une ligne est mauvaise** (« refusé », « manqué », « envoi interrompu », rien à 18h05) : regardez vous-même, sans nous envoyer de journal ; demandez au prêteur si son téléphone était éteint ou sans réseau. Envoyez-nous seulement une ligne du type « T4 : non reçu, téléphone allumé ». L'équipe applique les règles de `test-18h.md`, partie 1 (« Ce qu'on fait en cas d'échec »).
 
 **Le soir 3 (J7)** : chaque prêteur éteint puis rallume son téléphone **avant 18h**. À 18h10, votre iPhone reçoit en plus « Test, soir 3 sur 3 (seconde forme) » (si votre iPhone est en iOS 18.4 ou plus récent) : sa ligne apparaît avec « seconde forme ». Après le message, chacun **ouvre enfin l'icône** et vous dit si elle affiche « Connexion : connecté avec Google » (« connecté avec Apple » sur le vôtre). Chaque prêteur regarde la ligne « Connexion », puis ferme l'icône **sans toucher aucun bouton de la page**, surtout pas « Continuer avec Apple ».

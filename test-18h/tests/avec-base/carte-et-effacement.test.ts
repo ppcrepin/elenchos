@@ -83,3 +83,16 @@ test('effacer la ligne d’un téléphone (un prêteur qui se retire) efface son
   await depot.effacerLigne(4);
   assert.equal((await verifierVide(base.pool)).vide, true);
 });
+
+test('sans « sslmode », un serveur qui n’offre pas TLS est refusé : jamais de repli en clair', async () => {
+  const u = new URL(base.url);
+  u.searchParams.delete('sslmode');
+  const { creerPool: pool } = await import('../../src/base.ts');
+  const p = pool(u.toString());
+  try {
+    // Le PostgreSQL local des tests n'offre pas TLS : la connexion doit échouer plutôt que passer en clair.
+    await assert.rejects(p.query('SELECT 1'), /SSL|TLS/i);
+  } finally {
+    await p.end();
+  }
+});

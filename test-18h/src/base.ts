@@ -58,13 +58,22 @@ CREATE TABLE IF NOT EXISTS compte (
 );
 `;
 
-/** La base de Scalingo donne « sslmode=prefer » : on chiffre la connexion, sans vérifier le certificat (comme libpq). */
-export function creerPool(url: string, options: { schema?: string } = {}): pg.Pool {
+/** Le chiffrement de la connexion à la base, lu dans l'adresse. La base de Scalingo donne « sslmode=prefer ».
+ *  Une adresse sans « sslmode » est traitée comme « prefer » : chiffrée, sans vérifier le certificat (comme libpq),
+ *  pour que la connexion soit chiffrée même si le réglage « Force TLS » de Scalingo était oublié. Contrairement à
+ *  libpq, on ne retombe jamais en clair : un serveur sans TLS est refusé. Seul « sslmode=disable » (base locale de
+ *  test) se connecte en clair ; « verify-full » vérifie aussi le certificat. */
+export function chiffrementBase(url: string): { adresse: string; ssl: false | { rejectUnauthorized: boolean } } {
   const u = new URL(url);
   const mode = u.searchParams.get('sslmode');
   u.searchParams.delete('sslmode');
-  const ssl = mode === null || mode === 'disable' ? false : { rejectUnauthorized: mode === 'verify-full' };
-  const config: pg.PoolConfig = { connectionString: u.toString(), ssl, max: 5, connectionTimeoutMillis: 10_000 };
+  const ssl = mode === 'disable' ? false : { rejectUnauthorized: mode === 'verify-full' };
+  return { adresse: u.toString(), ssl };
+}
+
+export function creerPool(url: string, options: { schema?: string } = {}): pg.Pool {
+  const { adresse, ssl } = chiffrementBase(url);
+  const config: pg.PoolConfig = { connectionString: adresse, ssl, max: 5, connectionTimeoutMillis: 10_000 };
   if (options.schema) config.options = `-c search_path=${options.schema}`;
   const pool = new pg.Pool(config);
   pool.on('error', () => { /* une connexion inactive coupée : le pool la remplace ; rien à écrire */ });
