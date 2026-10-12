@@ -2,7 +2,7 @@
 
 *Étape 6, travail 4 de `docs/plan-construction.md` (partie 4). Back-end et Front-end, 12 octobre 2026. Document de préparation : aucune ligne de code n'est écrite avant votre accord sur ce document (D-001, D-051). Ce qui n'est écrit dans aucune décision est marqué « (proposé) ». Avis de Juridique intégré ; relecture : Cohérence (compatible avec réserves, corrigées), puis le Vérificateur (OK avec corrections mineures, appliquées) (depuis D-054, ces « (proposé) » sont validés ; voir l'état ci-dessous).*
 
-*État, 12 octobre 2026 : **validé (D-054)**, en entier ; les « (proposé) » de la version validée le sont avec elle. Mis à jour le même jour pour vos réponses : l'iPhone seulement (D-054, point 3), donc cinq iPhone, aucun Android, aucun achat ; si l'adresse de Scalingo est refusée, la question du domaine vous revient avant tout achat (D-054, point 2). Les deux questions de l'« En bref » sont retirées, puisque tranchées. Android écarté par D-054 : la version validée prévoyait trois Android (un Galaxy acheté, un Xiaomi et une autre marque prêtés) ; ces passages sont retirés. Ce que cette mise à jour ajoute sans décision de votre part est marqué « (proposé) » quand c'est un choix de l'équipe, « (application de D-054) » quand c'est la seule conséquence directe.*
+*État, 12 octobre 2026 : **validé (D-054)**, en entier ; les « (proposé) » de la version validée le sont avec elle. Mis à jour le même jour pour vos réponses : l'iPhone seulement (D-054, point 3), donc cinq iPhone, aucun Android, aucun achat ; si l'adresse de Scalingo est refusée, la question du domaine vous revient avant tout achat (D-054, point 2). Les deux questions de l'« En bref » sont retirées, puisque tranchées. Android écarté par D-054 : la version validée prévoyait trois Android (un Galaxy acheté, un Xiaomi et une autre marque prêtés) ; ces passages sont retirés. Ce que cette mise à jour ajoute sans décision de votre part est marqué « (proposé) » quand c'est un choix de l'équipe, « (application de D-054) » quand c'est la seule conséquence directe. Report de D-054 relu par Cohérence (compatible avec réserves, corrigées), puis par le Vérificateur (OK avec corrections, appliquées).*
 
 **Comment lire les faits.**
 - **Vérifié** : lu le 12 octobre 2026 sur la page officielle du prestataire, soit ouverte directement, soit telle que la restitue un moteur de recherche (l'ouverture directe de plusieurs sites est bloquée depuis l'environnement). Les sources, et la manière dont chacune a été lue, sont en fin de document.
@@ -16,14 +16,14 @@
 
 **Le test.** Page nue en icône sur cinq iPhone : le message arrive-t-il vers 18h trois soirs de suite, et la connexion Google ou Apple tient-elle depuis l'icône ? Premier code : tout le jeu en dépend. Sinon, question pour vous (D-035).
 
-**Vous faites**, à votre nom, sans mot de passe confié (D-048), environ 4 h 30 : ouvrir Scalingo, régler Google et Apple, installer chez quatre proches qui gardent leur iPhone (« prêteurs »), puis deux minutes par soir.
+**Vous faites**, à votre nom, sans mot de passe confié (D-048), environ 4 h 30 : trouver quatre proches qui gardent leur iPhone (« prêteurs »), si possible sur des versions d'iOS différentes (partie 2) ; ouvrir Scalingo, régler Google et Apple ; donner par écrit, la veille, votre feu vert pour la mise en ligne (D-054, point 1) ; installer chez les quatre ; puis deux minutes par soir.
 
-**Dépenses : 0 €.** Scalingo 0 € (essai) ; prêts 0 € ; aucun téléphone acheté (D-054, point 3). Si Apple ou Google refuse l'adresse de Scalingo, un nom de domaine (environ 10 €) vous est d'abord présenté, et rien n'est acheté sans votre réponse (D-054, point 2). Durée : 8 à 10 jours à partir du jour 0, au plus tôt le 13 octobre (partie 7).
+**Dépenses : 0 €.** Scalingo 0 € (essai) ; prêts 0 € ; aucun téléphone acheté (D-054, point 3). Si Apple ou Google refuse l'adresse de Scalingo, un nom de domaine (environ 10 €) vous est d'abord présenté, et rien n'est acheté sans votre réponse (D-054, point 2). Durée : 8 à 10 jours à partir du jour 0, le jour où vous ouvrez les pas-à-pas (au plus tôt le 13 octobre). Avant la mise en ligne, l'équipe écrit le code et le fait relire ; trois choses peuvent faire glisser les dates : votre feu vert écrit de la veille, la réponse de Scalingo sur ses journaux, et le temps de trouver quatre prêteurs (partie 7).
 
-**Validés avec ce document (D-054, point 1)** : une copie à part du code pour la mise en ligne, la branche `mise-en-ligne`, jamais de 15h à 19h ni le dimanche (inscrite dans `CLAUDE.md`, partie 3) ; une note aux prêteurs, avant ; l'effacement le lendemain du soir 3, sauf un tableau sans nom gardé jusqu'au 20 novembre 2026 (partie 5).
+**Validés avec ce document (D-054, point 1)** : une copie à part du code pour la mise en ligne, la branche `mise-en-ligne`, jamais de 15h à 19h ni le dimanche (inscrite dans `CLAUDE.md` ; détail en partie 3 de ce document) ; une note aux prêteurs, avant ; l'effacement le lendemain du soir 3, sauf un tableau sans nom gardé jusqu'au 20 novembre 2026 (partie 5).
 
 **Vos deux réponses (D-054).**
-- **Android : aucun.** Le jeu se joue sur iPhone seulement ; le test se fait sur cinq iPhone, sans achat (point 3).
+- **Android : aucun.** Le jeu se joue sur iPhone seulement ; le test se fait sur cinq iPhone, sans achat (point 3). Conséquence hors du test, écrite dans `docs/produit.md` (sections 1 et 5) : un proche sur Android ne peut pas jouer, et une page le lui dit.
 - **Domaine : on vous redemande.** Si l'adresse de Scalingo est refusée, la question vous revient avant tout achat ; quelques jours peuvent être perdus (point 2).
 
 ---
@@ -104,7 +104,7 @@ On relève aussi le nom du service d'acheminement de chaque téléphone, jamais 
 
 ### Cinq iPhone, aux versions d'iOS variées (D-054)
 
-Le jeu se joue sur iPhone seulement (D-054, point 3) : le test se fait sur cinq iPhone, le vôtre et quatre prêtés. Aucun Android, aucun achat. Les versions d'iOS ci-dessous sont celles que l'équipe vous demande de chercher chez vos proches (proposé) ; toutes reçoivent les messages, puisqu'elles sont en iOS 16.4 ou plus récent.
+Le jeu se joue sur iPhone seulement (D-054, point 3) : le test se fait sur cinq iPhone, le vôtre et quatre prêtés. Aucun Android, aucun achat. Les versions d'iOS ci-dessous sont celles que l'équipe vous demande de chercher chez vos proches (proposé) ; toutes sont en iOS 16.4 ou plus récent, la première version qui accepte les messages depuis une icône (vérifié, Apple) ; qu'elles les reçoivent bien, c'est ce que le test doit montrer.
 
 | | Téléphone | Version d'iOS cherchée | Pourquoi lui | Connexion essayée |
 |---|---|---|---|---|
@@ -350,13 +350,14 @@ Trois morceaux, plus une page de résultats.
 
 ## 7. Calendrier
 
-Votre accord est donné le lundi 12 octobre 2026 (D-054). Le calendrier ci-dessous est celui du **plus tôt possible**, pas une date promise. Le jour 0 est le premier jour où trois choses sont réunies : le code a passé le circuit complet et vous avez donné le feu vert écrit la veille de la mise en ligne (D-054, point 1) ; Scalingo a répondu sur la durée de ses journaux ; les quatre prêteurs sont trouvés. Les jours suivants se comptent depuis le jour 0.
+Votre accord est donné le lundi 12 octobre 2026 (D-054). Le calendrier ci-dessous est celui du **plus tôt possible**, pas une date promise. Le jour 0 est le jour où vous ouvrez les pas-à-pas et commencez à chercher les prêteurs ; au plus tôt le mardi 13 octobre. Les jours suivants se comptent depuis lui, mais trois choses peuvent les faire glisser : la mise en ligne (J3) attend que le code ait passé le circuit complet et votre feu vert écrit, donné la veille (D-054, point 1) ; la note aux prêteurs attend la réponse de Scalingo sur la durée de ses journaux ; la séance d'installation (J4) attend les quatre prêteurs, aux versions d'iOS cherchées. Si l'une manque, tout ce qui suit glisse d'autant.
 
 | Jour | Vous | L'équipe |
 |---|---|---|
 | J0 (au plus tôt le mardi 13) | Lecture des pas-à-pas ; premiers messages aux prêteurs (les versions d'iOS cherchées) | Pas-à-pas des démarches 2 à 4 |
 | J1 (au plus tôt le mercredi 14) | Démarches 2, 3 et 4 (environ 2 h), dont la question à Scalingo sur ses journaux ; appel des prêteurs | Construction de la page, du service et de la mesure |
-| J2–J3 (au plus tôt le jeudi 15 et le vendredi 16) | Votre feu vert écrit, la veille de la mise en ligne ; envoi de la note aux prêteurs, dès que Scalingo a donné la durée de ses journaux ; si l'adresse de Scalingo est refusée, la question du domaine vous revient (D-054, point 2), et le calendrier glisse de quelques jours | Tests, Cohérence, Vérificateur ; mise en ligne avant 15h le J3 ; vous installez T1 et le vérifiez par un message d'essai |
+| J2 (au plus tôt le jeudi 15) | Votre feu vert écrit pour la mise en ligne du lendemain ; envoi de la note aux prêteurs, dès que Scalingo a donné la durée de ses journaux | Tests automatiques, Cohérence, Vérificateur : le code doit être relu avant votre feu vert |
+| J3 (au plus tôt le vendredi 16) | Vous installez T1 et le vérifiez par un message d'essai à 18h ; si l'adresse de Scalingo est refusée, la question du domaine vous revient (D-054, point 2) et le calendrier glisse de quelques jours | Mise en ligne avant 15h |
 | J4 (au plus tôt le samedi 17) | Séance d'installation ; à 18h, soir 0 (répétition) | Correction éventuelle avant 15h |
 | J5 (au plus tôt le dimanche 18) | Soir 1 | Aucune mise en ligne (D-043) |
 | J6 (au plus tôt le lundi 19) | Soir 2 | Correction éventuelle avant 15h |

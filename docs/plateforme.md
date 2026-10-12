@@ -2,7 +2,7 @@
 
 *Référence de la plateforme retenue (D-048). Back-end, avec Front-end, 11 octobre 2026, révisé après la relecture de Cohérence et votre décision. Il répond à votre question « sur quelle plateforme, Supabase ou autre » (D-047). Aucune ligne de code avant votre accord pour l'étape 6 (D-001).*
 
-*État, 12 octobre 2026 : D-048 inchangé. Mis à jour pour D-054 (point 3), qui modifie D-005 : le jeu se joue sur iPhone seulement, et l'application ira sur l'App Store seul, sans Google Play. Ce qui parlait d'Android et de Google Play est retiré ou corrigé : la limite 4, l'acheminement des messages, le passage à l'App Store et ses messages, ce qui sort d'Europe, le compte Google, l'annexe C. Le reste ne change pas.*
+*État, 12 octobre 2026 : D-048 inchangé. Mis à jour pour D-054 (point 3), qui modifie D-005 : le jeu se joue sur iPhone seulement, et l'application ira sur l'App Store seul, sans Google Play. Ce qui parlait d'Android et de Google Play est retiré ou corrigé : la limite 4, l'acheminement des messages, le passage à l'App Store et ses messages, ce qui sort d'Europe, le compte Google, l'annexe C. Le reste ne change pas. Report de D-054 relu par Cohérence (compatible avec réserves, corrigées), puis par le Vérificateur (OK avec corrections, appliquées).*
 
 **Comment lire les faits.**
 - **Vérifié** : lu le 11 octobre 2026 sur une page officielle, telle que la restitue un moteur de recherche (l'ouverture directe des sites était bloquée), sauf deux pages ouvertes par l'orchestrateur, signalées dans les sources. Sources en fin de document.
