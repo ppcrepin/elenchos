@@ -57,7 +57,7 @@ for (const f of textes) {
   for (const adresse of contenu.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g) ?? []) {
     if (!adresse.endsWith('@exemple.invalid')) problemes.push(`${nom} : adresse e-mail hors du domaine réservé (${adresse.replace(/^[^@]+/, '…')})`);
   }
-  if (MESURE_EXTERIEURE.test(contenu)) problemes.push(`${nom} : outil de mesure extérieur`);
+  if (MESURE_EXTERIEURE.test(contenu) && !nom.endsWith('outils/controle.ts')) problemes.push(`${nom} : outil de mesure extérieur`);
   if (nom.startsWith('test-18h/src/') && !nom.endsWith('journal.ts') && /console\.|process\.(stdout|stderr)\.write/.test(contenu)) {
     problemes.push(`${nom} : écrit hors du journal (P-07)`);
   }

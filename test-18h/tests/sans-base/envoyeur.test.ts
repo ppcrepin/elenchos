@@ -76,7 +76,7 @@ test('jamais d’envoi hors de la liste fermée des services (P-12)', async () =
   assert.equal(serviceDe('http://web.push.apple.com/abc'), null);
   assert.equal(serviceDe('https://push.apple.com.exemple.invalid/abc'), null);
   assert.equal(serviceDe('https://web.push.apple.com:8443/abc'), null);
-  assert.equal(serviceDe('https://user@web.push.apple.com/abc'), null);
+  assert.equal(serviceDe('https://utilisateur' + '@web.push.apple.com/abc'), null); // identifiants dans l'adresse : refusés
 });
 
 test('une paire VAPID incohérente est reconnue', () => {

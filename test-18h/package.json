@@ -1,9 +1,17 @@
 {
   "name": "elenchos-test-18h",
   "private": true,
+  "description": "Test du message de 18h (Elenchos, étape 6, travail 4). Jetable, sauf ce que chaque fichier marque « REPRIS ».",
   "type": "module",
   "engines": {
     "node": "22.22.0"
+  },
+  "scripts": {
+    "start": "node src/principal.ts",
+    "build": "node outils/garde-horaires.ts && node --test \"tests/sans-base/*.test.ts\"",
+    "test": "node --test --test-concurrency=1 \"tests/sans-base/*.test.ts\" \"tests/avec-base/*.test.ts\"",
+    "controle": "node outils/controle.ts",
+    "effacer": "node outils/effacer.ts"
   },
   "dependencies": {
     "oauth4webapi": "3.8.8",
