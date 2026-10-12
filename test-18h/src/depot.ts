@@ -3,18 +3,19 @@
 
 import type pg from 'pg';
 import type { Fournisseur } from './connexion.ts';
-import type { Service } from './push/services.ts';
 
 export function creerDepot(pool: pg.Pool) {
   return {
-    async enregistrerAbonnement(telephone: number, service: Service, adresse: string, p256dh: string, auth: string) {
+    /** Un abonnement par téléphone : le doublon se contrôle sur le numéro du téléphone (clé primaire), jamais par une
+     *  contrainte d'unicité sur l'adresse d'abonnement, qu'une erreur de doublon recopierait dans le journal de la base
+     *  (condition 6 de Juridique). Les deux écritures sont des « ON CONFLICT » : aucune erreur n'est levée. */
+    async enregistrerAbonnement(telephone: number, adresse: string, p256dh: string, auth: string) {
       const client = await pool.connect();
       try {
         await client.query('BEGIN');
         await client.query(
-          `INSERT INTO telephone (numero, service) VALUES ($1, $2)
-           ON CONFLICT (numero) DO UPDATE SET service = EXCLUDED.service`,
-          [telephone, service],
+          'INSERT INTO telephone (numero) VALUES ($1) ON CONFLICT (numero) DO NOTHING',
+          [telephone],
         );
         await client.query(
           `INSERT INTO abonnement (telephone, adresse, cle_p256dh, cle_auth) VALUES ($1, $2, $3, $4)
@@ -83,8 +84,8 @@ export function creerDepot(pool: pg.Pool) {
     },
 
     async lireTout() {
-      const telephones = await pool.query<{ numero: number; systeme: string | null; service: Service; abonne: boolean }>(
-        `SELECT t.numero, t.systeme, t.service, (a.telephone IS NOT NULL) AS abonne
+      const telephones = await pool.query<{ numero: number; systeme: string | null; abonne: boolean }>(
+        `SELECT t.numero, t.systeme, (a.telephone IS NOT NULL) AS abonne
            FROM telephone t LEFT JOIN abonnement a ON a.telephone = t.numero ORDER BY t.numero`,
       );
       const envois = await pool.query<{

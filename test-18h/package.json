@@ -9,9 +9,10 @@
   "scripts": {
     "start": "node src/principal.ts",
     "build": "node outils/garde-horaires.ts && node --test \"tests/sans-base/*.test.ts\"",
-    "test": "node --test --test-concurrency=1 \"tests/sans-base/*.test.ts\" \"tests/avec-base/*.test.ts\"",
+    "test": "node --test --test-concurrency=1 \"tests/sans-base/*.test.ts\" \"tests/avec-base/*.test.ts\" \"tests/navigateur/*.test.ts\"",
     "controle": "node outils/controle.ts",
-    "effacer": "node outils/effacer.ts"
+    "effacer": "node outils/effacer.ts",
+    "test:journal-base": "node --test \"tests/journal-base/*.test.ts\""
   },
   "dependencies": {
     "oauth4webapi": "3.8.8",

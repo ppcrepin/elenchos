@@ -1,13 +1,14 @@
 // JETABLE (test du message de 18h) : les pages rendues par le serveur (résultats du porteur, erreurs de connexion).
-// Mots provisoires, à revoir par UX. Le porteur est vouvoyé sur ses pages ; la page des téléphones tutoie.
+// Mots relus par UX le 12 octobre 2026. Le porteur est vouvoyé sur ses pages ; la page des téléphones tutoie.
 // Aucune page ne montre une adresse e-mail, un abonnement ni une empreinte (P-42).
 
 import type { Config } from './config.ts';
 import type { Depot } from './depot.ts';
 import { heureParis, partiesParis } from './horloge.ts';
 import { classer, heurePrevue, libelleReponse } from './mesure.ts';
-import { NOMS_SERVICES } from './push/services.ts';
 import { titreDuSoir } from './planificateur.ts';
+
+const JOUR_EN_LETTRES = new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', weekday: 'long', day: 'numeric', month: 'long' });
 
 export function echapper(t: string): string {
   return t.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] ?? c);
@@ -66,7 +67,7 @@ export async function pageResultats(config: Config, depot: Depot, maintenant: Da
   const lignesTableau: string[] = [];
   const lignesCopie: string[] = [];
   for (const e of envois) {
-    const { classement, ecart } = classer(e, maintenant);
+    const { resultat, ecart } = classer(e, maintenant);
     const quoi = e.nature === 'soir'
       ? `soir ${e.soir ?? '?'} (${e.soir_date ?? ''})${e.forme === 'declarative' ? ', seconde forme' : ''}`
       : 'message d’essai';
@@ -76,24 +77,24 @@ export async function pageResultats(config: Config, depot: Depot, maintenant: Da
     const recu = e.recu_a ? heureParis(e.recu_a) : '—';
     const ecartTexte = ecart === null ? '—' : `${ecart} s`;
     lignesTableau.push(`<tr><td>${echapper(etiquette(e.telephone))}</td><td>${echapper(quoi)}</td><td>${prevue}</td>`
-      + `<td>${envoye}</td><td>${echapper(reponse)}</td><td>${recu}</td><td>${ecartTexte}</td><td>${echapper(classement)}</td></tr>`);
+      + `<td>${envoye}</td><td>${echapper(reponse)}</td><td>${recu}</td><td>${ecartTexte}</td><td>${echapper(resultat)}</td></tr>`);
     if (e.nature === 'soir') {
       lignesCopie.push(ligneTexte([
         etiquette(e.telephone), `soir ${e.soir ?? '?'}${e.forme === 'declarative' ? ' (seconde forme)' : ''}`,
-        `envoyé ${envoye}`, reponse, `reçu ${recu}`, `écart ${ecartTexte}`, classement, 'vu : ___',
+        `envoyé ${envoye}`, reponse, `reçu ${recu}`, `écart ${ecartTexte}`, resultat, 'vu : ___',
       ]));
     }
   }
 
   const lignesTelephones = [1, 2, 3, 4, 5].map((n) => {
     const t = telephones.find((x) => x.numero === n);
-    const etat = !t ? 'pas encore inscrit' : t.abonne ? `abonné (${NOMS_SERVICES[t.service]})` : 'abonnement perdu';
+    const etat = !t ? 'pas encore inscrit' : t.abonne ? 'abonné (Apple)' : 'abonnement perdu : à noter, ne rien refaire avant le bilan';
     return `<tr><td>T${n}</td><td>${echapper(etat)}</td>
 <td><form method="post" action="/resultats/systeme" class="ligne"><input type="hidden" name="telephone" value="${n}">
 <input name="systeme" value="${echapper(t?.systeme ?? '')}" placeholder="iOS 18.5" pattern="iOS [0-9]{1,2}(\\.[0-9]{1,2}){0,2}" aria-label="Version d’iOS de T${n}">
 <button type="submit">Noter</button></form></td>
 <td><form method="post" action="/resultats/essai"><input type="hidden" name="telephone" value="${n}"><button type="submit"${t?.abonne ? '' : ' disabled'}>Message d’essai</button></form></td>
-<td><form method="post" action="/resultats/effacer-ligne" data-confirmer="Effacer toute la ligne de T${n} ?"><input type="hidden" name="telephone" value="${n}"><button type="submit" class="danger"${t ? '' : ' disabled'}>Effacer sa ligne</button></form></td></tr>`;
+<td><form method="post" action="/resultats/effacer-ligne" data-confirmer="Effacer tout ce qui concerne T${n} ? C’est définitif."><input type="hidden" name="telephone" value="${n}"><button type="submit" class="danger"${t ? '' : ' disabled'}>Effacer sa ligne</button></form></td></tr>`;
   });
 
   const lignesComptes = comptes.map((c) => `<tr><td>compte ${c.numero}</td><td>${c.fournisseur === 'apple' ? 'Apple' : 'Google'}</td>
@@ -114,16 +115,16 @@ export async function pageResultats(config: Config, depot: Depot, maintenant: Da
   return gabarit('Résultats du test', `
 <h1>Résultats du test</h1>
 ${message ? `<p class="info">${echapper(message)}</p>` : ''}
-<p>Heure de Paris : ${heureParis(maintenant)}, le ${aujourdHui}. Écart : compté depuis 18h00 (18h10 pour la seconde forme).</p>
+<p>Heure de Paris : ${heureParis(maintenant)}, le ${JOUR_EN_LETTRES.format(maintenant)}. L’écart se compte depuis 18h00 (18h10 pour la seconde forme).</p>
 
 <h2>Mesures</h2>
 <div class="defile"><table>
-<thead><tr><th>Téléphone</th><th>Quoi</th><th>Prévu</th><th>Envoyé</th><th>Réponse du service</th><th>Reçu</th><th>Écart</th><th>Classement</th></tr></thead>
+<thead><tr><th>Téléphone</th><th>Quoi</th><th>Prévu</th><th>Envoyé</th><th>Réponse du service</th><th>Reçu</th><th>Écart</th><th>Résultat</th></tr></thead>
 <tbody>${lignesTableau.join('\n') || '<tr><td colspan="8">Aucun envoi pour l’instant.</td></tr>'}</tbody>
 </table></div>
 
 <h2>À copier pour l’équipe</h2>
-<p>Sans nom ni adresse. Remplacez « ___ » par ce que disent les SMS : « à l’heure (avant 18h05) », « plus tard » ou « rien vu » (laissez vide pour « éteint »).</p>
+<p>Sans nom ni adresse. Après les avoir collées, remplacez « ___ » selon le SMS du soir : « vu à 18h03 » donne « à l’heure », « vu à 18h20 » donne « plus tard », « rien vu » reste « rien vu ». Pour « éteint », effacez « ___ » sans rien écrire.</p>
 <textarea id="copie" readonly rows="8">${echapper(lignesCopie.join('\n'))}</textarea>
 <p><button type="button" id="copier">Copier</button></p>
 
@@ -135,7 +136,7 @@ ${message ? `<p class="info">${echapper(message)}</p>` : ''}
 <form method="post" action="/resultats/essai"><input type="hidden" name="telephone" value="tous"><button type="submit">Message d’essai à tous les téléphones abonnés</button></form>
 
 <h2>Connexions</h2>
-<p>Un même compte reconnecté garde son numéro. Un nouveau numéro veut dire : un second compte a été créé.</p>
+<p>Le compte Google de test doit garder un seul numéro, sur tous les téléphones. Un second numéro « Google » signale un échec. Le numéro « Apple » de votre iPhone est normal.</p>
 <div class="defile"><table><tbody>${lignesComptes.join('\n') || '<tr><td>Aucune connexion pour l’instant.</td></tr>'}</tbody></table></div>
 
 <h2>Calendrier des envois (réglage SOIRS)</h2>
@@ -145,7 +146,7 @@ ${message ? `<p class="info">${echapper(message)}</p>` : ''}
 ${reglages}
 
 <h2>Tout effacer</h2>
-<p>À faire le lendemain du dernier soir, après avoir copié le tableau. Vide la base, puis vérifie qu’elle est vide.</p>
+<p>Le lendemain du dernier soir, après avoir copié les lignes ci-dessus. Le bouton vide la base, puis vérifie qu’elle est vide.</p>
 <form method="post" action="/resultats/tout-effacer">
   <label for="confirmation">Tapez EFFACER pour confirmer</label>
   <input id="confirmation" name="confirmation" autocomplete="off" required>

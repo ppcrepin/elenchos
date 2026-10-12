@@ -1,0 +1,46 @@
+# REPRIS pour le vrai jeu (proposé) : la vérification que Scalingo attend avant d'installer
+# (« We will always wait that all these tools succeed before deploying your app », documentation de Scalingo).
+# Elle ne tourne que sur la branche mise-en-ligne (D-054). De 15h à 19h et le dimanche (heure de Paris), elle échoue
+# exprès et Scalingo n'installe pas (D-043) ; IGNORER_HORAIRES y est refusé (variables CI et GITHUB_ACTIONS).
+# Aucun secret ici : la base est jetable, sans mot de passe, détruite à la fin.
+# Actions figées par leur empreinte de commit (versions publiées plus de deux semaines avant le 12 octobre 2026) :
+#   actions/checkout v7.0.1 (17 juillet 2026), actions/setup-node v7.0.0 (13 juillet 2026), toutes deux en node24.
+# Le test navigateur utilise le Google Chrome de l'image ubuntu-24.04 (à vérifier au premier passage).
+# Le test du journal de la base (npm run test:journal-base) ne tourne pas ici : il lit le journal d'un PostgreSQL local.
+name: test-18h
+on:
+  push:
+    branches: [mise-en-ligne]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verifier:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: test-18h
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 12
+    env:
+      BASE_DE_TEST_URL: postgresql://postgres@localhost:5432/postgres
+      NAVIGATEUR_CHEMIN: /usr/bin/google-chrome
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22.22.0
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm run controle
+      - run: npm test

@@ -1,6 +1,6 @@
 # Le test du message de 18h : vos pas-à-pas
 
-*Étape 6, travail 4. Back-end et Front-end, 12 octobre 2026. Accompagne `docs/etape-6/test-18h.md` (validé, D-054) et suit ses démarches dans l'ordre. Écrans vérifiés le 12 octobre 2026 dans la documentation de Scalingo (lue dans son dépôt public, à jour au 9 octobre) et dans l'aide d'Apple pour les développeurs. La console Google n'a pas pu être ouverte depuis l'environnement de l'équipe : ses écrans sont décrits de mémoire et d'après des guides récents. Tout ce qui n'a pas pu être vérifié est marqué **« à vérifier sur l'écran »** : si l'écran dit autre chose, suivez l'écran et dites-le-nous en une ligne.*
+*Étape 6, travail 4. Back-end et Front-end, 12 octobre 2026 ; corrigé le même jour après les relectures (revue du code, Cohérence, Juridique, UX). Accompagne `docs/etape-6/test-18h.md` (validé, D-054) et suit ses démarches dans l'ordre. Écrans vérifiés le 12 octobre 2026 dans la documentation de Scalingo (lue dans son dépôt public, à jour au 9 octobre) et dans l'aide d'Apple pour les développeurs. La console Google n'a pas pu être ouverte depuis l'environnement de l'équipe : ses écrans sont décrits de mémoire et d'après des guides récents. Tout ce qui n'a pas pu être vérifié est marqué **« à vérifier sur l'écran »** : si l'écran dit autre chose, suivez l'écran et dites-le-nous en une ligne.*
 
 **Trois règles, pour tout ce qui suit.**
 1. **Vous ne nous envoyez jamais un mot de passe, une clé ni un code** (D-048). Vous les tapez vous-même chez Scalingo, Google ou Apple, et vous les gardez dans un gestionnaire de mots de passe (le trousseau de votre iPhone convient).
@@ -11,7 +11,7 @@
 |---|---|---|
 | J0, mardi 13 | Chercher les quatre prêteurs | 1 |
 | J1, mercredi 14 | Scalingo (première moitié), Google, Apple : environ 2 h | 2, 3, 4 |
-| J2, jeudi 15 | Votre feu vert écrit pour le lendemain ; la note aux prêteurs, dès que Scalingo a répondu | 5 |
+| J2, jeudi 15 | Votre feu vert écrit pour le lendemain ; la note aux prêteurs | 5 |
 | J3, vendredi 16 | Avant 15h : la mise en ligne, vos codes, votre iPhone (T1) ; à 18h, un premier message | 6 |
 | J4, samedi 17 | La séance d'installation ; à 18h, la répétition | 7 |
 | J5 à J7, dimanche 18 à mardi 20 | Les deux minutes du soir | 8 |
@@ -40,22 +40,31 @@ Si une version manque, prenez la plus proche ; le plus important est T2, et des 
 
 **Ce que vous notez, chez vous seulement** (jamais dans la conversation ni dans le dépôt) : qui a quel téléphone (T2 à T5). Vous effacerez cette liste le 20 novembre.
 
-**La note aux prêteurs** (`test-18h.md`, partie 5) ne part qu'à J2, une fois la réponse de Scalingo reçue (partie 2, étape 2.9).
+**La note aux prêteurs** (`test-18h.md`, partie 5, version relue par Juridique le 12 octobre 2026) part à J2 (partie 5). Elle n'attend plus la réponse de Scalingo.
 
 ---
 
 ## 2. Démarche 2 — Scalingo, première moitié (J1, environ 45 minutes)
 
-> **À lire avant (nouveau, lu le 12 octobre 2026 dans la documentation de Scalingo).** Scalingo demande désormais **une carte de paiement pour commencer l'essai gratuit**. Rien n'est prélevé pendant les 30 jours. Mais **à la fin de l'essai, la facturation commence d'elle-même** si l'application ou la base existent encore : Scalingo ne les supprime pas. L'effacement de la partie 10 les supprime ; faites-le avant le 30e jour. `test-18h.md` disait « sans carte » et « application arrêtée sans moyen de paiement » : c'était vrai à la lecture précédente, plus maintenant. Si vous ne voulez pas donner de carte, arrêtez-vous ici et dites-le-nous.
+**Ne commencez cette démarche qu'après votre réponse à la question de la carte (D-0xx).**
+
+> **Ce qu'il faut savoir de la carte** (documentation de Scalingo, lue le 12 octobre 2026). Scalingo demande une carte de paiement pour commencer l'essai gratuit. Rien n'est prélevé pendant les 30 jours. À la fin de l'essai, **la facturation commence d'elle-même** si l'application ou la base existent encore : Scalingo ne les supprime pas. Quatre garde-fous (Juridique) :
+> - la double vérification **avant** la carte, si l'écran le permet (2.2 avant la fin de 2.1) ;
+> - le jour de l'ouverture du compte, **notez la date de fin d'essai** (30 jours plus tard) ;
+> - l'équipe vous présente la suite, avec son montant, **au plus tard une semaine avant** cette date ; l'effacement (partie 10) supprime l'application et la base du test bien avant ;
+> - **ne touchez jamais le bouton « Stop free trial »** : il lance la facturation tout de suite.
+
+> **Prudence, après le bulletin de sécurité de Scalingo du 12 août 2026** (`test-18h.md`, partie 5) : un mot de passe propre à Scalingo ; ne suivez jamais le lien d'un e-mail « Scalingo », ouvrez le tableau de bord à la main (`https://dashboard.scalingo.com`) ; aucun nom d'application, de base ou de variable ne contient un prénom ou une information sur une personne.
 
 Ce jour-là, vous préparez tout chez Scalingo **sauf** la mise en ligne, qui attend le code relu et votre feu vert (partie 6).
 
 ### 2.1 Créer le compte
 1. Ouvrez `https://auth.scalingo.com/users/sign_up`.
 2. Choisissez **Personal**.
-3. Tapez votre adresse e-mail, puis un mot de passe fort (rangez-le dans votre gestionnaire).
+3. Tapez votre adresse e-mail, puis un mot de passe fort, propre à Scalingo (rangez-le dans votre gestionnaire).
 4. Touchez **Sign up with email**. (L'autre bouton, « Sign up with GitHub », marche aussi ; l'e-mail garde les deux comptes séparés.)
-5. Remplissez votre **profil de facturation** (à votre nom, D-042) et ajoutez la carte : c'est ce qui démarre l'essai.
+5. **Si l'écran vous laisse entrer dans le tableau de bord avant la carte, faites d'abord 2.2** (double vérification), puis revenez ici. Sinon, continuez et faites 2.2 tout de suite après (à vérifier sur l'écran).
+6. Remplissez votre **profil de facturation** (à votre nom, D-042) et ajoutez la carte : c'est ce qui démarre l'essai. **Notez la date de fin d'essai.**
 
 ### 2.2 La double vérification (P-16)
 1. Dans le tableau de bord, menu de votre compte, sous-menu **User Settings › Authentication**.
@@ -64,7 +73,7 @@ Ce jour-là, vous préparez tout chez Scalingo **sauf** la mise en ligne, qui at
 4. **Copiez les codes de secours** dans votre gestionnaire. Ne sautez pas ce point. Puis **Confirm**.
 
 ### 2.3 Le contrat de sous-traitance (RGPD, art. 28 ; condition bloquante de Juridique)
-Cherchez dans votre compte une page **Data Processing Agreement** (ou « DPA », « contrat de sous-traitance ») et acceptez-la. **À vérifier sur l'écran** : nous n'avons pas trouvé où elle se trouve dans le tableau de bord. Si vous ne la trouvez pas, la question 4 de l'étape 2.9 la demande.
+Cherchez dans votre compte une page **Data Processing Agreement** (ou « DPA », « contrat de sous-traitance ») et acceptez-la. **À vérifier sur l'écran** : nous n'avons pas trouvé où elle se trouve dans le tableau de bord. D'après Juridique, le contrat s'applique probablement d'office avec le contrat principal. **Gardez une preuve** : une capture de l'écran d'acceptation des conditions à l'inscription, ou la réponse écrite de Scalingo à la question 4 de 2.9. Sans l'une ou l'autre, aucune donnée n'entre dans la base (parties 6 et 7).
 
 ### 2.4 Lier Scalingo à GitHub (sans rien installer)
 1. Ouvrez `https://dashboard.scalingo.com/account/integrations`.
@@ -74,7 +83,7 @@ Cherchez dans votre compte une page **Data Processing Agreement** (ou « DPA »,
 1. Tableau de bord : **Create an application +**.
 2. **Basic information** : nom `elenchos-test-18h` ; région **osc-fr1** (« Paris - Outscale ») ; projet : celui proposé. Ne cochez pas la case « Health data hosting ».
 3. **Create app**.
-4. **Deployment method** : la documentation dit qu'on choisit ici le dépôt. **Ne lancez aucune installation aujourd'hui.** Si l'écran permet de passer cette étape, passez-la ; sinon, choisissez GitHub, le dépôt `ppcrepin/elenchos`, et **ne choisissez pas de branche, ou laissez l'installation automatique désactivée** (à vérifier sur l'écran). La branche `mise-en-ligne` n'existera qu'à J3 ; si quelque chose s'installe depuis `main` par erreur, dites-le-nous.
+4. **Deployment method** : la documentation dit qu'on choisit ici le dépôt. **Ne lancez aucune installation aujourd'hui** : rien ne s'installe jamais depuis `main` (D-054, point 1). Si l'écran permet de passer cette étape, passez-la. Si l'écran impose un dépôt et une branche, choisissez le dépôt, laissez **Automatic deployments** désactivé, ne lancez aucun déploiement manuel. Ouvrez ensuite l'onglet **Deploy** : aucun déploiement ne doit y apparaître. S'il y en a un, dites-le-nous tout de suite.
 
 Votre adresse sera : `https://elenchos-test-18h.osc-fr1.scalingo.io`.
 
@@ -84,12 +93,13 @@ Votre adresse sera : `https://elenchos-test-18h.osc-fr1.scalingo.io`.
 3. Le plus petit plan proposé (l'essai n'en autorise qu'un, le plus petit ; son nom exact est à vérifier sur l'écran, « Starter 512M » de mémoire). **Finish**.
 
 Deux réglages de la base, dans son propre tableau de bord (depuis l'addon PostgreSQL, lien vers le tableau de bord de la base) :
-4. **Pas de sauvegardes programmées (proposé).** Onglet **Backups › Logical backups**, bloc **Backup schedule**, **Schedule**, **décochez** « I want to enable scheduled backups », **Update**. Pourquoi : la documentation de Scalingo dit qu'une base supprimée **garde ses sauvegardes programmées** jusqu'à leur expiration (jusqu'à quatre semaines sur le plus petit plan). Sans elles, aucune copie des données des prêteurs ne survit à l'effacement. Le prix : si la base se perdait pendant le test, on recommencerait l'installation (environ une heure).
-5. **Connexion chiffrée obligatoire.** Onglet **Settings › Internet Access**, bloc **Force TLS connections**, **Enable**. Le programme du test se connecte toujours de façon chiffrée.
+4. **Pas de sauvegardes programmées, avant toute donnée** (condition 5 de Juridique). Onglet **Backups › Logical backups**, bloc **Backup schedule**, **Schedule**, **décochez** « I want to enable scheduled backups », **Update**. Si cette option n'existe pas sur le plan de l'essai, dites-le-nous avant de continuer. Pourquoi : la documentation de Scalingo dit qu'une base supprimée **garde ses sauvegardes programmées** jusqu'à leur expiration (jusqu'à quatre semaines sur le plus petit plan). Sans elles, aucune copie des données des prêteurs ne survit à l'effacement. Le prix : si la base se perdait pendant le test, on recommencerait l'installation (environ une heure).
+   **Ne faites jamais de sauvegarde manuelle** (bouton de sauvegarde à la demande) : elle survivrait un mois à la suppression de la base.
+5. **Connexion chiffrée obligatoire (proposé).** Onglet **Settings › Internet Access**, bloc **Force TLS connections**, **Enable**. Le programme du test se connecte toujours de façon chiffrée.
 
 ### 2.7 Deux réglages de l'application
-1. Onglet **Settings › Public Routing**, bloc **Force HTTPS** : activez.
-2. **Journaux du routeur** : laissez-les **désactivés** (c'est le réglage par défaut ; ils noteraient l'adresse internet de chaque téléphone). Ne les activez pas.
+1. Onglet **Settings › Public Routing**, bloc **Force HTTPS** : activez (proposé ; le programme renvoie aussi vers https).
+2. **Journaux du routeur** : vérifiez qu'ils sont **désactivés** (c'est le réglage par défaut ; ils noteraient l'adresse internet de chaque téléphone, gardée un an). Ne les activez jamais (condition 6 de Juridique ; emplacement du réglage à vérifier sur l'écran).
 
 ### 2.8 Les premiers réglages (variables d'environnement)
 Onglet **Environment**. Ajoutez ces deux variables (bouton d'ajout, ou édition en bloc : à vérifier sur l'écran). Elles ne sont pas secrètes.
@@ -100,13 +110,13 @@ SOIRS=2026-10-16=0@1;2026-10-17=0;2026-10-18=1;2026-10-19=2;2026-10-20=3
 ```
 
 - `PROJECT_DIR` dit à Scalingo d'installer le seul dossier `test-18h` du dépôt.
-- `SOIRS` est le calendrier des messages de 18h. Chaque morceau est « date = numéro du soir » : 0 pour la répétition (et `@1` : votre iPhone seulement, le vendredi), 1, 2 et 3 pour les trois soirs. **Si le calendrier glisse**, décalez les dates ; pour **ajouter un soir** à un seul téléphone, ajoutez par exemple `;2026-10-21=4@3` (un soir ajouté, pour T3 seulement). Un changement de cette variable redémarre l'application : **ne la changez jamais entre 17h45 et 18h35**.
+- `SOIRS` est le calendrier des messages de 18h. Chaque morceau est « date = numéro du soir » : 0 pour la répétition (et `@1` : votre iPhone seulement, le vendredi), 1, 2 et 3 pour les trois soirs. **Si le calendrier glisse**, décalez les dates ; pour **ajouter un soir** à un seul téléphone, ajoutez par exemple `;2026-10-21=4@3` (un soir ajouté, pour T3 seulement). Un changement de cette variable redémarre l'application : c'est une mise en ligne au sens de D-043. **Ne la changez jamais de 15h à 19h ni un dimanche.**
 - `SCALINGO_POSTGRESQL_URL` a été ajoutée par Scalingo avec la base : n'y touchez pas, ne la copiez nulle part.
 
 Les variables de Google et d'Apple s'ajoutent aux parties 3 et 4 ; les codes, à la partie 6.
 
 ### 2.9 Les questions écrites à Scalingo
-Depuis le tableau de bord, ouvrez l'aide de Scalingo (bulle de discussion ou formulaire de contact : à vérifier sur l'écran) et envoyez ce texte :
+Elles ne bloquent plus rien : la note aux prêteurs dit déjà la durée la plus longue, un an. Depuis le tableau de bord, ouvrez l'aide de Scalingo (bulle de discussion ou formulaire de contact : à vérifier sur l'écran) et envoyez ce texte :
 
 > Bonjour, je teste un service sur votre essai gratuit (application elenchos-test-18h, région osc-fr1). J'ai besoin de quatre réponses écrites pour informer les personnes concernées (RGPD) :
 > 1. Journaux : votre documentation indique que tous les journaux sont gardés un an. Est-ce vrai pour les journaux de l'application, ceux du routeur (que je n'active pas) et les « métadonnées de connexion » ? Contiennent-ils l'adresse IP des visiteurs ? Restent-ils un an après la suppression de l'application ?
@@ -115,7 +125,7 @@ Depuis le tableau de bord, ouvrez l'aide de Scalingo (bulle de discussion ou for
 > 4. Le contrat de sous-traitance (DPA) s'applique-t-il pendant l'essai gratuit, et où l'accepter dans mon compte ?
 > Merci.
 
-**Quand Scalingo répond**, copiez-nous seulement les chiffres et les noms (durées, liste des sous-traitants), pas l'échange entier. **Ce que l'équipe sait déjà, franchement** : la documentation de Scalingo dit « tous les journaux sont gardés un an » (obligation légale française). Le [N] de la note aux prêteurs serait donc d'environ 365 jours, et non de quelques jours. L'équipe vérifie avec Juridique si la note doit changer **avant** que vous la remettiez : attendez son retour.
+**Quand Scalingo répond**, copiez-nous seulement les chiffres et les noms (durées, liste des sous-traitants), pas l'échange entier. Ce que l'équipe sait déjà : la documentation de Scalingo dit « tous les journaux sont gardés un an » (obligation légale française) ; la note le dit. Si Scalingo répond avant J2 que sa trace des connexions ne contient pas l'adresse internet, Juridique allège la phrase ; sinon, la note part telle quelle. La réponse à la question 4 sert de preuve pour le contrat (2.3).
 
 ---
 
@@ -149,6 +159,8 @@ Menu ☰ › **Google Auth Platform** (parfois « API et services › Écran de 
    `https://elenchos-test-18h.osc-fr1.scalingo.io/connexion/google/retour`
 5. **Créer**. Une fenêtre montre l'**ID client** et le **code secret du client**. **Le code secret ne sera plus montré une fois la fenêtre fermée** (Google, depuis juin 2025) : gardez la fenêtre ouverte et passez à 3.5, ou téléchargez le fichier JSON proposé et rangez-le dans votre gestionnaire.
 
+Si la console refuse cette adresse de redirection, arrêtez-vous et dites-le-nous : la question du domaine vous revient avant tout achat (D-054, point 2).
+
 ### 3.5 Les deux réglages chez Scalingo
 Onglet **Environment** de l'application, deux variables :
 ```
@@ -163,21 +175,21 @@ Fermez ensuite la fenêtre de Google.
 
 Dans votre compte développeur : `https://developer.apple.com/account`, puis **Certificates, Identifiers & Profiles**. Vérifié dans l'aide d'Apple le 12 octobre 2026, sauf mention.
 
-Les noms proposés ci-dessous resserviront à la connexion du jeu (travail 9) : **gardez-les ensuite** (proposé).
+Les identifiants ci-dessous servent au test seulement. Ceux du jeu seront créés plus tard, au travail 9, avec le nom et le domaine définitifs.
 
 ### 4.1 L'identifiant d'application (App ID)
 1. **Identifiers** dans la barre de gauche, puis le bouton **+** en haut à gauche.
 2. **App IDs**, **Continue** ; type **App**, **Continue**.
-3. **Description** : `Elenchos`. **Bundle ID** : **Explicit**, `io.github.ppcrepin.elenchos` (proposé : un nom qui vous appartient déjà, celui de votre page GitHub ; il ne peut plus être changé ensuite).
+3. **Description** : `Test 18h`. **Bundle ID** : **Explicit**, `io.github.ppcrepin.test18h` (un nom qui vous appartient déjà, celui de votre page GitHub, et qui ne dit rien du jeu).
 4. Dans la liste **Capabilities**, cochez **Sign In with Apple**.
 5. **Continue**, vérifiez, **Register**.
 
 ### 4.2 L'identifiant de service (Services ID)
 1. **Identifiers**, **+**, **Services IDs**, **Continue**.
-2. **Description** : `Elenchos (test)` (de mémoire, c'est ce nom qu'Apple montre sur son écran de connexion). **Identifier** : `io.github.ppcrepin.elenchos.web`.
+2. **Description** : `Test 18h` (de mémoire, c'est ce nom qu'Apple montre sur son écran de connexion). **Identifier** : `io.github.ppcrepin.test18h.web`.
 3. **Continue**, **Register**.
 4. Dans la liste, touchez ce Services ID. Cochez **Sign In with Apple**, puis **Configure** :
-   - **Primary App ID** : `Elenchos` (créé en 4.1) ;
+   - **Primary App ID** : `Test 18h` (créé en 4.1) ;
    - **Domains and Subdomains** : `elenchos-test-18h.osc-fr1.scalingo.io`
    - **Return URLs** : `https://elenchos-test-18h.osc-fr1.scalingo.io/connexion/apple/retour`
    - **Done**, puis **Continue**, puis **Save**.
@@ -186,7 +198,7 @@ Les noms proposés ci-dessous resserviront à la connexion du jeu (travail 9) : 
 
 ### 4.3 La clé privée
 1. **Keys** dans la barre de gauche, **+**.
-2. **Key Name** : `Elenchos test 18h`. Cochez **Sign in with Apple**, puis **Configure** à côté : **Primary App ID** `Elenchos`, **Save**.
+2. **Key Name** : `Test 18h`. Cochez **Sign in with Apple**, puis **Configure** à côté : **Primary App ID** `Test 18h`, **Save**.
 3. **Continue**, **Register**.
 4. **Download** : un fichier `AuthKey_XXXXXXXXXX.p8` arrive dans vos Téléchargements. **Apple ne le donne qu'une fois.** Rangez-le dans votre gestionnaire de mots de passe (pièce jointe), puis supprimez-le des Téléchargements après l'étape 4.5.
 5. Notez le **Key ID** affiché (10 caractères).
@@ -197,7 +209,7 @@ En haut à droite de la page du compte, ou **Membership details** : le **Team ID
 ### 4.5 Les quatre réglages chez Scalingo
 Onglet **Environment** :
 ```
-APPLE_ID_SERVICE=io.github.ppcrepin.elenchos.web
+APPLE_ID_SERVICE=io.github.ppcrepin.test18h.web
 APPLE_ID_EQUIPE=…le Team ID
 APPLE_ID_CLE=…le Key ID
 APPLE_CLE_PRIVEE=…le contenu du fichier .p8
@@ -214,7 +226,9 @@ Les agents ne mettent rien en ligne sans votre accord écrit, donné **la veille
 
 Le lendemain matin, l'équipe pousse le code relu sur la branche `mise-en-ligne`, avant 15h, et vous prévient. Rien ne part de 15h à 19h ni le dimanche : la fabrication chez Scalingo elle-même échoue exprès dans ces créneaux (garde des horaires).
 
-**La note aux prêteurs** part aussi ce jour-là, à condition que Scalingo ait répondu et que l'équipe vous ait rendu la note avec le bon [N] (partie 2.9). Remplissez [n] (le numéro du téléphone de chacun), les dates et vos coordonnées.
+Il en va de même pour chaque correction ensuite : l'équipe ne pousse rien sur `mise-en-ligne` sans un nouveau message de vous, écrit la veille : « Feu vert : mise en ligne de la correction demain, [jour], avant 15h. » Une correction qu'un défaut oblige à pousser le dimanche ou entre 15h et 19h n'est pas faite ; elle attend.
+
+**La note aux prêteurs** part aussi ce jour-là (version relue par Juridique le 12 octobre 2026, `test-18h.md`, partie 5). Remplissez [n] (le numéro du téléphone de chacun), les deux dates, [Test 18h] et vos coordonnées.
 
 ---
 
@@ -244,6 +258,8 @@ Ne nous envoyez jamais ces valeurs. Si l'une d'elles fuit, recommencez 6.2 (les 
 3. Section **Calendrier des envois** : les dates de `SOIRS`, avec « (aujourd'hui) » sur le bon jour.
 
 ### 6.4 Votre iPhone (T1)
+**Avant de mettre la moindre donnée dans la base (votre iPhone compris) : le contrat de sous-traitance de Scalingo est accepté (2.3) et Scalingo a confirmé par écrit qu'il couvre l'essai gratuit (2.9, question 4). Sinon, ne continuez pas et dites-le-nous.** Juridique accepte aussi, comme preuve, la capture de l'écran d'acceptation des conditions à l'inscription (2.3).
+
 Suivez la fiche de la partie 7 pour votre iPhone, avec le code T1, **puis la connexion Apple** (7.3). Puis, sur la page de résultats : **Message d'essai** sur la ligne T1. À 18h00, votre iPhone reçoit « Test, répétition » : regardez la ligne dans le tableau vers 18h05.
 
 Si l'écran de Google ou d'Apple refuse l'adresse de Scalingo, arrêtez et dites-le-nous : la question du domaine vous revient (D-054, point 2).
@@ -251,6 +267,8 @@ Si l'écran de Google ou d'Apple refuse l'adresse de Scalingo, arrêtez et dites
 ---
 
 ## 7. Démarche 5 — La séance d'installation (J4, environ 15 minutes par téléphone)
+
+**Avant de mettre la moindre donnée dans la base (votre iPhone compris) : le contrat de sous-traitance de Scalingo est accepté (2.3) et Scalingo a confirmé par écrit qu'il couvre l'essai gratuit (2.9, question 4). Sinon, ne continuez pas et dites-le-nous.** Juridique accepte aussi, comme preuve, la capture de l'écran d'acceptation des conditions à l'inscription (2.3).
 
 **Avant de toucher au téléphone** : la note a été remise (condition bloquante), le prêteur est majeur, le téléphone n'est qu'à lui.
 
@@ -260,20 +278,20 @@ Ayez sur votre propre iPhone la page de résultats ouverte (partie 6.3), et le m
 1. **Noter, sans rien changer** (liste de contrôle) : la version d'iOS (**Réglages › Général › Informations**) ; si une **Concentration** est programmée (**Réglages › Concentration**) ; si le **Résumé programmé** est actif (**Réglages › Notifications › Résumé programmé**) ; si le **mode Économie d'énergie** est actif (**Réglages › Batterie**). Vous notez « oui/non », jamais les horaires du prêteur.
 2. **Safari** : tapez `elenchos-test-18h.osc-fr1.scalingo.io` dans la barre d'adresse. La page « Test du message de 18h » s'ouvre.
 3. **Continuer avec Google**. Sur la page de Google, **c'est vous qui tapez**, avec le compte de test, jamais celui du prêteur. Si Google affiche « Google n'a pas validé cette application », touchez **Continuer** (à vérifier sur l'écran). **Si Google affiche une erreur** (par exemple « disallowed_useragent »), notez-la mot pour mot : c'est un résultat du test.
-4. De retour sur la page : « Connexion : avec Google ».
+4. De retour sur la page : « Connexion : connecté avec Google ».
 5. **Ajouter à l'écran d'accueil** : bouton **Partager** (le carré avec une flèche vers le haut ; sur iOS 26, il peut se trouver dans le menu **⋯**, à vérifier sur l'écran), puis **Sur l'écran d'accueil**. Le nom proposé est « Test 18h » : gardez-le. Sur iOS 26, si un réglage « Ouvrir comme app web » apparaît, laissez-le **activé**. **Ajouter**.
-6. **Ouvrez l'icône** « Test 18h ». La page dit « Ouverte depuis l'icône : oui ». La connexion dit probablement « pas connecté » : l'icône a sa propre mémoire. Touchez **Continuer avec Google** et refaites 3. **Notez** : êtes-vous revenu dans l'icône, ou dans Safari ? La page dit-elle « avec Google » ?
-7. **Recevoir le message de 18h**. Tapez le **code d'essai de ce téléphone** (T2 pour le téléphone 2, etc.), **Valider le code**. La page dit « Code accepté : téléphone n ».
-8. **Autoriser les messages**, puis **Autoriser** dans la fenêtre de l'iPhone. La page dit « C'est fait ». En haut : « Messages : autorisés ».
+6. **Ouvrez l'icône** « Test 18h ». La page dit « Ouverte depuis l'icône : oui ». La connexion dit probablement « aucune » : l'icône a sa propre mémoire. Touchez **Continuer avec Google** et refaites 3. **Notez** : êtes-vous revenu dans l'icône, ou dans Safari ? La page dit-elle « connecté avec Google » ? Si une page dit « La connexion a expiré, ou elle s'est terminée dans Safari au lieu de l'icône », notez-le : c'est l'échec que le test cherche exprès.
+7. **Recevoir le message de 18h**. Tapez le **code d'essai de ce téléphone** (T2 pour le téléphone 2, etc.), **Valider**. La page dit « C'est le téléphone n. Touche « Autoriser les messages », puis « Autoriser ». »
+8. **Autoriser les messages**, puis **Autoriser** dans la fenêtre de l'iPhone. La page dit « C'est fait ». En haut : « Messages de 18h : autorisés », puis « Tout est prêt. Rien à toucher ici. »
 9. Sur **votre** iPhone, page de résultats : ligne de ce téléphone, **Message d'essai**. Dans la minute, le téléphone du prêteur affiche « Test, message d'essai ». **Ne le touchez pas** : lisez-le, c'est tout. Rechargez la page de résultats : la ligne dit « accepté » et une heure de réception.
 10. Sur la page de résultats, ligne de ce téléphone : tapez sa version (forme `iOS 17.6`), **Noter**.
-11. **Fermez l'icône** (balayez vers le haut). Rappelez au prêteur : ne plus ouvrir l'icône ni toucher le message avant le soir 3 ; un SMS chaque soir.
+11. **Fermez l'icône** (balayez vers le haut). Rappelez au prêteur : ne plus ouvrir l'icône ni toucher le message avant le soir 3 ; un SMS chaque soir. Dites-lui aussi de ne toucher aucun bouton de la page avant votre signal.
 
 ### 7.2 Ce qu'on ne fait jamais sur T2 à T5
-**Jamais « Continuer avec Apple »** : Safari proposerait le compte Apple du prêteur. Si cela arrive quand même : page de résultats, section **Connexions**, **Effacer** le compte Apple apparu ; le prêteur retire le lien dans **Réglages › [son nom] › Connexion et sécurité › Se connecter avec Apple** (à vérifier sur l'écran).
+**Jamais « Continuer avec Apple »** : Safari proposerait le compte Apple du prêteur. Le bouton n'y est pas montré, et le serveur refuse la connexion Apple hors du téléphone 1 (le téléphone garde son numéro après l'abonnement). Si cela arrivait quand même : page de résultats, section **Connexions**, **Effacer** le compte Apple apparu ; le prêteur retire le lien dans **Réglages › [son nom] › Connexion et sécurité › Se connecter avec Apple** (à vérifier sur l'écran).
 
 ### 7.3 Seulement sur votre iPhone (T1) : la connexion Apple
-Depuis l'icône : **Continuer avec Apple**, avec votre propre compte Apple. Apple peut proposer de partager ou de masquer votre adresse : les deux conviennent, elle n'est jamais gardée. Notez si vous revenez dans l'icône, connecté « avec Apple ». La section **Connexions** de la page de résultats montre alors deux comptes : un Google, un Apple.
+Depuis l'icône, **après** l'abonnement avec le code T1 (le bouton n'apparaît qu'ensuite) : **Continuer avec Apple**, avec votre propre compte Apple. Apple peut proposer de partager ou de masquer votre adresse : les deux conviennent, elle n'est jamais gardée. Notez si vous revenez dans l'icône, « connecté avec Apple ». La section **Connexions** de la page de résultats montre alors deux comptes : un Google, un Apple.
 
 **À 18h ce jour-là**, les cinq téléphones reçoivent « Test, répétition » : c'est la répétition, elle ne compte pas.
 
@@ -282,13 +300,13 @@ Depuis l'icône : **Continuer avec Apple**, avec votre propre compte Apple. Appl
 ## 8. Démarche 6 — Les deux minutes du soir (J5 à J7, vers 18h10)
 
 1. Ouvrez la page de résultats (votre code d'accès vous est redemandé toutes les douze heures).
-2. Pour chaque téléphone, la ligne du soir : **Réponse du service** « accepté », une heure **Reçu**, l'**Écart** en secondes et un **Classement** (à l'heure avant 18h02, acceptable avant 18h05, en retard jusqu'à 18h30, manqué au-delà).
-3. Lisez les SMS des prêteurs. Dans la zone **À copier pour l'équipe**, chaque ligne finit par « vu : ___ » : dans **votre** copie, remplacez-le le soir même par « à l'heure (avant 18h05) », « plus tard » ou « rien vu » ; laissez vide pour « éteint » (le soir ne compte pas). Jamais l'heure exacte du SMS.
+2. Pour chaque téléphone, la ligne du soir : **Réponse du service** « accepté », une heure **Reçu**, l'**Écart** en secondes et un **Résultat** (à l'heure avant 18h02, acceptable avant 18h05, en retard jusqu'à 18h30, manqué au-delà).
+3. Lisez les SMS des prêteurs. Dans la zone **À copier pour l'équipe**, chaque ligne finit par « vu : ___ » : dans **votre** copie, collée ailleurs, remplacez-le le soir même : « vu à 18h03 » donne « à l'heure », « vu à 18h20 » donne « plus tard », « rien vu » reste « rien vu » ; pour « éteint », effacez « ___ » sans rien écrire (le soir ne compte pas). Jamais l'heure exacte du SMS.
 4. **Si une ligne est mauvaise** (« refusé », « manqué », « envoi interrompu », rien à 18h05) : regardez vous-même, sans nous envoyer de journal ; demandez au prêteur si son téléphone était éteint ou sans réseau. Envoyez-nous seulement une ligne du type « T4 : non reçu, téléphone allumé ». L'équipe applique les règles de `test-18h.md`, partie 1 (« Ce qu'on fait en cas d'échec »).
 
-**Le soir 3 (J7)** : chaque prêteur éteint puis rallume son téléphone **avant 18h**. À 18h10, votre iPhone reçoit en plus « Test, soir 3 sur 3 (seconde forme) » (si votre iPhone est en iOS 18.4 ou plus récent) : sa ligne apparaît avec « seconde forme ». Après le message, chacun **ouvre enfin l'icône** et vous dit si elle affiche « Connexion : avec Google » (« avec Apple » sur le vôtre).
+**Le soir 3 (J7)** : chaque prêteur éteint puis rallume son téléphone **avant 18h**. À 18h10, votre iPhone reçoit en plus « Test, soir 3 sur 3 (seconde forme) » (si votre iPhone est en iOS 18.4 ou plus récent) : sa ligne apparaît avec « seconde forme ». Après le message, chacun **ouvre enfin l'icône** et vous dit si elle affiche « Connexion : connecté avec Google » (« connecté avec Apple » sur le vôtre). Chaque prêteur regarde la ligne « Connexion », puis ferme l'icône **sans toucher aucun bouton de la page**, surtout pas « Continuer avec Apple ».
 
-**Ajouter un soir** pour un téléphone : modifiez `SOIRS` chez Scalingo (partie 2.8), jamais entre 17h45 et 18h35.
+**Ajouter un soir** pour un téléphone : modifiez `SOIRS` chez Scalingo (partie 2.8), jamais de 15h à 19h ni un dimanche.
 
 **Un prêteur se retire** : le jour même, page de résultats, **Effacer sa ligne** ; il supprime l'icône ; dites-nous seulement « T3 retiré ».
 
@@ -307,13 +325,20 @@ Depuis l'icône : **Continuer avec Apple**, avec votre propre compte Apple. Appl
 Dans cet ordre :
 
 1. **Copier le tableau.** Page de résultats, zone **À copier pour l'équipe**, **Copier**. Complétez les « vu » depuis votre copie. Collez le tout dans la conversation : seulement ces lignes, sans nom. Gardez votre copie jusqu'au 20 novembre.
-2. **Les téléphones prêtés** (avec chaque prêteur, ou en le lui demandant) : ouvrir l'icône, **Se déconnecter** ; puis appui long sur l'icône, **Supprimer l'app** (ou « Supprimer de l'écran d'accueil »), confirmer. Les messages s'arrêtent aussi (de mémoire). Faites de même sur votre iPhone.
+2. **Les téléphones prêtés** (avec chaque prêteur, ou en le lui demandant) : ouvrir l'icône, **Se déconnecter** ; puis appui long sur l'icône. Il faut le geste qui **supprime** l'icône, pas celui qui la retire seulement de l'écran d'accueil (à vérifier sur l'écran, selon la version d'iOS) :
+   - si le menu propose **Supprimer l'app** (ou **Supprimer le signet**), choisissez-le, puis confirmez **Supprimer** ;
+   - s'il ne propose que **Supprimer de l'écran d'accueil**, ou si une fenêtre propose les deux, prenez celui qui **supprime** ; vérifiez ensuite que « Test 18h » n'apparaît plus dans la Bibliothèque d'apps (balayer l'écran d'accueil jusqu'au bout, à droite) et, s'il y est encore, supprimez-le de là.
+   Quoi qu'il arrive, aucun message ne peut plus arriver une fois l'application et la base supprimées chez Scalingo (étape 4). Faites de même sur votre iPhone.
 3. **Tout effacer.** Page de résultats, section **Tout effacer** : tapez `EFFACER`, touchez **Tout effacer**. La page doit dire **« Base vide : vérifié »**, avec zéro ligne partout. Sinon, ne supprimez rien et dites-le-nous.
-4. **Supprimer chez Scalingo.** Application `elenchos-test-18h`, onglet **Settings**, **Delete app**, remplissez la confirmation, confirmez. Vérifiez ensuite, onglet **Resources** d'une autre page ou page **Billing**, qu'aucune base ni application ne reste (à vérifier sur l'écran : la documentation ne dit pas si la base part avec l'application ; si elle reste, supprimez-la depuis son addon). **Faites-le avant le 30e jour de l'essai** : sinon, la facturation commence.
-   - Si vous avez désactivé les sauvegardes programmées (2.6), aucune copie de la base ne reste. Sinon, elles expirent d'elles-mêmes en quatre semaines au plus (documentation de Scalingo).
-   - Les journaux de Scalingo suivent leur propre durée (réponse à la question 1 de 2.9).
+4. **Supprimer chez Scalingo** (condition 5 de Juridique). « Tout effacer » a vidé la base ; il faut maintenant la **supprimer** : sa copie continue des changements (7 jours) ne part qu'avec elle.
+   - Application `elenchos-test-18h`, onglet **Resources**, bloc **Addons**, l'addon PostgreSQL : supprimez-le (à vérifier sur l'écran).
+   - Puis onglet **Settings**, **Delete app**, remplissez la confirmation, confirmez.
+   - Ouvrez la page **Billing** (et la liste de vos applications) : **plus aucune application ni base**. S'il en reste une, supprimez-la et dites-le-nous.
+   - **Faites-le avant le 30e jour de l'essai** : sinon, la facturation commence.
+   - Si vous avez désactivé les sauvegardes programmées (2.6) et n'avez jamais fait de sauvegarde manuelle, aucune copie de la base ne devrait rester (confirmez avec la réponse de Scalingo à la question 2 de 2.9). Sinon, elles expirent d'elles-mêmes : quatre semaines au plus pour les sauvegardes programmées, un mois pour une sauvegarde manuelle (documentation de Scalingo).
+   - La trace des connexions gardée par Scalingo reste un an, par obligation légale ; ni vous ni l'équipe ne pouvez l'effacer (la note le dit).
 5. **Google.** Connecté avec le **compte de test** : `https://myaccount.google.com`, **Sécurité**, **Vos connexions à des applications et services tiers**, `Elenchos (test)`, **Supprimer l'accès** (à vérifier sur l'écran). Puis **Données et confidentialité**, **Supprimer votre compte Google** (à vérifier sur l'écran). Avec **votre** compte, console Google, **Clients**, `test-18h` : retirez l'URI de redirection, enregistrez. Gardez le projet (il resservira, proposé).
-6. **Apple.** Sur votre iPhone : **Réglages › [votre nom] › Connexion et sécurité › Se connecter avec Apple**, `Elenchos (test)`, **Ne plus utiliser** (à vérifier sur l'écran). Dans le compte développeur, **Identifiers**, Services ID `io.github.ppcrepin.elenchos.web`, **Sign In with Apple › Configure** : retirez le domaine et l'adresse de retour, **Done**, **Continue**, **Save**. Gardez les identifiants et le fichier .p8 dans votre gestionnaire (ils resserviront, proposé).
+6. **Apple.** Sur votre iPhone : **Réglages › [votre nom] › Connexion et sécurité › Se connecter avec Apple**, `Test 18h`, **Ne plus utiliser** (à vérifier sur l'écran). Dans le compte développeur, **Identifiers**, Services ID `io.github.ppcrepin.test18h.web`, **Sign In with Apple › Configure** : retirez le domaine et l'adresse de retour, **Done**, **Continue**, **Save**. Les identifiants du test ne resserviront pas ; ceux du jeu seront créés au travail 9, avec le nom définitif. Gardez le fichier .p8 dans votre gestionnaire.
 7. **La ligne datée.** Écrivez, chez vous : « Test du message de 18h : effacé le [date], vérifié. » Confirmez-le à chaque prêteur, comme la note le promet. Effacez dans vos SMS les seuls messages du test (pas le reste de vos conversations).
 8. **Le 20 novembre 2026** : effacez votre copie du tableau et la liste « qui a quel téléphone », et ajoutez-le sur la même ligne datée.
 
@@ -323,6 +348,8 @@ Dans cet ordre :
 
 - **Les écrans de la console Google** : le site n'a pas pu être ouvert depuis l'environnement de l'équipe ; noms des menus de mémoire et d'après des guides récents.
 - **Où accepter le contrat de sous-traitance de Scalingo**, le nom exact du plus petit plan PostgreSQL, l'édition des variables en bloc, l'écran « Deployment method » à la création de l'application, et si la base part avec l'application supprimée.
-- **Les gestes d'iOS 26** (bouton Partager, « Ouvrir comme app web ») et les chemins exacts des Réglages pour « Se connecter avec Apple ».
+- **Les gestes d'iOS 26** (bouton Partager, « Ouvrir comme app web »), le geste qui **supprime** l'icône selon la version d'iOS, et les chemins exacts des Réglages pour « Se connecter avec Apple ».
+- **La carte** : la documentation de Scalingo la demande ; ses pages commerciales disaient encore « sans carte ». C'est l'écran qui tranchera.
+- **Où se trouve le réglage des journaux du routeur**, et le contenu des « métadonnées de connexion » de Scalingo.
 - **Apple et l'adresse `scalingo.io`** : on le saura à l'étape 4.2.
 - **Le code n'a jamais tourné chez Scalingo, ni vers le vrai service d'Apple, ni avec les vrais Google et Apple** : il a passé ses tests automatiques contre des imitations fidèles. C'est la raison d'être du message d'essai de J3.

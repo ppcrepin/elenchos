@@ -70,8 +70,21 @@ test('la déconnexion depuis la page des téléphones marche par le vrai formula
   }]);
   const page = await contexte.newPage();
   await page.goto(origine + '/');
-  await page.waitForSelector('#etat-connexion:has-text("avec Google")');
+  await page.waitForSelector('#etat-connexion:has-text("connecté avec Google")');
+  assert.equal(await page.isVisible('#apple'), false, 'Apple caché hors du téléphone 1');
   await page.click('#form-sortie button');
-  await page.waitForSelector('#etat-connexion:has-text("pas connecté")');
+  await page.waitForSelector('#etat-connexion:has-text("aucune")');
   await contexte.close();
+});
+
+test('page des téléphones dans Safari (hors de l’icône) : trois lignes, Apple caché, aide vers l’icône', async () => {
+  const page = await navigateur.newPage();
+  await page.goto(origine + '/');
+  await page.waitForSelector('#etat-connexion:has-text("aucune")');
+  assert.equal(await page.textContent('#etat-icone'), 'non');
+  assert.equal(await page.isVisible('#apple'), false);
+  assert.equal(await page.isVisible('#pret'), false);
+  await page.click('#recevoir');
+  await page.waitForSelector('text=Les messages n’arrivent que dans l’icône.');
+  await page.close();
 });

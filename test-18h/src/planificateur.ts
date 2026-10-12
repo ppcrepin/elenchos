@@ -6,7 +6,7 @@
 //   rattrape plus rien (le message serait « manqué » de toute façon).
 // - Si le serveur s'arrête entre le verrou et l'envoi, la ligne reste sans réponse et rien n'est renvoyé :
 //   ne jamais envoyer deux fois passe avant tout (la page de résultats montre « envoi interrompu »).
-// JETABLE : les textes « Test, soir n sur 3 » (mots provisoires, à revoir par UX) et la seconde forme du soir 3.
+// JETABLE : les textes « Test, soir n sur 3 » (mots relus par UX le 12 octobre 2026) et la seconde forme du soir 3.
 
 import { randomUUID } from 'node:crypto';
 import type pg from 'pg';
@@ -19,7 +19,7 @@ export const RATTRAPAGE_MS = 30 * 60_000; // après 18h30, on ne rattrape plus
 const PAS_EN_CRENEAU_MS = 15_000;
 const PAS_HORS_CRENEAU_MS = 60_000;
 
-// Mots provisoires, à revoir par UX. Neutres, sans rien du jeu (avis de Juridique, D-014).
+// Mots relus par UX le 12 octobre 2026. Neutres, sans rien du jeu (avis de Juridique, D-014).
 export function titreDuSoir(numero: number): string {
   if (numero === 0) return 'Test, répétition';
   if (numero >= 1 && numero <= 3) return `Test, soir ${numero} sur 3`;

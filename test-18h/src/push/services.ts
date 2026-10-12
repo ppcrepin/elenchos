@@ -1,10 +1,9 @@
-// REPRIS pour le vrai jeu (proposé) : la liste fermée des services d'acheminement des messages (P-12, D-043).
-// Le serveur n'envoie jamais à une adresse hors de cette liste : un abonnement vers ailleurs est refusé.
-// Apple : https://*.push.apple.com (vérifié, documentation d'Apple). Les autres : de mémoire, gardés pour le relevé de P-12.
+// REPRIS pour le vrai jeu (proposé) : la liste fermée des services d'acheminement des messages (P-12, D-043, D-054).
+// Le jeu se joue sur iPhone seulement (D-054) : un seul service, celui d'Apple, https://*.push.apple.com
+// (vérifié, documentation d'Apple). Le serveur n'envoie jamais ailleurs : un abonnement vers un autre service
+// (un Mac sous Chrome, par exemple) est refusé à l'abonnement, et le refus est noté au journal sans l'adresse.
 
-export type Service = 'apple' | 'google' | 'mozilla' | 'microsoft';
-
-export function serviceDe(adresse: string): Service | null {
+export function serviceDe(adresse: string): 'apple' | null {
   let url: URL;
   try {
     url = new URL(adresse);
@@ -12,14 +11,5 @@ export function serviceDe(adresse: string): Service | null {
     return null;
   }
   if (url.protocol !== 'https:' || url.username || url.password || (url.port && url.port !== '443')) return null;
-  const h = url.hostname.toLowerCase();
-  if (h.endsWith('.push.apple.com')) return 'apple';
-  if (h === 'fcm.googleapis.com') return 'google';
-  if (h === 'updates.push.services.mozilla.com') return 'mozilla';
-  if (h.endsWith('.notify.windows.com')) return 'microsoft';
-  return null;
+  return url.hostname.toLowerCase().endsWith('.push.apple.com') ? 'apple' : null;
 }
-
-export const NOMS_SERVICES: Record<Service, string> = {
-  apple: 'Apple', google: 'Google', mozilla: 'Mozilla', microsoft: 'Microsoft',
-};

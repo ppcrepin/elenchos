@@ -3,7 +3,7 @@
 // L'adresse de l'abonnement n'est jamais écrite dans un journal (P-07).
 
 import { createECDH } from 'node:crypto';
-import { clePriveeP256, deB64url, jwtES256 } from '../crypto.ts';
+import { clePriveeP256, completer32, deB64url, jwtES256 } from '../crypto.ts';
 import type { Horloge } from '../horloge.ts';
 import { chiffrerMessage, type ClesAbonnement } from './chiffrement.ts';
 import { serviceDe } from './services.ts';
@@ -87,7 +87,7 @@ export function creerEnvoyeur(vapid: CleVapid, horloge: Horloge, fetchImpl: Fetc
 export function verifierCleVapid(publique: string, privee: string): boolean {
   try {
     const ecdh = createECDH('prime256v1');
-    ecdh.setPrivateKey(deB64url(privee));
+    ecdh.setPrivateKey(completer32(deB64url(privee)));
     return ecdh.getPublicKey().equals(deB64url(publique)) && clePriveeP256(privee, publique) !== null;
   } catch {
     return false;

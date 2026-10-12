@@ -21,7 +21,7 @@ export type Route = (typeof ROUTES)[number];
 const DETAILS = [
   'pret', 'reglages incomplets', 'horloge arretee', 'horloge en marche', 'creneau', 'abonnement expire',
   'service refuse', 'envoi interrompu', 'base videe', 'base non vide', 'ligne effacee', 'compte efface',
-  'refus code', 'trop d essais', 'origine refusee', 'refus fournisseur', 'etat different', 'jeton refuse',
+  'refus code', 'refus telephone', 'trop d essais', 'origine refusee', 'refus fournisseur', 'etat different', 'jeton refuse',
   'reussie', 'pas de base', 'schema pret', 'signal', 'essai',
 ] as const;
 export type Detail = (typeof DETAILS)[number];

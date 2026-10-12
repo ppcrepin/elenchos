@@ -98,9 +98,27 @@ test('en-têtes de sécurité et demande de non-référencement sur toutes les r
     assert.match(r.entetes.get('content-security-policy') ?? '', /default-src 'none'/, chemin);
     assert.equal(r.entetes.get('x-content-type-options'), 'nosniff');
     assert.equal(r.entetes.get('x-robots-tag'), 'noindex, nofollow');
-    assert.equal(r.entetes.get('referrer-policy'), 'no-referrer');
+    assert.equal(r.entetes.get('referrer-policy'), 'same-origin');
   }
   assert.equal((await demander('/introuvable', { origine: null })).statut, 404);
+});
+
+test('origine : celle de la page, ou « Sec-Fetch-Site: same-origin » ; jamais une autre, jamais rien', async () => {
+  const sans = await fetch(adresse + '/api/code', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: 'null', 'Sec-Fetch-Site': 'same-origin' }, body: JSON.stringify({ code: CODES[2] }) });
+  assert.equal(sans.status, 200);
+  const nul = await fetch(adresse + '/api/code', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: 'null' }, body: JSON.stringify({ code: CODES[2] }) });
+  assert.equal(nul.status, 403);
+  const croise = await fetch(adresse + '/api/code', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: 'null', 'Sec-Fetch-Site': 'cross-site' }, body: JSON.stringify({ code: CODES[2] }) });
+  assert.equal(croise.status, 403);
+});
+
+test('une erreur sur une navigation répond par une page lisible ; sur un appel de la page, en JSON', async () => {
+  const page = await fetch(adresse + '/resultats/essai', { method: 'POST', headers: { Origin: 'https://autre.exemple.invalid', Accept: 'text/html', 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'telephone=1' });
+  assert.equal(page.status, 403);
+  assert.match(page.headers.get('content-type') ?? '', /text\/html/);
+  assert.match(await page.text(), /La demande n’a pas abouti/);
+  const appel = await demander('/api/code', { json: { code: CODES[2] }, origine: 'https://autre.exemple.invalid' });
+  assert.deepEqual(JSON.parse(appel.texte), { erreur: 403 });
 });
 
 test('codes d’essai : sans code ou faux, refusé ; le bon code donne son téléphone ; jamais sans la bonne origine', async () => {
@@ -119,6 +137,13 @@ test('abonnement : seulement avec un code, cinq au plus, un par téléphone, ver
   assert.equal((await demander('/api/abonnement', { json: { code: TRACEUR.code, abonnement: tel.abonnement } })).statut, 403);
   assert.equal((await base.pool.query('SELECT 1 FROM abonnement')).rowCount, 0);
   assert.equal((await demander('/api/abonnement', { json: { code: CODES[0], abonnement: fauxTelephone('exemple.invalid').abonnement } })).statut, 422);
+  // iPhone seulement (D-054) : un abonnement servi par Google ou Mozilla est refusé, rien n'est enregistré.
+  assert.equal((await demander('/api/abonnement', { json: { code: CODES[0], abonnement: fauxTelephone('fcm.googleapis.com').abonnement } })).statut, 422);
+  // Des clés bien formées mais inutilisables (pas un point de la courbe) : refusées dès l'abonnement.
+  const mauvaises = fauxTelephone();
+  mauvaises.abonnement.keys.p256dh = 'B' + 'A'.repeat(86);
+  assert.equal((await demander('/api/abonnement', { json: { code: CODES[0], abonnement: mauvaises.abonnement } })).statut, 400);
+  assert.equal((await base.pool.query('SELECT 1 FROM abonnement')).rowCount, 0);
   for (const [i, code] of CODES.entries()) {
     const r = await demander('/api/abonnement', { json: { code, abonnement: fauxTelephone().abonnement } });
     assert.equal(r.statut, 201);
@@ -194,7 +219,20 @@ test('connexion Google puis Apple depuis la page : cookies sûrs, même compte r
   const v2 = new URL(d2.entetes.get('location') ?? '');
   nonceCourant = v2.searchParams.get('nonce') ?? '';
   await demander('/connexion/google/retour', { formulaire: { code: 'c', state: v2.searchParams.get('state') ?? '' }, cookie: cookieDe(d2.cookies, '__Host-transaction') });
-  const d3 = await demander('/connexion/apple', { origine: null });
+  // Apple : refusé sans la marque du téléphone 1, et sur un autre téléphone (condition 3 de Juridique).
+  const refusSans = await demander('/connexion/apple', { origine: null });
+  assert.equal(refusSans.statut, 403);
+  assert.match(refusSans.texte, /ne marche que sur le téléphone 1/);
+  assert.equal(JSON.parse((await demander('/api/etat', { origine: null })).texte).apple, false);
+  const t2 = await demander('/api/abonnement', { json: { code: CODES[1], abonnement: fauxTelephone().abonnement } });
+  const marqueT2 = cookieDe(t2.cookies, '__Host-telephone');
+  assert.match(t2.cookies.join(), /__Host-telephone=[^;]+; Path=\/; Secure; HttpOnly; SameSite=Lax/);
+  assert.equal((await demander('/connexion/apple', { origine: null, cookie: marqueT2 })).statut, 403);
+  assert.equal(JSON.parse((await demander('/api/etat', { origine: null, cookie: marqueT2 })).texte).apple, false);
+  const t1 = await demander('/api/abonnement', { json: { code: CODES[0], abonnement: fauxTelephone().abonnement } });
+  const marqueT1 = cookieDe(t1.cookies, '__Host-telephone');
+  assert.equal(JSON.parse((await demander('/api/etat', { origine: null, cookie: marqueT1 })).texte).apple, true);
+  const d3 = await demander('/connexion/apple', { origine: null, cookie: marqueT1 });
   const v3 = new URL(d3.entetes.get('location') ?? '');
   nonceCourant = v3.searchParams.get('nonce') ?? '';
   const r3 = await demander('/connexion/apple/retour', {

@@ -2,7 +2,8 @@
 // comparée à la base réelle par un test (P-04, P-43), le verrou de l'envoi unique, l'effacement vérifié.
 //
 // Carte des données du test (docs/etape-6/test-18h.md, partie 5) — rien d'autre n'a le droit d'exister :
-//   telephone  : numero (T1…T5), systeme (« iOS 18.5 », saisi par le porteur), service (apple, google…)
+//   telephone  : numero (T1…T5), systeme (« iOS 18.5 », saisi par le porteur). Le service d'acheminement est
+//                toujours Apple (D-054) : il n'est pas gardé.
 //   abonnement : telephone, adresse (adresse technique du service d'acheminement), cle_p256dh, cle_auth
 //   envoi      : id (tiré au hasard), telephone, nature (soir ou essai), soir_date, soir, forme
 //                (classique ou déclarative), envoye_a, repondu_a, reponse_code, reponse_motif, recu_a
@@ -12,7 +13,7 @@
 import pg from 'pg';
 
 export const CARTE: Record<string, string[]> = {
-  telephone: ['numero', 'systeme', 'service'],
+  telephone: ['numero', 'systeme'],
   abonnement: ['telephone', 'adresse', 'cle_p256dh', 'cle_auth'],
   envoi: [
     'id', 'telephone', 'nature', 'soir_date', 'soir', 'forme', 'envoye_a', 'repondu_a', 'reponse_code', 'reponse_motif',
@@ -24,8 +25,7 @@ export const CARTE: Record<string, string[]> = {
 const SCHEMA = `
 CREATE TABLE IF NOT EXISTS telephone (
   numero smallint PRIMARY KEY CHECK (numero BETWEEN 1 AND 5),
-  systeme text CHECK (systeme IS NULL OR systeme ~ '^iOS [0-9]{1,2}(\\.[0-9]{1,2}){0,2}$'),
-  service text NOT NULL CHECK (service IN ('apple', 'google', 'mozilla', 'microsoft'))
+  systeme text CHECK (systeme IS NULL OR systeme ~ '^iOS [0-9]{1,2}(\\.[0-9]{1,2}){0,2}$')
 );
 CREATE TABLE IF NOT EXISTS abonnement (
   telephone smallint PRIMARY KEY REFERENCES telephone (numero) ON DELETE CASCADE,

@@ -1,6 +1,6 @@
 // JETABLE (la page du test) ; REPRIS (proposé) : le relevé statique de P-09 et P-10.
 // La page et ce qu'elle charge : rien d'ailleurs (P-09, P-10), installable sur l'écran d'accueil, non référencée,
-// aucun texte du jeu ni contenu politique (condition de Juridique), mots marqués provisoires.
+// aucun texte du jeu ni contenu politique (condition de Juridique), mots marqués relus par UX.
 
 import assert from 'node:assert/strict';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
@@ -55,13 +55,16 @@ test('installable sur l’écran d’accueil d’un iPhone : manifeste, icônes 
   }
 });
 
-test('la page dit seulement trois choses, en « tu », sans adresse e-mail, et ses mots sont marqués provisoires', () => {
+test('la page dit seulement trois choses, en « tu », sans adresse e-mail, et ses mots sont marqués relus par UX', () => {
   const index = texte('index.html');
-  for (const l of ['Ouverte depuis l’icône', 'Messages', 'Connexion']) assert.ok(index.includes(l));
+  for (const l of ['Ouverte depuis l’icône', 'Messages de 18h', 'Connexion']) assert.ok(index.includes(l));
   assert.equal((index.match(/<li>/g) ?? []).length, 3);
   for (const b of ['Recevoir le message de 18h', 'Continuer avec Apple', 'Continuer avec Google']) assert.ok(index.includes(b));
-  assert.ok(index.includes('Mots provisoires, à revoir par UX'));
-  assert.ok(texte('app.js').includes('Mots provisoires, à revoir par UX'));
+  for (const f of ['index.html', 'app.js', 'preparer.html', 'preparer.js', 'resultats.js']) assert.ok(texte(f).includes('Mots relus par UX le 12 octobre 2026'), f);
+  assert.ok(!TEXTES.some((f) => texte(f).includes('provisoires')));
+  // Ordre des gestes : Google, puis Recevoir, puis Apple (caché hors de T1).
+  assert.ok(index.indexOf('id="google"') < index.indexOf('id="recevoir"') && index.indexOf('id="recevoir"') < index.indexOf('id="apple"'));
+  assert.match(index, /id="apple" href="\/connexion\/apple" hidden>/);
   assert.ok(!/e-?mail|courriel|@/i.test(index));
   assert.ok(!/\bvous\b/i.test(index + texte('app.js').replace(/\/\/.*$/gm, '')), 'la page des téléphones tutoie');
 });

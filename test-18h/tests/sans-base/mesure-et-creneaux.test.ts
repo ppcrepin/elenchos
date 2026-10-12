@@ -1,5 +1,5 @@
 // REPRIS pour le vrai jeu (proposé) : créneaux, P-05, mesure « reçu ».
-// Les créneaux d'envoi, le contenu des messages (P-05 : rien de personnel) et le classement des réceptions.
+// Les créneaux d'envoi, le contenu des messages (P-05 : rien de personnel) et le resultat des réceptions.
 
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
@@ -36,7 +36,7 @@ test('les messages : neutres, « Test, soir n sur 3 », sans rien de personnel (
   });
 });
 
-test('classement : à l’heure avant 18h02, acceptable avant 18h05, en retard jusqu’à 18h30, manqué au-delà', () => {
+test('resultat : à l’heure avant 18h02, acceptable avant 18h05, en retard jusqu’à 18h30, manqué au-delà', () => {
   const base = {
     nature: 'soir' as const, soir_date: '2026-10-19', forme: 'classique' as const,
     envoye_a: new Date('2026-10-19T16:00:01Z'), repondu_a: new Date('2026-10-19T16:00:01.300Z'), reponse_code: 201,
@@ -44,14 +44,14 @@ test('classement : à l’heure avant 18h02, acceptable avant 18h05, en retard j
   const apres = (iso: string) => new Date(iso);
   const c = (recu: string | null, maintenant = '2026-10-19T17:00:00Z') =>
     classer({ ...base, recu_a: recu ? apres(recu) : null }, apres(maintenant));
-  assert.deepEqual(c('2026-10-19T16:00:09Z'), { classement: 'à l’heure', ecart: 9 });
-  assert.deepEqual(c('2026-10-19T16:02:00Z'), { classement: 'acceptable', ecart: 120 });
-  assert.deepEqual(c('2026-10-19T16:05:00Z'), { classement: 'en retard', ecart: 300 });
-  assert.deepEqual(c('2026-10-19T16:31:00Z'), { classement: 'manqué', ecart: 1860 });
-  assert.deepEqual(c(null), { classement: 'manqué', ecart: null });
-  assert.deepEqual(c(null, '2026-10-19T16:10:00Z'), { classement: 'en attente', ecart: null });
-  assert.equal(classer({ ...base, reponse_code: 410, recu_a: null }, apres('2026-10-19T17:00:00Z')).classement, 'refusé par le service');
-  assert.equal(classer({ ...base, reponse_code: null, repondu_a: null, recu_a: null }, apres('2026-10-19T16:10:00Z')).classement, 'envoi interrompu');
+  assert.deepEqual(c('2026-10-19T16:00:09Z'), { resultat: 'à l’heure', ecart: 9 });
+  assert.deepEqual(c('2026-10-19T16:02:00Z'), { resultat: 'acceptable', ecart: 120 });
+  assert.deepEqual(c('2026-10-19T16:05:00Z'), { resultat: 'en retard', ecart: 300 });
+  assert.deepEqual(c('2026-10-19T16:31:00Z'), { resultat: 'manqué', ecart: 1860 });
+  assert.deepEqual(c(null), { resultat: 'manqué', ecart: null });
+  assert.deepEqual(c(null, '2026-10-19T16:10:00Z'), { resultat: 'en attente', ecart: null });
+  assert.equal(classer({ ...base, reponse_code: 410, recu_a: null }, apres('2026-10-19T17:00:00Z')).resultat, 'refusé par le service');
+  assert.equal(classer({ ...base, reponse_code: null, repondu_a: null, recu_a: null }, apres('2026-10-19T16:10:00Z')).resultat, 'envoi interrompu');
   assert.equal(libelleReponse(201, null), 'accepté');
   assert.equal(libelleReponse(410, null), 'refusé 410');
   assert.equal(libelleReponse(null, 'Reseau'), 'pas de réponse (Reseau)');

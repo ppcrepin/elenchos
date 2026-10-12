@@ -1,5 +1,6 @@
 // @ts-check
 // JETABLE (test du message de 18h) : fabrique, dans le navigateur du porteur, les valeurs secrètes du test.
+// Mots relus par UX le 12 octobre 2026.
 // Tirage par crypto.getRandomValues (sans biais : tirage rejeté au-delà du dernier multiple de l'alphabet).
 // Aucune requête réseau : la page n'envoie rien (et sa politique de sécurité ne l'autorise qu'à son propre site).
 

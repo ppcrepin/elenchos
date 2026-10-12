@@ -52,10 +52,16 @@ export function ouvrir(texte: string | undefined, cle: Buffer): unknown {
   }
 }
 
+/** Une clé privée P-256 dont le premier octet est nul peut s'écrire sur 31 octets (une fois sur 256) : on la
+ *  complète à 32 octets par la gauche, sans changer sa valeur. */
+export function completer32(d: Buffer): Buffer {
+  return d.length > 0 && d.length < 32 ? Buffer.concat([Buffer.alloc(32 - d.length), d]) : d;
+}
+
 /** Clé privée P-256 à partir de sa forme web (« d », 32 octets) et de la clé publique (65 octets, forme non compressée). */
 export function clePriveeP256(priveeB64: string, publiqueB64: string): KeyObject {
   const pub = deB64url(publiqueB64);
-  const d = deB64url(priveeB64);
+  const d = completer32(deB64url(priveeB64));
   if (pub.length !== 65 || pub[0] !== 4 || d.length !== 32) throw new Error('clé P-256 illisible');
   return createPrivateKey({
     key: { kty: 'EC', crv: 'P-256', d: b64url(d), x: b64url(pub.subarray(1, 33)), y: b64url(pub.subarray(33, 65)) },

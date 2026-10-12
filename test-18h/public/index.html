@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- JETABLE (test du message de 18h). Mots provisoires, à revoir par UX. Aucun contenu politique (condition de Juridique). -->
+<!-- JETABLE (test du message de 18h). Mots relus par UX le 12 octobre 2026. Aucun contenu politique (condition de Juridique). -->
 <html lang="fr">
 <head>
 <meta charset="utf-8">
@@ -23,25 +23,28 @@
 
   <ul class="etat" aria-live="polite">
     <li>Ouverte depuis l’icône : <strong id="etat-icone">…</strong></li>
-    <li>Messages : <strong id="etat-messages">…</strong></li>
+    <li>Messages de 18h : <strong id="etat-messages">…</strong></li>
     <li>Connexion : <strong id="etat-connexion">…</strong></li>
   </ul>
 
+  <p id="pret" class="aide" hidden>Tout est prêt. Rien à toucher ici.</p>
   <p id="aide" class="aide" hidden></p>
 
   <section class="actions">
+    <a class="bouton" id="google" href="/connexion/google">Continuer avec Google</a>
+
     <button type="button" id="recevoir">Recevoir le message de 18h</button>
 
     <form id="form-code" hidden>
       <label for="code">Code d’essai</label>
       <input id="code" name="code" autocomplete="off" autocapitalize="none" spellcheck="false" required>
-      <button type="submit">Valider le code</button>
+      <button type="submit">Valider</button>
     </form>
 
     <button type="button" id="autoriser" hidden>Autoriser les messages</button>
 
-    <a class="bouton" id="apple" href="/connexion/apple">Continuer avec Apple</a>
-    <a class="bouton" id="google" href="/connexion/google">Continuer avec Google</a>
+    <!-- Téléphone 1 seulement : le bouton n'est montré, et la connexion acceptée, que sur T1 (condition 3 de Juridique). -->
+    <a class="bouton" id="apple" href="/connexion/apple" hidden>Continuer avec Apple</a>
 
     <form id="form-sortie" method="post" action="/deconnexion" hidden>
       <button type="submit" class="discret">Se déconnecter</button>

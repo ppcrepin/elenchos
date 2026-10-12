@@ -47,5 +47,5 @@ test('sans clés de chiffrement, ou avec des clés illisibles, l’envoi est ref
 test('un message trop long est refusé (Apple : 4 Ko au plus)', () => {
   const tel = fauxTelephone();
   assert.throws(() => chiffrerMessage(Buffer.alloc(TAILLE_MAX_CONTENU + 1), tel.abonnement.keys), /trop long/);
-  assert.ok(chiffrerMessage(Buffer.alloc(TAILLE_MAX_CONTENU), tel.abonnement.keys).length <= 4096 + 86);
+  assert.equal(chiffrerMessage(Buffer.alloc(TAILLE_MAX_CONTENU), tel.abonnement.keys).length, 4096);
 });

@@ -1,5 +1,6 @@
 // @ts-check
 // JETABLE (test du message de 18h) : le bouton « Copier » et les confirmations de la page de résultats.
+// Mots relus par UX le 12 octobre 2026.
 
 const zone = /** @type {HTMLTextAreaElement | null} */ (document.getElementById('copie'));
 const bouton = document.getElementById('copier');

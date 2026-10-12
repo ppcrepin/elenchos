@@ -23,7 +23,7 @@ async function remise() {
   const depot = creerDepot(base.pool);
   const tels = [1, 2, 3, 4, 5].map(() => fauxTelephone());
   for (const [i, t] of tels.entries()) {
-    await depot.enregistrerAbonnement(i + 1, 'apple', t.abonnement.endpoint, t.abonnement.keys.p256dh, t.abonnement.keys.auth);
+    await depot.enregistrerAbonnement(i + 1, t.abonnement.endpoint, t.abonnement.keys.p256dh, t.abonnement.keys.auth);
   }
   return tels;
 }

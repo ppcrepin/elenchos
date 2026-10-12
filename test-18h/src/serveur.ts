@@ -8,6 +8,8 @@ import { join } from 'node:path';
 import type pg from 'pg';
 import { toutEffacer } from './base.ts';
 import { creerConnexion, RefusConnexion, type Fournisseur, type Transaction } from './connexion.ts';
+import { chiffrerMessage } from './push/chiffrement.ts';
+import { TELEPHONE_PORTEUR } from './planificateur.ts';
 import { normaliserCode, type Config } from './config.ts';
 import { deriverCle, egalAtempsConstant, hmacHex, ouvrir, sceller } from './crypto.ts';
 import { creerDepot } from './depot.ts';
@@ -44,6 +46,9 @@ export const CSP = [
 const COOKIE_SESSION = '__Host-session';
 const COOKIE_TRANSACTION = '__Host-transaction';
 const COOKIE_PORTEUR = '__Host-porteur';
+/** Le numéro du téléphone (T1…T5), gardé dans le seul téléphone après son abonnement : la connexion Apple n'est
+ *  proposée et acceptée que sur T1, le téléphone du porteur (condition 3 de Juridique). */
+const COOKIE_TELEPHONE = '__Host-telephone';
 
 type Dependances = {
   config: Config;
@@ -155,8 +160,19 @@ export function creerApplication(d: Dependances): Server {
     return !!p && p.p === true && typeof p.e === 'number' && p.e > horloge.maintenant().getTime();
   }
 
+  /** Une demande qui modifie quelque chose doit venir de la page elle-même. La politique de référent « same-origin »
+   *  garde l'en-tête Origin des formulaires ; en défense, « Sec-Fetch-Site: same-origin » est aussi accepté. */
   function origineAcceptee(req: IncomingMessage): boolean {
-    return req.headers.origin === config.adressePublique;
+    if (req.headers.origin === config.adressePublique) return true;
+    const sansOrigine = req.headers.origin === undefined || req.headers.origin === 'null';
+    return sansOrigine && req.headers['sec-fetch-site'] === 'same-origin';
+  }
+
+  function telephoneDuCookie(req: IncomingMessage): number | null {
+    if (!cleCookies) return null;
+    const t = ouvrir(lireCookies(req)[COOKIE_TELEPHONE], cleCookies) as { t?: unknown; e?: unknown } | null;
+    if (!t || typeof t.t !== 'number' || typeof t.e !== 'number' || t.e < horloge.maintenant().getTime()) return null;
+    return t.t;
   }
 
   function envoyer(res: ServerResponse, statut: number, type: string, corps: string | Buffer, entetes: Record<string, string | string[]> = {}) {
@@ -190,7 +206,7 @@ export function creerApplication(d: Dependances): Server {
         connexion: connecte && s ? s.fournisseur : null,
         cleMessages: config.vapid?.publique ?? null,
         abonnementPossible: config.vapid !== null && config.codesEssai !== null,
-        apple: connexion.disponible('apple'),
+        apple: connexion.disponible('apple') && telephoneDuCookie(req) === TELEPHONE_PORTEUR,
         google: connexion.disponible('google'),
       });
       return 'GET /api/etat';
@@ -240,14 +256,21 @@ export function creerApplication(d: Dependances): Server {
         || !/^[A-Za-z0-9_-]{80,100}$/.test(p256dh) || !/^[A-Za-z0-9_-]{16,32}$/.test(auth) || adresse.length > 1024) {
         throw new ErreurHttp(400);
       }
-      const service = serviceDe(adresse);
-      if (!service) {
+      if (serviceDe(adresse) === null) {
         journal.ecrire({ evenement: 'requete', route, detail: 'service refuse' });
-        json(res, 422, { erreur: 'service d’acheminement inconnu' });
+        json(res, 422, { erreur: 'service d’acheminement hors de la liste' });
         return route;
       }
-      await depot.enregistrerAbonnement(telephone, service, adresse, p256dh, auth);
-      json(res, 201, { telephone });
+      // Les clés doivent servir : un chiffrement à blanc, sinon un envoi raterait plus tard sans être rejoué.
+      try {
+        chiffrerMessage(Buffer.from('{}'), { p256dh, auth });
+      } catch {
+        throw new ErreurHttp(400);
+      }
+      await depot.enregistrerAbonnement(telephone, adresse, p256dh, auth);
+      const marque = cleCookies
+        ? sceller({ t: telephone, e: horloge.maintenant().getTime() + 30 * 86_400_000 }, cleCookies) : null;
+      json(res, 201, { telephone }, marque ? { 'Set-Cookie': cookie(COOKIE_TELEPHONE, marque, 30 * 86_400, 'Lax') } : {});
       return route;
     }
 
@@ -256,7 +279,12 @@ export function creerApplication(d: Dependances): Server {
       const f = debutConnexion[1] as Fournisseur;
       const route: Route = f === 'google' ? 'GET /connexion/google' : 'GET /connexion/apple';
       if (!connexion.disponible(f) || !cleCookies) {
-        html(res, 503, pageMessage('Connexion indisponible', 'Cette connexion n’est pas encore réglée.', '/'));
+        html(res, 503, pageMessage('Connexion pas encore prête', 'Ce bouton ne marche pas encore. Réessaie plus tard.', '/'));
+        return route;
+      }
+      if (f === 'apple' && telephoneDuCookie(req) !== TELEPHONE_PORTEUR) {
+        journal.ecrire({ evenement: 'connexion', route, detail: 'refus telephone' });
+        html(res, 403, pageMessage('La connexion n’a pas marché', 'Ce bouton ne marche que sur le téléphone 1.', '/'));
         return route;
       }
       const { url, transaction } = await connexion.debut(f);
@@ -288,12 +316,13 @@ export function creerApplication(d: Dependances): Server {
       } catch (e) {
         const raison = e instanceof RefusConnexion ? e.raison : 'jeton refuse';
         journal.ecrire({ evenement: 'connexion', route, detail: raison });
+        const nom = f === 'apple' ? 'Apple' : 'Google';
         const textes = {
-          'refus fournisseur': 'Apple ou Google a refusé ou annulé la connexion.',
-          'etat different': 'La connexion a été commencée ailleurs ou a expiré. Recommence depuis cette page.',
-          'jeton refuse': 'La réponse d’Apple ou de Google n’a pas pu être vérifiée.',
+          'refus fournisseur': `${nom} a annulé ou refusé la connexion. Tu peux réessayer.`,
+          'etat different': 'La connexion a expiré, ou elle s’est terminée dans Safari au lieu de l’icône. Reviens et recommence.',
+          'jeton refuse': `La réponse de ${nom} n’a pas pu être vérifiée. Réessaie.`,
         } as const;
-        html(res, 400, pageMessage('Connexion non aboutie', textes[raison], '/'), { 'Set-Cookie': effacerTransaction });
+        html(res, 400, pageMessage('La connexion n’a pas marché', textes[raison], '/'), { 'Set-Cookie': effacerTransaction });
       }
       return route;
     }
@@ -333,7 +362,7 @@ export function creerApplication(d: Dependances): Server {
         }
         if (!egalAtempsConstant(cleComparaison, config.codeAccesPorteur, normaliserCode(formulaire.get('code') ?? ''))) {
           limitePorteur.echec();
-          html(res, 403, pageEntree('Code refusé.'));
+          html(res, 403, pageEntree('Code refusé. Vérifiez-le et réessayez.'));
           return route;
         }
         const jeton = sceller({ p: true, e: horloge.maintenant().getTime() + 12 * 3_600_000 }, cleCookies);
@@ -352,10 +381,10 @@ export function creerApplication(d: Dependances): Server {
       };
       let message: string;
       if (route === 'POST /resultats/essai') {
-        if (!d.planificateur) message = 'Envoi impossible : la clé des messages (VAPID) n’est pas réglée.';
+        if (!d.planificateur) message = 'Envoi impossible : la clé des messages n’est pas réglée chez Scalingo (lignes VAPID_ de la page Préparer).';
         else {
           const cibles = formulaire.get('telephone') === 'tous' ? [1, 2, 3, 4, 5] : [numero('telephone', 5)].filter((n): n is number => n !== null);
-          const mots = { envoye: 'envoyé', 'pas abonne': 'pas abonné', 'trop tot': 'déjà envoyé il y a moins de 20 secondes' } as const;
+          const mots = { envoye: 'envoyé', 'pas abonne': 'pas abonné', 'trop tot': 'déjà envoyé il y a moins de 20 s, attendez un peu' } as const;
           const issues = await Promise.all(cibles.map(async (n) => {
             const issue = d.planificateur ? await d.planificateur.envoyerEssai(n) : 'pas abonne';
             return `T${n} : ${mots[issue]}`;
@@ -367,7 +396,7 @@ export function creerApplication(d: Dependances): Server {
         const v = (formulaire.get('systeme') ?? '').trim();
         const valide = v === '' || /^iOS [0-9]{1,2}(\.[0-9]{1,2}){0,2}$/.test(v);
         message = n && valide && (await depot.noterSysteme(n, v === '' ? null : v))
-          ? `Version notée pour T${n}.` : 'Version non notée (téléphone pas encore inscrit, ou forme « iOS 18.5 » attendue).';
+          ? `Version notée pour T${n}.` : 'Version non notée : le téléphone n’est pas encore inscrit, ou la version n’est pas écrite comme « iOS 18.5 ».';
       } else if (route === 'POST /resultats/effacer-ligne') {
         const n = numero('telephone', 5);
         if (n) await depot.effacerLigne(n);
@@ -386,8 +415,8 @@ export function creerApplication(d: Dependances): Server {
           const detail = Object.entries(etat.lignes).map(([t, n]) => `${t} : ${n}`).join(', ');
           html(res, 200, pageMessage(
             etat.vide ? 'Base vide : vérifié' : 'Attention : la base n’est pas vide',
-            `Lignes restantes — ${detail}.${etat.tablesHorsCarte.length ? ' Tables hors carte : ' + etat.tablesHorsCarte.join(', ') + '.' : ''} `
-              + 'Étape suivante : supprimer l’application et sa base chez Scalingo (pas-à-pas, effacement).',
+            `Lignes restantes : ${detail}.${etat.tablesHorsCarte.length ? ' Tables absentes de la carte des données : ' + etat.tablesHorsCarte.join(', ') + '.' : ''} `
+              + 'Étape suivante : supprimer l’application et sa base chez Scalingo (pas-à-pas « Effacement »).',
             '/resultats',
           ));
           return route;
@@ -406,7 +435,7 @@ export function creerApplication(d: Dependances): Server {
     // En-têtes de sécurité sur toutes les réponses (P-41) ; demande de non-référencement (comme D-019).
     res.setHeader('Content-Security-Policy', CSP);
     res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('Referrer-Policy', 'no-referrer');
+    res.setHeader('Referrer-Policy', 'same-origin'); // « no-referrer » ferait envoyer « Origin: null » aux formulaires
     res.setHeader('X-Robots-Tag', 'noindex, nofollow');
     res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
     res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
@@ -424,8 +453,12 @@ export function creerApplication(d: Dependances): Server {
       (route) => journal.ecrire({ evenement: 'requete', route, statut: res.statusCode, duree_ms: performance.now() - debut, requete }),
       (e: unknown) => {
         const statut = e instanceof ErreurHttp ? e.statut : 500;
-        if (!res.headersSent) json(res, statut, { erreur: statut });
-        else res.end();
+        const navigation = req.headers['sec-fetch-mode'] === 'navigate' || (req.headers.accept ?? '').includes('text/html');
+        if (res.headersSent) res.end();
+        else if (navigation) {
+          const retour = (req.url ?? '').startsWith('/resultats') ? '/resultats' : '/';
+          html(res, statut, pageMessage('La demande n’a pas abouti', `Erreur ${statut}. Revenir à la page, puis réessayer.`, retour));
+        } else json(res, statut, { erreur: statut });
         journal.ecrire({
           evenement: statut >= 500 ? 'erreur' : 'requete', route: '(autre)', statut, requete,
           duree_ms: performance.now() - debut, ...(statut >= 500 ? { erreur: typeErreur(e) } : {}),

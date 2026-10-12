@@ -73,11 +73,24 @@ test('jamais d’envoi hors de la liste fermée des services (P-12)', async () =
   assert.equal(service.demandes.length, 0);
   assert.equal(serviceDe('https://web.push.apple.com/abc'), 'apple');
   assert.equal(serviceDe('https://api.push.apple.com/abc'), 'apple');
-  assert.equal(serviceDe('https://fcm.googleapis.com/fcm/send/abc'), 'google');
+  assert.equal(serviceDe('https://fcm.googleapis.com/fcm/send/abc'), null); // iPhone seulement (D-054)
+  assert.equal(serviceDe('https://updates.push.services.mozilla.com/wpush/v2/abc'), null);
   assert.equal(serviceDe('http://web.push.apple.com/abc'), null);
   assert.equal(serviceDe('https://push.apple.com.exemple.invalid/abc'), null);
   assert.equal(serviceDe('https://web.push.apple.com:8443/abc'), null);
   assert.equal(serviceDe('https://utilisateur' + '@web.push.apple.com/abc'), null); // identifiants dans l'adresse : refusés
+});
+
+test('une clé privée écrite sur 31 octets (premier octet nul) est acceptée', () => {
+  let trouvee = false;
+  for (let i = 0; i < 4000 && !trouvee; i += 1) {
+    const p = paireVapid();
+    if (Buffer.from(p.privee, 'base64url').length < 32) {
+      trouvee = true;
+      assert.equal(verifierCleVapid(p.publique, p.privee), true);
+    }
+  }
+  assert.ok(trouvee, 'aucune clé courte tirée en 4000 essais');
 });
 
 test('une paire VAPID incohérente est reconnue', () => {

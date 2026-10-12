@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- JETABLE (test du message de 18h) : la page où le porteur fabrique ses codes et ses clés, dans son navigateur.
      Rien n'est envoyé au serveur : tout est tiré au hasard par le navigateur, puis copié par le porteur chez Scalingo.
-     Mots provisoires, à revoir par UX. -->
+     Mots relus par UX le 12 octobre 2026. -->
 <html lang="fr">
 <head>
 <meta charset="utf-8">
@@ -14,10 +14,10 @@
 <body class="porteur">
 <main>
   <h1>Préparer le test</h1>
-  <p>Cette page fabrique vos codes et vos clés <strong>dans votre navigateur</strong>. Rien n’est envoyé au serveur ni à l’équipe. Si vous rechargez la page, tout change : ne la rechargez qu’avant d’avoir collé quoi que ce soit chez Scalingo.</p>
+  <p>Cette page fabrique vos codes et vos clés <strong>dans votre navigateur</strong>. Rien n’est envoyé au serveur ni à l’équipe. Recharger la page fabrique d’autres codes : une fois les lignes collées chez Scalingo, ne la rechargez plus.</p>
 
   <h2>1. Vos codes et la clé des messages</h2>
-  <p><button type="button" id="fabriquer">Fabriquer</button></p>
+  <p><button type="button" id="fabriquer">Fabriquer les codes</button></p>
   <div id="resultat" hidden>
     <p>Lignes à coller chez Scalingo (onglet Environment, édition en bloc) :</p>
     <pre class="valeurs" id="lignes"></pre>

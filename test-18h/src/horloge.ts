@@ -65,9 +65,3 @@ export function heureParis(d: Date): string {
   const deux = (n: number) => String(n).padStart(2, '0');
   return `${deux(p.heure)}:${deux(p.minute)}:${deux(p.seconde)}`;
 }
-
-/** Le jour civil parisien suivant, « AAAA-MM-JJ ». */
-export function lendemain(dateISO: string): string {
-  const midi = instantParis(dateISO, 12, 0);
-  return partiesParis(new Date(midi.getTime() + 24 * 3_600_000)).dateISO;
-}

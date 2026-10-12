@@ -15,6 +15,11 @@ test('les tables et colonnes réelles sont exactement celles de la carte', async
   assert.deepEqual(await colonnesReelles(base.pool), CARTE);
 });
 
+test('aucune contrainte d’unicité sur l’adresse d’abonnement (une erreur de doublon la recopierait au journal de la base)', async () => {
+  const r = await base.pool.query<{ indexdef: string }>('SELECT indexdef FROM pg_indexes WHERE schemaname = current_schema()');
+  for (const { indexdef } of r.rows) assert.ok(!/\badresse\b|cle_p256dh|cle_auth|empreinte\)/.test(indexdef) || /compte_fournisseur_empreinte_key/.test(indexdef), indexdef);
+});
+
 test('aucune colonne ne peut porter un nom, une adresse e-mail, une adresse internet ou une heure d’ouverture', () => {
   const toutes = Object.values(CARTE).flat().join(' ');
   assert.ok(!/nom|email(?!_recu)|mail\b|ip|ouvert|pseudo|user|agent|appareil/i.test(toutes.replace('numero', '')));
@@ -22,10 +27,9 @@ test('aucune colonne ne peut porter un nom, une adresse e-mail, une adresse inte
 
 test('la base refuse ce que la carte ne permet pas', async () => {
   const depot = creerDepot(base.pool);
-  await assert.rejects(base.pool.query("INSERT INTO telephone (numero, service) VALUES (6, 'apple')")); // un sixième téléphone
-  await base.pool.query("INSERT INTO telephone (numero, service) VALUES (1, 'apple')");
+  await assert.rejects(base.pool.query("INSERT INTO telephone (numero) VALUES (6)")); // un sixième téléphone
+  await base.pool.query("INSERT INTO telephone (numero) VALUES (1)");
   await assert.rejects(base.pool.query('UPDATE telephone SET systeme = $1 WHERE numero = 1', [`iPhone de ${TRACEUR.nom}`]));
-  await assert.rejects(base.pool.query("INSERT INTO telephone (numero, service) VALUES (2, 'inconnu')"));
   await assert.rejects(base.pool.query("INSERT INTO compte (fournisseur, empreinte, email_recu) VALUES ('google', $1, true)", [TRACEUR.email]));
   await assert.rejects(base.pool.query(
     "INSERT INTO envoi (id, telephone, nature, forme, envoye_a, reponse_motif) VALUES (gen_random_uuid(), 1, 'essai', 'classique', now(), $1)",
@@ -41,7 +45,7 @@ test('« Tout effacer » vide la base et le vérifie : ni abonnement, ni identif
   const depot = creerDepot(base.pool);
   for (const n of [1, 2, 3, 4, 5]) {
     const t = fauxTelephone();
-    await depot.enregistrerAbonnement(n, 'apple', t.abonnement.endpoint, t.abonnement.keys.p256dh, t.abonnement.keys.auth);
+    await depot.enregistrerAbonnement(n, t.abonnement.endpoint, t.abonnement.keys.p256dh, t.abonnement.keys.auth);
   }
   await base.pool.query(`INSERT INTO envoi (id, telephone, nature, soir_date, soir, forme, envoye_a, recu_a)
     VALUES (gen_random_uuid(), 2, 'soir', '2026-10-18', 1, 'classique', now(), now())`);
@@ -74,7 +78,7 @@ test('une table hors carte rend la base « non vide »', async () => {
 test('effacer la ligne d’un téléphone (un prêteur qui se retire) efface son abonnement et ses heures', async () => {
   const depot = creerDepot(base.pool);
   const t = fauxTelephone();
-  await depot.enregistrerAbonnement(4, 'apple', t.abonnement.endpoint, t.abonnement.keys.p256dh, t.abonnement.keys.auth);
+  await depot.enregistrerAbonnement(4, t.abonnement.endpoint, t.abonnement.keys.p256dh, t.abonnement.keys.auth);
   await base.pool.query(`INSERT INTO envoi (id, telephone, nature, forme, envoye_a) VALUES (gen_random_uuid(), 4, 'essai', 'classique', now())`);
   await depot.effacerLigne(4);
   assert.equal((await verifierVide(base.pool)).vide, true);

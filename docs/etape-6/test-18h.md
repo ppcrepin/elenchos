@@ -18,7 +18,7 @@
 
 **Vous faites**, à votre nom, sans mot de passe confié (D-048), environ 4 h 30 : trouver quatre proches qui gardent leur iPhone (« prêteurs »), si possible sur des versions d'iOS différentes (partie 2) ; ouvrir Scalingo, régler Google et Apple ; donner par écrit, la veille, votre feu vert pour la mise en ligne (D-054, point 1) ; installer chez les quatre ; puis deux minutes par soir.
 
-**Dépenses : 0 €.** Scalingo 0 € (essai) ; prêts 0 € ; aucun téléphone acheté (D-054, point 3). Si Apple ou Google refuse l'adresse de Scalingo, un nom de domaine (environ 10 €) vous est d'abord présenté, et rien n'est acheté sans votre réponse (D-054, point 2). Durée : 8 à 10 jours à partir du jour 0, le jour où vous ouvrez les pas-à-pas (au plus tôt le 13 octobre). Avant la mise en ligne, l'équipe écrit le code et le fait relire ; trois choses peuvent faire glisser les dates : votre feu vert écrit de la veille, la réponse de Scalingo sur ses journaux, et le temps de trouver quatre prêteurs (partie 7).
+**Dépenses : 0 €.** Scalingo 0 € (essai ; carte demandée, facturation automatique si rien n'est supprimé avant le 30e jour) ; prêts 0 € ; aucun téléphone acheté (D-054, point 3). Si Apple ou Google refuse l'adresse de Scalingo, un nom de domaine (environ 10 €) vous est d'abord présenté, et rien n'est acheté sans votre réponse (D-054, point 2). Durée : 8 à 10 jours à partir du jour 0, le jour où vous ouvrez les pas-à-pas (au plus tôt le 13 octobre). Avant la mise en ligne, l'équipe écrit le code et le fait relire ; trois choses peuvent faire glisser les dates : votre réponse à la question de la carte demandée par Scalingo, votre feu vert écrit de la veille, et le temps de trouver quatre prêteurs (partie 7).
 
 **Validés avec ce document (D-054, point 1)** : une copie à part du code pour la mise en ligne, la branche `mise-en-ligne`, jamais de 15h à 19h ni le dimanche (inscrite dans `CLAUDE.md` ; détail en partie 3 de ce document) ; une note aux prêteurs, avant ; l'effacement le lendemain du soir 3, sauf un tableau sans nom gardé jusqu'au 20 novembre 2026 (partie 5).
 
@@ -158,7 +158,7 @@ Tout est à votre nom (D-042). L'équipe vous donne, pour chaque démarche, un p
 
 **Comment l'équipe met le test en ligne sans vos mots de passe.**
 1. Les agents écrivent le code et le déposent sur GitHub, dans votre dépôt public : le code ne contient aucun secret ni aucune donnée.
-2. Vous liez une fois Scalingo à ce dépôt. Scalingo installe alors lui-même chaque nouvelle version, après que les tests automatiques sont passés : Scalingo attend leur résultat avant d'installer (vérifié, Scalingo).
+2. Vous liez une fois Scalingo à ce dépôt, sur la seule branche `mise-en-ligne`, jamais `main` (D-054, point 1). Scalingo installe alors lui-même chaque nouvelle version, après que les tests automatiques sont passés : il attend le succès de la vérification sur GitHub (`.github/workflows/test-18h.yml` : contrôle du code, tous les tests, avec une base jetable et un vrai navigateur), et sa propre fabrication relance la garde des horaires et les tests sans base (vérifié, documentation de Scalingo).
 3. Les secrets (clé Apple, code secret Google, votre code d'accès à la page de résultats, les cinq codes d'essai, et la clé qui signe nos envois vers Apple, créée par vous d'un geste selon le pas-à-pas) sont saisis par vous, dans les réglages de l'application chez Scalingo. Ils n'apparaissent nulle part ailleurs ; une recherche automatique de secrets dans le dépôt le vérifie (P-16).
 4. Les agents n'ont aucun accès à Scalingo, ni à Apple, ni à Google, et n'ouvrent pas la page du test en ligne.
 5. Si une installation échoue, vous nous copiez le message d'erreur de la **fabrication** chez Scalingo (pas un journal de l'application en marche) : il ne contient aucune donnée de prêteur.
@@ -167,12 +167,12 @@ Tout est à votre nom (D-042). L'équipe vous donne, pour chaque démarche, un p
 
 **La règle des horaires, répétée dès le test (proposé).** Scalingo installe depuis une branche réservée, qui ne reçoit que des versions déjà sur `main`. Les agents n'y poussent jamais de 15h à 19h ni le dimanche (D-043). En plus, les tests automatiques échouent volontairement dans ces créneaux : Scalingo refuse alors d'installer. Sans cette branche, chaque mise à jour de la documentation, poussée sur `main`, réinstallerait le test, même à 17h. En mots simples : une copie du projet réservée à la mise en ligne, qui ne reçoit que ce qui est déjà validé. C'est un ajout à la règle de poussée de `CLAUDE.md`, de même nature que la branche `gh-pages` (D-019) : vous l'avez acceptée avec ce document, et elle est inscrite dans `CLAUDE.md` (D-054, point 1).
 
-Le test est traité comme la version en ligne (`docs/plateforme.md`, §1) : les agents ne poussent sur cette branche qu'après votre feu vert écrit, donné par message, la veille (proposé).
+Le test est traité comme la version en ligne (`docs/plateforme.md`, §1) : les agents ne poussent sur cette branche qu'après votre feu vert écrit, donné par message, la veille (proposé). Il en va de même pour chaque correction ensuite : un nouveau feu vert écrit, la veille. Changer un réglage chez Scalingo (la variable `SOIRS`, par exemple) redémarre l'application : c'est une mise en ligne au sens de D-043, jamais de 15h à 19h ni le dimanche.
 
 | # | Démarche | Pourquoi | Temps | Argent | Ce que l'équipe prépare |
 |---|---|---|---|---|---|
 | 1 | Trouver quatre prêteurs, chacun avec un iPhone de la version cherchée (partie 2), et leur envoyer la note | Les cinq téléphones | 40 min de messages | 0 € | La liste des versions d'iOS cherchées, la note (Juridique) |
-| 2 | **Scalingo** : créer le compte (double vérification, P-16), accepter le contrat de sous-traitance, créer l'application du test (région Paris) et sa base d'essai, lier le dépôt GitHub, saisir vos codes. Poser deux questions écrites à Scalingo : la durée de ses journaux et sauvegardes après suppression (le [N] de la note) et la liste de ses sous-traitants (P-12). Vérifier que le contrat couvre l'essai gratuit. Détail dans le pas-à-pas. | L'hébergeur choisi (D-048) ; l'essai gratuit commence à l'ouverture | 45 min, plus la réponse de Scalingo | 0 € pendant 30 jours (vérifié) | Le pas-à-pas, la question écrite pour Scalingo, le nom de la branche, l'adresse de la page (du type `elenchos-test-18h.osc-fr1.scalingo.io`) |
+| 2 | **Scalingo** : créer le compte (double vérification, P-16), accepter le contrat de sous-traitance, créer l'application du test (région Paris) et sa base d'essai, lier le dépôt GitHub, saisir vos codes. Couper les sauvegardes programmées de la base avant toute donnée. Poser des questions écrites à Scalingo : ses journaux et sauvegardes après suppression, et la liste de ses sous-traitants (P-12) ; elles ne bloquent plus la note. Vérifier que le contrat couvre l'essai gratuit. Ne commencer qu'après votre réponse à la question de la carte. Détail dans le pas-à-pas. | L'hébergeur choisi (D-048) ; l'essai gratuit commence à l'ouverture | 45 min | 0 € pendant 30 jours ; une carte est demandée (documentation de Scalingo, lue le 12 octobre 2026) | Le pas-à-pas, la question écrite pour Scalingo, le nom de la branche, l'adresse de la page (du type `elenchos-test-18h.osc-fr1.scalingo.io`) |
 | 3 | **Google** : dans la console Google Cloud, créer un projet, l'écran d'accord en mode « Test », n'y ajouter que le compte de test, créer l'identifiant « application Web » avec l'adresse de retour donnée, saisir son code secret chez Scalingo ; créer un compte Google de test (Google peut demander un numéro de téléphone, de mémoire) | La connexion Google (D-035) | 40 min, compte de test compris | 0 € (de mémoire : aucun moyen de paiement demandé pour la connexion) | Le pas-à-pas, l'adresse de retour exacte |
 | 4 | **Apple** : dans votre compte développeur, créer l'identifiant d'application (avec « Se connecter avec Apple » coché), l'identifiant de service avec le domaine et l'adresse de retour, la clé privée (téléchargeable une seule fois) ; saisir chez Scalingo la clé, son numéro, votre numéro d'équipe et l'identifiant de service | La connexion Apple (D-035) ; votre compte est déjà ouvert (D-047) | 40 min | 0 € de plus | Le pas-à-pas, les valeurs à saisir |
 | 5 | Remettre la note à chaque prêteur, puis la séance d'installation (partie 1, soir 0) | Mettre les cinq téléphones en route | Environ 1 h 15, déplacements non comptés | 0 € | La liste de contrôle, une page d'aide à l'installation (textes d'UX) |
@@ -200,15 +200,15 @@ Environ **deux heures trois quarts** de démarches, plus la séance d'installati
 
 | Dépense | Montant TTC | Statut, source, date | Quand | Ce qui en dépend | Si vous dites non |
 |---|---|---|---|---|---|
-| **Hébergement Scalingo pendant le test** | **0 €** | Vérifié le 12 octobre 2026 (Scalingo) : essai de 30 jours sans carte bancaire. Il comprend une application de 5 conteneurs au plus et une base de données dans sa plus petite formule | Démarche 2 | Tout le test | Pas de test : la question vous revient |
-| Suite de l'hébergement, après les 30 jours | Environ 26 € par mois (vérifié le 11 octobre, `docs/plateforme.md`) | Hors test : présentée au moment venu (D-042) | Environ 30 jours après l'ouverture du compte | La construction (travail 5) | Sans moyen de paiement, l'application est arrêtée, puis ses données effacées 30 jours plus tard (vérifié) |
+| **Hébergement Scalingo pendant le test** | **0 €** | Vérifié le 12 octobre 2026 (documentation de Scalingo) : essai de 30 jours ; une carte de paiement est demandée pour le commencer (documentation de Scalingo, lue le 12 octobre 2026). Il comprend une application de 5 conteneurs au plus et une base de données dans sa plus petite formule | Démarche 2 | Tout le test | Pas de test : la question vous revient |
+| Suite de l'hébergement, après les 30 jours | Environ 26 € par mois (vérifié le 11 octobre, `docs/plateforme.md`) | Hors test : présentée au moment venu (D-042) | Environ 30 jours après l'ouverture du compte | La construction (travail 5) | À la fin de l'essai, la facturation commence d'elle-même si l'application ou la base existent encore ; Scalingo ne les supprime pas. Les supprimer avant le 30e jour (démarche 7). |
 | Android d'essai | Aucun | Écarté par D-054 (point 3) : le jeu se joue sur iPhone seulement | — | — | — |
 | **Prêt de quatre iPhone** | **0 €** | Validé (D-054) | Démarche 1 | T2 à T5 | Sans prêteur : un iPhone reconditionné, présenté avec son prix |
 | Location de téléphones | Écartée | Relevé : offres au mois, avec engagement | — | — | — |
 | **Nom de domaine** | **0 €** a priori ; **environ 10 €** par an si Apple ou Google refuse l'adresse de Scalingo | Estimation, non vérifiée. Un domaine neutre, sans le nom du jeu, chez un bureau d'enregistrement européen (D-043) | Seulement si un refus survient, et après votre réponse | La connexion Apple ou Google ; environ 30 minutes de réglage en plus chez Scalingo (pas-à-pas ; certificat automatique, de mémoire) | La question vous revient avant tout achat (D-054, point 2) |
 | Compte développeur Apple | 0 € de plus | Déjà ouvert (D-047) | — | La connexion Apple | — |
 | Console Google | 0 € | De mémoire | Démarche 3 | La connexion Google | — |
-| **Total du test** | **0 €.** Environ 10 € de plus seulement si Apple ou Google refuse l'adresse de Scalingo et si vous acceptez alors le domaine (D-054, point 2). Hors total : un iPhone reconditionné si un prêteur manque, présenté avec son prix le moment venu. | | | | |
+| **Total du test** | **0 €**, si l'application et la base sont supprimées avant le 30e jour de l'essai. Environ 10 € de plus seulement si Apple ou Google refuse l'adresse de Scalingo et si vous acceptez alors le domaine (D-054, point 2). Hors total : un iPhone reconditionné si un prêteur manque, présenté avec son prix le moment venu. | | | | |
 
 Par rapport au plan (partie 6) :
 - la ligne « Android, 100 à 200 € » est retirée (D-054, point 3) ;
@@ -216,7 +216,7 @@ Par rapport au plan (partie 6) :
 - le prêt des téléphones, « non chiffré » dans le plan, coûte 0 € ;
 - le domaine neutre (environ 10 €), s'il est acheté, **s'ajoute** à la ligne « adresses web » du plan, qui vise les adresses définitives.
 
-**Un point d'horloge à connaître.** L'essai de Scalingo court dès l'ouverture du compte. Le test en prend environ dix jours. Il en restera une vingtaine pour commencer le socle (travail 5). Le passage au payant vous sera présenté à ce moment-là.
+**Un point d'horloge à connaître.** L'essai de Scalingo court dès l'ouverture du compte. Le test en prend environ dix jours. Il en restera une vingtaine pour commencer le socle (travail 5). Le passage au payant commence seul à la fin de l'essai si une application ou une base existe encore : il doit vous être présenté avant le 30e jour. Vous notez la date de fin d'essai le jour de l'ouverture du compte ; l'équipe vous présente la suite, avec son montant, au plus tard une semaine avant (garde-fou proposé par Juridique, D-042). Le bouton « Stop free trial » de Scalingo lance la facturation tout de suite : on n'y touche jamais.
 
 ---
 
@@ -235,19 +235,20 @@ On applique P-43 et P-10 (`docs/etape-6/donnees.md`) : la page du test ne garde 
 - L'adresse renvoyée par Apple ou Google est lue, notée « reçue », puis jetée (proposé). C'est plus strict que P-43, qui permettait de la garder le temps de l'essai : une précision, pas un changement.
 - On demande pourtant l'adresse à Apple et à Google, comme le fera le jeu (D-035, P-03) : c'est la seule façon d'essayer les vrais écrans d'accord.
 - Notre programme n'écrit rien de personnel dans ses journaux (P-07).
-- Les journaux de Scalingo notent l'adresse internet de chaque téléphone qui se connecte : leur durée est à connaître avant de remettre la note (`docs/etape-6/donnees.md`, partie 4).
+- Les journaux de Scalingo peuvent noter l'adresse internet de chaque téléphone qui se connecte : journaux du routeur, désactivés par défaut et laissés désactivés ; « métadonnées de connexion », archivées en privé par Scalingo, dont le contenu n'est pas décrit (l'adresse internet et l'heure, hypothèse forte de Juridique). Sa documentation dit que tous ses journaux sont gardés un an, par obligation légale (vérifié dans le dépôt de sa documentation, 12 octobre 2026). Ni vous ni l'équipe ne pouvez les effacer : la note le dit.
+- Ce qui reste un an chez Scalingo ne doit rien contenir de nous sur les prêteurs (condition 6, plus bas). Notre journal n'a ni abonnement, ni identifiant, ni empreinte, ni adresse internet, ni couple « téléphone + heure ». Aucune erreur de la base ne recopie une valeur : un abonnement par téléphone se contrôle sur son numéro, jamais par une contrainte d'unicité sur l'adresse d'abonnement, et le programme refuse les valeurs fausses avant la base. Un test le prouve sur une base locale, en provoquant ces erreurs et en lisant le journal de la base (`test-18h/tests/journal-base/`).
 - Aucune ligne de notre journal ne contient un abonnement (P-07), et aucune adresse de page n'en porte (P-08).
 
-**Rien d'Apple ni de Google n'est chargé avant le toucher (P-10).** Les boutons sont de simples liens, sans aucun programme d'Apple ni de Google dans la page. Le relevé du réseau le vérifie automatiquement avant la mise en ligne.
+**Rien d'Apple ni de Google n'est chargé avant le toucher (P-10).** Les boutons sont de simples liens, sans aucun programme d'Apple ni de Google dans la page. Le relevé du réseau le vérifie automatiquement avant la mise en ligne. **Le bouton « Continuer avec Apple » n'est montré que sur le téléphone 1, et le serveur refuse la connexion Apple ailleurs** : le téléphone garde, après son abonnement, son seul numéro dans un cookie (condition 3).
 
 **Une précaution liée à l'adresse de Scalingo (proposé).** L'adresse `scalingo.io` est partagée avec les sites des autres clients de Scalingo. La page protège sa connexion pour qu'aucun de ces sites ne puisse y toucher (réglage standard des navigateurs).
 
 **L'effacement, le lendemain du soir 3** (ou du dernier soir ajouté), pour lire d'abord les heures du soir 3. Dans l'ordre :
 1. Vous touchez « Tout effacer » sur la page de résultats. Le programme vide la base, puis vérifie qu'elle est vide (test de P-43).
-2. Vous supprimez chez Scalingo l'application du test et sa base, pas seulement leurs lignes. Le sort des sauvegardes de la base d'essai est à connaître avant de commencer (démarche 2) ; de mémoire, elles partent avec elle.
+2. Vous supprimez chez Scalingo l'application du test et sa base : la base est **supprimée**, pas seulement vidée, car sa copie continue des changements (7 jours) ne part qu'avec elle. Les sauvegardes programmées de Scalingo survivent à la suppression de la base, jusqu'à quatre semaines sur le plus petit plan (documentation de Scalingo, 12 octobre 2026) ; les sauvegardes continues partent avec elle. On coupe donc les sauvegardes programmées avant de mettre des données (pas-à-pas, 2.6), et on ne fait jamais de sauvegarde manuelle (gardée un mois après la suppression). Puis vous vérifiez la page de facturation de Scalingo : plus aucune application ni base. Le tout avant le 30e jour de l'essai.
 3. Sur les téléphones prêtés, on se déconnecte, puis le prêteur supprime l'icône, ce qui coupe aussi les messages (de mémoire).
 4. Vous retirez l'accès du test dans le compte Google de test, puis vous supprimez ce compte. Sur votre iPhone, vous retirez le lien dans « Se connecter avec Apple ».
-5. Vous retirez l'adresse du test du projet Google et de l'identifiant de service Apple. Les deux restent pour la suite : la connexion du jeu (travail 9) les reprendra (proposé).
+5. Vous retirez l'adresse du test du projet Google et de l'identifiant de service Apple du test. Le projet Google reste, ainsi que le compte développeur et la clé ; les identifiants Apple du jeu seront créés au travail 9, avec le nom définitif (les identifiants du test, `io.github.ppcrepin.test18h`, ne sont pas repris).
 6. Vous écrivez une ligne datée, « effacé le …, vérifié », et vous le confirmez à chaque prêteur, comme la note le promet, et vous supprimez les messages du test dans vos SMS (ci-dessous).
 7. Le [20 novembre 2026] (proposé) : vous effacez votre copie du tableau et la liste « qui a quel téléphone », et vous l'écrivez sur la même ligne datée.
 
@@ -262,32 +263,31 @@ Un prêteur qui se retire en cours de test : on efface sa ligne le jour même. L
 
 ### La note pour les prêteurs
 
-Rédigée par Juridique, puis relue par lui avec les additions de Back-end et Front-end (avis du 12 octobre 2026) ; validée dans cette version par D-054, avec un geste ajouté après la relecture de Juridique, sur avis du Vérificateur (« lire le message sans le toucher »). Le texte ci-dessous reprend cette version, avec deux retouches de fait faites ensuite pour l'iPhone seulement : « par Apple » au lieu de « par Apple ou Google », et « (ou Désinstaller) » retiré. **Ce geste et ces deux retouches doivent être relus par Juridique avant la remise de la note.** Elle vouvoie, parce qu'une même note sert à plusieurs lecteurs ; vous pouvez tutoyer dans le message qui l'accompagne. Votre iPhone n'a pas besoin de note.
+Version définitive de Juridique (avis du 12 octobre 2026, après les constats sur Scalingo), reprise mot pour mot, avec un seul ajout de l'orchestrateur dans « Installé » : le message de répétition du jour de l'installation y est annoncé. Elle vouvoie, parce qu'une même note sert à plusieurs lecteurs ; vous pouvez tutoyer dans le message qui l'accompagne. Votre iPhone n'a pas besoin de note. **Elle n'attend plus la réponse de Scalingo** : la durée la plus longue de ses journaux, un an, est documentée et écrite dans la note.
 
 > **Test du message de 18h**
 >
-> Je prépare seul, en mon nom propre, un jeu : Elenchos.
+> Je prépare, en mon nom propre, un jeu : Elenchos.
 >
-> **Installé.** Une page de test en icône, sans jeu ni question. Trois soirs, vers 18h, un message « Test, soir 1 sur 3 ».
+> **Installé.** Une page de test en icône, sans jeu ni question. Le jour de l'installation, puis trois soirs, vers 18h, un message « Test, soir 1 sur 3 ».
 >
-> **À faire.** Ne pas ouvrir l'icône avant le soir 3 ; lire le message sans le toucher. Chaque soir, un SMS : « vu à 18h… », « rien vu » ou « éteint ». Le jour 3, éteindre et rallumer avant 18h ; après le message, ouvrir l'icône et me dire si elle affiche « connecté ».
+> **À faire.** Ne pas ouvrir l'icône avant le soir 3 ; lire le message sans appuyer dessus. Chaque soir, un SMS : « vu à 18h… », « rien vu » ou « éteint ». Le jour 3, éteindre et rallumer avant 18h ; après le message, ouvrir l'icône et me dire si elle affiche « connecté ».
 >
-> **Gardé.** L'adresse technique du téléphone et l'heure de réception, sous « téléphone [n] », avec sa marque et la version de son système, jamais votre nom. J'essaie la connexion Google avec un compte créé pour le test, jamais le vôtre.
+> **Gardé.** L'adresse technique du téléphone et l'heure de réception, sous « téléphone [n] », avec sa version d'iOS, jamais votre nom. J'essaie la connexion Google avec un compte de test, jamais le vôtre.
 >
 > **Où.** Chez Scalingo, hébergeur, en France. Le message passe, chiffré, par Apple.
 >
-> **Jusqu'à quand.** Le [21 octobre 2026], j'efface tout, SMS compris, et vous le confirme ; les journaux techniques de l'hébergeur suivent sous [N] jours. Seul le tableau des heures, sans nom, reste jusqu'au [20 novembre 2026], pour le bilan.
+> **Jusqu'à quand.** Le [21 octobre 2026], j'efface ce que je garde, SMS compris, sauf le tableau des heures, sans nom, gardé jusqu'au [20 novembre 2026] pour le bilan ; je vous le confirme. L'hébergeur garde un an, par obligation légale, la trace des connexions (adresse internet, heure) ; je ne peux pas l'effacer.
 >
 > **Retirer (à la fin).** Appui long sur l'icône, puis Supprimer : les messages s'arrêtent aussi. Couper seulement les messages : Réglages, Notifications, « [Test 18h] ».
 >
-> **Vos droits.** Ce test repose sur mon intérêt à préparer le jeu. Vous pouvez arrêter, ou tout faire effacer : [prénom, téléphone, e-mail]. Recours : la CNIL (cnil.fr).
+> **Vos droits.** Ce test repose sur mon intérêt à préparer le jeu. Vous pouvez arrêter, ou faire effacer ce que je garde : [prénom, téléphone, e-mail]. Recours : la CNIL (cnil.fr).
 
-Restent à remplir :
-- [n], par téléphone ;
-- [N], la durée des journaux de Scalingo (démarche 2). Sans ce chiffre, la note ne peut pas être remise : c'est une condition bloquante ;
-- vos coordonnées.
+*Relue par Juridique le 12 octobre 2026, après les constats sur Scalingo.*
 
-Le [21 octobre 2026] est la date du calendrier au plus tôt (partie 7) : elle bouge avec le jour 0. Le [20 novembre 2026] est fixé par D-054 (point 1). [Test 18h] est le nom proposé de l'icône. Le chemin « Réglages, Notifications » est celui que décrit Apple. Juridique et Front-end vérifient les mots exacts sur chaque téléphone, selon sa version d'iOS. « Google » reste juste dans la note : la connexion Google s'essaie sur les iPhone prêtés, avec le compte de test (partie 2) ; seul le message ne passe que par Apple (de mémoire, à confirmer par le test, partie 1).
+Restent à remplir : [n], par téléphone ; les deux dates ; [Test 18h] ; vos coordonnées.
+
+Le [21 octobre 2026] est la date du calendrier au plus tôt (partie 7) : elle bouge avec le jour 0. Le [20 novembre 2026] est fixé par D-054 (point 1). [Test 18h] est le nom proposé de l'icône. Le chemin « Réglages, Notifications » est celui que décrit Apple. Juridique et Front-end vérifient les mots exacts sur chaque téléphone, selon sa version d'iOS, dont le geste qui **supprime** l'icône (pas celui qui la retire seulement de l'écran d'accueil). Si Scalingo répond avant la remise que sa trace des connexions ne contient pas l'adresse internet, Juridique allège la phrase ; sinon, la note part telle quelle.
 
 ### L'avis de Juridique : ce qui bloque, ce qui ne bloque pas
 
@@ -297,18 +297,19 @@ Le [21 octobre 2026] est la date du calendrier au plus tôt (partie 7) : elle bo
 - Le RGPD s'applique, mais en petit : l'abonnement d'un téléphone dont on connaît le prêteur, l'heure de réception, l'identifiant de connexion et les adresses internet des journaux de Scalingo sont des données personnelles.
 - Le responsable est vous, en nom propre (D-042).
 - Juridique recommande l'intérêt légitime (RGPD, art. 6.1.f), avec droit d'opposition : s'opposer revient à supprimer l'icône. Le consentement obligerait à garder une preuve, sans mieux protéger le prêteur. L'équipe retient cette recommandation (proposé par Juridique, retenu par l'équipe), sans question à vous (D-009).
-- Ce que la page garde dans le téléphone (abonnement, session) est strictement nécessaire : pas de bandeau.
+- Ce que la page garde dans le téléphone (abonnement, session, numéro du téléphone après son abonnement) est strictement nécessaire : pas de bandeau.
 
-**Les cinq conditions bloquantes** (proposé par Juridique, retenu par l'équipe), sans lesquelles le test ne commence pas :
+**Les six conditions bloquantes** (proposé par Juridique, retenu par l'équipe ; la 5 réécrite et la 6 ajoutée après les constats sur Scalingo du 12 octobre 2026), sans lesquelles le test ne commence pas :
 1. **Aucun contenu politique** sur la page ni dans le message. Sinon, les opinions deviennent des données sensibles (RGPD, art. 9), et tout change.
-2. **La note remise avant l'installation**, à chaque prêteur, sur papier ou par message.
+2. **La note remise avant l'installation**, à chaque prêteur, sur papier ou par message. Elle n'attend plus la réponse de Scalingo sur ses journaux.
 3. **Des comptes de test seulement** sur les téléphones prêtés : jamais le compte Google ni Apple d'un prêteur.
-4. **Le contrat de sous-traitance de Scalingo en place** (RGPD, art. 28), et vérifié comme couvrant l'essai gratuit avant de mettre une donnée dans la base. Juridique l'a trouvé publié, par une recherche, sans pouvoir ouvrir la page.
-5. **L'effacement fait et vérifié** le lendemain du soir 3, et la durée des journaux de Scalingo connue avant de remettre la note.
+4. **Le contrat de sous-traitance de Scalingo en place** (RGPD, art. 28), et vérifié comme couvrant l'essai gratuit avant de mettre une donnée dans la base. Toujours bloquante avant la première donnée. Elle est probablement remplie d'office : le contrat se dit « partie intégrante » du contrat principal et « prend effet en même temps » (page de Scalingo vue par moteur, non ouverte), et un compte d'essai doté d'un profil de facturation est un compte client sous contrat. **Preuve suffisante** : l'écran d'acceptation des conditions à l'inscription, ou la réponse écrite de Scalingo (pas-à-pas, 2.9, question 4).
+5. **L'effacement fait et vérifié** le lendemain du soir 3, **et avant le 30e jour de l'essai**. Quatre points : (a) sauvegardes programmées désactivées **avant** toute donnée ; (b) **aucune sauvegarde manuelle**, jamais, car elles survivent un mois à la suppression ; (c) la base **supprimée**, pas seulement vidée, puisque la copie continue de 7 jours ne part qu'avec elle ; (d) la page de facturation de Scalingo vérifiée : plus aucune application ni base.
+6. **Ce qui reste un an chez Scalingo ne contient rien de nous sur les prêteurs.** (a) Journaux du routeur laissés désactivés, vérifiés par vous à l'installation. (b) La liste fermée de nos journaux exclut l'adresse d'abonnement, l'identifiant de connexion et son empreinte, l'adresse internet, et aussi le couple « T3 + heure » : sinon le tableau, promis effacé le 20 novembre, survivrait un an dans les archives de Scalingo. (c) Aucune erreur de la base qui recopie une valeur personnelle : le doublon d'abonnement se contrôle sur le code du téléphone (T1 à T5), jamais par une contrainte d'unicité sur l'adresse d'abonnement. Vérifié sans journal réel (D-048) : les agents provoquent ces erreurs sur une base locale, sans donnée réelle, et lisent les journaux locaux (`test-18h/tests/journal-base/`) ; Cohérence et le Vérificateur le contrôlent à la relecture du code. Limite : les réglages de journal de la base de Scalingo ne sont pas connus ; la preuve vaut pour les réglages par défaut de PostgreSQL.
 
 **Les risques, et leurs parades**, en bref :
 - un prêteur se connecte avec son compte Google : mode « Test » de Google avec le seul compte de test ; c'est vous qui tapez ;
-- Safari propose le compte Apple d'un prêteur : jamais de connexion Apple sur T2 à T5 ;
+- Safari propose le compte Apple d'un prêteur : jamais de connexion Apple sur T2 à T5 ; le bouton n'y est pas montré, et le serveur la refuse hors du téléphone 1 ;
 - le compte de test reste sur un téléphone prêté : déconnexion, icône supprimée, compte supprimé ; le mot de passe n'est jamais donné ;
 - un prêteur mineur, ou un téléphone partagé en famille : prêteurs majeurs, téléphone à eux seuls ;
 - un message qui ressemble au jeu inquiète l'entourage : « Test, soir n sur 3 » ;
@@ -316,6 +317,8 @@ Le [21 octobre 2026] est la date du calendrier au plus tôt (partie 7) : elle bo
 - une panne pousse à montrer des journaux aux agents : vous regardez ; les agents ne reçoivent qu'un relevé sans adresse (D-048) ;
 - un inconnu s'abonne : un code d'essai par téléphone, cinq abonnements au plus ;
 - un prêteur se retire : sa ligne est effacée le jour même, et vous décidez s'il faut reprendre.
+
+**Le bulletin de sécurité de Scalingo (12 août 2026).** Scalingo a signalé une fuite de son entrepôt interne d'analyses, par une faille de l'outil Metabase : environ 90 000 personnes touchées (identité et coordonnées, informations de compte, facturation limitée, noms d'applications et de variables, sans leurs valeurs), CNIL avertie le 11 août. Selon Scalingo, aucune trace d'accès aux applications ni aux bases de ses clients ; mots de passe, clés, code et contenu des bases non touchés. Vérifié dans le dépôt de la documentation de Scalingo (bulletin SSB-2026-004) ; l'absence d'accès aux applications reste la parole de Scalingo, rapportée, non confirmée de l'extérieur. Avis de Juridique : l'incident touche la relation client de Scalingo, pas l'hébergement ; ce n'est pas une raison de revoir D-048. Ce qu'il change : la double vérification dès la création du compte ; un mot de passe propre à Scalingo ; ne jamais suivre le lien d'un e-mail « Scalingo » (ouvrir le tableau de bord à la main) ; aucun nom d'application, de base ou de variable qui contienne un prénom ou une information sur une personne.
 
 **Ce que Juridique juge non bloquant.**
 - **Le registre des traitements** : probablement pas obligatoire pour un test occasionnel, sans donnée sensible. Juridique recommande quand même une ligne dans le futur registre du jeu : cinq minutes, et elle prouve le sérieux. L'équipe la rédige (proposé).
@@ -350,13 +353,13 @@ Trois morceaux, plus une page de résultats.
 
 ## 7. Calendrier
 
-Votre accord est donné le lundi 12 octobre 2026 (D-054). Le calendrier ci-dessous est celui du **plus tôt possible**, pas une date promise. Le jour 0 est le jour où vous ouvrez les pas-à-pas et commencez à chercher les prêteurs ; au plus tôt le mardi 13 octobre. Les jours suivants se comptent depuis lui, mais trois choses peuvent les faire glisser : la mise en ligne (J3) attend que le code ait passé le circuit complet et votre feu vert écrit, donné la veille (D-054, point 1) ; la note aux prêteurs attend la réponse de Scalingo sur la durée de ses journaux ; la séance d'installation (J4) attend les quatre prêteurs, aux versions d'iOS cherchées. Si l'une manque, tout ce qui suit glisse d'autant.
+Votre accord est donné le lundi 12 octobre 2026 (D-054). Le calendrier ci-dessous est celui du **plus tôt possible**, pas une date promise. Le jour 0 est le jour où vous ouvrez les pas-à-pas et commencez à chercher les prêteurs ; au plus tôt le mardi 13 octobre. Les jours suivants se comptent depuis lui, mais trois choses peuvent les faire glisser : la mise en ligne (J3) attend que le code ait passé le circuit complet et votre feu vert écrit, donné la veille (D-054, point 1) ; l'ouverture du compte Scalingo attend votre réponse à la question de la carte ; la séance d'installation (J4) attend les quatre prêteurs, aux versions d'iOS cherchées. Si l'une manque, tout ce qui suit glisse d'autant.
 
 | Jour | Vous | L'équipe |
 |---|---|---|
 | J0 (au plus tôt le mardi 13) | Lecture des pas-à-pas ; premiers messages aux prêteurs (les versions d'iOS cherchées) | Pas-à-pas des démarches 2 à 4 |
-| J1 (au plus tôt le mercredi 14) | Démarches 2, 3 et 4 (environ 2 h), dont la question à Scalingo sur ses journaux ; appel des prêteurs | Construction de la page, du service et de la mesure |
-| J2 (au plus tôt le jeudi 15) | Votre feu vert écrit pour la mise en ligne du lendemain ; envoi de la note aux prêteurs, dès que Scalingo a donné la durée de ses journaux | Tests automatiques, Cohérence, Vérificateur : le code doit être relu avant votre feu vert |
+| J1 (au plus tôt le mercredi 14) | Démarches 2, 3 et 4 (environ 2 h), dont les questions écrites à Scalingo (elles ne bloquent rien) ; appel des prêteurs | Construction de la page, du service et de la mesure |
+| J2 (au plus tôt le jeudi 15) | Votre feu vert écrit pour la mise en ligne du lendemain ; envoi de la note aux prêteurs | Tests automatiques, Cohérence, Vérificateur : le code doit être relu avant votre feu vert |
 | J3 (au plus tôt le vendredi 16) | Vous installez T1 et le vérifiez par un message d'essai à 18h ; si l'adresse de Scalingo est refusée, la question du domaine vous revient (D-054, point 2) et le calendrier glisse de quelques jours | Mise en ligne avant 15h |
 | J4 (au plus tôt le samedi 17) | Séance d'installation ; à 18h, soir 0 (répétition) | Correction éventuelle avant 15h |
 | J5 (au plus tôt le dimanche 18) | Soir 1 | Aucune mise en ligne (D-043) |
@@ -386,7 +389,7 @@ Le soir 0 ne peut avoir lieu qu'une fois la page en ligne depuis la veille au mo
 
 **Ce qui reste incertain avant de commencer.**
 - **Apple et l'adresse de Scalingo** : la documentation d'Apple se contredit (partie 3). Le doute se lève en cinq minutes, à la démarche 4.
-- **Scalingo** : on ne sait pas encore si son contrat de sous-traitance couvre l'essai gratuit, ni combien de temps il garde ses journaux et ses sauvegardes. Ce sont deux conditions bloquantes de Juridique (partie 5) ; si Scalingo tarde à répondre, le test glisse d'autant.
+- **Scalingo** : son contrat de sous-traitance couvre probablement l'essai gratuit (condition 4, preuve à garder avant la première donnée). Sa documentation dit : journaux gardés un an, sauvegardes programmées gardées jusqu'à quatre semaines après la suppression de la base, sauvegardes manuelles un mois (lue le 12 octobre 2026). Le contenu de ses « métadonnées de connexion » et les réglages de journal de ses bases ne sont pas connus. L'essai demande maintenant une carte : la facturation part seule au 30e jour si rien n'est supprimé.
 - **Google et une icône d'iPhone** : des refus ont été signalés par le passé (relevé, forums anciens). C'est le risque le plus probable d'échec de la connexion, et la raison d'être de cette partie du test.
 - **L'heure de réception**, notée par le serveur, est juste à quelques secondes près (estimation). C'est assez pour un rendez-vous « vers 18h ».
 
@@ -429,6 +432,13 @@ Précisions, signalées :
 - **`CLAUDE.md`, règle de poussée** : une branche de mise en ligne s'ajoute (partie 3). Elle ne reçoit que des versions déjà sur `main`, n'est jamais fusionnée ailleurs et ne réécrit rien. C'est un ajout à la règle, de même nature que la branche `gh-pages` (D-019). Accepté avec ce document (D-054, point 1), il est inscrit dans `docs/decisions.md` et `CLAUDE.md` : c'est la branche `mise-en-ligne`.
 - **D-014** : le message du test, « Test, soir n sur 3 », n'est pas un message du jeu. Les textes validés ne sont ni employés ni changés.
 
+Mises à jour du 12 octobre 2026, après les constats sur Scalingo et la relecture du code (Cohérence, Juridique) :
+- **D-048** : un fait est corrigé, « essai de 30 jours sans carte » (relevé le 11 octobre) : la documentation de Scalingo, modifiée le 1er octobre, demande une carte, et la facturation part seule à la fin de l'essai. Le choix de Scalingo tient. La question de la carte vous est posée à part (D-0xx).
+- **D-042** : garde-fou proposé par Juridique, la date de fin d'essai notée et la suite présentée une semaine avant (partie 4).
+- **D-043, point 2** : interprété strictement, un changement de réglage chez Scalingo, qui redémarre l'application, compte comme une mise en ligne (jamais de 15h à 19h ni le dimanche).
+- **D-054, point 1** : la note aux prêteurs et les conditions bloquantes de Juridique changent (note définitive de Juridique, conditions 4 précisée, 5 réécrite, 6 ajoutée) ; la note n'attend plus la réponse de Scalingo (partie 7). Le feu vert écrit de la veille vaut pour chaque mise en ligne, corrections comprises.
+- **P-12** : un seul service d'acheminement, celui d'Apple ; le serveur refuse tout autre abonnement.
+
 ---
 
 ## Sources consultées le 12 octobre 2026
@@ -455,7 +465,7 @@ Précisions, signalées :
 - Location : [Phonandroid, comparatif](https://www.phonandroid.com/?p=2093485) (relevé).
 
 **Scalingo**
-- [Essai gratuit de 30 jours](https://scalingo.com/blog/30-days-to-explore-scalingo-free-trial-details) et [hébergement Node.js](https://scalingo.com/runtimes/nodejs-hosting) (moteur) : sans carte, cinq conteneurs, une base dans sa plus petite formule.
+- [Essai gratuit de 30 jours](https://scalingo.com/blog/30-days-to-explore-scalingo-free-trial-details) et [hébergement Node.js](https://scalingo.com/runtimes/nodejs-hosting) (moteur) : carte demandée (la page de l'essai, modifiée le 1er octobre 2026, le dit ; ces deux pages disaient encore « sans carte »), cinq conteneurs, une base dans sa plus petite formule. Dépôt public de la documentation de Scalingo (`Scalingo/documentation`, lu le 12 octobre 2026) : essai gratuit, journaux, politique de sauvegarde, bulletin SSB-2026-004, `PROJECT_DIR`, `Procfile`, Node.js.
 - [Fin de l'essai](https://scalingo.com/blog/upcoming-changes-in-our-pricing-policy) (moteur).
 - [Contrat de sous-traitance des données](https://scalingo.com/data-processing-agreement) (moteur, cité par Juridique ; page non ouverte).
 - [Mise en ligne depuis GitHub](https://doc.scalingo.com/platform/deployment/deploy-with-github) et [intégration GitHub](https://doc.scalingo.com/platform/app/scm-integration) (moteur) : installation automatique, attente des tests.

@@ -4,7 +4,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { environnementProtege, fenetreInterdite, verifierHoraires } from '../../src/garde-horaires.ts';
-import { heureParis, instantParis, lendemain, partiesParis } from '../../src/horloge.ts';
+import { heureParis, instantParis, partiesParis } from '../../src/horloge.ts';
 
 test('18h à Paris, l’hiver et l’été, et autour des changements d’heure', () => {
   assert.equal(instantParis('2026-10-24', 18, 0).toISOString(), '2026-10-24T16:00:00.000Z'); // été (UTC+2)
@@ -15,8 +15,6 @@ test('18h à Paris, l’hiver et l’été, et autour des changements d’heure'
   assert.equal(instantParis('2026-10-20', 18, 10).toISOString(), '2026-10-20T16:10:00.000Z');
   assert.throws(() => instantParis('2026-03-29', 2, 30), /inexistante/); // 2h30 n'existe pas ce jour-là
   assert.equal(heureParis(new Date('2026-10-25T17:00:09Z')), '18:00:09');
-  assert.equal(lendemain('2026-10-24'), '2026-10-25');
-  assert.equal(lendemain('2026-10-25'), '2026-10-26');
   const p = partiesParis(new Date('2026-10-18T15:59:59Z'));
   assert.deepEqual(p, { dateISO: '2026-10-18', heure: 17, minute: 59, seconde: 59, jourSemaine: 0 });
 });
