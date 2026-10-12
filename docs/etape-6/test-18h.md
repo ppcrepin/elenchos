@@ -68,7 +68,7 @@ Sur votre seul iPhone (T1), la connexion Apple s'essaie ensuite, directement dep
 
 **Soir 2.** Personne n'a rouvert l'icône depuis la veille : c'est exprès. On vérifie que l'abonnement tient sans qu'on ouvre l'icône (`docs/plateforme.md`, limite 4).
 
-**Soir 3.** Même règle. En plus, chacun éteint puis rallume son téléphone dans la journée (proposé), comme il arrive dans la vraie vie. Après le message, on ouvre enfin l'icône : est-on toujours connecté, trois jours plus tard ?
+**Soir 3.** Même règle. En plus, chacun éteint puis rallume son téléphone avant 18h (proposé), comme il arrive dans la vraie vie ; après 18h, ce redémarrage fausserait la mesure. Après le message, on ouvre enfin l'icône : est-on toujours connecté, trois jours plus tard ?
 
 Entre deux soirs, chacun se sert de son téléphone comme d'habitude. On ne touche à aucun réglage de batterie ni de concentration : on veut savoir ce qui arrive dans des conditions ordinaires. On note seulement ces réglages à l'installation (liste de contrôle, proposé).
 
@@ -78,9 +78,9 @@ Pour chaque téléphone et chaque soir, la page de résultats, que vous seul ouv
 1. **L'heure d'envoi** par notre serveur, et la réponse du service d'acheminement : celui d'Apple pour un iPhone, celui de Google pour Chrome.
 2. **L'heure de réception** : à l'arrivée du message, le téléphone le dit au serveur, qui note l'heure. On ne garde pas l'heure du téléphone lui-même : ce serait un champ de plus, et la précision gagnée (quelques secondes) ne change rien pour un rendez-vous « vers 18h ».
 3. **L'écart à 18h00**, en secondes.
-4. **« Vu à »** : le prêteur vous envoie un SMS chaque soir (« vu à 18h01 », ou « rien vu »). Recevoir et voir sont deux choses différentes : un iPhone réglé en « Résumé programmé » reçoit le message à 18h, mais ne le montre qu'à l'heure du résumé.
+4. **« Vu »** : le prêteur vous envoie un SMS chaque soir (« vu à 18h01 », ou « rien vu »). Vous le reportez le soir même, en trois cases seulement : « à l'heure (avant 18h05) », « plus tard » ou « rien vu », jamais à la minute (avis de Juridique) : l'heure exacte où quelqu'un regarde son téléphone est un renseignement sur sa vie. Recevoir et voir sont deux choses différentes : un iPhone réglé en « Résumé programmé » reçoit le message à 18h, mais ne le montre qu'à l'heure du résumé.
 
-Exemple de ligne : « T4 · Xiaomi · Android 14 · soir 2 · envoyé 18:00:01 · accepté · reçu 18:00:09 · écart 9 s · vu à 18h20 (SMS) ». Le « vu à » vient du SMS et n'entre pas dans la base.
+Exemple de ligne : « T4 · Xiaomi · Android 14 · soir 2 · envoyé 18:00:01 · accepté · reçu 18:00:09 · écart 9 s · vu : plus tard (SMS) ». Le « vu » vient du SMS et n'entre pas dans la base.
 
 Aucun autre champ n'est gardé dans la base. En particulier, jamais l'heure à laquelle un prêteur ouvre l'icône : ce serait un renseignement sur sa vie (avis de Juridique, retenu).
 
@@ -159,9 +159,9 @@ Pourquoi ce mélange :
 - **Ce qu'ils reçoivent** : la note de Juridique (partie 5), remise avant qu'on touche à leur téléphone. C'est une condition bloquante.
 - **Ce qu'ils font** :
   1. une installation d'environ quinze minutes avec vous, en personne de préférence ;
-  2. ne pas ouvrir l'icône avant le message du soir 3, et éteindre puis rallumer le téléphone une fois ce jour-là ;
+  2. ne pas ouvrir l'icône avant le message du soir 3, et éteindre puis rallumer le téléphone une fois ce jour-là, avant 18h ;
   3. vers 18h, garder le téléphone allumé et connecté, comme d'habitude ;
-  4. chaque soir, un SMS : « vu à 18hxx », ou « rien vu », ou « téléphone éteint » ; au soir 3, ouvrir l'icône et dire si elle montre « connecté » ;
+  4. chaque soir, un SMS : « vu à 18h… », « rien vu » ou « éteint » ; au soir 3, ouvrir l'icône et dire si elle montre « connecté » ;
   5. à la fin, supprimer l'icône.
 - **Ce qu'ils ne font pas** : se connecter avec leur propre compte Apple ou Google. Sur leurs téléphones, c'est vous qui vous connectez, avec le compte Google créé pour le test. Le projet Google en mode « Test » ne liste que ce compte : Google refuse lui-même tout autre compte.
 - **Pourquoi jamais Apple sur T2.** Sur l'iPhone d'un prêteur, Safari propose d'office le compte Apple du téléphone, donc le sien (de mémoire) ; un seul toucher le relierait au jeu. La connexion Apple ne s'essaie donc que sur votre iPhone (T1), avec votre compte (avis de Juridique, retenu). Si un toucher l'a fait quand même, on efface sa ligne tout de suite, et le prêteur retire le lien dans les réglages de son compte Apple.
@@ -179,7 +179,7 @@ Tout est à votre nom (D-042). L'équipe vous donne, pour chaque démarche, un p
 4. Les agents n'ont aucun accès à Scalingo, ni à Apple, ni à Google, et n'ouvrent pas la page du test en ligne.
 5. Si une installation échoue, vous nous copiez le message d'erreur de la **fabrication** chez Scalingo (pas un journal de l'application en marche) : il ne contient aucune donnée de prêteur.
 6. **En cas de panne pendant le test** (un message qui ne part pas, une page qui ne répond pas), c'est vous qui regardez, comme D-048 le prévoit. Les agents ne reçoivent qu'un relevé du type « téléphone 4 : reçu à 18h01 » ou « non reçu », sans adresse ni abonnement. Jamais les journaux de l'application en marche (D-052, point 3 ; avis de Juridique, retenu).
-7. À la fin, vous nous copiez le tableau des résultats, sous la même forme. Le tableau reste dans la conversation ; seul un bilan chiffré, sans heures par téléphone, entre dans le dépôt public (comme D-017) (proposé).
+7. À la fin, vous nous copiez le tableau des résultats, sous la même forme, avec le « vu » en trois cases. Le tableau reste dans la conversation (partie 5) ; seul un bilan chiffré, sans heures par téléphone, entre dans le dépôt public (comme D-017) (proposé).
 
 **La règle des horaires, répétée dès le test (proposé).** Scalingo installe depuis une branche réservée, qui ne reçoit que des versions déjà sur `main`. Les agents n'y poussent jamais de 15h à 19h ni le dimanche (D-043). En plus, les tests automatiques échouent volontairement dans ces créneaux : Scalingo refuse alors d'installer. Sans cette branche, chaque mise à jour de la documentation, poussée sur `main`, réinstallerait le test, même à 17h. En mots simples : une copie du projet réservée à la mise en ligne, qui ne reçoit que ce qui est déjà validé. C'est un ajout à la règle de poussée de `CLAUDE.md`, de même nature que la branche `gh-pages` (D-019) : vous l'acceptez en validant ce document (partie « Décisions antérieures touchées »).
 
@@ -245,7 +245,7 @@ On applique P-43 et P-10 (`docs/etape-6/donnees.md`) : la page du test ne garde 
 |---|---|---|---|
 | L'abonnement au message de chaque téléphone : l'adresse technique où son service d'acheminement le joint, et ses clés de chiffrement | Envoyer le message | Base du test, chez Scalingo | Fin du test |
 | L'étiquette du téléphone : son numéro, sa marque et la version de son système (« T4 · Xiaomi · Android 14 »), jamais un nom | Lire les résultats par marque et par version | Idem | Fin du test |
-| Les heures : envoi, réponse du service d'acheminement, réception notée par le serveur | La mesure | Idem | Fin du test ; seul le tableau, sans identifiant, vous reste |
+| Les heures : envoi, réponse du service d'acheminement, réception notée par le serveur | La mesure | Idem | Fin du test. Puis le tableau par téléphone numéroté (marque, système, heures, « vu » en trois cases), sans adresse ni nom, jusqu'au [20 novembre 2026], pour le bilan, puis effacé. Seul reste le bilan chiffré, sans heure par téléphone. |
 | La connexion : l'identifiant renvoyé par Apple ou Google, gardé sous forme d'empreinte, et « adresse e-mail reçue : oui ou non » | Vérifier qu'on retrouve le même compte en se reconnectant | Idem | Fin du test |
 
 **Ce qui n'est jamais gardé** : aucune réponse, aucun pseudo, aucun nom, aucune adresse e-mail.
@@ -265,38 +265,46 @@ On applique P-43 et P-10 (`docs/etape-6/donnees.md`) : la page du test ne garde 
 3. Sur les téléphones prêtés, on se déconnecte, puis le prêteur supprime l'icône, ce qui coupe aussi les messages (de mémoire).
 4. Vous retirez l'accès du test dans le compte Google de test, puis vous supprimez ce compte. Sur votre iPhone, vous retirez le lien dans « Se connecter avec Apple ».
 5. Vous retirez l'adresse du test du projet Google et de l'identifiant de service Apple. Les deux restent pour la suite : la connexion du jeu (travail 9) les reprendra (proposé).
-6. Vous écrivez une ligne datée, « effacé le …, vérifié », et vous le confirmez à chaque prêteur, comme la note le promet, et vous supprimez les SMS des prêteurs.
+6. Vous écrivez une ligne datée, « effacé le …, vérifié », et vous le confirmez à chaque prêteur, comme la note le promet, et vous supprimez les messages du test dans vos SMS (ci-dessous).
+7. Le [20 novembre 2026] (proposé) : vous effacez votre copie du tableau, et vous l'écrivez sur la même ligne datée.
+
+**Les SMS des prêteurs (proposé, avis de Juridique).** Ce sont des données des prêteurs, que vous traitez pour le test. Trois précautions :
+- des SMS individuels, jamais un groupe : un groupe ferait connaître les prêteurs entre eux, avec leurs numéros, et un groupe WhatsApp ajouterait un prestataire américain ;
+- le soir même, vous reportez le « vu » dans le tableau, en trois cases ;
+- le 21 octobre, vous effacez seulement les messages du test, pas le reste de votre conversation avec chaque proche, qui relève de votre vie privée. Une ancienne sauvegarde de votre téléphone peut encore en garder une copie : risque accepté, vu le contenu.
+
+**La copie dans la conversation des agents, franchement.** Les agents ne reçoivent que des lignes sans nom, avec le « vu » en trois cases (partie 3, points 6 et 7). Pour eux et pour le fournisseur d'IA, ces lignes ne se relient à personne : aucun d'eux ne sait qui a quel téléphone. Mais elles restent dans l'historique de travail après le 20 novembre. C'est accepté, selon l'avis de Juridique.
 
 Un prêteur qui se retire en cours de test : on efface sa ligne le jour même. Le test n'atteint alors plus « cinq téléphones, trois soirs », et vous décidez s'il faut reprendre (avis de Juridique).
 
 ### La note pour les prêteurs
 
-Rédigée par Juridique, reprise de son avis du 12 octobre 2026, avec trois additions de Back-end et Front-end, signalées entre doubles crochets, à confirmer par Juridique. Elle vouvoie, parce qu'une même note sert à plusieurs lecteurs ; vous pouvez tutoyer dans le message qui l'accompagne. Les crochets restent à remplir ; ceux que le calendrier permet sont remplis, marqués « proposé ». Vos téléphones n'ont pas besoin de note.
+Rédigée par Juridique, puis relue par lui avec les additions de Back-end et Front-end (avis du 12 octobre 2026). Le texte ci-dessous est sa version définitive, reprise mot pour mot. Elle vouvoie, parce qu'une même note sert à plusieurs lecteurs ; vous pouvez tutoyer dans le message qui l'accompagne. Vos téléphones n'ont pas besoin de note.
 
 > **Test du message de 18h**
 >
-> Je prépare Elenchos, un jeu, seul et en mon nom propre. Je vérifie qu'un message arrive à 18h.
+> Je prépare seul, en mon nom propre, un jeu : Elenchos.
 >
-> **Installé.** Une page de test, en icône sur l'écran d'accueil. Aucun jeu, aucune question. Trois soirs, vers 18h, un message « Test, soir 1 sur 3 ». [[**À faire :** ne pas ouvrir l'icône avant le soir 3, m'envoyer un SMS chaque soir (« vu à 18h… », « rien vu » ou « téléphone éteint »), éteindre puis rallumer le téléphone une fois le soir 3, puis ouvrir l'icône et me dire si elle montre « connecté ».]]
+> **Installé.** Une page de test en icône, sans jeu ni question. Trois soirs, vers 18h, un message « Test, soir 1 sur 3 ».
 >
-> **Gardé.** L'adresse technique qui permet d'envoyer le message à ce téléphone, et l'heure où il l'a reçu, sous « téléphone [n] » [[avec la marque et la version du système du téléphone]], jamais votre nom. J'essaie aussi la connexion Google ou Apple avec un compte créé pour le test, jamais le vôtre. Son identifiant et son adresse sont effacés avec le reste. [[Reste, après l'effacement, un tableau d'heures par téléphone numéroté, sans adresse technique ni nom, que je garde pour le projet. Les SMS que vous m'envoyez le soir sont supprimés avec le reste.]]
+> **À faire.** Ne pas ouvrir l'icône avant le soir 3. Chaque soir, un SMS : « vu à 18h… », « rien vu » ou « éteint ». Le jour 3, éteindre et rallumer avant 18h ; après le message, ouvrir l'icône et me dire si elle affiche « connecté ».
+>
+> **Gardé.** L'adresse technique du téléphone et l'heure de réception, sous « téléphone [n] », avec sa marque et la version de son système, jamais votre nom. J'essaie la connexion Google avec un compte créé pour le test, jamais le vôtre.
 >
 > **Où.** Chez Scalingo, hébergeur, en France. Le message passe, chiffré, par Apple ou Google.
 >
-> **Jusqu'à quand.** Du [samedi 17 octobre 2026, proposé] au [mercredi 21 octobre 2026, proposé]. Le [mercredi 21 octobre 2026, proposé], j'efface tout et je vous le confirme ; les journaux techniques de l'hébergeur suivent sous [N] jours.
+> **Jusqu'à quand.** Le [21 octobre 2026], j'efface tout, SMS compris, et vous le confirme ; les journaux techniques de l'hébergeur suivent sous [N] jours. Seul le tableau des heures, sans nom, reste jusqu'au [20 novembre 2026], pour le bilan.
 >
-> **Retirer.** Appui long sur l'icône, puis Supprimer (ou Désinstaller) : l'icône et les messages partent ensemble. Couper seulement les messages : Réglages, Notifications, « [Test 18h, proposé] ».
+> **Retirer (à la fin).** Appui long sur l'icône, puis Supprimer (ou Désinstaller) : les messages s'arrêtent aussi. Couper seulement les messages : Réglages, Notifications, « [Test 18h] ».
 >
-> **Vos droits.** Ce test repose sur mon intérêt à préparer le jeu. Vous pouvez arrêter quand vous voulez, ou faire tout effacer plus tôt : [prénom, téléphone, e-mail]. Recours : la CNIL (cnil.fr).
+> **Vos droits.** Ce test repose sur mon intérêt à préparer le jeu. Vous pouvez arrêter, ou tout faire effacer : [prénom, téléphone, e-mail]. Recours : la CNIL (cnil.fr).
 
 Restent à remplir :
 - [n], par téléphone ;
 - [N], la durée des journaux de Scalingo (démarche 3). Sans ce chiffre, la note ne peut pas être remise : c'est une condition bloquante ;
 - vos coordonnées.
 
-Les dates suivent le calendrier de la partie 7 : elles bougent avec votre accord. [Test 18h] est le nom proposé de l'icône.
-
-Les trois additions entre doubles crochets viennent de Back-end et Front-end, et sont à confirmer par Juridique : la marque et la version, parce qu'on lit les résultats par marque et par version (Juridique demande alors que la note le dise) ; les gestes demandés aux prêteurs, que « Rien à faire » contredisait ; le tableau d'heures conservé et les SMS effacés, que « j'efface tout » ne couvrait pas. Sur iPhone, le chemin « Réglages, Notifications » est celui que décrit Apple ; sur Android, il passe par les réglages de Chrome (de mémoire). Juridique et Front-end vérifient les mots exacts sur chaque téléphone.
+Les dates entre crochets suivent le calendrier proposé de la partie 7 (effacement le mercredi 21 octobre 2026, tableau gardé jusqu'au 20 novembre 2026) : elles bougent avec votre accord. [Test 18h] est le nom proposé de l'icône. Sur iPhone, le chemin « Réglages, Notifications » est celui que décrit Apple ; sur Android, il passe par les réglages de Chrome (de mémoire). Juridique et Front-end vérifient les mots exacts sur chaque téléphone.
 
 ### L'avis de Juridique : ce qui bloque, ce qui ne bloque pas
 
@@ -369,8 +377,9 @@ Exemple, si vous donnez votre accord le mardi 13 octobre 2026 (proposé) :
 | J4, samedi 17 | Séance d'installation ; à 18h, soir 0 (répétition) | Correction éventuelle avant 15h |
 | J5, dimanche 18 | Soir 1 | Aucune mise en ligne (D-043) |
 | J6, lundi 19 | Soir 2 | Correction éventuelle avant 15h |
-| J7, mardi 20 | Soir 3 (prêteurs : un redémarrage dans la journée) | — |
+| J7, mardi 20 | Soir 3 (chacun : un redémarrage avant 18h) | — |
 | J8, mercredi 21 | Effacement ; vous nous copiez le tableau | Bilan, par le circuit habituel |
+| Vendredi 20 novembre | Effacement de votre copie du tableau (proposé) | — |
 
 **Huit jours si tout passe, dix avec un soir ajouté.** Le plan disait « environ une semaine ». Tout se tient avant le changement d'heure du dimanche 25 octobre. Ce changement est couvert par un test automatique, pas par un vrai soir.
 
@@ -422,6 +431,7 @@ Précisions, signalées :
   - « effacé à la fin des trois soirs » devient « effacé le lendemain du troisième soir, et vérifié » ;
   - les champs gardés sont fixés : jamais l'heure d'ouverture ; la marque et la version du système, demandées par Back-end et Front-end et dites dans la note (condition de Juridique) ;
   - l'abonnement n'est accepté qu'avec un code d'essai, cinq au plus.
+- **P-43 et la ligne « Test du message de 18h » de la carte des données** (`docs/etape-6/donnees.md`, partie 4) disent « effacé à la fin des trois soirs ». Le tableau d'heures par téléphone, sans adresse ni nom, gardé jusqu'au 20 novembre 2026 pour le bilan, en est une exception (avis de Juridique). Elle sera écrite dans les deux si vous validez ce document.
 - **P-43, précision de Back-end et Front-end** : l'adresse e-mail renvoyée par Apple ou Google n'est pas gardée du tout, et l'identifiant ne l'est que sous forme d'empreinte. C'est plus strict que P-43.
 - **D-035** : ne demander que l'identifiant et l'adresse, dès le test.
 - **D-048** : appliqué au test. En cas de panne, vous regardez ; les agents ne reçoivent qu'un relevé sans adresse.
