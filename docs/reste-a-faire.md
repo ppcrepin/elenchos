@@ -1,6 +1,6 @@
 # Ce qu'il reste à faire, jusqu'à l'ouverture
 
-*À jour au 12 octobre 2026. Ce document ne décide rien : il rassemble ce que disent `docs/plan-construction.md` (« le plan »), `docs/decisions.md` (jusqu'à D-055) et les documents cités. Les montants sont des estimations de l'équipe, pas des devis ; les durées sont à faible confiance.*
+*À jour au 12 octobre 2026. Ce document ne décide rien : il rassemble ce que disent `docs/plan-construction.md` (« le plan »), `docs/decisions.md` (jusqu'à D-055) et les documents cités. Les montants sont des estimations de l'équipe, pas des devis ; les durées sont à faible confiance. Trois marques reviennent : « (proposé) », un choix de l'équipe que vous n'avez pas encore tranché ; « (de mémoire) », un fait à revérifier ; « (lecture de l'équipe) », une interprétation des documents, pas leur lettre. Relu par Cohérence (compatible avec réserves, corrigées), puis par le Vérificateur (OK avec corrections mineures, appliquées).*
 
 ## 1. En une phrase
 
@@ -28,20 +28,22 @@ Pour les travaux 5 à 13, le plan ne donne qu'une durée d'ensemble (partie 6) :
 | 12 | **Surveillance** : alerte à 18h02 si les messages ne sont pas partis, relance d'un geste ; procédure d'incident d'une page | — | Ouvrir le compte de la sonde (un service extérieur qui vérifie à 18h02 que les messages sont partis), chez un second prestataire (proposé) ; recevoir une alerte d'essai ; jouer la procédure une fois à blanc | Idem | À venir |
 | 13 | **Vérification finale** : chaque phrase affichée, chaque ligne rouge écran par écran, l'accessibilité, la mention IA | — | Jouer une journée | Idem | À venir |
 | 14 | **L'App Store** : fiches de confidentialité, suppression du compte dans l'application, marge pour un refus | La question de la structure, d'abord (D-042, D-043). Numéroté 14, mais placé avant l'ouverture, hors des 3 à 6 mois ; calendrier exact à fixer (proposé) | Trancher la structure | Non estimable (plan, partie 6) | À venir |
-| Bêta | **Proposée par le plan (partie 5) :** 8 à 12 cercles réels, 40 à 80 personnes, tous sur iPhone | Bloquée tant que manque un point de la liste « Avant la bêta » (plan, partie 5) : construction finie, textes d'avance, avocat, analyse d'impact, procédure d'incident jouée, nom vérifié, adresse et icône définitives | Recruter 4 à 6 créateurs, qui invitent leurs proches ; tenir la permanence chaque soir, dimanche compris ; donner aux agents les rapports de totaux (D-052) | 8 semaines au moins, 12 de préférence | À venir |
-| Mi-bêta | Un seul lot de réglages, appuyé sur trois comptes (D-052) | Les réglages actuels reposent sur des joueurs simulés | À confirmer : le plan ne dit pas qui valide le lot (lecture de l'assembleur) | — | À venir |
+| Bêta | **Proposée par le plan (partie 5) :** 8 à 12 cercles réels, 40 à 80 personnes, tous sur iPhone | Bloquée tant que manque un point de la liste « Avant la bêta » (plan, partie 5) : construction finie, textes d'avance, avocat, analyse d'impact, décision écrite sur le délégué, mention IA et procédure de correction prêtes, procédure d'incident jouée, testeurs de 15 ans ou plus informés, nom vérifié, adresse et icône définitives | Recruter 4 à 6 créateurs, qui invitent leurs proches ; tenir la permanence chaque soir, dimanche compris ; donner aux agents les rapports de totaux (D-052) | 8 semaines au moins, 12 de préférence | À venir |
+| Mi-bêta | Un seul lot de réglages, appuyé sur trois comptes (D-052) | Les réglages actuels reposent sur des joueurs simulés | À confirmer : le plan ne dit pas qui valide le lot (lecture de l'équipe) | — | À venir |
 | Préparation de l'ouverture | Audit de sécurité extérieur, test de charge de 18h, seconde relecture de l'avocat, analyse d'impact finale, délégué à la protection des données nommé, marque déposée, contribution libre, avec la liste publique des organisations qui financent le jeu, mentions légales et conditions d'utilisation en ligne, égalité entre groupes conforme à D-044, App Store, les huit tensions en circulation, registre public en ligne (plan, partie 5) | Tout ce bloc est bloquant | Voir la partie 3 | Non estimable (plan, partie 6) | À venir |
 | Ouverture | Le jeu ouvert au public | Le bloc précédent terminé | Choisir la date (feuille de route, étape 7) | — | À venir |
 
 ## 3. Ce que vous faites, vous, dans l'ordre
 
+Trois choses n'avancent pas sans vous, et tout le reste attend derrière elles : le test du message de 18h, le nom, l'avocat (plan, partie 6).
+
 **Maintenant, en parallèle**
-1. **La vérification du nom par un conseil en propriété industrielle.** Elle conditionne l'adresse et l'icône définitives, figées avant la bêta (D-043, D-047). Elle est « en cours » (D-050) ; aucun résultat n'est encore consigné.
-2. **Le devis de l'avocat** spécialisé en données personnelles (D-044). Vous considérez ce point comme réglé de votre côté (D-047), mais aucun nom ni devis n'est encore consigné.
+1. **La vérification du nom par un conseil en propriété industrielle.** Elle conditionne l'adresse et l'icône définitives, figées avant la bêta (D-043, D-047). Elle est « en cours » (D-050) ; aucun résultat n'est encore consigné. Dès que le conseil répond, transmettez-nous sa conclusion : elle déclenche l'achat des adresses web et, s'il écarte le nom, la reprise du logo et du texte du nom (D-047).
+2. **Le devis de l'avocat** spécialisé en données personnelles (D-044). Vous considérez ce point comme réglé de votre côté (D-047), mais aucun nom ni devis n'est encore consigné. Donnez-nous le nom du cabinet et son devis, pour qu'il soit consigné avant la relecture (D-042) ; sinon, demandez un devis maintenant : sans avocat, pas de bêta.
 
 **Le test du message de 18h** (au plus tôt du 13 au 21 octobre, test-18h, partie 7)
 3. Trouver quatre proches majeurs qui gardent leur iPhone, et leur remettre la note d'une page, que vous remplissez d'abord (deux dates, vos coordonnées).
-4. Ouvrir Scalingo avec votre carte et **noter la date de fin d'essai** (D-055) ; régler Google et Apple (environ 2 h). Vous ne nous confiez jamais un mot de passe (D-048).
+4. Ouvrir Scalingo avec votre carte et **noter la date de fin d'essai** (D-055) ; régler Google et Apple. Environ 2 h pour les trois démarches (test-18h, partie 7). Vous ne nous confiez jamais un mot de passe (D-048).
 5. Avant toute donnée dans la base : couper les sauvegardes programmées chez Scalingo et n'en faire aucune à la main ; créer le compte Google de test (test-18h, partie 3, démarches 2 et 3 ; condition 5 de Juridique).
 6. Donner votre feu vert écrit la veille de la mise en ligne. Cette règle vaut pour **chaque** mise en ligne (D-054), jamais de 15h à 19h ni le dimanche (D-043).
 7. Installer les téléphones ; chaque soir, regarder les résultats (deux minutes) et reporter le « vu » en trois cases ; le lendemain du troisième soir, tout effacer : page de résultats, application et base chez Scalingo (puis vérifier la page de facturation), accès Google et Apple, SMS du test ; le 20 novembre 2026, effacer votre tableau et la liste « qui a quel téléphone ».
@@ -60,7 +62,7 @@ Pour les travaux 5 à 13, le plan ne donne qu'une durée d'ensemble (partie 6) :
 16. Produire les rapports de totaux que lisent les agents (D-052) ; valider le lot de réglages de mi-bêta (à confirmer).
 
 **Avant l'ouverture**
-17. Déposer la marque, française puis européenne dans les six mois (de mémoire ; D-043 ; plan, partie 6).
+17. Déposer la marque française (270 €), puis l'européenne (1 050 €) ; déposée dans les six mois qui suivent, l'européenne garde la date de la française (de mémoire ; D-043 ; plan, partie 6).
 18. Trancher la structure, puis l'App Store (D-042, D-043) ; nommer un délégué à la protection des données, qui ne peut pas être vous (D-044) ; faire faire la seconde relecture de l'avocat et l'audit de sécurité.
 19. Choisir la date d'ouverture.
 
@@ -74,7 +76,7 @@ Pour les travaux 5 à 13, le plan ne donne qu'une durée d'ensemble (partie 6) :
 | Reprendre ou non le test si un prêteur se retire | Pendant le test | test-18h, partie 5 |
 | La suite de Scalingo : continuer ou tout supprimer | Une semaine avant la fin de l'essai | D-055 |
 | Chaque dépense, avec son montant | À chaque fois | D-042 |
-| Les nouveaux écrans, dont l'ordinateur et l'iPad (proposé : un code à viser pour continuer sur l'iPhone ; l'iPad non admis) | Travail 7 | D-054 (laissé à l'équipe) ; produit, « Ce que ces décisions laissent à régler » ; vous validez avec les écrans |
+| Les nouveaux écrans, dont l'ordinateur et l'iPad (proposé : un QR code à scanner pour continuer sur l'iPhone ; l'iPad non admis) | Travail 7 | D-054 (laissé à l'équipe) ; produit, « Ce que ces décisions laissent à régler » ; vous validez avec les écrans |
 | L'égalité entre groupes, si elle ne tient pas sur les vrais votes (de même si une tension manque de textes dans un sens) | Travail 10 | D-044 ; `docs/etape-6/tensions.md` |
 | Les titres du dimanche, seulement s'ils ne peuvent pas être calculés d'avance | Travail 6 | Plan, travail 6 (proposé) |
 | Le nom définitif, si le conseil écarte Elenchos (logo, texte du nom et adresse à refaire) | Avant la bêta | D-047 |
@@ -86,7 +88,7 @@ Pour les travaux 5 à 13, le plan ne donne qu'une durée d'ensemble (partie 6) :
 | Peut-être, après la bêta : l'âge de 15 ans sur simple déclaration, le cercle à trois, le seuil des curseurs nets, Le Sans-Faute, « Tout effacer » | Après la bêta | Plan, partie 7 |
 | Le nouveau venu, si sa justesse reste au niveau du hasard | Après les mesures de la bêta | D-023 |
 
-Les voix sous le vote (E4), seul point de règle encore ouvert, sont confiées à UX et Contenu, pas à vous (`docs/etape-6/regles.md`, D-052).
+Les voix sous le vote (E4 : afficher ou non, sous le résultat du vote à l'Assemblée, le nombre de voix pour et contre), seul point de règle encore ouvert, sont confiées à UX et Contenu, pas à vous (`docs/etape-6/regles.md`, D-052).
 
 ## 5. L'argent
 
@@ -130,7 +132,7 @@ Si vous créez une structure : environ 200 à 250 € pour la créer, puis 600 �
 Le délégué figure déjà dans le total d'ouverture (première année) : ne l'additionnez pas deux fois.
 
 **Ce qui n'est compté nulle part :**
-- votre abonnement Claude, qui paie la construction et l'entretien (deux à quatre jours d'agents par mois, Back-end) ;
+- votre abonnement Claude, qui paie la construction et l'entretien (pour l'entretien seul : deux à quatre jours d'agents par mois, estimation de Back-end) ;
 - votre temps ;
 - la location d'un Mac en ligne, nécessaire pour fabriquer l'application de l'App Store (plateforme, annexe A), non chiffrée ;
 - l'hébergement au-delà de six mois (quelques dizaines d'euros par mois, plan, partie 6), ce qui arrive si la construction et la bêta durent plus de six mois en tout (calcul fait ici), et la chaîne des textes après la bêta ;
@@ -150,10 +152,10 @@ La borne basse suppose que tout réussit du premier coup. Ce qui fait glisser (p
 - une question qui vous revient (connexion depuis l'icône, égalité entre groupes) ;
 - un avocat qui fait refaire la carte de consentement ;
 - une chaîne des textes qui échoue à son épreuve ;
-- un conseil qui écarte le nom (lecture de l'assembleur : logo, texte et adresse seraient à refaire, D-047) ;
+- un conseil qui écarte le nom (lecture de l'équipe : logo, texte et adresse seraient à refaire, D-047) ;
 - des validations lentes, ou des sessions d'agents trop rares.
 
-L'équipe recalera la fourchette après le test de 18h ; ses estimations se sont déjà écartées du réel. La bêta pourrait tomber pendant la présidentielle d'avril-mai 2027 ; Juridique dira avant si cela change quelque chose (plan, partie 7).
+L'équipe recalera la fourchette après le test de 18h ; ses estimations se sont déjà écartées du réel. La bêta pourrait tomber pendant la présidentielle d'avril-mai 2027 (dates à confirmer) ; Juridique dira avant si cela change quelque chose (plan, partie 7).
 
 ## 7. Ce qui peut faire échouer ou dérailler
 
