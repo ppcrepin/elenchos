@@ -1,3 +1,4 @@
+// REPRIS pour le vrai jeu (proposé) : créneaux, P-05, mesure « reçu ».
 // Les créneaux d'envoi, le contenu des messages (P-05 : rien de personnel) et le classement des réceptions.
 
 import assert from 'node:assert/strict';

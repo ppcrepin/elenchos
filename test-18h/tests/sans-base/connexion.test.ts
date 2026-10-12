@@ -1,3 +1,4 @@
+// REPRIS pour le vrai jeu (proposé) : tests de la connexion (P-03, P-10).
 // La connexion Google et Apple, contre de faux serveurs d'Apple et de Google :
 // demande minimale (P-03), state, nonce, PKCE chez Google, retour par formulaire, adresse e-mail jetée.
 

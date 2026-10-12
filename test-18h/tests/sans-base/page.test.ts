@@ -1,3 +1,4 @@
+// JETABLE (la page du test) ; REPRIS (proposé) : le relevé statique de P-09 et P-10.
 // La page et ce qu'elle charge : rien d'ailleurs (P-09, P-10), installable sur l'écran d'accueil, non référencée,
 // aucun texte du jeu ni contenu politique (condition de Juridique), mots marqués provisoires.
 

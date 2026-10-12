@@ -1,3 +1,4 @@
+// REPRIS pour le vrai jeu (proposé) : horloge de 18h et règle des horaires.
 // L'horloge de Paris (changements d'heure compris) et la règle des horaires de mise en ligne (D-043).
 
 import assert from 'node:assert/strict';

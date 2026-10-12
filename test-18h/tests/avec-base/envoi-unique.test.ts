@@ -1,3 +1,4 @@
+// REPRIS pour le vrai jeu (proposé) : l’envoi unique de 18h.
 // L'envoi de 18h, sur un vrai PostgreSQL, avec une horloge simulée :
 // à l'heure, une seule fois même avec deux serveurs, rattrapé après un redémarrage, jamais après 18h30.
 

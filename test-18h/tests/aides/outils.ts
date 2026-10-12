@@ -1,3 +1,4 @@
+// REPRIS pour le vrai jeu (proposé) : les outils de test (traceur, faux téléphone, faux service).
 // Aides des tests : réglages inventés, faux téléphone, faux service d'acheminement, journal capturé, base d'essai.
 // Toutes les valeurs « traceur » sont uniques et reconnaissables (outil « traceur » de docs/etape-6/donnees.md) ;
 // les adresses e-mail sont au domaine réservé exemple.invalid (P-17).

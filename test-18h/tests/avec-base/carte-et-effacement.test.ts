@@ -1,3 +1,4 @@
+// JETABLE dans son détail ; REPRIS (proposé) : le principe du test de P-43 (carte, effacement vérifié).
 // P-43 : la base du test n'a que les champs de sa carte ; « Tout effacer » la vide, puis vérifie qu'elle est vide.
 
 import assert from 'node:assert/strict';

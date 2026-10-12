@@ -1,3 +1,4 @@
+// JETABLE dans son détail ; REPRIS (proposé) : le traceur dans les journaux (P-07, P-08).
 // Le serveur complet, sur un vrai PostgreSQL : codes d'essai, abonnement, réception, connexion, page de résultats,
 // en-têtes de sécurité, effacement ; et le traceur, cherché dans tout ce que le programme écrit (P-07, P-08).
 
@@ -269,4 +270,21 @@ test('la session cesse avec « Tout effacer » : le compte n’existe plus, la p
   assert.equal(JSON.parse((await demander('/api/etat', { cookie: session, origine: null })).texte).connexion, 'google');
   await base.pool.query('TRUNCATE compte RESTART IDENTITY');
   assert.equal(JSON.parse((await demander('/api/etat', { cookie: session, origine: null })).texte).connexion, null);
+});
+
+test('chez Scalingo : toute demande en clair est renvoyée vers https, et HSTS est posé', async () => {
+  const enLigne = configDeTest({ CONTAINER: 'web-1' });
+  const app = creerApplication({ config: enLigne, pool: base.pool, journal, horloge, planificateur: null, fetch: fauxMonde });
+  await new Promise<void>((r) => app.listen(0, '127.0.0.1', () => r()));
+  const ici = `http://127.0.0.1:${(app.address() as AddressInfo).port}`;
+  try {
+    const clair = await fetch(ici + '/', { headers: { 'X-Forwarded-Proto': 'http' }, redirect: 'manual' });
+    assert.equal(clair.status, 308);
+    assert.equal(clair.headers.get('location'), ORIGINE + '/');
+    const chiffre = await fetch(ici + '/', { headers: { 'X-Forwarded-Proto': 'https' } });
+    assert.equal(chiffre.status, 200);
+    assert.equal(chiffre.headers.get('strict-transport-security'), 'max-age=31536000');
+  } finally {
+    await new Promise<void>((r) => { app.closeAllConnections(); app.close(() => r()); });
+  }
 });

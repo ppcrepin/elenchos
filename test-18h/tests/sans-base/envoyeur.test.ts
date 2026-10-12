@@ -1,3 +1,4 @@
+// REPRIS pour le vrai jeu (proposé) : tests de l’envoi (P-06, P-12).
 // L'envoi : signature VAPID (RFC 8292, règles d'Apple), urgence haute, durée de vie, liste fermée des services.
 
 import assert from 'node:assert/strict';

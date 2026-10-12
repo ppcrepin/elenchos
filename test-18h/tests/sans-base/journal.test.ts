@@ -1,3 +1,4 @@
+// REPRIS pour le vrai jeu (proposé) : test de P-07.
 // P-07 : le journal ne peut rien écrire de personnel, par construction (champs et textes d'une liste fermée).
 
 import assert from 'node:assert/strict';

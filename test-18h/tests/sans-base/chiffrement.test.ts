@@ -1,3 +1,4 @@
+// REPRIS pour le vrai jeu (proposé) : test de P-06.
 // P-06 : le contenu du message est chiffré pour le seul téléphone destinataire (RFC 8291).
 
 import assert from 'node:assert/strict';

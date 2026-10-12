@@ -32,6 +32,7 @@ const FICHIERS: Record<string, { fichier: string; type: string; cache: string }>
   '/icone-192.png': { fichier: 'icone-192.png', type: 'image/png', cache: 'public, max-age=86400' },
   '/icone-512.png': { fichier: 'icone-512.png', type: 'image/png', cache: 'public, max-age=86400' },
   '/favicon-32.png': { fichier: 'favicon-32.png', type: 'image/png', cache: 'public, max-age=86400' },
+  '/favicon.ico': { fichier: 'favicon-32.png', type: 'image/png', cache: 'public, max-age=86400' },
 };
 
 /** La page refuse tout chargement venu d'ailleurs (P-09, P-10). */
@@ -354,7 +355,11 @@ export function creerApplication(d: Dependances): Server {
         if (!d.planificateur) message = 'Envoi impossible : la clé des messages (VAPID) n’est pas réglée.';
         else {
           const cibles = formulaire.get('telephone') === 'tous' ? [1, 2, 3, 4, 5] : [numero('telephone', 5)].filter((n): n is number => n !== null);
-          const issues = await Promise.all(cibles.map(async (n) => `T${n} : ${await d.planificateur?.envoyerEssai(n)}`));
+          const mots = { envoye: 'envoyé', 'pas abonne': 'pas abonné', 'trop tot': 'déjà envoyé il y a moins de 20 secondes' } as const;
+          const issues = await Promise.all(cibles.map(async (n) => {
+            const issue = d.planificateur ? await d.planificateur.envoyerEssai(n) : 'pas abonne';
+            return `T${n} : ${mots[issue]}`;
+          }));
           message = `Message d’essai — ${issues.join(', ')}. Regardez le tableau dans une minute.`;
         }
       } else if (route === 'POST /resultats/systeme') {

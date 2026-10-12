@@ -1,3 +1,4 @@
+// REPRIS pour le vrai jeu (proposé) : test de la réception dans le téléphone.
 // La réception dans le téléphone (public/sw.js), jouée dans un faux téléphone :
 // le message s'affiche toujours, la réception est signalée avec le seul numéro d'envoi, et un toucher ne fait rien.
 

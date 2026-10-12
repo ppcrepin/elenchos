@@ -21,5 +21,10 @@
     "@types/node": "22.20.4",
     "@types/pg": "8.23.1",
     "typescript": "6.0.3"
+  },
+  "overrides": {
+    "pg-cloudflare": "1.4.0",
+    "pg-connection-string": "2.14.0",
+    "pg-protocol": "1.16.0"
   }
 }

@@ -1,3 +1,4 @@
+// JETABLE (test du message de 18h).
 // Les réglages : cinq codes d'essai, calendrier des soirs, clé d'Apple ; un réglage absent est signalé par son nom.
 
 import assert from 'node:assert/strict';
