@@ -8,7 +8,7 @@
 
 *Le 12 octobre 2026, après D-054 : le travail 4 (test du message de 18h) est préparé et validé (`docs/etape-6/test-18h.md`), et se fait sur cinq iPhone ; le jeu se joue sur iPhone seulement, et l'application ira sur l'App Store seul (D-054, point 3, qui modifie D-005). Sont mis à jour : l'état (partie 1), le choix 2 (partie 3), les travaux 4, 7, 9 et 14, la bêta (partie 5), les coûts (partie 6 : l'Android d'essai et le compte Google Play retirés, nouveau total), les durées et les points d'attention (partie 7). Les critères de passage aux boutiques de D-005 qui comparaient iPhone et Android tombent (partie 5). Report de D-054 relu par Cohérence (compatible avec réserves, corrigées), puis par le Vérificateur (OK avec corrections, appliquées).*
 
-*Le 12 octobre 2026, après l'avis de Juridique sur Scalingo (quatre constats vérifiés ce jour ; rapport de Cohérence, ligne A3) : l'essai de 30 jours demande une carte bancaire, et la facturation démarre seule ensuite ; le test du message de 18h ne coûte donc 0 € que si l'essai est supprimé avant le 30e jour (travail 4, partie 6). C'est un fait corrigé, comme D-046 l'a fait pour D-006, non un changement de décision. La question de la carte est posée au porteur (D-0xx, à remplir par l'orchestrateur). Le travail 5 note aussi les journaux et les sauvegardes de Scalingo.*
+*Le 12 octobre 2026, après l'avis de Juridique sur Scalingo (quatre constats vérifiés ce jour ; rapport de Cohérence, ligne A3) : l'essai de 30 jours demande une carte bancaire, et la facturation démarre seule ensuite ; le test du message de 18h ne coûte donc 0 € que si l'essai est supprimé avant le 30e jour (travail 4, partie 6). C'est un fait corrigé, comme D-046 l'a fait pour D-006, non un changement de décision. La question de la carte est posée au porteur (D-055). Le travail 5 note aussi les journaux et les sauvegardes de Scalingo.*
 
 ## 1. Où on en est
 
@@ -105,7 +105,7 @@ Les trois premiers travaux se font sur papier. Le test du message de 18h est le 
 - Il faut avant lui le compte développeur Apple, à votre nom (déjà ouvert, D-047 ; partie 2).
 - Les cinq téléphones : l'équipe n'en a aucun. Votre iPhone et quatre iPhone prêtés par des proches, sur des versions d'iOS variées, toutes en 16.4 ou plus récent ; aucun Android, aucun achat (D-054, point 3) ; la location est écartée (`docs/etape-6/test-18h.md`, partie 2).
 - Si Apple ou Google refuse l'adresse de test de Scalingo, la question vous revient avant l'achat d'un nom de domaine (D-054, point 2).
-- **L'essai de Scalingo demande une carte bancaire** (avis de Juridique, vérifié le 12 octobre 2026 ; corrige un « sans carte » de `docs/plateforme.md`). Rien n'est facturé pendant les 30 jours ; ensuite la facturation démarre seule si une application ou une base existe encore. Pour ne rien payer, il faut tout supprimer avant le 30e jour : l'effacement du test, base supprimée (avis de Juridique), y pourvoit ; ce que le socle créera ensuite sera facturé. La question de la carte est posée au porteur (D-0xx, à remplir par l'orchestrateur).
+- **L'essai de Scalingo demande une carte bancaire** (avis de Juridique, vérifié le 12 octobre 2026 ; corrige un « sans carte » de `docs/plateforme.md`). Rien n'est facturé pendant les 30 jours ; ensuite la facturation démarre seule si une application ou une base existe encore. Pour ne rien payer, il faut tout supprimer avant le 30e jour : l'effacement du test, base supprimée (avis de Juridique), y pourvoit ; ce que le socle créera ensuite sera facturé. La question de la carte est posée au porteur (D-055).
 - Fini quand : le message arrive vers 18h sur les cinq téléphones, trois soirs de suite, et la connexion tient depuis l'icône.
 - Vous : vous le recevez sur votre téléphone, et vous vous connectez depuis l'icône.
 - **État : préparé et validé** (`docs/etape-6/test-18h.md`, D-054, point 1), avec la branche `mise-en-ligne`, la note aux prêteurs et l'effacement ; **construction autorisée par la validation**.
@@ -271,7 +271,7 @@ Vérification : la somme des lignes donne 2 949 à 8 949 € ; la ligne « Un t�
 Ce total ne compte pas :
 - votre abonnement Claude pour les agents, que l'équipe ne connaît pas ; avec des agents seuls, c'est lui qui paie la construction et l'entretien ;
 - votre temps ;
-- le test du message de 18h (travail 4), qui coûte 0 € si l'essai de Scalingo est supprimé avant le 30e jour (carte demandée à l'ouverture, facturation automatique sinon : avis de Juridique, 12 octobre 2026 ; question posée au porteur, D-0xx, à remplir par l'orchestrateur) : quatre iPhone prêtés, aucun achat, la location écartée (D-054). Seul un nom de domaine d'environ 10 € s'y ajouterait, si Apple ou Google refuse l'adresse de Scalingo, et après votre réponse (D-054, point 2).
+- le test du message de 18h (travail 4), qui coûte 0 € si l'essai de Scalingo est supprimé avant le 30e jour (carte demandée à l'ouverture, facturation automatique sinon : avis de Juridique, 12 octobre 2026 ; question posée au porteur, D-055) : quatre iPhone prêtés, aucun achat, la location écartée (D-054). Seul un nom de domaine d'environ 10 € s'y ajouterait, si Apple ou Google refuse l'adresse de Scalingo, et après votre réponse (D-054, point 2).
 
 Les six mois d'hébergement sont une hypothèse de calcul, pas une estimation de durée : si la construction dure plus, quelques dizaines d'euros par mois s'ajoutent.
 

@@ -433,7 +433,7 @@ Précisions, signalées :
 - **D-014** : le message du test, « Test, soir n sur 3 », n'est pas un message du jeu. Les textes validés ne sont ni employés ni changés.
 
 Mises à jour du 12 octobre 2026, après les constats sur Scalingo et la relecture du code (Cohérence, Juridique) :
-- **D-048** : un fait est corrigé, « essai de 30 jours sans carte » (relevé le 11 octobre) : la documentation de Scalingo, modifiée le 1er octobre, demande une carte, et la facturation part seule à la fin de l'essai. Le choix de Scalingo tient. La question de la carte vous est posée à part (D-0xx).
+- **D-048** : un fait est corrigé, « essai de 30 jours sans carte » (relevé le 11 octobre) : la documentation de Scalingo, modifiée le 1er octobre, demande une carte, et la facturation part seule à la fin de l'essai. Le choix de Scalingo tient. La question de la carte vous est posée à part (D-055).
 - **D-042** : garde-fou proposé par Juridique, la date de fin d'essai notée et la suite présentée une semaine avant (partie 4).
 - **D-043, point 2** : interprété strictement, un changement de réglage chez Scalingo, qui redémarre l'application, compte comme une mise en ligne (jamais de 15h à 19h ni le dimanche).
 - **D-054, point 1** : la note aux prêteurs et les conditions bloquantes de Juridique changent (note définitive de Juridique, conditions 4 précisée, 5 réécrite, 6 ajoutée) ; la note n'attend plus la réponse de Scalingo (partie 7). Le feu vert écrit de la veille vaut pour chaque mise en ligne, corrections comprises.

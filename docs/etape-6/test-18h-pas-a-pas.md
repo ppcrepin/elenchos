@@ -46,7 +46,7 @@ Si une version manque, prenez la plus proche ; le plus important est T2, et des 
 
 ## 2. Démarche 2 — Scalingo, première moitié (J1, environ 45 minutes)
 
-**Ne commencez cette démarche qu'après votre réponse à la question de la carte (D-0xx).**
+**Ne commencez cette démarche qu'après votre réponse à la question de la carte (D-055).**
 
 > **Ce qu'il faut savoir de la carte** (documentation de Scalingo, lue le 12 octobre 2026). Scalingo demande une carte de paiement pour commencer l'essai gratuit. Rien n'est prélevé pendant les 30 jours. À la fin de l'essai, **la facturation commence d'elle-même** si l'application ou la base existent encore : Scalingo ne les supprime pas. Quatre garde-fous (Juridique) :
 > - la double vérification **avant** la carte, si l'écran le permet (2.2 avant la fin de 2.1) ;
