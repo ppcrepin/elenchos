@@ -1,22 +1,37 @@
 # La version minimale : combien, et ce qu'elle fait risquer
 
-*12 octobre 2026. Votre demande : « Optimiser vraiment tous les coûts pour la première version qui sera publiée. Ça donnerait quoi, si je supprime tout conseil ? Si je ne passe pas par l'hébergeur européen, mais par un autre moins cher ? » Ce document rassemble deux études. La première, de Back-end avec Front-end, porte sur l'hébergement, les textes et les petits postes. La seconde, de Juridique, porte sur ce que la loi impose et sur ce qu'on risque. Il ne décide rien : les choix qui vous reviennent vous sont posés à part. Juridique n'est pas avocat. État : en relecture (Cohérence, fait ; Vérificateur, à venir).*
+*12 octobre 2026. Votre demande : « Optimiser vraiment tous les coûts pour la première version qui sera publiée. Ça donnerait quoi, si je supprime tout conseil ? Si je ne passe pas par l'hébergeur européen, mais par un autre moins cher ? » Ce document rassemble deux études. La première, de Back-end avec Front-end, porte sur l'hébergement, les textes et les petits postes. La seconde, de Juridique, porte sur ce que la loi impose et sur ce qu'on risque. Il ne décide rien : les choix qui vous reviennent vous sont posés à part. Juridique n'est pas avocat. Relu par Cohérence (compatible avec réserves, corrigées), puis par le Vérificateur (OK avec corrections, appliquées).*
 
 ## Vos deux questions, en deux réponses
 
-- **Un hébergeur hors d'Europe fait gagner 20 à 35 € par mois** pour 1 000 joueurs, soit 250 à 400 € par an. En contrepartie, il faut prévenir les joueurs, et l'avocat a du travail en plus. Ce qui fait vraiment baisser la facture d'hébergement, c'est un serveur loué « nu » : une machine vide, que l'équipe configure et qu'il faut entretenir soi-même. Il existe en Europe. Mais l'entretien retomberait sur vous. **Urgent** : si l'hébergeur doit changer, il faut le décider avant le test du message de 18h, qui ouvre le compte Scalingo (au plus tôt le 13 octobre, D-054, D-055).
-- **Sans aucun conseil** (ni conseil pour le nom, ni avocat, ni test de sécurité, ni délégué), le départ coûterait environ 700 à 1 000 €, puis environ 85 € par mois (calcul fait pour ce document). Ce n'est pas défendable : sans avocat, le recueil de l'accord des joueurs n'est vérifié par personne. Le plan l'interdit d'ailleurs (« sans avocat, pas de bêta », plan, partie 5).
+- **Un hébergeur hors d'Europe fait gagner 20 à 35 € par mois** pour 1 000 joueurs, soit environ 250 à 400 € par an. En contrepartie :
+  - il faut dire aux joueurs que leurs réponses sont gardées par une société américaine ;
+  - l'avocat et l'analyse d'impact coûtent environ 300 à 1 000 € de plus (estimation de Juridique), soit de quelques mois à quatre ans d'économie (calcul fait pour ce document) ;
+  - si la Cour de justice de l'Union européenne annule le cadre qui autorise ces transferts, comme en 2015 et en 2020, il faut déménager en urgence.
+
+  Juridique conclut : « côté juridique, aller hors d'Europe ne fait rien gagner. » C'est aussi l'option « société américaine, serveurs en Europe » que vous avez écartée le 11 octobre (D-043, point 3).
+
+  Ce qui fait vraiment baisser la facture d'hébergement, c'est un serveur loué « nu » : une machine vide, que l'équipe configure et qu'il faut entretenir soi-même. Il existe en Europe. Mais l'entretien retomberait sur vous.
+
+  **Quand décider ?** Le compte Scalingo s'ouvre le premier jour des démarches du test de 18h, au plus tôt le 14 octobre (D-054, D-055). Changer d'hébergeur avant cette date éviterait de refaire le pas-à-pas et la mise en ligne du test (Back-end). Mais rien ne presse : le test coûte 0 € s'il est supprimé avant le 30e jour. Et un serveur nu demande une à deux semaines de préparation selon Back-end, sur des prix encore incertains : il ne serait donc pas prêt pour le test (déduction de l'orchestrateur).
+- **Sans aucun conseil** (ni conseil pour le nom, ni avocat, ni test de sécurité, ni délégué), le départ coûterait environ 700 à 1 000 € (calcul fait pour ce document) :
+  - la marque française, 230 € ;
+  - les textes, 125 à 290 € ;
+  - l'hébergement et l'adresse, 140 à 270 € ;
+  - la structure, 200 à 250 €, si vous en créez une.
+
+  Ensuite, environ 85 € par mois. Ce n'est pas défendable : sans avocat, le recueil de l'accord des joueurs n'est vérifié par personne. Le plan de construction l'interdit d'ailleurs : « sans avocat, pas de bêta ».
 
 ## En bref
 
-- **La version « minimal défendable »** réduit au plus juste sans retirer de protection que Juridique et Back-end jugent indispensable. Les risques qui restent sont listés à la partie 2. Elle divise la dépense de départ par trois ou quatre. Elle divise le coût mensuel par sept à quinze, tant que le jeu n'a pas atteint le nombre de joueurs qui impose le délégué. Au-delà de ce seuil, elle ne le divise plus que par deux ou trois environ.
+- **La version « minimal défendable »** réduit au plus juste sans retirer de protection que Juridique et Back-end jugent indispensable. Les risques qui restent sont listés à la partie 2. Elle divise la dépense de départ par trois ou quatre. Elle divise le coût mensuel par sept à quinze, tant que le seuil écrit pour nommer le délégué n'est pas atteint. Une fois ce seuil atteint, l'économie fond. La première année, le coût mensuel est à peine plus bas qu'aujourd'hui : environ 445 à 985 €, contre 610 à 1 260 €. Les années suivantes, il est divisé par deux ou trois environ : 335 à 435 €.
 - **Au départ, trois postes font l'essentiel de l'économie** :
   - le délégué à la protection des données, nommé seulement à partir d'un seuil de joueurs écrit à l'avance ;
   - une relecture d'avocat ciblée, au lieu de deux complètes ;
   - un test de sécurité ciblé, au lieu d'un audit complet.
 
-  **Chaque mois, c'est le délégué seul qui fait l'économie.**
-- **Une seule obligation ne se réduit pas : l'analyse d'impact.** C'est l'étude écrite des risques que le jeu fait courir aux joueurs. Elle est exigée parce que le jeu garde des opinions politiques. Elle ne coûte que du temps, avec le modèle gratuit de la CNIL, l'autorité française de protection des données.
+  **Chaque mois, c'est le délégué qui fait l'essentiel de l'économie.**
+- **Une seule obligation est à la fois imposée par la loi et impossible à réduire : l'analyse d'impact.** C'est l'étude écrite des risques que le jeu fait courir aux joueurs. Elle est exigée parce que le jeu garde des opinions politiques. Elle ne coûte que du temps, avec le modèle gratuit de la CNIL, l'autorité française de protection des données.
 - **On ne peut pas supprimer trois choses sans danger réel** :
   - une relecture d'avocat avant la bêta : si l'accord des joueurs est mal recueilli, tout le traitement des données devient illégal ;
   - un test de sécurité fait par un humain ;
@@ -45,14 +60,18 @@ La colonne « Actuel » reprend `docs/reste-a-faire.md` (partie 5), avec les tex
 | Délégué, première année | 6 000 à 10 800 € | 0 € jusqu'au seuil écrit | 0 € |
 | Textes de la bêta (150) | 400 à 735 € | 125 à 290 € | 36 € (montage jugé indéfendable par Back-end) |
 | Structure (société ou association), si vous en créez une (à trancher avant l'App Store, D-042, D-043) | 200 à 250 € | 200 à 250 € | 0 € (pas d'App Store) |
-| Le reste : hébergement jusqu'à la fin de la bêta, adresses web, test de charge | 250 à 800 € | 140 à 250 € | 30 à 55 € |
+| Le reste : hébergement jusqu'à la fin de la bêta, adresses web, test de charge | 250 à 800 € | 140 à 270 € | 30 à 55 € |
 | **Total de départ** | **environ 15 500 à 34 700 €** | **environ 4 500 à 9 700 €** | **environ 70 à 90 €** |
 
 Comment se calcule la ligne « Le reste » (calcul fait pour ce document) :
-- **Minimal défendable** : la construction coûte environ 9 € par mois, pendant trois à quatre mois. La bêta coûte environ 50 € par mois, pendant deux à trois mois. S'y ajoutent une adresse en .fr (10 à 15 € par an) et le test de charge (0 à 50 €).
+- **Minimal défendable** : la construction coûte environ 9 € par mois, pendant trois à six mois (plan). La bêta coûte environ 50 € par mois, pendant deux à trois mois. S'y ajoutent une adresse en .fr (10 à 15 € par an) et le test de charge (0 à 50 €).
 - **Minimal extrême** : un seul serveur nu, à 5 à 9 € par mois, pendant six mois.
 
 Le compte Apple (99 € par an, déjà payé) n'est compté dans aucune colonne de départ.
+
+**Quand payer, dans la colonne défendable** (calcul fait pour ce document) :
+- **avant la bêta, environ 2 500 à 5 600 €** : le nom, la marque, la relecture d'avocat, les textes, l'hébergement ;
+- **avant l'ouverture, environ 2 000 à 4 150 € de plus** : les heures d'avocat, le test de sécurité, la structure.
 
 **Chaque mois, après l'ouverture**
 
@@ -72,8 +91,9 @@ Ce qui n'est compté dans aucune colonne :
 - votre temps.
 
 **Ce qui est incertain dans ces chiffres** :
-- **Les 27 € des textes sont une estimation.** Le raisonnement des modèles en représente plus de la moitié. Il ne sera mesuré qu'au travail 10, celui de la chaîne des textes : selon les débats, la fourchette réelle va de 13 à 250 € par mois.
+- **Les 27 € des textes sont une estimation.** Le raisonnement des modèles en représente plus de la moitié. Il ne sera mesuré qu'au travail 10, celui de la chaîne des textes : pour un montage plus cher, `docs/couts-mensuels.md` donne une fourchette réelle de 13 à 250 € par mois selon les débats ; pour celui-ci, elle serait plus basse.
 - **Le plus petit modèle n'a jamais été essayé sur nos contrôles.**
+- **À 10 000 joueurs**, l'hébergement coûte 40 à 100 € de plus par mois, selon l'option (Back-end).
 - **Les prix de l'avocat, de l'audit, du test d'intrusion et du délégué sont des estimations** : seuls des devis les donneront.
 
 ## 2. Ce que chaque économie fait risquer
@@ -103,7 +123,7 @@ Le reste du code n'est vu par aucun humain. **Sans aucun test humain**, après u
 
 La seconde laisse passer davantage de biais d'écriture et de tournures qui annoncent le vote. C'est un risque pour la neutralité, à mesurer avant de l'adopter. La fidélité reste vérifiée sur le débat entier. **Confier la fidélité au plus petit modèle** (colonne extrême) est jugé indéfendable par Back-end : une erreur peut viser un député nommé.
 
-**Le serveur nu** fait économiser environ 35 € par mois. Mais :
+**Le serveur nu** fait économiser environ 35 à 40 € par mois. Mais :
 - **Les prix sont incertains.** Les prix de 10 et 16 € ont été relevés par un moteur de recherche. Des tiers signalent l'offre de Hetzner comme indisponible. L'offre de repli coûte environ 53 € pour deux machines, soit autant que Scalingo. La sauvegarde incluse chez OVH reste à confirmer.
 - **L'entretien retombe sur vous.** Les mises à jour de sécurité, les sauvegardes et les pannes d'une machine qui garde des opinions vous reviennent. Comptez une à deux heures par mois, et parfois un incident à régler en ligne de commande, un soir à 18h. Ce serait une à deux semaines de travail d'agents en plus au départ.
 - **Un seul serveur, c'est un seul point de panne.**
@@ -112,7 +132,8 @@ La seconde laisse passer davantage de biais d'écriture et de tournures qui anno
 **Un hébergeur hors d'Europe** fait économiser 20 à 35 € par mois. Mais :
 - **Le cadre juridique reste attaquable.** Ce cadre autorise l'envoi de données vers les États-Unis. Le Tribunal de l'Union européenne l'a validé le 3 septembre 2025, mais un recours est pendant devant la Cour de justice, sans date connue.
 - **Il faudrait le dire aux joueurs.** Le message serait : « tes réponses sont gardées par une société américaine ». La bêta tombera peut-être pendant la présidentielle (avril-mai 2027, dates à confirmer).
-- **L'avocat aurait du travail en plus.**
+- **L'avocat et l'analyse d'impact coûteraient environ 300 à 1 000 € de plus** (estimation de Juridique). Avec une société non certifiée au cadre de transfert (Supabase, Railway), le travail juridique serait plus lourd encore.
+- **Si la Cour de justice annule le cadre**, les transferts doivent cesser : il faut déménager en urgence, comme après 2015 et 2020.
 
 L'offre gratuite de Supabase est écartée : elle ne fait aucune sauvegarde, donc un seul incident et tout est perdu.
 
@@ -134,16 +155,16 @@ En nom propre (D-042), vous êtes le responsable des données, et vous en répon
 - **D-043 (point 4) et D-047.** La vérification du nom, si vous la faites vous-même. La marque déposée avant la bêta, en France seule : vous aviez écarté le dépôt avant la bêta (D-043, point 4), et Juridique le repropose. Abandonner la marque européenne change aussi le plan (partie 6).
 - **D-044 (point 4).** Une relecture d'avocat ciblée avant la bêta, puis une heure ou deux avant l'ouverture. D-044 avait écarté « une seule relecture avant l'ouverture » : la proposition est voisine, mais différente. Le délégué serait nommé au seuil écrit, au lieu d'avant l'ouverture.
 - **Le plan, partie 5 (validé par D-046).** Un test de sécurité ciblé, au lieu d'un audit complet.
-- **Le montage des textes** se choisira au travail 10, comme prévu (`docs/couts-mensuels.md`). Le montage le moins cher s'écarte de deux décisions :
+- **Le montage des textes** se choisira au travail 10, comme prévu (`docs/couts-mensuels.md`). Le montage défendable à 27 € s'écarte de deux décisions prises pour les essais, sans les modifier. Back-end n'y voit aucune décision touchée, puisque le choix est prévu au travail 10. Contenu, qui tient la chaîne des textes, se prononcera alors. Les deux décisions :
   - D-036, qui fixe la vérification de fidélité sur Fable 5.1 et l'annotation sur Sonnet 5.5, pendant les essais ;
   - D-018, qui réserve le plus petit modèle aux tâches mécaniques.
-- **Rien d'autre.** D-048, le choix de Scalingo, reste intacte.
+- **Rien d'autre.** D-048, le choix de Scalingo, reste intact.
 
 **Si l'on prend un serveur nu européen :** cela modifie **D-048**, le choix de l'hébergeur. Deux points de D-043 seraient aussi mis sous tension :
 - le point 2 : vous êtes le seul recours, y compris le soir ;
 - le point 3 : aucune donnée de joueur ne va chez un fournisseur d'IA.
 
-**Si l'on prend un hébergeur hors d'Europe :** cela modifie **D-043 (point 3)**, qui impose des prestataires européens, et **D-048**.
+**Si l'on prend un hébergeur hors d'Europe :** cela modifie **D-043 (point 3)**, qui impose des prestataires européens, et dont vous avez écarté l'option « américains avec serveurs en Europe ». Cela modifie aussi **D-048**, qui avait écarté Supabase pour la même raison.
 
 **Le minimal extrême toucherait en plus :**
 - D-044 (point 4) et la règle « sans avocat, pas de bêta » : il n'y a ni avocat, ni délégué, ni audit ;
@@ -151,5 +172,13 @@ En nom propre (D-042), vous êtes le responsable des données, et vous en répon
 - D-005, D-043 (point 1) et D-054 : pas d'App Store ;
 - D-043 (point 4) : pas de marque ;
 - D-044 (point 2), si tout était confié au même petit modèle : il écrirait et vérifierait lui-même.
+
+Les questions qui vous seront posées à part, chacune avec une option recommandée, portent sur six points :
+- l'hébergeur ;
+- le délégué au seuil ;
+- la relecture d'avocat ciblée ;
+- la marque française avant la bêta ;
+- la recherche du nom par vous ;
+- le test de sécurité ciblé.
 
 *Sources : les rapports de Back-end et de Juridique du 12 octobre 2026. Les prix des hébergeurs, de l'INPI et des prestataires ont été relevés par un moteur de recherche : les sites étaient bloqués depuis notre environnement. Ceux du fournisseur d'IA ont été lus sur sa page officielle. L'avocat, l'audit, le test d'intrusion et le délégué sont des estimations. Chaque montant sera relu avant la dépense (D-042).*
