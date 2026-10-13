@@ -35,7 +35,7 @@ Un seul processus Node (`Procfile` : `web: node src/principal.ts`) :
 | Variable | Rôle | Qui la fournit |
 |---|---|---|
 | `PROJECT_DIR` | `test-18h` : Scalingo installe ce dossier du dépôt | le porteur (valeur publique) |
-| `SOIRS` | calendrier des envois, ex. `2026-10-16=0@1;2026-10-17=0;2026-10-18=1;2026-10-19=2;2026-10-20=3`. `n` : 0 = répétition, 1 à 3 = soirs du test, 4 et plus = soir ajouté ; `@1+3` : seulement ces téléphones. Un changement redémarre l'application : c'est une mise en ligne au sens de D-043, **jamais de 15h à 19h ni le dimanche** | le porteur (valeur publique) |
+| `SOIRS` | calendrier des envois, ex. `2026-10-15=0@1;2026-10-16=1@1;2026-10-17=2@1;2026-10-18=3@1` (le calendrier du test sur l'iPhone du porteur, `docs/etape-6/test-18h-pas-a-pas.md`, 2.9). `n` : 0 = répétition, 1 à 3 = soirs du test, 4 et plus = soir ajouté ; `@1+3` : seulement ces téléphones. Un changement redémarre l'application : c'est une mise en ligne au sens de D-043, **jamais de 15h à 19h ni le dimanche** | le porteur (valeur publique) |
 | `SECRET_SESSION` | 32 octets au hasard : chiffre les cookies, fait l'empreinte des identifiants | `/preparer` |
 | `CODES_ESSAI` | les cinq codes d'essai, séparés par `;`, dans l'ordre T1…T5 | `/preparer` |
 | `CODE_ACCES_PORTEUR` | le code d'accès à la page de résultats | `/preparer` |
@@ -44,7 +44,7 @@ Un seul processus Node (`Procfile` : `web: node src/principal.ts`) :
 | `APPLE_ID_SERVICE` | l'identifiant de service (Services ID) | compte développeur Apple |
 | `APPLE_ID_EQUIPE`, `APPLE_ID_CLE` | numéro d'équipe et numéro de la clé (10 caractères chacun) | compte développeur Apple |
 | `APPLE_CLE_PRIVEE` | le fichier .p8, mis sur une ligne par `/preparer` (base64), ou collé tel quel | compte développeur Apple |
-| `ADRESSE_PUBLIQUE` | exigée en ligne : `https://test18h.elenchos.fr` (D-057), jamais l'adresse en `scalingo.io` | — |
+| `ADRESSE_PUBLIQUE` | exigée en ligne : l'adresse du domaine du porteur (D-057), proposée : `https://test18h.elenchos.fr` ; jamais l'adresse en `scalingo.io` | — |
 | `SCALINGO_POSTGRESQL_URL` | la base ; ajoutée par Scalingo avec la base (`sslmode=prefer`). Sans `sslmode`, la connexion est chiffrée quand même ; jamais de repli en clair | Scalingo |
 | `PORT`, `CONTAINER`, `APP`, `REGION_NAME`, `SOURCE_VERSION` | posées par Scalingo | Scalingo |
 | `IGNORER_HORAIRES=oui` | **en local seulement** : lève la garde des horaires ; refusée chez Scalingo et sur GitHub | l'agent, sur sa machine |
@@ -52,7 +52,7 @@ Un seul processus Node (`Procfile` : `web: node src/principal.ts`) :
 | `NAVIGATEUR_CHEMIN` | **tests seulement** : le Chromium (ou Chrome) du test navigateur ; par défaut celui de l'environnement des agents | l'agent ; GitHub (`/usr/bin/google-chrome`) |
 | `JOURNAL_BASE_DE_TEST` | **tests seulement** : le fichier journal du PostgreSQL local, lu par le test de la condition 6 | l'agent, sur sa machine |
 
-Un réglage absent ne fait pas tomber la page : la fonction qui en dépend est coupée et son **nom** (jamais sa valeur) est signalé au journal et sur la page de résultats. Sans base, le programme refuse de démarrer.
+Un réglage absent ne fait pas tomber la page : la fonction qui en dépend est coupée et son **nom** (jamais sa valeur) est signalé au journal et sur la page de résultats. Exception : `ADRESSE_PUBLIQUE` absente est seulement signalée, pas coupée (le programme prend `http://localhost:<port>`, et la connexion Google et Apple échoue). Sans base, le programme refuse de démarrer.
 
 ## La carte des données (P-43) — rien d'autre n'existe
 
@@ -63,7 +63,7 @@ Un réglage absent ne fait pas tomber la page : la fonction qui en dépend est c
 | `envoi` | `id` (tiré au hasard), `telephone`, `nature` (soir, essai), `soir_date`, `soir`, `forme` (classique, declarative), `envoye_a`, `repondu_a`, `reponse_code`, `reponse_motif`, `recu_a` |
 | `compte` | `numero`, `fournisseur` (apple, google), `empreinte` (HMAC de l'identifiant), `email_recu` (oui ou non) |
 
-Jamais : nom, adresse e-mail, adresse internet, heure d'ouverture de l'icône, heure du téléphone. Un test compare la base réelle à cette carte. Les cookies (session, transaction de connexion, accès du porteur, numéro du téléphone) sont chiffrés et authentifiés (AES-256-GCM), préfixés `__Host-` (aucun autre site en `scalingo.io` ne peut y toucher). Aucune contrainte d'unicité sur l'adresse d'abonnement : le doublon se contrôle sur le numéro du téléphone, et toutes les écritures sont des « ON CONFLICT » ; le programme refuse les valeurs fausses avant la base. Aucune erreur de la base ne recopie donc une valeur des prêteurs dans son journal, gardé un an chez Scalingo (condition 6 de Juridique, prouvée par `tests/journal-base/`).
+Jamais : nom, adresse e-mail, adresse internet, heure d'ouverture de l'icône, heure du téléphone. Un test compare la base réelle à cette carte. Les cookies (session, transaction de connexion, accès du porteur, numéro du téléphone) sont chiffrés et authentifiés (AES-256-GCM), préfixés `__Host-` (aucun autre site en `scalingo.io` ne peut y toucher). Aucune contrainte d'unicité sur l'adresse d'abonnement : le doublon se contrôle sur le numéro du téléphone, et toutes les écritures sont des « ON CONFLICT » ; le programme refuse les valeurs fausses avant la base. Aucune erreur de la base ne recopie donc une valeur personnelle dans son journal, gardé un an chez Scalingo (condition 6 de Juridique, prouvée par `tests/journal-base/`).
 
 ## Journaux (P-07)
 
@@ -104,7 +104,7 @@ npm run controle                    # types, secrets (fichiers et historique), j
 
 - `tests/avec-base/` et `tests/navigateur/` exigent un vrai PostgreSQL ; `tests/navigateur/` exige aussi un navigateur (`NAVIGATEUR_CHEMIN`, par défaut `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`, présent dans l'environnement des agents ; jamais de `playwright install`). Sans eux, ils échouent : ils ne sont jamais sautés.
 - Le test navigateur soumet les vrais formulaires (`/resultats/entree`, `/resultats/sortie`, `/deconnexion`) dans Chromium. Remis sous l'ancien en-tête `no-referrer`, il échoue (vérifié le 12 octobre 2026).
-- `test:journal-base` ne tourne qu'en local, à lancer avant chaque mise en ligne : il provoque, sur la base locale, les erreurs que le programme pourrait causer, lit le journal de PostgreSQL, et contrôle qu'aucune valeur des prêteurs n'y est recopiée ; un témoin vérifie qu'il sait la voir. Il vaut pour les réglages de journal par défaut de PostgreSQL ; ceux de la base de Scalingo ne sont pas connus.
+- `test:journal-base` ne tourne qu'en local, à lancer avant chaque mise en ligne : il provoque, sur la base locale, les erreurs que le programme pourrait causer, lit le journal de PostgreSQL, et contrôle qu'aucune valeur personnelle n'y est recopiée ; un témoin vérifie qu'il sait la voir. Il vaut pour les réglages de journal par défaut de PostgreSQL ; ceux de la base de Scalingo ne sont pas connus.
 
 ## Mise en ligne chez Scalingo
 
@@ -113,7 +113,7 @@ npm run controle                    # types, secrets (fichiers et historique), j
 - **`build` lance la garde des horaires et les tests sans base** : de 15h à 19h et le dimanche, la fabrication échoue, rien ne s'installe.
 - **Vérification sur GitHub** : `.github/workflows/test-18h.yml`, sur la branche `mise-en-ligne` seulement ; Scalingo attend qu'elle passe avant d'installer. Elle lance le contrôle et les tests sans base, avec base (PostgreSQL 16 jetable) et navigateur (Google Chrome de l'image ubuntu-24.04, à vérifier au premier passage). Actions figées par empreinte de commit : `actions/checkout` v7.0.1 (17 juillet 2026), `actions/setup-node` v7.0.0 (13 juillet 2026).
 - **Rien ne s'installe depuis `main`** (D-054, point 1) : Scalingo n'est lié qu'à `mise-en-ligne`.
-- Région : `osc-fr1` (Paris, Outscale), choisie à la création de l'application. Adresse : `https://<nom>.osc-fr1.scalingo.io`.
+- Région : `osc-fr1` (Paris, Outscale), choisie à la création de l'application. Adresse : celle de `ADRESSE_PUBLIQUE`.
 
 ## Ce qui n'a pas pu être essayé ici
 

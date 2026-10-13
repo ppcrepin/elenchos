@@ -75,7 +75,7 @@ test('une table hors carte rend la base « non vide »', async () => {
   await base.pool.query('DROP TABLE intruse');
 });
 
-test('effacer la ligne d’un téléphone (un prêteur qui se retire) efface son abonnement et ses heures', async () => {
+test('effacer la ligne d’un téléphone (un joueur qui se retire) efface son abonnement et ses heures', async () => {
   const depot = creerDepot(base.pool);
   const t = fauxTelephone();
   await depot.enregistrerAbonnement(4, t.abonnement.endpoint, t.abonnement.keys.p256dh, t.abonnement.keys.auth);

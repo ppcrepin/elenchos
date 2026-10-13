@@ -1,5 +1,5 @@
 // REPRIS pour le vrai jeu (proposé) : condition 6 de Juridique. Ce que Scalingo garde un an (ses journaux, dont
-// celui de la base) ne doit rien contenir de nous sur les prêteurs. On le prouve sans journal réel (D-048) :
+// celui de la base) ne doit rien contenir de personnel. On le prouve sans journal réel (D-048) :
 // on joue ici, sur une base locale, tout ce qui pourrait faire écrire une erreur à PostgreSQL, puis on lit son journal.
 // Exige JOURNAL_BASE_DE_TEST : le chemin du fichier journal du PostgreSQL local (voir LISEZMOI.md). Jamais sauté.
 // Limite : les réglages de journal de la base de Scalingo ne sont pas connus ; ce test vaut pour les réglages par
@@ -52,7 +52,7 @@ const formulaire = (chemin: string, champs: Record<string, string>, cookie = '')
   body: new URLSearchParams(champs).toString(),
 });
 
-test('aucune erreur de la base ne recopie une valeur des prêteurs, et notre journal n’a aucun couple « téléphone + heure »', async () => {
+test('aucune erreur de la base ne recopie une valeur personnelle, et notre journal n’a aucun couple « téléphone + heure »', async () => {
   const debut = statSync(JOURNAL as string).size;
   const tel = fauxTelephone();
   tel.abonnement.endpoint = `https://web.push.apple.com/${TRACE}-adresse`;

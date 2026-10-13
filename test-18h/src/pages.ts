@@ -103,7 +103,7 @@ export async function pageResultats(config: Config, depot: Depot, maintenant: Da
 
   const aujourdHui = partiesParis(maintenant).dateISO;
   const calendrier = (config.soirs ?? []).map((s) => {
-    const qui = s.telephones.length === 5 ? 'les cinq téléphones' : s.telephones.map((n) => `T${n}`).join(', ');
+    const qui = s.telephones.length === 5 ? 'tous les téléphones' : s.telephones.map((n) => `T${n}`).join(', ');
     const marque = s.dateISO === aujourdHui ? ' (aujourd’hui)' : '';
     return `<li>${s.dateISO}${marque} : « ${echapper(titreDuSoir(s.numero))} » à 18h00, ${echapper(qui)}${s.numero === 3 ? ' ; seconde forme à 18h10 sur T1' : ''}</li>`;
   });

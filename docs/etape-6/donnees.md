@@ -325,7 +325,7 @@ Vos écrans à vous : le stock de textes, les alertes, les totaux de P-21 et P-2
 
 ### L. Le premier code : le test du message de 18h
 
-**P-43. Le test du message de 18h ne garde que ce qu'il teste.** *Plan, travail 4 ; D-005 ; précisé par D-054, point 1 (`docs/etape-6/test-18h.md`, partie 5).*
+**P-43. Le test du message de 18h ne garde que ce qu'il teste.** *Plan, travail 4 ; D-005 ; précisé par D-054, point 1 (`docs/etape-6/test-18h.md`, partie 5). Lu avec D-057 : un seul iPhone, celui du porteur ; domaine elenchos.fr. Ce qui parle ci-dessous de cinq iPhone, de prêteurs, de leur note et du 20 novembre 2026 est périmé (D-057, point 4) ; le reste tient.*
 La page nue du test, sur cinq iPhone (D-054, point 3), n'enregistre que les abonnements au message, l'étiquette de chaque téléphone (son numéro et la version de son système, jamais un nom) et les heures (envoi, réponse du service d'acheminement, réception notée par le serveur) ; aucune réponse, aucun pseudo, jamais l'heure à laquelle un prêteur ouvre l'icône. Un abonnement n'est accepté qu'avec un code d'essai, cinq au plus. Les téléphones prêtés n'y laissent aucune donnée de leurs propriétaires : jamais le compte d'un prêteur ; Apple seulement sur votre iPhone, ou avec un compte Apple de test. Une note d'une page, remise avant l'installation, leur dit ce qui est gardé et quand c'est effacé. La connexion Apple ou Google, essayée sur les mêmes téléphones (plan, travail 4), renvoie un identifiant et une adresse : l'identifiant n'est gardé que sous forme d'empreinte, le temps du test ; l'adresse est lue, notée « reçue », puis jetée. Le relevé du réseau de P-10 s'applique dès ce test. Tout est effacé le lendemain du troisième soir, et vérifié, hors la trace des connexions que Scalingo garde un an et que ni vous ni nous ne pouvons effacer (avis de Juridique, 12 octobre 2026 ; P-07) ; la base du test est supprimée, non seulement vidée, et aucune sauvegarde manuelle n'est faite (même avis ; P-32). Seule exception : un tableau d'heures par téléphone numéroté, sans adresse ni nom, gardé jusqu'au 20 novembre 2026 pour le bilan (hors de la base du test), puis effacé avec la liste « qui a quel téléphone », qui n'est écrite que chez vous.
 *Test.* La base du test n'a que les champs prévus (comparaison avec sa carte) ; aucun champ d'adresse e-mail. Sans code d'essai, ou au sixième, l'abonnement est refusé. Le programme d'effacement de fin de test est joué, puis la base est vérifiée vide : ni abonnement, ni identifiant, ni adresse. Relevé du réseau sur la page du test. *Travail 4.*
 
@@ -371,7 +371,7 @@ Première version, à compléter au travail 5 avec le modèle de données, puis 
 | Copie chiffrée des sauvegardes | 4 | Scaleway | 30 jours | `docs/plateforme.md`, proposé |
 | Journal des effacements, identifiants seuls | 4 | Scalingo | Plus longue rotation des sauvegardes, plus 5 jours | Proposé (P-32) |
 | Version d'aperçu | — | Scalingo | Aucune donnée réelle ; remise à zéro chaque semaine | Proposé (P-19, P-20) |
-| Test du message de 18h | 1 | Scalingo | Effacé le lendemain du troisième soir, et vérifié, hors la trace des connexions que Scalingo garde un an (ligne ci-dessus) ; seul le tableau d'heures par téléphone numéroté, sans adresse ni nom, est gardé jusqu'au 20 novembre 2026, puis effacé avec la liste « qui a quel téléphone », écrite chez vous seul ; ce tableau est gardé hors de la base (votre copie et la conversation de travail), jamais chez Scalingo | D-054, point 1 (P-43) |
+| Test du message de 18h | 1 | Scalingo | Effacé le lendemain du troisième soir, et vérifié, hors la trace des connexions que Scalingo garde un an (ligne ci-dessus) ; seul le tableau d'heures par téléphone numéroté, sans adresse ni nom, est gardé jusqu'au 20 novembre 2026, puis effacé avec la liste « qui a quel téléphone », écrite chez vous seul ; ce tableau est gardé hors de la base (votre copie et la conversation de travail), jamais chez Scalingo | D-054, point 1 (P-43) ; lu avec D-057 : un seul iPhone, celui du porteur ; domaine elenchos.fr |
 
 ---
 
@@ -444,7 +444,7 @@ Ce document applique D-006, D-010, D-024 à D-027, D-035, D-041 à D-045, D-048 
 
 **Touchées par vos réponses du 12 octobre 2026 (D-054) :**
 - **D-005, modifié par D-054, point 3** (l'iPhone seulement, l'App Store seul) : le message de 18h ne passe plus que par Apple (P-06, P-12, partie 1) ; Google ne sort d'Europe que pour la connexion (D-035). D-043 tient : ses deux exceptions restent, l'une plus étroite.
-- **P-43 et la carte des données, précisés par D-054, point 1** : comptes de test seulement, codes d'essai, champs fixés, adresse e-mail jetée, effacement le lendemain du troisième soir et vérifié, tableau sans nom gardé jusqu'au 20 novembre 2026.
+- **P-43 et la carte des données, précisés par D-054, point 1** : comptes de test seulement, codes d'essai, champs fixés, adresse e-mail jetée, effacement le lendemain du troisième soir et vérifié, tableau sans nom gardé jusqu'au 20 novembre 2026 (lu avec D-057 : un seul iPhone, celui du porteur ; domaine elenchos.fr).
 - **P-21, précisé par D-054, point 1** : le message d'erreur de la fabrication chez Scalingo, sans donnée, peut être copié aux agents ; D-048 et D-052 (point 3) tiennent.
 
 **Proposées, et qui touchent une décision :**

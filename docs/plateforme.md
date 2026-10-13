@@ -84,7 +84,7 @@ Supabase est un « tout-en-un » très apprécié : base de données, connexion 
    - **vos propres réponses** dans la version en ligne sont des données de joueur : elles ne se montrent pas aux agents.
 
    Le prix : un défaut qui n'apparaît qu'avec les vraies données sera plus long à comprendre.
-4. **Le test du message de 18h** (travail 4 ; D-005 ; sur cinq iPhone, D-054) dira si le message arrive sur iPhone depuis l'icône, quelle forme de notification garder, si l'abonnement tient après des jours sans ouvrir l'icône, et si la connexion Apple ou Google tient depuis l'icône (D-035).
+4. **Le test du message de 18h** (travail 4 ; D-005 ; sur cinq iPhone, D-054) dira si le message arrive sur iPhone depuis l'icône, quelle forme de notification garder, si l'abonnement tient après des jours sans ouvrir l'icône, et si la connexion Apple ou Google tient depuis l'icône (D-035). Lu avec D-057 : un seul iPhone, celui du porteur ; domaine elenchos.fr.
 5. **L'adresse masquée d'Apple.** Un joueur qui masque son adresse reçoit nos e-mails par un relais d'Apple : l'avertissement avant effacement (D-045) passera par Apple (de mémoire). À dire dans « Qui, durée, droits ».
 6. **Les coûts.** À 10 000 joueurs, on suppose que la moitié ouvrent le jeu dans les cinq minutes après 18h. La location d'un Mac pour fabriquer la version iPhone (annexe A) est une dépense nouvelle, à ajouter au plan (partie 6), non chiffrée.
 

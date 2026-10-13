@@ -1,21 +1,36 @@
 # Le test du message de 18h : vos pas-à-pas
 
-*État, 13 octobre 2026 : **mis à jour pour D-057, en relecture.** Un seul iPhone, le vôtre (T1) ; plus de prêteurs, de note aux prêteurs ni de séance d'installation ; le domaine elenchos.fr, acheté avant la mise en ligne ; connexion Apple et Google depuis l'icône (l'e-mail viendra avec le jeu). Ce que la mise à jour ajoute sans décision de votre part est marqué « (proposé) ».*
+*État, 13 octobre 2026 : **mis à jour pour D-057, en relecture.** Un seul iPhone, le vôtre (T1) ; plus de prêteurs, de note aux prêteurs ni de séance d'installation ; le domaine elenchos.fr, acheté avant la mise en ligne ; connexion Apple et Google depuis l'icône (l'e-mail n'est pas dans ce test : plan, travail 4). Ce que la mise à jour ajoute sans décision de votre part est marqué « (proposé) ».*
 
-*Étape 6, travail 4. Back-end et Front-end, 12 octobre 2026 ; corrigé le même jour après les relectures (revue du code, Cohérence, Juridique, UX) ; mis à jour le 13 octobre (D-057). Accompagne `docs/etape-6/test-18h.md` et suit ses démarches dans l'ordre. Écrans vérifiés dans la documentation de Scalingo (lue dans son dépôt public, à jour au 9 octobre 2026 ; pages sur les domaines relues le 13 octobre) et dans l'aide d'Apple pour les développeurs (relue le 13 octobre). La console Google et le site d'OVHcloud n'ont pas pu être ouverts depuis l'environnement de l'équipe : leurs écrans sont décrits de mémoire et d'après des guides récents. Tout ce qui n'a pas pu être vérifié est marqué **« à vérifier sur l'écran »** : si l'écran dit autre chose, suivez l'écran et dites-le-nous en une ligne.*
+*Étape 6, travail 4. Back-end et Front-end, 12 octobre 2026 ; corrigé le même jour après les relectures (revue du code, Cohérence, Juridique, UX) ; mis à jour le 13 octobre (D-057). Accompagne `docs/etape-6/test-18h.md` et suit ses démarches dans l'ordre. Écrans vérifiés dans la documentation de Scalingo (lue dans son dépôt public, à jour au 9 octobre 2026 ; pages sur les domaines relues le 13 octobre) et dans l'aide d'Apple pour les développeurs (relue le 13 octobre). La console Google et le site d'OVHcloud n'ont pas pu être ouverts depuis l'environnement de l'équipe : leurs écrans sont décrits de mémoire et d'après des guides récents. Tout ce qui n'a pas pu être vérifié est marqué ▲ (voir l'encadré plus bas).*
 
 **Trois règles, pour tout ce qui suit.**
 1. **Vous ne nous envoyez jamais un mot de passe, une clé ni un code** (D-048). Vous les tapez vous-même chez OVHcloud, Scalingo, Google ou Apple, et vous les gardez dans un gestionnaire de mots de passe (le trousseau de votre iPhone convient).
 2. **Ce que vous pouvez nous copier** : un message d'erreur de **fabrication** chez Scalingo, et les lignes du tableau de résultats. Jamais un journal de l'application en marche.
 3. **Les adresses de ce document** supposent que l'application s'appelle `elenchos-test-18h` et que la page du test vit à l'adresse `test18h.elenchos.fr` (proposé : une adresse à part, pour que rien du test ne reste à l'adresse du jeu ; raison en 1.4). Si le nom `elenchos-test-18h` est pris chez Scalingo, choisissez-en un autre, remplacez-le partout (y compris dans l'entrée de 1.4), et dites-nous lequel (ce n'est pas un secret).
 
-| Quand (au plus tôt) | Vous faites | Partie |
+**Quatre mots, une fois pour toutes** (ils reviennent en 1.4 et 2.6).
+- **Zone DNS** : le carnet d'adresses de votre domaine, tenu par OVHcloud. Chaque ligne (une « entrée ») dit où mène un nom comme `test18h.elenchos.fr`.
+- **CNAME** : un type d'entrée qui dit « ce nom est un autre nom pour celui-là » ; ici, `test18h.elenchos.fr` devient un autre nom pour l'adresse de votre application chez Scalingo.
+- **TTL (durée de vie)** : le temps pendant lequel les ordinateurs gardent une entrée en mémoire avant de la relire ; vous gardez la valeur proposée.
+- **« Pending DNS »** : l'état affiché par Scalingo tant qu'il ne voit pas encore votre entrée. Ce n'est pas une erreur ; il regarde toutes les minutes.
+
+> **Écrans de mémoire (▲).** Un ▲ dans le texte marque un écran ou un menu que nous n'avons pas pu voir : nous le décrivons de mémoire ou d'après des guides récents. Si l'écran dit autre chose, suivez l'écran et dites-le-nous en une ligne. Où ils se trouvent :
+> - **OVHcloud** : la recherche et le panier (1.1), la double authentification et le renouvellement (1.2), le chemin vers la zone DNS (1.4) ;
+> - **Scalingo** : l'écran juste après l'inscription (2.1), le nom du plus petit plan PostgreSQL (2.7), l'emplacement du réglage des journaux (2.8), l'édition des variables en bloc (2.9 et 6.2), la suppression de la base (9) ;
+> - **Google** : les noms des menus de la console (3.2), l'écran « Google n'a pas validé cette application » (6.4), le retrait de l'accès (9) ;
+> - **Apple** : un champ ou deux pour le domaine (4.2), le retrait « Ne plus utiliser » (9) ;
+> - **iPhone** : le bouton Partager sur iOS 26 (6.4), le geste qui supprime l'icône (9).
+
+| Quand (au plus tôt) | Vous faites | Partie (démarche) |
 |---|---|---|
 | J0, mardi 13 | Acheter elenchos.fr et préparer son branchement : environ 30 minutes | 1 |
 | J1, mercredi 14 | Scalingo (branchement du domaine compris), Google, Apple : environ 2 h ; puis votre feu vert écrit pour le lendemain | 2, 3, 4, 5 |
-| J2, jeudi 15 | Avant 15h : la mise en ligne, vos codes, votre iPhone ; à 18h, la répétition | 6 |
-| J3 à J5, vendredi 16 à dimanche 18 | Les deux minutes du soir (soirs 1, 2, 3) | 7 |
-| J6, lundi 19 | L'effacement | 9 |
+| J2, jeudi 15 | Avant 15h : la mise en ligne, vos codes, votre iPhone ; à 18h, la répétition | 6 (démarche 5) |
+| J3 à J5, vendredi 16 à dimanche 18 | Les deux minutes du soir (soirs 1, 2, 3) | 7 (démarche 6) |
+| J6, lundi 19 | L'effacement | 9 (démarche 7) |
+
+Les parties de ce document sont numérotées de 1 à 9 ; les « démarches » du tableau de `test-18h.md` sont au nombre de sept. Les démarches 1 à 4 sont les parties 1 à 4 ; la démarche 5 est la partie 6, la démarche 6 la partie 7, la démarche 7 la partie 9. La partie 5 (le feu vert) et la partie 8 (la panne) ne sont pas des démarches.
 
 ---
 
@@ -28,16 +43,16 @@
 **Le prix, présenté avant l'achat (D-042, D-057).** Relevé le 13 octobre 2026 sur des comparatifs récents (le site d'OVHcloud n'a pas pu être ouvert) : **environ 6 € TTC la première année** (4,99 € HT), puis **environ 9,35 € TTC par an** au renouvellement (7,79 € HT). C'est l'écran de paiement qui fait foi. **Si le total dépasse 15 € TTC pour un an, arrêtez-vous et dites-le-nous** (proposé).
 
 ### 1.1 Vérifier que le nom est libre, et l'acheter
-1. Ouvrez `https://www.ovhcloud.com/fr/domains/` et tapez `elenchos.fr` dans le champ de recherche (à vérifier sur l'écran).
+1. Ouvrez `https://www.ovhcloud.com/fr/domains/` et tapez `elenchos.fr` dans le champ de recherche ▲.
 2. **Si elenchos.fr est déjà pris** : n'achetez rien d'autre, arrêtez-vous et dites-le-nous. La question vous revient avant tout autre achat.
-3. S'il est libre : ajoutez-le au panier, **pour un an**. **Refusez toutes les options payantes** proposées (hébergement, adresses e-mail, « DNS Anycast »…). Gardez la zone DNS d'OVHcloud, gratuite (à vérifier sur l'écran).
+3. S'il est libre : ajoutez-le au panier, **pour un an**. **Refusez toutes les options payantes** proposées (hébergement, adresses e-mail, « DNS Anycast »…). Gardez la zone DNS d'OVHcloud, gratuite ▲.
 4. Créez votre compte OVHcloud, **en tant que particulier**, à votre nom (D-042) ; mot de passe fort, propre à OVHcloud, rangé dans votre gestionnaire. Le titulaire du domaine, c'est vous. Pour un particulier, le registre du .fr (l'Afnic) ne publie pas vos coordonnées dans l'annuaire public des domaines (de mémoire).
 5. Payez. Notez le prix réellement payé (une ligne, pour le tableau des dépenses).
 
-### 1.2 Protéger le compte (5 minutes)
-Qui contrôle le domaine contrôle l'adresse où les icônes des joueurs iront chercher le jeu. Deux réglages, dans votre compte OVHcloud :
-1. **La double authentification** (menu de votre compte, « Sécurité » ; à vérifier sur l'écran) : une application d'authentification, comme pour Scalingo en 2.2. Rangez les codes de secours.
-2. **Le renouvellement automatique** du domaine : **activé** (à vérifier sur l'écran). Un domaine qui expire, ce sont des icônes qui ne mènent plus nulle part.
+### 1.2 Protéger le compte (5 minutes, proposé)
+Qui contrôle le domaine contrôle l'adresse où les icônes des joueurs iront chercher le jeu. Deux réglages gratuits (proposé : D-056 veut un test simple, D-057 point 5 garde les protections qui ne coûtent rien), dans votre compte OVHcloud :
+1. **La double authentification** (menu de votre compte, « Sécurité » ▲) : une application d'authentification, comme pour Scalingo en 2.2. Rangez les codes de secours.
+2. **Le renouvellement automatique** du domaine : **activé** ▲. Un domaine qui expire, ce sont des icônes qui ne mènent plus nulle part.
 
 Même prudence que pour Scalingo : ne suivez jamais le lien d'un e-mail « OVHcloud » ou « Afnic » qui vous demande d'agir sur le domaine ; ouvrez votre compte à la main.
 
@@ -45,9 +60,9 @@ Même prudence que pour Scalingo : ne suivez jamais le lien d'un e-mail « OVHcl
 Le domaine peut mettre de quelques minutes à quelques heures à devenir actif (de mémoire). Un e-mail d'OVHcloud le confirme. Vous pouvez faire 1.4 sans attendre.
 
 ### 1.4 Préparer le branchement : une entrée dans la zone DNS
-**Pourquoi `test18h.elenchos.fr` et pas `elenchos.fr` (proposé).** La page du test est jetable. Si elle vivait à `elenchos.fr`, son icône, ses réglages et son abonnement occuperaient l'adresse du jeu. À une adresse à part, rien ne se mélange. En plus, chez OVHcloud, une adresse comme `test18h.elenchos.fr` se branche à Scalingo par une seule entrée simple ; l'adresse nue `elenchos.fr` en demande une autre sorte, que Scalingo déconseille (documentation de Scalingo, vérifiée le 13 octobre 2026). L'adresse du jeu lui-même sera choisie avec sa construction.
+**Pourquoi `test18h.elenchos.fr` et pas `elenchos.fr` (proposé).** La page du test est jetable. Si elle vivait à `elenchos.fr`, son icône, ses réglages et son abonnement occuperaient l'adresse du jeu. À une adresse à part, rien ne se mélange. En plus, une adresse comme `test18h.elenchos.fr` se branche à Scalingo par une seule entrée simple (CNAME). L'adresse nue `elenchos.fr` demande une entrée « ALIAS » ou « ANAME » que le registraire doit accepter, sinon des entrées « A » que Scalingo déconseille (documentation de Scalingo, vérifiée le 13 octobre 2026). Que OVHcloud n'accepte pas l'entrée « ALIAS » ou « ANAME » est de mémoire, à vérifier : son site n'a pas pu être ouvert. L'adresse du jeu lui-même sera choisie avec sa construction.
 
-1. Dans votre compte OVHcloud : **Web Cloud › Noms de domaine › elenchos.fr › Zone DNS** (à vérifier sur l'écran).
+1. Dans votre compte OVHcloud : **Web Cloud › Noms de domaine › elenchos.fr › Zone DNS** ▲.
 2. **Ajouter une entrée**, type **CNAME**.
 3. **Sous-domaine** : `test18h`. **Cible** : `elenchos-test-18h.osc-fr1.scalingo.io.` — **avec le point final** (Scalingo y insiste). Durée de vie (TTL) : celle proposée.
 4. **Suivant**, **Valider**. Ne touchez à aucune autre entrée de la zone.
@@ -77,7 +92,7 @@ Ce jour-là, vous préparez tout chez Scalingo **sauf** la mise en ligne, qui at
 2. Choisissez **Personal**.
 3. Tapez votre adresse e-mail, puis un mot de passe fort, propre à Scalingo (rangez-le dans votre gestionnaire).
 4. **Avant de toucher le bouton, faites une capture d'écran de cet écran, où vous acceptez les conditions de Scalingo** (votre preuve pour 2.3 ; rangez-la chez vous). Puis touchez **Sign up with email**. (L'autre bouton, « Sign up with GitHub », marche aussi ; l'e-mail garde les deux comptes séparés.)
-5. **Si l'écran vous laisse entrer dans le tableau de bord avant la carte, faites d'abord 2.2** (double vérification), puis revenez ici. Sinon, continuez et faites 2.2 tout de suite après (à vérifier sur l'écran).
+5. **Si l'écran vous laisse entrer dans le tableau de bord avant la carte, faites d'abord 2.2** (double vérification), puis revenez ici. Sinon, continuez et faites 2.2 tout de suite après ▲.
 6. Remplissez votre **profil de facturation** (à votre nom, D-042) et ajoutez la carte : c'est ce qui démarre l'essai. **Notez la date de fin d'essai.**
 
 ### 2.2 La double vérification (P-16)
@@ -87,7 +102,7 @@ Ce jour-là, vous préparez tout chez Scalingo **sauf** la mise en ligne, qui at
 4. **Copiez les codes de secours** dans votre gestionnaire. Ne sautez pas ce point. Puis **Confirm**.
 
 ### 2.3 Le contrat de sous-traitance (RGPD, art. 28)
-Gardez la capture faite en 2.1 (étape 4) : c'est la preuve que vous avez accepté les conditions de Scalingo, dont le contrat de sous-traitance fait partie (page de Scalingo vue par moteur). **Pour ce test, elle ne bloque plus rien** (proposé, à confirmer par Juridique) : la base ne contiendra que des données de votre propre téléphone. Juridique en avait fait une condition bloquante pour les données des prêteurs ; elle redevient bloquante avant le premier vrai joueur.
+Gardez la capture faite en 2.1 (étape 4) : c'est la preuve que vous avez accepté les conditions de Scalingo, dont le contrat de sous-traitance fait partie (page de Scalingo vue par moteur). **Pour ce test, elle ne bloque plus rien** (proposé, à confirmer par Juridique) : la base ne contiendra que des données de votre propre téléphone. Juridique en avait fait une condition bloquante pour les données des prêteurs ; elle redevient bloquante avant le premier vrai joueur (proposé).
 
 ### 2.4 Lier Scalingo à GitHub (sans rien installer)
 1. Ouvrez `https://dashboard.scalingo.com/account/integrations`.
@@ -109,14 +124,14 @@ Suite de 1.4. Vérifié dans la documentation de Scalingo le 13 octobre 2026.
    ```
    ADRESSE_PUBLIQUE=https://test18h.elenchos.fr
    ```
-   **Ne l'oubliez pas** : sans elle, le programme donnerait à Google et à Apple l'adresse en `scalingo.io`, et ils refuseraient la connexion.
+   **Ne l'oubliez pas** : sans elle, la page de résultats l'affiche comme réglage manquant, et la connexion Google et Apple échoue.
 
 Si l'état reste « Pending DNS » le lendemain matin, vérifiez l'entrée de 1.4 (le point final, le nom de l'application) ; sinon, dites-le-nous.
 
 ### 2.7 La base de données
 1. Dans l'application : onglet **Resources**, bloc **Addons**, **Add an addon**.
 2. **PostgreSQL**, puis **Go to plan selection**.
-3. Le plus petit plan proposé (l'essai n'en autorise qu'un, le plus petit ; son nom exact est à vérifier sur l'écran, « Starter 512M » de mémoire). **Finish**.
+3. Le plus petit plan proposé (l'essai n'en autorise qu'un, le plus petit ; son nom exact ▲ : « Starter 512M » de mémoire). **Finish**.
 
 Deux réglages de la base, dans son propre tableau de bord (depuis l'addon PostgreSQL, lien vers le tableau de bord de la base) :
 
@@ -126,10 +141,10 @@ Deux réglages de la base, dans son propre tableau de bord (depuis l'addon Postg
 
 ### 2.8 Deux réglages de l'application
 1. Onglet **Settings › Public Routing**, bloc **Force HTTPS** : activez (proposé ; le programme renvoie aussi vers https).
-2. **Journaux du routeur** : vérifiez qu'ils sont **désactivés** (c'est le réglage par défaut ; ils noteraient l'adresse internet de chaque visite, gardée un an). Ne les activez pas (emplacement du réglage à vérifier sur l'écran).
+2. **Journaux du routeur** : vérifiez qu'ils sont **désactivés** (c'est le réglage par défaut ; ils noteraient l'adresse internet de chaque visite, gardée un an). Ne les activez pas (emplacement du réglage ▲).
 
 ### 2.9 Les autres réglages (variables d'environnement)
-Onglet **Environment**. Ajoutez ces deux variables, en plus de `ADRESSE_PUBLIQUE` (bouton d'ajout, ou édition en bloc : à vérifier sur l'écran). Elles ne sont pas secrètes.
+Onglet **Environment**. Ajoutez ces deux variables, en plus de `ADRESSE_PUBLIQUE` (bouton d'ajout, ou édition en bloc ▲). Elles ne sont pas secrètes.
 
 ```
 PROJECT_DIR=test-18h
@@ -142,7 +157,7 @@ SOIRS=2026-10-15=0@1;2026-10-16=1@1;2026-10-17=2@1;2026-10-18=3@1
 
 Les variables de Google et d'Apple s'ajoutent aux parties 3 et 4 ; les codes, à la partie 6.
 
-Les questions écrites à Scalingo de la version précédente (journaux, sauvegardes, sous-traitants) servaient la note aux prêteurs : elles sont retirées du test et seront posées à la mise à niveau (proposé).
+Les questions écrites à Scalingo (journaux, sauvegardes, sous-traitants) ne sont pas posées pour ce test, qui n'a plus de prêteurs : elles le seront à la mise à niveau (proposé).
 
 ---
 
@@ -155,14 +170,14 @@ Les questions écrites à Scalingo de la version précédente (journaux, sauvega
 2. En haut, sélecteur de projet, **Nouveau projet**. Nom : `elenchos`. **Créer**. Sélectionnez-le.
 
 ### 3.2 L'écran d'accord, en mode « Test »
-Menu ☰ › **Google Auth Platform** (parfois « API et services › Écran de consentement OAuth » ; à vérifier sur l'écran), puis **Commencer** :
+Menu ☰ › **Google Auth Platform** (parfois « API et services › Écran de consentement OAuth » ▲), puis **Commencer** :
 1. **Informations sur l'application** : nom `Elenchos (test)` ; adresse d'assistance : la vôtre.
 2. **Audience** : **Externe**.
 3. **Coordonnées** : votre adresse. Acceptez la règle des données utilisateur. **Créer**.
 4. Menu **Audience** : l'état de publication doit être **Test** (« Testing »). Ne touchez pas à « Publier » : c'est pour les vrais joueurs (encadré ci-dessous).
 5. Toujours dans **Audience**, **Utilisateurs tests › Add users** : **votre adresse Gmail**, et elle seule. **Enregistrer**.
 6. Menu **Accès aux données** (« Data Access ») : n'ajoutez aucun champ d'application. L'identifiant et l'adresse e-mail sont demandés par la page elle-même, sans rien régler ici.
-7. Menu **Marque** (« Branding »), **Domaines autorisés** : si la console le demande, ajoutez `elenchos.fr` (à vérifier sur l'écran ; souvent, elle l'ajoute d'elle-même à l'étape 3.3).
+7. Menu **Marque** (« Branding »), **Domaines autorisés** : si la console le demande, ajoutez `elenchos.fr` (▲ ; souvent, elle l'ajoute d'elle-même à l'étape 3.3).
 
 ### 3.3 L'identifiant « application Web »
 1. Menu **Clients**, **Créer un client**.
@@ -175,7 +190,7 @@ Menu ☰ › **Google Auth Platform** (parfois « API et services › Écran de 
 Si la console refuse cette adresse, arrêtez-vous et dites-le-nous.
 
 ### 3.4 Les deux réglages chez Scalingo
-Onglet **Environment** de l'application, deux variables :
+Onglet **Environment** de l'application, deux variables. Enregistrer une variable redémarre l'application : c'est une mise en ligne au sens de D-043, donc pas de 15h à 19h ni un dimanche (sans effet tant que rien n'est installé, mais utile si le calendrier glisse).
 ```
 GOOGLE_ID_CLIENT=…l'ID client, qui finit par .apps.googleusercontent.com
 GOOGLE_SECRET_CLIENT=…le code secret du client
@@ -209,7 +224,7 @@ Les identifiants ci-dessous servent au test seulement. Ceux du jeu seront créé
    - l'adresse de retour : `https://test18h.elenchos.fr/connexion/apple/retour`
    - **Done**, puis **Continue**, puis **Save**.
 
-   **Un ou deux champs** (à vérifier sur l'écran) : l'aide d'Apple décrit maintenant un seul champ, **Website URLs**, où l'on met domaines et adresses de retour à la suite, séparés par des virgules ; la version précédente de ce pas-à-pas décrivait deux champs, **Domains and Subdomains** et **Return URLs**. Si vous voyez un seul champ, collez : `test18h.elenchos.fr,https://test18h.elenchos.fr/connexion/apple/retour`. Si vous en voyez deux, une valeur dans chacun.
+   **Un ou deux champs** ▲ : l'aide d'Apple décrit maintenant un seul champ, **Website URLs**, où l'on met domaines et adresses de retour à la suite, séparés par des virgules ; l'écran peut encore en montrer deux, **Domains and Subdomains** et **Return URLs**. Si vous voyez un seul champ, collez : `test18h.elenchos.fr,https://test18h.elenchos.fr/connexion/apple/retour`. Si vous en voyez deux, une valeur dans chacun.
 
 **Aucun fichier à déposer sur le serveur** : l'aide d'Apple le dit (« You don't need to upload a file on your server »), vérifié le 13 octobre 2026. Avec un domaine à vous, le doute sur l'adresse de Scalingo est levé. Si l'écran refuse quand même le domaine, arrêtez-vous et dites-le-nous.
 
@@ -224,7 +239,7 @@ Les identifiants ci-dessous servent au test seulement. Ceux du jeu seront créé
 En haut à droite de la page du compte, ou **Membership details** : le **Team ID** (10 caractères).
 
 ### 4.5 Les quatre réglages chez Scalingo
-Onglet **Environment** :
+Onglet **Environment**. Même rappel qu'en 3.4 : enregistrer redémarre l'application, donc pas de 15h à 19h ni un dimanche.
 ```
 APPLE_ID_SERVICE=io.github.ppcrepin.test18h.web
 APPLE_ID_EQUIPE=…le Team ID
@@ -247,7 +262,7 @@ Il en va de même pour chaque correction ensuite : l'équipe ne pousse rien sur 
 
 ---
 
-## 6. Démarche 5 — La mise en ligne, vos codes et votre iPhone (J2, avant 15h, puis 18h)
+## 6. La mise en ligne, vos codes et votre iPhone (démarche 5 ; J2, avant 15h, puis 18h)
 
 ### 6.1 Brancher la branche et installer (dès que l'équipe a poussé)
 1. Application `elenchos-test-18h`, onglet **Deploy › Configuration**.
@@ -258,10 +273,12 @@ Il en va de même pour chaque correction ensuite : l'équipe ne pousse rien sur 
 **Pas avant 15h ? Pas un dimanche ?** Si vous faites ceci entre 15h et 19h ou un dimanche, la fabrication échoue avec le message « Horaires : aucune installation de 15h à 19h ni le dimanche » : c'est voulu. Recommencez avant 15h ou après 19h, un autre jour que le dimanche.
 
 ### 6.2 Fabriquer vos codes et la clé des messages (5 minutes)
+**Enregistrer ces réglages (étape 4) redémarre l'application : c'est une mise en ligne au sens de D-043. Ne le faites pas de 15h à 19h ni un dimanche. S'il est plus de 14h30, attendez 19h.**
+
 1. Sur votre ordinateur, ouvrez `https://test18h.elenchos.fr/preparer`. Le cadenas doit être fermé ; sinon, le certificat n'est pas encore prêt (2.6, étape 3) : attendez « In use ».
-2. Touchez **Fabriquer les codes**. La page tire au hasard, **dans votre navigateur**, cinq lignes : le secret de session, les **cinq codes d'essai** (T1 à T5), **votre code d'accès** aux résultats, et la clé des messages (publique et privée). Rien n'est envoyé au serveur. Le programme attend toujours cinq codes ; **seul T1 servira**.
-3. Plus bas, la page liste les codes et votre code d'accès : **copiez au moins T1 et votre code d'accès dans votre gestionnaire de mots de passe**.
-4. **Copier ces lignes**, puis, chez Scalingo, onglet **Environment**, édition en bloc : collez les cinq lignes à la suite des autres (à vérifier sur l'écran ; sinon, ajoutez-les une par une : le nom avant le « = », la valeur après). Enregistrez : l'application redémarre.
+2. Touchez **Fabriquer les codes**. La page tire au hasard, **dans votre navigateur**, **cinq lignes de réglages** : (1) le secret de session, (2) la liste des codes d'essai (une seule ligne, qui contient les cinq codes T1 à T5), (3) **votre code d'accès** aux résultats, (4) la clé publique et (5) la clé privée des messages. Rien n'est envoyé au serveur. Le programme attend toujours cinq codes ; **seul T1 servira**.
+3. Plus bas, la page liste les cinq codes et votre code d'accès : **copiez au moins T1 et votre code d'accès dans votre gestionnaire de mots de passe**.
+4. **Copier ces lignes**, puis, chez Scalingo, onglet **Environment**, édition en bloc : collez ces cinq lignes (une par réglage) à la suite des autres (▲ ; sinon, ajoutez-les une par une : le nom avant le « = », la valeur après). Enregistrez : l'application redémarre.
 5. Si la clé Apple n'a pas pu être collée en 4.5 : section 2 de la même page, choisissez le fichier .p8, copiez la ligne obtenue, ajoutez-la de la même façon.
 6. Fermez la page. Ne la rechargez pas avant d'avoir tout collé : chaque chargement tire d'autres valeurs.
 
@@ -278,9 +295,9 @@ Gardez la page de résultats ouverte **sur votre ordinateur** : sur l'iPhone, vo
 
 1. **Noter, sans rien changer** (liste de contrôle) : la version d'iOS (**Réglages › Général › Informations**) ; si une **Concentration** est programmée (**Réglages › Concentration**) ; si le **Résumé programmé** est actif (**Réglages › Notifications › Résumé programmé**) ; si le **mode Économie d'énergie** est actif (**Réglages › Batterie**). Vous notez « oui/non », pour vous.
 2. **Safari** : tapez `test18h.elenchos.fr` dans la barre d'adresse. La page « Test du message de 18h » s'ouvre.
-3. **Continuer avec Google**, avec votre compte Google. Si Google affiche « Google n'a pas validé cette application », touchez **Continuer** (à vérifier sur l'écran). **Si Google affiche une erreur** (par exemple « disallowed_useragent »), notez-la mot pour mot : c'est un résultat du test.
+3. **Continuer avec Google**, avec votre compte Google. Si Google affiche « Google n'a pas validé cette application », touchez **Continuer** ▲. **Si Google affiche une erreur** (par exemple « disallowed_useragent »), notez-la mot pour mot : c'est un résultat du test.
 4. De retour sur la page : « Connexion : connecté avec Google ».
-5. **Ajouter à l'écran d'accueil** : bouton **Partager** (le carré avec une flèche vers le haut ; sur iOS 26, il peut se trouver dans le menu **⋯**, à vérifier sur l'écran), puis **Sur l'écran d'accueil**. Le nom proposé est « Test 18h » : gardez-le. Sur iOS 26, si un réglage « Ouvrir comme app web » apparaît, laissez-le **activé**. **Ajouter**.
+5. **Ajouter à l'écran d'accueil** : bouton **Partager** (le carré avec une flèche vers le haut ; sur iOS 26, il peut se trouver dans le menu **⋯** ▲), puis **Sur l'écran d'accueil**. Le nom proposé est « Test 18h » : gardez-le. Sur iOS 26, si un réglage « Ouvrir comme app web » apparaît, laissez-le **activé**. **Ajouter**.
 6. **Ouvrez l'icône** « Test 18h ». La page dit « Ouverte depuis l'icône : oui ». La connexion dit probablement « aucune » : l'icône a sa propre mémoire. Touchez **Continuer avec Google** et refaites 3. **Notez** : êtes-vous revenu dans l'icône, ou dans Safari ? La page dit-elle « connecté avec Google » ? Si une page dit « La connexion a expiré, ou elle s'est terminée dans Safari au lieu de l'icône », notez-le : c'est l'échec que le test cherche exprès.
 7. **Recevoir le message de 18h**. Tapez le **code T1**, **Valider**. La page dit « C'est le téléphone 1. Touche « Autoriser les messages », puis « Autoriser ». »
 8. **Autoriser les messages**, puis **Autoriser** dans la fenêtre de l'iPhone. La page dit « C'est fait ». En haut : « Messages de 18h : autorisés ».
@@ -293,7 +310,7 @@ Gardez la page de résultats ouverte **sur votre ordinateur** : sur l'iPhone, vo
 
 ---
 
-## 7. Démarche 6 — Les deux minutes du soir (J3 à J5, vers 18h10)
+## 7. Les deux minutes du soir (démarche 6 ; J3 à J5, vers 18h10)
 
 1. Sur votre ordinateur, ouvrez la page de résultats (votre code d'accès vous est redemandé toutes les douze heures). Pas l'icône.
 2. La ligne du soir : **Réponse du service** « accepté », une heure **Reçu**, l'**Écart** en secondes et un **Résultat** (à l'heure avant 18h02, acceptable avant 18h05, en retard jusqu'à 18h30, manqué au-delà).
@@ -315,25 +332,27 @@ Gardez la page de résultats ouverte **sur votre ordinateur** : sur l'iPhone, vo
 
 ---
 
-## 9. Démarche 7 — L'effacement (J6, environ 20 minutes)
+## 9. L'effacement (démarche 7 ; J6, environ 20 minutes)
+
+L'effacement n'est pas une mise en ligne : la garde des horaires ne le bloque pas. Ne le faites pourtant pas entre 18h00 et 18h30 si un soir est en cours (un soir ajouté, par exemple).
 
 Dans cet ordre :
 
 1. **Copier le tableau.** Page de résultats, zone **À copier pour l'équipe**, **Copier**. Complétez les « vu » depuis votre note. Collez le tout dans la conversation : seulement ces lignes.
-2. **Votre iPhone** : ouvrez l'icône, **Se déconnecter** ; puis appui long sur l'icône. Il faut le geste qui **supprime** l'icône, pas celui qui la retire seulement de l'écran d'accueil (à vérifier sur l'écran, selon la version d'iOS) :
+2. **Votre iPhone** : ouvrez l'icône, **Se déconnecter** ; puis appui long sur l'icône. Il faut le geste qui **supprime** l'icône, pas celui qui la retire seulement de l'écran d'accueil (▲ selon la version d'iOS) :
    - si le menu propose **Supprimer l'app** (ou **Supprimer le signet**), choisissez-le, puis confirmez **Supprimer** ;
    - s'il ne propose que **Supprimer de l'écran d'accueil**, ou si une fenêtre propose les deux, prenez celui qui **supprime** ; vérifiez ensuite que « Test 18h » n'apparaît plus dans la Bibliothèque d'apps (balayer l'écran d'accueil jusqu'au bout, à droite) et, s'il y est encore, supprimez-le de là.
    Quoi qu'il arrive, aucun message ne peut plus arriver une fois l'application et la base supprimées chez Scalingo (étape 4).
 3. **Tout effacer.** Page de résultats, section **Tout effacer** : tapez `EFFACER`, touchez **Tout effacer**. La page doit dire **« Base vide : vérifié »**, avec zéro ligne partout. Sinon, ne supprimez rien et dites-le-nous.
 4. **Supprimer chez Scalingo.** « Tout effacer » a vidé la base ; il faut maintenant la **supprimer** : sa copie continue des changements (7 jours) ne part qu'avec elle.
-   - Application `elenchos-test-18h`, onglet **Resources**, bloc **Addons**, l'addon PostgreSQL : supprimez-le (à vérifier sur l'écran).
+   - Application `elenchos-test-18h`, onglet **Resources**, bloc **Addons**, l'addon PostgreSQL : supprimez-le ▲.
    - Puis onglet **Settings**, **Delete app**, remplissez la confirmation, confirmez. Le domaine `test18h.elenchos.fr` part avec elle.
    - Ouvrez la page **Billing** (et la liste de vos applications) : **plus aucune application ni base**. S'il en reste une, supprimez-la et dites-le-nous.
    - **Faites-le avant le 30e jour de l'essai** : sinon, la facturation commence. La place de l'unique application de l'essai est alors libre pour la construction du jeu.
    - La trace des connexions gardée par Scalingo reste un an, par obligation légale ; ni vous ni l'équipe ne pouvez l'effacer.
 5. **Retirer l'entrée de la zone DNS (à ne pas oublier).** Compte OVHcloud, **Zone DNS** d'elenchos.fr : supprimez l'entrée CNAME `test18h`. Pourquoi : une entrée qui pointe vers une application supprimée peut être reprise par quiconque crée chez Scalingo une application du même nom ; il pourrait alors servir sa page à `test18h.elenchos.fr`. **Gardez le domaine elenchos.fr** : il sert au jeu.
-6. **Google.** Avec votre compte : `https://myaccount.google.com`, **Sécurité**, **Vos connexions à des applications et services tiers**, `Elenchos (test)`, **Supprimer l'accès** (à vérifier sur l'écran). Puis console Google, **Clients**, `test-18h` : retirez l'URI de redirection, enregistrez. Gardez le projet (il resservira, proposé).
-7. **Apple.** Sur votre iPhone : **Réglages › [votre nom] › Connexion et sécurité › Se connecter avec Apple**, `Test 18h`, **Ne plus utiliser** (à vérifier sur l'écran). Dans le compte développeur, **Identifiers**, Services ID `io.github.ppcrepin.test18h.web`, **Sign In with Apple › Configure** : retirez le domaine et l'adresse de retour, **Done**, **Continue**, **Save**. Les identifiants du test ne resserviront pas ; ceux du jeu seront créés au travail 9. Gardez le fichier .p8 dans votre gestionnaire.
+6. **Google.** Avec votre compte : `https://myaccount.google.com`, **Sécurité**, **Vos connexions à des applications et services tiers**, `Elenchos (test)`, **Supprimer l'accès** ▲. Puis console Google, **Clients**, `test-18h` : retirez l'URI de redirection, enregistrez. Gardez le projet (il resservira, proposé).
+7. **Apple.** Sur votre iPhone : **Réglages › [votre nom] › Connexion et sécurité › Se connecter avec Apple**, `Test 18h`, **Ne plus utiliser** ▲. Dans le compte développeur, **Identifiers**, Services ID `io.github.ppcrepin.test18h.web`, **Sign In with Apple › Configure** : retirez le domaine et l'adresse de retour, **Done**, **Continue**, **Save**. Les identifiants du test ne resserviront pas ; ceux du jeu seront créés au travail 9. Gardez le fichier .p8 dans votre gestionnaire.
 8. **La ligne datée.** Écrivez, chez vous : « Test du message de 18h : effacé le [date], vérifié. »
 
 ---

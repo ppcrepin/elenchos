@@ -1,6 +1,6 @@
 # Le test du message de 18h : préparation
 
-*État, 13 octobre 2026 : **mis à jour pour D-057, en relecture.** D-057 (point 4) modifie D-054 (points 1 et 3) : le test se fait **sur votre seul iPhone (T1)** ; plus de prêteurs, de note aux prêteurs, de séance d'installation ni de liste « qui a quel téléphone ». D-057 (point 2 et précision du même jour) : le domaine **elenchos.fr** est acheté avant la mise en ligne ; il remplace l'adresse de Scalingo pour la page, Apple et Google, et D-054 (point 2, « on vous redemande avant d'acheter un domaine ») est dépassé. D-057 (point 3) : la connexion par e-mail viendra avec le jeu, pas dans ce test. Ce que cette mise à jour ajoute sans décision de votre part est marqué « (proposé) » quand c'est un choix de l'équipe, « (application de D-057) » quand c'est la seule conséquence directe. La version précédente (cinq iPhone, prêteurs, note relue par Juridique) reste dans l'historique du dépôt.*
+*État, 13 octobre 2026 : **mis à jour pour D-057, en relecture.** D-057 (point 4) modifie D-054 (points 1 et 3) : le test se fait **sur votre seul iPhone (T1)** ; plus de prêteurs, de note aux prêteurs, de séance d'installation ni de liste « qui a quel téléphone ». D-057 (point 2 et précision du même jour) : le domaine **elenchos.fr** est acheté avant la mise en ligne ; il remplace l'adresse de Scalingo pour la page, Apple et Google, et D-057 (point 2) précise D-054 (point 2, « on vous redemande avant d'acheter un domaine ») : le domaine est maintenant voulu. La connexion par e-mail n'est pas dans ce test (plan, travail 4 : seuls Google et Apple y sont essayés) ; D-057 (point 3) la garde pour la version de test du jeu. Ce que cette mise à jour ajoute sans décision de votre part est marqué « (proposé) » quand c'est un choix de l'équipe, « (application de D-057) » quand c'est la seule conséquence directe.*
 
 *Étape 6, travail 4 de `docs/plan-construction.md` (partie 4). Back-end et Front-end, 12 octobre 2026. Validé en entier par D-054 (« Je valide tout ») ; mis à jour le même jour pour l'iPhone seulement (D-054, point 3), relu par Cohérence puis par le Vérificateur ; mis à jour le 13 octobre pour D-057. Avis de Juridique du 12 octobre intégré ; ce qui en tombe sans prêteur est dit en partie 5.*
 
@@ -37,7 +37,7 @@ La page du test n'est pas le jeu. Elle tient sur un écran et dit seulement troi
 
 On y trouve trois boutons : « Continuer avec Google », « Recevoir le message de 18h » et « Continuer avec Apple ». Ses textes sont écrits par Front-end et relus mot à mot par UX (12 octobre 2026). Le message lui-même est neutre : « Test, soir 1 sur 3 » (puis 2, puis 3). Ce n'est pas un texte du jeu (D-014). La page ne montre aucun texte de l'Assemblée et ne recueille aucun avis (condition 1 de Juridique, partie 5).
 
-La page vit à l'adresse **`test18h.elenchos.fr`** (proposé), pas à `elenchos.fr` : elle est jetable, et son icône, ses réglages et son abonnement ne doivent pas occuper l'adresse du jeu. Chez OVHcloud, une telle adresse se branche aussi à Scalingo par une entrée simple, alors que l'adresse nue `elenchos.fr` en demande une sorte que Scalingo déconseille (partie 3).
+La page vit à l'adresse **`test18h.elenchos.fr`** (proposé), pas à `elenchos.fr` : elle est jetable, et son icône, ses réglages et son abonnement ne doivent pas occuper l'adresse du jeu. Une telle adresse se branche à Scalingo par une entrée simple (CNAME) ; l'adresse nue `elenchos.fr` demande une entrée « ALIAS » ou « ANAME » que le registraire doit accepter, sinon des entrées « A » que Scalingo déconseille (partie 3). Que OVHcloud n'accepte pas l'entrée « ALIAS » ou « ANAME » est de mémoire, à vérifier : son site n'a pas pu être ouvert.
 
 ### Le calendrier du test
 
@@ -94,7 +94,7 @@ On relève aussi le nom du service d'acheminement, jamais l'adresse d'un abonnem
 ### Ce qu'on fait en cas d'échec
 
 - **L'iPhone était éteint, en mode avion ou sans réseau** : le soir ne compte pas. On ajoute un soir.
-- **L'envoi est parti en retard ou a échoué chez nous** : on corrige, avant 15h et jamais le dimanche (D-043), et on ajoute un soir. C'est une panne de notre côté, pas un échec du canal.
+- **L'envoi est parti en retard ou a échoué chez nous** : on corrige, avant 15h et jamais le dimanche (D-043), après un nouveau feu vert écrit de votre part la veille (D-054), et on ajoute un soir. C'est une panne de notre côté, pas un échec du canal.
 - **L'iPhone allumé ne reçoit pas ou reçoit en retard**, par exemple à cause d'un réglage, comme le mode Économie d'énergie. On note le réglage en cause. Le soir suivant, on le corrige, pour vérifier que c'est bien lui. Si la cause se règle par un réglage, c'est un fait pour les vrais joueurs (un guide de réglage, à écrire par UX), pas un échec du test. Si elle ne se règle pas, c'est un échec.
 - **Un échec qui ne s'explique pas**, par exemple plus rien après le soir 1 : on arrête. Le constat vous est présenté, avec des options en QCM, comme D-035 le prévoit. Le repli prévu par D-057 (point 1), TestFlight, serait alors reposé.
 - **La connexion échoue depuis l'icône.** On essaie d'abord, sans rien vous demander, une autre manière d'ouvrir Apple ou Google dans l'icône. Si aucune ne marche, la question vous revient (D-035). Les options seront alors, par exemple : se connecter avant d'ajouter l'icône, puis entrer dans l'icône avec un code à six chiffres ; ou s'appuyer sur l'e-mail.
@@ -144,7 +144,7 @@ Tout est à votre nom (D-042). Le pas-à-pas (`docs/etape-6/test-18h-pas-a-pas.m
 
 | # | Démarche | Pourquoi | Temps | Argent | Ce que l'équipe prépare |
 |---|---|---|---|---|---|
-| 1 | **Acheter elenchos.fr** (proposé : chez OVHcloud), avant d'ouvrir Scalingo ; double authentification et renouvellement automatique ; une entrée dans la zone DNS pour `test18h.elenchos.fr` | D-057, point 2 : une adresse à vous, pour que l'icône et l'abonnement survivent à la mise à niveau. Avant Scalingo : si le nom est pris, vous le savez avant que l'essai ne coure | 30 min | Environ 6 € TTC la première année, puis environ 9,35 € TTC par an (relevé, partie 4) | Le pas-à-pas, l'entrée DNS exacte |
+| 1 | **Acheter elenchos.fr** (proposé : chez OVHcloud), avant d'ouvrir Scalingo ; double authentification et renouvellement automatique (proposé) ; une entrée dans la zone DNS pour `test18h.elenchos.fr` | D-057, point 2 : une adresse à vous, pour que l'icône et l'abonnement survivent à la mise à niveau. Avant Scalingo : si le nom est pris, vous le savez avant que l'essai ne coure | 30 min | Environ 6 € TTC la première année, puis environ 9,35 € TTC par an (relevé, partie 4) | Le pas-à-pas, l'entrée DNS exacte |
 | 2 | **Scalingo** : créer le compte (double vérification, P-16), créer l'application du test (région Paris) et sa base d'essai, **brancher `test18h.elenchos.fr`** (certificat automatique), couper les sauvegardes programmées de la base, lier le dépôt GitHub. La carte est donnée, avec deux garde-fous (D-055) | L'hébergeur choisi (D-048, D-057) ; l'essai gratuit commence à l'ouverture | 1 h | 0 € pendant 30 jours ; une carte est demandée | Le pas-à-pas, le nom de la branche, les réglages |
 | 3 | **Google** : dans la console Google Cloud, avec votre compte, créer un projet, l'écran d'accord en mode « Test » avec votre seule adresse, l'identifiant « application Web » avec l'adresse de retour sur `test18h.elenchos.fr`, saisir son code secret chez Scalingo | La connexion Google (D-035, D-057) | 25 min | 0 € (de mémoire) | Le pas-à-pas, l'adresse de retour exacte |
 | 4 | **Apple** : dans votre compte développeur, créer l'identifiant d'application (« Se connecter avec Apple » coché), l'identifiant de service avec le domaine `test18h.elenchos.fr` et l'adresse de retour, la clé privée (téléchargeable une seule fois) ; saisir chez Scalingo la clé, son numéro, votre numéro d'équipe et l'identifiant de service | La connexion Apple (D-035) ; votre compte est déjà ouvert (D-047) | 40 min | 0 € de plus | Le pas-à-pas, les valeurs à saisir |
@@ -153,6 +153,8 @@ Tout est à votre nom (D-042). Le pas-à-pas (`docs/etape-6/test-18h-pas-a-pas.m
 | 7 | À la fin : « Tout effacer », supprimer l'application chez Scalingo, **retirer l'entrée DNS du test**, retirer les accès Google et Apple, nous copier le tableau | P-43 ; l'effacement réel (D-057, point 5) ; la place de l'unique application de l'essai, libérée pour le jeu | 20 min | 0 € | Le pas-à-pas d'effacement |
 
 Environ **trois heures et demie** en tout, soirs et effacement compris.
+
+Dans le pas-à-pas, les démarches 1 à 4 sont les parties 1 à 4 ; la démarche 5 est la partie 6, la démarche 6 la partie 7, la démarche 7 la partie 9 (la partie 5 est le feu vert, la partie 8 la panne).
 
 **Ce que disent aujourd'hui OVHcloud, Scalingo, Apple et Google** (13 octobre 2026).
 
@@ -186,7 +188,7 @@ Environ **trois heures et demie** en tout, soirs et effacement compris.
 | Console Google | 0 € | De mémoire | Démarche 3 | La connexion Google | — |
 | **Total du test** | **Environ 6 €** (le domaine, qui sert ensuite au jeu), si l'application et la base sont supprimées avant le 30e jour de l'essai | | | | |
 
-Par rapport à la version précédente : le prêt de quatre iPhone et l'iPhone reconditionné de secours disparaissent (D-057, point 4) ; le domaine n'est plus éventuel, il est acheté d'office (D-057, point 2).
+Par rapport à ce que D-054 avait validé : le prêt de quatre iPhone et l'iPhone reconditionné de secours disparaissent (D-057, point 4) ; le domaine n'est plus éventuel, il est acheté d'office (D-057, point 2).
 
 **Un point d'horloge à connaître.** L'essai de Scalingo court dès l'ouverture du compte (J1). Le test en prend environ six jours. Le passage au payant commence seul à la fin de l'essai si une application ou une base existe encore. Vous notez la date de fin d'essai le jour de l'ouverture du compte ; l'équipe vous présente la suite, avec son montant, au plus tard une semaine avant (D-055). Le bouton « Stop free trial » lance la facturation tout de suite : on n'y touche jamais.
 
@@ -200,7 +202,7 @@ On applique P-43 et P-10 (`docs/etape-6/donnees.md`) : la page du test ne garde 
 |---|---|---|---|
 | L'abonnement de votre iPhone au message : l'adresse technique où le service d'Apple le joint, et ses clés de chiffrement | Envoyer le message | Base du test, chez Scalingo | Fin du test |
 | L'étiquette du téléphone : « T1 » et sa version d'iOS | Lire les résultats | Idem | Fin du test |
-| Les heures : envoi, réponse du service d'Apple, réception notée par le serveur | La mesure | Idem | Fin du test ; ensuite, votre copie du tableau, et le bilan chiffré dans le dépôt |
+| Les heures : envoi, réponse du service d'Apple, réception notée par le serveur | La mesure | Idem | Fin du test ; ensuite, votre copie du tableau, et le bilan chiffré dans le dépôt (le 20 novembre de D-054, point 1, est sans objet : voir plus bas, à confirmer) |
 | La connexion : l'identifiant renvoyé par Apple ou Google, sous forme d'empreinte, et « adresse e-mail reçue : oui ou non » | Vérifier qu'on retrouve le même compte en se reconnectant | Idem | Fin du test |
 
 **Ce qui n'est jamais gardé** : aucune réponse, aucun pseudo, aucun nom, aucune adresse e-mail.
@@ -212,13 +214,14 @@ On applique P-43 et P-10 (`docs/etape-6/donnees.md`) : la page du test ne garde 
 
 **Les cookies** restent protégés comme avant (préfixe `__Host-` : liés à la seule adresse `test18h.elenchos.fr`). La précaution avait été prise pour l'adresse partagée `scalingo.io` ; elle vaut aussi sur un domaine à nous.
 
-**L'effacement, le lendemain du soir 3** (ou du dernier soir ajouté), pour lire d'abord les heures du soir 3. D-057 (point 5) garde l'effacement réel, et D-055 demande que l'essai ne laisse ni application ni base. Dans l'ordre :
-1. Vous touchez « Tout effacer » sur la page de résultats. Le programme vide la base, puis vérifie qu'elle est vide (test de P-43).
-2. Vous supprimez chez Scalingo l'application du test et sa base : la base est **supprimée**, pas seulement vidée, car sa copie continue des changements (7 jours) ne part qu'avec elle. Les sauvegardes programmées survivent à la suppression de la base, jusqu'à quatre semaines sur le plus petit plan : on les coupe donc avant de mettre des données, et on ne fait jamais de sauvegarde manuelle (gardée un mois après la suppression). Puis vous vérifiez la page de facturation : plus aucune application ni base. Le tout avant le 30e jour de l'essai.
-3. **Vous retirez l'entrée DNS `test18h`** chez OVHcloud. Une entrée qui vise une application supprimée peut être reprise par quiconque crée chez Scalingo une application du même nom, et servirait alors sa page à `test18h.elenchos.fr` (reprise d'adresse, risque connu). Le domaine elenchos.fr est gardé : il sert au jeu.
-4. Sur votre iPhone : déconnexion, puis l'icône supprimée, ce qui coupe aussi les messages (de mémoire).
-5. Vous retirez l'accès du test dans votre compte Google, et le lien dans « Se connecter avec Apple » sur votre iPhone ; puis l'adresse du test du projet Google et de l'identifiant de service Apple. Le projet Google reste, ainsi que le compte développeur et la clé ; les identifiants Apple du jeu seront créés au travail 9 (ceux du test, `io.github.ppcrepin.test18h`, ne sont pas repris).
-6. Vous écrivez une ligne datée, « effacé le …, vérifié ».
+**L'effacement, le lendemain du soir 3** (ou du dernier soir ajouté), pour lire d'abord les heures du soir 3. D-057 (point 5) garde l'effacement réel, et D-055 demande que l'essai ne laisse ni application ni base. L'effacement n'est pas une mise en ligne : la garde des horaires ne le bloque pas. Ne le faites pourtant pas entre 18h00 et 18h30 si un soir est en cours (un soir ajouté, par exemple). Dans l'ordre, le même que dans le pas-à-pas (partie 9) :
+1. Vous copiez le tableau de résultats (voir « Votre copie du tableau », plus bas).
+2. Sur votre iPhone : déconnexion, puis l'icône supprimée, ce qui coupe aussi les messages (de mémoire).
+3. Vous touchez « Tout effacer » sur la page de résultats. Le programme vide la base, puis vérifie qu'elle est vide (test de P-43).
+4. Vous supprimez chez Scalingo l'application du test et sa base : la base est **supprimée**, pas seulement vidée, car sa copie continue des changements (7 jours) ne part qu'avec elle. Les sauvegardes programmées survivent à la suppression de la base, jusqu'à quatre semaines sur le plus petit plan : on les coupe donc avant de mettre des données, et on ne fait jamais de sauvegarde manuelle (gardée un mois après la suppression). Puis vous vérifiez la page de facturation : plus aucune application ni base. Le tout avant le 30e jour de l'essai.
+5. **Vous retirez l'entrée DNS `test18h`** chez OVHcloud. Une entrée qui vise une application supprimée peut être reprise par quiconque crée chez Scalingo une application du même nom, et servirait alors sa page à `test18h.elenchos.fr` (reprise d'adresse, risque connu). Le domaine elenchos.fr est gardé : il sert au jeu.
+6. Vous retirez l'accès du test dans votre compte Google, et le lien dans « Se connecter avec Apple » sur votre iPhone ; puis l'adresse du test du projet Google et de l'identifiant de service Apple. Le projet Google reste, ainsi que le compte développeur et la clé ; les identifiants Apple du jeu seront créés au travail 9 (ceux du test, `io.github.ppcrepin.test18h`, ne sont pas repris).
+7. Vous écrivez une ligne datée, « effacé le …, vérifié ».
 
 **Votre copie du tableau** ne concerne que votre iPhone : la date du 20 novembre 2026, fixée pour les données des prêteurs (D-054, point 1), n'a plus d'objet (application de D-057, à confirmer). Seul le bilan chiffré entre dans le dépôt. Les lignes copiées dans la conversation des agents portent sur votre propre téléphone ; vous les donnez vous-même, comme un rapport (D-048 et D-052, point 3, respectés : aucun accès des agents).
 
@@ -232,7 +235,7 @@ La base ne contient plus que des données de votre iPhone, dont vous êtes à la
 1. **Aucun contenu politique** sur la page ni dans le message : **gardée** (elle ne coûte rien ; message « Test, soir n sur 3 »).
 2. **La note remise avant l'installation** : **tombe**, sans prêteur (D-057, point 4).
 3. **Des comptes de test seulement sur les téléphones prêtés** : **tombe** ; vous vous connectez avec vos propres comptes Google et Apple (proposé).
-4. **Le contrat de sous-traitance de Scalingo, vérifié avant la première donnée** : **n'est plus bloquant pour ce test** (proposé), puisque seules vos données y entrent ; la capture d'écran des conditions acceptées à l'inscription reste faite (pas-à-pas, 2.1) ; la condition **redevient bloquante avant le premier vrai joueur**. Les questions écrites à Scalingo (journaux, sauvegardes, sous-traitants), qui servaient la note, sont reportées à la mise à niveau (proposé).
+4. **Le contrat de sous-traitance de Scalingo, vérifié avant la première donnée** : **n'est plus bloquant pour ce test** (proposé), puisque seules vos données y entrent ; la capture d'écran des conditions acceptées à l'inscription reste faite (pas-à-pas, 2.1) ; la condition **redevient bloquante avant le premier vrai joueur** (proposé). Les questions écrites à Scalingo (journaux, sauvegardes, sous-traitants), qui servaient la note, sont reportées à la mise à niveau (proposé).
 5. **L'effacement fait et vérifié** (sauvegardes programmées coupées avant toute donnée, aucune sauvegarde manuelle, base supprimée, facturation vérifiée) : **gardée**, au titre de l'effacement réel (D-057, point 5) et de D-055.
 6. **Rien de nous dans ce que Scalingo garde un an** (journaux du routeur coupés ; journal fermé, sans abonnement, identifiant, empreinte, adresse internet ni couple « téléphone + heure » ; aucune erreur de la base qui recopie une valeur) : **gardée** ; elle est déjà dans le code et prouvée par `test-18h/tests/journal-base/`, et elle préfigure ce que le jeu devra tenir.
 
@@ -248,7 +251,7 @@ Trois morceaux, plus une page de résultats (le code est écrit : `test-18h/`).
 2. **Le service qui envoie à 18h.** Un petit programme tourne en permanence chez Scalingo et tient l'horloge, à l'heure de Paris, changements d'heure compris (vérifiés par un test automatique sur une horloge simulée). À 18h, il envoie le message, chiffré (P-06), en « urgence haute ». S'il redémarre à 18h00 et 30 secondes, il voit que l'envoi n'a pas eu lieu et le fait ; il est conçu pour ne jamais envoyer deux fois, et un test automatique le vérifie.
 3. **La mesure.** Les heures, la page de résultats, réservée à vous par votre code d'accès, les codes d'essai, le bouton d'essai immédiat et « Tout effacer ».
 
-**Le code, après D-057.** Il n'a pas besoin d'être réécrit : il prévoit cinq téléphones, et un seul servira. Deux réglages suffisent : l'adresse publique (`ADRESSE_PUBLIQUE=https://test18h.elenchos.fr`) et le calendrier (`SOIRS`, chaque soir pour T1 seulement). Les pages de documentation du code (`test-18h/LISEZMOI.md`) seront mises à jour avec lui. Proposé : que le programme exige `ADRESSE_PUBLIQUE` en ligne, au lieu de prendre d'office l'adresse en `scalingo.io` ; un oubli serait alors signalé par son nom sur la page de résultats, au lieu de faire échouer Google et Apple sans explication. Toute retouche du code repasse par le circuit avant votre feu vert.
+**Le code, après D-057.** Il n'a pas besoin d'être réécrit : il prévoit cinq téléphones, et un seul servira. Deux réglages suffisent : l'adresse publique (`ADRESSE_PUBLIQUE=https://test18h.elenchos.fr`) et le calendrier (`SOIRS`, chaque soir pour T1 seulement). Les pages de documentation du code (`test-18h/LISEZMOI.md`) sont mises à jour en partie avec lui (le reste suit la relecture). Fait dans le code, en relecture (proposé) : le programme exige `ADRESSE_PUBLIQUE` en ligne, au lieu de prendre d'office l'adresse en `scalingo.io` ; un oubli est signalé par son nom sur la page de résultats, au lieu de faire échouer Google et Apple sans explication. Toute retouche du code repasse par le circuit avant votre feu vert.
 
 **Jetable** : la page elle-même et ses textes, la page de résultats, l'application et la base du test chez Scalingo, l'entrée DNS `test18h`.
 
@@ -296,12 +299,12 @@ Le soir 0 ne peut avoir lieu qu'une fois la page en ligne. Aucune mise en ligne 
 - **Ce qui n'est pas couvert** : les iPhone en iOS 16.4 à 25 si le vôtre est plus récent ; les réglages d'autres personnes ; l'iPad ; les autres navigateurs de l'iPhone ; un iPhone d'avant iOS 16.4, qui ne reçoit pas les messages.
 - **La forme de message d'iOS 18.4** n'est essayée qu'un soir.
 - **Le geste d'ajout de l'icône par un inconnu**, sans vous à côté, n'est pas essayé : c'est un critère de la version de test (D-005).
-- **La connexion par e-mail** (D-035, D-057, point 3) n'est pas dans ce test : elle viendra avec le jeu.
+- **La connexion par e-mail** (D-035) n'est pas dans ce test (plan, travail 4 : seuls Google et Apple y sont essayés) ; D-057 (point 3) la garde pour la version de test du jeu, où elle viendra.
 - **La connexion Google en mode « Test »** n'est pas celle des joueurs : en production, l'écran de Google sera différent (le domaine au lieu de « application non validée »). Le geste depuis l'icône, lui, est le même.
 
 **Ce qui reste incertain avant de commencer.**
 - **La disponibilité d'elenchos.fr** : inconnue, levée à l'achat.
-- **L'adresse du jeu lui-même** : `elenchos.fr` nu, ou une adresse comme `www.elenchos.fr`. Chez OVHcloud, l'adresse nue se branche à Scalingo par des entrées que Scalingo déconseille (partie 3). Ce choix fixe l'adresse des icônes des joueurs pour toujours : il doit être fait avant le premier joueur, avec la construction (proposé : l'équipe le prépare et vous le présente à ce moment-là).
+- **L'adresse du jeu lui-même** : `elenchos.fr` nu, ou une adresse comme `www.elenchos.fr`. Chez OVHcloud, l'adresse nue se brancherait à Scalingo par des entrées que Scalingo déconseille, si OVHcloud n'accepte pas « ALIAS » ou « ANAME » (de mémoire, à vérifier ; son site n'a pas pu être ouvert ; partie 3). Ce choix fixe l'adresse des icônes des joueurs pour toujours : il doit être fait avant le premier joueur, avec la construction (proposé : l'équipe le prépare et vous le présente à ce moment-là).
 - **Apple** : sa documentation se contredit toujours (« vérifier » les domaines, « app existante dans l'App Store ») ; le doute se lève en cinq minutes, à la démarche 4.
 - **Scalingo** : le temps réel avant le certificat ; le contenu de ses « métadonnées de connexion » et les réglages de journal de ses bases ne sont pas connus. L'essai demande une carte : la facturation part seule au 30e jour si rien n'est supprimé.
 - **Google et une icône d'iPhone** : des refus ont été signalés par le passé (relevé, forums anciens). C'est le risque le plus probable d'échec de la connexion, et la raison d'être de cette partie du test.
@@ -320,10 +323,10 @@ Le soir 0 ne peut avoir lieu qu'une fois la page en ligne. Aucune mise en ligne 
 
 **Mise à jour du 13 octobre 2026, pour D-057** :
 - **D-054, points 1 et 3, modifiés par D-057 (point 4)** : un seul iPhone, le vôtre ; plus de prêteurs, de note aux prêteurs (retirée de ce document), de séance d'installation, de liste « qui a quel téléphone », de versions d'iOS cherchées. La branche `mise-en-ligne` et le feu vert de la veille (point 1) restent.
-- **D-054, point 2** (« on vous redemande avant d'acheter un domaine ») : dépassé par D-057 (point 2 et précision du même jour), qui veut elenchos.fr acheté avant la mise en ligne ; le montant est présenté ici (D-042).
+- **D-054, point 2** (« on vous redemande avant d'acheter un domaine ») : précisé par D-057 (point 2 et précision du même jour), qui veut elenchos.fr acheté avant la mise en ligne ; le montant est présenté ici (D-042).
 - **D-054, point 1, la date du 20 novembre 2026** pour le tableau et la liste des prêteurs : sans objet sans prêteur (application de D-057, **à confirmer**).
 - **Avis de Juridique du 12 octobre**, conditions 2 et 3 : tombent ; condition 4 : non bloquante pour ce test, bloquante avant le premier joueur (**proposé, à confirmer par Juridique**) ; conditions 1, 5 et 6 : gardées.
-- **Plan de construction, travail 4, « Fini quand »** (« le message arrive vers 18h sur les cinq téléphones, trois soirs de suite, et la connexion tient depuis l'icône ») : modifié par D-057 (point 4) ; nouvelle formulation dans l'« En bref » ; `docs/plan-construction.md` reste à mettre à jour.
+- **Plan de construction, travail 4, « Fini quand »** (« le message arrive vers 18h sur les cinq téléphones, trois soirs de suite, et la connexion tient depuis l'icône ») : modifié par D-057 (point 4) ; nouvelle formulation dans l'« En bref » ; `docs/plan-construction.md` : le « Fini quand » est mis à jour, le reste du travail 4 aussi (lu avec D-057).
 - **P-43** (`docs/etape-6/donnees.md`), précision validée par D-054 « jamais le compte d'un prêteur ; Apple seulement sur votre iPhone » : sans prêteur, vos propres comptes Google et Apple servent (proposé). Le reste de P-43 tient.
 - **P-12** : inchangé (un seul service d'acheminement, celui d'Apple).
 - **D-043, point 2** (alerte de 18h02) : suspendue pour la version de test par D-057 ; ce test garde « à l'heure : avant 18h02 » comme simple mesure.
