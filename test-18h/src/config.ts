@@ -82,10 +82,9 @@ export function lireConfig(env: NodeJS.ProcessEnv): Config {
   const enLigne = val('CONTAINER') !== null;
   const port = Number(val('PORT') ?? '8080');
 
+  // En ligne, l'adresse est exigée (D-057 : le domaine du porteur) ; jamais déduite de celle de Scalingo,
+  // que Google et Apple refuseraient comme adresse de retour.
   let adressePublique = val('ADRESSE_PUBLIQUE');
-  if (!adressePublique && val('APP') && val('REGION_NAME')) {
-    adressePublique = `https://${val('APP')}.${val('REGION_NAME')}.scalingo.io`;
-  }
   if (!adressePublique) {
     adressePublique = `http://localhost:${port}`;
     if (enLigne) signaler('ADRESSE_PUBLIQUE');

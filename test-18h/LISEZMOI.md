@@ -44,7 +44,7 @@ Un seul processus Node (`Procfile` : `web: node src/principal.ts`) :
 | `APPLE_ID_SERVICE` | l'identifiant de service (Services ID) | compte développeur Apple |
 | `APPLE_ID_EQUIPE`, `APPLE_ID_CLE` | numéro d'équipe et numéro de la clé (10 caractères chacun) | compte développeur Apple |
 | `APPLE_CLE_PRIVEE` | le fichier .p8, mis sur une ligne par `/preparer` (base64), ou collé tel quel | compte développeur Apple |
-| `ADRESSE_PUBLIQUE` | facultatif : sinon `https://$APP.$REGION_NAME.scalingo.io` | — |
+| `ADRESSE_PUBLIQUE` | exigée en ligne : `https://test18h.elenchos.fr` (D-057), jamais l'adresse en `scalingo.io` | — |
 | `SCALINGO_POSTGRESQL_URL` | la base ; ajoutée par Scalingo avec la base (`sslmode=prefer`). Sans `sslmode`, la connexion est chiffrée quand même ; jamais de repli en clair | Scalingo |
 | `PORT`, `CONTAINER`, `APP`, `REGION_NAME`, `SOURCE_VERSION` | posées par Scalingo | Scalingo |
 | `IGNORER_HORAIRES=oui` | **en local seulement** : lève la garde des horaires ; refusée chez Scalingo et sur GitHub | l'agent, sur sa machine |

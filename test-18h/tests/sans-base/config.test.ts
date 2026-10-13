@@ -53,10 +53,11 @@ test('clé .p8 d’Apple : acceptée en PEM, sur une ligne, ou en base64 ; refus
   assert.equal(lireClePriveeApple('n’importe quoi'), null);
 });
 
-test('chez Scalingo, l’adresse publique se déduit du nom de l’application et de la région', () => {
+test('en ligne, l’adresse publique est exigée, jamais déduite de celle de Scalingo', () => {
   const env = envDeTest({ CONTAINER: 'web-1', APP: 'elenchos-test-18h', REGION_NAME: 'osc-fr1' });
   delete env.ADRESSE_PUBLIQUE;
   const c = lireConfig(env);
-  assert.equal(c.adressePublique, 'https://elenchos-test-18h.osc-fr1.scalingo.io');
   assert.equal(c.enLigne, true);
+  assert.ok(c.manquants.includes('ADRESSE_PUBLIQUE'));
+  assert.ok(!c.adressePublique.includes('scalingo.io'));
 });
