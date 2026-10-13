@@ -471,6 +471,17 @@ Plan des prochaines étapes présenté dans le chat (relu par Cohérence, compat
 
 Rappelé au porteur avec ce plan, sans QCM (conséquences de D-056) : le test ne contient que le cœur du jeu, fixé par une page courte de Game design et UX ; les textes sont écrits en session par les agents, la chaîne automatique (travail 10, D-044 point 1) attend la mise à niveau ; l'alerte de 18h02 et la procédure d'incident (D-043, point 2) sont suspendues pour le test, le porteur vérifiant lui-même la réception chaque soir ; pas de mise en ligne de 15h à 19h ni le dimanche (inchangé). Coût estimé par l'orchestrateur : environ 26 à 80 € d'hébergement, plus le domaine ; durée estimée : 4 à 8 semaines de construction avant les premiers joueurs, non chiffrée par Back-end et Front-end, ni engagement ni date de sortie.
 
+### D-058 — Le contenu de la version de test · Décidé (13 octobre 2026)
+
+Proposition : `docs/etape-6/contenu-test.md` (Game design et UX, assemblés par l'orchestrateur ; relu par Cohérence, compatible avec réserves, et par le Vérificateur, OK avec corrections, appliquées). Le test garde la journée (Deviner, Répondre, révélation de 18h), la semaine (trois titres du dimanche) et l'entrée (défi des trois textes) ; le long terme (portrait, tempéraments, badges rares) vient après le test ; un seul cercle par personne. Les décisions mises de côté pour le test sont listées dans la partie 8 du document, au titre de D-056. Quatre QCM :
+
+1. **La carte « qui et pourquoi » est dans le test** (règle 9, R5, D-038 inchangés ; égalité au Devin départagée par les raisons cachées, D-010). Option recommandée non retenue : après le test (Vérificateur, Game design).
+2. **La barre « Ton portrait se dessine » est dans le test**, en simple compteur (D-026, D-038 inchangés ; la carte de consentement garde « ton portrait se dessine »). Option recommandée non retenue : après le test (Vérificateur, Game design).
+3. **Le créateur devine son premier invité** (D-006, D-011 inchangés). Option non retenue : après le test (Game design).
+4. **L'âge minimum reste 15 ans et plus** pendant le test (D-006 inchangé). Option recommandée non retenue : 18 ans et plus (UX, Vérificateur).
+
+Restent des propositions, sans décision du porteur : la durée du test (quatre semaines après le lancement du dernier cercle, 34 textes, Game design), la mention IA reformulée (« Résumé et raisons rédigés avec une IA, d'après le texte et les débats. », UX ; reformule D-057 point 5, sauf avis contraire), les textes des écrans nouveaux (annexe, à relire par Juridique pour la carte et « Qui, durée, droits »).
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique : **tranché, D-042** (gratuit, contribution libre à l'ouverture) · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.

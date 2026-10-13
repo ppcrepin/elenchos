@@ -13,7 +13,7 @@
   - Chaque joueur n'a qu'un seul cercle.
   - Il n'y a ni pause ni sommeil : un absent ne produit simplement pas de carte.
   - Sous trois membres, un bandeau dit « Il faut trois joueurs pour deviner ».
-- **Quatre points vous reviennent, à la fin.** Trois touchent à ce qui compte pour vous, et Game design et UX n'y sont pas d'accord. Le quatrième est l'âge minimum.
+- **Vos quatre choix (D-058)** : la carte « qui et pourquoi », la barre du portrait et le premier tour du créateur sont dans le test ; l'âge minimum reste 15 ans.
 - **La durée du test (proposée par Game design)** : quatre semaines complètes après le lancement du dernier cercle, tous les cercles étant lancés la même semaine. Cela fait 34 textes : 3 d'entrée, 28 du jour et 3 de réserve. Ils sont écrits et vérifiés par les agents avant le premier jour. Il faut un texte de plus par jour d'écart si les cercles démarrent à des dates différentes.
 - **Les écrans (UX).** Sur les 51 écrans validés, 22 entrent tels quels ou presque (avec les seuls ajouts de D-057), 21 entrent allégés et 8 attendent la mise à niveau. Il faut aussi 16 écrans ou textes jamais dessinés, dont le guide d'ajout de l'icône. Leurs textes sont en annexe.
 
@@ -29,19 +29,19 @@
 | Phrase du jour | Dedans | C'est le seul retour personnel juste après avoir répondu. Il ne demande qu'une étiquette par texte. |
 | Deviner : jusqu'à 3 cartes, un visage par carte, passer sans pénalité | Dedans | C'est la promesse elle-même. Désigner un proche qui a donné la même réponse compte juste (D-024). |
 | Choix des cartes « les plus inattendues » | Allégé : au hasard, sans deux cartes identiques | Pendant le test, aucun portrait n'est assez net pour ce calcul. |
-| Carte « qui et pourquoi » (deviner aussi la raison) | **Question 1** | Game design et UX ne sont pas d'accord. |
+| Carte « qui et pourquoi » (deviner aussi la raison) | Dedans (votre choix, D-058) | C'est le « pourquoi » deviné (D-002). Quelques jours de construction de plus. |
 | Révélation de 18h : qui avait dit quoi, puis le vote, puis les auteurs | Dedans | C'est le moment qui fait revenir. |
 | Avis du cercle, dès 3 réponses | Dedans : la ligne et la répartition (D-025), dessinées sans fioriture (une barre en cinq parts, d'une seule teinte) | C'est votre choix. Le test dira s'il met mal à l'aise. |
 | Points (un par carte juste) | Allégé : la révélation dit, carte par carte, juste ou faux, mais aucun total ne s'affiche ; le compte de la semaine ne sert qu'au Devin | Il n'y a pas de classement à montrer. |
-| Titres du dimanche : Le Devin, Le Mystère, Le Fidèle | Dedans, sur un seul écran | C'est la raison de revenir d'une semaine sur l'autre. En cas d'égalité au Devin, les raisons cachées départagent (D-010) ; si la question 1 retire la carte « qui et pourquoi », le sort décide, sans que ce soit montré. |
+| Titres du dimanche : Le Devin, Le Mystère, Le Fidèle | Dedans, sur un seul écran | C'est la raison de revenir d'une semaine sur l'autre. En cas d'égalité au Devin, les raisons cachées départagent (D-010). |
 | Surprise de la semaine, phrase du dimanche, titres passés | Après | Ils servent le long terme, ou un portrait absent du test. |
 | Portrait, curseurs, tempéraments, badges rares | Après | Ils ne se formeraient pas en quelques semaines. |
-| Barre « Ton portrait se dessine » | **Question 2** | Game design et UX ne sont pas d'accord. |
+| Barre « Ton portrait se dessine » | Dedans, en simple compteur (votre choix, D-058) | Elle donne une raison de revenir. Le portrait lui-même vient après le test. |
 | Plusieurs cercles par personne | Allégé : un seul cercle | C'est le plus gros gain de construction sur le cercle. Game design et UX sont d'accord ; Game design proposait de vous le demander, il vous est signalé en partie 6. |
 | Pause, cercle endormi, réveil | Allégé : un bandeau sous trois membres, avec « Inviter » | Pas d'écran à part. |
 | Quitter un cercle | Allégé : « Tout effacer » vaut départ | Avec un seul cercle, les deux se confondent. L'effacement reste réel. |
 | Défi d'entrée : 3 textes, « Et Thomas ? », révélation immédiate | Dedans, avec les mêmes trois textes pour tous les cercles | Sans lui, Game design estime que le premier plaisir de deviner arriverait environ 30 heures après l'arrivée. |
-| Le créateur devine à son tour son premier invité | **Question 3** | Game design et UX ne sont pas d'accord. |
+| Le créateur devine à son tour son premier invité | Dedans (votre choix, D-058) | Tous les créateurs vivent ce moment ; sans lui, ils attendent environ 30 heures avant de deviner. |
 | Annonce d'arrivée au créateur (« Marie a trouvé 2 de tes 3 réponses ») | Dedans, par le canal le plus simple | Sans elle, le créateur ignore que son défi a marché (D-006). |
 | Invitation : lien personnel, à usage unique, valable 7 jours (proposé par UX, D-052) ; cercle de 3 à 10 | Dedans | Le lien porte les réponses du créateur : l'usage unique les protège. |
 | Effacement à 12 mois | Après | Le test dure quelques semaines. |
@@ -83,7 +83,7 @@ UX a rédigé les textes de 16 écrans ou textes jamais dessinés. Ils sont en a
 - la page « ouvre ce lien dans Safari », quand le lien s'ouvre dans une autre application.
 
 Deux textes protègent le joueur :
-- **La carte de consentement** reçoit la ligne « Version de test : tout peut être effacé à la fin. », suivie de l'âge minimum (question 4).
+- **La carte de consentement** reçoit la ligne « Version de test : tout peut être effacé à la fin. », suivie de « 15 ans et plus » (règle validée, D-006, confirmée pour le test par D-058).
 - **La mention IA.** UX propose qu'elle devienne, sous chaque texte, « Résumé et raisons rédigés avec une IA, d'après le texte et les débats. ». Elle remplacerait les mots de D-057 (point 5), « textes rédigés avec une IA », qui, placés sous « Un vrai texte de l'Assemblée », feraient croire que le texte est inventé. C'est sauf avis contraire de votre part.
 
 UX a aussi écrit une page « Qui, durée, droits » minimale, avec deux blancs à remplir : votre nom et une adresse de contact. Ni la carte ni cette page ne sont relues par un avocat (D-056). Juridique, qui est un agent et ne coûte rien, les relira avant la construction.
@@ -150,27 +150,15 @@ Front-end et Back-end diront ce qui se reprend vraiment, et chiffreront la duré
 | Voie e-mail : plus de « Plus tard » ; le jeu attend que le code soit saisi | D-014 (maquette 1.9), `onboarding.md` étape 5 (D-006) | Oui |
 | Le message se coupe depuis les réglages de l'iPhone | D-029 | Oui |
 | Mention IA reformulée | D-057, point 5 | Non : c'est une reformulation |
-| Si la question 1 va « après » : pas de carte « qui et pourquoi » ; le Devin se départage au sort | Règle 9, R5, D-038 (ordre des cartes), D-010 (départage) | Oui |
-| Si la question 2 va « après » : pas de barre ; la carte de consentement perd « ton portrait se dessine » | D-026, D-038 | Oui |
-| Si la question 3 va « après » : le créateur ne devine pas son premier invité | D-006, D-011 | Oui |
-| Si la question 4 retient 18 ans | D-006 (« 15 ans et plus ») | À confirmer |
 
 Ce qui reste intact : les lignes rouges, D-002, D-024 et D-025 (l'avis du cercle). La place du texte du nom, sous les boutons du compte, est un choix laissé à l'étape 6 (D-049) : ce n'est pas un changement.
 
-## Questions
+## Vos choix (D-058, 13 octobre 2026)
 
-1. **La carte « qui et pourquoi »** (règle 9, R5, D-038).
-   - **Après le test** : c'est la recommandation du Vérificateur et de Game design. L'écran Deviner est plus simple. Les raisons restent écrites sur chaque carte, et le député derrière ta raison reste révélé à 18h.
-   - **Dedans** : c'est la position d'UX. C'est le « pourquoi » deviné (D-002), au prix de quelques jours de construction.
-2. **La barre « Ton portrait se dessine »** (D-026, D-038).
-   - **Après le test** : c'est la recommandation du Vérificateur et de Game design. Elle promet un portrait que le test n'aura pas. C'est aussi une raison de revenir qui n'est pas la promesse, et qui brouille la mesure. L'onglet Moi garde l'historique et les réglages.
-   - **Dedans** : c'est la position d'UX (« la barre et les phrases suffisent »). Game design note qu'en simple compteur, elle est presque gratuite.
-3. **Le créateur devine son premier invité** (D-006, D-011).
-   - **Dedans** : c'est la recommandation du Vérificateur et d'UX. Tous les créateurs vivent ce moment. Sans lui, le créateur attend environ 30 heures avant de deviner. Les écrans sont réutilisés en miroir.
-   - **Après le test** : c'est la position de Game design. C'est un cas de lancement : à trois, la journée ordinaire prend le relais.
-4. **L'âge minimum pendant le test** (D-006).
-   - **18 ans et plus** : c'est la recommandation d'UX, reprise par le Vérificateur. Sans avocat, mieux vaut aucun mineur.
-   - **15 ans et plus** : c'est la règle validée.
+1. La carte « qui et pourquoi » : **dedans**. Le Vérificateur et Game design recommandaient « après le test ».
+2. La barre « Ton portrait se dessine » : **dedans**, en simple compteur. Le Vérificateur et Game design recommandaient « après le test ».
+3. Le créateur devine son premier invité : **dedans**, comme recommandé.
+4. L'âge minimum : **15 ans et plus**, la règle validée (D-006). UX et le Vérificateur recommandaient 18 ans.
 
 ## Annexe : les textes des écrans nouveaux (UX)
 
@@ -190,7 +178,7 @@ Aucun bouton, aucune promesse d'une version Android. Le lien n'est pas consommé
 « Résumé et raisons rédigés avec une IA, d'après le texte et les débats. »
 
 **N5. Version de test.** La carte 1.3 devient :
-« Avant ta première réponse » / « Tes réponses révèlent tes opinions politiques. Elles servent au jeu : tes proches te devinent, ton portrait se dessine. Seul ton cercle les voit, elles ne sont jamais vendues. Tu peux tout effacer, quand tu veux. » / « Version de test : tout peut être effacé à la fin. [Âge minimum : question 4.] » / « J'accepte » · « Qui, durée, droits »
+« Avant ta première réponse » / « Tes réponses révèlent tes opinions politiques. Elles servent au jeu : tes proches te devinent, ton portrait se dessine. Seul ton cercle les voit, elles ne sont jamais vendues. Tu peux tout effacer, quand tu veux. » / « Version de test : tout peut être effacé à la fin. 15 ans et plus. » / « J'accepte » · « Qui, durée, droits »
 La même ligne figure dans Réglages et sur N1.
 
 **N6. « Qui, durée, droits », version minimale** (à relire par Juridique ; entre crochets, ce qui manque) :
