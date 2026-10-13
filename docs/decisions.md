@@ -482,6 +482,15 @@ Proposition : `docs/etape-6/contenu-test.md` (Game design et UX, assemblés par 
 
 Restent des propositions, sans décision du porteur : la durée du test (quatre semaines après le lancement du dernier cercle, 34 textes, Game design), la mention IA reformulée (« Résumé et raisons rédigés avec une IA, d'après le texte et les débats. », UX ; reformule D-057 point 5, sauf avis contraire), les textes des écrans nouveaux (annexe, à relire par Juridique pour la carte et « Qui, durée, droits »).
 
+### D-059 — Test du message de 18h : vos comptes, domaine pas maintenant · Décidé (13 octobre 2026)
+
+Pas-à-pas du test de 18h mis à jour pour D-057 (Back-end ; relu par Cohérence, compatible avec réserves, puis par le Vérificateur, OK avec corrections mineures ; corrections appliquées ; 82/82 tests). Deux QCM :
+
+1. **Le porteur se connecte avec ses propres comptes Google et Apple** sur son iPhone (le test ne garde qu'une empreinte de l'identifiant ; le tableau d'heures, qui ne parle que de lui, reste chez lui sans date limite : le 20 novembre de D-054 point 1 tombe). **Modifie D-054 point 1 et P-43** (« comptes de test seulement »). Option non retenue : des comptes créés exprès.
+2. **Le domaine elenchos.fr n'est pas acheté maintenant.** Le test du message de 18h attend ; **D-057 point 2 (domaine acheté avant la mise en ligne) est à reposer** au porteur, avec la suite. Options non retenues : OVHcloud (recommandée), un autre registraire.
+
+Restent « proposé », laissés à l'équipe : le sous-domaine `test18h.elenchos.fr`, le seuil de 15 €, la condition 4 de Juridique non bloquante pour ce test (à confirmer par Juridique).
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique : **tranché, D-042** (gratuit, contribution libre à l'ouverture) · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
