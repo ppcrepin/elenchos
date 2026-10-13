@@ -443,6 +443,20 @@ Fait nouveau, relevé en écrivant le code du test (documentation de Scalingo mo
 
 **Le porteur donne sa carte, avec deux garde-fous** : il note la date de fin d'essai le jour de l'ouverture du compte ; l'équipe lui présente la suite, avec son montant, au plus tard une semaine avant cette date (continuer ou tout supprimer). Le test supprime son application et sa base avant le 30e jour : 0 € si les dates tiennent. **Précise D-042** (une dépense qui s'engagerait seule est présentée avant). Options non retenues : une carte virtuelle à plafond ; pas de carte (repli vers Clever Cloud).
 
+### D-056 — Priorité absolue : une version de test, la moins chère et la plus simple, sur iPhone, avec de vrais joueurs · Décidé (13 octobre 2026)
+
+Après la lecture de `docs/version-minimale.md`, le porteur, mot pour mot (dicté) : « Je ne veux aucun frais d'avocat. […] Je veux un truc qui fonctionne, peu importe s'il y a des risques. […] d'abord un truc qui fonctionne pour prouver que ça fonctionne avec des utilisateurs réels. Et ensuite, je mettrai tout à niveau en termes de sécurité, d'hébergement, etc. […] mon but, c'est de faire l'application la moins chère possible pour pouvoir la tester. […] disponible sur iPhone […] la manière la plus simple d'y accéder. […] s'il y a des choses que j'ai dites avant qui sont contraires à ça, oubliez-les. »
+
+**Décision : le prochain but est une version de test, au coût et à la difficulté technique les plus bas, jouable sur iPhone par de vrais joueurs.** La mise à niveau (sécurité, hébergement, juridique) vient après ce test et avant toute ouverture au public. Le porteur accepte les risques ; il en a été informé (`docs/version-minimale.md`, parties 2 et 3, dont sa responsabilité en nom propre, D-042).
+
+**Pour la version de test, suspend** (ces décisions reprennent effet à la mise à niveau, avant l'ouverture au public) :
+- D-044, point 4 (relectures d'avocat, délégué nommé avant l'ouverture), et la règle du plan « sans avocat, pas de bêta » ;
+- D-043, point 4, D-047 et D-050 (vérification du nom par un conseil, marque) ;
+- le plan, partie 5 (liste « Avant la bêta » : avocat, analyse d'impact, décision écrite sur le délégué, audit) et les travaux 11 (Juridique) et 14 (App Store) ;
+- toute autre décision antérieure qui ajoute un coût ou une difficulté technique à la version de test, dès que l'équipe la signale au porteur.
+
+**Ne change pas** : le jeu lui-même (`docs/produit.md`) et les lignes rouges du §9. Choix de l'orchestrateur, à confirmer par le porteur : les protections qui ne coûtent rien restent en place (accord explicite du joueur à l'entrée, cloisonnement des cercles, effacement réel, aucune mesure extérieure, aucune donnée de joueur vers un fournisseur d'IA). Restent aussi les règles de travail (circuit, branche `mise-en-ligne` et feu vert de la veille, D-054) et la carte avec ses garde-fous (D-055). Les choix concrets (accès, hébergement, contenu du test, test de 18h) sont posés au porteur en QCM et consignés à part.
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique : **tranché, D-042** (gratuit, contribution libre à l'ouverture) · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
