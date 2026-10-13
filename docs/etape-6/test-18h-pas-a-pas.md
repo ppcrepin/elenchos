@@ -20,7 +20,7 @@
 > - **Scalingo** : l'écran juste après l'inscription (2.1), le nom du plus petit plan PostgreSQL (2.7), l'emplacement du réglage des journaux (2.8), l'édition des variables en bloc (2.9 et 6.2), la suppression de la base (9) ;
 > - **Google** : les noms des menus de la console (3.2), l'écran « Google n'a pas validé cette application » (6.4), le retrait de l'accès (9) ;
 > - **Apple** : un champ ou deux pour le domaine (4.2), le retrait « Ne plus utiliser » (9) ;
-> - **iPhone** : le bouton Partager sur iOS 26 (6.4), le geste qui supprime l'icône (9).
+> - **iPhone** : le bouton Partager sur la version la plus récente d'iOS, 26 ou suivante (6.4), le geste qui supprime l'icône (9).
 
 | Quand (au plus tôt) | Vous faites | Partie (démarche) |
 |---|---|---|
@@ -112,7 +112,7 @@ Gardez la capture faite en 2.1 (étape 4) : c'est la preuve que vous avez accept
 1. Tableau de bord : **Create an application +**.
 2. **Basic information** : nom `elenchos-test-18h` ; région **osc-fr1** (« Paris - Outscale ») ; projet : celui proposé. Ne cochez pas la case « Health data hosting ».
 3. **Create app**.
-4. **Deployment method** : la documentation dit qu'on choisit ici le dépôt. **Ne lancez aucune installation aujourd'hui** : rien ne s'installe jamais depuis `main` (D-054, point 1). Si l'écran permet de passer cette étape, passez-la. Si l'écran impose un dépôt et une branche, choisissez le dépôt, laissez **Automatic deployments** désactivé, ne lancez aucun déploiement manuel. Ouvrez ensuite l'onglet **Deploy** : aucun déploiement ne doit y apparaître. S'il y en a un, dites-le-nous tout de suite.
+4. **Deployment method** : la documentation dit qu'on choisit ici le dépôt. **Ne lancez aucune installation aujourd'hui** : rien ne s'installe jamais depuis `main` (D-054, point 1). Si l'écran permet de passer cette étape, passez-la. Si l'écran impose un dépôt et une branche (la branche `mise-en-ligne` n'apparaîtra pas encore dans la liste : elle n'existe qu'après votre feu vert ; ne choisissez jamais `main` ; si l'écran ne peut pas être passé sans branche, arrêtez-vous là et dites-le-nous), choisissez le dépôt, laissez **Automatic deployments** désactivé, ne lancez aucun déploiement manuel. Ouvrez ensuite l'onglet **Deploy** : aucun déploiement ne doit y apparaître. S'il y en a un, dites-le-nous tout de suite.
 
 ### 2.6 Brancher elenchos.fr à l'application (10 minutes, puis une attente)
 Suite de 1.4. Vérifié dans la documentation de Scalingo le 13 octobre 2026.
@@ -152,7 +152,7 @@ SOIRS=2026-10-15=0@1;2026-10-16=1@1;2026-10-17=2@1;2026-10-18=3@1
 ```
 
 - `PROJECT_DIR` dit à Scalingo d'installer le seul dossier `test-18h` du dépôt.
-- `SOIRS` est le calendrier des messages de 18h. Chaque morceau est « date = numéro du soir @ téléphone » : 0 pour la répétition, 1, 2 et 3 pour les trois soirs ; `@1`, c'est votre iPhone (T1). **Si le calendrier glisse**, décalez les dates ; pour **ajouter un soir**, ajoutez par exemple `;2026-10-20=4@1`. Un changement de cette variable redémarre l'application : c'est une mise en ligne au sens de D-043. **Ne la changez jamais de 15h à 19h ni un dimanche.**
+- `SOIRS` est le calendrier des messages de 18h. Chaque morceau est « date = numéro du soir @ téléphone » : 0 pour la répétition, 1, 2 et 3 pour les trois soirs ; `@1`, c'est votre iPhone (T1). **Si le calendrier glisse**, décalez les dates ; pour **ajouter un soir**, ajoutez par exemple `;2026-10-20=4@1`. Un changement de cette variable redémarre l'application : c'est une mise en ligne au sens de D-043. **Ne la changez jamais de 15h à 19h ni un dimanche.** Les dates ci-dessus supposent la mise en ligne le jeudi 15. Si vous commencez un autre jour, **demandez-nous la ligne exacte** (ce n'est pas un secret) plutôt que de la recalculer : la répétition doit tomber le jour de la mise en ligne, et le soir 3 ne doit pas obliger à une correction un dimanche.
 - `SCALINGO_POSTGRESQL_URL` a été ajoutée par Scalingo avec la base : n'y touchez pas, ne la copiez nulle part.
 
 Les variables de Google et d'Apple s'ajoutent aux parties 3 et 4 ; les codes, à la partie 6.
@@ -232,7 +232,7 @@ Les identifiants ci-dessous servent au test seulement. Ceux du jeu seront créé
 1. **Keys** dans la barre de gauche, **+**.
 2. **Key Name** : `Test 18h`. Cochez **Sign in with Apple**, puis **Configure** à côté : **Primary App ID** `Test 18h`, **Save**.
 3. **Continue**, **Register**.
-4. **Download** : un fichier `AuthKey_XXXXXXXXXX.p8` arrive dans vos Téléchargements. **Apple ne le donne qu'une fois.** Rangez-le dans votre gestionnaire de mots de passe (pièce jointe), puis supprimez-le des Téléchargements après l'étape 4.5.
+4. **Download** : un fichier `AuthKey_XXXXXXXXXX.p8` arrive dans vos Téléchargements. **Apple ne le donne qu'une fois.** Rangez-le dans votre gestionnaire de mots de passe (pièce jointe), puis supprimez-le des Téléchargements **une fois la clé acceptée chez Scalingo** (4.5, ou 6.2 si le collage a échoué).
 5. Notez le **Key ID** affiché (10 caractères).
 
 ### 4.4 Votre numéro d'équipe
@@ -256,7 +256,7 @@ Les agents ne mettent rien en ligne sans votre accord écrit, donné **la veille
 
 > Feu vert : mise en ligne du test demain, jeudi 15 octobre, avant 15h.
 
-Le lendemain matin, l'équipe pousse le code relu sur la branche `mise-en-ligne`, avant 15h, et vous prévient. Rien ne part de 15h à 19h ni le dimanche : la fabrication chez Scalingo elle-même échoue exprès dans ces créneaux (garde des horaires).
+Le lendemain matin, **ouvrez la conversation et écrivez « allez-y »** : l'équipe pousse alors le code relu sur la branche `mise-en-ligne`, avant 15h, et vous prévient. Sans conversation ouverte, rien ne part. Rien ne part de 15h à 19h ni le dimanche : la fabrication chez Scalingo elle-même échoue exprès dans ces créneaux (garde des horaires).
 
 Il en va de même pour chaque correction ensuite : l'équipe ne pousse rien sur `mise-en-ligne` sans un nouveau message de vous, écrit la veille : « Feu vert : mise en ligne de la correction demain, [jour], avant 15h. » Une correction qu'un défaut oblige à pousser le dimanche ou entre 15h et 19h n'est pas faite ; elle attend.
 
@@ -297,12 +297,12 @@ Gardez la page de résultats ouverte **sur votre ordinateur** : sur l'iPhone, vo
 2. **Safari** : tapez `test18h.elenchos.fr` dans la barre d'adresse. La page « Test du message de 18h » s'ouvre.
 3. **Continuer avec Google**, avec votre compte Google. Si Google affiche « Google n'a pas validé cette application », touchez **Continuer** ▲. **Si Google affiche une erreur** (par exemple « disallowed_useragent »), notez-la mot pour mot : c'est un résultat du test.
 4. De retour sur la page : « Connexion : connecté avec Google ».
-5. **Ajouter à l'écran d'accueil** : bouton **Partager** (le carré avec une flèche vers le haut ; sur iOS 26, il peut se trouver dans le menu **⋯** ▲), puis **Sur l'écran d'accueil**. Le nom proposé est « Test 18h » : gardez-le. Sur iOS 26, si un réglage « Ouvrir comme app web » apparaît, laissez-le **activé**. **Ajouter**.
+5. **Ajouter à l'écran d'accueil** : bouton **Partager** (le carré avec une flèche vers le haut ; sur iOS 26 ou suivant, il peut se trouver dans le menu **⋯** ▲), puis **Sur l'écran d'accueil**. Le nom proposé est « Test 18h » : gardez-le. Sur iOS 26 ou suivant, si un réglage « Ouvrir comme app web » apparaît, laissez-le **activé**. **Ajouter**.
 6. **Ouvrez l'icône** « Test 18h ». La page dit « Ouverte depuis l'icône : oui ». La connexion dit probablement « aucune » : l'icône a sa propre mémoire. Touchez **Continuer avec Google** et refaites 3. **Notez** : êtes-vous revenu dans l'icône, ou dans Safari ? La page dit-elle « connecté avec Google » ? Si une page dit « La connexion a expiré, ou elle s'est terminée dans Safari au lieu de l'icône », notez-le : c'est l'échec que le test cherche exprès.
 7. **Recevoir le message de 18h**. Tapez le **code T1**, **Valider**. La page dit « C'est le téléphone 1. Touche « Autoriser les messages », puis « Autoriser ». »
 8. **Autoriser les messages**, puis **Autoriser** dans la fenêtre de l'iPhone. La page dit « C'est fait ». En haut : « Messages de 18h : autorisés ».
 9. **La connexion Apple**, toujours depuis l'icône (le bouton n'apparaît qu'après l'abonnement) : **Continuer avec Apple**, avec votre compte Apple. Apple peut proposer de partager ou de masquer votre adresse : les deux conviennent, elle n'est jamais gardée. Notez si vous revenez dans l'icône, « connecté avec Apple ». La section **Connexions** de la page de résultats montre alors deux comptes : un Google, un Apple.
-10. Sur l'ordinateur, page de résultats : ligne T1, **Message d'essai**. Dans la minute, l'iPhone affiche « Test, message d'essai ». **Ne le touchez pas** : lisez-le, c'est tout. Rechargez la page de résultats : la ligne dit « accepté » et une heure de réception.
+10. Fermez d'abord l'icône (balayez vers le haut), pour voir le message comme il arrivera les soirs suivants. Puis, sur l'ordinateur, page de résultats : ligne T1, **Message d'essai**. Dans la minute, l'iPhone affiche « Test, message d'essai ». **Ne le touchez pas** : lisez-le, c'est tout. Rechargez la page de résultats : la ligne dit « accepté » et une heure de réception.
 11. Ligne T1 : tapez la version d'iOS (forme `iOS 18.6`), **Noter**.
 12. **Fermez l'icône** (balayez vers le haut). À partir de maintenant : **ne plus ouvrir l'icône ni toucher les messages du test avant le soir 3**.
 
@@ -325,7 +325,7 @@ Gardez la page de résultats ouverte **sur votre ordinateur** : sur l'iPhone, vo
 
 ## 8. En cas de panne
 
-- **Une page ne répond pas, un message ne part pas** : c'est vous qui regardez (D-048), dans le tableau de bord de Scalingo (état de l'application, redémarrage). Ne nous copiez pas les journaux de l'application en marche.
+- **Une page ne répond pas, un message ne part pas** : c'est vous qui regardez (D-048), dans le tableau de bord de Scalingo (état de l'application). **Un redémarrage compte comme une mise en ligne : jamais de 15h à 19h ni le dimanche.** Une page qui ne répond plus à 17h, c'est un soir manqué : on l'ajoute (partie 7), on ne redémarre pas. Ne nous copiez pas les journaux de l'application en marche.
 - **Une installation échoue** : copiez-nous le message d'erreur de la fabrication.
 - **La page ne s'ouvre pas à `test18h.elenchos.fr`, ou sans cadenas** : regardez l'état du certificat (2.6, étape 3) et l'entrée de la zone DNS (1.4).
 - **Aucune correction n'est mise en ligne de 15h à 19h ni le dimanche** : une panne le dimanche attend le lundi matin, et le soir manqué est ajouté (partie 7).
@@ -364,6 +364,6 @@ Dans cet ordre :
 - **Les écrans de la console Google** : le site n'a pas pu être ouvert ; noms des menus de mémoire et d'après des guides récents.
 - **L'écran d'Apple pour le domaine** : un champ ou deux (4.2).
 - **Chez Scalingo** : le nom exact du plus petit plan PostgreSQL, l'édition des variables en bloc, l'écran « Deployment method » à la création de l'application, l'emplacement du réglage des journaux du routeur, et le temps réel avant le certificat (« In use »).
-- **Les gestes d'iOS 26** (bouton Partager, « Ouvrir comme app web »), le geste qui **supprime** l'icône selon la version d'iOS, et les chemins exacts des Réglages pour « Se connecter avec Apple ».
+- **Les gestes d'iOS 26 ou suivant** (bouton Partager, « Ouvrir comme app web »), le geste qui **supprime** l'icône selon la version d'iOS, et les chemins exacts des Réglages pour « Se connecter avec Apple ».
 - **La carte** : la documentation de Scalingo la demande ; c'est l'écran qui tranchera.
 - **Le code n'a jamais tourné chez Scalingo, ni vers le vrai service d'Apple, ni avec les vrais Google et Apple** : il a passé ses tests automatiques contre des imitations fidèles. C'est la raison d'être du message d'essai de J2.

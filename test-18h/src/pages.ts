@@ -52,7 +52,7 @@ export function pageMessage(titre: string, message: string, retour: string): str
 <p><a class="bouton" href="${echapper(retour)}">Retour</a></p>`);
 }
 
-/** Une ligne prête à copier pour l'équipe : sans nom, sans adresse ; le « vu » se remplit depuis les SMS. */
+/** Une ligne prête à copier pour l'équipe : sans nom, sans adresse ; le « vu » est noté par le porteur. */
 export function ligneTexte(parts: string[]): string {
   return parts.join(' · ');
 }
@@ -124,7 +124,7 @@ ${message ? `<p class="info">${echapper(message)}</p>` : ''}
 </table></div>
 
 <h2>À copier pour l’équipe</h2>
-<p>Sans nom ni adresse. Après les avoir collées, remplacez « ___ » selon le SMS du soir : « vu à 18h03 » donne « à l’heure », « vu à 18h20 » donne « plus tard », « rien vu » reste « rien vu ». Pour « éteint », effacez « ___ » sans rien écrire.</p>
+<p>Sans nom ni adresse. Après les avoir collées, remplacez « ___ » par ce que vous avez vu sur votre iPhone : « à l’heure » (vu avant 18h05), « plus tard », ou « rien vu ». Si l’iPhone était éteint, effacez « ___ » sans rien écrire.</p>
 <textarea id="copie" readonly rows="8">${echapper(lignesCopie.join('\n'))}</textarea>
 <p><button type="button" id="copier">Copier</button></p>
 
@@ -136,7 +136,7 @@ ${message ? `<p class="info">${echapper(message)}</p>` : ''}
 <form method="post" action="/resultats/essai"><input type="hidden" name="telephone" value="tous"><button type="submit">Message d’essai à tous les téléphones abonnés</button></form>
 
 <h2>Connexions</h2>
-<p>Le compte Google de test doit garder un seul numéro, sur tous les téléphones. Un second numéro « Google » signale un échec. Le numéro « Apple » de votre iPhone est normal.</p>
+<p>Votre compte Google doit garder un seul numéro, même après la reconnexion depuis l’icône : un second numéro « Google » signale un échec (un second compte a été créé). Un numéro « Apple », après la connexion Apple, est normal.</p>
 <div class="defile"><table><tbody>${lignesComptes.join('\n') || '<tr><td>Aucune connexion pour l’instant.</td></tr>'}</tbody></table></div>
 
 <h2>Calendrier des envois (réglage SOIRS)</h2>
