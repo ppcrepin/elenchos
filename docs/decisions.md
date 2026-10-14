@@ -489,6 +489,8 @@ Pas-à-pas du test de 18h mis à jour pour D-057 (Back-end ; relu par Cohérence
 1. **Le porteur se connecte avec ses propres comptes Google et Apple** sur son iPhone (le test ne garde qu'une empreinte de l'identifiant ; le tableau d'heures, qui ne parle que de lui, reste chez lui sans date limite : le 20 novembre de D-054 point 1 tombe). **Modifie D-054 point 1 et P-43** (« comptes de test seulement »). Option non retenue : des comptes créés exprès.
 2. **Le domaine elenchos.fr n'est pas acheté maintenant.** Le test du message de 18h attend ; **D-057 point 2 (domaine acheté avant la mise en ligne) est à reposer** au porteur, avec la suite. Options non retenues : OVHcloud (recommandée), un autre registraire.
 
+**Précision du même jour (QCM)** : **on construit le jeu d'abord** ; le test du message de 18h attend que le jeu soit prêt et que le domaine soit décidé. Conséquence dite au porteur : on ne saura qu'à la fin si le message de 18h arrive bien sur iPhone. Options non retenues : le test tout de suite sur l'adresse gratuite de Scalingo (recommandée) ; pause.
+
 Restent « proposé », laissés à l'équipe : le sous-domaine `test18h.elenchos.fr`, le seuil de 15 €, la condition 4 de Juridique non bloquante pour ce test (à confirmer par Juridique).
 
 ### Points ouverts du §11 — toujours ouverts
