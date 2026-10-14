@@ -61,7 +61,7 @@
 |---|---|---|---|---|
 | 0 | Le contrat entre le serveur et l'interface ; le format des textes, avec Contenu. Juridique relit la carte de consentement, « Qui, durée, droits » et le code à usage unique ; UX écrit les textes manquants (bandeau hors réseau, page de refus Android) | Exemples de réponses, relecture | Rien | 1 à 1,5 j |
 | 1 | En parallèle : le socle du serveur, les textes et l'horloge, le moteur de règles (relu par Game design) ; tous les écrans, sur des données d'exemple | Un joueur d'un cercle ne reçoit rien d'un autre ; les journées chiffrées de `regles.md` sont rejouées ; chaque écran est testé en taille iPhone (clair, sombre, soir), sans débordement | Une planche de captures des écrans, à relire | 4 à 6 j |
-| T | Les 34 textes, écrits et vérifiés par Contenu | Voir la note sous le tableau | Ne pas les lire si vous jouez | Voir la note, en parallèle des phases 1 à 4 |
+| T | Les 34 textes, écrits et vérifiés par Contenu | Vérification de fidélité sur un autre modèle, annotation à l'aveugle, test de forme du fichier | Ne pas les lire si vous jouez | 5,5 à 8,5 j, en parallèle des phases 1 à 4 |
 | 2 | Les comptes et l'entrée : la carte de consentement, le défi, le compte (Apple, Google, e-mail, avec de faux services), le cercle, l'invitation, « Tout effacer » | Quatre joueurs simulés jouent l'entrée de bout en bout ; plus rien ne reste après un effacement | Selon le choix 1 : jouer l'entrée sur votre iPhone | 4 à 6 j |
 | 3 | La journée : Deviner, Répondre, la révélation, les titres du dimanche, la barre | Une semaine jouée en une heure, horloge accélérée ; calculs relancés sans écart | Selon le choix 1 : jouer une semaine en accéléré | 3 à 5 j |
 | 4 | Le message de 18h, l'icône et son guide, le code à usage unique, les mesures, le ménage | Envoi unique ; mesures sans aucun contenu ; rien ne se fait entre 17h30 et 18h30 | Vous approuvez la forme du rapport de totaux ; selon le choix 1, vous ajoutez l'icône | 2 à 3 j |
@@ -69,7 +69,18 @@
 | 6 | La mise en ligne, puis vos essais sur votre iPhone et le test du message de 18h | Message avant 18h05 trois soirs ; connexion tenue depuis l'icône | Choix 2 et 3 ; vous ouvrez les comptes (environ 3 h, avec un pas-à-pas) et notez la date de fin d'essai de Scalingo (D-055) ; feu vert ; trois soirs | 1 à 2 j, plus 3 soirs |
 | 7 | Les retouches après vos essais, la vérification finale, la base vidée puis recréée, l'arrivée des premiers joueurs | Passe complète, Cohérence, Vérificateur | Feu vert ; vous saisissez la date du premier jour ; vous envoyez le message aux premiers créateurs | 3 à 5 j |
 
-**Note sur les textes (Contenu)** : [estimation de Contenu, à compléter].
+**Note sur les textes (Contenu)** : 5,5 à 8,5 jours de session, en quatre lots, hors du chemin critique de la construction.
+- Le relevé et la table des 34 textes, puis les fiches 1 à 17 et 18 à 34 : dès maintenant.
+- Une passe finale : après le format de la phase 0.
+- La semaine avant le premier jour : un quart de jour pour vérifier ce que chaque dossier est devenu depuis le vote.
+
+La méthode est celle des essais : la fidélité est vérifiée sur Fable 5.1, l'annotation se fait à l'aveugle, les formes qui annoncent le vote sont décomptées. Trois allègements sont sans risque pour un député nommé : un seul annotateur, sauf en cas d'hésitation ; pas de « devin du vote » ; au lieu des quotas par commission, un plafond de 6 textes par commission (à vous signaler, D-056).
+
+Deux risques, dits franchement par Contenu :
+- d'octobre à décembre, l'Assemblée vote surtout les budgets : il faudra remonter 12 à 18 mois ;
+- l'équilibre entre groupes (D-044) n'a jamais été tenu sur tout un lot : on le saura au premier lot. S'il ne tient pas, une question vous reviendra.
+
+Si vous jouez, n'ouvrez pas le fichier des textes.
 
 **La relecture du code.** Chaque phase se termine par une relecture :
 - par Cohérence, contre les décisions et `donnees.md` ;
