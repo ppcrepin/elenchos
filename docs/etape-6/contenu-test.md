@@ -162,7 +162,9 @@ Ce qui reste intact : les lignes rouges, D-002, D-024 et D-025 (l'avis du cercle
 
 ## Annexe : les textes des écrans nouveaux (UX)
 
-*Textes proposés par UX, à relire par Juridique pour N5 et N6, et à confirmer en construction. Entre crochets : ce qui manque.*
+*Mise à jour le 15 octobre 2026 (D-061) : textes relus par Juridique et UX, à relire par UX pour la forme en phase 1.*
+
+*Textes proposés par UX, à confirmer en construction. Entre crochets : ce qui manque.*
 
 **N1. elenchos.fr ouvert sans invitation**
 « Elenchos » / « Un jeu entre proches, sur iPhone : chaque jour, un vrai texte de l'Assemblée. Tu donnes ton avis, puis tu devines celui de tes proches. » / « Pendant le test, on entre seulement par invitation. » / bouton « J'ai déjà un compte ».
@@ -177,24 +179,55 @@ Aucun bouton, aucune promesse d'une version Android. Le lien n'est pas consommé
 **N4. Mention IA**, en petit sous les trois lignes de chaque texte (1.2, 1.12, 2.3, 5.12) et sur la fiche 5.4 :
 « Résumé et raisons rédigés avec une IA, d'après le texte et les débats. »
 
-**N5. Version de test.** La carte 1.3 devient :
-« Avant ta première réponse » / « Tes réponses révèlent tes opinions politiques. Elles servent au jeu : tes proches te devinent, ton portrait se dessine. Seul ton cercle les voit, elles ne sont jamais vendues. Tu peux tout effacer, quand tu veux. » / « Version de test : tout peut être effacé à la fin. 15 ans et plus. » / « J'accepte » · « Qui, durée, droits »
-La même ligne figure dans Réglages et sur N1.
+**N5. Version de test.** La carte 1.3 devient (D-061, point 1 ; texte de Juridique, deuxième phrase coupée en deux sur avis du Vérificateur) :
+« Avant ta première réponse » / « Tes réponses révèlent tes opinions politiques. Elles servent au jeu : le lendemain, ton cercle essaie de deviner qui a répondu quoi. À 18h, il découvre lesquelles étaient de toi. Ton portrait se dessine. » / « Seul ton cercle les voit, et tes trois premières vont aussi aux proches que tu invites. Elles ne sont jamais vendues. Tu peux tout effacer, quand tu veux. » / « Version de test, tenue par [Prénom Nom]. Tout peut être effacé à la fin. » / boutons « J'ai 15 ans ou plus, j'accepte » · « Non merci » / « Qui, durée, droits »
+Après « Non merci » : « D'accord, rien n'a été gardé. Tu peux revenir par ce lien pendant 7 jours. » Rien n'est enregistré, et le lien n'est pas consommé.
 
-**N6. « Qui, durée, droits », version minimale** (à relire par Juridique ; entre crochets, ce qui manque) :
-- **Qui.** « Elenchos est un projet personnel de [prénom nom], en test. C'est lui qui garde tes données et en répond. Contact : [adresse]. »
-- **Ce qui est gardé.** « Ton pseudo, ton adresse e-mail ou l'identifiant donné par Apple ou Google, tes réponses, tes devinettes. Jamais ton nom ni ta photo. »
-- **Qui voit quoi.** « Ton cercle voit ce que le jeu révèle à 18h : à qui étaient les réponses qu'il devinait, et l'avis du cercle sur chaque texte. Dans un petit cercle, cet avis peut laisser deviner qui a dit quoi. Si un proche te désigne alors que vous aviez donné la même réponse, il l'apprend. Tes trois réponses d'entrée vont aux proches que tu invites : c'est toi qui les envoies. Personne d'autre ne voit tes réponses. »
-- **Où.** « Chez Scalingo, un hébergeur français, en France. Il garde un an une trace technique des connexions, comme la loi l'exige. Le message de 18h passe par Apple, sans tes réponses. Si tu te connectes avec Apple ou Google, ils savent que tu as un compte Elenchos, jamais ce que tu réponds. Aucune de tes données ne va à une IA. Ni vente, ni publicité. »
-- **Ce qu'on compte.** « Des gestes (qui a fini son entrée, qui a joué avant 18h), pour savoir si le jeu marche. Jamais ce que tu réponds. »
-- **Combien de temps.** « C'est une version de test : tout peut être effacé à la fin. »
-- **Tes droits.** « Tout effacer, quand tu veux : Moi › Réglages › Tout effacer. Pour voir ou emporter tes données, écris à [adresse]. »
+**N6. « Qui, durée, droits »** (texte de Juridique, D-061 ; entre crochets, ce qui manque)
+- **Qui.** « Elenchos est un jeu en test, tenu à titre personnel par [Prénom Nom]. C'est lui qui décide de ce que deviennent tes données, et qui en répond. Contact : [adresse e-mail]. »
+- **Pourquoi.** « Tes réponses révèlent tes opinions politiques. Elles servent à faire tourner le jeu, avec ton accord, donné sur la carte avant ta première réponse. Sans cet accord, tu ne peux pas jouer. Ton compte sert à te reconnaître d'un jour à l'autre. La sécurité du jeu et le compte des gestes (plus bas) reposent sur notre intérêt légitime : protéger le jeu et savoir s'il marche. Tu peux refuser qu'on compte tes gestes : écris à [adresse]. »
+- **Ce qui est gardé.**
+  - « Ton pseudo. »
+  - « Une empreinte de ton adresse e-mail, ou de l'identifiant donné par Apple ou Google : un code tiré de l'adresse, qui sert à te reconnaître. L'adresse elle-même n'est pas gardée. »
+  - « Ton accord : sa date et la version de la carte. »
+  - « Tes réponses (chiffrées), tes devinettes, tes titres du dimanche. »
+  - « Si tu l'acceptes, l'adresse technique où ton iPhone reçoit le message de 18h. »
+  - « Des gestes, sous un numéro sans nom. »
+  - « Jamais ton nom, ta photo, ta date de naissance ni ton numéro de téléphone. Si tu t'arrêtes avant de créer ton compte, tes réponses sont effacées au bout de 7 jours, et tu peux les effacer toi-même avant. »
+- **Qui voit quoi.**
+  - « Le lendemain de ta réponse, des proches de ton cercle la voient sur une carte, sans ton nom, et essaient de deviner qu'elle est de toi. À 18h, ils découvrent si c'était toi. »
+  - « Si un proche te désigne alors que vous aviez donné exactement la même réponse, il l'apprend aussi. »
+  - « À 18h, ton cercle voit aussi la répartition des réponses du cercle sur le texte. Dans un petit cercle, elle peut laisser deviner qui a dit quoi, ou qui n'a pas répondu. »
+  - « Ton cercle voit si tu as déjà joué dans la journée, et les titres du dimanche. »
+  - « Tes trois premières réponses : la personne qui t'a invité peut les deviner, puis les découvrir, et elle apprend combien des siennes tu as trouvées. Quand tu invites quelqu'un, tu lui envoies les tiennes : il les découvre avant d'entrer dans le cercle. »
+  - « Personne d'autre ne voit tes réponses. [Prénom] a les clés du jeu, mais aucun écran ne lui montre une réponse. »
+  - « Ce que ton cercle a vu, il l'a vu : effacer ne l'enlève ni des mémoires ni des captures d'écran. »
+- **Où, et chez qui.**
+  - « Le jeu et tes données sont chez Scalingo, un hébergeur français, en France. Ses sauvegardes en gardent une copie environ quatre semaines. »
+  - « Scalingo garde aussi, de son côté, une trace technique des connexions pendant un an (par exemple l'adresse internet et l'heure). Ni toi ni nous ne pouvons l'effacer. Elle ne contient aucune de tes réponses. »
+  - « Le code reçu par e-mail part par Scaleway, un service français : il voit ton adresse et le code, rien d'autre. »
+  - « Le message de 18h passe par Apple, sans tes réponses. Si tu te connectes avec Apple ou Google, ils savent que tu as un compte Elenchos et quand tu t'y connectes, jamais ce que tu réponds. Ces deux sociétés sont américaines : ce passage hors d'Europe repose sur la décision de la Commission européenne qui reconnaît le cadre de protection UE–États-Unis (2023). »
+  - « Aucune de tes réponses, ni rien qui porte ton nom, ne va à une IA. Ni vente, ni publicité. »
+- **Ce qu'on compte.** « Des gestes, en totaux : qui a fini son entrée, qui a joué avant 18h, si le message de 18h est arrivé, si les devinettes sont plus justes que le hasard. Jamais ce que tu réponds. [Prénom] lit ces totaux. Il peut en montrer certains aux assistants d'IA qui l'aident à construire le jeu, toujours sur au moins dix joueurs à la fois, sans nom ni réponse. »
+- **Combien de temps.** « Tes données sont gardées tant que ton compte existe, et au plus jusqu'à la fin du test. À la fin du test, tout est effacé. Le code reçu par e-mail vaut 15 minutes ; une invitation, 7 jours. Après un effacement, les sauvegardes disparaissent en quatre semaines environ, et la trace des connexions de Scalingo au bout d'un an. »
+- **Tes droits.**
+  - « Tout effacer, quand tu veux : Moi › Réglages › Tout effacer. C'est immédiat dans le jeu. Les copies de secours s'effacent d'elles-mêmes en quatre semaines environ ; si l'une d'elles sert après une panne, ton effacement est refait. C'est aussi la façon de retirer ton accord. »
+  - « Pour voir ou emporter tes données, corriger ton pseudo, ou demander qu'on limite ou qu'on arrête un usage : écris à [adresse]. Réponse sous un mois. »
+  - « Si ça ne va pas, tu peux te plaindre à la CNIL (cnil.fr). »
+- **Âge.** « Il faut avoir 15 ans ou plus. Dès 15 ans, tu peux donner ton accord seul. »
 - **Les textes.** « Les résumés et les raisons sont rédigés avec une IA, d'après le texte et les débats. Une erreur ? Écris à [adresse]. »
 
 **N7. Compte (1.8 redessiné)**
 « Pour que Thomas sache que c'était toi, et retrouver tes réponses demain. » (pour le créateur : « Pour retrouver tes réponses demain, et que tes proches sachent que c'est toi. ») / champ « Ton pseudo » (« Tes proches te verront sous ce nom. ») / boutons « Continuer avec Apple » · « Continuer avec Google » · « Recevoir un code par e-mail » / « Avec ton compte personnel, pas celui du travail ou de l'école. » / sous un filet, le texte « Pourquoi Elenchos ? » (D-049).
 Pseudo pris : « {pseudo} est déjà pris dans ce cercle. Choisis-en un autre. »
-E-mail du code : objet « Ton code Elenchos : 482913 » ; corps « Ton code : 482913. Il marche 10 minutes. Tu n'as rien demandé ? Ignore ce message. » (la durée de 10 minutes est une hypothèse, à fixer par Back-end).
+E-mail du code : objet « Ton code Elenchos : 482913 » ; corps « Ton code : 482913. Il est valable 15 minutes, une seule fois. Tu n'as rien demandé ? Ignore ce message. »
+Écran du code (1.9), « Code envoyé à {adresse} » (l'adresse que le joueur vient de taper, gardée dans le téléphone seulement) ; puis, selon l'état :
+- code faux : « Ce n'est pas le bon code. Vérifie les six chiffres. »
+- après 5 essais : « Trop d'essais. Demande un nouveau code. »
+- code expiré : « Ce code a expiré. Demande un nouveau code. »
+- trop de codes demandés : « Trop de codes demandés pour cette adresse. Réessaie dans un quart d'heure. » (durée fixée par le contrat, `jeu/CONTRAT.md` partie 6, au lieu de {durée})
+- après « Renvoyer le code » : « Nouveau code envoyé. »
+- sous « Renvoyer le code » : « Rien reçu ? Regarde dans les indésirables. »
 
 **N8. Bloc et guide d'ajout de l'icône** (reprend les mots de la page-test de l'essai, passés au « tu »)
 Bloc sur 1.13 et 2.5 : « Chaque soir à 18h, un message te dit que la révélation est là. Pour le recevoir, garde Elenchos sur ton écran d'accueil. » / « Montre-moi comment » · « Plus tard ».
@@ -223,9 +256,11 @@ Replié : « « Sur l'écran d'accueil » n'apparaît pas ? » → « Tu n'es sa
 **N13. Lien qui ne marche plus** (5.14 élargi)
 « Ce lien ne marche plus » / « Une invitation ne sert qu'une fois, pendant 7 jours. Demande-en une nouvelle à {prénom}. » / « Tu as déjà un compte ? » bouton « Me connecter ».
 
-**N14. Tout effacer**
-Confirmation : « Tout effacer ? Ton compte, tes réponses et tes devinettes sont effacés tout de suite, pour de bon. Ton visage disparaît du cercle, sans message au cercle. » (si les titres sont gardés, ajouter : « Tes titres passés restent, sous « un ancien membre ». ») / « Tout effacer » · « Annuler ».
+**N14. Tout effacer** (Moi › Réglages › Tout effacer)
+Confirmation : « Tout effacer ? » / « Ton compte, tes réponses et tes devinettes sont effacés du jeu tout de suite. Ton visage disparaît du cercle, sans message au cercle. » / « Les copies de secours de l'hébergeur s'effacent d'elles-mêmes en quatre semaines environ. Elles ne servent qu'en cas de panne. » / « Tout effacer » · « Annuler ».
 Après : « C'est effacé. Tu peux supprimer l'icône de ton écran d'accueil. »
+- [compte créé avec Apple] « Ton compte passait par Apple. Pour y retirer aussi Elenchos : ouvre les Réglages de l'iPhone et cherche « Se connecter avec Apple ». »
+- [compte créé avec Google] « Ton compte passait par Google. Pour y retirer aussi Elenchos : myaccount.google.com, rubrique « Sécurité », connexions aux applications tierces. »
 
 **N15. Cercle complet** : « Ce cercle est complet : dix membres. » (règle 1, une ligne).
 
@@ -234,4 +269,27 @@ Bandeau « Pour commencer · Texte 1 sur 3 », et dessous « Réponds à 3 texte
 Bilan : « Tes 3 réponses sont prêtes. Tes proches vont essayer de les deviner. » / « Créer mon compte ».
 
 **N17. Message du porteur au créateur** (le porteur l'envoie lui-même, ce n'est pas un écran)
-« Je teste un jeu sur iPhone, entre proches : chaque jour, un vrai texte de l'Assemblée. Tu donnes ton avis, puis tu devines celui de tes proches. Il faut inviter au moins deux proches qui ont un iPhone. Ouvre ce lien dans Safari : [lien] »
+« Je teste un jeu sur iPhone, entre proches : chaque jour, un vrai texte de l'Assemblée. Tu donnes ton avis, puis tu devines celui de tes proches. Il faut inviter au moins deux proches (15 ans et plus) qui ont un iPhone. Ouvre ce lien dans Safari : [lien] »
+
+**N18. Pas de réseau** (UX, phase 0, 1.1). Les données passent toujours par le réseau : rien d'ancien ne s'affiche. Quand le réseau revient, l'écran se recharge tout seul et le bandeau disparaît sans message.
+- **L'icône s'ouvre sans réseau, rien n'est encore chargé** (écran entier : l'en-tête Elenchos, sans barre d'onglets) : « Pas de connexion » / « Elenchos a besoin d'internet pour afficher le jeu. Il s'affichera dès que la connexion revient. » / bouton « Réessayer ».
+- **Le réseau se coupe pendant la partie** (bandeau en haut de l'écran, au-dessus de l'en-tête, tant que la coupure dure) : « Pas de connexion. Elenchos réessaie tout seul. »
+- **Un geste n'est pas parti** (valider une réponse, poser un visage, valider la manche ; une ligne sous le bouton, le choix reste affiché et ne peut plus être changé) : « Pas encore envoyé : pas de connexion. Garde Elenchos ouvert, ça partira dès que le réseau revient. »
+- **Le réseau est là, mais le jeu ne répond pas** (serveur en panne, délai dépassé ; même bandeau) : « Elenchos ne répond pas pour l'instant. Réessaie dans quelques minutes. »
+- Le premier bandeau quand le téléphone sait qu'il n'a pas de réseau, le second pour tous les autres échecs. Encre sur fond lin, sans rouge (D-012) ; VoiceOver le lit dès qu'il apparaît ; il ne cache jamais le bouton principal.
+
+**Autres textes de la phase 0** (UX, 1.5 a à h)
+- **a. Vue de secours.** « Elenchos n'a pas pu démarrer. » / « Ce n'est pas une erreur de ta part. Ferme Elenchos, puis rouvre-le. Si ça recommence, préviens la personne qui t'a envoyé le lien. »
+- **b. Ligne de l'écran Inviter** (1.14 et Le Cercle 4.2, sous le bouton d'envoi). « Elenchos se joue seulement sur iPhone : invite des proches qui en ont un. »
+- **c. N15, cercle complet, en deux moments** (remplace la ligne de N15 ci-dessus).
+  - Le lien s'ouvre alors que le cercle a déjà dix membres, avant tout texte : « Ce cercle est complet » / « Un cercle compte dix membres au plus : tu ne peux pas y entrer. » / « Tu peux le dire à {pseudo}. »
+  - Le cercle s'est rempli pendant l'entrée ; l'écran prend la place du compte, après le bilan : « Ce cercle est complet » / « Le cercle de {pseudo} s'est rempli pendant que tu jouais. Dix membres, c'est le maximum : tu ne peux pas y entrer. » / « Tes réponses sont effacées dans 7 jours. »
+- **d. Refus après 18h** (le test n'accepte plus de réponse jusqu'à 18h10).
+  - Écrans Répondre ou raison, quand la validation arrive après 18h00 : « Ce texte s'est fermé à 18h. Ta réponse n'a pas été prise. » / « Continuer », qui mène à la révélation.
+  - Écran Deviner, quand un visage est posé après 18h : « La manche s'est fermée à 18h, telle qu'elle était. » / « Continuer ».
+- **e. Texte corrigé.**
+  - Fiche 5.4 : « Corrigé le {date} : {ce qui a changé}. » Exemple : « Corrigé le 12 novembre : le vote a eu lieu le 3 juin, pas le 3 mai. »
+  - Historique, sous la phrase du jour : « Texte corrigé après ta réponse. »
+- **f. Message d'arrivée, sans score.** Titre « Elenchos », corps : « {pseudo} a relevé ton défi. À ton tour de deviner {pseudo}. » Le score (« a trouvé 2 de tes 3 réponses », D-011) reste dans le jeu : il n'apparaît pas sur l'écran verrouillé et ne passe pas par Apple.
+- **g. Mise à jour forcée de l'icône : aucun texte.** Le rechargement se fait à l'ouverture ou au retour dans l'application, jamais quand un choix n'est pas encore validé.
+- **h. N13 avec {pseudo}** (remplace le texte de N13 ci-dessus ; le jeu ne connaît que le pseudo). « Ce lien ne marche plus » / « Une invitation ne sert qu'une fois, pendant 7 jours. Demande-en une nouvelle à {pseudo}. » / « Tu as déjà un compte ? » bouton « Me connecter ».
