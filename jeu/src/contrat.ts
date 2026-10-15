@@ -99,6 +99,10 @@ export type Voies = {
   readonly email: boolean;
 };
 
+/** La voie par laquelle un compte a été créé. Rendue au seul titulaire, après « Tout effacer », pour lui dire comment
+ *  retirer aussi Elenchos chez Apple ou Google (N14) ; jamais servie au sujet d'un autre membre (P-27). */
+export type Voie = 'apple' | 'google' | 'email';
+
 // ============================================================================================================
 // 2. L'enveloppe de chaque échange, et l'heure du serveur
 // ============================================================================================================
@@ -171,7 +175,7 @@ export const CODES_ERREUR = [
   'code_expire', // 422 : 15 minutes (P-41)
   'trop_essais', // 429 : 5 essais par code (P-41)
   'trop_de_codes', // 429 : codes demandés pour une même adresse (P-41)
-  'passage_refuse', // 410 : code de passage inconnu, expiré ou déjà servi (partie 4 du contrat)
+  'passage_refuse', // 410 : code de passage inconnu, expiré, déjà servi, ou session qui l'a demandé plus valable (partie 4)
   'abonnement_invalide', // 422
 ] as const;
 export type CodeErreur = (typeof CODES_ERREUR)[number];
@@ -208,7 +212,9 @@ export type RefusConnexion =
 /** L'annonce d'arrivée faite au créateur, tant que le cercle a moins de trois membres (1.10 ; D-006, D-011). */
 export type AnnonceArrivee = {
   readonly visage: Visage;
-  /** Faite par le serveur, la même que le message : « Marie a trouvé 2 de tes 3 réponses. À ton tour de deviner Marie. » */
+  /** Faite par le serveur, pour l'écran seulement (D-011) : « Marie a trouvé 2 de tes 3 réponses. À ton tour de deviner
+   *  Marie. », ou la première phrase seule si `aDeviner` est faux. Le message envoyé, lui, ne porte jamais le score : il
+   *  prend un texte de `MESSAGES_ARRIVEE` (partie 11). */
   readonly texte: string;
   /** Vrai si le créateur doit deviner cet invité (son premier invité, quand ils sont deux : D-006, D-058). */
   readonly aDeviner: boolean;
@@ -325,6 +331,9 @@ export type EcranCompte = {
   /** Le pseudo déjà accepté, s'il y en a un (retour d'Apple ou de Google avec un refus). */
   readonly pseudo: string | null;
   readonly voies: Voies;
+  /** N15, second moment : le cercle de l'invitant s'est rempli pendant l'entrée. L'écran N15 prend la place du compte,
+   *  après le bilan. Toujours faux pour le créateur et pour `connexion`. */
+  readonly cercleComplet: boolean;
 };
 
 export type ResultatConnexion = { readonly etat: 'connecte' } | { readonly etat: RefusConnexion };
@@ -447,8 +456,10 @@ export type Aujourdhui = {
   readonly bandeau: 'cercle_incomplet' | null;
   /** « Tu as rejoint {nom}. », une seule fois (1.12). */
   readonly arrivee: { readonly nomCercle: string } | null;
-  /** La ligne « Revoir la révélation », jusqu'au prochain 18h (E3). */
-  readonly revoirRevelation: boolean;
+  /** La ligne en haut d'Aujourd'hui, jusqu'au prochain 18h (E3, mots d'UX) : `finir` (« Finir la révélation › »), la
+   *  révélation a été ouverte mais pas lue jusqu'à 2.7f ; `revoir` (« Revoir la révélation › »), elle a été lue jusqu'au
+   *  bout (`POST /api/vu { objet: 'revelation_finie' }`) ; null, pas de ligne. */
+  readonly revoirRevelation: 'finir' | 'revoir' | null;
   readonly etape: EtapeDeviner | EtapeRepondre | EtapeEnAttendant;
 };
 
@@ -553,6 +564,9 @@ export type LigneHistorique = {
   readonly phraseDuJour: string | null;
   /** « révélé vendredi à 18h », ou null si pas encore révélé. */
   readonly revelation: string | null;
+  /** « Texte corrigé après ta réponse. » (mots d'UX) : vrai si le texte a reçu un erratum de sorte `repondu` après ta
+   *  réponse (règle 20, allégée pour le test). */
+  readonly corrige: boolean;
 };
 
 /** 4.1 et 5.11 allégés, 5.3 fondu dedans, 5.7 allégé. */
@@ -562,13 +576,15 @@ export type Moi = {
   readonly barre: { readonly crans: number; readonly total: number; readonly pleine: boolean } | null;
   /** Les réponses, de la plus récente à la plus ancienne. */
   readonly historique: readonly LigneHistorique[];
-  /** N14 : ajouter « Tes titres passés restent, sous « un ancien membre ». » */
-  readonly aDesTitres: boolean;
 };
 
-/** Les deux blancs de « Qui, durée, droits » (N6), réglés par le porteur, jamais écrits dans le dépôt. */
+/** Les blancs de « Qui, durée, droits » (N6), réglés par le porteur chez Scalingo, jamais écrits dans le dépôt. */
 export type Droits = {
+  /** « [Prénom Nom] » */
   readonly responsable: string;
+  /** « [Prénom] », seul, là où le texte de Juridique le demande. */
+  readonly prenom: string;
+  /** « [adresse e-mail] » de contact. */
   readonly contact: string;
 };
 
@@ -576,9 +592,12 @@ export type Droits = {
 // 11. L'icône, le message de 18h, les mesures
 // ============================================================================================================
 
+/** Créé seulement au toucher sur « Montre-moi comment » (N8) ou « Comment ? » (N11), redemandé à chaque retour au
+ *  premier plan tant que le guide est affiché (partie 4 du contrat). */
 export type CodePassage = {
-  /** 32 octets tirés au hasard, en base64url. À placer après « # » : « /#passage=… » (partie 4 du contrat). */
+  /** 32 octets tirés au hasard, en base64url. À placer après « # » : « /#passage=… ». */
   readonly code: string;
+  /** 10 : la page retire le code de son adresse à l'expiration. */
   readonly minutes: number;
 };
 
@@ -614,6 +633,16 @@ export const MESSAGES_18H = [
 ] as const;
 export type Message18h = (typeof MESSAGES_18H)[number];
 
+/** Les textes possibles de l'annonce d'arrivée envoyée en message (UX ; à relire par Juridique). Sans le score, qui
+ *  reste à l'écran (`AnnonceArrivee.texte`, D-011) : un message s'affiche sur l'écran verrouillé et passe par Apple.
+ *  Le premier quand le créateur doit deviner cet invité, le second sinon (seconde arrivée). Le serveur remplace
+ *  {pseudo} ; liste fermée, comme `MESSAGES_18H` (P-05). */
+export const MESSAGES_ARRIVEE = [
+  '{pseudo} a relevé ton défi. À ton tour de deviner {pseudo}.',
+  '{pseudo} a relevé ton défi.',
+] as const;
+export type MessageArrivee = (typeof MESSAGES_ARRIVEE)[number];
+
 /** Gestes que l'interface signale (mesures sur des gestes, jamais sur une réponse : D-041, P-39). */
 export const GESTES = ['ouverture_icone'] as const;
 export type Geste = (typeof GESTES)[number];
@@ -622,8 +651,14 @@ export type Geste = (typeof GESTES)[number];
 export const SORTES_COMPTEUR = ['android', 'ordinateur', 'ipad', 'hors_safari'] as const;
 export type SorteCompteur = (typeof SORTES_COMPTEUR)[number];
 
-/** Ce qu'on marque comme vu. `revelation` sert aussi la mesure « révélation ouverte le soir même ». */
-export const OBJETS_VU = ['revelation', 'arrivee', 'cercle_lance', 'annonces', 'barre_pleine'] as const;
+/** Comptés par le serveur lui-même, sans geste de l'interface et sans rien garder de la personne (UX) :
+ *  `reponse_apres_18h`, une réponse du jour refusée par `texte_ferme`. Elle dira s'il faut rétablir le délai de 18h10. */
+export const SORTES_COMPTEUR_SERVEUR = ['reponse_apres_18h'] as const;
+export type SorteCompteurServeur = (typeof SORTES_COMPTEUR_SERVEUR)[number];
+
+/** Ce qu'on marque comme vu. `revelation` (première ouverture) sert aussi la mesure « révélation ouverte le soir même » ;
+ *  `revelation_finie` (écran 2.7f atteint) fait passer la ligne de « Finir » à « Revoir ». */
+export const OBJETS_VU = ['revelation', 'revelation_finie', 'arrivee', 'cercle_lance', 'annonces', 'barre_pleine'] as const;
 export type ObjetVu = (typeof OBJETS_VU)[number];
 
 // ============================================================================================================
@@ -693,7 +728,8 @@ export type Routes = {
   'POST /api/abonnement': Route<EnvoiAbonnement, { readonly abonne: true }, AvecSession | 'abonnement_invalide' | 'indisponible'>;
   'POST /api/geste': Route<{ readonly geste: Geste }, { readonly note: true }, AvecSession>;
   'POST /api/compteur': Route<{ readonly sorte: SorteCompteur }, { readonly note: true }, never>;
-  'POST /api/tout-effacer': Route<{ readonly confirmation: 'tout-effacer' }, { readonly efface: true }, AvecSession>;
+  /** Accepté en session provisoire (« Effacer mes réponses », 1.8) ; `voie` est null pour un joueur provisoire. */
+  'POST /api/tout-effacer': Route<{ readonly confirmation: 'tout-effacer' }, { readonly efface: true; readonly voie: Voie | null }, AvecSession>;
   'POST /api/deconnexion': Route<null, { readonly deconnecte: true }, never>;
   // Développement local seulement : en ligne, ces deux routes n'existent pas (réponse `introuvable`).
   'POST /dev/connexion': Route<EnvoiConnexionEssai, { readonly connecte: true }, 'introuvable' | 'code_faux'>;

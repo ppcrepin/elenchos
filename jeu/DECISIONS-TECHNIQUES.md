@@ -1,6 +1,6 @@
 # Les choix techniques de la phase 0 (version de test)
 
-*Phase 0 de la construction (D-060). Back-end et Front-end, ensemble, 15 octobre 2026. Ce document arrête les choix techniques que D-048 laisse à l'équipe, pour la seule version de test (D-056). Il ne décide rien de ce qui revient au porteur. Une question reste ouverte : où garder les trois réponses d'entrée d'un invité avant son compte (partie 3). Juridique la tranche avec l'orchestrateur ; nous donnons notre recommandation commune. À relire par Cohérence et le Vérificateur. Le contrat est dans `jeu/CONTRAT.md`, ses types dans `jeu/src/contrat.ts`, le format des textes dans `jeu/textes/FORMAT.md`.*
+*Phase 0 de la construction (D-060). Back-end et Front-end, ensemble, 15 octobre 2026. Ce document arrête les choix techniques que D-048 laisse à l'équipe, pour la seule version de test (D-056). Il ne décide rien de ce qui revient au porteur. La question de la phase 0, où garder les trois réponses d'entrée d'un invité avant son compte, est tranchée par l'équipe (partie 3). Relu par Cohérence et le Vérificateur ; leurs corrections et les arbitrages de l'orchestrateur sont appliqués (15 octobre 2026). Le contrat est dans `jeu/CONTRAT.md`, ses types dans `jeu/src/contrat.ts`, le format des textes dans `jeu/textes/FORMAT.md`.*
 
 ## En bref
 
@@ -8,7 +8,7 @@
 - **Sans cadriciel, une seule page.** L'interface est faite de modules JavaScript que Safari lit tels quels, typés par des commentaires. Il n'y a rien à fabriquer, donc rien qui puisse casser chez Scalingo, et un humain peut tout relire sans outil (D-043).
 - **Le cloisonnement des cercles est tenu par la base elle-même**, avec des rôles séparés. Si Scalingo ne permet pas de créer des rôles, un repli existe ; il protège moins, et nous disons de combien (partie 1.6).
 - **On reprend beaucoup.** Du test de 18h : l'horloge, la connexion, l'envoi du message, la sécurité des pages. Du second essai : les styles, les polices, une partie des écrans, une partie du moteur de règles (partie 2).
-- **Notre recommandation commune sur les réponses d'entrée de l'invité : un joueur provisoire en base dès l'accord, effacé à 7 jours.** Front-end proposait de les garder dans l'onglet. À l'examen, cette option oblige quand même le serveur à enregistrer l'accord et la liaison du lien ; elle ne gagne donc que trois réponses pendant 7 jours au plus. Elle risque, en échange, de faire perdre le défi quand l'iPhone recharge l'onglet (partie 3).
+- **Les réponses d'entrée de l'invité : tranché par l'équipe, un joueur provisoire en base dès l'accord, effacé à 7 jours** (option B), avec deux conditions prises à Juridique : un lien « Effacer mes réponses » sur l'écran du compte, et la phrase des 7 jours dans « Qui, durée, droits ». Juridique préférait garder les réponses dans le téléphone ; l'équipe retient le joueur provisoire, pour la solidité, avec un lien d'effacement avant le compte (partie 3).
 
 ## 1. Les choix arrêtés
 
@@ -75,10 +75,10 @@ Les migrations sont des fichiers SQL numérotés, joués au démarrage sous le r
 | Rôle | Ce qu'il peut | Exigence tenue par la base |
 |---|---|---|
 | `proprietaire` | créer les tables ; joué seulement par les migrations | — |
-| `jeu` | lire et écrire les tables du jeu, soumis aux règles de cloisonnement ; aucun droit sur les identités ni sur les totaux | P-25, P-01 |
+| `jeu` | lire et écrire les tables du jeu, soumis aux règles de cloisonnement ; écrire, sans les lire, dans les tables de totaux, où il dépose la justesse et la part des Mystère déjà totalisées ; aucun droit sur les identités | P-25, P-01, P-22 |
 | `comptes` | lire et écrire les seules empreintes d'identité | P-01 |
 | `envoi` | lire les abonnements, écrire les envois | P-22 |
-| `menage` | effacer ce qui est échu (joueurs provisoires à 7 jours, codes, sessions) | P-31 |
+| `menage` | effacer ce qui est échu (joueurs provisoires à 7 jours, scores d'entrée, codes, codes de passage, sessions) | P-31 |
 | `mesures` | lire des vues de totaux, jamais une réponse | P-22, P-23 |
 
 **À vérifier : Scalingo permet-il de créer des rôles ?** De mémoire, oui (Back-end), mais ce n'est pas vérifié. Le compte Scalingo ne s'ouvre qu'en phase 6 (D-060, point 1). En phase 1, on le cherche dans la documentation de Scalingo ; le code est écrit pour fonctionner dans les deux cas, avec un seul réglage.
@@ -94,7 +94,7 @@ Les migrations sont des fichiers SQL numérotés, joués au démarrage sous le r
 
 ### 1.8 Les sessions
 
-Une session est un numéro tiré au hasard, dans un cookie `__Host-session`. La base n'en garde que l'empreinte, avec le joueur et une échéance. Une table plutôt qu'un cookie seulement scellé, parce que P-41 demande que la session s'arrête à la déconnexion : sans table, un cookie copié resterait valable jusqu'à son terme. Chaque appareil a la sienne : se déconnecter dans Safari ne déconnecte pas l'icône. Durée proposée : 180 jours, prolongés à chaque ouverture. « Tout effacer » les supprime toutes (P-38). C'est une ligne à ajouter à la carte des données (`donnees.md`, partie 4), qui citait déjà « les sessions » parmi ce que « Tout effacer » efface.
+Une session est un numéro tiré au hasard, dans un cookie `__Host-session`. La base n'en garde que l'empreinte, avec le joueur et une échéance. Une table plutôt qu'un cookie seulement scellé, parce que P-41 demande que la session s'arrête à la déconnexion : sans table, un cookie copié resterait valable jusqu'à son terme. Chaque appareil a la sienne : se déconnecter dans Safari ne déconnecte pas l'icône. Durée proposée, alignée sur Juridique : l'échéance est prolongée à chaque ouverture, **jamais au-delà de la fin du test**. « Tout effacer » les supprime toutes (P-38). C'est une ligne à ajouter à la carte des données (`donnees.md`, partie 4), qui citait déjà « les sessions » parmi ce que « Tout effacer » efface ; à signaler au porteur. Ce que deviennent les comptes à la fin du test attend sa réponse (durées de garde, QCM en cours).
 
 ### 1.9 L'horloge, et le développement local
 
@@ -153,18 +153,18 @@ Tableau de Back-end (`plan-version-test-backend.md`, partie 1), complété par F
 | Gardé | `style.css`, partie « Téléphone : La Tablée » (environ 200 lignes sur 362) ; les polices réduites Alegreya et Alegreya Sans, avec leurs licences | l'écran occupe tout l'iPhone ; le cadre de l'essai est retiré ; l'avis du cercle devient une barre en cinq parts, d'une seule teinte |
 | Gardé | le haut d'`interface.js` : les outils de page et les petits blocs (bandeaux, boutons, positions, raisons, visages, feuille, onglets) | ils lisent une réponse du serveur au lieu du socle, du moteur et du calendrier |
 | Adapté | les écrans de l'entrée, Deviner, Répondre, la raison, En attendant, la révélation, l'avis du cercle (35 à 40 % d'`interface.js`) | la carte se montre d'un coup, sans retournement, sans total de points |
-| Adapté | `textes.js` : les mots validés des écrans | N1 à N16 ajoutés ; le cadre et la table des valeurs retirés. **L'agent qui le reprend vérifie d'abord qu'il ne contient aucun texte du lot de l'essai** (nous ne l'avons pas ouvert en phase 0) |
+| Adapté | `textes.js` : les mots validés des écrans | N1 à N16, N18 et les mots d'UX de la phase 0 (`CONTRAT.md`, partie 11) ajoutés ; le cadre et la table des valeurs retirés. **L'agent qui le reprend vérifie d'abord qu'il ne contient aucun texte du lot de l'essai** (nous ne l'avons pas ouvert en phase 0) |
 | Extrait | de `noyau.js` : `typographier`, `dePrenom`, `quePrenom`, `listeEt` ; la table des caractères qui se ressemblent (E7) | — |
 | Porté en TypeScript, côté serveur | de `moteur.js` : le tirage `t(clé)` ; `identiques`, `estJuste`, `redistribuer` (le jumeau, D-024), `verdict` ; les points ; `avisCercle` ; `classer` ; Le Devin et Le Mystère | comparés au moteur de l'essai sur des milliers de manches tirées au hasard, pour les fonctions communes |
 | Réécrit | le choix des cartes (au hasard, sans deux identiques, R4) ; la carte « qui et pourquoi » (tirée au sort, en dernier : règle 9, D-038) ; Le Fidèle (sans le nouveau venu de la semaine : règle 12) ; `phraseDuJour` (huit tensions, mots de D-053) | prouvés par les journées de `regles.md` |
 | Repris | `harnais/navigateur.js` (appareil « iPhone 15 », mode app imposé, horloge, sombre, animations réduites) ; `harnais/passe-webkit.js` ; la détection du contexte de la page-test (`docs/essai/page-test-icone/source.html`) | — |
 | Non repris | le socle, les sauts, le rattrapage, le carnet, le cadre, le dévoilement, le témoin, tout ce qui suppose le fichier scellé et des personnages simulés ; le portrait, les tempéraments, Le Pas de Côté, la phrase de la semaine (après le test, D-058) | — |
 
-## 3. Le point à trancher : les trois réponses d'entrée de l'invité
+## 3. Les trois réponses d'entrée de l'invité : tranché par l'équipe (option B)
 
 ### 3.1 La question
 
-Marie ouvre le lien de Thomas, accepte la carte, répond à trois textes et devine Thomas sur chacun. Puis elle crée son compte, ou s'en va. Entre la carte et le compte, ses trois réponses (position et raison) existent. Où ? La question vaut aussi pour le créateur, qui répond à ses trois textes avant son compte. `plan-version-test.md` (partie 4) la renvoie à l'équipe et à Juridique : ce n'est pas un choix pour le porteur.
+Marie ouvre le lien de Thomas, accepte la carte, répond à trois textes et devine Thomas sur chacun. Puis elle crée son compte, ou s'en va. Entre la carte et le compte, ses trois réponses (position et raison) existent. Où ? La question vaut aussi pour le créateur, qui répond à ses trois textes avant son compte. `plan-version-test.md` (partie 4) la renvoie à l'équipe et à Juridique : ce n'est pas un choix pour le porteur. Ce qui suit est le compte rendu de l'examen et de la décision.
 
 ### 3.2 Les deux options
 
@@ -183,7 +183,7 @@ L'option A garde donc un accord et une liaison en base. Elle ne gagne que **les 
 | | Option A : dans l'onglet | Option B : joueur provisoire (recommandée) |
 |---|---|---|
 | **P-29** (une seule personne, une fois) | Tenu, à condition de lier le lien à un jeton d'onglet enregistré en base à la première réponse | Tenu tel quel : la première réponse enregistrée lie le lien au joueur provisoire |
-| **P-34** (accord enregistré avant toute réponse) | À adapter : l'accord serait enregistré seul, puis les réponses arriveraient bien plus tard, d'un coup, envoyées par l'onglet. La base ne peut plus refuser elle-même une réponse sans accord au moment où la personne répond. La phrase de P-34 (« l'accord … suit l'invité ») serait à réécrire | Tenu tel quel : la base refuse une réponse sans accord (clé étrangère) ; l'accord suit l'invité jusqu'à son compte, avec sa date d'origine, comme P-34 le propose |
+| **P-34** (accord enregistré avant toute réponse) | Le test de P-34 tient si l'accord est inséré en premier, dans la transaction qui crée le compte (condition 4 de Juridique) ; mais l'heure du toucher serait déclarée par le téléphone, preuve plus faible que l'heure du serveur. Seule la phrase « l'accord … suit l'invité » perd son objet | Tenu tel quel : la base refuse une réponse sans accord (clé étrangère) ; l'accord suit l'invité jusqu'à son compte, avec sa date d'origine, comme P-34 le propose |
 | **P-35** (accord de l'invitant, avec l'invitation) | Inchangé | Inchangé |
 | **D-006** (trois textes avant tout compte ; lien personnel à usage unique) | Tenu | Tenu : le joueur provisoire n'a ni identité, ni pseudo avant 1.8, ni adresse ; ce n'est pas un compte |
 | **Minimisation** (RGPD, art. 5.1.c) | Meilleure : rien des réponses de qui s'arrête | Les réponses de qui s'arrête restent 7 jours au plus, chiffrées, lisibles de personne. Durée déjà inscrite sur la carte des données (`donnees.md`, partie 4 : « Réponses d'un invité qui ne crée pas de compte, 7 jours au plus », proposé par Juridique) et prévue dans « Qui, durée, droits » (`onboarding.md`) |
@@ -191,39 +191,36 @@ L'option A garde donc un accord et une liaison en base. Elle ne gagne que **les 
 | **Solidité** | Fragile : pour lire le code reçu par e-mail, on quitte Safari pour Mail. Si l'iPhone manque de mémoire, il recharge l'onglet au retour, et la reprise de `sessionStorage` dans ce cas n'est pas garantie. Le défi serait alors perdu, et avec lui l'annonce à Thomas | Solide : la reprise se fait depuis la base, dans le même navigateur, pendant 7 jours |
 | **Ce que le serveur peut prouver** | Les réponses arrivent après les révélations, envoyées par l'onglet : le serveur ne peut pas vérifier qu'elles ont été données avant de voir celles de Thomas | Chaque réponse est enregistrée avant la réponse de Thomas, dans le même échange que le pari (`CONTRAT.md`, 2.4) |
 | **Code** | Deux chemins pour enregistrer une réponse (pendant le défi, puis en lot) | Un seul chemin, le même que pour le texte du jour |
-| **Décisions touchées** | Réécriture de P-34 (proposé) ; la ligne « 7 jours » de la carte des données tombe | Aucune |
+| **Décisions touchées** | Une phrase de P-34 et P-29 (« à sa première réponse » deviendrait « à sa première devinette »), P-11, la ligne « 7 jours » de la carte des données, `onboarding.md` (proposés) ; et, dans la variante de Juridique (le serveur ne reçoit que les devinettes), une exception à la liste fermée (P-27), pour envoyer au téléphone les auteurs des quatre raisons | Aucune |
 
-### 3.4 Notre recommandation commune : l'option B, à cinq conditions
+### 3.4 La décision de l'équipe : l'option B, avec deux conditions prises à Juridique
 
-Front-end se range à l'option B. Elle tient P-29 et P-34 tels qu'ils sont écrits, sans rien toucher. Elle ne garde rien de plus que ce que la carte des données prévoit déjà. Et elle évite de perdre un défi, qui est le premier plaisir du jeu (`contenu-test.md`, partie 1), à cause d'un onglet rechargé. Le gain de l'option A, réel, est petit : trois réponses, 7 jours au plus, chiffrées.
+**Les positions.** Back-end et Front-end recommandaient l'option B (Front-end s'y est rangé à l'examen). Juridique recommandait l'option A : rien des réponses de qui s'arrête dans la base, ni dans les sauvegardes (près de cinq semaines en tout sous B), et « fermer l'onglet suffit » pour effacer. Cohérence relève que les sources déjà écrites supposent B (règle 2 de `regles.md`, `onboarding.md`, carte des données) ; le Vérificateur recommande B, en reprenant à Juridique ce qui ne coûte rien.
 
-Les cinq conditions, reprises de l'objectif de Front-end :
+**La décision, telle qu'elle sera dite au porteur** : « Juridique préférait garder les réponses dans le téléphone ; l'équipe retient le joueur provisoire, pour la solidité, avec un lien d'effacement avant le compte. » Raison en une ligne : B tient P-29 et P-34 tels qu'ils sont écrits, à l'heure du serveur, sans écran de rattrapage ni second chemin d'enregistrement ; sa donnée en plus est bornée (7 jours), chiffrée, déjà sur la carte des données, et effaçable d'un toucher. C'est ce que demande D-056 (le plus simple), sans rien retirer à D-057 point 5 (accord explicite, effacement réel).
+
+**Les conditions** :
 1. **Rien avant l'accord.** Ouvrir le lien n'enregistre rien et ne pose aucun cookie (`CONTRAT.md`, 2.2).
-2. **Le joueur provisoire ne garde que** : l'accord, les trois réponses chiffrées, la liaison du lien et le score du pari. Le pseudo n'arrive qu'à l'écran du compte (1.8). Ni identité, ni adresse, ni rien de l'appareil.
+2. **Le joueur provisoire ne garde que** : l'accord, les trois réponses chiffrées, la liaison du lien, le score du pari, et le pseudo dès qu'il est choisi à l'écran du compte (1.8 ; `CONTRAT.md`, 2.5). Ni identité, ni adresse, ni rien de l'appareil.
 3. **Effacé au bout de 7 jours** par le ménage quotidien. **Effacé tout de suite** si la personne se connecte à un compte existant (N12). Personne n'en est averti, ni l'invitant, ni le cercle.
 4. **Personne ne le voit** : il n'est membre d'aucun cercle, et la base le garantit par ses règles de cloisonnement (partie 1.6).
-5. **« Qui, durée, droits » le dit** (phrase à écrire par Juridique, à relire par UX) : « Si tu t'arrêtes avant de créer ton compte, tes réponses sont effacées au bout de 7 jours. »
-
-**Une question de plus pour Juridique, sous l'option B** : faut-il un moyen d'effacer tout de suite avant le compte, par exemple un lien discret « Effacer mes réponses » sur le bilan (1.7) ou l'écran du compte (1.8) ? Le joueur provisoire n'a pas accès à Moi, donc pas à « Tout effacer ». Sans ce lien, l'effacement se fait de lui-même au bout de 7 jours. Ce serait un écran de plus (mots : UX).
-
-**Sous forme de QCM**, pour Juridique et l'orchestrateur :
-
-**Les trois réponses d'entrée d'un invité, avant son compte : où les garder ?**
-- **Dans la base, sous un joueur provisoire effacé à 7 jours (Recommandé : Back-end, Front-end)** : tient P-29 et P-34 tels qu'ils sont ; durée déjà sur la carte des données ; défi non perdu si l'iPhone recharge l'onglet.
-- **Dans l'onglet, envoyées à la création du compte** : rien des réponses de qui s'arrête ; mais l'accord et la liaison du lien restent en base, P-34 est à réécrire, et un onglet rechargé fait perdre le défi.
+5. **« Qui, durée, droits » le dit** (condition prise à Juridique) : « Si tu t'arrêtes avant de créer ton compte, tes réponses sont effacées au bout de 7 jours. » (phrase d'UX, pour l'option B).
+6. **Un lien « Effacer mes réponses » sur l'écran du compte (1.8)** (condition prise à Juridique) : il appelle `POST /api/tout-effacer`, accepté en session provisoire ; aucune route nouvelle. Le droit d'effacement existe ainsi avant le compte (RGPD, art. 12.2). Mots du lien et de sa confirmation : UX.
 
 ## 4. Ce que ces choix touchent (au titre de D-056)
 
-- **Aucune décision du porteur n'est modifiée.**
+- **Une décision du porteur est allégée pour le test, et n'avait pas été signalée avec D-060** : D-035 (règle 5 des six règles de Juridique, « la suppression du compte coupe le lien ») et P-38. « Tout effacer » coupe le lien avec Apple ou Google de notre côté seulement ; le révoquer chez eux obligerait à garder leurs jetons. N14 dit au joueur comment retirer Elenchos chez Apple ou Google (`CONTRAT.md`, 2.12). À ajouter à la liste des allègements signalés au porteur (D-056).
+- **D-035 et P-03, précisés** : l'identifiant seul est demandé à Apple et à Google (moins que le plafond de D-035, avis de Juridique).
+- Les autres décisions touchées par le contrat (D-011 pour le canal du message d'arrivée, D-006 pour le score d'entrée, D-045 point 2) sont listées dans `CONTRAT.md`, partie 8. La carte de consentement (N5) et les durées de garde du test sont en attente du porteur.
 - **P-20 (proposé)** : la connexion d'essai devient locale seulement, faute d'aperçu en ligne avant la phase 6 (D-060, point 1).
-- **La carte des données** (`donnees.md`, partie 4) reçoit une ligne : les sessions (empreinte, joueur, échéance ; 180 jours prolongés à chaque ouverture, proposé). Avec l'option B, aucune autre ligne ne change.
+- **La carte des données** (`donnees.md`, partie 4) reçoit une ligne : les sessions (empreinte, joueur, échéance ; prolongée à chaque ouverture, jamais au-delà de la fin du test, proposé). À signaler au porteur. Avec l'option B, aucune autre ligne ne change.
 - **P-02** (chiffrement des réponses) : gardé, retirable, déjà signalé au porteur avec D-060.
 - **P-13, P-19, P-20** : allégés pour le test, déjà signalés au porteur avec D-060.
 - **Le repli des rôles** (partie 1.6), s'il est nécessaire, affaiblit P-01, P-22 et P-23 : la séparation n'y serait plus tenue que par le code. Il faudrait alors le signaler au porteur.
 
 ## 5. Limites et doutes
 
-- **De mémoire, à vérifier** : la création de rôles chez Scalingo ; la reprise de `sessionStorage` après un rechargement de l'onglet par iOS (c'est l'un des arguments de la partie 3, dit comme un doute, pas comme un fait mesuré) ; l'adresse de départ d'une icône sans adresse dans le manifeste (`CONTRAT.md`, partie 4).
+- **De mémoire, à vérifier** : la création de rôles chez Scalingo ; la reprise de `sessionStorage` après un rechargement de l'onglet par iOS (c'était l'un des arguments de la partie 3, dit comme un doute, pas comme un fait mesuré) ; la marque de domaine de Google sans la demande de l'e-mail (`CONTRAT.md`, partie 10) ; l'adresse de départ d'une icône sans adresse dans le manifeste (`CONTRAT.md`, partie 4).
 - **Aucun vrai iPhone avant la phase 6** (D-060, point 1). Le moteur WebKit sur macOS n'est pas Safari sur iPhone.
 - **Seuls des modèles relisent ce code**, qui gardera des opinions (D-043, point 2) ; aucun avocat (D-056).
-- **À observer avec de vraies personnes** : combien d'invités s'arrêtent entre le défi et le compte (ce que l'option B garde 7 jours) ; combien reviennent finir leur compte plus tard ; si l'aller-retour vers Mail pour le code fait perdre des défis.
+- **À observer avec de vraies personnes** : combien d'invités s'arrêtent entre le défi et le compte (ce que l'option B garde 7 jours) ; combien touchent « Effacer mes réponses » ; combien reviennent finir leur compte plus tard ; si l'aller-retour vers Mail pour le code fait perdre des défis.

@@ -504,6 +504,16 @@ Proposition : `docs/etape-6/plan-version-test.md` (Back-end, Front-end, Contenu,
 
 Signalés au porteur dans le plan, au titre de D-056, sans QCM : révélation rouverte reprise au début (E3), pas de copie des sauvegardes (P-13), une seule application Scalingo (P-19, P-20), plafond de 6 textes par commission au lieu des quotas (§8), chiffrement des réponses gardé (P-02, retirable).
 
+### D-061 — Phase 0 : la carte de consentement, la durée du test, la mention · Décidé (15 octobre 2026)
+
+Phase 0 de la construction (D-060) : contrat entre le serveur et l'interface, format des textes et décisions techniques (`jeu/`, Back-end et Front-end), relecture de Juridique, textes manquants d'UX ; relus par Cohérence (compatible avec réserves) et par le Vérificateur (OK avec corrections) ; corrections appliquées. Trois QCM :
+
+1. **La carte de consentement corrigée par Juridique** : le nom du porteur en bas (« Version de test, tenue par [Prénom Nom]. Tout peut être effacé à la fin. »), le risque dit (« le lendemain, ton cercle essaie de deviner qui a répondu quoi. À 18h, il découvre lesquelles étaient de toi »), les trois premières réponses envoyées aux invités, un bouton « J'ai 15 ans ou plus, j'accepte » et un bouton « Non merci ». **Modifie le texte validé de la carte** (D-006, `onboarding.md` étape 3 ; maquette 1.3, D-014 ; ligne de D-058). Options non retenues : la même sans le nom ; la carte validée telle quelle.
+2. **À la fin du test, tout est effacé** : les données des joueurs sont gardées tant que le compte existe, et au plus jusqu'à la fin du test ; les joueurs repartent de zéro à la mise à niveau. Précise D-057 point 5 (« tout peut être effacé à la fin » devient une durée). Options non retenues : chacun choisit de garder son compte (recommandée) ; rien de plus promis.
+3. **Pas de phrase disant qu'aucun avocat ni expert en sécurité n'a vérifié cette version.** Option recommandée non retenue : une phrase dans « Qui, durée, droits » (Juridique, Vérificateur).
+
+Arbitrages de l'équipe, dits au porteur sans QCM (D-009) : les trois réponses d'entrée d'un invité sont gardées sur le serveur dès l'accord, effacées au bout de 7 jours s'il ne crée pas de compte, avec un lien « Effacer mes réponses » avant le compte (Back-end et Front-end ; Juridique préférait les garder dans le téléphone) ; le code de passage vers l'icône vaut 10 minutes (Juridique) ; Apple et Google ne fournissent que l'identifiant (moins que le plafond de D-035) ; le message d'arrivée, sur l'écran verrouillé, ne montre pas le score (UX) ; « Tout effacer » coupe le lien avec Apple ou Google de notre côté seulement (allègement de D-035 règle 5 et P-38, au titre de D-056).
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique : **tranché, D-042** (gratuit, contribution libre à l'ouverture) · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
