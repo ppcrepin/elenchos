@@ -1,0 +1,252 @@
+{
+  "format": "elenchos-textes/1",
+  "lot": {
+    "nom": "exemple",
+    "exemple": true,
+    "etat": "provisoire",
+    "date": "2026-10-15"
+  },
+  "groupes": [
+    {
+      "libelle": "Groupe inventé des Aulnes",
+      "chambre": "assemblee",
+      "legislature": 99,
+      "identifiant": "PO000001"
+    },
+    {
+      "libelle": "Groupe inventé des Bouleaux",
+      "chambre": "assemblee",
+      "legislature": 99,
+      "identifiant": "PO000002"
+    },
+    {
+      "libelle": "Groupe inventé des Charmes",
+      "chambre": "assemblee",
+      "legislature": 99,
+      "identifiant": "PO000003"
+    },
+    {
+      "libelle": "Groupe inventé des Frênes",
+      "chambre": "assemblee",
+      "legislature": 99,
+      "identifiant": "PO000004"
+    }
+  ],
+  "commissions": [
+    {
+      "libelle": "commission inventée des exemples",
+      "identifiant": "PO000010"
+    }
+  ],
+  "textes": [
+    {
+      "id": "T01",
+      "role": "entree",
+      "rang": 1,
+      "titre": "Robots de livraison sur les trottoirs",
+      "lignes": [
+        "Des robots de livraison pourraient rouler sur les trottoirs des villes volontaires.",
+        "Leur vitesse serait limitée à 6 km/h.",
+        "L'essai durerait trois ans, puis serait évalué."
+      ],
+      "tension": "P",
+      "sens": 1,
+      "commission": "commission inventée des exemples",
+      "auteur": {
+        "type": "depute",
+        "nom": "Émile Fictif",
+        "feminin": false,
+        "groupe": "Groupe inventé des Bouleaux",
+        "depot": "2025-09-02"
+      },
+      "vote": {
+        "objet": "texte",
+        "issue": "rejete",
+        "etape": "aucune",
+        "date": "2025-11-12",
+        "suite": null,
+        "rejetDeProcedure": false
+      },
+      "scrutin": {
+        "legislature": 99,
+        "numero": 1
+      },
+      "lienScrutin": "https://www.assemblee-nationale.fr/dyn/99/scrutins/1",
+      "raisons": [
+        {
+          "id": "r1",
+          "cote": "pour",
+          "pole": 1,
+          "texte": "Une ville qui n'essaie rien prend du retard.",
+          "depute": {
+            "nom": "Alice Exemple",
+            "feminin": true,
+            "groupe": "Groupe inventé des Aulnes",
+            "elision": "d'"
+          },
+          "source": {
+            "adresse": "https://www.assemblee-nationale.fr/dyn/99/comptes-rendus/seance-inventee-1",
+            "date": "2025-11-12",
+            "extrait": "Une ville qui n'essaie rien, mes chers collègues, prend toujours du retard sur les autres."
+          }
+        },
+        {
+          "id": "r2",
+          "cote": "pour",
+          "pole": "aucun",
+          "texte": "Moins de camionnettes, ce sont des rues moins encombrées.",
+          "depute": {
+            "nom": "Bruno Fictif",
+            "feminin": false,
+            "groupe": "Groupe inventé des Bouleaux",
+            "elision": "de"
+          },
+          "source": {
+            "adresse": "https://www.assemblee-nationale.fr/dyn/99/comptes-rendus/seance-inventee-1",
+            "date": "2025-11-12",
+            "extrait": "Chaque robot, c'est une camionnette de moins dans des rues déjà encombrées."
+          }
+        },
+        {
+          "id": "r3",
+          "cote": "contre",
+          "pole": 0,
+          "texte": "Un trottoir doit rester sûr pour les enfants et les personnes âgées.",
+          "depute": {
+            "nom": "Chloé Inventée",
+            "feminin": true,
+            "groupe": "Groupe inventé des Charmes",
+            "elision": "de"
+          },
+          "source": {
+            "adresse": "https://www.assemblee-nationale.fr/dyn/99/comptes-rendus/seance-inventee-1",
+            "date": "2025-11-12",
+            "extrait": "Le trottoir doit rester un lieu sûr, d'abord pour les enfants et pour les personnes âgées."
+          }
+        },
+        {
+          "id": "r4",
+          "cote": "contre",
+          "pole": "aucun",
+          "texte": "Les communes n'ont pas les moyens de contrôler ces engins.",
+          "depute": {
+            "nom": "Denis Exemple",
+            "feminin": false,
+            "groupe": "Groupe inventé des Frênes",
+            "elision": "de"
+          },
+          "source": {
+            "adresse": "https://www.assemblee-nationale.fr/dyn/99/comptes-rendus/seance-inventee-1",
+            "date": "2025-11-12",
+            "extrait": "Qui contrôlera ces engins ? Pas nos communes, qui n'en ont pas les moyens."
+          }
+        }
+      ],
+      "erratum": null,
+      "empreinte": "0b88580de44e272c105d5f5bcdd7b0eb5a1b93aabcbc71ff579d1f9120391f96"
+    },
+    {
+      "id": "T04",
+      "role": "jour",
+      "rang": 1,
+      "titre": "Parkings de gare rachetés par l'État",
+      "lignes": [
+        "L'État pourrait racheter les parkings de gare tenus par des sociétés privées.",
+        "Le prix de l'heure serait fixé par la région.",
+        "Le rachat s'étalerait sur dix ans."
+      ],
+      "tension": "EP",
+      "sens": 0,
+      "commission": "commission inventée des exemples",
+      "auteur": {
+        "type": "gouvernement",
+        "depot": "2026-01-20"
+      },
+      "vote": {
+        "objet": "texte",
+        "issue": "adopte",
+        "etape": "navette",
+        "date": "2026-03-04",
+        "suite": null,
+        "rejetDeProcedure": false
+      },
+      "scrutin": {
+        "legislature": 99,
+        "numero": 2
+      },
+      "lienScrutin": "https://www.assemblee-nationale.fr/dyn/99/scrutins/2",
+      "raisons": [
+        {
+          "id": "r1",
+          "cote": "pour",
+          "pole": 0,
+          "texte": "Un service lié au train doit suivre les besoins des voyageurs, pas la rentabilité.",
+          "depute": {
+            "nom": "Élise Exemple",
+            "feminin": true,
+            "groupe": "Groupe inventé des Aulnes",
+            "elision": "d'"
+          },
+          "source": {
+            "adresse": "https://www.assemblee-nationale.fr/dyn/99/comptes-rendus/seance-inventee-2",
+            "date": "2026-03-03",
+            "extrait": "Un service qui dépend du train doit suivre les besoins des voyageurs, et non la seule rentabilité."
+          }
+        },
+        {
+          "id": "r2",
+          "cote": "pour",
+          "pole": 1,
+          "texte": "Les sociétés pourront placer leur argent là où elles sont plus utiles.",
+          "depute": {
+            "nom": "François Fictif",
+            "feminin": false,
+            "groupe": "Groupe inventé des Charmes",
+            "elision": "de"
+          },
+          "source": {
+            "adresse": "https://www.assemblee-nationale.fr/dyn/99/comptes-rendus/seance-inventee-2",
+            "date": "2026-03-03",
+            "extrait": "Ces sociétés pourront enfin placer leur argent là où elles sont plus utiles."
+          }
+        },
+        {
+          "id": "r3",
+          "cote": "contre",
+          "pole": 1,
+          "texte": "Les sociétés qui gèrent ces parkings le font déjà correctement.",
+          "depute": {
+            "nom": "Gaëlle Inventée",
+            "feminin": true,
+            "groupe": "Groupe inventé des Frênes",
+            "elision": "de"
+          },
+          "source": {
+            "adresse": "https://www.assemblee-nationale.fr/dyn/99/comptes-rendus/seance-inventee-2",
+            "date": "2026-03-04",
+            "extrait": "Les sociétés qui gèrent aujourd'hui ces parkings le font correctement, personne ne le conteste."
+          }
+        },
+        {
+          "id": "r4",
+          "cote": "contre",
+          "pole": "aucun",
+          "texte": "Cet argent serait mieux employé à rénover les gares elles-mêmes.",
+          "depute": {
+            "nom": "Lucas Exemple",
+            "feminin": false,
+            "groupe": "Groupe inventé des Bouleaux",
+            "elision": "de"
+          },
+          "source": {
+            "adresse": "https://www.assemblee-nationale.fr/dyn/99/comptes-rendus/seance-inventee-2",
+            "date": "2026-03-04",
+            "extrait": "Cet argent serait bien mieux employé à rénover les gares elles-mêmes."
+          }
+        }
+      ],
+      "erratum": null,
+      "empreinte": "483126be37647cd3ace0a99ed6ecfe432a93646b075597b51bc70ba43169728c"
+    }
+  ]
+}
