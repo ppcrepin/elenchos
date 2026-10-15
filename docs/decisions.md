@@ -493,6 +493,17 @@ Pas-à-pas du test de 18h mis à jour pour D-057 (Back-end ; relu par Cohérence
 
 Restent « proposé », laissés à l'équipe : le sous-domaine `test18h.elenchos.fr`, le seuil de 15 €, la condition 4 de Juridique non bloquante pour ce test (à confirmer par Juridique).
 
+### D-060 — La construction de la version de test : lancée · Décidé (15 octobre 2026)
+
+Proposition : `docs/etape-6/plan-version-test.md` (Back-end, Front-end, Contenu, assemblés par l'orchestrateur ; relu par Cohérence, compatible avec réserves, et par le Vérificateur, OK avec corrections, appliquées ; plans complets conservés à côté). Quatre QCM :
+
+1. **Le porteur joue sur son iPhone à la phase 6 seulement** : tout se construit sur les machines de l'équipe jusque-là ; il voit des captures (phase 1). Rien n'est payé avant. Option recommandée non retenue : un aperçu dès la phase 2 (Vérificateur, Front-end).
+2. **Le domaine elenchos.fr est acheté juste avant les premiers joueurs** (précise D-057 point 2 et D-059). La phase 6 se fait sur l'adresse gratuite de Scalingo ; le porteur réinstallera son icône une fois. Si Apple ou Google refusent cette adresse, la question revient (D-054, point 2). Conséquence : la voie e-mail ne s'essaie qu'à l'arrivée du domaine. Option recommandée non retenue : l'acheter à l'ouverture de Scalingo ; autre option non retenue : pas de domaine pendant le test.
+3. **Le test du message de 18h se fait sur le jeu lui-même, en phase 6.** **Modifie D-054, point 1** (test sur une page nue) ; le sous-domaine `test18h` et le seuil de 15 € (D-059, proposés) tombent ; `test-18h/` reste comme source de briques reprises. Option non retenue : la page nue d'abord.
+4. **On lance** la phase 0 (contrat entre serveur et interface, format des textes, relectures de Juridique, textes manquants d'UX) et l'écriture des 34 textes par Contenu, en parallèle. Point d'étape à chaque phase (D-020). Option non retenue : pause.
+
+Signalés au porteur dans le plan, au titre de D-056, sans QCM : révélation rouverte reprise au début (E3), pas de copie des sauvegardes (P-13), une seule application Scalingo (P-19, P-20), plafond de 6 textes par commission au lieu des quotas (§8), chiffrement des réponses gardé (P-02, retirable).
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique : **tranché, D-042** (gratuit, contribution libre à l'ouverture) · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
