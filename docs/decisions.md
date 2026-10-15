@@ -514,6 +514,19 @@ Phase 0 de la construction (D-060) : contrat entre le serveur et l'interface, fo
 
 Arbitrages de l'équipe, dits au porteur sans QCM (D-009) : les trois réponses d'entrée d'un invité sont gardées sur le serveur dès l'accord, effacées au bout de 7 jours s'il ne crée pas de compte, avec un lien « Effacer mes réponses » avant le compte (Back-end et Front-end ; Juridique préférait les garder dans le téléphone) ; le code de passage vers l'icône vaut 10 minutes (Juridique) ; Apple et Google ne fournissent que l'identifiant (moins que le plafond de D-035) ; le message d'arrivée, sur l'écran verrouillé, ne montre pas le score (UX) ; « Tout effacer » coupe le lien avec Apple ou Google de notre côté seulement (allègement de D-035 règle 5 et P-38, au titre de D-056).
 
+### D-062 — Nouveau cap : le jeu entier, testé par les amis du porteur via l'App Store, puis une deuxième version publique · Décidé (15 octobre 2026)
+
+Le porteur, mot pour mot (dicté) : « je n'avais pas compris que le test contenait uniquement le cœur du jeu. Pour moi, un test du jeu, c'est un test du jeu en entier. […] comme tu me poses des détails techniques, je perds la vue d'ensemble à chaque fois. Donc là, je veux créer le jeu, tout simplement. Et créer le jeu, et puis je ferai tester le jeu directement sur l'App Store à mes amis. Et puis ensuite, on pourra publier une deuxième version. » QCM : « Oui, ce cap (Recommandé) ».
+
+**Décision.**
+1. **On construit le jeu entier**, tel que validé (`docs/produit.md`, `docs/etape-6/regles.md`) : portrait, badges, tempéraments, plusieurs cercles, etc. **Remplace D-058** (contenu réduit du test) : `docs/etape-6/contenu-test.md` ne vaut plus comme périmètre ; ses textes d'écran nouveaux (annexe, D-061) restent utiles.
+2. **Les amis du porteur testent le jeu sur iPhone par l'App Store, avec TestFlight** (l'outil d'Apple pour les versions de test), pendant au moins deux mois (le portrait demande environ huit semaines). **Modifie D-057 point 1** (accès par un lien et une icône) et **D-005** (le lien d'abord) pour le test ; la question de la structure (D-042, D-043) se pose si Apple l'exige dès le test (à vérifier par l'équipe : testeurs internes jusqu'à 100 sans relecture, ou testeurs externes avec une relecture légère ; règle 5.1.1 (ix) pour les données sensibles).
+3. **Une deuxième version, publique**, vient après le test ; la mise à niveau de D-056 (juridique, structure, sécurité, hébergement) s'y fait.
+4. **Remplace le plan en phases de D-060** (`docs/etape-6/plan-version-test.md`) : l'équipe refait le plan en une page. Le travail fait reste : contrat (`jeu/`), textes d'écran, règles, choix de D-059 à D-061 (domaine avant les joueurs, test de 18h sur le jeu, carte corrigée, tout effacé à la fin du test, pas de mention d'avocat), sauf ce que le nouveau cap rend sans objet.
+5. **Méthode** : l'équipe ne pose plus de questions de détail au porteur ; elle tranche seule (D-009) et lui fait un point court à chaque étape importante, sans jargon. Seuls les choix qui engagent de l'argent, une décision validée ou la vision lui reviennent.
+
+Estimation donnée au porteur (orchestrateur, à chiffrer par l'équipe) : 2 à 3 mois de construction. Dit franchement : Apple relit les applications avant les testeurs externes et ses règles demandent une société pour une application qui garde des opinions politiques ; la voie des testeurs internes est à vérifier.
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique : **tranché, D-042** (gratuit, contribution libre à l'ouverture) · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
