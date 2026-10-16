@@ -47,7 +47,6 @@ import {
 } from '../../src/regles/index.ts';
 import { alea, graineHex } from './aides.ts';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Quelconque = any;
 
 const exiger = createRequire(import.meta.url);

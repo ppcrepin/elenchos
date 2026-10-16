@@ -33,6 +33,7 @@ import {
   ordonnerCartes,
   ORDRE_TENSIONS,
   pasDeCote,
+  phraseApresReponse,
   peutEntrer,
   peutRejoindre,
   portrait,
@@ -631,6 +632,8 @@ describe('Règle 15 · L’entrée', () => {
     const e = { texte: texte('E1', 'P', 1, 'p1 p1 c0 c0'), reponse: rep('F · R1'), entree: true, jour: LUNDI, instant: 0 } as ReponseDatee;
     assert.equal(portrait([e]).P.W.toString(), '1');
     assert.equal(portraitVu([e], LUNDI).P.W.toString(), '1', 'le cercle voit l’entrée');
+    assert.equal(phraseApresReponse(e), null, 'pas de phrase du jour à l’entrée');
+    assert.equal(phraseApresReponse({ ...e, entree: false }), "Aujourd'hui, tu as fait passer l'innovation avant la précaution.");
   });
 });
 

@@ -26,6 +26,11 @@ export function phraseDuJour(texte: TexteMoteur, reponse: ReponseMoteur): { read
   return { classement: cl, phrase };
 }
 
+/** Règle 18 et règle 15 : la phrase qui suit une réponse ; aucune à l'entrée (la révélation immédiate en tient lieu). */
+export function phraseApresReponse(r: ReponseDatee): string | null {
+  return r.entree ? null : phraseDuJour(r.texte, r.reponse).phrase;
+}
+
 /** « décision locale et décision nationale » : les deux valeurs sans article (regles.md, J9). */
 export function entreDeux(t: CodeTension): string {
   return `${sansArticle(motPole(t, 0))} et ${sansArticle(motPole(t, 1))}`;
