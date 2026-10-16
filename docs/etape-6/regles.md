@@ -152,6 +152,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
   - si son absence viderait deux manches, ou aucune, un tirage invisible choisit ;
   - dans l'autre manche, son visage n'est pas proposé ;
   - une manche vidée ainsi est sautée : « Rien à deviner dans ce cercle aujourd'hui ».
+  - s'il n'a pas de réponse servie (pas de réponse, ou réponse en retard), son visage n'est proposé que dans une seule de mes manches qui ont des cartes, choisie par un tirage invisible, pour ne pas trahir qu'il n'a pas répondu (troisième exception à D-011 ; arbitrage de l'équipe, D-065, 16 octobre 2026).
 - **La révélation reste unique** : les attributions cercle par cercle, puis le vote et les auteurs une seule fois ; l'avis du cercle, cercle par cercle, jamais additionné (D-011, D-025). Points et titres se comptent par cercle ; le portrait est unique.
 - **Exemples.** J4 (Hugo servi dans « Amis », où Léa n'a pas répondu) ; J5 (tirage).
 - *Source : règle 3 ; R8 (D-030).*

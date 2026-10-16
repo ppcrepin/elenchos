@@ -539,6 +539,16 @@ Le porteur : « Ok je te laisse continuer le travail. » Plan proposé : `docs/e
 
 Arbitrage de l'équipe, au titre de D-062 point 5 (le porteur ne veut plus de questions de détail), dit au porteur au point d'étape suivant, et qu'il peut renverser : pour la tension « Tradition ou changement », faute de textes récents « tradition », 3 textes « changement » pour 1 « tradition » sur cette seule tension (relâche E9, D-030, sur une tension ; recommandation de Contenu). Options non retenues : un quatrième texte sur Solidarité (7 textes des affaires sociales, au-dessus du plafond de 6) ; un texte de plus de deux ans.
 
+### D-065 — Étape 1 : trois arbitrages de l'équipe touchant la lettre de décisions validées · Arbitré par l'équipe (16 octobre 2026), à dire au porteur, renversable
+
+Au titre de D-062 point 5 (l'équipe tranche les détails ; le porteur est informé et peut renverser). Relevés par Cohérence et le Vérificateur sur l'étape 1.
+
+1. **Un proche partagé sans réponse n'est proposé que dans une seule de mes manches du jour** (lecture A2 de Game design, R8). **Troisième exception à D-011** (« tous les autres membres sont proposés »), fidèle à son but : ne jamais montrer qui n'a pas répondu. Reportée dans `docs/produit.md` règle 3 et `docs/etape-6/regles.md` règle 3.
+2. **Un seul trio de textes d'entrée pour tous les cercles pendant le test** (lecture B2 de Game design). **Suspend, pour le test, `docs/onboarding.md` et la règle 15** (trois textes fixés par cercle) ; l'exemple de la règle 15 (une réponse reprise sur trois) ne peut pas se produire. À rétablir pour la version publique (quelques trios en rotation).
+3. **Un lien de relecture réutilisable, 30 jours, pour le relecteur d'Apple**, qui n'ouvre qu'un cercle de démonstration aux membres et réponses inventés. **Exception à D-006 (arbitrage 3, lien non réutilisable) et à P-29**, bornée : aucune donnée réelle n'en sort.
+
+Rappel, déjà dans le plan relu (D-064) : « Tout effacer » révoque aussi la connexion chez Apple (rétablit D-035 règle 5 et P-38 pour Apple ; l'allègement de D-061 reste pour Google).
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique : **tranché, D-042** (gratuit, contribution libre à l'ouverture) · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
