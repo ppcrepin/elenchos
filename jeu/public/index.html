@@ -1,0 +1,32 @@
+<!doctype html>
+<!--
+  Elenchos, étape 1 (coquille). La page embarquée dans l'application (DECISIONS-TECHNIQUES.md 1.3).
+  - La marque de l'adresse du serveur (ELENCHOS_SERVEUR entre deux paires de soulignés) figure exactement deux fois :
+    la règle de chargement, puis la balise lue par client.js. ios/App/fixer-adresse.sh la remplace par l'adresse du
+    serveur au moment de la fabrication, et refuse la fabrication si elle n'y est pas deux fois.
+  - Règle de chargement stricte : rien venu d'ailleurs ; échanges avec l'adresse du serveur seulement (P-09, P-10).
+  - La vue de secours a ses mots ici (UX, phase 0 ; CONTRAT.md, partie 11) : elle s'affiche quand le script n'a pas pu
+    démarrer.
+-->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src __ELENCHOS_SERVEUR__; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="elenchos-serveur" content="__ELENCHOS_SERVEUR__">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no">
+<title>Elenchos</title>
+<link rel="stylesheet" href="style.css">
+<script src="secours.js" defer></script>
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<main id="application"></main>
+<section id="secours" class="ecran" hidden>
+  <h1>Elenchos n’a pas pu démarrer.</h1>
+  <p>Ce n’est pas une erreur de ta part. Ferme Elenchos, puis rouvre-le. Si ça recommence, préviens la personne qui t’a envoyé le lien.</p>
+</section>
+</body>
+</html>
