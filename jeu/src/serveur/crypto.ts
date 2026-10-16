@@ -5,7 +5,8 @@
 //   remplacé par le service d'Apple (plan-jeu-entier-equipe.md, 2.2) ;
 // - ajoutés : l'empreinte avec clé (P-01, DECISIONS-TECHNIQUES 1.7) et le chiffrement des réponses (P-02) ;
 // - ajoutés le 16 octobre 2026 (relecture de l'étape 1, corrections 2 et 9) : le « pourquoi » des cartes, chiffré comme
-//   les réponses ; les empreintes d'identité, tirées d'une clé à elles (CLE_IDENTITES) et non plus du secret de session.
+//   les réponses ; les empreintes d'identité, tirées d'une clé à elles (CLE_IDENTITES) et non plus du secret de session ;
+// - ajouté le même jour : le témoin des deux clés qui ne changent jamais (temoinDeCle ; src/base/temoin.ts).
 // Toutes les briques viennent de node:crypto (aucune bibliothèque).
 
 import {
@@ -55,6 +56,18 @@ export function empreinte(secret: Buffer, usage: Usage, valeur: string): string 
  *  c'est elle qui retrouve un compte. La base ne garde jamais la valeur (P-01). */
 export function empreinteIdentite(cleIdentites: Buffer, usage: UsageIdentite, valeur: string): string {
   return hmacHex(deriverCleIdentite(cleIdentites, usage), valeur);
+}
+
+/** Les deux clés qui ne changent jamais pendant le test, et dont la base garde un témoin (migration 0005 ;
+ *  src/base/temoin.ts) : CLE_REPONSES ouvre les réponses, CLE_IDENTITES retrouve les comptes. */
+export type CleTemoin = 'CLE_REPONSES' | 'CLE_IDENTITES';
+
+/** Le témoin d'une clé : 64 chiffres hexadécimaux, tirés de la clé par une fonction à sens unique (HKDF-SHA-256), avec
+ *  une étiquette propre au témoin et à cette clé. Il dit si la clé est la même qu'au premier démarrage, sans permettre
+ *  de la retrouver ; et, l'étiquette étant à lui seul, il ne vaut aucune des clés que le serveur tire de ces deux-là
+ *  (l'étiquette « elenchos-jeu:identites:… » de `deriverCleIdentite` ; CLE_REPONSES sert telle quelle au chiffrement). */
+export function temoinDeCle(cle: Buffer, nom: CleTemoin): string {
+  return Buffer.from(hkdfSync('sha256', cle, Buffer.alloc(0), Buffer.from('elenchos-jeu:temoin:' + nom), 32)).toString('hex');
 }
 
 /** Un jeton tiré au hasard (session, lien d'invitation) : 32 octets, en base64url. */

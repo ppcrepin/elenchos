@@ -43,9 +43,11 @@ export const TEXTES = Object.freeze({
 
   /** Le bloc du message de 18h (N10, sans sa variante « iPhone trop ancien » ; CONTRAT.md 2.13). */
   message: Object.freeze({
-    // Une ou deux phrases au-dessus du bouton : un seul message par jour, à 18h, pour dire que la révélation et la
-    // question du jour attendent ; iOS va demander l'accord.
-    explication: 'Chaque soir à 18h, un seul message : la révélation et la question du jour t’attendent. Pas de relance. Ton iPhone va te demander ton accord.',
+    // Une ou deux phrases au-dessus du bouton : un message chaque soir à 18h, qui dit ce qui attend ; iOS va demander
+    // l'accord. À l'étape 1, le seul message qui part est « 18h. La question d'aujourd'hui t'attend. » (CONTRAT.md,
+    // 2.13) : la phrase dit donc la question, pas la révélation. À l'étape 2, avec le vrai calcul de ce qui attend,
+    // retour à la formule de N10 : « Chaque soir à 18h, un message : la révélation t'attend. Pas de relance. »
+    explication: 'Chaque soir à 18h, un message : la question du jour t’attend. Pas de relance. Ton iPhone va te demander ton accord.',
     // Le bouton, qui seul déclenche la demande d'iOS. Mots de N10, cités par CONTRAT.md 2.13.
     bouton: 'Recevoir le message de 18h',
     // Après l'accord, une fois l'abonnement enregistré : c'est fait, le message arrivera vers 18h.

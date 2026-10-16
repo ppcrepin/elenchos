@@ -14,12 +14,14 @@ import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import type pg from 'pg';
 import { creerPool, creerPoolModule, enTransaction, type ModuleOuProprietaire } from '../../src/base/connexion.ts';
 import { installerBase } from '../../src/base/installation.ts';
+import { verifierTemoinDesCles } from '../../src/base/temoin.ts';
 import { pseudoComparaison } from '../../src/regles/cercle.ts';
 import type { ModeRoles } from '../../src/serveur/config.ts';
 import { chiffrerPourquoi, chiffrerReponse, type ReponseClaire } from '../../src/serveur/crypto.ts';
 
 export const PROPRIETAIRE_DE_TEST = 'elenchos_test_proprietaire';
 export const CLE_REPONSES_TEST = randomBytes(32);
+export const CLE_IDENTITES_TEST = randomBytes(32);
 
 export function urlDeTest(): string {
   const url = process.env.BASE_DE_TEST_URL;
@@ -311,6 +313,9 @@ export async function peupler(base: BaseDeTest) {
   await commeJoueur(base, ines.id, (cl) => cl.query('INSERT INTO message_coupe (joueur_id) VALUES ($1) ON CONFLICT DO NOTHING', [ines.id]));
   // Le ménage du lundi est passé (migration 0004).
   await base.module('menage').query("INSERT INTO tache_du_jour (tache, jour) VALUES ('menage', $1) ON CONFLICT DO NOTHING", [JOURS.lundi]);
+  // Le témoin des clés, rangé comme au premier démarrage normal (migration 0005).
+  await verifierTemoinDesCles(base.urlProprietaire, { CLE_REPONSES: CLE_REPONSES_TEST, CLE_IDENTITES: CLE_IDENTITES_TEST },
+    { schema: base.schema });
   // Les totaux, le mardi à midi (la semaine du dimanche 25 n'est pas close : migration 0003).
   await commeJoueur(base, marie.id, async (cl) => {
     await cl.query("SELECT ajouter_compteur('ipad', $1)", [JOURS.mardi]);

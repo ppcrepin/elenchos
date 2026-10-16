@@ -64,6 +64,8 @@ const DETAILS = [
   'verificateur faux', 'cles apple', 'trop de demandes', 'pas encore construit', 'mise a jour requise',
   // Le mode préparation (preparation.ts) : la seule ligne qu'il écrive au démarrage.
   'mode preparation',
+  // Le témoin des clés (src/base/temoin.ts) : rangé au premier démarrage normal ; une clé changée depuis.
+  'temoin des cles enregistre', 'cles changees',
 ] as const;
 export type Detail = (typeof DETAILS)[number];
 

@@ -3,8 +3,8 @@
 // réelle à la carte, colonne par colonne (tests/socle/carte.test.ts).
 //
 // Usages (D-042, point 2 ; D-052, point 2) : 1 faire tourner le jeu ; 2 la part de « aucune » ; 3 les mesures sur les
-// gestes ; 4 la sécurité ; 5 régler les seuils du jeu. « public » : données de l'Assemblée ; « technique » : la
-// mémoire des migrations, sans donnée.
+// gestes ; 4 la sécurité ; 5 régler les seuils du jeu. « public » : données de l'Assemblée ; « technique » : sans
+// aucune donnée de joueur (la tâche du jour, le témoin des clés, la mémoire des migrations).
 //
 // Formes : ce qu'une colonne peut contenir. Aucune ne peut porter un nom, une adresse e-mail ou une adresse internet :
 // les seules colonnes de texte libre sont le pseudo et le nom du cercle, et la base y refuse « @ », « / », « : » et
@@ -208,6 +208,10 @@ export const CARTE: Record<string, Table> = {
     usage: 'technique', duree: '7 jours (ménage) : le verrou « une fois par jour » du ménage (migration 0004)',
     colonnes: { tache: 'liste', jour: 'date' },
   },
+  temoin_cle: {
+    usage: 'technique', duree: 'Jusqu’à la fin du test : il part avec la base. Une empreinte à sens unique de CLE_REPONSES et une de CLE_IDENTITES, qui ne permettent pas de retrouver les clés (migration 0005 ; src/base/temoin.ts)',
+    colonnes: { cle: 'liste', empreinte: 'empreinte' },
+  },
   migration: {
     usage: 'technique', duree: 'Tant que la base existe',
     colonnes: { numero: 'entier', nom: 'nom_migration', empreinte: 'empreinte', jouee_le: 'instant' },
@@ -219,7 +223,7 @@ export const VUES = ['mesure_aucune', 'mesure_compteurs', 'mesure_histogramme', 
 
 /** Les tables sans aucune donnée de joueur. */
 export const TABLES_SANS_JOUEUR = ['texte', 'calendrier', 'carte_accord', 'compte_aucune', 'compteur',
-  'histogramme_raison', 'total_mesure', 'tache_du_jour', 'migration'];
+  'histogramme_raison', 'total_mesure', 'tache_du_jour', 'temoin_cle', 'migration'];
 
 /** Les colonnes réelles d'un schéma : { table: [colonnes] }, vues comprises. */
 export async function colonnesReelles(client: pg.Pool | pg.ClientBase, schema: string): Promise<Record<string, string[]>> {

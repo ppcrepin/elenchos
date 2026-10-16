@@ -21,8 +21,8 @@
 -- LIRE AU-DESSUS DES SEUILS (P-21, P-23, P-39 a). Le module des mesures ne lit que des vues : la part de « aucune »
 -- d'un texte après sa révélation et au-dessus de 30 réponses ; les totaux des mesures au-dessus de 10 joueurs
 -- distincts, et de 30 pour les trois comptes de mi-bêta ; les compteurs par jour et l'histogramme de la durée de la
--- raison au-dessus d'un seuil d'apports (N6 : aucun total n'est montré pour moins de dix joueurs différents). Ces
--- deux-là sont sans personne : on ne peut pas y compter des joueurs distincts. Le seuil vaut donc dix fois ce qu'un
+-- raison au-dessus d'un seuil d'apports (N6 : « jamais un total qui porte sur moins de dix gestes »). Ces deux-là
+-- sont sans personne : on ne peut pas y compter des joueurs distincts. Le seuil vaut donc dix fois ce qu'un
 -- même joueur peut apporter au plus à une ligne : 10 pour un compteur par jour (un apport par joueur et par jour),
 -- 30 pour « cercle_pendant_deviner » (une fois par manche, trois cercles au plus), 70 pour une tranche de
 -- l'histogramme de la semaine (une réponse par jour). Une ligne sous son seuil n'est pas montrée du tout (arbitrage de

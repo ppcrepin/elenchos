@@ -21,7 +21,12 @@
 // - le ménage quotidien (src/base/menage.ts), à 4h, heure de Paris (proposé), ou dès que possible s'il n'a pas pu
 //   tourner, jamais de 17h30 à 18h30 (P-31) : de 4h à 17h30. Sa ligne de `tache_du_jour` (migration 0004) le fait
 //   tourner une fois par jour, jamais deux fois en même temps, même avec deux serveurs ou après un redémarrage.
-// Rien ne se calcule à 18h pile (D-043) : à 18h, le planificateur compare l'heure et envoie.
+// Rien ne se calcule à 18h pile (D-043) : à 18h, le planificateur compare l'heure et envoie. Ce qui attend chaque
+// joueur (`ceQuiAttend`) est préparé avant 18h et seulement lu à 18h : à l'étape 1, c'est une constante
+// (`rienNAttendEncore`, sans base ni calcul) ; à l'étape 2, ce sera une simple lecture de ce que la base aura noté
+// au moment des gestes de la journée (une manche ouverte avec ses cartes, une réponse enregistrée, une semaine qui
+// aura des titres), jamais un calcul fait à 18h. On ne peut pas le préparer hors de 15h–19h : un joueur qui ouvre
+// Deviner à 17h change ce qui l'attend, et le message doit dire ce qui attend vraiment (E1).
 // Le journal ne reçoit aucune valeur de joueur : ni jeton d'appareil, ni identifiant, ni texte.
 
 import { randomUUID } from 'node:crypto';
@@ -45,7 +50,8 @@ const PAS_HORS_CRENEAU_MS = 60_000;
 const MENAGE_REESSAI_MS = 15 * 60_000;
 const ENVOIS_EN_PARALLELE = 8;
 
-/** Ce qui attend un joueur à 18h, tous cercles confondus (E1 ; CONTRAT.md, 2.13). */
+/** Ce qui attend un joueur à 18h, tous cercles confondus (E1 ; CONTRAT.md, 2.13). Préparé avant 18h, seulement lu à
+ *  18h (D-043). */
 export type Attente = {
   /** Des cartes dans la manche qui se révèle, dans un de ses cercles. */
   avaitDesCartes: boolean;

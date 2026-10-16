@@ -20,24 +20,25 @@
 <body>
 <main>
   <h1>Préparer le serveur</h1>
-  <p>Le serveur attend ses trois clés pour démarrer. Cette page les tire au hasard <strong>dans votre navigateur</strong> : elle n’envoie rien, ni au serveur ni à l’équipe, et ne garde rien.</p>
+  <p>Le serveur du jeu a besoin de trois clés pour démarrer. Cette page les crée au hasard, <strong>dans votre navigateur</strong> : elle n’envoie rien, ni au serveur ni à l’équipe, et ne garde rien.</p>
   <p class="important">Ces clés protègent les connexions, les réponses et les comptes des joueurs : ne les envoyez jamais à personne, pas même à l’équipe.</p>
+  <p><strong>Une seule fois.</strong> Si le serveur a déjà tourné avec ses clés, n’en créez pas d’autres : remettez celles de votre gestionnaire de mots de passe, et prévenez l’équipe. Avec de nouvelles clés, il refuserait de démarrer, pour ne perdre ni les réponses ni les comptes.</p>
 
-  <p><button type="button" id="tirer">Tirer les trois clés</button></p>
+  <p><button type="button" id="tirer">Créer les trois clés</button></p>
 
   <div id="resultat" hidden>
     <pre id="lignes"></pre>
     <p><button type="button" id="copier">Copier les trois lignes</button></p>
+    <p>Ne rechargez pas cette page avant le point&nbsp;4 : elle créerait d’autres clés.</p>
     <ol>
-      <li>Collez-les dans une fiche de votre gestionnaire de mots de passe.</li>
-      <li>Chez Scalingo, onglet <strong>Environment</strong>, ajoutez-les : une ligne par réglage, le nom avant le « = », la valeur après. Enregistrez.</li>
-      <li>Redémarrez l’application, si Scalingo ne le fait pas de lui-même. Ensuite, cette page ne s’affiche plus : c’est normal.</li>
+      <li>Collez les trois lignes dans une nouvelle fiche de votre gestionnaire de mots de passe, « Elenchos serveur ».</li>
+      <li>Chez Scalingo, onglet <strong>Environment</strong> de l’application, ajoutez-les : une ligne par réglage, le nom avant le « = », la valeur après. Enregistrez.</li>
+      <li>Redémarrez l’application chez Scalingo : le serveur ne lit ses réglages qu’en démarrant. Jamais entre 15h et 19h, ni le dimanche.</li>
+      <li>Deux minutes plus tard, rechargez cette page : elle ne doit plus s’afficher. C’est le signe que le serveur a démarré avec ses clés. Si elle s’affiche encore au bout de dix minutes, n’en créez pas d’autres : prévenez l’équipe.</li>
     </ol>
-    <p>Ne rechargez pas cette page avant d’avoir tout collé : elle tirerait d’autres clés.</p>
   </div>
 
-  <p class="note">Si le serveur a déjà tourné avec ses clés, ne tirez pas de nouvelles clés : remettez celles de votre gestionnaire. <code>CLE_REPONSES</code> et <code>CLE_IDENTITES</code> ne changent jamais pendant le test : de nouvelles valeurs rendraient les réponses illisibles et les comptes introuvables.</p>
-  <noscript><p class="important">Cette page a besoin de JavaScript pour tirer les clés.</p></noscript>
+  <noscript><p class="important">Cette page a besoin de JavaScript pour créer les clés.</p></noscript>
 </main>
 </body>
 </html>

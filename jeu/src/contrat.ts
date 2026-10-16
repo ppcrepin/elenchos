@@ -977,8 +977,9 @@ export const GESTES = ['cercle_pendant_deviner'] as const;
 export type Geste = (typeof GESTES)[number];
 
 /** Liens arrêtés avant le premier texte, comptés sans rien garder de la personne (N2 ; page d'invitation) : `android`,
- *  `ordinateur`, `ipad` (page web, ou application ouverte sur un iPad) ; `iphone_sans_application` (la page d'invitation
- *  s'est affichée sur un iPhone : l'application n'y est pas encore). */
+ *  `ordinateur`, `ipad` (la page web ouverte sur un iPad, ou l'application ouverte sur un iPad ou un Mac : les deux
+ *  comptent `ipad`) ; `iphone_sans_application` (la page d'invitation s'est affichée sur un iPhone : l'application
+ *  n'y est pas encore). */
 export const SORTES_COMPTEUR = ['android', 'ordinateur', 'ipad', 'iphone_sans_application'] as const;
 export type SorteCompteur = (typeof SORTES_COMPTEUR)[number];
 

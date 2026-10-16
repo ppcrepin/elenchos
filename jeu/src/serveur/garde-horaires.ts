@@ -3,7 +3,8 @@
 // La règle des horaires de mise en ligne (D-043, D-054, CLAUDE.md) : aucune installation de 15h à 19h ni le dimanche,
 // heure de Paris. Les vérifications automatiques échouent exprès dans ces créneaux : Scalingo refuse alors d'installer
 // (fabrication en échec, ou vérification GitHub en échec). La même règle vaut pour les versions de l'application
-// proposées aux testeurs (plan-jeu-entier-equipe.md, 2.2).
+// proposées aux testeurs (plan-jeu-entier-equipe.md, 2.2) : la fabrication pour TestFlight la tient par sa propre
+// règle, plus stricte, écrite dans .github/workflows/app-testflight.yml (dès 14h), et non par ce module.
 // La variable IGNORER_HORAIRES=oui lève la garde en local seulement : elle est refusée chez Scalingo et sur GitHub.
 
 import { partiesParis } from './horloge.ts';

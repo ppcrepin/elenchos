@@ -8,18 +8,23 @@
 // 1. les réglages (config.ts) : un réglage dangereux présent chez Scalingo, ou un réglage indispensable absent, et le
 //    serveur ne démarre pas ; les autres manques sont signalés par leur NOM et coupent seulement leur fonction ;
 // 2. la base : les migrations, puis les rôles des modules (src/base/installation.ts) ;
-// 3. une connexion par module (jeu, comptes, envoi, ménage), chacune sous son rôle ;
-// 4. le serveur, puis le planificateur. En local, aucun message ne part vers Apple (DECISIONS-TECHNIQUES 1.13).
+// 3. le témoin des clés (src/base/temoin.ts) : au premier démarrage normal, il range une empreinte à sens unique de
+//    CLE_REPONSES et de CLE_IDENTITES ; ensuite, si l'une ne correspond plus, le serveur ne démarre pas, et le journal
+//    dit seulement « cles changees » avec le NOM de la clé (des clés remplacées par erreur ne rendent jamais les
+//    réponses illisibles en silence) ;
+// 4. une connexion par module (jeu, comptes, envoi, ménage), chacune sous son rôle ;
+// 5. le serveur, puis le planificateur. En local, aucun message ne part vers Apple (DECISIONS-TECHNIQUES 1.13).
 // Aucune erreur imprévue n'écrit son message, qui pourrait contenir une donnée : seulement son type (P-07).
 //
 // Le mode préparation (16 octobre 2026 ; CONTRAT.md, 2.17) : si les trois clés manquent toutes et que rien d'autre
-// n'empêche de démarrer (`config.preparation`), les étapes 2 à 4 sont sautées. Seul le petit serveur de
+// n'empêche de démarrer (`config.preparation`), les étapes 2 à 5 sont sautées. Seul le petit serveur de
 // preparation.ts tourne : sans base, sans planificateur ni ménage, il ne sert que la page `/preparer`. Le journal dit
 // seulement « mode preparation », sans la liste des réglages manquants.
 
 import { creerPoolModule } from '../base/connexion.ts';
 import { installerBase, RepliSansCloison } from '../base/installation.ts';
 import { MigrationModifiee } from '../base/migrations.ts';
+import { ClesChangees, verifierTemoinDesCles } from '../base/temoin.ts';
 import { creerEnvoyeurApns } from './apns.ts';
 import { creerVerificateurApple } from './apple.ts';
 import { lireConfig, type Config } from './config.ts';
@@ -64,7 +69,7 @@ function demarrerPreparation(config: Config): void {
 
 /** Le jeu : la base, les modules, le serveur, le planificateur. */
 async function demarrerLeJeu(config: Config): Promise<void> {
-  if (!config.peutDemarrer || !config.urlBase) {
+  if (!config.peutDemarrer || !config.urlBase || !config.cleReponses || !config.cleIdentites) {
     journal.ecrire({ evenement: 'demarrage', detail: config.urlBase ? 'reglages incomplets' : 'pas de base', manquants: config.manquants });
     process.exit(1);
   }
@@ -78,6 +83,17 @@ async function demarrerLeJeu(config: Config): Promise<void> {
   } catch (e) {
     if (e instanceof MigrationModifiee) journal.ecrire({ evenement: 'migration', detail: 'migration modifiee' });
     else if (e instanceof RepliSansCloison) journal.ecrire({ evenement: 'roles', detail: 'repli', erreur: 'repli_sans_cloison' });
+    else journal.ecrire({ evenement: 'erreur', erreur: typeErreur(e) });
+    process.exit(1);
+  }
+
+  // Le témoin des clés : rangé la première fois, comparé ensuite. Une clé changée arrête tout, avant toute connexion
+  // des modules : aucune réponse n'est lue ni écrite avec une clé qui ne les ouvre pas.
+  try {
+    const issue = await verifierTemoinDesCles(urlBase, { CLE_REPONSES: config.cleReponses, CLE_IDENTITES: config.cleIdentites });
+    if (issue === 'enregistre') journal.ecrire({ evenement: 'demarrage', detail: 'temoin des cles enregistre' });
+  } catch (e) {
+    if (e instanceof ClesChangees) journal.ecrire({ evenement: 'demarrage', detail: 'cles changees', manquants: e.cles });
     else journal.ecrire({ evenement: 'erreur', erreur: typeErreur(e) });
     process.exit(1);
   }
