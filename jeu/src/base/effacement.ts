@@ -1,12 +1,13 @@
 // « Tout effacer » (P-33, P-38) : un effacement immédiat, en une transaction, sous le rôle du ménage.
 // Le principe vient de test-18h/outils/effacer.ts : effacer, puis vérifier qu'il ne reste rien.
 //
-// Effacer la ligne du joueur (et les liens qui l'ont fait entrer) suffit : les clés étrangères emportent tout ce qui
-// porte son identifiant (identités,
+// Effacer la ligne du joueur suffit : les clés étrangères emportent tout ce qui porte son identifiant (identités,
 // sessions, accords, réponses, abonnements et envois, places dans les cercles, manches, cartes dont il est l'auteur,
 // compteurs, tempéraments, lectures du dimanche, « vu »). Ce qui reste, voulu :
 // - ses titres passés, sous « un ancien membre » (D-045, point 2) : la clé du titulaire devient vide ;
 // - une carte où un proche avait posé son visage redevient vide (règle 4) ;
+// - le lien qui l'avait fait entrer reste « servi », sans plus le désigner : il ne s'ouvre pas à un autre (P-29), et
+//   l'invitant voit toujours le même nombre de liens envoyés (CONTRAT.md, 2.12) ;
 // - les totaux déjà anonymes (P-23) ;
 // - l'identifiant tiré au hasard, au journal des effacements (P-32), pour rejouer l'effacement après une restauration.
 // Un cercle resté sans membre est effacé avec son histoire (carte des données, « Titres passés »).
@@ -26,8 +27,6 @@ export async function toutEffacer(pool: pg.Pool, joueur: string, jour: string): 
   try {
     await client.query('BEGIN');
     const cercles = await client.query<{ cercle_id: string }>('SELECT cercle_id FROM membre WHERE joueur_id = $1', [joueur]);
-    // Les liens qui l'ont fait entrer : ils ne servent plus, et garderaient l'heure de son arrivée.
-    await client.query('DELETE FROM invitation WHERE invite_joueur_id = $1', [joueur]);
     const efface = await client.query('DELETE FROM joueur WHERE id = $1', [joueur]);
     const vides = await client.query(
       `DELETE FROM cercle c WHERE c.id = ANY ($1::uuid[]) AND NOT EXISTS (SELECT 1 FROM membre m WHERE m.cercle_id = c.id)`,

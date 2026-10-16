@@ -2,7 +2,7 @@
 // Lancé avant le serveur (et par lui au démarrage). Il n'écrit que par le journal : aucune valeur, aucun réglage.
 // Il refuse de tourner si un réglage dangereux est présent chez Scalingo ou sur GitHub (config.ts).
 
-import { installerBase } from '../src/base/installation.ts';
+import { installerBase, RepliSansCloison } from '../src/base/installation.ts';
 import { MigrationModifiee } from '../src/base/migrations.ts';
 import { lireConfig } from '../src/serveur/config.ts';
 import { creerJournal, typeErreur } from '../src/serveur/journal.ts';
@@ -21,6 +21,7 @@ try {
   await installerBase(config.urlBase, config.modeRoles, {}, journal);
 } catch (e) {
   if (e instanceof MigrationModifiee) journal.ecrire({ evenement: 'migration', detail: 'migration modifiee' });
+  else if (e instanceof RepliSansCloison) journal.ecrire({ evenement: 'roles', detail: 'repli', erreur: 'repli_sans_cloison' });
   else journal.ecrire({ evenement: 'erreur', erreur: typeErreur(e) });
   process.exit(1);
 }

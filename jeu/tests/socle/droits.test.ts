@@ -10,6 +10,7 @@ import { MODULES, nomRole } from '../../src/base/connexion.ts';
 import { jouerMigrations, lireMigrations, MigrationModifiee } from '../../src/base/migrations.ts';
 import { creerPoolModule } from '../../src/base/connexion.ts';
 import { DROITS } from '../../src/base/roles.ts';
+import { installerBase, RepliSansCloison } from '../../src/base/installation.ts';
 import { baseDeTest, PROPRIETAIRE_DE_TEST, type BaseDeTest } from './aides.ts';
 
 let base: BaseDeTest;
@@ -126,6 +127,18 @@ test('le propriétaire lui-même, sans module déclaré, ne voit aucune donnée 
   } finally {
     await p.end();
     await base.admin.query("DELETE FROM joueur WHERE id = '8f3c0000-0000-4000-8000-0000000000aa'");
+  }
+});
+
+test('en mode « repli », un propriétaire qui échappe aux règles (superutilisateur) fait refuser l’installation', async () => {
+  const schema = 'socle_su_' + Date.now().toString(36);
+  await base.admin.query(`CREATE SCHEMA ${schema}`);
+  try {
+    await assert.rejects(installerBase(base.url, 'repli', { schema }), RepliSansCloison);
+    const tables = await base.admin.query('SELECT 1 FROM pg_tables WHERE schemaname = $1', [schema]);
+    assert.equal(tables.rowCount, 0); // rien n'a été joué
+  } finally {
+    await base.admin.query(`DROP SCHEMA ${schema} CASCADE`);
   }
 });
 

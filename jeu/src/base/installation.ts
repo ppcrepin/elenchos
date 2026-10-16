@@ -7,9 +7,20 @@ import { creerPoolModule, type OptionsPool } from './connexion.ts';
 import { jouerMigrations, lireMigrations } from './migrations.ts';
 import { appliquerDroits, creerRoles } from './roles.ts';
 
+/** Le propriétaire échappe aux règles de cloisonnement (superutilisateur, ou BYPASSRLS) : en mode « repli », où tous
+ *  les modules se connectent sous son nom, plus rien ne cloisonnerait. Le serveur refuse alors de démarrer. */
+export class RepliSansCloison extends Error {
+  override name = 'Error';
+  constructor() { super('repli impossible : le propriétaire échappe aux règles de cloisonnement'); }
+}
+
 export async function installerBase(url: string, mode: ModeRoles, options: OptionsPool = {}, journal?: Journal): Promise<void> {
   const pool = creerPoolModule(url, 'proprietaire', mode, { ...options, max: 1 });
   try {
+    const qui = await pool.query<{ rolsuper: boolean; rolbypassrls: boolean }>(
+      'SELECT rolsuper, rolbypassrls FROM pg_roles WHERE rolname = current_user');
+    const echappe = qui.rows[0] === undefined || qui.rows[0].rolsuper || qui.rows[0].rolbypassrls;
+    if (mode === 'repli' && echappe) throw new RepliSansCloison();
     const n = await jouerMigrations(pool, lireMigrations());
     journal?.ecrire({ evenement: 'migration', detail: 'migrations jouees', nombre: n });
     if (mode === 'repli') {

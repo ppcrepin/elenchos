@@ -29,8 +29,7 @@ for (const mode of ['roles', 'repli'] as ModeRoles[]) {
         m.connexion.id, m.connexion.nonce, m.connexion.etat, m.connexion.verificateur, m.connexion.defi, m.connexion.codeRetour,
         m.hugo.abonnement, m.hugo.jeton, m.envois[m.hugo.pseudo] ?? 'absent', ...[m.a, m.b, m.c].map((c) => c.membres.get(m.hugo.id) ?? 'absent'),
         m.c.id, m.c.intitule, m.temperaments.mesureHugo, m.temperaments.originalHugoB, m.cartesA[1] ?? 'absent',
-        m.cartesB[0] ?? 'absent', m.invitations.invHugoA.id, m.invitations.invHugoA.jeton, m.invitations.invHugoB.id,
-        m.invitations.invHugoB.jeton,
+        m.cartesB[0] ?? 'absent',
       ];
       aucuneAvant = (await base.admin.query('SELECT * FROM compte_aucune ORDER BY texte_id')).rows;
       const avant = await toutLeContenu(base, TABLES);
@@ -62,6 +61,11 @@ for (const mode of ['roles', 'repli'] as ModeRoles[]) {
       const cartes = await base.admin.query<{ id: string; visage_membre_id: string | null }>(
         'SELECT id, visage_membre_id FROM carte WHERE manche_id = $1', [m.mancheA]);
       assert.deepEqual(cartes.rows, [{ id: m.cartesA[0], visage_membre_id: null }]);
+      // Les liens qui l'avaient fait entrer restent servis, sans plus le désigner (P-29 ; CONTRAT.md, 2.12).
+      const liens = await base.admin.query<{ invite_joueur_id: string | null; servi: boolean }>(
+        'SELECT invite_joueur_id, lie_le IS NOT NULL AS servi FROM invitation WHERE id = ANY ($1::uuid[])',
+        [[m.invitations.invHugoA.id, m.invitations.invHugoB.id]]);
+      assert.deepEqual(liens.rows, [{ invite_joueur_id: null, servi: true }, { invite_joueur_id: null, servi: true }]);
       // Les totaux ne reculent pas (P-23).
       assert.deepEqual((await base.admin.query('SELECT * FROM compte_aucune ORDER BY texte_id')).rows, aucuneAvant);
     });

@@ -182,7 +182,7 @@ Ils tournent à chaque changement du fichier, dans le contrôle du code (`npm ru
 ## 8. Ce que les contrôles ne prouvent pas
 
 Dit franchement : un programme vérifie la forme et les comptes, pas le sens. Restent humains, par la méthode des essais (`docs/etape-6/plan-version-test.md`, partie 2, « Note sur les textes », gardé pour mémoire depuis D-062 ; le plan de D-064 confirme que les textes sont écrits par les agents en session) :
-- **la fidélité** du résumé et de chaque raison au texte et aux débats : vérification indépendante sur Claude Fable 5.1 (D-036) ;
+- **la fidélité** du résumé et de chaque raison au texte et aux débats : vérification indépendante par un autre modèle, le plus capable (D-036) ;
 - **le côté et le pôle** de chaque raison, et le sens du texte : annotation à l'aveugle ;
 - **« une forme n'annonce jamais le vote »** pour les phrases fixes que le programme ne reconnaît pas (C21 ne voit que le premier mot du titre et l'objet du vote) ;
 - **le critère du camp** (D-053, point 1) : il se mesure en bêta, auprès de volontaires hors du jeu, pas par un contrôle.
