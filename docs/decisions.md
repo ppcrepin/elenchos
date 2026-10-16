@@ -551,6 +551,16 @@ Au titre de D-062 point 5 (l'équipe tranche les détails ; le porteur est infor
 
 Rappel, déjà dans le plan relu (D-064) : « Tout effacer » révoque aussi la connexion chez Apple (rétablit D-035 règle 5 et P-38 pour Apple ; l'allègement de D-061 reste pour Google).
 
+### D-066 — Données du test : quatre arbitrages de l'équipe sur avis de Juridique · Arbitré par l'équipe (16 octobre 2026), à dire au porteur, renversable
+
+Relecture du schéma de la base par Juridique (`docs/etape-6/donnees.md` mis à jour en conséquence). Au titre de D-062 point 5 :
+1. **Le badge « Pas de Côté » est effacé quand son titulaire quitte le cercle ou efface tout**, au lieu de rester sous « un ancien membre » : il dit qu'une réponse allait contre son penchant (donnée tirée d'une opinion). **Modifie, pour ce seul badge, D-045 point 2 et la règle 14** (validées par D-052). Les autres titres restent sous « un ancien membre ».
+2. **Pendant le test, la part de « aucune » et les trois comptes de mi-bêta ne sont pas calculés** : avec 20 à 30 joueurs, le seuil de 30 n'est jamais atteint. Suspend pour le test D-027 et D-052 point 2 (reprend ce que D-058 prévoyait).
+3. **Un joueur peut refuser qu'on compte ses gestes** (droit d'opposition, promis par « Qui, durée, droits ») : la base garde ce refus et les totaux l'excluent.
+4. **Les mesures se comptent au moment du geste, sans heure gardée sous la personne** (« révélation ouverte le soir même », « message reçu » : totaux par jour) ; les envois du message ne sont gardés en détail que 7 jours ; les seuils des totaux comptent des joueurs distincts.
+
+Rappel de Juridique, sans décision : le droit s'applique au test ; une demi-page « si les données fuient » (CNIL sous 72 heures, prévenir les joueurs, changer les clés) sera remise au porteur avant les amis ; le programme de ménage (effacements à 7 jours, liens échus, codes, sessions) doit tourner avant la première vraie invitation.
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique : **tranché, D-042** (gratuit, contribution libre à l'ouverture) · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
