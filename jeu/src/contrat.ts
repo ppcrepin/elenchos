@@ -703,8 +703,13 @@ export type Verdict = 'juste' | 'juste_et_raison' | 'jumeau' | 'jumeau_et_raison
 export type CarteRevelee = {
   readonly position: Position;
   readonly raison: RaisonAffichee | 'aucune' | 'cachee';
-  /** « Ton pari : Paul. » (avec « parce que « … » » sur la carte cachée) ; null : carte passée ou vide. */
-  readonly pari: { readonly visage: Visage; readonly pourquoi: RaisonAffichee | null } | null;
+  /** « Ton pari : Paul. » (avec « parce que « … » » sur la carte cachée) ; null : carte passée ou vide.
+   *  `parti` : le membre que tu avais désigné a quitté le cercle (ou tout effacé) après 18h. La carte garde son verdict
+   *  et son point, mais la révélation et « Revoir la révélation » ne montrent plus le pari : ni pseudo, ni « un ancien
+   *  membre », ni « … avait répondu la même chose. », seulement le verdict et « C'était {auteur}. » (D-067 ; CONTRAT.md,
+   *  partie 3). Distinct de null, qui dit une carte passée ou vidée par un départ avant 18h. Servi à l'étape 2 ; mots :
+   *  UX (verdict faux sans pari : à confirmer avec UX, avis de Game design). */
+  readonly pari: { readonly visage: Visage; readonly pourquoi: RaisonAffichee | null } | 'parti' | null;
   /** « C'était Hugo. » Pour deux cartes identiques servies ensemble, l'auteur est déjà réattribué (R4). */
   readonly auteur: Visage;
   readonly verdict: Verdict;
