@@ -6,16 +6,31 @@
 //   introuvables). Sans l'un d'eux, le serveur refuse de démarrer, au lieu de tourner à moitié (P-02 : « sans clé, le
 //   serveur refuse de démarrer »). Les trois clés doivent être distinctes. En ligne, FIN_DU_TEST l'est aussi : sans
 //   elle, rien ne garantirait qu'aucune session ne dure au-delà de la fin du test (D-061, point 2) ;
-// - les autres coupent seulement la fonction qui en dépend (connexion Apple ou Google, message de 18h) ;
+// - les autres coupent seulement la fonction qui en dépend (connexion Apple ou Google, message de 18h, révocation
+//   chez Apple, version minimale) ;
 // - les réglages dangereux (horloge accélérée, connexion d'essai, garde des horaires levée) n'existent qu'en local :
 //   présents chez Scalingo ou sur GitHub, ils sont REFUSÉS et le serveur ne démarre pas (CONTRAT.md, partie 5).
 // Retirés : les codes d'essai, le calendrier des soirs, la clé VAPID (propres au test de 18h).
+//
+// Étape 1, travail D (16 octobre 2026) : les réglages d'Apple sont séparés par fonction, pour qu'un manque ne coupe
+// que la sienne (DECISIONS-TECHNIQUES 1.7) :
+// - la connexion Apple n'a besoin que de l'identifiant de l'application (APPLE_ID_APPLICATION) : c'est l'audience du
+//   jeton signé par Apple, vérifié avec les clés publiques d'Apple, sans clé à nous ;
+// - le message de 18h : l'identifiant d'équipe, la clé des messages (.p8) et son identifiant, le service d'Apple
+//   (production par défaut ; « essai » seulement s'il le faut) ;
+// - la révocation à « Tout effacer » (étape 2) : la clé « Se connecter avec Apple » et son identifiant, qui peuvent
+//   être les mêmes que ceux des messages si le porteur a coché les deux services sur une seule clé (à vérifier) ;
+// - FABRICATION_MINIMALE : le plus petit numéro de fabrication accepté (CONTRAT.md, 1.7) ; absent, tout est accepté ;
+// - COMPTE_PORTEUR : à l'étape 1 seulement, le pseudo sous lequel la première connexion Apple ouvre le compte du
+//   porteur, tant qu'aucun compte n'existe (CONTRAT.md, 2.5 ; arbitrage de l'équipe, renversable). Facultatif.
 
 import { createPrivateKey, type KeyObject } from 'node:crypto';
 import { deB64url } from './crypto.ts';
 import { environnementProtege } from './garde-horaires.ts';
 
 export type ModeRoles = 'roles' | 'repli';
+/** Le service d'Apple pour les messages : « production » (les fabrications TestFlight), ou « essai » (sandbox). */
+export type ServiceApns = 'production' | 'essai';
 
 export type Config = {
   /** Vrai dans un conteneur de Scalingo. */
@@ -34,7 +49,16 @@ export type Config = {
   /** La clé des empreintes d'identité (Apple, Google, e-mail), gardée hors ligne par le porteur ; ne se change jamais
    *  pendant le test (crypto.ts, `empreinteIdentite`). */
   cleIdentites: Buffer | null;
-  apple: { idEquipe: string; idCle: string; idApplication: string; clePrivee: KeyObject } | null;
+  /** La connexion Apple : l'application visée par le jeton (son identifiant, « bundle ID »). */
+  apple: { idApplication: string } | null;
+  /** Le message de 18h, envoyé au service d'Apple (APNs) : DECISIONS-TECHNIQUES 1.13. */
+  apns: { idEquipe: string; idCle: string; clePrivee: KeyObject; idApplication: string; service: ServiceApns } | null;
+  /** La révocation chez Apple à « Tout effacer » (étape 2 ; CONTRAT.md, 2.12). */
+  revocation: { idEquipe: string; idCle: string; clePrivee: KeyObject; idApplication: string } | null;
+  /** Le plus petit numéro de fabrication de l'application accepté (CONTRAT.md, 1.7). 0 : tout est accepté. */
+  fabricationMinimale: number;
+  /** Étape 1 : le pseudo du compte du porteur, ouvert par sa première connexion Apple (CONTRAT.md, 2.5). */
+  comptePorteur: { pseudo: string } | null;
   google: { idClient: string; secretClient: string } | null;
   /** AAAA-MM-JJ : aucune session ne dure au-delà (DECISIONS-TECHNIQUES 1.8 ; D-061, point 2). Exigée en ligne. */
   finDuTest: string | null;
@@ -74,6 +98,14 @@ export function lireClePriveeApple(texte: string): KeyObject | null {
   } catch {
     return null;
   }
+}
+
+/** Un pseudo que la base acceptera (migration 0001, `joueur.pseudo`) : 1 à 24 caractères, ni « @ », ni « / », ni
+ *  « : », ni « < » ou « > », ni caractère de contrôle, ni adresse IP. Le programme vérifie avant la base (P-07). */
+export function pseudoAcceptable(pseudo: string): boolean {
+  const n = [...pseudo].length;
+  return n >= 1 && n <= 24 && pseudo === pseudo.trim() && !/[@/:<>\u0000-\u001f\u007f-\u009f]/.test(pseudo)
+    && !/[0-9]+(\.[0-9]+){3}/.test(pseudo);
 }
 
 function dateCivile(texte: string): string | null {
@@ -146,21 +178,47 @@ export function lireConfig(env: NodeJS.ProcessEnv): Config {
     cleReponses = null;
   }
 
-  let apple: Config['apple'] = null;
-  const aEquipe = val('APPLE_ID_EQUIPE');
-  const aCle = val('APPLE_ID_CLE');
-  const aAppli = val('APPLE_ID_APPLICATION');
-  const aPrivee = val('APPLE_CLE_PRIVEE');
-  const clePrivee = aPrivee ? lireClePriveeApple(aPrivee) : null;
+  // Apple. Chaque fonction a ses réglages ; un réglage partagé (équipe, application) manquant est signalé une fois.
   const dix = /^[A-Z0-9]{10}$/;
   const paquet = /^[A-Za-z0-9-]+(\.[A-Za-z0-9-]+){1,9}$/;
-  if (aEquipe && dix.test(aEquipe) && aCle && dix.test(aCle) && aAppli && paquet.test(aAppli) && clePrivee) {
-    apple = { idEquipe: aEquipe, idCle: aCle, idApplication: aAppli, clePrivee };
-  } else {
-    if (!aEquipe || !dix.test(aEquipe)) signaler('APPLE_ID_EQUIPE');
-    if (!aCle || !dix.test(aCle)) signaler('APPLE_ID_CLE');
-    if (!aAppli || !paquet.test(aAppli)) signaler('APPLE_ID_APPLICATION');
-    if (!clePrivee) signaler('APPLE_CLE_PRIVEE');
+  const aAppli = val('APPLE_ID_APPLICATION');
+  const idApplication = aAppli && paquet.test(aAppli) ? aAppli : null;
+  if (!idApplication) signaler('APPLE_ID_APPLICATION');
+  const aEquipe = val('APPLE_ID_EQUIPE');
+  const idEquipe = aEquipe && dix.test(aEquipe) ? aEquipe : null;
+  if (!idEquipe) signaler('APPLE_ID_EQUIPE');
+  const cleApple = (nomId: string, nomCle: string): { idCle: string; clePrivee: KeyObject } | null => {
+    const id = val(nomId);
+    const texte = val(nomCle);
+    const clePrivee = texte ? lireClePriveeApple(texte) : null;
+    if (!id || !dix.test(id)) signaler(nomId);
+    if (!clePrivee) signaler(nomCle);
+    return id && dix.test(id) && clePrivee ? { idCle: id, clePrivee } : null;
+  };
+  const apple: Config['apple'] = idApplication ? { idApplication } : null;
+  const cleMessages = cleApple('APPLE_ID_CLE_MESSAGES', 'APPLE_CLE_MESSAGES');
+  let service: ServiceApns | null = 'production';
+  const sm = val('APPLE_SERVICE_MESSAGES');
+  if (sm === 'essai') service = 'essai';
+  else if (sm !== null && sm !== 'production') { signaler('APPLE_SERVICE_MESSAGES'); service = null; }
+  const apns: Config['apns'] = idEquipe && idApplication && cleMessages && service
+    ? { idEquipe, idApplication, ...cleMessages, service } : null;
+  const cleConnexion = cleApple('APPLE_ID_CLE_CONNEXION', 'APPLE_CLE_CONNEXION');
+  const revocation: Config['revocation'] = idEquipe && idApplication && cleConnexion
+    ? { idEquipe, idApplication, ...cleConnexion } : null;
+
+  // La version minimale : un entier de 0 à 999 999 999. Absente ou illisible : signalée, et tout est accepté.
+  let fabricationMinimale = 0;
+  const fm = val('FABRICATION_MINIMALE');
+  if (fm !== null && /^[0-9]{1,9}$/.test(fm)) fabricationMinimale = Number(fm);
+  else signaler('FABRICATION_MINIMALE');
+
+  // Le compte du porteur, à l'étape 1 : facultatif ; présent mais illisible, il est signalé et sans effet.
+  let comptePorteur: Config['comptePorteur'] = null;
+  const cp = val('COMPTE_PORTEUR');
+  if (cp !== null) {
+    if (pseudoAcceptable(cp)) comptePorteur = { pseudo: cp };
+    else signaler('COMPTE_PORTEUR');
   }
 
   let google: Config['google'] = null;
@@ -206,7 +264,8 @@ export function lireConfig(env: NodeJS.ProcessEnv): Config {
   const peutDemarrer = urlBase !== null && secretSession !== null && cleReponses !== null && cleIdentites !== null
     && refuses.length === 0 && (!enLigne || (adresseOk && finDuTest !== null));
   return {
-    enLigne, protege, port, adressePublique, version, urlBase, modeRoles, secretSession, cleReponses, cleIdentites, apple, google,
-    finDuTest, local, manquants: [...new Set(manquants)], refuses: [...new Set(refuses)], peutDemarrer,
+    enLigne, protege, port, adressePublique, version, urlBase, modeRoles, secretSession, cleReponses, cleIdentites, apple, apns,
+    revocation, fabricationMinimale, comptePorteur, google, finDuTest, local, manquants: [...new Set(manquants)],
+    refuses: [...new Set(refuses)], peutDemarrer,
   };
 }

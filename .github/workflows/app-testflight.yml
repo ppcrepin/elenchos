@@ -1,0 +1,270 @@
+# Elenchos, étape 1 (coquille) : fabrique l'application, la signe automatiquement avec la clé d'API d'App Store Connect
+# du porteur, vérifie ce qui a été fabriqué, puis l'envoie à TestFlight (DECISIONS-TECHNIQUES.md 1.15).
+#
+# Il refuse de démarrer (tâche « garde », sur Linux, avant toute machine macOS) :
+# - hors de la branche mise-en-ligne, qui ne reçoit que des versions déjà sur main, après le feu vert écrit du porteur
+#   la veille (D-054) ;
+# - à partir de 14h, heure de Paris, et le dimanche : une heure de marge avant 15h pour le traitement d'Apple
+#   (D-043, D-054 ; DECISIONS-TECHNIQUES.md 1.15). Juste avant l'envoi, il refuse encore à partir de 15h ;
+# - si `npm run controle` échoue, ou si un texte de l'interface porte encore la marque A_ECRIRE (CONTRAT.md 1.6) ;
+# - si l'adresse du serveur n'est pas fixée (jeu/ios/adresse-serveur.txt).
+#
+# Les secrets sont saisis par le porteur lui-même, dans l'environnement GitHub « testflight » (réservé à la branche
+# mise-en-ligne) ; ils ne sont jamais dans le dépôt, jamais affichés. Une clé écrite sur la machine est effacée à la fin.
+#   ASC_CLE_ID        identifiant de la clé d'API d'App Store Connect (clé d'équipe, rôle Admin)
+#   ASC_EMETTEUR_ID   identifiant de l'émetteur (Issuer ID) de cette clé
+#   ASC_CLE_P8        contenu du fichier .p8 de cette clé
+#   APPLE_EQUIPE_ID   identifiant d'équipe (Team ID) du compte développeur
+# Le journal ne dit que « juste », « ÉCART », « permis », « refusé », « réussi » ou « échoué », et les lignes d'erreur
+# de xcodebuild en cas d'échec ; les sorties complètes de xcodebuild restent sur la machine, effacée à la fin.
+#
+# Deux choix au lancement :
+# - « envoyer » : décoché (par défaut), tout est fait et vérifié, mais rien ne part chez Apple ;
+# - « signature de l'archive » : comment l'archive est signée avant que l'export la signe pour l'App Store, par les
+#   certificats gérés par Apple (« cloud signing ») :
+#     sans         l'archive n'est pas signée (aucun certificat créé) ; choix par défaut ;
+#     ponctuelle   signature locale sans certificat (« ad hoc ») ;
+#     automatique  signature de développement automatique, qui crée un certificat de développement à chaque machine.
+#   Les trois mènent au même export ; la vérification de l'IPA (droits d'Apple, adresse, numéros) dit si le résultat
+#   est bon avant tout envoi. Sans Mac, on ne peut pas savoir d'avance lequel passe : le premier passage le dira.
+#
+# Numéro de fabrication : celui de l'exécution de ce workflow (github.run_number), qui ne fait que monter. Relancer une
+# exécution (« Re-run ») garde son numéro, qu'Apple refuserait : lancer une nouvelle exécution.
+# Machine : macos-26 (arm64, machine standard, gratuite pour un dépôt public), Xcode 26.6 choisi explicitement.
+# Actions figées par leur empreinte de commit, comme test-18h.yml : actions/checkout v7.0.1, actions/setup-node v7.0.0.
+name: App - TestFlight
+on:
+  workflow_dispatch:
+    inputs:
+      envoyer:
+        description: "Envoyer à TestFlight (décoché : tout fabriquer et vérifier, sans rien envoyer)"
+        type: boolean
+        default: false
+      signature_archive:
+        description: "Signature de l'archive (voir l'en-tête du fichier)"
+        type: choice
+        options:
+          - sans
+          - ponctuelle
+          - automatique
+        default: sans
+permissions:
+  contents: read
+concurrency:
+  group: app-testflight
+  cancel-in-progress: false
+jobs:
+  garde:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: jeu
+    steps:
+      - name: Branche, heure et jour
+        working-directory: .
+        run: |
+          if [ "$GITHUB_REF" != "refs/heads/mise-en-ligne" ]; then
+            echo "refusé : la fabrication pour TestFlight ne part que de la branche mise-en-ligne (D-054)."
+            exit 1
+          fi
+          heure=$(TZ=Europe/Paris date +%H)
+          jour=$(TZ=Europe/Paris date +%u)
+          if [ "$jour" = "7" ] || [ "$((10#$heure))" -ge 14 ]; then
+            echo "refusé : pas de fabrication pour TestFlight à partir de 14h, heure de Paris, ni le dimanche (D-043, D-054)."
+            exit 1
+          fi
+          echo "permis : branche mise-en-ligne, avant 14h, en semaine."
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22.22.0
+          package-manager-cache: false
+      - name: Bibliothèques
+        run: |
+          npm ci --no-audit --no-fund > /dev/null 2>&1 || { echo "échoué : npm ci"; exit 1; }
+      - name: Contrôle
+        run: npm run controle
+      - name: Aucun texte à écrire
+        run: |
+          if grep -rqE "['\"]A_ECRIRE['\"]" public; then
+            echo "refusé : des textes de l'interface portent encore la marque A_ECRIRE (CONTRAT.md 1.6) ; fichiers :"
+            grep -rlE "['\"]A_ECRIRE['\"]" public
+            exit 1
+          fi
+          echo "juste : aucun texte à écrire"
+      - name: Adresse du serveur
+        run: |
+          adresse=$(grep -v '^#' ios/adresse-serveur.txt | tr -d '[:space:]')
+          if ! printf '%s' "$adresse" | grep -Eq '^https://[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$'; then
+            echo "refusé : l'adresse du serveur n'est pas fixée, ou mal écrite (jeu/ios/adresse-serveur.txt)."
+            exit 1
+          fi
+          echo "juste : adresse du serveur fixée"
+
+  fabriquer:
+    needs: garde
+    runs-on: macos-26
+    environment: testflight
+    timeout-minutes: 75
+    defaults:
+      run:
+        working-directory: jeu
+    env:
+      XCODE: /Applications/Xcode_26.6.app
+      APPLICATION: io.github.ppcrepin.elenchos
+      NUMERO: ${{ github.run_number }}
+      SIGNATURE: ${{ inputs.signature_archive }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22.22.0
+          package-manager-cache: false
+      - name: Machine et Xcode
+        run: |
+          sudo xcode-select -s "$XCODE/Contents/Developer"
+          echo "machine : macOS $(sw_vers -productVersion), image ${ImageVersion:-inconnue} ; $(xcodebuild -version | head -1)"
+      - name: Bibliothèques et interface copiée dans le projet iOS
+        run: |
+          npm ci --no-audit --no-fund > /dev/null 2>&1 || { echo "échoué : npm ci"; exit 1; }
+          npx cap sync ios > /dev/null 2>&1 || { echo "échoué : cap sync ios"; exit 1; }
+          if git diff --quiet -- ios; then echo "juste : le projet iOS du dépôt est celui que donne cap sync"; else echo "ÉCART : cap sync modifie le projet iOS du dépôt"; exit 1; fi
+      - name: Réglages présents
+        env:
+          ASC_CLE_ID: ${{ secrets.ASC_CLE_ID }}
+          ASC_EMETTEUR_ID: ${{ secrets.ASC_EMETTEUR_ID }}
+          ASC_CLE_P8: ${{ secrets.ASC_CLE_P8 }}
+          APPLE_EQUIPE_ID: ${{ secrets.APPLE_EQUIPE_ID }}
+        run: |
+          manque=""
+          [ -n "$ASC_CLE_ID" ] || manque="$manque ASC_CLE_ID"
+          [ -n "$ASC_EMETTEUR_ID" ] || manque="$manque ASC_EMETTEUR_ID"
+          [ -n "$ASC_CLE_P8" ] || manque="$manque ASC_CLE_P8"
+          [ -n "$APPLE_EQUIPE_ID" ] || manque="$manque APPLE_EQUIPE_ID"
+          if [ -n "$manque" ]; then echo "refusé : secrets absents de l'environnement testflight :$manque"; exit 1; fi
+          umask 077
+          mkdir -p "$RUNNER_TEMP/cles"
+          printf '%s\n' "$ASC_CLE_P8" > "$RUNNER_TEMP/cles/cle-asc.p8"
+          if ! grep -q "BEGIN PRIVATE KEY" "$RUNNER_TEMP/cles/cle-asc.p8"; then echo "refusé : ASC_CLE_P8 n'a pas la forme d'un fichier .p8"; exit 1; fi
+          echo "juste : quatre secrets présents"
+      - name: Archive
+        env:
+          ASC_CLE_ID: ${{ secrets.ASC_CLE_ID }}
+          ASC_EMETTEUR_ID: ${{ secrets.ASC_EMETTEUR_ID }}
+          APPLE_EQUIPE_ID: ${{ secrets.APPLE_EQUIPE_ID }}
+        run: |
+          adresse=$(grep -v '^#' ios/adresse-serveur.txt | tr -d '[:space:]')
+          case "$SIGNATURE" in
+            sans) signature="CODE_SIGNING_ALLOWED=NO" ;;
+            ponctuelle) signature="CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY=- AD_HOC_CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=NO PROVISIONING_PROFILE_SPECIFIER=" ;;
+            automatique) signature="-allowProvisioningUpdates -authenticationKeyPath $RUNNER_TEMP/cles/cle-asc.p8 -authenticationKeyID $ASC_CLE_ID -authenticationKeyIssuerID $ASC_EMETTEUR_ID" ;;
+            *) echo "refusé : signature inconnue"; exit 1 ;;
+          esac
+          # shellcheck disable=SC2086
+          xcodebuild archive -project ios/App/App.xcodeproj -scheme App -configuration Release \
+            -destination 'generic/platform=iOS' -archivePath "$RUNNER_TEMP/App.xcarchive" -derivedDataPath "$RUNNER_TEMP/derive" \
+            DEVELOPMENT_TEAM="$APPLE_EQUIPE_ID" CURRENT_PROJECT_VERSION="$NUMERO" ELENCHOS_SERVEUR="$adresse" $signature \
+            > "$RUNNER_TEMP/archive.log" 2>&1 || {
+              grep -E "error:|\*\* ARCHIVE FAILED" "$RUNNER_TEMP/archive.log" | head -60
+              echo "échoué : archive (signature : $SIGNATURE)"
+              exit 1
+            }
+          echo "réussi : archive (signature : $SIGNATURE)"
+      - name: Export pour l'App Store, signé par Apple (pour vérifier)
+        env:
+          ASC_CLE_ID: ${{ secrets.ASC_CLE_ID }}
+          ASC_EMETTEUR_ID: ${{ secrets.ASC_EMETTEUR_ID }}
+          APPLE_EQUIPE_ID: ${{ secrets.APPLE_EQUIPE_ID }}
+        run: |
+          options() {
+            cat <<FIN
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>$1</string>
+            <key>signingStyle</key><string>automatic</string>
+            <key>teamID</key><string>$APPLE_EQUIPE_ID</string>
+            <key>manageAppVersionAndBuildNumber</key><false/>
+            <key>uploadSymbols</key><true/>
+          </dict>
+          </plist>
+          FIN
+          }
+          options export > "$RUNNER_TEMP/cles/export-verifier.plist"
+          options upload > "$RUNNER_TEMP/cles/export-envoyer.plist"
+          xcodebuild -exportArchive -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/cles/export-verifier.plist" -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates -authenticationKeyPath "$RUNNER_TEMP/cles/cle-asc.p8" \
+            -authenticationKeyID "$ASC_CLE_ID" -authenticationKeyIssuerID "$ASC_EMETTEUR_ID" \
+            > "$RUNNER_TEMP/export.log" 2>&1 || {
+              grep -E "error:|\*\* EXPORT FAILED" "$RUNNER_TEMP/export.log" | head -60
+              echo "échoué : export"
+              exit 1
+            }
+          echo "réussi : export"
+      - name: Vérification de ce qui a été fabriqué
+        run: |
+          adresse=$(grep -v '^#' ios/adresse-serveur.txt | tr -d '[:space:]')
+          ipa=$(ls "$RUNNER_TEMP"/export/*.ipa 2>/dev/null | head -1)
+          [ -n "$ipa" ] || { echo "échoué : aucun fichier .ipa exporté"; exit 1; }
+          rm -rf "$RUNNER_TEMP/ipa" && mkdir -p "$RUNNER_TEMP/ipa" && unzip -q "$ipa" -d "$RUNNER_TEMP/ipa"
+          app="$RUNNER_TEMP/ipa/Payload/App.app"
+          ext="$app/PlugIns/Reception.appex"
+          ecarts=0
+          verifier() { if [ "$2" = "$3" ]; then echo "juste : $1"; else echo "ÉCART : $1"; ecarts=$((ecarts + 1)); fi; }
+          lire() { /usr/libexec/PlistBuddy -c "Print :$2" "$1" 2>/dev/null || true; }
+          faux_ou_absent() { case "$1" in ""|false) echo "oui" ;; *) echo "non" ;; esac; }
+          codesign -d --entitlements - --xml "$app" > "$RUNNER_TEMP/ipa/droits-app.plist" 2>/dev/null || true
+          codesign -d --entitlements - --xml "$ext" > "$RUNNER_TEMP/ipa/droits-ext.plist" 2>/dev/null || true
+          verifier "identifiant de l'application" "$(lire "$app/Info.plist" CFBundleIdentifier)" "$APPLICATION"
+          verifier "identifiant de l'extension" "$(lire "$ext/Info.plist" CFBundleIdentifier)" "$APPLICATION.reception"
+          verifier "numéro de fabrication de l'application" "$(lire "$app/Info.plist" CFBundleVersion)" "$NUMERO"
+          verifier "numéro de fabrication de l'extension" "$(lire "$ext/Info.plist" CFBundleVersion)" "$NUMERO"
+          verifier "version 1.0 (application)" "$(lire "$app/Info.plist" CFBundleShortVersionString)" "1.0"
+          verifier "version 1.0 (extension)" "$(lire "$ext/Info.plist" CFBundleShortVersionString)" "1.0"
+          verifier "messages d'Apple en production" "$(lire "$RUNNER_TEMP/ipa/droits-app.plist" aps-environment)" "production"
+          verifier "connexion avec Apple" "$(lire "$RUNNER_TEMP/ipa/droits-app.plist" com.apple.developer.applesignin:0)" "Default"
+          verifier "pas de droit de débogage (application)" "$(faux_ou_absent "$(lire "$RUNNER_TEMP/ipa/droits-app.plist" get-task-allow)")" "oui"
+          verifier "pas de droit de débogage (extension)" "$(faux_ou_absent "$(lire "$RUNNER_TEMP/ipa/droits-ext.plist" get-task-allow)")" "oui"
+          verifier "adresse du serveur dans l'extension" "$(lire "$ext/Info.plist" ElenchosServeur)" "$adresse"
+          verifier "adresse du serveur dans la règle de chargement" "$(grep -cF "connect-src $adresse;" "$app/public/index.html")" "1"
+          verifier "adresse du serveur lue par l'interface" "$(grep -cF "content=\"$adresse\"" "$app/public/index.html")" "1"
+          verifier "plus de marque d'adresse" "$(grep -cF "__ELENCHOS_SERVEUR__" "$app/public/index.html")" "0"
+          verifier "aucun texte à écrire" "$(grep -rlE "['\"]A_ECRIRE['\"]" "$app/public" | wc -l | tr -d ' ')" "0"
+          if [ "$ecarts" -gt 0 ]; then echo "échoué : $ecarts écart(s), rien n'est envoyé"; exit 1; fi
+          echo "réussi : vérification"
+      - name: Envoi à TestFlight
+        if: ${{ inputs.envoyer }}
+        env:
+          ASC_CLE_ID: ${{ secrets.ASC_CLE_ID }}
+          ASC_EMETTEUR_ID: ${{ secrets.ASC_EMETTEUR_ID }}
+        run: |
+          heure=$(TZ=Europe/Paris date +%H)
+          jour=$(TZ=Europe/Paris date +%u)
+          if [ "$jour" = "7" ] || [ "$((10#$heure))" -ge 15 ]; then
+            echo "refusé : il est 15h passées à Paris, ou dimanche ; rien n'est envoyé (D-043). Relancer demain matin."
+            exit 1
+          fi
+          xcodebuild -exportArchive -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/cles/export-envoyer.plist" -exportPath "$RUNNER_TEMP/envoi" \
+            -allowProvisioningUpdates -authenticationKeyPath "$RUNNER_TEMP/cles/cle-asc.p8" \
+            -authenticationKeyID "$ASC_CLE_ID" -authenticationKeyIssuerID "$ASC_EMETTEUR_ID" \
+            > "$RUNNER_TEMP/envoi.log" 2>&1 || {
+              grep -E "error:|\*\* EXPORT FAILED" "$RUNNER_TEMP/envoi.log" | head -60
+              echo "échoué : envoi"
+              exit 1
+            }
+          echo "réussi : envoyé à App Store Connect ; Apple traite la fabrication avant de la proposer dans TestFlight."
+      - name: Effacer la clé et les fichiers de signature
+        if: ${{ always() }}
+        run: |
+          rm -rf "$RUNNER_TEMP/cles" "$RUNNER_TEMP/ipa" "$RUNNER_TEMP/export" "$RUNNER_TEMP/envoi"
+          echo "réussi : clé effacée de la machine"

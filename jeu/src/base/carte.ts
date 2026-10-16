@@ -116,9 +116,9 @@ export const CARTE: Record<string, Table> = {
       consentement_id: 'reference' },
   },
   manche: {
-    usage: 1, duree: 'Comme les réponses (cercle_regarde : un verrou ; le geste se compte au moment où il a lieu)',
+    usage: 1, duree: 'Comme les réponses (cercle_regarde : un verrou ; le geste se compte au moment où il a lieu ; validee : un booléen, sans heure)',
     colonnes: { id: 'identifiant', cercle_id: 'reference', devineur_membre_id: 'reference', jour: 'date',
-      texte_id: 'texte_id', validee_le: 'instant', cercle_regarde: 'booleen' },
+      texte_id: 'texte_id', validee: 'booleen', cercle_regarde: 'booleen' },
   },
   carte: {
     usage: 1, duree: 'Comme les réponses ; une carte part avec son auteur, le visage d’un partant se vide',
@@ -137,7 +137,7 @@ export const CARTE: Record<string, Table> = {
       erreurs_faites: 'entier', passes_faites: 'entier', textes_repondus: 'entier' },
   },
   compte_texte_cercle: {
-    usage: 1, duree: 'La semaine en cours et la précédente, comptées au jour où le texte se devine (ménage) ; restent au départ d’un auteur',
+    usage: 1, duree: 'Jusqu’au lundi 18h qui suit sa semaine, comptée au jour où le texte se devine : la surprise de la semaine est alors figée dans les titres (ménage) ; restent au départ d’un auteur',
     colonnes: { cercle_id: 'reference', texte_id: 'texte_id', attributions: 'entier', fausses: 'entier' },
   },
   titre: {
@@ -204,6 +204,10 @@ export const CARTE: Record<string, Table> = {
     usage: 4, duree: 'Plus longue rotation des sauvegardes, plus 5 jours (P-32) ; joueurs provisoires effacés par le ménage compris ; lu avant toute restauration',
     colonnes: { joueur_id: 'identifiant', efface_le: 'date' },
   },
+  tache_du_jour: {
+    usage: 'technique', duree: '7 jours (ménage) : le verrou « une fois par jour » du ménage (migration 0004)',
+    colonnes: { tache: 'liste', jour: 'date' },
+  },
   migration: {
     usage: 'technique', duree: 'Tant que la base existe',
     colonnes: { numero: 'entier', nom: 'nom_migration', empreinte: 'empreinte', jouee_le: 'instant' },
@@ -215,7 +219,7 @@ export const VUES = ['mesure_aucune', 'mesure_compteurs', 'mesure_histogramme', 
 
 /** Les tables sans aucune donnée de joueur. */
 export const TABLES_SANS_JOUEUR = ['texte', 'calendrier', 'carte_accord', 'compte_aucune', 'compteur',
-  'histogramme_raison', 'total_mesure', 'migration'];
+  'histogramme_raison', 'total_mesure', 'tache_du_jour', 'migration'];
 
 /** Les colonnes réelles d'un schéma : { table: [colonnes] }, vues comprises. */
 export async function colonnesReelles(client: pg.Pool | pg.ClientBase, schema: string): Promise<Record<string, string[]>> {

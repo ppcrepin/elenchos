@@ -59,6 +59,9 @@ const DETAILS = [
   'roles prets', 'repli', 'horloge arretee', 'creneau', 'abonnement retire', 'service refuse', 'envoi interrompu',
   'compte efface', 'provisoire efface', 'echeances effacees', 'effacement verifie', 'base non vide', 'refus code', 'trop d essais',
   'origine refusee', 'refus fournisseur', 'jeton refuse', 'reussie', 'signal',
+  // Étape 1, travail D : le serveur, la connexion Apple, l'envoi vers Apple, le planificateur.
+  'horloge en marche', 'soir fini', 'menage deja passe', 'compte porteur', 'compte inconnu', 'connexion expiree',
+  'verificateur faux', 'cles apple', 'trop de demandes', 'pas encore construit', 'mise a jour requise',
 ] as const;
 export type Detail = (typeof DETAILS)[number];
 

@@ -42,7 +42,7 @@ export const DROITS: Record<Module, DroitsModule> = {
       membre: ['SELECT', 'INSERT', 'DELETE'],
       invitation: ['SELECT', 'INSERT', 'UPDATE(invite_joueur_id, lie_le, score_entree)'],
       reponse: ['SELECT', 'INSERT'],
-      manche: ['SELECT', 'INSERT', 'UPDATE(validee_le, cercle_regarde)'],
+      manche: ['SELECT', 'INSERT', 'UPDATE(validee, cercle_regarde)'],
       carte: ['SELECT', 'INSERT', 'UPDATE(visage_membre_id, pourquoi, passee, videe_par_depart, verdict)'],
       journee_cercle: ['SELECT', 'INSERT', 'UPDATE(eveille, titres_calcules)'],
       compte_semaine: ['SELECT', 'INSERT', 'UPDATE(points, raisons_trouvees, tentatives_subies, erreurs_subies, jours_avec_cartes, erreurs_faites, passes_faites, textes_repondus)'],
@@ -53,7 +53,8 @@ export const DROITS: Record<Module, DroitsModule> = {
       vu: ['SELECT', 'INSERT'],
       repondre_ouvert: ['SELECT', 'INSERT'],
       reprise_revelation: ['SELECT', 'INSERT', 'UPDATE(etape)'],
-      abonnement: ['SELECT', 'INSERT', 'DELETE'],
+      // Le jeton d'appareil se remplace sans effacer la ligne, ni donc l'envoi du soir qui la verrouille (routes.ts).
+      abonnement: ['SELECT', 'INSERT', 'UPDATE(jeton)', 'DELETE'],
       message_coupe: ['SELECT', 'INSERT', 'DELETE'],
       mesures_refusees: ['SELECT', 'INSERT', 'DELETE'], // le refus des mesures, posé et retiré par le joueur (D-066)
     },
@@ -95,6 +96,8 @@ export const DROITS: Record<Module, DroitsModule> = {
         .map((t) => [t, ['SELECT', 'DELETE']])),
       invitation: ['SELECT', 'DELETE', 'UPDATE(score_entree)'],
       effacement: ['SELECT', 'INSERT', 'DELETE'],
+      // La tâche du jour : le ménage ne tourne qu'une fois par jour (migration 0004, menage.ts).
+      tache_du_jour: ['SELECT', 'INSERT', 'DELETE'],
     },
     fonctions: [...FONCTIONS_DES_REGLES],
   },

@@ -4,6 +4,8 @@
 
 *État, 11 octobre 2026 : **validé par le porteur (D-052)**. Les deux questions de la section 7 sont répondues : les règles sont validées d'un geste (D-052, point 1) et les trois comptes de mi-bêta sont ajoutés aux mesures (D-052, point 2). Ce qui était marqué « (proposé) » est donc décidé, sauf ce qui reste « à confirmer » (le lien de 7 jours, par UX) et les mots laissés à UX ; les passages écrits au conditionnel sur les trois comptes (sections 5, 8, 9 et 10) se lisent désormais au présent. Les mots des valeurs des tensions 6 et 7 suivent D-053 (point 3) : « l'indépendance » et « le privé » remplacent « la souveraineté » et « le marché » ; Souveraineté/Ouverture (SO) et État/Marché (EP) restent des noms de code internes, jamais des libellés à l'écran. Aucun chiffre n'a changé. Report dans `docs/produit.md` : fait le même jour.*
 
+*État, 16 octobre 2026 : règles 3, 4, 10, 11, 14 et 16 : arbitrages de l'équipe du 16 octobre (D-064, D-065, D-066, D-067), non validés par le porteur, renversables. La règle 16 ne change que pendant le test (D-064). Report dans `docs/produit.md` : fait le même jour.*
+
 ## En bref
 
 **Ce que nous avons fait.**
@@ -29,6 +31,7 @@
 
 **Décisions touchées.**
 - Une modification : une exception à D-011 (un nouveau venu n'est pas proposé dans Deviner pour un texte fermé avant son arrivée).
+- Depuis le 16 octobre 2026, des arbitrages de l'équipe, non validés par vous et renversables (section 8) : une troisième exception à D-011 (règle 3, D-065) ; Le Pas de Côté effacé au départ de son titulaire (règles 4 et 14, D-066, point 1) ; un proche parti après 18h que la révélation ne nomme plus (règles 4 et 11, D-067, qui touche D-024) ; pendant le test, une relâche de E9 sur la tension tradition / changement (règle 16, D-064).
 - Une ligne d'écran ajoutée sous « Valider », à la demande d'UX (touche D-014).
 - Quatre précisions qui s'écartent de la lettre d'un texte validé : la barre (D-026, dans le cadre de D-038), Le Pont et L'Original (§4, règle 13), la phrase du dimanche (R2).
 - Une règle nouvelle : la règle 20 (précise D-044, point 1).
@@ -160,8 +163,8 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 **Règle 4 · Partir.**
 - **Chiffres.** Au départ d'un membre (il quitte le cercle, efface tout, ou son compte est effacé pour inactivité), ses réponses partent avec lui, sur-le-champ. Le reste suit (proposé) :
   - une de ses cartes déjà servie mais pas encore révélée disparaît de la manche ; elle ne compte ni juste ni fausse ;
-  - si son visage était posé sur une autre carte, cette carte redevient vide, que la manche ait été validée ou non ; la manche ne se rouvre pas pour autant (Valider fige, règle 9) : vide à 18h, la carte est passée, mais cette passe-là ne compte jamais contre Le Sans-Faute ;
-  - s'il part après 18h, une carte d'une manche close où son visage était posé garde son verdict et son point ; un jumeau y devient juste (règle 11). À la révélation, jusqu'au 18h suivant, la carte ne montre plus ce pari : « Tu connais ton monde. » « C'était Hugo. », sans « Paul avait répondu la même chose. » ni « un ancien membre » (arbitrage de l'équipe, D-067) ;
+  - *avant 18h*, si son visage était posé sur une autre carte, cette carte redevient vide, que la manche ait été validée ou non ; la manche ne se rouvre pas pour autant (Valider fige, règle 9) : vide à 18h, la carte est passée, mais cette passe-là ne compte jamais contre Le Sans-Faute ;
+  - s'il part après 18h, une carte d'une manche close où son visage était posé garde son verdict et son point ; un jumeau y devient juste (règle 11). À la révélation, jusqu'au 18h suivant, la carte ne montre plus ce pari : « Tu connais ton monde. » « C'était Hugo. », sans « Paul avait répondu la même chose. » ni « un ancien membre » (arbitrage de l'équipe, D-067). Verdict faux : « Ça alors ! » « C'était Hugo. », sans pari non plus (Game design ; à confirmer avec UX) ;
   - la carte « qui et pourquoi » n'est pas remplacée si c'était la sienne ;
   - les points déjà gagnés sur ses cartes révélées restent (§3, « scores figés »), et les attributions déjà révélées sur ses cartes restent dans les comptes de la semaine (surprise de la semaine) ;
   - ses titres passés restent dans l'historique, sous « un ancien membre » (D-045) ; deux anciens membres ne se distinguent pas, c'est voulu. **Sauf Le Pas de Côté, qui est effacé** : il dit qu'une réponse allait contre son penchant (D-066, point 1) ;
@@ -274,7 +277,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
   - concrètement, il faut au moins dix arbitrages nets d'un même côté, sans aucun écart, puis une réponse franchement contraire ; avec un seul écart, il faut quinze arbitrages du même côté ;
   - il vaut pour tout membre, sur les textes du jour, jamais l'entrée ;
   - il est annoncé dans chacun de ses cercles, à la révélation de ce texte, après les auteurs ; plusieurs le même soir sont possibles ;
-  - ensuite, il vit comme un titre, comme Le Sans-Faute (proposé ; R11 ne disait rien).
+  - ensuite, il vit comme un titre, comme Le Sans-Faute (proposé ; R11 ne disait rien), sauf au départ de son titulaire : il est alors effacé (règle 4 ; arbitrage de l'équipe, D-066, point 1).
 - **Exemples.** J7 (Le Sans-Faute manqué par deux passes) ; J8 (Le Pas de Côté de Paul).
 - *Source : règle 14 ; R7, R11 (D-030). Rareté mesurée en section 5.*
 
@@ -282,6 +285,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 - **Chiffres.** Trois textes, fixés à la création du cercle, identiques pour tous ceux qui y entrent, d'une tension différente chacun (proposé, `docs/onboarding.md`), dont au moins un texte rejeté (D-028). Ils comptent pour le portrait et la barre (3 crans), jamais pour les points ni les titres.
 - **Pas de phrase du jour à l'entrée** : la révélation immédiate en tient lieu (proposé, conforme au parcours validé, `docs/onboarding.md`).
 - **Un joueur déjà inscrit qui rejoint un autre cercle** relève le défi comme tout invité : il répond aux trois textes de ce cercle et devine celui qui l'invite (proposé ; D-030 renvoyait ce point à l'étape 6). S'il avait déjà répondu à l'un de ces textes, sa réponse est reprise, sans compter deux fois. Il ne recrée pas de compte. Si son pseudo est déjà pris dans ce cercle, on lui demande d'en changer ; le nouveau vaut pour tous ses cercles, car le pseudo reste celui du compte (proposé ; mots : UX). Ses proches des cercles où il est déjà le verront changer de nom. Un pseudo propre à chaque cercle serait plus doux, mais créerait une donnée nouvelle ; nous ne le proposons pas. S'il a déjà trois cercles, le lien le lui dit.
+- **Pendant le test, un seul trio de textes d'entrée pour tous les cercles** (arbitrage de l'équipe, D-065 point 2, renversable) : la règle des trois textes fixés par cercle est suspendue, et l'exemple ci-dessous ne peut pas se produire ; à rétablir pour la version publique (quelques trios en rotation).
 - **Exemple.** Hugo, déjà dans « Famille », est invité par Léa dans « Amis ». Il répond aux trois textes d'« Amis » ; il avait déjà répondu au deuxième dans « Famille », et sa réponse y est reprise telle quelle. Puis il devine Léa. Sa barre avance de 2 crans, pas de 3.
 - *Source : règle 15 ; D-006 ; D-028 ; D-030.*
 
@@ -289,6 +293,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 
 **Règle 16 · Les tensions.**
 - **Chiffres.** Huit tensions, chaque texte en touche une. Sur 8 semaines, pour chaque tension, autant de textes où « favorable » sert une valeur que l'autre, à un texte près quand leur nombre est impair (E9, règle de Contenu ; « à un près » proposé). Un libellé par valeur, toujours le même ; ceux des quatre tensions jamais essayées viennent du travail 2.
+- **Pendant le test, une relâche sur une seule tension** (arbitrage de l'équipe, D-064, renversable ; relâche de E9, D-030, recommandée par Contenu) : pour « Tradition ou changement », faute de textes récents « tradition », 3 textes « changement » pour 1 « tradition ». Les sept autres tensions gardent E9.
 - **Exemple.** Sur 8 semaines, la tension précaution / innovation reçoit 7 textes : 4 où être favorable sert l'innovation, 3 où il sert la précaution. Un joueur qui approuve tout ne voit donc pas son curseur pencher pour cette seule raison.
 - *Source : règle 16 ; E2, E9 (D-030).*
 
@@ -873,6 +878,10 @@ Son curseur P est net depuis la semaine 9.
 - **D-011** (« au Deviner, tous les autres membres sont proposés, y compris ceux en pause »). Seconde exception, après R8 : un membre arrivé après la fermeture d'un texte n'est pas proposé sur ce texte (règle 8). Il ne pouvait pas y avoir répondu ; le proposer offrirait à tous une élimination gratuite, et ne cache rien, puisque son arrivée est connue du cercle. La raison de D-011 (ne jamais montrer qui a décroché) tient : un membre en pause reste proposé.
 - **Les trois comptes sont ajoutés (D-052, point 2)** : D-042, point 2 (liste fermée des usages), et D-027 (« seul usage interne des opinions ») reçoivent une seconde exception, limitée au réglage du jeu ; une phrase s'ajoute à « Qui, durée, droits » (D-006). `produit.md` §6 et §8 sont à mettre à jour.
 - **D-014** (maquettes finales) : une ligne sous « Valider » sur l'écran Deviner, « Une fois validé, tu ne peux plus changer. » (condition d'UX, règle 9).
+- **D-024** (« la révélation le dit ») : un proche parti après 18h n'est plus nommé à la révélation (règle 4 ; arbitrage de l'équipe, D-067).
+- **D-045 point 2 et règle 14** : Le Pas de Côté est effacé au départ de son titulaire (arbitrage de l'équipe, D-066 point 1).
+- **D-011** : troisième exception (règle 3 ; arbitrage de l'équipe, D-065 point 1).
+- **E9 (D-030)**, pendant le test : sur la seule tension « Tradition ou changement », 3 textes « changement » pour 1 « tradition » (règle 16 ; arbitrage de l'équipe, D-064).
 
 **Précisées, en s'écartant de la lettre d'un texte validé.**
 - **D-026 et D-038 (la barre)** : D-026 disait « jusqu'aux premiers curseurs nets ». La barre va jusqu'à 60 réponses, curseur net ou non, comme D-038 l'admet (une barre pleine sans curseur net). Avec elle disparaît l'état « portrait pas encore formé » (5.11). Le « seuil des trois mois » ne change pas.
@@ -890,6 +899,7 @@ Son curseur P est net depuis la semaine 9.
 - **Règle 4 (D-010) et D-045** : sort d'une carte, d'une attribution et d'un titre quand quelqu'un part.
 - **Règle 19 (D-010)** : le cercle voit les curseurs d'après les seules réponses révélées (lecture A, reprise de l'essai).
 - **D-025** : seuil de 3 réponses et règle de la ligne, proposés. La position d'UX, six réponses, est nommée en règle 10. Le seuil passe chez l'avocat avant la bêta.
+- **Règle 10 (D-052, « les membres actuels »)** : l'avis du cercle ne compte que les membres déjà présents à la fermeture du texte (arbitrage de l'équipe, D-065 point 4).
 - **D-045** : « 12 mois » ; un seul e-mail par période d'inactivité ; `docs/etape-6/donnees.md` (P-30) y voit un élargissement de l'exception à « aucune relance » : soumis à l'avocat.
 - **Règle 18 et écran 5.11** : la phrase de la barre pleine et la ligne de Moi sans curseur net, proposées par UX.
 
@@ -897,7 +907,7 @@ Son curseur P est net depuis la semaine 9.
 
 **Conventions des essais remplacées** (ce n'étaient pas des décisions) : net à W ≥ 10 (désormais 8) ; Pas de Côté à 1/5 (désormais 7/20) ; barre de 16 crans pleine au premier net (désormais 60, un cran par réponse) ; tempéraments à seuil unique (désormais par taille, avec une marge) ; Le Fidèle du nouveau venu compté depuis son arrivée (désormais la lettre de la règle 12).
 
-**Inchangées** : la promesse (D-002), la lecture A (D-010), le jumeau (D-024), l'avis du cercle tel que choisi (D-025), toutes les lignes rouges (§9).
+**Inchangées** : la promesse (D-002), la lecture A (D-010), le jumeau (D-024), sauf pour un proche parti après 18h (règle 4, D-067), l'avis du cercle tel que choisi (D-025), toutes les lignes rouges (§9).
 
 ---
 

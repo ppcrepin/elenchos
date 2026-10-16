@@ -28,6 +28,14 @@ export function horlogeReglable(depart: Date): Horloge & { regler(d: Date): void
   };
 }
 
+/** L'horloge accélérée du développement local (CONTRAT.md, partie 5) : elle part de `depart` (l'heure du système si
+ *  absent) et avance `vitesse` fois plus vite. Jamais en ligne : ses réglages y sont refusés (config.ts). */
+export function horlogeAcceleree(depart: Date | null, vitesse: number, systeme: () => number = Date.now): Horloge {
+  const t0 = systeme();
+  const d0 = depart ? depart.getTime() : t0;
+  return { maintenant: () => new Date(d0 + (systeme() - t0) * vitesse) };
+}
+
 /** L'heure du rendez-vous : 18h00, heure de Paris (§2). */
 export const HEURE_DU_RENDEZ_VOUS = 18;
 

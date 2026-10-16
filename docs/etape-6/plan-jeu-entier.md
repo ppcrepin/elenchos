@@ -19,7 +19,7 @@ On construit tout le jeu que vous avez validé : le portrait, les badges, plusie
 | 3 | **Le long terme.** Le portrait, l'écran d'un proche, les badges, les tempéraments, la pause d'un cercle. | Vous parcourez un cercle inventé « vieux de trois mois ». | 2 à 3 semaines |
 | 4 | **Finitions.** On vérifie que tout se lit bien et va vite, on fait une vérification complète, puis on met en ligne la page « Qui, durée, droits ». | Vous achetez le domaine elenchos.fr, l'adresse web du jeu (environ 6 € la première année). Puis vous donnez votre feu vert. | 1 à 2 semaines |
 | 5 | **Vos amis arrivent.** | Apple valide la version finale. Vous envoyez le lien à vos premiers créateurs de cercle. | 1 à 2 semaines |
-| 6 | **Le test.** | Il dure au moins huit semaines. Chaque soir, vous vérifiez que le message est parti. À la fin, tout est effacé, y compris les remarques envoyées par TestFlight (D-061). Puis on fait le bilan, et on prépare la deuxième version. | 8 semaines au moins |
+| 6 | **Le test.** | Il dure au moins huit semaines. Chaque soir, vous vérifiez que le message est parti. À la fin, tout est effacé (D-061), y compris les remarques envoyées par TestFlight (proposé, Juridique). Puis on fait le bilan, et on prépare la deuxième version. | 8 semaines au moins |
 
 *Le tableau suppose la réponse recommandée à la question de la fin. Avec l'autre réponse, les réglages et les trois soirs de l'étape 1 passent à l'étape 4. D'ici là, vous ne voyez que des captures d'écran.*
 

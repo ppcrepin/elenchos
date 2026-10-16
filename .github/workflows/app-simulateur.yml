@@ -1,0 +1,149 @@
+# Elenchos, étape 1 (coquille) : fabrique l'application pour le simulateur d'iPhone, sans signature, l'ouvre contre un
+# faux serveur local, et prend deux captures (l'accueil, puis l'écran de mise à jour). C'est la preuve que le Swift
+# compile et que l'application s'ouvre, puisque personne dans l'équipe n'a de Mac (DECISIONS-TECHNIQUES.md 1.11).
+# Règles de la maison, comme les autres workflows : lancement manuel seulement ; droits en lecture seule ; aucun secret ;
+# aucune valeur du jeu dans le journal (il ne dit que « juste », « ÉCART », « réussi » ou « échoué », et les erreurs de
+# fabrication). Captures gardées 3 jours.
+# Le faux serveur n'a aucune donnée : il répond à GET /api/etat (un joueur « dehors ») et à la demande préalable du
+# navigateur intégré (CORS), compte les demandes, et dit seulement si l'en-tête Elenchos-Fabrication est arrivé.
+# Ce que ce workflow ne prouve pas : le message de 18h, l'extension de réception à l'œuvre, la connexion Apple, le
+# trousseau et les liens universels. Cela ne se prouve que sur l'iPhone du porteur.
+# Machine : macos-26 (arm64, machine standard, gratuite pour un dépôt public), avec Xcode 26.6 choisi explicitement,
+# le même que pour TestFlight (Apple exige Xcode 26 et le SDK d'iOS 26 depuis le 28 avril 2026).
+# Actions figées par leur empreinte de commit (versions publiées plus de deux semaines avant le 16 octobre 2026) :
+#   actions/checkout v7.0.1 et actions/setup-node v7.0.0 (comme test-18h.yml),
+#   actions/upload-artifact v7.0.1 (10 avril 2026) ; toutes en node24.
+name: App - simulateur
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: app-simulateur
+  cancel-in-progress: false
+jobs:
+  simulateur:
+    runs-on: macos-26
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: jeu
+    env:
+      XCODE: /Applications/Xcode_26.6.app
+      APPLICATION: io.github.ppcrepin.elenchos
+      FAUX_SERVEUR: http://localhost:8787
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22.22.0
+          package-manager-cache: false
+      - name: Machine et Xcode
+        run: |
+          sudo xcode-select -s "$XCODE/Contents/Developer"
+          echo "machine : macOS $(sw_vers -productVersion), image ${ImageVersion:-inconnue} ; $(xcodebuild -version | head -1)"
+      - name: Bibliothèques
+        run: |
+          npm ci --no-audit --no-fund > /dev/null 2>&1 || { echo "échoué : npm ci"; exit 1; }
+      - name: Interface copiée dans le projet iOS
+        run: |
+          npx cap sync ios > /dev/null 2>&1 || { echo "échoué : cap sync ios"; exit 1; }
+          if git diff --quiet -- ios; then echo "juste : le projet iOS du dépôt est celui que donne cap sync"; else echo "ÉCART : cap sync modifie le projet iOS du dépôt"; git diff --stat -- ios; exit 1; fi
+      - name: Faux serveur
+        run: |
+          cat > "$RUNNER_TEMP/faux-serveur.mjs" <<'FIN'
+          import http from 'node:http';
+          let minimale = 1;
+          let etats = 0;
+          let fabrication = false;
+          const horloge = () => {
+            const instant = new Date();
+            return { instant: instant.toISOString(), bascule: new Date(instant.getTime() + 3600000).toISOString(), vitesse: 1 };
+          };
+          const donnees = {
+            session: 'aucune', parcours: { etape: 'dehors' }, accordAJour: true, revelationAOuvrir: false, annonces: [],
+            defi: null, voies: { apple: true, google: false, email: false }, message: { disponible: true },
+          };
+          const cors = {
+            'Access-Control-Allow-Origin': 'capacitor://localhost',
+            'Access-Control-Allow-Methods': 'GET, POST',
+            'Access-Control-Allow-Headers': 'Authorization, Content-Type, Elenchos-Fabrication',
+            'Vary': 'Origin',
+          };
+          const json = { ...cors, 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' };
+          const traiter = (req, res) => {
+            if (req.method === 'OPTIONS') { res.writeHead(204, cors); res.end(); return; }
+            if (req.method === 'GET' && req.url === '/api/etat') {
+              etats += 1;
+              if (/^[0-9]+$/.test(req.headers['elenchos-fabrication'] ?? '')) fabrication = true;
+              res.writeHead(200, json);
+              res.end(JSON.stringify({ ok: true, fabricationMinimale: minimale, horloge: horloge(), donnees }));
+              return;
+            }
+            if (req.method === 'POST' && req.url === '/outil/mise-a-jour') { minimale = 1000000; res.writeHead(204); res.end(); return; }
+            if (req.method === 'GET' && req.url === '/outil/bilan') {
+              res.writeHead(200, { 'Content-Type': 'application/json' });
+              res.end(JSON.stringify({ etats, fabrication }));
+              return;
+            }
+            res.writeHead(404, json);
+            res.end(JSON.stringify({ ok: false, fabricationMinimale: minimale, horloge: horloge(), erreur: 'introuvable' }));
+          };
+          http.createServer(traiter).listen(8787, '127.0.0.1');
+          http.createServer(traiter).on('error', () => {}).listen(8787, '::1');
+          FIN
+          nohup node "$RUNNER_TEMP/faux-serveur.mjs" > /dev/null 2>&1 &
+          for i in 1 2 3 4 5 6 7 8 9 10; do curl -sf "$FAUX_SERVEUR/outil/bilan" > /dev/null && break; sleep 1; done
+          curl -sf "$FAUX_SERVEUR/outil/bilan" > /dev/null && echo "réussi : faux serveur prêt" || { echo "échoué : faux serveur"; exit 1; }
+      - name: Fabrication pour le simulateur, sans signature
+        run: |
+          xcodebuild build -project ios/App/App.xcodeproj -scheme App -configuration Debug \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath "$RUNNER_TEMP/derive" \
+            CODE_SIGNING_ALLOWED=NO ELENCHOS_SERVEUR="$FAUX_SERVEUR" > "$RUNNER_TEMP/fabrication.log" 2>&1 || {
+              grep -E "error:|\*\* BUILD FAILED" "$RUNNER_TEMP/fabrication.log" | head -60
+              echo "échoué : fabrication"
+              exit 1
+            }
+          echo "réussi : fabrication"
+          echo "avertissements dans nos fichiers :"
+          grep -E "(ElenchosNatif|ElenchosBridgeViewController|NotificationService|AppDelegate|SceneDelegate)\.swift:[0-9]+:[0-9]+: warning:" "$RUNNER_TEMP/fabrication.log" | sed "s|^.*/ios/App/||" | sort -u | head -40 || true
+      - name: L'application dans le simulateur
+        run: |
+          mkdir -p "$RUNNER_TEMP/captures"
+          runtime=$(xcrun simctl list runtimes -j | python3 -I -c "import json,sys; r=[x for x in json.load(sys.stdin)['runtimes'] if x.get('platform')=='iOS' and x.get('isAvailable')]; r.sort(key=lambda x: [int(p) for p in x['version'].split('.')]); print(r[-1]['identifier'] if r else '')")
+          [ -n "$runtime" ] || { echo "échoué : aucun simulateur d'iOS"; exit 1; }
+          appareil=$(xcrun simctl create elenchos "iPhone 17" "$runtime")
+          echo "simulateur : iPhone 17, ${runtime##*.}"
+          xcrun simctl boot "$appareil"
+          xcrun simctl bootstatus "$appareil" -b > /dev/null
+          xcrun simctl status_bar "$appareil" override --time 9:41 --batteryState charged --batteryLevel 100 > /dev/null 2>&1 || true
+          xcrun simctl install "$appareil" "$RUNNER_TEMP/derive/Build/Products/Debug-iphonesimulator/App.app"
+          xcrun simctl launch "$appareil" "$APPLICATION" > /dev/null
+          sleep 10
+          xcrun simctl io "$appareil" screenshot "$RUNNER_TEMP/captures/1-accueil.png" > /dev/null 2>&1
+          echo "réussi : capture de l'accueil"
+          curl -sf -X POST "$FAUX_SERVEUR/outil/mise-a-jour" > /dev/null
+          xcrun simctl terminate "$appareil" "$APPLICATION" > /dev/null 2>&1 || true
+          xcrun simctl launch "$appareil" "$APPLICATION" > /dev/null
+          sleep 10
+          xcrun simctl io "$appareil" screenshot "$RUNNER_TEMP/captures/2-mise-a-jour.png" > /dev/null 2>&1
+          echo "réussi : capture de l'écran de mise à jour"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: ${{ !cancelled() }}
+        with:
+          name: captures-simulateur
+          path: ${{ runner.temp }}/captures
+          retention-days: 3
+          if-no-files-found: warn
+      - name: Ce que le faux serveur a reçu
+        run: |
+          curl -sf "$FAUX_SERVEUR/outil/bilan" | python3 -I -c "
+          import json, sys
+          b = json.load(sys.stdin)
+          ok = b['etats'] >= 2 and b['fabrication']
+          print(('juste' if b['etats'] >= 2 else 'ÉCART') + ' : l\'application a demandé l\'état au serveur à chaque ouverture')
+          print(('juste' if b['fabrication'] else 'ÉCART') + ' : l\'en-tête Elenchos-Fabrication est arrivé')
+          sys.exit(0 if ok else 1)
+          "

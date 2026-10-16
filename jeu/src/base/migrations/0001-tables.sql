@@ -231,7 +231,10 @@ CREATE TABLE manche (
   devineur_membre_id uuid NOT NULL,
   jour date NOT NULL,
   texte_id text NOT NULL REFERENCES texte (id),
-  validee_le timestamptz, -- Valider fige la manche (règle 9)
+  -- « Valider » fige la manche (règle 9). Un booléen et non une heure : aucune règle ne lit l'heure de la validation
+  -- (le moteur ne connaît que « validée ou non », src/regles/manche.ts), et une heure par jour et par personne
+  -- formerait un journal de ses habitudes (même motif que « vu », relecture de Juridique du 16 octobre 2026).
+  validee boolean NOT NULL DEFAULT false,
   cercle_regarde boolean NOT NULL DEFAULT false,
   FOREIGN KEY (devineur_membre_id, cercle_id) REFERENCES membre (id, cercle_id) ON DELETE CASCADE,
   UNIQUE (devineur_membre_id, jour),
@@ -305,8 +308,9 @@ CREATE TABLE compte_semaine (
 );
 
 -- Les attributions d'un cercle sur un texte : la surprise de la semaine (règle 12). Elles restent au départ d'un
--- auteur (règle 4). La semaine d'un texte est celle du jour où on le devine (calendrier.jour + 1) ; gardées pour la
--- semaine en cours et la précédente, comme les compteurs ci-dessus.
+-- auteur (règle 4). La semaine d'un texte est celle du jour où on le devine (calendrier.jour + 1) ; gardées jusqu'au
+-- lundi 18h qui suit cette semaine : la surprise est alors figée dans les titres (Juridique ; arbitrage de l'équipe,
+-- 16 octobre 2026 ; ménage).
 CREATE TABLE compte_texte_cercle (
   cercle_id uuid NOT NULL REFERENCES cercle (id) ON DELETE CASCADE,
   texte_id text NOT NULL REFERENCES texte (id),

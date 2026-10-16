@@ -1,5 +1,7 @@
 # Ce que contient la version de test
 
+*Parties 1 à 8 : périmètre du test réduit (D-058), remplacé par D-062 le 15 octobre 2026. Seule l'annexe (textes d'écran) reste en usage.*
+
 *13 octobre 2026. Application de D-056 et D-057. Ce document assemble deux travaux : celui de Game design sur les règles, et celui d'UX sur les écrans et le parcours. Il ne modifie pas le jeu (`docs/produit.md`). Ce qui est marqué « après le test » est absent du test, pas du jeu : il revient à la mise à niveau (D-056). Le document a été relu par Cohérence (compatible avec réserves) et par le Vérificateur (OK avec corrections) ; leurs corrections sont appliquées.*
 
 ## En bref
@@ -162,7 +164,7 @@ Ce qui reste intact : les lignes rouges, D-002, D-024 et D-025 (l'avis du cercle
 
 ## Annexe : les textes des écrans nouveaux (UX)
 
-*Mise à jour le 15 octobre 2026 (D-061) : textes relus par Juridique et UX, à relire par UX pour la forme en phase 1.*
+*Mise à jour le 15 octobre 2026 (D-061) : textes relus par Juridique et UX, à relire par UX pour la forme à l'étape 2.*
 
 *Textes proposés par UX, à confirmer en construction. Entre crochets : ce qui manque.*
 
@@ -183,14 +185,15 @@ Aucun bouton, aucune promesse d'une version Android. Le lien n'est pas consommé
 « Avant ta première réponse » / « Tes réponses révèlent tes opinions politiques. Elles servent au jeu : le lendemain, ton cercle essaie de deviner qui a répondu quoi. À 18h, il découvre lesquelles étaient de toi. Ton portrait se dessine. » / « Seul ton cercle les voit, et tes trois premières vont aussi aux proches que tu invites. Elles ne sont jamais vendues. Tu peux tout effacer, quand tu veux. » / « Version de test, tenue par [Prénom Nom]. Tout peut être effacé à la fin. » / boutons « J'ai 15 ans ou plus, j'accepte » · « Non merci » / « Qui, durée, droits »
 Après « Non merci » : « D'accord, rien n'a été gardé. Tu peux revenir par ce lien pendant 7 jours. » Rien n'est enregistré, et le lien n'est pas consommé.
 
-**N6. « Qui, durée, droits »** (texte de Juridique, D-061 ; mis à jour le 16 octobre 2026 d'après la relecture du schéma par Juridique, D-062 à D-066, et son avis du 15 octobre sur TestFlight, `docs/etape-6/testflight-juridique.md` ; entre crochets, ce qui manque)
+**N6. « Qui, durée, droits »** (texte de Juridique, D-061 ; mis à jour le 16 octobre 2026 d'après la relecture du schéma par Juridique, D-062 à D-066, et son avis du 15 octobre sur TestFlight, `docs/etape-6/testflight-juridique.md` ; corrigé le même jour d'après la relecture de Cohérence ; entre crochets, ce qui manque ou reste à vérifier)
 - **Qui.** « Elenchos est un jeu en test, tenu à titre personnel par [Prénom Nom]. C'est lui qui décide de ce que deviennent tes données, et qui en répond. Contact : [adresse e-mail]. »
-- **Pourquoi.** « Tes réponses révèlent tes opinions politiques. Elles servent à faire tourner le jeu, avec ton accord, donné sur la carte avant ta première réponse. Sans cet accord, tu ne peux pas jouer. Ton compte sert à te reconnaître d'un jour à l'autre. La sécurité du jeu et le compte des gestes (plus bas) reposent sur notre intérêt légitime : protéger le jeu et savoir s'il marche. Tu peux refuser qu'on compte tes gestes : écris à [adresse]. »
+- **Pourquoi.** « Tes réponses révèlent tes opinions politiques. Elles servent à faire tourner le jeu, avec ton accord, donné sur la carte avant ta première réponse. Sans cet accord, tu ne peux pas jouer. Ton compte sert à te reconnaître d'un jour à l'autre. La sécurité du jeu et le compte des gestes (plus bas) reposent sur notre intérêt légitime : protéger le jeu et savoir s'il marche. Tu peux refuser qu'on compte tes gestes : Moi › Réglages. » (chemin et mots finaux : UX ; le réglage et sa route sont à écrire à l'étape 2, `jeu/CONTRAT.md`, 2.12 ; D-066, point 3)
 - **Ce qui est gardé.**
   - « Ton pseudo. »
-  - « Une empreinte de ton adresse e-mail, ou de l'identifiant donné par Apple ou Google : un code tiré de l'adresse, qui sert à te reconnaître. L'adresse elle-même n'est pas gardée. »
+  - « Une empreinte de ton adresse e-mail, ou de l'identifiant donné par Apple ou Google : un code tiré de l'adresse, qui sert à te reconnaître. L'adresse elle-même n'est pas gardée par le jeu. »
   - « Ton accord : sa date et la version de la carte. »
   - « Tes réponses (chiffrées), tes devinettes, tes titres du dimanche. »
+  - « Tes tempéraments, ton Pas de Côté s'il y en a un, et les tensions sur lesquelles tes réponses sont nettes (sans leur sens). »
   - « Si tu l'acceptes, l'adresse technique où ton iPhone reçoit le message de 18h. »
   - « Ce que tu fais dans le jeu (quand tu joues, si le message est arrivé) sert aussi à des totaux, jamais ce que tu réponds. »
   - « Jamais ton nom, ta photo, ta date de naissance ni ton numéro de téléphone. Si tu t'arrêtes avant de créer ton compte, tes réponses sont effacées au bout de 7 jours, et tu peux les effacer toi-même avant. »
@@ -199,28 +202,29 @@ Après « Non merci » : « D'accord, rien n'a été gardé. Tu peux revenir par
   - « Si un proche te désigne alors que vous aviez donné exactement la même réponse, il l'apprend aussi. »
   - « À 18h, ton cercle voit aussi la répartition des réponses du cercle sur le texte. Dans un petit cercle, elle peut laisser deviner qui a dit quoi, ou qui n'a pas répondu. »
   - « Ton cercle voit si tu as déjà joué dans la journée, et les titres du dimanche. »
-  - « Ton cercle voit ton portrait : où tu te situes sur huit grandes questions, d'après tes réponses déjà révélées. Il voit aussi tes tempéraments, par exemple « souvent seul de son côté ». Et si une de tes réponses va nettement contre ton penchant habituel, il voit l'annonce d'un « Pas de Côté » sur ce texte. »
+  - « Ton cercle voit ton portrait : où tu te situes sur huit grandes tensions, par exemple entre sécurité et liberté, d'après tes réponses déjà révélées. Il voit aussi tes tempéraments, par exemple « souvent neutre » ou « souvent à contre-courant du cercle ». Et si une de tes réponses va nettement contre ton penchant habituel, il voit l'annonce d'un « Pas de Côté » sur ce texte. »
   - « Tes trois premières réponses : la personne qui t'a invité peut les deviner, puis les découvrir, et elle apprend combien des siennes tu as trouvées. Quand tu invites quelqu'un, tu lui envoies les tiennes : il les découvre avant d'entrer dans le cercle. »
   - « Personne d'autre ne voit tes réponses. [Prénom] a les clés du jeu, mais aucun écran ne lui montre une réponse. »
   - « Ce que ton cercle a vu, il l'a vu : effacer ne l'enlève ni des mémoires ni des captures d'écran. »
 - **Où, et chez qui.**
-  - « Le jeu et tes données sont chez Scalingo, un hébergeur français, en France. Ses sauvegardes en gardent une copie environ quatre semaines. »
+  - « Le jeu et tes données sont chez un hébergeur français (Scalingo). Ses sauvegardes en gardent une copie environ quatre semaines. »
   - « Scalingo garde aussi, de son côté, une trace technique des connexions pendant un an (par exemple l'adresse internet et l'heure). Ni toi ni nous ne pouvons l'effacer. Elle ne contient aucune de tes réponses. »
-  - « Le code reçu par e-mail part par Scaleway, un service français : il voit ton adresse et le code, rien d'autre. »
-  - « Le message de 18h passe par Apple, sans tes réponses. Si tu te connectes avec Apple ou Google, ils savent que tu as un compte Elenchos et quand tu t'y connectes, jamais ce que tu réponds. Ces deux sociétés sont américaines : ce passage hors d'Europe repose sur la décision de la Commission européenne qui reconnaît le cadre de protection UE–États-Unis (2023). »
+  - « Le code reçu par e-mail part par Scaleway, un service français : il voit ton adresse et le code, rien d'autre. Scaleway garde une trace de l'envoi (ton adresse, l'heure, le code) pendant [durée, à vérifier avant d'allumer la voie e-mail]. »
+  - « Le message de 18h passe par Apple, sans tes réponses. L'annonce de ton arrivée, faite à la personne qui t'a invité, cite ton pseudo, jamais ton score ; Apple peut la lire. Si tu te connectes avec Apple ou Google, ils savent que tu as un compte Elenchos et quand tu t'y connectes, jamais ce que tu réponds. Ces deux sociétés sont américaines : ce passage hors d'Europe repose sur la décision de la Commission européenne qui reconnaît le cadre de protection UE–États-Unis (2023). » [Cette décision est citée de mémoire : à confirmer par Juridique à la mise à niveau.]
   - « Le jeu s'installe avec TestFlight, l'outil de test d'Apple. Apple sait que tu testes Elenchos. Il montre à [Prénom], pour chaque testeur, l'installation, les ouvertures et les plantages. Jamais tes réponses. Ce que tu envoies avec le bouton de retour de TestFlight passe par Apple : n'y mets pas de capture qui montre des réponses. »
   - « Avant d'ouvrir le test, Apple fait vérifier le jeu par une personne de chez lui. Elle joue dans un cercle inventé, avec des membres et des réponses inventés : elle ne voit jamais un vrai cercle. »
   - « Aucune de tes réponses, ni rien qui porte ton nom, ne va à une IA. Ni vente, ni publicité. »
-- **Ce qu'on compte.** « Des gestes, en totaux : qui a fini son entrée, qui a joué avant 18h, si le message de 18h est arrivé, si les devinettes sont plus justes que le hasard. Jamais ce que tu réponds. [Prénom] lit ces totaux. Il peut en montrer certains aux assistants d'IA qui l'aident à construire le jeu, toujours sur au moins dix joueurs différents, sans nom ni réponse. Les compteurs par testeur d'Apple (installations, ouvertures, plantages) ne sont pas des totaux : [Prénom] ne s'en sert que pour réparer le jeu, et ne les montre jamais aux assistants d'IA. Si tu as refusé qu'on compte tes gestes, les tiens n'entrent dans aucun total. »
-- **Combien de temps.** « Tes données sont gardées tant que ton compte existe, et au plus jusqu'à la fin du test. À la fin du test, tout est effacé. Les retours envoyés par TestFlight sont effacés à la fin du test. Le code reçu par e-mail vaut 15 minutes ; une invitation, 7 jours. Après un effacement, les sauvegardes disparaissent en quatre semaines environ, et la trace des connexions de Scalingo au bout d'un an. »
+- **Ce qu'on compte.** « Des gestes, en totaux : qui a fini son entrée, qui a joué avant 18h, si le message de 18h est arrivé, si les devinettes sont plus justes que le hasard. Jamais ce que tu réponds. [Prénom] lit ces totaux. Il peut en montrer certains aux assistants d'IA qui l'aident à construire le jeu, sans nom ni réponse, et jamais un total qui porte sur moins de dix gestes. Les compteurs par testeur d'Apple (installations, ouvertures, plantages) ne sont pas des totaux : [Prénom] ne s'en sert que pour réparer le jeu, et ne les montre jamais aux assistants d'IA. Si tu refuses qu'on compte tes gestes, ceux que tu feras ensuite n'entrent dans aucun total. Ce qui avait déjà été compté reste, sans ton nom. » (« moins de dix gestes » suit P-21 de `docs/etape-6/donnees.md` : dix joueurs distincts pour les totaux des gestes, dix apports pour les compteurs du jour ; seuils proposés, Back-end à confirmer)
+- **Combien de temps.** « Tes données sont gardées tant que ton compte existe, et au plus jusqu'à la fin du test. À la fin du test, tout est effacé. Les retours envoyés par TestFlight sont effacés à la fin du test [à vérifier : effacement possible dans App Store Connect]. Le code reçu par e-mail vaut 15 minutes ; une invitation, 7 jours. Scaleway garde une trace de l'envoi du code (ton adresse, l'heure, le code) pendant [durée, à vérifier avant d'allumer la voie e-mail]. Après un effacement, les sauvegardes disparaissent en quatre semaines environ, et la trace des connexions de Scalingo au bout d'un an. »
 - **Tes droits.**
-  - « Tout effacer, quand tu veux : Moi › Réglages › Tout effacer. C'est immédiat dans le jeu. Les copies de secours s'effacent d'elles-mêmes en quatre semaines environ ; si l'une d'elles sert après une panne, ton effacement est refait. C'est aussi la façon de retirer ton accord. »
+  - « Tout effacer, quand tu veux : Moi › Réglages › Tout effacer. C'est immédiat dans le jeu. Tes titres du dimanche restent dans l'historique du cercle, sous « un ancien membre ». Le Pas de Côté, lui, est effacé. Les copies de secours s'effacent d'elles-mêmes en quatre semaines environ ; si l'une d'elles sert après une panne, ton effacement est refait. C'est aussi la façon de retirer ton accord. »
   - « Si tu t'es connecté avec Apple, « Tout effacer » retire aussi Elenchos de ton compte Apple, quand tu confirmes. Avec Google, ou si tout est effacé à la fin du test, Elenchos reste dans la liste des connexions de ton compte Apple ou Google, sans aucune donnée du jeu. Tu peux l'en retirer toi-même : [chemin Apple] ; [chemin Google]. »
-  - « Pour voir ou emporter tes données, corriger ton pseudo, ou demander qu'on limite ou qu'on arrête un usage : écris à [adresse]. Réponse sous un mois. »
+  - « Pour voir ou emporter tes données : Moi › Réglages › Emporter mes données. Tu reçois un fichier lisible, et personne d'autre n'ouvre la base pour ça. » (mots : UX ; route prévue à l'étape 2 ; `docs/etape-6/donnees.md`, P-36, proposé)
+  - « Pour corriger ton pseudo, ou pour toute autre demande (qu'on limite un usage de tes données, ou qu'on en arrête un autre que le compte de tes gestes) : écris à [adresse]. Réponse sous un mois. » (le contrat, `jeu/CONTRAT.md`, ne prévoit pas de changer son pseudo dans les Réglages ; s'il le prévoit un jour, ce chemin remplacera l'e-mail pour le pseudo)
   - « Si ça ne va pas, tu peux te plaindre à la CNIL (cnil.fr). »
 - **Âge.** « Il faut avoir 15 ans ou plus. Dès 15 ans, tu peux donner ton accord seul. »
 - **Les textes.** « Les résumés et les raisons sont rédigés avec une IA, d'après le texte et les débats. Une erreur ? Écris à [adresse]. »
-- **Mots à finaliser par UX.** Les phrases ajoutées le 16 octobre 2026 gardent les mots de Juridique et sont à mettre en forme par UX : le portrait, les tempéraments et le Pas de Côté (« Qui voit quoi ») ; la phrase sur ce que tu fais dans le jeu (« Ce qui est gardé ») ; les trois phrases sur TestFlight (« Où, et chez qui », « Ce qu'on compte », « Combien de temps ») ; le relecteur d'Apple (« Où, et chez qui ») ; le refus des mesures (« Ce qu'on compte ») ; la révocation chez Apple et chez Google (« Tes droits »). [chemin Apple] et [chemin Google] sont à vérifier sur un iPhone par UX (de mémoire de Juridique : Réglages › ton nom › Se connecter avec Apple ; myaccount.google.com, rubrique des connexions tierces). Ce même texte est aussi publié à une adresse web, comme politique de confidentialité (`docs/etape-6/testflight-juridique.md`, 1.6).
+- **Mots à finaliser par UX.** Les phrases ajoutées le 16 octobre 2026 gardent les mots de Juridique et sont à mettre en forme par UX : le portrait, les tempéraments et le Pas de Côté (« Qui voit quoi ») ; la phrase sur ce que tu fais dans le jeu (« Ce qui est gardé ») ; les trois phrases sur TestFlight (« Où, et chez qui », « Ce qu'on compte », « Combien de temps ») ; le relecteur d'Apple (« Où, et chez qui ») ; le refus des mesures (« Ce qu'on compte ») ; la révocation chez Apple et chez Google (« Tes droits »). Les phrases corrigées le même jour d'après la relecture de Cohérence sont aussi à mettre en forme par UX : le refus des mesures dans les Réglages (« Pourquoi », « Ce qu'on compte ») ; les tempéraments, le Pas de Côté et les tensions nettes (« Ce qui est gardé ») ; les huit tensions et les exemples de tempéraments (« Qui voit quoi ») ; la trace de Scaleway et l'annonce d'arrivée (« Où, et chez qui », « Combien de temps ») ; le seuil des totaux (« Ce qu'on compte ») ; les titres qui restent après « Tout effacer », « Emporter mes données » et les autres demandes (« Tes droits »). [chemin Apple] et [chemin Google] sont à vérifier sur un iPhone par UX (de mémoire de Juridique : Réglages › ton nom › Se connecter avec Apple ; myaccount.google.com, rubrique des connexions tierces). Ce même texte est aussi publié à une adresse web, comme politique de confidentialité (`docs/etape-6/testflight-juridique.md`, 1.6).
 
 **N7. Compte (1.8 redessiné)**
 « Pour que Thomas sache que c'était toi, et retrouver tes réponses demain. » (pour le créateur : « Pour retrouver tes réponses demain, et que tes proches sachent que c'est toi. ») / champ « Ton pseudo » (« Tes proches te verront sous ce nom. ») / boutons « Continuer avec Apple » · « Continuer avec Google » · « Recevoir un code par e-mail » / « Avec ton compte personnel, pas celui du travail ou de l'école. » / sous un filet, le texte « Pourquoi Elenchos ? » (D-049).
@@ -255,14 +259,14 @@ Replié : « « Sur l'écran d'accueil » n'apparaît pas ? » → « Tu n'es sa
 **N11. Bandeau dans Safari, une fois connecté**
 « Pour recevoir le message de 18h, ajoute Elenchos à ton écran d'accueil. Comment ? »
 
-**N12. Déjà dans un cercle**
-« Tu es déjà dans un cercle. Pendant le test, on joue dans un seul cercle. » / « Ouvrir mon cercle ».
+**N12. Déjà dans trois cercles** (D-062, point 1 : plusieurs cercles ; règle 15 de `docs/etape-6/regles.md` : à trois cercles, « le lien le lui dit » ; erreur `trois_cercles`, `jeu/CONTRAT.md`)
+`[A_ECRIRE, UX : « Tu es déjà dans trois cercles… »]`
 
 **N13. Lien qui ne marche plus** (5.14 élargi)
 « Ce lien ne marche plus » / « Une invitation ne sert qu'une fois, pendant 7 jours. Demande-en une nouvelle à {prénom}. » / « Tu as déjà un compte ? » bouton « Me connecter ».
 
 **N14. Tout effacer** (Moi › Réglages › Tout effacer ; mis à jour le 16 octobre 2026 : « Tout effacer » révoque aussi la connexion chez Apple, D-065 (rappel) ; `jeu/DECISIONS-TECHNIQUES.md`, 1.14 ; `jeu/CONTRAT.md`, `POST /api/tout-effacer` ; aligné sur N6, « Tes droits »)
-Confirmation : « Tout effacer ? » / « Ton compte, tes réponses et tes devinettes sont effacés du jeu tout de suite. Ton visage disparaît du cercle, sans message au cercle. » / « Les copies de secours de l'hébergeur s'effacent d'elles-mêmes en quatre semaines environ. Elles ne servent qu'en cas de panne. » / « Tout effacer » · « Annuler ».
+Confirmation : « Tout effacer ? » / « Ton compte, tes réponses et tes devinettes sont effacés du jeu tout de suite. Ton visage disparaît du cercle, sans message au cercle. Tes titres du dimanche restent dans l'historique du cercle, sous « un ancien membre ». Le Pas de Côté, lui, est effacé. » / « Les copies de secours de l'hébergeur s'effacent d'elles-mêmes en quatre semaines environ. Elles ne servent qu'en cas de panne. » / « Tout effacer » · « Annuler ».
 - [compte créé avec Apple, sous le texte de confirmation] « « Tout effacer » retire aussi Elenchos de ton compte Apple, quand tu confirmes. » (mots de Juridique, N6). Puis : « Apple te demandera de confirmer. Si tu fermes sa fenêtre, tout est quand même effacé, mais Elenchos reste dans ton compte Apple. » (mots à finaliser par UX). Au toucher sur « Tout effacer », la feuille d'Apple s'ouvre (Face ID). L'effacement se fait même si le joueur la ferme (`jeu/CONTRAT.md`).
 
 Après, selon la voie du compte et le résultat chez Apple (`voie`, `revoque`) :
@@ -285,10 +289,10 @@ Bilan : « Tes 3 réponses sont prêtes. Tes proches vont essayer de les deviner
 **N17 a. Message du porteur avant l'invitation à TestFlight par e-mail** (nouveau, 16 octobre 2026 ; le porteur l'envoie lui-même, ce n'est pas un écran ; texte de Juridique, tel quel, avis du 15 octobre 2026, `docs/etape-6/testflight-juridique.md`, 1.6 ; information due au titre de l'article 14 du RGPD ; à relire par UX)
 « Je peux donner ton adresse e-mail à Apple pour t'inviter au test d'Elenchos ? Apple ne s'en sert que pour l'invitation. »
 Sans « oui », pas d'invitation.
-Quand il sert (proposé) : seulement si [Prénom] invite un ami à TestFlight par son adresse e-mail. Le plan retient le lien public de TestFlight, où l'ami s'inscrit lui-même et où aucune adresse ne passe par [Prénom] (`docs/etape-6/plan-jeu-entier.md`, « Ce que l'équipe a tranché seule », D-064) : avec ce lien, ce message n'a pas à être envoyé.
+Quand il sert (proposé) : seulement si [Prénom] invite un ami à TestFlight par son adresse e-mail. Le plan retient le lien public de TestFlight, où l'ami s'inscrit lui-même et où aucune adresse ne passe par [Prénom] (`docs/etape-6/plan-jeu-entier.md`, « Ce que l'équipe a tranché seule » ; plan de D-064, arbitrage de l'équipe) : avec ce lien, ce message n'a pas à être envoyé.
 
 **N18. Pas de réseau** (UX, phase 0, 1.1). Les données passent toujours par le réseau : rien d'ancien ne s'affiche. Quand le réseau revient, l'écran se recharge tout seul et le bandeau disparaît sans message.
-- **L'icône s'ouvre sans réseau, rien n'est encore chargé** (écran entier : l'en-tête Elenchos, sans barre d'onglets) : « Pas de connexion » / « Elenchos a besoin d'internet pour afficher le jeu. Il s'affichera dès que la connexion revient. » / bouton « Réessayer ».
+- **L'application s'ouvre sans réseau, rien n'est encore chargé** (écran entier : l'en-tête Elenchos, sans barre d'onglets) : « Pas de connexion » / « Elenchos a besoin d'internet pour afficher le jeu. Il s'affichera dès que la connexion revient. » / bouton « Réessayer ».
 - **Le réseau se coupe pendant la partie** (bandeau en haut de l'écran, au-dessus de l'en-tête, tant que la coupure dure) : « Pas de connexion. Elenchos réessaie tout seul. »
 - **Un geste n'est pas parti** (valider une réponse, poser un visage, valider la manche ; une ligne sous le bouton, le choix reste affiché et ne peut plus être changé) : « Pas encore envoyé : pas de connexion. Garde Elenchos ouvert, ça partira dès que le réseau revient. »
 - **Le réseau est là, mais le jeu ne répond pas** (serveur en panne, délai dépassé ; même bandeau) : « Elenchos ne répond pas pour l'instant. Réessaie dans quelques minutes. »
@@ -300,12 +304,12 @@ Quand il sert (proposé) : seulement si [Prénom] invite un ami à TestFlight pa
 - **c. N15, cercle complet, en deux moments** (remplace la ligne de N15 ci-dessus).
   - Le lien s'ouvre alors que le cercle a déjà dix membres, avant tout texte : « Ce cercle est complet » / « Un cercle compte dix membres au plus : tu ne peux pas y entrer. » / « Tu peux le dire à {pseudo}. »
   - Le cercle s'est rempli pendant l'entrée ; l'écran prend la place du compte, après le bilan : « Ce cercle est complet » / « Le cercle de {pseudo} s'est rempli pendant que tu jouais. Dix membres, c'est le maximum : tu ne peux pas y entrer. » / « Tes réponses sont effacées dans 7 jours. »
-- **d. Refus après 18h** (le test n'accepte plus de réponse jusqu'à 18h10).
-  - Écrans Répondre ou raison, quand la validation arrive après 18h00 : « Ce texte s'est fermé à 18h. Ta réponse n'a pas été prise. » / « Continuer », qui mène à la révélation.
-  - Écran Deviner, quand un visage est posé après 18h : « La manche s'est fermée à 18h, telle qu'elle était. » / « Continuer ».
+- **d. Refus après l'heure.**
+  - Écrans Répondre ou raison, quand la validation arrive après 18h10 (ou après 18h si l'écran Répondre ne s'était pas affiché avant 18h ; règle 6 de `docs/etape-6/regles.md` ; `texte_ferme`, `jeu/CONTRAT.md`) : « Ce texte s'est fermé à 18h. Ta réponse n'a pas été prise. » / « Continuer », qui mène à la révélation.
+  - Écran Deviner, quand un visage est posé après 18h (la manche n'a pas de délai : `manche_fermee`, `jeu/CONTRAT.md`) : « La manche s'est fermée à 18h, telle qu'elle était. » / « Continuer ».
 - **e. Texte corrigé.**
   - Fiche 5.4 : « Corrigé le {date} : {ce qui a changé}. » Exemple : « Corrigé le 12 novembre : le vote a eu lieu le 3 juin, pas le 3 mai. »
   - Historique, sous la phrase du jour : « Texte corrigé après ta réponse. »
 - **f. Message d'arrivée, sans score.** Titre « Elenchos », corps : « {pseudo} a relevé ton défi. À ton tour de deviner {pseudo}. » Le score (« a trouvé 2 de tes 3 réponses », D-011) reste dans le jeu : il n'apparaît pas sur l'écran verrouillé et ne passe pas par Apple.
-- **g. Mise à jour forcée de l'icône : aucun texte.** Le rechargement se fait à l'ouverture ou au retour dans l'application, jamais quand un choix n'est pas encore validé.
+- **g. Mise à jour requise** : erreur `mise_a_jour_requise` (`jeu/CONTRAT.md`, 1.7 ; `jeu/DECISIONS-TECHNIQUES.md`, 1.10) ; mots : UX.
 - **h. N13 avec {pseudo}** (remplace le texte de N13 ci-dessus ; le jeu ne connaît que le pseudo). « Ce lien ne marche plus » / « Une invitation ne sert qu'une fois, pendant 7 jours. Demande-en une nouvelle à {pseudo}. » / « Tu as déjà un compte ? » bouton « Me connecter ».

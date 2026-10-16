@@ -1,12 +1,12 @@
 // Généré par Capacitor 8.5.3 (`npx cap add ios`), puis adapté pour Elenchos (étape 1, coquille) :
 // - transmet le jeton d'appareil d'Apple au module officiel des notifications (sa notice, partie iOS) ;
-// - commentaires du modèle d'origine retirés.
+// - commentaires du modèle d’origine retirés ; `@main` à la place de `@UIApplicationMain`, déprécié par Swift.
 // Rien n'est écrit dans les journaux (P-07).
 
 import Capacitor
 import UIKit
 
-@UIApplicationMain
+@main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?

@@ -1,0 +1,4 @@
+# L'adresse du serveur que vise l'application fabriquée pour TestFlight (.github/workflows/app-testflight.yml).
+# Une seule ligne sans « # » : « https://hôte », sans port, sans chemin, sans « / » final.
+# Vide tant que l'adresse gratuite de Scalingo n'est pas connue : la fabrication pour TestFlight refuse alors de partir.
+# Changer cette adresse (par exemple pour le domaine) demande une nouvelle fabrication (CONTRAT.md, partie 5).

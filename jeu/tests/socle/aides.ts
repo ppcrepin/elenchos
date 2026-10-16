@@ -233,7 +233,7 @@ export async function peupler(base: BaseDeTest) {
     await cl.query(`INSERT INTO carte (id, manche_id, cercle_id, ordre, auteur_membre_id, qui_et_pourquoi, visage_membre_id)
       VALUES ($1, $2, $3, 1, $4, false, $5), ($6, $2, $3, 2, $5, true, $4)`,
       [cartesA[0], mancheA, a.id, a.membres.get(paul.id), a.membres.get(hugo.id), cartesA[1]]);
-    await cl.query('UPDATE manche SET validee_le = now() WHERE id = $1', [mancheA]);
+    await cl.query('UPDATE manche SET validee = true WHERE id = $1', [mancheA]);
     await cl.query(`INSERT INTO journee_cercle (cercle_id, jour, eveille) VALUES ($1, $2, true) ON CONFLICT DO NOTHING`, [a.id, JOURS.mardi]);
     await cl.query(`INSERT INTO compte_semaine (cercle_id, membre_id, semaine, points) VALUES ($1, $2, $3, 1)
       ON CONFLICT (membre_id, semaine) DO UPDATE SET points = compte_semaine.points + 1`, [a.id, a.membres.get(marie.id), JOURS.dimanche]);

@@ -20,7 +20,10 @@
 --
 -- LIRE AU-DESSUS DES SEUILS (P-21, P-23, P-39 a). Le module des mesures ne lit que des vues : la part de « aucune »
 -- d'un texte après sa révélation et au-dessus de 30 réponses ; les totaux des mesures au-dessus de 10 joueurs
--- distincts, et de 30 pour les trois comptes de mi-bêta. Les vues appartiennent au propriétaire ; les règles de
+-- distincts, et de 30 pour les trois comptes de mi-bêta ; les compteurs par jour et l'histogramme de la durée de la
+-- raison seulement à 10 au moins (N6 : aucun total n'est montré pour moins de dix joueurs). Ces deux-là sont sans
+-- personne : le seuil compte des apports, pas des joueurs distincts, et une ligne sous le seuil n'est pas montrée du
+-- tout (arbitrage de l'équipe, 16 octobre 2026 ; CONTRAT.md, 2.15). Les vues appartiennent au propriétaire ; les règles de
 -- cloisonnement des tables lues s'y appliquent quand même (FORCE), au module qui lit.
 
 -- Le joueur déclaré a-t-il refusé qu'on compte ses gestes ? Lu sous le module « totaux », par les seules fonctions
@@ -125,9 +128,9 @@ CREATE VIEW mesure_totaux WITH (security_barrier) AS
    WHERE joueurs >= CASE WHEN sorte IN ('justesse_cartes', 'justesse_hasard', 'mystere_nouveaux') THEN 10 ELSE 30 END;
 
 CREATE VIEW mesure_compteurs WITH (security_barrier) AS
-  SELECT sorte, jour, nombre FROM compteur;
+  SELECT sorte, jour, nombre FROM compteur WHERE nombre >= 10;
 
 CREATE VIEW mesure_histogramme WITH (security_barrier) AS
-  SELECT semaine, tranche, nombre FROM histogramme_raison;
+  SELECT semaine, tranche, nombre FROM histogramme_raison WHERE nombre >= 10;
 
 REVOKE ALL ON mesure_aucune, mesure_totaux, mesure_compteurs, mesure_histogramme FROM PUBLIC;
