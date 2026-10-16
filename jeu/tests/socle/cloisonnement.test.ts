@@ -2,7 +2,7 @@
 // autre cercle, même par une requête privée de tout filtre (« SELECT * » sur chaque table, sous le rôle du jeu) : c'est
 // la base qui refuse. Sans déclaration, la base ne rend rien. Les identités ne sont lues que par les comptes (P-01) ;
 // les réponses, jamais par l'envoi ni par les mesures (P-22, P-23) ; les mesures ne lisent que des totaux au-dessus des
-// seuils. L'invitation ne montre les réponses d'entrée de l'invitant qu'à l'invité lié (P-29). « Rien avant 18h »
+// seuils. L'invitation ne montre les réponses d'entrée de l'invitant qu'à l'invité lié, 7 jours au plus (P-29). « Rien avant 18h »
 // (P-26) est tenu aussi par la base pour les réponses du jour : un proche ne les lit qu'après la fermeture du texte,
 // et « déjà joué » passe par une fonction qui ne rend que des membres. La base et le moteur placent 18h au même instant.
 //
@@ -17,7 +17,9 @@ import { enTransaction } from '../../src/base/connexion.ts';
 import { bascule, jourDeDate } from '../../src/regles/heure.ts';
 import { ajouterJours } from '../../src/serveur/horloge.ts';
 import type { ModeRoles } from '../../src/serveur/config.ts';
-import { baseDeTest, commeJoueur, peupler, repondre, toutCeQuIlVoit, type BaseDeTest, type Monde } from './aides.ts';
+import {
+  baseDeTest, commeJoueur, inviter, nouveauJoueur, peupler, repondre, toutCeQuIlVoit, type BaseDeTest, type Monde,
+} from './aides.ts';
 
 const TABLES = Object.keys(CARTE).filter((t) => t !== 'migration');
 const TABLES_JOUEUR = TABLES.filter((t) => !['texte', 'calendrier', 'carte_accord'].includes(t));
@@ -287,6 +289,39 @@ for (const mode of ['roles', 'repli'] as ModeRoles[]) {
       await assert.rejects(commeJoueur(base, zoe.id, (c) => c.query(
         "INSERT INTO membre (id, cercle_id, joueur_id, rond, createur, arrive_le) VALUES ($1, $2, $3, 'Z', false, now())",
         [randomUUID(), m.b.id, zoe.id])), (e) => code(e) === 'EL006');
+    });
+
+    test('un lien lié ne fait plus rien lire 7 jours après sa liaison, ni entrer (Juridique, P-25)', async () => {
+      // Yves, déjà inscrit, relève le défi de Léa sans entrer dans « Amis » (le cas du cercle complet).
+      const yves = await nouveauJoueur(base, 'Yves-Trace7Q2', 'Y');
+      const inv = await inviter(base, m.b, m.lea);
+      await commeJoueur(base, yves.id, (c) => c.query(
+        'UPDATE invitation SET invite_joueur_id = $1, lie_le = now() WHERE empreinte_jeton = $2 AND lie_le IS NULL', [yves.id, inv.jeton]), inv.jeton);
+      const lie = (await base.admin.query<{ l: Date }>('SELECT lie_le AS l FROM invitation WHERE id = $1', [inv.id])).rows[0]?.l ?? new Date(0);
+      const plus = (jours: number, secondes = 0) => new Date(lie.getTime() + jours * 86_400_000 + secondes * 1000);
+      const lire = async (instant: Date) => {
+        const tables = ['invitation', 'cercle', 'joueur', 'membre', 'reponse'];
+        const vu = await enTransaction(base.module('jeu'), { joueur: yves.id, instant }, async (c) => {
+          const sortie: Record<string, unknown[]> = {};
+          for (const t of tables) sortie[t] = (await c.query(`SELECT * FROM "${t}"`)).rows;
+          return sortie;
+        });
+        const reponsesLea = (vu.reponse as { joueur_id: string; texte_id: string }[]).filter((r) => r.joueur_id === m.lea.id)
+          .map((r) => r.texte_id).sort();
+        return { tout: JSON.stringify(vu), reponsesLea };
+      };
+      // Six jours après : le cercle, le visage de Léa, ses trois réponses d'entrée.
+      const avant = await lire(plus(6));
+      assert.ok(avant.tout.includes(m.b.intitule) && avant.tout.includes(m.lea.pseudo));
+      assert.deepEqual(avant.reponsesLea, ['T01', 'T02', 'T03']);
+      // Sept jours et une seconde après : plus rien de Léa ni d'« Amis ».
+      const apres = await lire(plus(7, 1));
+      for (const s of [m.b.id, m.b.intitule, m.lea.id, m.lea.pseudo, inv.id]) assert.ok(!apres.tout.includes(s), s);
+      assert.deepEqual(apres.reponsesLea, []);
+      // Ni entrer : la base ne le laisse plus faire.
+      await assert.rejects(enTransaction(base.module('jeu'), { joueur: yves.id, instant: plus(7, 1) }, (c) => c.query(
+        "INSERT INTO membre (id, cercle_id, joueur_id, rond, createur, arrive_le) VALUES ($1, $2, $3, 'Y', false, now())",
+        [randomUUID(), m.b.id, yves.id])), (e) => code(e) === '42501');
     });
   });
 }

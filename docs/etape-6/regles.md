@@ -161,9 +161,10 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 - **Chiffres.** Au départ d'un membre (il quitte le cercle, efface tout, ou son compte est effacé pour inactivité), ses réponses partent avec lui, sur-le-champ. Le reste suit (proposé) :
   - une de ses cartes déjà servie mais pas encore révélée disparaît de la manche ; elle ne compte ni juste ni fausse ;
   - si son visage était posé sur une autre carte, cette carte redevient vide, que la manche ait été validée ou non ; la manche ne se rouvre pas pour autant (Valider fige, règle 9) : vide à 18h, la carte est passée, mais cette passe-là ne compte jamais contre Le Sans-Faute ;
+  - s'il part après 18h, une carte d'une manche close où son visage était posé garde son verdict et son point ; un jumeau y devient juste (règle 11). À la révélation, jusqu'au 18h suivant, la carte ne montre plus ce pari : « Tu connais ton monde. » « C'était Hugo. », sans « Paul avait répondu la même chose. » ni « un ancien membre » (arbitrage de l'équipe, D-067) ;
   - la carte « qui et pourquoi » n'est pas remplacée si c'était la sienne ;
   - les points déjà gagnés sur ses cartes révélées restent (§3, « scores figés »), et les attributions déjà révélées sur ses cartes restent dans les comptes de la semaine (surprise de la semaine) ;
-  - ses titres passés restent dans l'historique, sous « un ancien membre » (D-045) ; deux anciens membres ne se distinguent pas, c'est voulu ;
+  - ses titres passés restent dans l'historique, sous « un ancien membre » (D-045) ; deux anciens membres ne se distinguent pas, c'est voulu. **Sauf Le Pas de Côté, qui est effacé** : il dit qu'une réponse allait contre son penchant (D-066, point 1) ;
   - un titre de la semaine qu'il détenait n'est pas redonné : il disparaît avec son visage et reste dans les titres passés ;
   - il ne peut plus recevoir de titre le dimanche ;
   - s'il revient, il entre comme un nouveau membre : ses anciens titres restent sous « un ancien membre ».
@@ -236,7 +237,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 
 **Règle 11 · Les points.**
 - **Chiffres.** Un point par bonne attribution, tous de même valeur.
-- **Ce qui est juste.** Une attribution est juste si le visage posé est celui de l'auteur, ou d'un proche qui a donné exactement la même réponse : même position, même raison, « aucune » comprise (le jumeau, D-024). Pour deux cartes identiques servies ensemble, l'un ou l'autre auteur est juste sur chacune (R4). Ensuite, pour « C'était … », Le Mystère et « ses surprises », chaque auteur désigné devient l'auteur de la carte où on l'a posé, et les autres vont aux cartes restantes dans l'ordre d'arrivée (règle des essais).
+- **Ce qui est juste.** Une attribution est juste si le visage posé est celui de l'auteur, ou d'un proche qui a donné exactement la même réponse : même position, même raison, « aucune » comprise (le jumeau, D-024). Pour deux cartes identiques servies ensemble, l'un ou l'autre auteur est juste sur chacune (R4). Ensuite, pour « C'était … », Le Mystère et « ses surprises », chaque auteur désigné devient l'auteur de la carte où on l'a posé, et les autres vont aux cartes restantes dans l'ordre d'arrivée (règle des essais). Si le proche désigné part après 18h, le point reste, et la révélation ne le nomme plus (règle 4 ; D-067).
 - **« Raison cachée trouvée »** : la personne est juste et la raison aussi. Elle ne rapporte pas de point ; elle sert seulement à départager Le Devin (R5).
 - **Le hasard d'une manche** (mesure interne, D-041) : pour chaque carte, h = nombre de proposés qui ont donné la même réponse, divisé par le nombre de proposés. La somme des h donne le nombre de cartes justes qu'on aurait en posant les visages au hasard.
 - **Exemples.** J2 (jumeau : 1 point, et le hasard monte à 1 carte au lieu de 3/4) ; J3.

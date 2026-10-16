@@ -71,6 +71,8 @@ export function empreinteDe(mot: string): string {
 }
 
 export const JOURS = { lundi: '2026-10-19', mardi: '2026-10-20', mercredi: '2026-10-21', dimanche: '2026-10-25' };
+/** Le mardi 20 octobre 2026 à midi, heure de Paris : avant la fermeture du texte du mardi. */
+export const MARDI_MIDI = '2026-10-20T10:00:00Z';
 
 export type Joueur = {
   id: string; pseudo: string; rond: string; consentement: string; session: string; sessionId: string; identite: string;
@@ -237,7 +239,7 @@ export async function peupler(base: BaseDeTest) {
       ON CONFLICT (membre_id, semaine) DO UPDATE SET points = compte_semaine.points + 1`, [a.id, a.membres.get(marie.id), JOURS.dimanche]);
     await cl.query(`INSERT INTO compte_texte_cercle (cercle_id, texte_id, attributions, fausses) VALUES ($1, 'T04', 2, 1)
       ON CONFLICT DO NOTHING`, [a.id]);
-    await cl.query("INSERT INTO vu (joueur_id, objet, cercle_id, vu_le) VALUES ($1, 'arrivee', $2, now()) ON CONFLICT DO NOTHING",
+    await cl.query("INSERT INTO vu (joueur_id, objet, cercle_id) VALUES ($1, 'arrivee', $2) ON CONFLICT DO NOTHING",
       [marie.id, a.id]);
     await cl.query('INSERT INTO portrait_dimanche (joueur_id, jour, nettes) VALUES ($1, $2, 3)', [marie.id, JOURS.dimanche]);
     await cl.query('INSERT INTO repondre_ouvert (joueur_id, texte_id, ouvert_le) VALUES ($1, $2, now()) ON CONFLICT DO NOTHING',
@@ -260,7 +262,7 @@ export async function peupler(base: BaseDeTest) {
       ON CONFLICT (membre_id, semaine) DO NOTHING`, [b.id, b.membres.get(lea.id), JOURS.dimanche]);
     await cl.query(`INSERT INTO compte_texte_cercle (cercle_id, texte_id, attributions, fausses) VALUES ($1, 'T04', 2, 2)
       ON CONFLICT DO NOTHING`, [b.id]);
-    await cl.query("INSERT INTO vu (joueur_id, objet, cercle_id, vu_le) VALUES ($1, 'cercle_lance', $2, now()) ON CONFLICT DO NOTHING", [lea.id, b.id]);
+    await cl.query("INSERT INTO vu (joueur_id, objet, cercle_id) VALUES ($1, 'cercle_lance', $2) ON CONFLICT DO NOTHING", [lea.id, b.id]);
     await cl.query("INSERT INTO reprise_revelation (joueur_id, jour, etape) VALUES ($1, $2, 'etape-B7Q2') ON CONFLICT DO NOTHING", [lea.id, JOURS.mardi]);
   });
 
@@ -307,11 +309,12 @@ export async function peupler(base: BaseDeTest) {
       [connexion.codeRetour, connexion.defi, hugo.id]);
   });
   await commeJoueur(base, ines.id, (cl) => cl.query('INSERT INTO message_coupe (joueur_id) VALUES ($1) ON CONFLICT DO NOTHING', [ines.id]));
+  // Les totaux, le mardi à midi (la semaine du dimanche 25 n'est pas close : migration 0003).
   await commeJoueur(base, marie.id, async (cl) => {
     await cl.query("SELECT ajouter_compteur('ipad', $1)", [JOURS.mardi]);
     await cl.query("SELECT ajouter_histogramme($1, 2::smallint)", [JOURS.dimanche]);
     await cl.query("SELECT ajouter_mesure($1, 'justesse_cartes', 1, 2)", [JOURS.dimanche]);
-  });
+  }, undefined, new Date(MARDI_MIDI));
 
   return {
     marie, paul, hugo, lea, ines, a, b, c, positions, mancheA, mancheB, cartesA, cartesB, titres, temperaments, envois, connexion,

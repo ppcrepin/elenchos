@@ -74,6 +74,24 @@ test('P-34 : l’accord est enregistré à l’heure du serveur, pas avant ; « 
   (e) => (e as { code?: string }).code === '23514');
 });
 
+test('P-34 : l’accord se juge à l’heure du jeu déclarée par le serveur, la même que « rien avant 18h » (horloge accélérée)', async () => {
+  // Un accord écrit à l'heure du serveur, en avance sur celle de la base (l'horloge accélérée du développement local).
+  // La dernière version de la carte (un test plus haut en a ajouté une marquée « nouvel accord »).
+  const accord = randomUUID();
+  const instant = new Date('2099-01-01T10:00:01Z');
+  await commeJoueur(base, m.ines.id, (c) => c.query(
+    `INSERT INTO consentement (id, joueur_id, version, donne_le, quinze_ans_et_plus)
+     SELECT $1, $2, max(version), '2099-01-01T10:00:00Z', true FROM carte_accord`,
+    [accord, m.ines.id]), undefined, instant);
+  // Sans heure déclarée, la base prend la sienne : l'accord est « à venir », la réponse est refusée.
+  await assert.rejects(commeJoueur(base, m.ines.id, (c) => repondre(c, { ...m.ines, consentement: accord }, 'T06', { position: 2, raison: 1 }, 'jour')),
+    refus('EL034'));
+  // Avec l'heure du serveur déclarée, une seconde après l'accord : acceptée.
+  await commeJoueur(base, m.ines.id, (c) => repondre(c, { ...m.ines, consentement: accord }, 'T06', { position: 2, raison: 1 }, 'jour'),
+    undefined, instant);
+  assert.equal((await base.admin.query('SELECT 1 FROM reponse WHERE joueur_id = $1 AND texte_id = $2', [m.ines.id, 'T06'])).rowCount, 1);
+});
+
 test('règle 1 : un cercle compte dix membres au plus ; le onzième est refusé par la base', async () => {
   const createur = await nouveauJoueur(base, 'Dix-0', 'A');
   const cercle = await creerCercle(base, createur, 'Complet');

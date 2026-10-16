@@ -561,6 +561,16 @@ Relecture du schéma de la base par Juridique (`docs/etape-6/donnees.md` mis à 
 
 Rappel de Juridique, sans décision : le droit s'applique au test ; une demi-page « si les données fuient » (CNIL sous 72 heures, prévenir les joueurs, changer les clés) sera remise au porteur avant les amis ; le programme de ménage (effacements à 7 jours, liens échus, codes, sessions) doit tourner avant la première vraie invitation.
 
+### D-067 — Un proche qui part juste après 18h : le point reste, la révélation ne le nomme plus · Arbitré par l'équipe (16 octobre 2026), à dire au porteur, renversable
+
+Au titre de D-062 point 5. Lecture de Game design (confirmée), sur une proposition de Juridique et Back-end dans `docs/etape-6/donnees.md` (P-37).
+
+Quand un membre quitte le cercle ou efface tout après 18h, une carte d'une manche close où son visage était posé **garde son verdict et son point** (règle 4 : les points déjà gagnés restent). Un « jumeau » y devient « juste » : la règle 11 les compte pareil partout (points, Le Devin et son départage, Le Mystère, Le Sans-Faute, la surprise de la semaine, « ses surprises ») ; le hasard de la manche reste celui calculé avant le départ. **À la révélation et à « Revoir la révélation », cette carte ne montre plus le pari** : ni pseudo, ni « un ancien membre », ni « … avait répondu la même chose. » ; seulement son verdict et « C'était {auteur}. ». **Touche la lettre de D-024** (« la révélation le dit ») pour ce seul cas, au nom de la règle 4 (« ses réponses partent avec lui », D-052). Reporté dans `docs/produit.md` règle 4 et `docs/etape-6/regles.md` règles 4 et 11.
+
+Limite dite franchement (Game design) : le joueur se souvient de son pari ; avec « Tu connais ton monde. », il peut en déduire que le partant avait la même réponse. On ne l'éviterait qu'en retirant un point déjà gagné, ce qui serait punitif. À 18h, D-024 lui donnait déjà cette information.
+
+Report de D-066 point 1 fait au passage : Le Pas de Côté effacé au départ de son titulaire, dans `docs/produit.md` (règles 4 et 14, titres passés, Réglages) et `docs/etape-6/regles.md` (règle 4).
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique : **tranché, D-042** (gratuit, contribution libre à l'ouverture) · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
