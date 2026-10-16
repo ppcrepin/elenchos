@@ -309,6 +309,8 @@ export async function peupler(base: BaseDeTest) {
       [connexion.codeRetour, connexion.defi, hugo.id]);
   });
   await commeJoueur(base, ines.id, (cl) => cl.query('INSERT INTO message_coupe (joueur_id) VALUES ($1) ON CONFLICT DO NOTHING', [ines.id]));
+  // Le ménage du lundi est passé (migration 0004).
+  await base.module('menage').query("INSERT INTO tache_du_jour (tache, jour) VALUES ('menage', $1) ON CONFLICT DO NOTHING", [JOURS.lundi]);
   // Les totaux, le mardi à midi (la semaine du dimanche 25 n'est pas close : migration 0003).
   await commeJoueur(base, marie.id, async (cl) => {
     await cl.query("SELECT ajouter_compteur('ipad', $1)", [JOURS.mardi]);

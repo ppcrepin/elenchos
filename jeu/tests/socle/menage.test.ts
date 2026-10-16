@@ -104,17 +104,19 @@ for (const mode of ['roles', 'repli'] as ModeRoles[]) {
       await a.query(`INSERT INTO reprise_revelation (joueur_id, jour, etape) VALUES ($1, '2026-10-21', 'etape-gardee')`, [m.lea.id]);
 
       // « Écran Répondre affiché » : T06 (fermé mercredi 18h, 18h10 passé) part ; T12 (se ferme jeudi 18h) reste.
-      // Les comptes par texte : T10 (deviné le mardi 6 octobre, deux semaines plus tôt) part ; T11 (deviné le mardi
-      // 13, semaine précédente) et T04 (deviné le mardi 20, semaine en cours) restent.
-      for (const [id, jour] of [['T10', '2026-10-05'], ['T11', '2026-10-12'], ['T12', '2026-10-22']]) {
+      // Les comptes par texte, gardés jusqu'au lundi 18h qui suit la semaine où le texte se devine (Juridique ;
+      // arbitrage de l'équipe du 16 octobre 2026) : T10 (deviné le mardi 6 octobre) part ; T11 (deviné le dimanche
+      // 18, dernier jour de sa semaine : gardé jusqu'au lundi 19 à 18h) part ; T13 (deviné le lundi 19, premier jour de
+      // la semaine en cours) et T04 (deviné le mardi 20) restent.
+      for (const [id, jour] of [['T10', '2026-10-05'], ['T11', '2026-10-17'], ['T13', '2026-10-18'], ['T12', '2026-10-22']]) {
         await proprietaire.query("INSERT INTO texte (id, role, tension, sens, contenu, empreinte) VALUES ($1, 'jour', 'L', 1, '{}', $2)",
           [id, 'e'.repeat(64)]);
         await proprietaire.query('INSERT INTO calendrier (jour, texte_id) VALUES ($1, $2)', [jour, id]);
       }
       await a.query('UPDATE repondre_ouvert SET ouvert_le = $1', [avant(JOUR)]);
       await a.query("INSERT INTO repondre_ouvert (joueur_id, texte_id, ouvert_le) VALUES ($1, 'T12', $2)", [m.marie.id, avant(HEURE)]);
-      await a.query(`INSERT INTO compte_texte_cercle (cercle_id, texte_id, attributions, fausses) VALUES ($1, 'T10', 4, 1), ($1, 'T11', 4, 2)`,
-        [m.a.id]);
+      await a.query(`INSERT INTO compte_texte_cercle (cercle_id, texte_id, attributions, fausses)
+        VALUES ($1, 'T10', 4, 1), ($1, 'T11', 4, 2), ($1, 'T13', 4, 3)`, [m.a.id]);
       // Les comptes de la semaine : semaine du 11 octobre (part), du 18 (précédente) et du 25 (en cours, déjà là).
       await a.query(`INSERT INTO compte_semaine (cercle_id, membre_id, semaine, points) VALUES ($1, $2, '2026-10-11', 3), ($1, $2, '2026-10-18', 2)`,
         [m.a.id, m.a.membres.get(m.marie.id)]);
@@ -135,12 +137,12 @@ for (const mode of ['roles', 'repli'] as ModeRoles[]) {
       const bilan = await passerLeMenage(base.module('menage'), T, { ecrire: (l) => { lignes.push(l); } });
       const attendu: BilanMenage = {
         provisoires: 1, liens: 2, scores: 1, connexions: 1, codesRetour: 1, codesEmail: 1, sessions: 1, revelationsVues: 1,
-        reprises: 1, repondreOuvert: 1, comptesSemaine: 1, comptesTexte: 1, envois: 1, verrous: 1,
+        reprises: 1, repondreOuvert: 1, comptesSemaine: 1, comptesTexte: 2, envois: 1, verrous: 1,
       };
       assert.deepEqual(bilan, attendu);
       assert.deepEqual(lignes, [
         { evenement: 'menage', detail: 'provisoire efface', nombre: 1 },
-        { evenement: 'menage', detail: 'echeances effacees', nombre: 14 },
+        { evenement: 'menage', detail: 'echeances effacees', nombre: 15 },
       ]);
       // Zoé seule est partie, avec sa réponse et son accord : rien d'autre n'a bougé.
       const apres = await compter();
@@ -183,7 +185,7 @@ for (const mode of ['roles', 'repli'] as ModeRoles[]) {
       assert.deepEqual(await lignes('SELECT jour::text FROM reprise_revelation'), [{ jour: '2026-10-21' }]);
       assert.deepEqual(await lignes('SELECT texte_id FROM repondre_ouvert'), [{ texte_id: 'T12' }]);
       assert.deepEqual(await lignes('SELECT texte_id FROM compte_texte_cercle WHERE cercle_id = $1 ORDER BY texte_id', [m.a.id]),
-        [{ texte_id: 'T04' }, { texte_id: 'T11' }]);
+        [{ texte_id: 'T04' }, { texte_id: 'T13' }]);
       assert.deepEqual(await lignes('SELECT semaine::text FROM compte_semaine WHERE membre_id = $1 ORDER BY semaine', [m.a.membres.get(m.marie.id)]),
         [{ semaine: '2026-10-18' }, { semaine: '2026-10-25' }]);
       assert.ok(!await existe('SELECT 1 FROM envoi WHERE id = $1', [m.envois[m.marie.pseudo]]));
