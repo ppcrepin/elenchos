@@ -533,6 +533,12 @@ Le porteur, mot pour mot : « Ne paie rien sans demander mon avis. » **Renforce
 
 Fait dit au porteur le même jour : le journal ne consigne aucune ouverture de compte Scalingo (le pas-à-pas du test de 18h a été mis en attente par D-059) ; s'il en a ouvert un, l'essai gratuit court depuis ce jour-là, et rien n'est facturé tant qu'aucune application ni base n'existe (D-055).
 
+### D-064 — Étape 1 lancée ; « Tradition ou changement » à 3 pour 1, arbitré par l'équipe · Décidé (16 octobre 2026)
+
+Le porteur : « Ok je te laisse continuer le travail. » Plan proposé : `docs/etape-6/plan-jeu-entier.md` (relu par Cohérence et le Vérificateur, corrections appliquées). **On lance l'étape 1 (les fondations), sur les machines de l'équipe, sans aucune dépense** (D-063). La question « voir le jeu sur l'iPhone dès l'étape 1 ou à l'étape 4 » reste ouverte : elle ne se pose qu'au moment d'ouvrir l'hébergeur, avec son montant, et sera reposée alors.
+
+Arbitrage de l'équipe, au titre de D-062 point 5 (le porteur ne veut plus de questions de détail), dit au porteur au point d'étape suivant, et qu'il peut renverser : pour la tension « Tradition ou changement », faute de textes récents « tradition », 3 textes « changement » pour 1 « tradition » sur cette seule tension (relâche E9, D-030, sur une tension ; recommandation de Contenu). Options non retenues : un quatrième texte sur Solidarité (7 textes des affaires sociales, au-dessus du plafond de 6) ; un texte de plus de deux ans.
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique : **tranché, D-042** (gratuit, contribution libre à l'ouverture) · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.

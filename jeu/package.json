@@ -1,0 +1,27 @@
+{
+  "name": "elenchos-jeu",
+  "private": true,
+  "description": "Le jeu Elenchos, version de test (D-062) : serveur, règles, interface.",
+  "type": "module",
+  "engines": {
+    "node": "22.22.0"
+  },
+  "scripts": {
+    "typer": "tsc -p tsconfig.json",
+    "test": "node --test --test-concurrency=1 \"tests/**/*.test.ts\""
+  },
+  "dependencies": {
+    "oauth4webapi": "3.8.8",
+    "pg": "8.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.4",
+    "@types/pg": "8.23.1",
+    "typescript": "6.0.3"
+  },
+  "overrides": {
+    "pg-cloudflare": "1.4.0",
+    "pg-connection-string": "2.14.0",
+    "pg-protocol": "1.16.0"
+  }
+}
