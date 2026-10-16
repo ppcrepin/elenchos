@@ -166,8 +166,8 @@ for (const mode of ['roles', 'repli'] as ModeRoles[]) {
 
     test('après 18h, la manche est jouée : Paul quitte « Famille » ; la carte où Marie l’avait désigné perd son visage, et son « jumeau » devient « juste »', async () => {
       // Paul avait donné la même réponse que Hugo : la carte de Hugo, où Marie avait posé Paul, était un jumeau
-      // (D-024). Avec un visage vide, « jumeau » dirait qu'un ancien membre pensait comme Hugo (Juridique ; à
-      // confirmer par Game design).
+      // (D-024). Avec un visage vide, « jumeau » dirait qu'un ancien membre pensait comme Hugo : il devient « juste »,
+      // et garde son point (D-067).
       await base.admin.query("UPDATE carte SET verdict = 'jumeau_et_raison' WHERE id = $1", [m.cartesA[1]]);
       await commeJoueur(base, m.paul.id, (c) => c.query('UPDATE invitation SET score_entree = 3 WHERE id = $1', [m.invitations.invPaul.id]));
       await quitter(m.paul.id, m.a.membres.get(m.paul.id), '2026-10-20T16:00:00Z'); // mardi 18:00:00

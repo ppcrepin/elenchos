@@ -12,7 +12,7 @@
 //   membre » (D-045, point 2) : la clé du titulaire devient vide ;
 // - une carte où un proche avait posé son visage redevient vide (règle 4) : avant 18h, avec la marque « vidée par un
 //   départ » et sans verdict ; après 18h, la manche est jouée, seul le visage se vide, et un « jumeau » devient
-//   « juste » ;
+//   « juste » (D-067) ;
 // - le lien qui l'avait fait entrer reste « servi », sans plus le désigner ni porter son score : il ne s'ouvre pas à
 //   un autre (P-29), et l'invitant voit toujours le même nombre de liens envoyés (CONTRAT.md, 2.12).
 // Restent aussi : les totaux déjà anonymes (P-23) ; l'identifiant tiré au hasard, au journal des effacements (P-32),

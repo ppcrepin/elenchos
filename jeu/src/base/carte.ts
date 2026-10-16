@@ -17,7 +17,7 @@
 // seule. Les réponses et le « pourquoi » des cartes sont chiffrés (P-02) ; restent en clair :
 // - carte.verdict avec carte.visage_membre_id : « juste » dit que le devineur a reconnu l'auteur ; « jumeau » dit que
 //   le membre désigné a donné exactement la même réponse que l'auteur (D-024), ce que la révélation montre au devineur.
-//   Au départ du membre désigné après 18h, « jumeau » devient « juste » (migration 0002) ;
+//   Au départ du membre désigné après 18h, « jumeau » devient « juste » (D-067 ; migration 0002) ;
 // - carte.qui_et_pourquoi (usage 1, forme « booleen », durée de sa carte : comme les réponses) : la carte « qui et
 //   pourquoi » n'est servie que si la raison de l'auteur n'est pas « aucune » ; une manche sans cette carte dit que
 //   toutes les raisons servies étaient « aucune » ;

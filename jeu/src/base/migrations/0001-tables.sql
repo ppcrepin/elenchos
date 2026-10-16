@@ -249,7 +249,7 @@ CREATE INDEX manche_cercle_jour ON manche (cercle_id, jour);
 -- elle-même (déclencheur membre_avant_depart, migration 0002), et remet le « pourquoi » et le verdict à vide ; la passe
 -- qui en résulte ne compte pas contre Le Sans-Faute. Un geste du joueur sur la carte l'efface.
 -- « verdict » : écrit au moment du geste (CONTRAT.md, partie 3). Après 18h, au départ du membre désigné, un « jumeau »
--- devient « juste » (Juridique ; migration 0002).
+-- devient « juste » (D-067 ; migration 0002).
 -- Restent en clair, voulus et dits sur la carte des données : le verdict et le visage posé (un « jumeau » dit que deux
 -- membres ont donné la même réponse, ce que la révélation montre au devineur), et « qui_et_pourquoi » (carte.ts).
 CREATE TABLE carte (

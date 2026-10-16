@@ -270,9 +270,9 @@ CREATE TRIGGER titre_meme_cercle BEFORE INSERT ON titre FOR EACH ROW EXECUTE FUN
 --    fini, redevient vide, validée ou non : le « pourquoi » et le verdict (écrit au geste, CONTRAT.md, partie 3)
 --    s'effacent, et la carte porte la marque « vidée par un départ », qui ne compte pas contre Le Sans-Faute.
 -- 2. Après 18h, la manche est jouée : la clé étrangère vide seulement le visage, qui devient « un ancien membre », et
---    le verdict reste figé, sauf qu'un « jumeau » devient « juste » : avec un visage vide, il dirait qu'un ancien
---    membre avait donné la même réponse que l'auteur (Juridique ; règle 11 : jumeau et juste comptent pareil ; à
---    confirmer par Game design).
+--    le verdict reste figé avec son point, sauf qu'un « jumeau » devient « juste » : avec un visage vide, il dirait
+--    qu'un ancien membre avait donné la même réponse que l'auteur (D-067, sur proposition de Juridique ; règle 11 :
+--    jumeau et juste comptent pareil). Que la révélation ne montre plus le pari est l'affaire du serveur (étape 2).
 -- 3. Ses badges Le Pas de Côté de ce cercle s'effacent (D-066, point 1) ; ses autres titres restent sous « un ancien
 --    membre » (clé étrangère).
 -- 4. Ce qu'il avait « déjà vu » dans ce cercle s'efface (arrivée, cercle lancé).

@@ -31,7 +31,7 @@ Chaque demande ouvre une transaction et déclare d'abord qui la fait, et quand (
 
 **Ce que fait un départ, dans la base elle-même** (déclencheur `membre_avant_depart`, dans la transaction de « Quitter » ou de « Tout effacer ») :
 - avant 18h, les cartes où le partant était désigné redeviennent vides, sans « pourquoi » ni verdict, marquées « vidées par un départ » (règle 4, J10) ;
-- après 18h, la manche est jouée : seul le visage se vide (« un ancien membre ») et le verdict reste figé, sauf qu'un « jumeau » devient « juste » (Juridique : un « jumeau » sous un visage vide dirait qu'un ancien membre pensait comme l'auteur ; la règle 11 les compte pareil ; à confirmer par Game design) ;
+- après 18h, la manche est jouée : seul le visage se vide (« un ancien membre ») et le verdict reste figé avec son point, sauf qu'un « jumeau » devient « juste » (D-067 : un « jumeau » sous un visage vide dirait qu'un ancien membre pensait comme l'auteur ; la règle 11 les compte pareil). Que la révélation ne montre plus le pari de cette carte (D-067) est l'affaire du serveur, à l'étape 2 ;
 - ses badges Le Pas de Côté de ce cercle s'effacent (D-066, point 1) ; ses autres titres restent sous « un ancien membre » ;
 - ce qu'il avait « déjà vu » dans ce cercle s'efface ; le lien qui l'y avait fait entrer ne le désigne plus et perd son score.
 
@@ -81,7 +81,7 @@ Chaque fichier de test crée son schéma, dont le propriétaire est un rôle san
 
 - le serveur HTTP, la connexion Apple et Google, l'envoi vers Apple, le planificateur de 18h, l'import des textes ;
 - l'appel quotidien du ménage par le planificateur : le programme existe et il est testé (`menage.ts`), pas encore son déclenchement. Il doit tourner avant la première vraie invitation (Juridique) ;
-- dans « Tout effacer » et « Quitter », le retrait d'une carte pas encore révélée des compteurs de la semaine (règle 4) : c'est le moteur de la journée. Les cartes où le partant était désigné, elles, sont déjà vidées par la base (déclencheur `membre_avant_depart`). Avec le verdict écrit au geste, un départ après 18h ne change que « jumeau » en « juste » ; ce qui reste à l'étape 2 : une manche non validée reçoit « passe » sur ses cartes vides à la première lecture après 18h ;
+- dans « Tout effacer » et « Quitter », le retrait d'une carte pas encore révélée des compteurs de la semaine (règle 4) : c'est le moteur de la journée. Les cartes où le partant était désigné, elles, sont déjà vidées par la base (déclencheur `membre_avant_depart`). Avec le verdict écrit au geste, un départ après 18h ne change que « jumeau » en « juste » (D-067) ; ce qui reste à l'étape 2 : une manche non validée reçoit « passe » sur ses cartes vides à la première lecture après 18h ;
 - la route qui pose ou retire le refus des mesures (la table existe, `mesures_refusees`) : ses mots, avec UX, à l'étape 2 (`CONTRAT.md`, partie 9) ;
 - le cercle de démonstration et le lien de relecture (CONTRAT.md, 2.16), et les vues du rapport des totaux tirées des tables de joueurs (retour à 7 jours, etc.) : chacun viendra par une migration, avec l'étape qui le construit. L'avis du cercle, lui, n'aura jamais de table : il se calcule à la lecture (CONTRAT.md, partie 3) ;
 - l'extension du test du journal de PostgreSQL (`test-18h/tests/journal-base/`) aux écritures du jeu, quand elles existeront.
