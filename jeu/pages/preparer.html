@@ -1,0 +1,43 @@
+<!doctype html>
+<!--
+  La page du mode préparation (CONTRAT.md, 2.17 ; DECISIONS-TECHNIQUES 1.17), servie par src/serveur/preparation.ts
+  seulement quand les trois clés du serveur manquent toutes. Reprise de test-18h/public/preparer.html (12 octobre 2026),
+  réduite aux trois clés. Une page pour le porteur : elle dit « vous ».
+  Rien n'est envoyé ni gardé : preparer.js tire les clés dans le navigateur ; la règle de chargement, posée par le
+  serveur, interdit tout échange et tout fichier venu d'ailleurs.
+-->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<title>Préparer le serveur</title>
+<link rel="stylesheet" href="/preparer.css">
+<script src="/preparer.js" defer></script>
+</head>
+<body>
+<main>
+  <h1>Préparer le serveur</h1>
+  <p>Le serveur attend ses trois clés pour démarrer. Cette page les tire au hasard <strong>dans votre navigateur</strong> : elle n’envoie rien, ni au serveur ni à l’équipe, et ne garde rien.</p>
+  <p class="important">Ces clés protègent les connexions, les réponses et les comptes des joueurs : ne les envoyez jamais à personne, pas même à l’équipe.</p>
+
+  <p><button type="button" id="tirer">Tirer les trois clés</button></p>
+
+  <div id="resultat" hidden>
+    <pre id="lignes"></pre>
+    <p><button type="button" id="copier">Copier les trois lignes</button></p>
+    <ol>
+      <li>Collez-les dans une fiche de votre gestionnaire de mots de passe.</li>
+      <li>Chez Scalingo, onglet <strong>Environment</strong>, ajoutez-les : une ligne par réglage, le nom avant le « = », la valeur après. Enregistrez.</li>
+      <li>Redémarrez l’application, si Scalingo ne le fait pas de lui-même. Ensuite, cette page ne s’affiche plus : c’est normal.</li>
+    </ol>
+    <p>Ne rechargez pas cette page avant d’avoir tout collé : elle tirerait d’autres clés.</p>
+  </div>
+
+  <p class="note">Si le serveur a déjà tourné avec ses clés, ne tirez pas de nouvelles clés : remettez celles de votre gestionnaire. <code>CLE_REPONSES</code> et <code>CLE_IDENTITES</code> ne changent jamais pendant le test : de nouvelles valeurs rendraient les réponses illisibles et les comptes introuvables.</p>
+  <noscript><p class="important">Cette page a besoin de JavaScript pour tirer les clés.</p></noscript>
+</main>
+</body>
+</html>

@@ -99,8 +99,9 @@ describe('le serveur HTTP de l’étape 1', () => {
   });
 
   test('une route du contrat pas encore construite, une route /dev/, une adresse inconnue : introuvable (404)', async () => {
+    // `/preparer` n'existe qu'en mode préparation (preparation.ts) : le jeu, lui, ne la sert pas.
     for (const [methode, chemin] of [['GET', '/api/aujourdhui'], ['POST', '/api/repondre'], ['POST', '/dev/horloge'],
-      ['GET', '/api/inconnue'], ['GET', '/']] as const) {
+      ['GET', '/api/inconnue'], ['GET', '/'], ['GET', '/preparer'], ['GET', '/preparer.js']] as const) {
       const r = await s.demande(methode, chemin, methode === 'POST' ? { corps: {} } : {});
       assert.equal(r.statut, 404, `${methode} ${chemin}`);
       if (chemin.startsWith('/api/') || chemin.startsWith('/dev/')) assert.equal(r.json.erreur, 'introuvable');

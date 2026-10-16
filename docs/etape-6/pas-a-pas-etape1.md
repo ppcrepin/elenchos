@@ -16,14 +16,14 @@
 | Dès qu'Apple a donné son accord (1.9) | 1.11, puis 2. GitHub | 15 min |
 | Quand l'équipe vous écrit « le serveur est prêt » | 3. Scalingo, puis 4. Ce que vous nous écrivez | 1 h |
 | La veille de la mise en ligne | Votre feu vert écrit (4) | 1 min |
-| Le jour J, un matin de semaine | 5.1 à 5.3 : mise en ligne, Elenchos sur votre iPhone | 35 min |
-| Les trois soirs suivants | 5.4 : le message est-il arrivé ? | 2 min par soir |
+| Le jour J, un matin de semaine | 5.1 à 5.4 : mise en ligne, les trois clés du serveur, Elenchos sur votre iPhone | 45 min |
+| Les trois soirs suivants | 5.5 : le message est-il arrivé ? | 2 min par soir |
 
 En cas de souci : partie 6.
 
 **Trois règles, pour tout ce qui suit.**
 1. **Vous ne nous envoyez jamais un secret** : ni clé, ni mot de passe, ni code, ni capture d'écran qui en montre un (D-048). Vous les tapez vous-même chez Apple, GitHub et Scalingo, et vous les gardez dans votre gestionnaire de mots de passe (l'app Mots de passe de l'iPhone convient).
-2. **Ce que vous pouvez nous écrire** se limite à la partie 4, aux lignes du soir (5.4) et à ce que la partie 6 vous demande.
+2. **Ce que vous pouvez nous écrire** se limite à la partie 4, aux lignes du soir (5.5) et à ce que la partie 6 vous demande.
 3. **Rien ne se met en ligne de 15h à 19h ni le dimanche** (D-043). Une fois le serveur en ligne, changer un réglage chez Scalingo le redémarre : cela compte comme une mise en ligne.
 
 **Cinq mots, une fois pour toutes.**
@@ -34,9 +34,9 @@ En cas de souci : partie 6.
 - **Mise en ligne** : installer une nouvelle version du serveur chez Scalingo.
 
 > **Écrans de mémoire (▲).** Un ▲ marque un écran ou un menu que nous n'avons pas pu voir : nous le décrivons de mémoire. Si l'écran dit autre chose, suivez l'écran s'il est clair ; sinon, arrêtez-vous et écrivez-nous. Les écrans d'Apple sont nommés ici en anglais ; si votre compte est en français, les mots changent, les places restent ▲. Où sont les ▲ :
-> - **Apple** : le menu des accords (1.1), la date de renouvellement (1.7), la réponse d'Apple à la demande d'accès (1.9), l'arrivée d'Elenchos dans TestFlight et ses boutons (5.2) ;
-> - **Scalingo** : l'écran juste après l'inscription (3.1), l'écran « Deployment method » (3.4), le nom du plus petit plan de base (3.5), les conteneurs (3.6), l'ajout des réglages en bloc (3.7), la suppression d'un réglage (5.3), l'état de l'application (6) ;
-> - **iPhone** : l'heure affichée sous le message (5.4).
+> - **Apple** : le menu des accords (1.1), la date de renouvellement (1.7), la réponse d'Apple à la demande d'accès (1.9), l'arrivée d'Elenchos dans TestFlight et ses boutons (5.3) ;
+> - **Scalingo** : l'écran juste après l'inscription (3.1), l'écran « Deployment method » (3.4), le nom du plus petit plan de base (3.5), les conteneurs (3.6), l'ajout des réglages en bloc (3.7, 5.2), le redémarrage de l'application (5.2), la suppression d'un réglage (5.4), l'état de l'application (6) ;
+> - **iPhone** : l'heure affichée sous le message (5.5).
 
 **À avoir sous la main** : un ordinateur (Mac ou PC) pour les parties 1 à 3 ; votre iPhone, en iOS 15 ou plus récent ; vos accès à Apple et à GitHub ; votre carte bancaire (partie 3).
 
@@ -188,7 +188,7 @@ Laissez les sauvegardes programmées comme elles sont : elles protègent le jeu.
 1. **Settings** › **Public Routing**, bloc **Force HTTPS** : activez.
 2. N'activez pas les **journaux du routeur** (désactivés par défaut) : ils noteraient chaque visite, gardée un an. Ne changez pas non plus le nombre ni la taille des conteneurs : le montant de 26 € suppose un seul conteneur, de taille par défaut ▲.
 
-### 3.7 Les réglages (20 min, 0 €)
+### 3.7 Les réglages (15 min, 0 €)
 Onglet **Environment** de l'application. Ajoutez ces lignes, une par une (le nom avant le « = », la valeur après) ou en bloc ▲. Tant que rien n'est installé, l'heure n'a pas d'importance.
 
 **Pas secrets** (remplacez `elenchos` si vous avez pris un autre nom) :
@@ -201,7 +201,7 @@ FIN_DU_TEST=2027-03-31
 COMPTE_PORTEUR=…votre pseudo
 ```
 - `FIN_DU_TEST` est provisoire (proposé) : l'équipe vous donnera la vraie date avant l'arrivée de vos amis.
-- `COMPTE_PORTEUR` : votre pseudo dans le jeu (24 signes au plus, sans @ ni /). Il ouvre votre compte à votre première connexion, sans le défi d'entrée qui n'existe pas encore ; vous le retirerez juste après (5.3 ; D-068).
+- `COMPTE_PORTEUR` : votre pseudo dans le jeu (24 signes au plus, sans @ ni /). Il ouvre votre compte à votre première connexion, sans le défi d'entrée qui n'existe pas encore ; vous le retirerez juste après (5.4 ; D-068).
 
 **Apple** (tirés de votre gestionnaire, partie 1) :
 ```
@@ -211,15 +211,9 @@ APPLE_CLE_MESSAGES=…le contenu du fichier de 1.4, sur une seule ligne
 APPLE_ID_CLE_CONNEXION=…le Key ID de la clé de connexion (1.5)
 APPLE_CLE_CONNEXION=…le contenu du fichier de 1.5, sur une seule ligne
 ```
-**Mettre un fichier .p8 sur une seule ligne** (Scalingo gère mal les valeurs sur plusieurs lignes) : ouvrez le fichier avec TextEdit ou le Bloc-notes ; cliquez au tout début de la deuxième ligne et appuyez une fois sur la touche d'effacement : elle remonte au bout de la première. Recommencez jusqu'à ce que tout tienne sur une ligne (cinq fois environ), sans rien retirer d'autre. **Tout sélectionner**, copiez, collez comme valeur. Fermez **sans enregistrer**. Après le premier soir réussi (5.4), supprimez les deux fichiers des Téléchargements : leur copie reste dans votre gestionnaire.
+**Mettre un fichier .p8 sur une seule ligne** (Scalingo gère mal les valeurs sur plusieurs lignes) : ouvrez le fichier avec TextEdit ou le Bloc-notes ; cliquez au tout début de la deuxième ligne et appuyez une fois sur la touche d'effacement : elle remonte au bout de la première. Recommencez jusqu'à ce que tout tienne sur une ligne (cinq fois environ), sans rien retirer d'autre. **Tout sélectionner**, copiez, collez comme valeur. Fermez **sans enregistrer**. Après le premier soir réussi (5.5), supprimez les deux fichiers des Téléchargements : leur copie reste dans votre gestionnaire.
 
-**Les trois clés du serveur** : l'équipe vous donnera l'adresse d'une petite page qui les tire au hasard, dans votre navigateur, et n'envoie rien, ni à nous ni ailleurs. Touchez le bouton, copiez les trois lignes dans une fiche de votre gestionnaire, puis collez-les ici. Ne rechargez pas la page avant d'avoir tout collé : chaque chargement tire d'autres clés.
-```
-SECRET_SESSION=…
-CLE_REPONSES=…
-CLE_IDENTITES=…
-```
-> **`CLE_REPONSES` et `CLE_IDENTITES` ne changent jamais pendant le test.** Sans elles, les réponses deviennent illisibles et les comptes introuvables. Gardez-en la copie.
+**Les trois clés du serveur** (`SECRET_SESSION`, `CLE_REPONSES`, `CLE_IDENTITES`) : ne les ajoutez pas maintenant. Elles viennent juste après la mise en ligne (5.2) : tant qu'elles manquent toutes les trois, le serveur ne fait rien d'autre que servir une page qui les tire au hasard dans votre navigateur.
 
 N'ajoutez rien d'autre. Ne touchez pas à `SCALINGO_POSTGRESQL_URL`, posé par Scalingo avec la base, et ne la copiez nulle part. Les réglages de Google viendront à l'étape 2.
 
@@ -249,19 +243,34 @@ Dès que l'équipe vous écrit qu'elle a poussé le code sur `mise-en-ligne` :
 2. Si rien ne démarre dans les dix minutes, écrivez-le-nous d'abord. Ensuite seulement : **Manual deployment**, branche `mise-en-ligne`.
 3. Attendez la fin (quelques minutes). Si l'installation échoue, copiez-nous son message d'erreur, rien d'autre. De 15h à 19h et le dimanche, elle échoue exprès (« Horaires : aucune installation de 15h à 19h ni le dimanche ») : c'est voulu.
 
+Enchaînez aussitôt avec 5.2.
+
+### 5.2 Les trois clés du serveur (juste après 5.1, 10 min, 0 €)
+Le serveur vient de démarrer sans ses trois clés : il ne fait rien d'autre que servir une page qui les tire au hasard **dans votre navigateur**. Elle n'envoie rien, ni à nous ni ailleurs, et ne garde rien. Faites ceci avant 15h : le redémarrage du geste 5 compte comme une mise en ligne (règle 3).
+1. Sur votre ordinateur, ouvrez `https://elenchos.osc-fr1.scalingo.io/preparer` (avec le nom choisi en 3.4). La page « Préparer le serveur » s'affiche.
+2. Touchez **Tirer les trois clés**, puis **Copier les trois lignes**.
+3. Collez-les dans une nouvelle fiche de votre gestionnaire de mots de passe, « Elenchos serveur ».
+4. Chez Scalingo, onglet **Environment** : ajoutez les trois lignes, en bloc ou une par une (le nom avant le « = », la valeur après) ▲. Enregistrez.
+5. Si Scalingo ne redémarre pas l'application de lui-même, redémarrez-la (bouton **Restart** de l'application ▲).
+6. Deux minutes plus tard, rechargez la page ouverte en 1 : elle ne doit plus s'afficher (une page vide ou un message d'erreur du navigateur : le serveur a démarré pour de bon). Si elle s'affiche encore au bout de dix minutes, ne tirez pas d'autres clés : écrivez-nous (partie 6).
+
+Ne rechargez pas la page avant d'avoir tout collé : chaque tirage donne d'autres clés.
+
+> **`CLE_REPONSES` et `CLE_IDENTITES` ne changent jamais pendant le test.** Sans elles, les réponses deviennent illisibles et les comptes introuvables. Gardez-en la copie. Si un jour la page « Préparer le serveur » s'affiche de nouveau, ne tirez pas de nouvelles clés : écrivez-nous.
+
 L'équipe fabrique ensuite l'application ; vous n'avez rien à faire. Elle vous écrit quand Apple l'a traitée (comptez une à deux heures).
 
-### 5.2 Elenchos sur votre iPhone (15 min, 0 €)
+### 5.3 Elenchos sur votre iPhone (15 min, 0 €)
 1. App Store : installez **TestFlight**, l'application gratuite d'Apple (vous pouvez le faire avant).
 2. Un e-mail d'Apple arrive à l'adresse de votre compte Apple. Ouvrez-le sur l'iPhone : **View in TestFlight**, puis **Accepter** et **Installer** ▲. Il se peut aussi qu'Elenchos apparaisse directement dans TestFlight ▲ : touchez **Installer**.
 3. Ouvrez Elenchos : **Se connecter avec Apple**, confirmez (Face ID ou code). L'écran dit « La connexion a marché ».
 4. Touchez **Recevoir le message de 18h**, puis **Autoriser** dans la fenêtre de l'iPhone. L'écran dit « C'est fait. À 18h. »
 
-### 5.3 Retirer `COMPTE_PORTEUR` (2 min, 0 €)
+### 5.4 Retirer `COMPTE_PORTEUR` (2 min, 0 €)
 Chez Scalingo, onglet **Environment**, supprimez la ligne `COMPTE_PORTEUR` ▲. Le serveur redémarre : faites-le avant 15h, sinon après 19h ou le lendemain matin, jamais un dimanche.
 
-### 5.4 Les trois soirs (2 minutes vers 18h05, 0 €)
-Pendant trois soirs de suite, à partir du jour J si vous avez fini 5.2 avant 18h :
+### 5.5 Les trois soirs (2 minutes vers 18h05, 0 €)
+Pendant trois soirs de suite, à partir du jour J si vous avez fini 5.3 avant 18h :
 1. Vers 18h05, regardez l'écran verrouillé, ou le centre de notifications (glissez depuis le haut de l'écran). Le message attendu : **« Elenchos — 18h. La question d'aujourd'hui t'attend. »** L'application n'a pas encore de question à montrer : c'est normal à cette étape.
 2. L'iPhone indique quand il est arrivé (« il y a 5 min », ou l'heure) ▲.
 3. Écrivez une ligne dans la conversation, par exemple :
@@ -285,8 +294,8 @@ Après le troisième soir, l'équipe vous fait le point d'étape.
 | Le nom est pris chez Apple (1.8) ou chez Scalingo (3.4) | Prenez le nom proposé à côté, et dites-nous celui de Scalingo (partie 4). |
 | L'installation échoue chez Scalingo (5.1) | Copiez-nous son message d'erreur, rien d'autre. |
 | Le serveur ne démarre pas (Scalingo le signale, ou Elenchos dit « Elenchos ne répond pas pour l'instant ») | Onglet **Logs** de l'application : sur la ligne qui contient « reglages incomplets », copiez-nous seulement les noms en majuscules. Les noms qui commencent par `GOOGLE_` y figurent toujours à cette étape : c'est normal. L'équipe peut vous demander d'ajouter une ligne, par exemple `MODE_ROLES=repli` : ce n'est pas un secret. |
-| Elenchos dit « Aucun compte Elenchos n'est lié à ce compte Apple » (5.2) | `COMPTE_PORTEUR` manque ou est mal écrit. Écrivez-le-nous ; ne réessayez pas en boucle. |
-| Pas de message à 18h05 (5.4) | Vérifiez : iPhone allumé, réseau, **Réglages › Notifications › Elenchos** autorisé. Regardez si l'application est en marche dans le tableau de bord de Scalingo ▲. Envoyez votre ligne du soir. **Ne redémarrez rien** : il est entre 15h et 19h. Le soir manqué est ajouté. |
+| Elenchos dit « Aucun compte Elenchos n'est lié à ce compte Apple » (5.3) | `COMPTE_PORTEUR` manque ou est mal écrit. Écrivez-le-nous ; ne réessayez pas en boucle. |
+| Pas de message à 18h05 (5.5) | Vérifiez : iPhone allumé, réseau, **Réglages › Notifications › Elenchos** autorisé. Regardez si l'application est en marche dans le tableau de bord de Scalingo ▲. Envoyez votre ligne du soir. **Ne redémarrez rien** : il est entre 15h et 19h. Le soir manqué est ajouté. |
 | Une clé ou un fichier .p8 est perdu | Pas grave : on révoque la clé (même page que sa création, **Revoke**), on en crée une autre, gratuitement, et vous la ressaisissez là où vivait l'ancienne (GitHub ou Scalingo). |
 | Une clé a été montrée (envoyée, capturée, collée au mauvais endroit) | Même chose, tout de suite. Écrivez-nous « une clé a été exposée », sans sa valeur. |
 | Un e-mail « Apple », « GitHub » ou « Scalingo » vous demande d'agir | Ne cliquez pas. Ouvrez le site à la main. |
@@ -305,6 +314,5 @@ Après le troisième soir, l'équipe vous fait le point d'étape.
 ## Ce qui n'est pas encore sûr
 
 - **Chez Apple** : l'accord pour la clé de fabrication (1.9) ; le rôle **Admin** de cette clé, nécessaire d'après des développeurs, pas d'après Apple ; la fabrication sans Mac du premier coup.
-- **La page qui tire les trois clés du serveur** (3.7) : l'équipe la prépare avant que vous ouvriez Scalingo.
 - **Les écrans marqués ▲.**
-- **Le serveur n'a encore jamais tourné chez Scalingo, ni écrit au vrai service d'Apple** : il a passé ses tests sur les machines de l'équipe. C'est précisément ce que les trois soirs vérifient.
+- **Le serveur, page des trois clés comprise (5.2), n'a encore jamais tourné chez Scalingo, ni écrit au vrai service d'Apple** : il a passé ses tests sur les machines de l'équipe. C'est précisément ce que les trois soirs vérifient.

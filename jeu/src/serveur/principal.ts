@@ -11,16 +11,22 @@
 // 3. une connexion par module (jeu, comptes, envoi, ménage), chacune sous son rôle ;
 // 4. le serveur, puis le planificateur. En local, aucun message ne part vers Apple (DECISIONS-TECHNIQUES 1.13).
 // Aucune erreur imprévue n'écrit son message, qui pourrait contenir une donnée : seulement son type (P-07).
+//
+// Le mode préparation (16 octobre 2026 ; CONTRAT.md, 2.17) : si les trois clés manquent toutes et que rien d'autre
+// n'empêche de démarrer (`config.preparation`), les étapes 2 à 4 sont sautées. Seul le petit serveur de
+// preparation.ts tourne : sans base, sans planificateur ni ménage, il ne sert que la page `/preparer`. Le journal dit
+// seulement « mode preparation », sans la liste des réglages manquants.
 
 import { creerPoolModule } from '../base/connexion.ts';
 import { installerBase, RepliSansCloison } from '../base/installation.ts';
 import { MigrationModifiee } from '../base/migrations.ts';
 import { creerEnvoyeurApns } from './apns.ts';
 import { creerVerificateurApple } from './apple.ts';
-import { lireConfig } from './config.ts';
+import { lireConfig, type Config } from './config.ts';
 import { horlogeAcceleree, horlogeSysteme } from './horloge.ts';
 import { creerJournal, typeErreur } from './journal.ts';
 import { creerPlanificateur } from './planificateur.ts';
+import { creerServeurPreparation } from './preparation.ts';
 import { creerRoutes } from './routes.ts';
 import { creerServeur } from './serveur.ts';
 
@@ -40,54 +46,74 @@ if (config.refuses.length > 0) {
   journal.ecrire({ evenement: 'demarrage', detail: 'reglages refuses', manquants: config.refuses });
   process.exit(1);
 }
-if (!config.peutDemarrer || !config.urlBase) {
-  journal.ecrire({ evenement: 'demarrage', detail: config.urlBase ? 'reglages incomplets' : 'pas de base', manquants: config.manquants });
-  process.exit(1);
-}
-if (config.manquants.length > 0) journal.ecrire({ evenement: 'reglages', detail: 'reglages incomplets', manquants: config.manquants });
-// Le compte du porteur (étape 1) : on dit seulement que le réglage est présent, jamais sa valeur.
-if (config.comptePorteur) journal.ecrire({ evenement: 'reglages', detail: 'compte porteur', manquants: ['COMPTE_PORTEUR'] });
+if (config.preparation) demarrerPreparation(config);
+else await demarrerLeJeu(config);
 
-try {
-  await installerBase(config.urlBase, config.modeRoles, {}, journal);
-} catch (e) {
-  if (e instanceof MigrationModifiee) journal.ecrire({ evenement: 'migration', detail: 'migration modifiee' });
-  else if (e instanceof RepliSansCloison) journal.ecrire({ evenement: 'roles', detail: 'repli', erreur: 'repli_sans_cloison' });
-  else journal.ecrire({ evenement: 'erreur', erreur: typeErreur(e) });
-  process.exit(1);
-}
-
-// Peu de connexions : la plus petite base de Scalingo en accepte peu (à vérifier à l'ouverture), et le jeu a au plus
-// une trentaine de joueurs pendant le test.
-const pools = {
-  jeu: creerPoolModule(config.urlBase, 'jeu', config.modeRoles, { max: 4 }),
-  comptes: creerPoolModule(config.urlBase, 'comptes', config.modeRoles, { max: 2 }),
-  envoi: creerPoolModule(config.urlBase, 'envoi', config.modeRoles, { max: 2 }),
-  menage: creerPoolModule(config.urlBase, 'menage', config.modeRoles, { max: 1 }),
-};
-
-// L'horloge : celle du système en ligne ; accélérée en local seulement (ses réglages sont refusés en ligne).
-const accelere = !config.protege && (config.local.horlogeVitesse !== null || config.local.horlogeDepart !== null);
-const vitesse = accelere ? (config.local.horlogeVitesse ?? 1) : 1;
-const horloge = accelere ? horlogeAcceleree(config.local.horlogeDepart, vitesse) : horlogeSysteme;
-
-const verificateur = config.apple ? creerVerificateurApple({ audience: config.apple.idApplication, horloge }) : null;
-const envoyeur = config.apns && config.enLigne ? creerEnvoyeurApns({ ...config.apns, horloge }) : null;
-const planificateur = creerPlanificateur({ pools, envoyeur, horloge, journal, vitesse });
-const { table, recu } = creerRoutes({ pools, config, verificateur, journal });
-const serveur = creerServeur({ config, pools, horloge, vitesse, journal, table, recu });
-
-serveur.listen(config.port, () => {
-  journal.ecrire({ evenement: 'demarrage', detail: 'pret' });
-  planificateur.demarrer();
-});
-
-// Scalingo envoie SIGTERM, puis attend 30 secondes.
-process.on('SIGTERM', () => {
-  journal.ecrire({ evenement: 'arret', detail: 'signal' });
-  planificateur.arreter();
-  serveur.close(() => {
-    void Promise.all(Object.values(pools).map((p) => p.end())).finally(() => process.exit(0));
+/** Le mode préparation : la page `/preparer` seulement (preparation.ts). */
+function demarrerPreparation(config: Config): void {
+  const serveur = creerServeurPreparation(config);
+  serveur.listen(config.port, () => journal.ecrire({ evenement: 'demarrage', detail: 'mode preparation' }));
+  // Scalingo envoie SIGTERM, puis attend 30 secondes.
+  process.on('SIGTERM', () => {
+    journal.ecrire({ evenement: 'arret', detail: 'signal' });
+    serveur.close(() => process.exit(0));
+    serveur.closeAllConnections();
+    setTimeout(() => process.exit(0), 20_000).unref();
   });
-  setTimeout(() => process.exit(0), 20_000).unref();
-});
+}
+
+/** Le jeu : la base, les modules, le serveur, le planificateur. */
+async function demarrerLeJeu(config: Config): Promise<void> {
+  if (!config.peutDemarrer || !config.urlBase) {
+    journal.ecrire({ evenement: 'demarrage', detail: config.urlBase ? 'reglages incomplets' : 'pas de base', manquants: config.manquants });
+    process.exit(1);
+  }
+  const urlBase = config.urlBase;
+  if (config.manquants.length > 0) journal.ecrire({ evenement: 'reglages', detail: 'reglages incomplets', manquants: config.manquants });
+  // Le compte du porteur (étape 1) : on dit seulement que le réglage est présent, jamais sa valeur.
+  if (config.comptePorteur) journal.ecrire({ evenement: 'reglages', detail: 'compte porteur', manquants: ['COMPTE_PORTEUR'] });
+
+  try {
+    await installerBase(urlBase, config.modeRoles, {}, journal);
+  } catch (e) {
+    if (e instanceof MigrationModifiee) journal.ecrire({ evenement: 'migration', detail: 'migration modifiee' });
+    else if (e instanceof RepliSansCloison) journal.ecrire({ evenement: 'roles', detail: 'repli', erreur: 'repli_sans_cloison' });
+    else journal.ecrire({ evenement: 'erreur', erreur: typeErreur(e) });
+    process.exit(1);
+  }
+
+  // Peu de connexions : la plus petite base de Scalingo en accepte peu (à vérifier à l'ouverture), et le jeu a au plus
+  // une trentaine de joueurs pendant le test.
+  const pools = {
+    jeu: creerPoolModule(urlBase, 'jeu', config.modeRoles, { max: 4 }),
+    comptes: creerPoolModule(urlBase, 'comptes', config.modeRoles, { max: 2 }),
+    envoi: creerPoolModule(urlBase, 'envoi', config.modeRoles, { max: 2 }),
+    menage: creerPoolModule(urlBase, 'menage', config.modeRoles, { max: 1 }),
+  };
+
+  // L'horloge : celle du système en ligne ; accélérée en local seulement (ses réglages sont refusés en ligne).
+  const accelere = !config.protege && (config.local.horlogeVitesse !== null || config.local.horlogeDepart !== null);
+  const vitesse = accelere ? (config.local.horlogeVitesse ?? 1) : 1;
+  const horloge = accelere ? horlogeAcceleree(config.local.horlogeDepart, vitesse) : horlogeSysteme;
+
+  const verificateur = config.apple ? creerVerificateurApple({ audience: config.apple.idApplication, horloge }) : null;
+  const envoyeur = config.apns && config.enLigne ? creerEnvoyeurApns({ ...config.apns, horloge }) : null;
+  const planificateur = creerPlanificateur({ pools, envoyeur, horloge, journal, vitesse });
+  const { table, recu } = creerRoutes({ pools, config, verificateur, journal });
+  const serveur = creerServeur({ config, pools, horloge, vitesse, journal, table, recu });
+
+  serveur.listen(config.port, () => {
+    journal.ecrire({ evenement: 'demarrage', detail: 'pret' });
+    planificateur.demarrer();
+  });
+
+  // Scalingo envoie SIGTERM, puis attend 30 secondes.
+  process.on('SIGTERM', () => {
+    journal.ecrire({ evenement: 'arret', detail: 'signal' });
+    planificateur.arreter();
+    serveur.close(() => {
+      void Promise.all(Object.values(pools).map((p) => p.end())).finally(() => process.exit(0));
+    });
+    setTimeout(() => process.exit(0), 20_000).unref();
+  });
+}

@@ -1,0 +1,98 @@
+/*
+  La page du mode préparation (preparer.html). Les couleurs de l'application (public/style.css) : lin et brou le jour,
+  soir et lin du soir la nuit, une seule teinte d'accent. Polices du système. Rien n'est chargé d'ailleurs.
+*/
+
+:root {
+  --fond: #F2EEE8;      /* lin */
+  --encre: #2A211C;     /* brou */
+  --accent: #8A5714;    /* caramel */
+  --cadre: #FFFFFF;
+  --bouton-fond: #2A211C;
+  --bouton-encre: #F2EEE8;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fond: #1C1612;    /* soir */
+    --encre: #F2ECE3;   /* lin du soir */
+    --accent: #E9B45A;  /* miel */
+    --cadre: #2A221C;
+    --bouton-fond: #F2ECE3;
+    --bouton-encre: #1C1612;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--encre);
+  font-family: -apple-system, system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.45;
+  -webkit-text-size-adjust: 100%;
+}
+
+main {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 32px 16px 48px;
+}
+
+h1 {
+  font-family: ui-serif, Georgia, serif;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  margin: 0 0 1rem;
+}
+
+p, ol { margin: 0 0 1rem; }
+li { margin-bottom: 0.4rem; }
+
+.important { font-weight: 600; }
+
+.note {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--accent);
+  font-size: 0.94rem;
+}
+
+button {
+  min-height: 48px;
+  padding: 0.6rem 1.1rem;
+  border: 0;
+  border-radius: 12px;
+  background: var(--bouton-fond);
+  color: var(--bouton-encre);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:disabled { opacity: 0.5; cursor: default; }
+
+button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+pre {
+  margin: 0 0 1rem;
+  padding: 0.8rem 1rem;
+  border-left: 4px solid var(--accent);
+  background: var(--cadre);
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+
+code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.9em; }
+
+[hidden] { display: none !important; }

@@ -62,6 +62,8 @@ const DETAILS = [
   // Étape 1, travail D : le serveur, la connexion Apple, l'envoi vers Apple, le planificateur.
   'horloge en marche', 'soir fini', 'menage deja passe', 'compte porteur', 'compte inconnu', 'connexion expiree',
   'verificateur faux', 'cles apple', 'trop de demandes', 'pas encore construit', 'mise a jour requise',
+  // Le mode préparation (preparation.ts) : la seule ligne qu'il écrive au démarrage.
+  'mode preparation',
 ] as const;
 export type Detail = (typeof DETAILS)[number];
 

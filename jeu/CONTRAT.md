@@ -458,6 +458,7 @@ Toutes sur le domaine, ou sur l'adresse gratuite de l'hébergeur avant lui. Tout
 | `GET /invitation` | La page d'invitation (2.2) : sur iPhone, les trois gestes de TestFlight ; ailleurs, N2. Balises d'aperçu fixes, sans pseudo (1.1). `POST /api/compteur` ; jamais le jeton |
 | `GET /.well-known/apple-app-site-association` | Le fichier d'association : il dit à iOS que `/invitation` s'ouvre dans l'application Elenchos |
 | `POST /connexion/google/retour` | Le retour de Google, dans la feuille du système (2.5) ; répond par une redirection vers `elenchos://connexion#code=…` |
+| `GET /preparer` | En mode préparation seulement (2.17) : la page où le porteur tire les trois clés du serveur. Hors de ce mode, introuvable |
 
 ### 2.15 Les mesures
 
@@ -514,6 +515,8 @@ Apple relit l'application avant les testeurs extérieurs, et demande un accès q
 | `POST /api/recu` | 2.13. |
 
 Toutes les autres routes répondent `introuvable` (partie 6). Parmi elles, `POST /api/compteur`, que l'application envoie déjà à chaque ouverture sur un iPad ou un Mac (2.1) : ces ouvertures ne sont pas comptées avant l'étape 2. Le serveur envoie aussi le message de 18h (2.13) et fait le ménage quotidien (partie 3), sans route.
+
+**Le mode préparation**, avant la première vraie mise en route : si les trois clés du serveur (`SECRET_SESSION`, `CLE_REPONSES`, `CLE_IDENTITES`) manquent toutes et que rien d'autre n'empêche de démarrer, le serveur ne sert que `GET /preparer` et ses deux fichiers, la page où le porteur les tire dans son navigateur, sans rien envoyer ; il ne touche pas à la base, n'envoie aucun message, ne fait aucun ménage, et toute autre adresse répond 503 avec un corps neutre, hors de l'enveloppe (l'application y voit N18, « Elenchos ne répond pas pour l'instant »). Une ou deux clés seulement, une clé illisible ou deux clés égales : le serveur refuse de démarrer (`src/serveur/preparation.ts` ; `DECISIONS-TECHNIQUES.md`, 1.17).
 
 L'application de l'étape 1 (travail E, `jeu/public/`) n'appelle que `GET /api/etat`, `POST /api/connexion/debut`, `POST /api/connexion/apple`, `POST /api/abonnement` et `POST /api/compteur` ; l'extension, `POST /api/recu`.
 

@@ -23,6 +23,12 @@
 // - FABRICATION_MINIMALE : le plus petit numéro de fabrication accepté (CONTRAT.md, 1.7) ; absent, tout est accepté ;
 // - COMPTE_PORTEUR : à l'étape 1 seulement, le pseudo sous lequel la première connexion Apple ouvre le compte du
 //   porteur, tant qu'aucun compte n'existe (CONTRAT.md, 2.5 ; arbitrage de l'équipe, renversable). Facultatif.
+//
+// Le mode préparation (16 octobre 2026 ; CONTRAT.md, 2.17) : le porteur n'a aucun moyen de tirer seul les trois clés.
+// Si elles manquent TOUTES LES TROIS (absentes ou vides), et que rien d'autre n'empêche de démarrer, `preparation` est
+// vrai : le serveur ne sert que la page qui les tire dans le navigateur (preparation.ts), sans toucher à la base. Une
+// ou deux clés seulement, une clé illisible ou deux clés égales : c'est une erreur de saisie, jamais une préparation,
+// et le serveur refuse de démarrer.
 
 import { createPrivateKey, type KeyObject } from 'node:crypto';
 import { deB64url } from './crypto.ts';
@@ -67,7 +73,13 @@ export type Config = {
   manquants: string[]; // noms des réglages absents ou illisibles
   refuses: string[]; // noms des réglages dangereux présents dans un environnement protégé
   peutDemarrer: boolean;
+  /** Vrai seulement si les trois clés manquent toutes et que rien d'autre n'empêche de démarrer : le serveur ne sert
+   *  alors que la page `/preparer` (preparation.ts). Jamais vrai en même temps que `peutDemarrer`. */
+  preparation: boolean;
 };
+
+/** Les trois clés du serveur, que la page `/preparer` tire au hasard (pages/preparer.js). */
+export const CLES_DU_SERVEUR = ['SECRET_SESSION', 'CLE_REPONSES', 'CLE_IDENTITES'] as const;
 
 /** Les réglages qui n'ont le droit d'exister qu'en local (CONTRAT.md, partie 5 ; garde-horaires.ts). */
 export const REGLAGES_DANGEREUX = ['IGNORER_HORAIRES', 'HORLOGE_VITESSE', 'HORLOGE_DEPART', 'CODES_ESSAI_LOCAUX'] as const;
@@ -261,11 +273,14 @@ export function lireConfig(env: NodeJS.ProcessEnv): Config {
     }
   }
 
-  const peutDemarrer = urlBase !== null && secretSession !== null && cleReponses !== null && cleIdentites !== null
-    && refuses.length === 0 && (!enLigne || (adresseOk && finDuTest !== null));
+  // Ce qui empêcherait de démarrer, en dehors des trois clés.
+  const resteEnPlace = urlBase !== null && refuses.length === 0 && (!enLigne || (adresseOk && finDuTest !== null));
+  const peutDemarrer = resteEnPlace && secretSession !== null && cleReponses !== null && cleIdentites !== null;
+  // « Absente » : non définie, ou vide (`val`). Une clé présente mais illisible n'est pas absente.
+  const preparation = resteEnPlace && CLES_DU_SERVEUR.every((nom) => val(nom) === null);
   return {
     enLigne, protege, port, adressePublique, version, urlBase, modeRoles, secretSession, cleReponses, cleIdentites, apple, apns,
     revocation, fabricationMinimale, comptePorteur, google, finDuTest, local, manquants: [...new Set(manquants)],
-    refuses: [...new Set(refuses)], peutDemarrer,
+    refuses: [...new Set(refuses)], peutDemarrer, preparation,
   };
 }
