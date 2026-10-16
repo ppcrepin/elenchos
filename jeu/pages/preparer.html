@@ -34,7 +34,7 @@
       <li>Collez les trois lignes dans une nouvelle fiche de votre gestionnaire de mots de passe, « Elenchos serveur ».</li>
       <li>Chez Scalingo, onglet <strong>Environment</strong> de l’application, ajoutez-les : une ligne par réglage, le nom avant le « = », la valeur après. Enregistrez.</li>
       <li>Redémarrez l’application chez Scalingo : le serveur ne lit ses réglages qu’en démarrant. Jamais entre 15h et 19h, ni le dimanche.</li>
-      <li>Deux minutes plus tard, rechargez cette page : elle ne doit plus s’afficher. C’est le signe que le serveur a démarré avec ses clés. Si elle s’affiche encore au bout de dix minutes, n’en créez pas d’autres : prévenez l’équipe.</li>
+      <li>Deux minutes plus tard, rechargez cette page : elle ne doit plus s’afficher. Puis vérifiez chez Scalingo, onglet <strong>Logs</strong>, qu’une ligne contient « pret ». Si la page s’affiche encore au bout de dix minutes, ou si le journal dit « reglages incomplets » ou « cles changees », n’en créez pas d’autres : prévenez l’équipe.</li>
     </ol>
   </div>
 

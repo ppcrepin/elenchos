@@ -21,7 +21,7 @@ import { temoinDeCle, type CleTemoin } from '../serveur/crypto.ts';
 
 /** Les deux clés qui ont un témoin, dans l'ordre où le journal les nomme. */
 export const CLES_TEMOINS: readonly CleTemoin[] = ['CLE_REPONSES', 'CLE_IDENTITES'];
-const VERROU_TEMOIN = 6_202_612; // un nombre fixe, propre à ce verrou (6 202 610 : migrations ; 6 202 611 : rôles)
+const VERROU_TEMOIN = 6_202_612; // un nombre fixe, propre à ce verrou (6 202 610 : migrations ; 6 202 611 : rôles ; 6 202 613 : compte du porteur)
 
 /** Une clé ne correspond plus à son témoin : le serveur ne doit pas démarrer. `cles` : leurs noms, jamais leurs valeurs. */
 export class ClesChangees extends Error {

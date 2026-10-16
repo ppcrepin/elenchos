@@ -1,12 +1,12 @@
 # Voir le jeu sur votre iPhone dès l'étape 1 : votre pas-à-pas
 
-*État, 16 octobre 2026 : proposé, à relire (Cohérence, puis Vérificateur). Ce guide ne sert que si vous choisissez, au point d'étape, de voir le jeu sur votre iPhone dès l'étape 1 (plan, `plan-jeu-entier.md`, « La question qui vous revient »).*
+*État, 16 octobre 2026 : relu par le Vérificateur (OK avec corrections mineures, appliquées). Ce guide ne sert que si vous choisissez, au point d'étape, de voir le jeu sur votre iPhone dès l'étape 1 (plan, `plan-jeu-entier.md`, « La question qui vous revient »). Il vous est remis avec cette question : n'ouvrez pas Scalingo avant d'y avoir répondu.*
 
 *UX, avec Back-end. Écrans d'Apple et de GitHub d'après leurs pages d'aide (relevé de Front-end, 16 octobre 2026) ; écrans de Scalingo d'après sa documentation (relue le 16 octobre 2026, deux fois : la seconde pour le redémarrage, règle 3) et le pas-à-pas du test de 18h. Ce qui n'a pas pu être vérifié est marqué ▲.*
 
-**En tout : environ 2 h 30 de gestes, en cinq fois, sur une à deux semaines**, plus l'attente d'une réponse d'Apple (durée inconnue, 1.9). Ensuite, trois soirs de 2 minutes.
+**En tout : environ 2 h 30 de gestes, en cinq fois, sur une à deux semaines** (le plan annonçait environ 2 heures ; le détail des gestes ajoute une demi-heure), plus l'attente d'une réponse d'Apple (durée inconnue, 1.9). Ensuite, trois soirs de 2 minutes.
 
-**Ce que ça coûte.** Rien pendant 30 jours. Ensuite, environ 26 € TTC par mois chez Scalingo, l'hébergeur, si vous continuez : la question vous sera posée une semaine avant (D-055, D-063). Tout le reste est gratuit.
+**Ce que ça coûte.** Rien pendant 30 jours. Ensuite, environ 26 € TTC par mois chez Scalingo, l'hébergeur, si vous continuez : la question vous sera posée une semaine avant (D-055, D-063). Tout le reste est gratuit, à une exception déjà engagée : votre compte Apple, qui se renouvelle chaque année pour environ 99 € (1.7).
 
 **Sommaire et déroulé**
 
@@ -24,7 +24,7 @@ En cas de souci : partie 6.
 **Trois règles, pour tout ce qui suit.**
 1. **Vous ne nous envoyez jamais un secret** : ni clé, ni mot de passe, ni code, ni capture d'écran qui en montre un (D-048). Vous les tapez vous-même chez Apple, GitHub et Scalingo, et vous les gardez dans votre gestionnaire de mots de passe (l'app Mots de passe de l'iPhone convient).
 2. **Ce que vous pouvez nous écrire** se limite à la partie 4, aux lignes du soir (5.5) et à ce que la partie 6 vous demande.
-3. **Rien ne se met en ligne de 15h à 19h ni le dimanche** (D-043). Une fois le serveur en ligne, un réglage changé chez Scalingo ne compte qu'au démarrage suivant du serveur : après un changement, c'est vous qui redémarrez l'application (5.2). Ce redémarrage compte comme une mise en ligne. Changer un réglage et redémarrer se font donc aux mêmes heures : avant 15h ou après 19h, jamais le dimanche.
+3. **Rien ne se met en ligne de 15h à 19h ni le dimanche** (D-043). Une fois le serveur en ligne, un réglage changé chez Scalingo ne compte qu'au démarrage suivant du serveur : après un changement, c'est vous qui redémarrez l'application (5.2). Ce redémarrage compte comme une mise en ligne. Changer un réglage et redémarrer se font donc aux mêmes heures : avant 15h ou après 19h, jamais le dimanche. L'application pour votre iPhone, elle, se fabrique **le matin** : elle doit partir avant 14h, pour qu'Apple ait fini de la traiter avant 15h.
 
 **Cinq mots, une fois pour toutes.**
 - **Clé** : un fichier, ou une ligne de lettres, qui ouvre un accès, comme un mot de passe.
@@ -33,10 +33,7 @@ En cas de souci : partie 6.
 - **Fabrication** : le passage qui transforme le code en application installable. Elle tourne sur les machines de GitHub, puis Apple la traite.
 - **Mise en ligne** : installer une nouvelle version du serveur chez Scalingo.
 
-> **Écrans de mémoire (▲).** Un ▲ marque un écran ou un menu que nous n'avons pas pu voir : nous le décrivons de mémoire. Si l'écran dit autre chose, suivez l'écran s'il est clair ; sinon, arrêtez-vous et écrivez-nous. Les écrans d'Apple sont nommés ici en anglais ; si votre compte est en français, les mots changent, les places restent ▲. Où sont les ▲ :
-> - **Apple** : le menu des accords (1.1), la date de renouvellement (1.7), la réponse d'Apple à la demande d'accès (1.9), l'arrivée d'Elenchos dans TestFlight et ses boutons (5.3) ;
-> - **Scalingo** : l'écran juste après l'inscription (3.1), l'écran « Deployment method » (3.4), le nom du plus petit plan de base (3.5), les conteneurs (3.6), l'ajout des réglages en bloc (3.7, 5.2), le bouton de redémarrage de l'application (5.2), la suppression d'un réglage (5.4), l'état de l'application (6) ;
-> - **iPhone** : l'heure affichée sous le message (5.5).
+> **Écrans de mémoire (▲).** Un ▲ marque un écran ou un menu que nous n'avons pas pu voir : nous le décrivons de mémoire. Si l'écran dit autre chose, suivez l'écran s'il est clair ; sinon, arrêtez-vous et écrivez-nous. Les écrans d'Apple sont nommés ici en anglais ; si votre compte est en français, les mots changent, les places restent ▲.
 
 **À avoir sous la main** : un ordinateur (Mac ou PC) pour les parties 1 à 3 ; votre iPhone, en iOS 15 ou plus récent ; vos accès à Apple et à GitHub ; votre carte bancaire (partie 3).
 
@@ -100,7 +97,7 @@ Dans TestFlight, vos testeurs verront votre nom comme éditeur : le compte est �
 ### 1.9 Demander l'accès à la clé de fabrication (2 min puis attente, 0 €)
 App Store Connect › **Users and Access**, onglet **Integrations**, **App Store Connect API**, bouton **Request Access**. Cochez l'accord, **Submit**. Apple répond plus tard, par e-mail ou sur cette même page ▲.
 
-> **Le risque chez Apple.** Apple étudie chaque demande au cas par cas, sans délai connu. S'il refuse ou tarde trop, l'équipe passe à la « signature à la main » : une dizaine de gestes de plus chez Apple, gratuits, qu'elle vous écrira alors ; en dernier recours, un Mac loué une journée, présenté d'abord avec son prix (D-063). Même avec l'accès, personne ne sait d'avance si la fabrication sans Mac passera du premier coup : c'est ce que l'étape 1 vérifie.
+> **Le risque chez Apple.** Apple étudie chaque demande au cas par cas, sans délai connu. S'il refuse ou tarde trop, l'équipe passe à la « signature à la main » : une dizaine de gestes de plus chez Apple et chez GitHub, gratuits (dont, probablement, un mot de passe d'application à ranger dans le coffre GitHub, pour l'envoi à Apple sans clé de fabrication), qu'elle vous écrira alors ; en dernier recours, un Mac loué une journée, présenté d'abord avec son prix (D-063). Même avec l'accès, personne ne sait d'avance si la fabrication sans Mac passera du premier coup : c'est ce que l'étape 1 vérifie.
 
 ### 1.10 Le groupe de testeurs (3 min, 0 €)
 App Store Connect › **Apps** › Elenchos, onglet **TestFlight**, **Internal Testing**, bouton **+** :
@@ -201,7 +198,7 @@ FIN_DU_TEST=2027-03-31
 COMPTE_PORTEUR=…votre pseudo
 ```
 - `FIN_DU_TEST` est provisoire (proposé) : l'équipe vous donnera la vraie date avant l'arrivée de vos amis.
-- `COMPTE_PORTEUR` : votre pseudo dans le jeu (24 signes au plus, sans @ ni /). Il ouvre votre compte à votre première connexion, sans le défi d'entrée qui n'existe pas encore ; vous le retirerez juste après (5.4 ; D-068).
+- `COMPTE_PORTEUR` : votre pseudo dans le jeu (1 à 24 signes ; ni @, ni /, ni « : », ni < ou > ; pas d'espace au début ni à la fin). Il ouvre votre compte à votre première connexion, sans le défi d'entrée qui n'existe pas encore ; vous le retirerez juste après (5.4 ; D-068).
 
 **Apple** (tirés de votre gestionnaire, partie 1) :
 ```
@@ -229,7 +226,7 @@ Aucun de ces messages ne contient de secret.
 L'équipe en tire l'adresse du serveur, que l'application doit connaître, et vous préviendra une semaine avant chacune des deux dates.
 
 **La veille de la mise en ligne**, quand l'équipe vous dit que tout est relu (D-054) :
-> Feu vert : mise en ligne demain, [jour et date], avant 14h.
+> Feu vert : mise en ligne demain, [jour et date], le matin.
 
 Un jour de semaine, pas un dimanche. **Le lendemain matin, écrivez « allez-y »** : sans conversation ouverte, rien ne part.
 
@@ -239,7 +236,7 @@ Un jour de semaine, pas un dimanche. **Le lendemain matin, écrivez « allez-y �
 
 ### 5.1 Brancher la branche (le jour J, 15 min, 0 €)
 Dès que l'équipe vous écrit qu'elle a poussé le code sur `mise-en-ligne` :
-1. Application `elenchos`, onglet **Deploy** › **Configuration** : dépôt `ppcrepin/elenchos`, branche **`mise-en-ligne`**, **Automatic deployments** activé.
+1. Application `elenchos`, onglet **Deploy** › **Configuration** : dépôt `ppcrepin/elenchos`, branche **`mise-en-ligne`**, **Automatic deployments** activé. Si un réglage « Review apps » (ou « Deploy review apps ») est proposé ▲, laissez-le **désactivé** : il créerait d'autres applications, facturées, à partir de code que personne n'a relu.
 2. Si rien ne démarre dans les dix minutes, écrivez-le-nous d'abord. Ensuite seulement : **Manual deployment**, branche `mise-en-ligne`.
 3. Attendez la fin (quelques minutes). Si l'installation échoue, copiez-nous son message d'erreur, rien d'autre. De 15h à 19h et le dimanche, elle échoue exprès (« Horaires : aucune installation de 15h à 19h ni le dimanche ») : c'est voulu.
 
@@ -252,7 +249,7 @@ Le serveur vient de démarrer sans ses trois clés : il ne fait rien d'autre que
 3. Collez-les dans une nouvelle fiche de votre gestionnaire de mots de passe, « Elenchos serveur ».
 4. Chez Scalingo, onglet **Environment** : ajoutez les trois lignes, en bloc ou une par une (le nom avant le « = », la valeur après) ▲. Enregistrez.
 5. Redémarrez l'application : bouton **Restart** de l'application ▲. Le serveur ne lit ses réglages qu'en démarrant : enregistrer ne suffit pas (la documentation de Scalingo demande ce redémarrage après l'ajout d'un réglage). Si Scalingo vous propose lui-même de redémarrer, acceptez : cela revient au même.
-6. Deux minutes plus tard, rechargez la page ouverte en 1 : elle ne doit plus s'afficher (une page vide ou un message d'erreur du navigateur : le serveur a démarré pour de bon). Si elle s'affiche encore au bout de dix minutes, ne créez pas d'autres clés : écrivez-nous (partie 6).
+6. Deux minutes plus tard, chez Scalingo, onglet **Logs** de l'application ▲ : la dernière ligne qui contient « demarrage » doit contenir **« pret »**. C'est le signe que le serveur a démarré avec ses clés. Si vous lisez « reglages incomplets », « cles changees » ou « repli », ou si rien ne vient au bout de dix minutes : ne créez pas d'autres clés, allez à la partie 6. Rechargée, la page « Préparer le serveur » ne doit plus s'afficher ; mais une page vide ou d'erreur ne prouve rien à elle seule.
 
 Ne rechargez pas la page avant d'avoir tout collé : elle créerait d'autres clés.
 
@@ -293,6 +290,7 @@ Après le troisième soir, l'équipe vous fait le point d'étape.
 | Apple refuse l'accès, ou ne répond pas au bout d'une semaine (1.9) | Écrivez-le-nous : l'équipe passe à la signature à la main et vous écrit les gestes (encadré de 1.9). |
 | Le nom est pris chez Apple (1.8) ou chez Scalingo (3.4) | Prenez le nom proposé à côté, et dites-nous celui de Scalingo (partie 4). |
 | L'installation échoue chez Scalingo (5.1) | Copiez-nous son message d'erreur, rien d'autre. |
+| La page « Préparer le serveur » ne s'affiche pas, ou le navigateur tourne sans fin (5.2, geste 1) | N'ajoutez aucun réglage. Écrivez-nous les mots exacts de l'écran et l'état de l'application dans le tableau de bord de Scalingo ▲. |
 | Le serveur ne démarre pas (Scalingo le signale, ou Elenchos dit « Elenchos ne répond pas pour l'instant ») | Onglet **Logs** de l'application : sur la ligne qui contient « reglages incomplets », copiez-nous seulement les noms en majuscules. Les noms qui commencent par `GOOGLE_` y figurent toujours à cette étape : c'est normal. L'équipe peut vous demander d'ajouter une ligne, par exemple `MODE_ROLES=repli` : ce n'est pas un secret. |
 | Le serveur ne démarre pas, et l'onglet **Logs** montre une ligne qui contient « cles changees » | Une des clés du serveur n'est plus celle du premier démarrage : le serveur refuse de démarrer pour ne rien perdre. Ne créez pas de nouvelles clés. Onglet **Environment**, remettez les trois lignes de votre fiche « Elenchos serveur », puis redémarrez (5.2, geste 5), aux heures permises. Écrivez-nous le nom en majuscules qui suit « manquants » sur cette ligne, sans aucune valeur. |
 | Elenchos dit « Aucun compte Elenchos n'est lié à ce compte Apple » (5.3) | `COMPTE_PORTEUR` manque ou est mal écrit. Écrivez-le-nous ; ne réessayez pas en boucle. |
@@ -314,6 +312,7 @@ Après le troisième soir, l'équipe vous fait le point d'étape.
 
 ## Ce qui n'est pas encore sûr
 
+- **Ce qui est déjà prouvé** : la fabrication pour le simulateur, sans signature, a réussi sur GitHub le 16 octobre 2026 : le Swift compile et l'application s'ouvre. Ce qui reste à prouver, c'est la signature et l'envoi à Apple.
 - **Chez Apple** : l'accord pour la clé de fabrication (1.9) ; le rôle **Admin** de cette clé, nécessaire d'après des développeurs, pas d'après Apple ; la fabrication sans Mac du premier coup.
 - **Les écrans marqués ▲.**
 - **Le redémarrage chez Scalingo** (règle 3, 5.2) : sa documentation dit que les réglages sont donnés au serveur quand il démarre, et demande de redémarrer l'application après l'ajout d'un réglage (pages « Environment Variables », mise à jour le 20 mars 2026, et « Access Your Database », le 9 février 2026, relues le 16 octobre 2026). Elle ne dit pas si son tableau de bord propose ou fait lui-même ce redémarrage. D'où le redémarrage à la main, sans risque s'il était déjà fait.

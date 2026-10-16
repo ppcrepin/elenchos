@@ -51,7 +51,7 @@ import { echeanceCompte, ouvrirSession } from './sessions.ts';
 /** Une connexion commencée vaut 10 minutes (CONTRAT.md, 2.5). */
 export const DUREE_CONNEXION_MS = 10 * 60_000;
 /** Le verrou qui empêche deux ouvertures du compte du porteur en même temps (un nombre fixe, propre à ce verrou). */
-const VERROU_PORTEUR = 6_202_612;
+const VERROU_PORTEUR = 6_202_613; // un nombre fixe, propre à ce verrou (6 202 612 : témoin des clés)
 
 export type DependancesConnexion = {
   pools: { jeu: pg.Pool; comptes: pg.Pool };
