@@ -4,6 +4,8 @@ Chaque arbitrage du porteur, daté et numéroté. Source de vérité n°1 du pro
 
 Numérotation : **D-nnn** décision du porteur · **C-nnn** constat (incohérence ou fait relevé, pas encore tranché).
 
+Les entrées marquées « Arbitré par l'équipe » (depuis D-064, au titre de D-062 point 5) ne sont pas des arbitrages du porteur. Elles s'appliquent au test, mais ne remplacent pas l'entrée du porteur qu'elles citent tant qu'il ne les a pas ratifiées ; elles lui sont présentées au point d'étape suivant, pour ratification.
+
 ---
 
 ## 2026-10-04
@@ -539,7 +541,7 @@ Le porteur : « Ok je te laisse continuer le travail. » Plan proposé : `docs/e
 
 Arbitrage de l'équipe, au titre de D-062 point 5 (le porteur ne veut plus de questions de détail), dit au porteur au point d'étape suivant, et qu'il peut renverser : pour la tension « Tradition ou changement », faute de textes récents « tradition », 3 textes « changement » pour 1 « tradition » sur cette seule tension (relâche E9, D-030, sur une tension ; recommandation de Contenu). Options non retenues : un quatrième texte sur Solidarité (7 textes des affaires sociales, au-dessus du plafond de 6) ; un texte de plus de deux ans.
 
-### D-065 — Étape 1 : trois arbitrages de l'équipe touchant la lettre de décisions validées · Arbitré par l'équipe (16 octobre 2026), à dire au porteur, renversable
+### D-065 — Étape 1 : quatre arbitrages de l'équipe touchant la lettre de décisions validées · Arbitré par l'équipe (16 octobre 2026), à dire au porteur, renversable
 
 Au titre de D-062 point 5 (l'équipe tranche les détails ; le porteur est informé et peut renverser). Relevés par Cohérence et le Vérificateur sur l'étape 1.
 
@@ -576,6 +578,10 @@ Report de D-066 point 1 fait au passage : Le Pas de Côté effacé au départ de
 Au titre de D-062 point 5. Relevé par Back-end en construisant le serveur de l'étape 1.
 
 Le contrat ne crée un compte qu'au bout du défi (D-006), qui n'arrive qu'à l'étape 2. Sans compte, le porteur ne pourrait ni s'abonner au message de 18h, ni le vérifier sur son iPhone à l'étape 1. **Un réglage du serveur, `COMPTE_PORTEUR`, ouvre le compte du porteur à sa première connexion avec Apple, sans défi ni carte, tant qu'aucun compte n'existe dans la base** ; dès qu'un compte existe, il n'a plus d'effet, et il est retiré du serveur après usage. **Touche la lettre de D-006** (le compte vient après le défi) pour ce seul compte, pendant l'étape 1. Avant les amis, ce compte est soit effacé, soit gardé comme compte de joueur du porteur : choix de l'équipe à l'étape 4, dit au porteur. Écrit dans `jeu/CONTRAT.md`, 2.5 et partie 8.
+
+À l'étape 1 seulement, l'écran provisoire de l'application propose aussi l'accord pour le message de 18h dès la connexion du porteur, sans révélation préalable (toujours après un toucher) : **exception à `docs/produit.md` §5 et à D-005 condition 1** (« jamais avant la première révélation »), limitée à ce compte et à ce test (relevé par Cohérence).
+
+Le tout **sous réserve de la réponse du porteur à la question laissée ouverte par D-064** : si le jeu ne doit arriver sur son iPhone qu'à l'étape 4, le compte du porteur, `COMPTE_PORTEUR` et les trois soirs de vérification passent à l'étape 4.
 
 ### Points ouverts du §11 — toujours ouverts
 
