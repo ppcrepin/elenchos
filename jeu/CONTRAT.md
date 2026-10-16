@@ -16,7 +16,7 @@
   - une page web d'invitation, sur le domaine, ouvre l'application si elle est installée, et explique TestFlight sinon.
 - **« Tout effacer » révoque aussi la connexion chez Apple** (arbitrage de l'équipe, `docs/etape-6/plan-jeu-entier.md`, « Ce que l'équipe a tranché seule ») : une feuille d'Apple se montre à la confirmation ; l'effacement se fait même si elle est fermée. Pour Google, l'allègement de D-061 reste.
 - **Le relecteur d'Apple entre dans un cercle inventé**, par un lien de relecture, jamais dans un vrai cercle (2.16).
-- **Décisions touchées, à dire au porteur** (partie 8) : il applique D-062, le plan sur lequel D-064 lance l'étape 1 (`docs/etape-6/plan-jeu-entier.md`) et les arbitrages de l'équipe de D-065 : un proche partagé sans réponse proposé dans une seule manche (troisième exception à D-011), un seul trio d'entrée pendant le test (suspension de `onboarding.md` et de la règle 15), un lien de relecture réutilisable pour Apple (exception à D-006 et à P-29), l'avis du cercle compté sur les membres présents à la fermeture du texte (règle 10 précisée). Sept lectures, tranchées par Game design ou par l'équipe. Et les quatre arbitrages de D-066 sur les données du test : Le Pas de Côté effacé au départ, la part de « aucune » et les trois comptes de mi-bêta non calculés, le refus des mesures, des mesures comptées au geste sur des joueurs distincts. Et D-067 : au départ d'un proche après 18h, le point reste, un « jumeau » devient « juste » et la révélation ne nomme plus le partant (partie 8).
+- **Décisions touchées, à dire au porteur** (partie 8) : il applique D-062, le plan sur lequel D-064 lance l'étape 1 (`docs/etape-6/plan-jeu-entier.md`) et les arbitrages de l'équipe de D-065 : un proche partagé sans réponse proposé dans une seule manche (troisième exception à D-011), un seul trio d'entrée pendant le test (suspension de `onboarding.md` et de la règle 15), un lien de relecture réutilisable pour Apple (exception à D-006 et à P-29), l'avis du cercle compté sur les membres présents à la fermeture du texte (règle 10 précisée). Sept lectures, tranchées par Game design ou par l'équipe. Et les quatre arbitrages de D-066 sur les données du test : Le Pas de Côté effacé au départ, la part de « aucune » et les trois comptes de mi-bêta non calculés, le refus des mesures, des mesures comptées au geste sur des joueurs distincts. Et D-067 : au départ d'un proche après 18h, le point reste, un « jumeau » devient « juste » et la révélation ne nomme plus le partant (partie 8). Et D-068 : à l'étape 1, le compte du porteur s'ouvre sans défi, pour qu'il vérifie le message de 18h (2.5).
 
 ## 1. Les règles du contrat
 
@@ -81,7 +81,7 @@ Une seule exception, qui ne touche pas au jeu : `GET /api/etat` prolonge l'éch�
 
 ### 1.6 Où vivent les mots
 
-- **Les mots fixes vivent dans l'application, dans un seul fichier de textes.** Ce sont les boutons, les titres d'écran, les verdicts (« Ça alors ! »), les noms des positions, des titres, des badges et des tempéraments, N1 à N18, et les mots de la partie 11. Ce qui manque porte la marque `A_ECRIRE`, et un test refuse toute fabrication de l'application qui en contient encore une (repris de l'essai 2). Changer un mot fixe demande une nouvelle fabrication.
+- **Les mots fixes vivent dans l'application, dans un seul fichier de textes.** Ce sont les boutons, les titres d'écran, les verdicts (« Ça alors ! »), les noms des positions, des titres, des badges et des tempéraments, N1 à N18, et les mots de la partie 11. Ce qui manque porte la marque `A_ECRIRE` : la fabrication pour TestFlight refuse de partir tant qu'un texte la porte encore (`app-testflight.yml`, avant de fabriquer puis dans l'application fabriquée ; repris de l'essai 2). Celle du simulateur l'accepte, pour qu'on voie les écrans avant les mots ; le contrôle du code (`npm run controle`) ne la refuse pas, car il bloquerait aussi la mise en ligne du serveur (`DECISIONS-TECHNIQUES.md`, 1.11). Changer un mot fixe demande une nouvelle fabrication.
 - **Les phrases qui dépendent des données sont faites par le serveur**, déjà typographiées. Ce sont :
   - la phrase du jour et la phrase de la semaine ;
   - les lignes du vote, « Proposé par … », « Ta raison, « … », était l'argument de … » ;
@@ -109,7 +109,8 @@ Une seule exception, qui ne touche pas au jeu : `GET /api/etat` prolonge l'éch�
 
   Le joueur provisoire du défi a son propre jeton, rendu par `POST /api/accord`, valable 7 jours au plus. Une connexion réussie rend le jeton du compte, qui le remplace dans le trousseau.
 - **Plus de cookies, plus de contrôle d'origine par cookie.** Sans cookie, une page d'un autre site ne peut pas agir au nom du joueur : la session n'est envoyée que par l'application. Le serveur répond aux demandes de l'application (origine `capacitor://localhost`, CORS limité à cette origine, aux méthodes `GET` et `POST` et aux trois en-têtes) et à celles de ses propres pages. Une demande d'un navigateur venue d'ailleurs reçoit `origine_refusee`. `POST /api/recu`, envoyée par l'extension sans origine, est la seule route qui accepte une demande sans origine.
-  - Précisions de l'étape 1 (`src/serveur/serveur.ts`) : la demande préalable (`OPTIONS`) n'est acceptée que de l'application, pour `GET` ou `POST` et les seuls en-têtes `Authorization`, `Content-Type`, `Elenchos-Fabrication` ; la réponse dit `Access-Control-Max-Age: 600`, jamais `Access-Control-Allow-Credentials`. Une demande `/api/` sans origine (hors `POST /api/recu`), ou d'origine `null`, reçoit `origine_refusee` : un navigateur donne toujours une origine à une demande vers une autre adresse.
+  - Précisions de l'étape 1 (`src/serveur/serveur.ts`) : la demande préalable (`OPTIONS`) n'est acceptée que de l'application, pour `GET` ou `POST` et les seuls en-têtes `Authorization`, `Content-Type`, `Elenchos-Fabrication` ; la réponse dit `Access-Control-Max-Age: 600`, jamais `Access-Control-Allow-Credentials`. L'en-tête `Elenchos-Fabrication` fait précéder chaque échange de l'application d'une demande préalable : ces 10 minutes l'épargnent aux échanges suivants. Une demande `/api/` sans origine (hors `POST /api/recu`), ou d'origine `null`, reçoit `origine_refusee` : un navigateur donne toujours une origine à une demande vers une autre adresse.
+  - **Aucune redirection sur `/api/`** : une demande `/api/` arrivée en clair reçoit `requete_invalide`, jamais une redirection (seules les pages web sont redirigées vers https). L'application refuse d'ailleurs toute redirection, n'envoie jamais de cookie (`public/client.js`), et prend toute réponse qui n'est pas l'enveloppe JSON pour un serveur muet (N18).
 - **La version minimale.** Chaque enveloppe porte `fabricationMinimale`. Si le numéro de l'application est plus petit :
   - le serveur répond `mise_a_jour_requise` (426) à toute demande dont l'en-tête porte un numéro trop petit, sauf `GET /api/etat`, par laquelle l'application apprend le numéro minimal. Les demandes sans cet en-tête (nos pages web, l'extension) ne sont pas concernées : la version minimale est une question de compatibilité, pas de sécurité. Un en-tête qui n'est pas un entier de 1 à 9 chiffres donne `requete_invalide`, sauf sur `GET /api/etat`, qui l'ignore ;
   - le numéro minimal est le réglage `FABRICATION_MINIMALE` ; absent, il vaut 0 : tout est accepté ;
@@ -212,8 +213,8 @@ L'appareil n'est pas une règle du jeu : l'application lit seulement si elle tou
 
 **Apple, en natif** (la feuille d'Apple, avec Face ID) :
 1. L'application tire au hasard un vérificateur de 32 octets, gardé dans sa seule mémoire. Elle appelle `POST /api/connexion/debut { voie: 'apple', but, defi }`, où `defi` est l'empreinte SHA-256 du vérificateur. **Reçu** : `{ nonce }`. Le serveur garde la connexion en cours 10 minutes : le nonce, le défi, le but, le joueur provisoire de la session s'il y en a un.
-   - **Le calcul exact** est celui de PKCE, méthode « S256 » (RFC 7636, 4.1 et 4.2) : le vérificateur est écrit en base64url sans remplissage (43 caractères) ; `defi` = base64url(SHA-256(les 43 caractères ASCII du vérificateur)), 43 caractères. C'est ce texte de 43 caractères que l'application renvoie à la fin.
-   - **Le nonce** : 32 octets tirés par le serveur, en base64url (43 caractères), une seule fois.
+   - **Le calcul exact** est celui de PKCE, méthode « S256 » (RFC 7636, 4.1 et 4.2) : le vérificateur, 32 octets tirés par iOS (le module natif de l'application), est écrit en base64url sans remplissage (43 caractères) ; `defi` = base64url(SHA-256(les 43 caractères ASCII du vérificateur)), 43 caractères. C'est ce texte de 43 caractères que l'application renvoie à la fin. Le serveur et la coquille font le même calcul (vérifié à l'étape 1).
+   - **Le nonce** : 32 octets tirés par le serveur, en base64url (43 caractères), une seule fois. L'application le passe tel quel à la feuille d'Apple, qui le recopie tel quel dans le jeton signé.
    - **Refus** : `indisponible` si la voie n'est pas réglée (Google jusqu'à l'étape 2, Apple sans `APPLE_ID_APPLICATION`) ; `etape_incorrecte` avec une session de compte, ou pour `creation` sans un joueur provisoire au bout de son défi (trois réponses d'entrée, pseudo choisi, lien lié).
 2. L'application ouvre la feuille d'Apple sans demander ni nom ni adresse (D-061, P-03), avec ce nonce.
 3. Elle envoie `POST /api/connexion/apple { jetonIdentite, verificateur }`. **Reçu** : `ResultatConnexion`.
@@ -251,9 +252,9 @@ Le vérificateur lie la fin de la connexion à l'application qui l'a commencée 
 - `POST /api/compte/code` : **envoyé** `{ code }` ; **reçu** `ResultatConnexion`. **Erreurs** : `code_faux`, `code_expire`, `trop_essais`, `etape_incorrecte`.
 - **Personne ne peut savoir si une adresse a un compte.** En mode `connexion`, une adresse inconnue reçoit la même réponse ; aucun e-mail ne part, et tout code est faux. Savoir qu'une adresse joue à un jeu politique serait déjà une donnée sensible.
 
-**Le résultat.** `ResultatConnexion` porte le jeton du compte, que l'application range dans le trousseau, ou un refus dit une seule fois : `refus_fournisseur`, `compte_organisation`, `compte_inconnu`, `cercle_complet`, `pseudo_pris`, `connexion_echouee`.
+**Le résultat.** `ResultatConnexion` porte le jeton du compte (32 octets en base64url, 43 caractères ; l'application n'accepte dans le trousseau qu'un jeton base64url de 16 à 128 caractères), qu'elle range dans le trousseau, ou un refus dit une seule fois : `refus_fournisseur`, `compte_organisation`, `compte_inconnu`, `cercle_complet`, `pseudo_pris`, `connexion_echouee`.
 
-**Le compte du porteur, à l'étape 1 seulement** (arbitrage de l'équipe, 16 octobre 2026, renversable). Ce contrat ne crée un compte qu'au bout du défi, qui vient à l'étape 2 : sans lui, le porteur n'aurait à l'étape 1 ni session, ni abonnement, ni message de 18h à vérifier. Le réglage `COMPTE_PORTEUR` (un pseudo, saisi chez l'hébergeur) comble ce seul trou : **tant qu'aucun compte n'existe dans la base**, la première connexion Apple sans joueur provisoire, d'une identité inconnue, ouvre un compte sous ce pseudo (`connecte`), sans défi, sans carte, sans cercle. Dès qu'un compte existe, le réglage n'a plus d'effet (`compte_inconnu`, comme sans lui) ; le porteur le retire chez l'hébergeur après sa première connexion. Ce compte n'a ni accord ni réponse : `Etat` le met à `nommer_cercle`, avec `accordAJour` faux. Il touche la lettre de D-006 (le compte après le défi) pour le seul compte du porteur, à l'étape 1 ; à effacer ou à garder au début de l'étape 2 (partie 9). Sans ce réglage, la règle est celle du contrat.
+**Le compte du porteur, à l'étape 1 seulement** (D-068 : arbitrage de l'équipe, 16 octobre 2026, à dire au porteur, renversable). Ce contrat ne crée un compte qu'au bout du défi, qui vient à l'étape 2 : sans lui, le porteur n'aurait à l'étape 1 ni session, ni abonnement, ni message de 18h à vérifier. Le réglage `COMPTE_PORTEUR` (un pseudo, saisi chez l'hébergeur) comble ce seul trou : **tant qu'aucun compte n'existe dans la base**, la première connexion Apple sans joueur provisoire, d'une identité inconnue, ouvre un compte sous ce pseudo (`connecte`), sans défi, sans carte, sans cercle. Dès qu'un compte existe, le réglage n'a plus d'effet (`compte_inconnu`, comme sans lui) ; le porteur le retire chez l'hébergeur après sa première connexion. Ce compte n'a ni accord ni réponse : `Etat` le met à `nommer_cercle`, avec `accordAJour` faux. Il touche la lettre de D-006 (le compte après le défi) pour le seul compte du porteur, à l'étape 1. Avant les amis, ce compte est effacé, ou gardé comme compte de joueur du porteur : choix de l'équipe à l'étape 4, dit au porteur (D-068 ; partie 9). Sans ce réglage, la règle est celle du contrat.
 
 **La création du compte se fait en une transaction** :
 - l'empreinte de l'identifiant ou de l'adresse (jamais l'adresse elle-même) ;
@@ -369,7 +370,7 @@ Le serveur vérifie au même moment le cercle complet (N15) et le pseudo (E7). P
   - À chaque étape affichée, l'application envoie `POST /api/revelation/etape { etape }` (l'`id` de l'étape), et `'fin'` à l'écran 2.7f.
   - `reprise` rend la dernière étape vue. « Finir la révélation › » y reprend ; « Revoir la révélation › » reprend au début.
   - Les `id` sont opaques et stables du 18h au 18h suivant. Si l'étape a disparu (un départ, règle 4), le serveur donne la suivante.
-- `POST /api/vu { objet: 'revelation', cercle: null }`, à l'ouverture : la première ouverture après 18h ne commence plus par la révélation. « Déjà vu » ne garde pas d'heure, et part au 18h suivant. Au même moment, le serveur ajoute 1 aux compteurs du jour `revelation_ouverte` et, si c'est le soir même, `revelation_ouverte_le_soir` : la mesure « révélation ouverte le soir même » est un total par jour, sans personne (D-066, point 4 ; « le soir même » : de 18h à minuit, heure de Paris, le jour de la révélation, proposé par Back-end, à confirmer par Game design, partie 9).
+- `POST /api/vu { objet: 'revelation', cercle: null }`, à l'ouverture : la première ouverture après 18h ne commence plus par la révélation. « Déjà vu » ne garde pas d'heure, et part au 18h suivant. Au même moment, le serveur ajoute 1 aux compteurs du jour `revelation_ouverte` et, si c'est le soir même, `revelation_ouverte_le_soir` : la mesure « révélation ouverte le soir même » est un total par jour, sans personne (D-066, point 4 ; « le soir même » : de 18h à minuit, heure de Paris, le jour de la révélation, proposé par Back-end et confirmé par Game design, au titre de D-062 point 5, renversable ; partie 8).
 - `POST /api/fiche { texte }` → `Fiche` (5.4) :
   - avant la révélation, le texte et ta réponse seulement, avec « Le vote et les auteurs : … à 18h », sans lien officiel ;
   - après, le vote, l'auteur, les quatre raisons et leurs députés, le lien du scrutin, et la ligne d'erratum s'il y en a une (règle 20 ; jamais pour une erreur d'étiquette, qui ne se montre pas) ;
@@ -433,9 +434,9 @@ Le serveur vérifie au même moment le cercle complet (N15) et le pseudo (E7). P
 - **Écrans** : N10, 2.6, 3.1, 1.10.
 - **L'accord d'iOS se demande au même moment qu'avant** : au compte à rebours (1.13, 2.5), après la révélation du défi, jamais avant, et seulement après un toucher sur « Recevoir le message de 18h » (N10). iOS donne alors un jeton d'appareil.
 - `POST /api/abonnement { jeton }` → `{ abonne: true }`. L'abonnement est lié à la session de cet appareil. **Erreurs** : `abonnement_invalide`, `indisponible`, `non_connecte`. Le refus d'iOS se voit dans le téléphone : aucun échange. La variante « iPhone trop ancien » de N10 disparaît : tout iPhone qui installe l'application reçoit les messages.
-  - Le jeton d'appareil est de l'hexadécimal, 64 à 200 caractères (Apple prévient qu'il peut s'allonger), gardé en minuscules ; autre chose : `abonnement_invalide`. `indisponible` : la clé des messages n'est pas réglée chez l'hébergeur (`Etat.message.disponible` faux).
-  - Un abonnement par session. L'application peut renvoyer son jeton à chaque ouverture : le même jeton ne change rien ; un jeton nouveau remplace l'ancien sur la même ligne, sans effacer l'envoi du soir qui la verrouille (pas de second message le même soir).
-- **Le contenu d'un message** est `MessageApns`, envoyé à Apple sans intermédiaire, signé par la clé du porteur (`DECISIONS-TECHNIQUES.md`, 1.13).
+  - Le jeton d'appareil est de l'hexadécimal, 64 à 200 caractères (Apple prévient qu'il peut s'allonger) ; l'application l'envoie en minuscules, le serveur accepte aussi les majuscules et le garde en minuscules ; autre chose : `abonnement_invalide`. `indisponible` : la clé des messages n'est pas réglée chez l'hébergeur (`Etat.message.disponible` faux).
+  - Un abonnement par session. L'application renvoie son jeton à chaque ouverture, si l'accord d'iOS est déjà donné (iOS peut le changer) : la route peut donc être rejouée sans créer de doublon. Le même jeton ne change rien ; un jeton nouveau remplace l'ancien sur la même ligne, sans effacer l'envoi du soir qui la verrouille (pas de second message le même soir).
+- **Le contenu d'un message** est `MessageApns`, envoyé à Apple sans intermédiaire, signé par la clé du porteur (`DECISIONS-TECHNIQUES.md`, 1.13), au service de production, celui des fabrications TestFlight (vérifié). Il porte toujours `"mutable-content": 1` : sans lui, iOS ne lance pas l'extension, qui ne signale rien. Son sujet (`apns-topic`) est l'identifiant de l'application, `io.github.ppcrepin.elenchos` (partie 4).
   - **Le message de 18h** prend un des six textes de `MESSAGES_18H` (E1, D-014). La forme dit ce qui attend vraiment, tous cercles confondus : des cartes dans un de ses cercles, sinon le vote d'un texte auquel il a répondu, sinon la question du jour. Le dimanche, s'il y a des titres dans un de ses cercles, il ajoute « Ce soir, aussi : les titres de la semaine. ». Liste fermée : un texte nouveau ne part pas sans son test (P-05).
   - **L'annonce d'arrivée** prend un des deux textes de `MESSAGES_ARRIVEE`, sans le score. Le texte avec le score (D-011) reste à l'écran.
   - **Apple peut lire le contenu d'un message** dans une application, contrairement au message web (P-06 ne s'applique plus). Les six textes de 18h ne disent rien de personnel. L'annonce d'arrivée porte un pseudo, sans aucune opinion : c'est l'exception de P-05, couverte par D-043. **À relire par Juridique.**
@@ -444,7 +445,7 @@ Le serveur vérifie au même moment le cercle complet (N15) et le pseudo (E7). P
 - **Un message par soir et par abonnement**, à 18h00, rattrapé jusqu'à 18h30, jamais deux fois (verrou en base, même avec deux serveurs) ; deux abonnements qui portent le même jeton d'appareil (deux comptes sur un même iPhone) ne font partir qu'un message. Apple le garde 30 minutes au plus, puis ne le livre plus.
 - **À l'étape 1, sans jeu**, le texte qui part est « 18h. La question d'aujourd'hui t'attend. » : rien d'autre n'attend encore (ni cartes, ni vote, ni titres), et c'est la forme que E1 donne alors. L'étape 2 branche le vrai calcul de ce qui attend, sans rien changer d'autre (`src/serveur/planificateur.ts`).
 - **Un jeton refusé par Apple** (application désinstallée, jeton périmé : réponse 410) est retiré. Un refus 400 (« BadDeviceToken ») ne retire rien : il peut venir d'un réglage du service d'Apple qui ne correspond pas à la fabrication, et retirer effacerait alors tous les abonnements d'un coup.
-- **`POST /api/recu`** : envoyée par l'extension de l'application à la réception du message, sans session, avec le seul numéro d'envoi tiré au hasard ; réponse 204. L'heure de réception est celle du serveur. C'est la mesure « message reçu » (`produit.md` §8) : à l'envoi puis à la réception, le serveur ajoute 1 aux compteurs du jour `message_envoye` et `message_recu`, au nom du joueur de l'abonnement (pour exclure un refus). « Envoyé » se compte quand Apple accepte le message ; « reçu », une fois par envoi, pour le seul message de 18h, au jour de cet envoi. Un numéro inconnu, illisible ou déjà reçu ne change rien, et reçoit aussi 204. Les envois ne sont gardés en détail que 7 jours, puis seulement ces totaux (D-066, point 4). Si l'extension n'aboutit pas, on mesure seulement « ouvert depuis le message », par un geste ajouté alors au contrat, et on le dit au porteur.
+- **`POST /api/recu`** : envoyée par l'extension de l'application à la réception du message, sans session, avec le seul numéro d'envoi tiré au hasard ; réponse 204. L'extension l'envoie en `application/json`, sans cookie, sans origine ni `Elenchos-Fabrication`, et attend 20 secondes au plus. Elle n'envoie rien si `envoi` n'est pas un texte base64url de 64 caractères au plus (le serveur tire un UUID, 36 caractères), ni vers une adresse qui n'est pas en https (sauf `http://localhost`, dans le simulateur). L'heure de réception est celle du serveur. C'est la mesure « message reçu » (`produit.md` §8) : à l'envoi puis à la réception, le serveur ajoute 1 aux compteurs du jour `message_envoye` et `message_recu`, au nom du joueur de l'abonnement (pour exclure un refus). « Envoyé » se compte quand Apple accepte le message ; « reçu », une fois par envoi, pour le seul message de 18h, au jour de cet envoi. Un numéro inconnu, illisible ou déjà reçu ne change rien, et reçoit aussi 204. Les envois ne sont gardés en détail que 7 jours, puis seulement ces totaux (D-066, point 4). Si l'extension n'aboutit pas, on mesure seulement « ouvert depuis le message », par un geste ajouté alors au contrat, et on le dit au porteur.
 
 ### 2.14 Les pages web et les navigations
 
@@ -506,13 +507,15 @@ Apple relit l'application avant les testeurs extérieurs, et demande un accès q
 | Route | Ce qu'elle fait à l'étape 1 |
 |---|---|
 | `GET /api/etat` | Sans session : `dehors`. Un compte sans cercle : `nommer_cercle` (`premierCercle` vrai : « Quitter » n'existe pas encore). Un compte dans un cercle : `jeu`. Un joueur provisoire : `entree` ou `entree_finie` (avant sa première réponse, son lien n'est pas encore lié : étape 2, partie 9 ; `introuvable` d'ici là, et aucun joueur provisoire ne peut exister à l'étape 1). Partout : `revelationAOuvrir` faux, `annonces` vide, `defi` null (ils viennent avec le jeu) ; `voies` : Apple selon son réglage, Google et e-mail faux ; `message.disponible` selon la clé des messages. Prolonge la session (1.5, 1.7). |
-| `POST /api/connexion/debut`, `POST /api/connexion/apple` | La voie Apple (2.5), « J'ai déjà un compte », le compte d'un créateur, et le compte du porteur (`COMPTE_PORTEUR`, 2.5). La voie Google répond `indisponible`. |
+| `POST /api/connexion/debut`, `POST /api/connexion/apple` | La voie Apple (2.5), « J'ai déjà un compte », le compte d'un créateur, et le compte du porteur (`COMPTE_PORTEUR`, 2.5 ; D-068). La voie Google répond `indisponible`. |
 | `POST /api/abonnement` | 2.13. |
 | `POST /api/message` | Couper ou rallumer le message (2.12). |
 | `POST /api/deconnexion` | 2.12. |
 | `POST /api/recu` | 2.13. |
 
-Toutes les autres routes répondent `introuvable` (partie 6). Le serveur envoie aussi le message de 18h (2.13) et fait le ménage quotidien (partie 3), sans route.
+Toutes les autres routes répondent `introuvable` (partie 6). Parmi elles, `POST /api/compteur`, que l'application envoie déjà à chaque ouverture sur un iPad ou un Mac (2.1) : ces ouvertures ne sont pas comptées avant l'étape 2. Le serveur envoie aussi le message de 18h (2.13) et fait le ménage quotidien (partie 3), sans route.
+
+L'application de l'étape 1 (travail E, `jeu/public/`) n'appelle que `GET /api/etat`, `POST /api/connexion/debut`, `POST /api/connexion/apple`, `POST /api/abonnement` et `POST /api/compteur` ; l'extension, `POST /api/recu`.
 
 ## 3. Avant et après 18h : l'heure du serveur
 
@@ -560,7 +563,9 @@ Ce qu'on voit « avant 18h » ou « après 18h » n'est donc qu'une question de 
 - l'extension qui signale la réception ;
 - la lecture du numéro de fabrication et du type d'appareil.
 
-**Pourquoi un jeton et non un cookie.** Dans l'application, la page et le serveur n'ont pas la même adresse. iOS y bloque les cookies d'un autre site (de mémoire, à vérifier à l'étape 1). Un jeton dans le trousseau tient P-11 (le téléphone ne garde que lui) et P-41 (il s'arrête à la déconnexion, puisque la base le connaît). Le trousseau n'est lisible que par l'application, et pas par la page d'un autre site.
+**L'identifiant de l'application** est `io.github.ppcrepin.elenchos` (l'extension : `io.github.ppcrepin.elenchos.reception`). C'est l'application visée par le jeton d'Apple et le sujet des messages (réglage `APPLE_ID_APPLICATION` du serveur). **Il ne pourra plus changer après le premier envoi à Apple** (`DECISIONS-TECHNIQUES.md`, 1.7).
+
+**Pourquoi un jeton et non un cookie.** Dans l'application, la page et le serveur n'ont pas la même adresse. iOS y bloque les cookies d'un autre site, par défaut depuis iOS 14 (vérifié le 16 octobre 2026, documentation de Capacitor 8). Un jeton dans le trousseau tient P-11 (le téléphone ne garde que lui) et P-41 (il s'arrête à la déconnexion, puisque la base le connaît). Le trousseau n'est lisible que par l'application, et pas par la page d'un autre site. Limite d'iOS : il survit à la désinstallation de l'application, qui retrouve donc sa session si on la réinstalle (`DECISIONS-TECHNIQUES.md`, 1.8).
 
 **Les adresses reçues par l'application.** Deux seulement :
 - le lien universel `https://…/invitation#lien=…` ;
@@ -568,7 +573,7 @@ Ce qu'on voit « avant 18h » ou « après 18h » n'est donc qu'une question de 
 
 Toute autre adresse est ignorée. L'application ne garde ni l'une ni l'autre.
 
-**La version.** Le numéro de version reste « 1.0 » pendant tout le test ; seul le numéro de fabrication monte, à chaque fabrication. Le serveur le lit dans `Elenchos-Fabrication` et annonce `fabricationMinimale` (1.7). Une fabrication n'est proposée aux testeurs ni de 15h à 19h, ni le dimanche, et ne se fait que depuis la branche `mise-en-ligne`, après le feu vert du porteur la veille (D-043, D-054 ; `DECISIONS-TECHNIQUES.md`, 1.15).
+**La version.** Le numéro de version reste « 1.0 » pendant tout le test ; seul le numéro de fabrication monte, à chaque fabrication. Le serveur le lit dans `Elenchos-Fabrication` et annonce `fabricationMinimale` (1.7). Le numéro de fabrication est celui de l'exécution du workflow de fabrication (1, 2, 3…) ; le simulateur envoie 1. Une fabrication ne part ni à partir de 14h, ni le dimanche, et ne se fait que depuis la branche `mise-en-ligne`, après le feu vert du porteur la veille (D-043, D-054 ; `DECISIONS-TECHNIQUES.md`, 1.15). Qu'elle ne soit jamais proposée aux testeurs de 15h à 19h n'est tenu qu'au moment de l'envoi : si Apple la propose d'office dès qu'il l'a traitée, ce peut être après 15h. Sans risque à l'étape 1, où le porteur est le seul testeur ; à régler avant les amis (1.15).
 
 **Ce qui disparaît avec l'icône** (plan de D-064, `docs/etape-6/plan-jeu-entier.md`) :
 - le code de passage, `POST /api/passage` et `POST /api/passage/echanger`, et l'erreur `passage_refuse` ;
@@ -576,7 +581,7 @@ Toute autre adresse est ignorée. L'application ne garde ni l'une ni l'autre.
 - le geste `ouverture_icone` et le compteur `hors_safari` ;
 - le manifeste, le service de réception web et le chiffrement du message web ;
 - le rechargement sur changement de `version`, remplacé par la version minimale ;
-- le plancher d'iOS 16.4, remplacé par celui de Capacitor (iOS 15 environ, de mémoire, à confirmer à l'étape 1).
+- le plancher d'iOS 16.4, remplacé par celui de Capacitor : iOS 15 (Capacitor 8, vérifié le 16 octobre 2026 ; le projet iOS le fixe).
 
 ## 5. Le développement local : connexion d'essai, horloge accélérée, proches simulés
 
@@ -589,7 +594,10 @@ Toute autre adresse est ignorée. L'application ne garde ni l'une ni l'autre.
 
 **L'horloge accélérée** (`POST /dev/horloge`). À la vitesse 168, une semaine de jeu passe en une heure. `POST /dev/horloge` saute à `bascule`, à `dix_secondes_avant` ou au prochain `dimanche_bascule`. En local, aucun message ne part vers Apple. Le serveur déclare l'heure de son horloge à la base dans chaque transaction (`elenchos.instant`) : « rien avant 18h » et les départs, que la base juge aussi, suivent l'horloge accélérée.
 
-**L'adresse du serveur dans l'application** est fixée à la fabrication. Une fabrication pour TestFlight ne connaît que l'adresse en ligne ; un test refuse une fabrication qui viserait une autre adresse.
+**L'adresse du serveur dans l'application** est fixée à la fabrication, depuis une seule source : `jeu/ios/adresse-serveur.txt` (une ligne `https://hôte` ; `DECISIONS-TECHNIQUES.md`, 1.17). Une fabrication pour TestFlight ne connaît que l'adresse en ligne :
+- `ios/App/fixer-adresse.sh` la recopie dans la page embarquée (la règle de chargement et la balise `elenchos-serveur`), et refuse une adresse qui n'est pas `https://hôte` ; pour le simulateur seulement, `http://localhost:port` est aussi permis, pour son faux serveur ;
+- `app-testflight.yml` refuse de partir si le fichier est vide ou mal écrit, et vérifie dans l'application fabriquée que la même adresse est dans la page et dans l'extension ;
+- le contrôle du code vérifie que la page porte sa marque exactement deux fois, et qu'aucune adresse n'est écrite en dur dans l'interface.
 
 **Les proches simulés** : un outil remplit la base locale de joueurs inventés (adresses au domaine réservé `exemple.invalid`) qui répondent et devinent, pour jouer seul trois mois accélérés (étape 3, « un cercle vieux de trois mois »). Il refuse de tourner en ligne (P-19). Le module du cercle de démonstration (2.16) est un autre module, limité aux cercles marqués « démonstration ».
 
@@ -751,12 +759,12 @@ Le corps d'une erreur ne contient que son code : jamais de message, de valeur re
 **Un arbitrage de l'équipe, lecture de Game design sur une proposition de Juridique et de Back-end** (D-067, renversable) : quand un membre part après 18h, une carte close où son visage était posé garde son verdict et son point, un « jumeau » y devient « juste », et la révélation ne montre plus le pari (partie 3). Touche la lettre de D-024 (« la révélation le dit ») pour ce seul cas.
 
 **Ce que le serveur de l'étape 1 (travail D, 16 octobre 2026) ajoute ou arbitre**, au titre de D-062 point 5, à dire au porteur, renversable :
-- **le compte du porteur à l'étape 1** (`COMPTE_PORTEUR`, 2.5) : tant qu'aucun compte n'existe, sa première connexion Apple ouvre son compte sans défi ni carte, pour qu'il puisse vérifier le message de 18h dès l'étape 1. **Touche la lettre de D-006** (le compte vient après le défi) pour ce seul compte, à l'étape 1 ;
+- **le compte du porteur à l'étape 1** (`COMPTE_PORTEUR`, 2.5 ; consigné dans D-068) : tant qu'aucun compte n'existe, sa première connexion Apple ouvre son compte sans défi ni carte, pour qu'il puisse vérifier le message de 18h dès l'étape 1. **Touche la lettre de D-006** (le compte vient après le défi) pour ce seul compte, à l'étape 1. Avant les amis, ce compte est effacé ou gardé : choix de l'équipe à l'étape 4, dit au porteur ;
 - **le seuil des compteurs sans personne** (2.15) : 10, 30 ou 70 apports selon la sorte, tenu par la base, pour tenir la promesse de N6 (« au moins dix joueurs différents ») ; confirme la proposition de l'équipe (10), et la relève là où un même joueur peut apporter plusieurs fois ;
 - **les comptes d'attributions par texte** sont gardés jusqu'au lundi 18h qui suit leur semaine (avis de Juridique, retenu par l'équipe), au lieu de la semaine en cours et de la précédente : le calcul des titres du dimanche doit donc se faire avant (partie 9) ;
 - **la validation d'une manche** n'a plus d'heure : un simple « validée ou non » (`manche.validee`, booléen), comme « vu » ; aucune règle ne lisait l'heure ;
 - **le cercle de démonstration** : un cercle neuf à chaque ouverture du lien de relecture (2.16), au lieu d'un cercle partagé ;
-- **« le soir même »** : de 18h à minuit, heure de Paris, le jour de la révélation (proposé par Back-end, à confirmer par Game design, partie 9).
+- **« le soir même »** : de 18h à minuit, heure de Paris, le jour de la révélation (proposé par Back-end, confirmé par Game design ; une seule constante, `FIN_DU_SOIR_MEME_HEURE`, `src/serveur/mesures.ts`).
 
 Et deux précisions de Juridique, sans décision touchée : le lien d'invitation ne fait lire l'invité que 7 jours après sa liaison et ne le désigne plus après son départ (P-25, P-29 ; 2.6) ; la lecture du dimanche n'est gardée qu'en une ligne par joueur (règle 18).
 
@@ -775,32 +783,32 @@ Et deux précisions de Juridique, sans décision touchée : le lien d'invitation
 
 ## 9. Points ouverts
 
-1. **À vérifier au tout début de l'étape 1** (de mémoire) :
-   - un lien universel passe-t-il le « # » à l'application ?
-   - Google accepte-t-il le retour par formulaire dans la feuille du système ?
-   - iOS bloque-t-il les cookies dans l'application (ce qui justifie le jeton, sans le rendre nécessaire) ?
-   - le plancher d'iOS de Capacitor ;
-   - le service de production d'Apple pour TestFlight ;
-   - la révocation chez Apple demande-t-elle une clé « Se connecter avec Apple » (la même que celle des messages, ou une seconde) ?
-2. **Un réglage de plus pour le porteur, sans frais** : la clé qui permet de révoquer la connexion chez Apple (`APPLE_ID_CLE_CONNEXION`, `APPLE_CLE_CONNEXION`), si elle n'est pas celle des messages (`APPLE_ID_CLE_MESSAGES`, `APPLE_CLE_MESSAGES`) ; si une seule clé porte les deux services, le porteur colle la même deux fois. Elle entre dans le pas-à-pas de l'étape 1 ; elle ne sert qu'à l'étape 2. Le service d'Apple pour les messages est celui de production par défaut ; `APPLE_SERVICE_MESSAGES=essai` le change sans nouvelle fabrication, s'il le faut.
-3. **Les mots encore à écrire par UX** (`A_ECRIRE`) :
-   - la mise à jour requise et la page d'invitation sans l'application ;
-   - N1 dans l'application ; N10 sans sa variante ; N12 ; N14 avec la feuille d'Apple ; N17 ;
+1. **Ce qu'on avait écrit de mémoire, vérifié le 16 octobre 2026** par la coquille (travail E ; sources et confiance : `DECISIONS-TECHNIQUES.md`, partie 5) :
+   - ~~iOS bloque-t-il les cookies dans l'application ?~~ Oui, par défaut depuis iOS 14 : le jeton est justifié, sans être rendu nécessaire ;
+   - ~~le plancher d'iOS de Capacitor~~ : iOS 15 (partie 4) ;
+   - ~~le service de production d'Apple pour TestFlight~~ : oui, production (2.13) ;
+   - ~~la révocation chez Apple demande-t-elle une clé « Se connecter avec Apple » ?~~ Oui, une clé qui porte ce service, associée à l'identifiant principal de l'application ; deux clés séparées recommandées (point 2).
+
+   **Reste ouvert** :
+   - un lien universel passe-t-il le « # » à l'application ? Très probablement, d'après Apple, qui ne l'écrit pas mot pour mot : à prouver sur l'iPhone, à l'étape 2 ;
+   - Google accepte-t-il le retour par formulaire dans la feuille du système ? Non vérifié : étape 2.
+2. **Une seconde clé pour le porteur, sans frais** : la clé « Se connecter avec Apple », qui permet de révoquer la connexion (`APPLE_ID_CLE_CONNEXION`, `APPLE_CLE_CONNEXION`), distincte de celle des messages (`APPLE_ID_CLE_MESSAGES`, `APPLE_CLE_MESSAGES`). Deux clés sont recommandées : qu'une même clé puisse encore porter les deux services n'est pas vérifié. Elle entre dans le pas-à-pas de l'étape 1 ; elle ne sert qu'à l'étape 2. Les messages partent par le service de production, celui de TestFlight (vérifié) : la clé des messages est créée pour lui seul, et `APPLE_SERVICE_MESSAGES=essai` ne sert pas avec TestFlight. Tous les réglages, en une liste : `DECISIONS-TECHNIQUES.md`, 1.17.
+3. **Les mots encore à écrire par UX** (`A_ECRIRE`). Ceux de l'application de l'étape 1 sont écrits dans `jeu/public/textes.js`, qui ne porte plus aucune marque au 16 octobre 2026 : N1 dans l'application (avec le bouton Apple, dont Apple n'accepte que trois intitulés : « Continuer avec Apple », « Se connecter avec Apple » ou « S'inscrire avec Apple ») ; N2 dans l'application ; l'écran provisoire une fois connecté ; N10 sans sa variante ; la mise à jour requise ; la connexion expirée, `compte_inconnu`, `connexion_echouee`, `trop_de_demandes`. Restent :
+   - la page d'invitation sans l'application ;
+   - N12 ; N14 avec la feuille d'Apple ; N17 ;
    - le défi d'un joueur inscrit, l'écran Rejoindre et la ligne « Défi … à finir » ;
    - quitter un cercle (5.7, avec « un ancien membre »), et 5.1 sans cercle ;
    - la réponse en retard acceptée ;
    - « un ancien membre » sur l'écran d'un proche et dans les titres passés ;
-   - la connexion expirée, `compte_inconnu`, `connexion_echouee`, `trop_de_demandes` ;
    - « Connecté avec Apple » dans les Réglages ;
    - N13 sans invitant ; « Effacer mes réponses » et sa confirmation.
 4. **N6 à compléter par Juridique** : les ajouts de `testflight-juridique.md` (1.6), la révocation chez Apple, l'iPad, la voie Google par la feuille du système, et la publication à `/confidentialite`. Juridique relit aussi `MESSAGES_ARRIVEE`, désormais lisible par Apple.
-5. **Les sept lectures de la partie 8** sont tranchées ; reste à les dire au porteur au point d'étape (D-065), avec les quatre arbitrages de D-066 et celui de D-067.
+5. **Les sept lectures de la partie 8** sont tranchées ; reste à les dire au porteur au point d'étape (D-065), avec les quatre arbitrages de D-066, celui de D-067 et celui de D-068.
 6. **Les durées proposées** : connexion en cours 10 minutes ; code de retour une minute ; code e-mail 15 minutes, sa ligne gardée 24 heures ; lien de créateur 7 jours ; lien de relecture 30 jours ; joueur provisoire 7 jours ; lien lié lisible par l'invité 7 jours ; score d'entrée effacé à la lecture de l'annonce, 7 jours au plus après la liaison ; envois 7 jours ; comptes de la semaine, la semaine en cours et la précédente ; comptes d'attributions par texte, jusqu'au lundi 18h qui suit leur semaine ; sessions de compte 30 jours, prolongées à chaque ouverture, jamais au-delà de la fin du test ; tâche du jour du ménage, 7 jours. Toutes sont tenues par le ménage quotidien (`src/base/menage.ts`, P-31), **branché sur le planificateur depuis l'étape 1** : chaque jour à 4h, heure de Paris (proposé), ou dès que possible jusqu'à 17h30 s'il n'a pas pu tourner, jamais de 17h30 à 18h30, une fois par jour, jamais deux fois en même temps (`tache_du_jour`, migration 0004).
 7. **La feuille de Google, partagée ou privée** : partagée, elle reprend la session Google de Safari mais iOS demande d'abord un accord ; privée, il faut retaper son mot de passe Google. À trancher par UX et Front-end à l'étape 2.
 8. **`GET /api/droits`** : les trois blancs de N6 sont des réglages du serveur, pour ne pas les écrire dans le dépôt public. À confirmer par Juridique.
 9. **Le jour écrit entre 18h et minuit.** L'en-tête « Aujourd'hui · … » donne le jour civil (`Aujourdhui.jour`) : le mercredi à 20h, « mercredi ». Le texte auquel on répond ce soir-là est pourtant celui du jeudi (partie 3), et l'historique l'écrira « Jeudi 3 avril » (maquette 5.3). À confirmer par UX à l'étape 2 ; le serveur suivra ce choix.
-10. **Trois points nés de la relecture de Juridique (D-066, D-067)** :
-   - **à confirmer par Game design** : le « soir même » du compteur `revelation_ouverte_le_soir` (2.9). Proposé par Back-end : de 18h à minuit, heure de Paris, le jour de la révélation (`FIN_DU_SOIR_MEME_HEURE`, une seule constante, `src/serveur/mesures.ts`). Le « jumeau » changé en « juste » est tranché (D-067) ;
+10. **Deux points nés de la relecture de Juridique (D-066, D-067)** ; le « soir même » (2.9) et le « jumeau » changé en « juste » (D-067) sont tranchés :
    - **à écrire avec UX à l'étape 2** : la route qui pose et retire le refus des mesures, et ses mots dans les Réglages (2.12 ; point 11) ;
    - « a joué avant 18h le lendemain » se tire des envois, qui ne vivent que 7 jours : le calcul doit se faire dans ce délai (2.15).
 11. **À construire à l'étape 2, en plus des routes du jeu** (relevés de Cohérence et du Vérificateur, et du serveur de l'étape 1). Chaque route nouvelle entre dans `Routes` (`contrat.ts`) et dans la liste du journal (`src/serveur/journal.ts`), que la compilation compare :
@@ -817,8 +825,8 @@ Et deux précisions de Juridique, sans décision touchée : le lien d'invitation
    - **ce qui attend chaque joueur à 18h** (cartes, vote, titres du dimanche), branché à la place de `rienNAttendEncore` (`src/serveur/planificateur.ts`) ;
    - **les titres du dimanche calculés avant le lundi 18h**, même si personne n'ouvre le jeu : les comptes d'attributions par texte partent alors (point 6) ;
    - **un refus après 18h compté une fois par joueur et par texte**, pour que le seuil des compteurs tienne (2.15) ;
-   - **le compte du porteur de l'étape 1** (2.5) : le garder, avec l'accord qu'il donnera à sa première réponse, ou l'effacer avant les amis ; et retirer `COMPTE_PORTEUR` chez l'hébergeur.
-12. **À vérifier à l'ouverture de l'hébergeur** (en plus de `src/base/LISEZMOI.md`) : le serveur ouvre au plus 9 connexions à la base (jeu 4, comptes 2, envoi 2, ménage 1), plus une au démarrage ; la plus petite base de l'hébergeur doit les accepter.
+12. **À vérifier à l'ouverture de l'hébergeur** (en plus de `src/base/LISEZMOI.md`) : le serveur ouvre au plus 9 connexions à la base (jeu 4, comptes 2, envoi 2, ménage 1), plus une au démarrage ; la plus petite base de l'hébergeur doit les accepter. Ce qui reste à prouver chez l'hébergeur, sur GitHub et sur l'iPhone, en entier : `DECISIONS-TECHNIQUES.md`, partie 5.
+13. **Le compte du porteur de l'étape 1** (2.5, D-068) : `COMPTE_PORTEUR` est retiré chez l'hébergeur après sa première connexion ; le compte vit ensuite comme un autre (`nommer_cercle`, la carte avant sa première réponse). Le garder comme compte de joueur du porteur, ou l'effacer avant les amis, est un choix de l'équipe à l'étape 4, dit au porteur (D-068).
 
 ## 10. Limites et doutes
 

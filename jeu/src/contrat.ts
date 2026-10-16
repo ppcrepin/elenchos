@@ -7,7 +7,8 @@
 // - Le serveur l'importe (`import type { … } from './contrat.ts'`) ; il se lit avec Node 22, sans fabrication
 //   (`erasableSyntaxOnly` : ni enum, ni namespace, ni propriété de paramètre).
 // - L'interface embarquée ne l'importe jamais à l'exécution : elle s'en sert dans ses commentaires JSDoc, vérifiés par
-//   `tsc`, par exemple `/** @typedef {import('../src/contrat.ts').Aujourdhui} Aujourdhui */`.
+//   `tsc -p tsconfig.interface.json` (et `npm run controle`), par exemple
+//   `/** @typedef {import('../src/contrat.ts').Aujourdhui} Aujourdhui */`.
 // - Le moteur de règles (`src/regles/`) a ses propres types et ne dépend pas de ce fichier.
 //
 // Quatre règles tiennent tout le fichier :
@@ -133,8 +134,9 @@ export type Voies = {
  *  jamais servie au sujet d'un autre membre (P-27). */
 export type Voie = 'apple' | 'google' | 'email';
 
-/** Un jeton de session : 32 octets tirés au hasard, en base64url. L'application le garde dans le trousseau de l'iPhone
- *  et l'envoie dans l'en-tête `Authorization: Bearer …` ; la base n'en garde que l'empreinte avec clé (P-11, P-41). */
+/** Un jeton de session : 32 octets tirés au hasard, en base64url (43 caractères). L'application le garde dans le
+ *  trousseau de l'iPhone (elle n'y accepte qu'un texte base64url de 16 à 128 caractères) et l'envoie dans l'en-tête
+ *  `Authorization: Bearer …` ; la base n'en garde que l'empreinte avec clé (P-11, P-41). */
 export type JetonSession = string;
 
 // ============================================================================================================
@@ -408,9 +410,10 @@ export type ResultatConnexion =
   | { readonly etat: 'connecte'; readonly jeton: JetonSession }
   | { readonly etat: RefusConnexion };
 
-/** `POST /api/connexion/debut` : commencer une connexion par Apple ou Google. `defi` : SHA-256, en base64url, d'un
- *  vérificateur de 32 octets tiré au hasard par l'application et gardé dans sa seule mémoire, jusqu'à la fin (CONTRAT.md,
- *  2.5). */
+/** `POST /api/connexion/debut` : commencer une connexion par Apple ou Google. Le vérificateur : 32 octets tirés au
+ *  hasard par iOS (le module natif de l'application), écrits en base64url sans remplissage (43 caractères), gardés dans
+ *  la seule mémoire de l'application jusqu'à la fin. `defi` = base64url(SHA-256(les 43 caractères ASCII du
+ *  vérificateur)), 43 caractères : la méthode « S256 » de PKCE (RFC 7636 ; CONTRAT.md, 2.5). */
 export type EnvoiDebutConnexion = {
   readonly voie: 'apple' | 'google';
   readonly but: 'creation' | 'connexion';
@@ -418,12 +421,13 @@ export type EnvoiDebutConnexion = {
 };
 
 export type DebutConnexion =
-  /** À passer tel quel à la feuille d'Apple, qui le recopie dans le jeton signé. Vaut 10 minutes, une fois. */
+  /** 32 octets en base64url (43 caractères). À passer tel quel à la feuille d'Apple, qui le recopie tel quel dans le
+   *  jeton signé. Vaut 10 minutes, une fois. */
   | { readonly voie: 'apple'; readonly nonce: string }
   /** L'adresse de Google à ouvrir dans la feuille du système (ASWebAuthenticationSession), avec le schéma de retour. */
   | { readonly voie: 'google'; readonly adresse: string; readonly schemaRetour: 'elenchos' };
 
-/** `POST /api/connexion/apple` : ce que la feuille d'Apple a rendu, et le vérificateur. */
+/** `POST /api/connexion/apple` : ce que la feuille d'Apple a rendu, et le vérificateur (ses 43 caractères). */
 export type EnvoiConnexionApple = {
   /** Le jeton signé par Apple (JWT), avec l'identifiant pour seule information (D-061, P-03). */
   readonly jetonIdentite: string;
@@ -924,7 +928,9 @@ export type ToutEfface = {
 // 11. Le message de 18h, la version, les mesures
 // ============================================================================================================
 
-/** `POST /api/abonnement` : le jeton d'appareil que donne iOS (APNs), en hexadécimal, après l'accord d'iOS. */
+/** `POST /api/abonnement` : le jeton d'appareil que donne iOS (APNs), après l'accord d'iOS. De l'hexadécimal, 64 à 200
+ *  caractères, envoyé en minuscules par l'application (le serveur accepte aussi les majuscules) ; renvoyé à chaque
+ *  ouverture si l'accord est déjà donné, sans créer de doublon (CONTRAT.md, 2.13). */
 export type EnvoiAbonnement = {
   readonly jeton: string;
 };
@@ -938,7 +944,8 @@ export type MessageApns = {
     /** Fait passer le message par l'extension de l'application, qui signale la réception (`POST /api/recu`). */
     readonly 'mutable-content': 1;
   };
-  /** Le numéro d'envoi, tiré au hasard, sans lien avec le joueur. */
+  /** Le numéro d'envoi, tiré au hasard (un UUID), sans lien avec le joueur. L'extension ne le renvoie que s'il est un
+   *  texte base64url de 64 caractères au plus. */
   readonly envoi: string;
 };
 
@@ -980,7 +987,8 @@ export type SorteCompteur = (typeof SORTES_COMPTEUR)[number];
  *  - les réponses du jour refusées après 18h (`texte_ferme`), et celles acceptées en retard (R10) : ils diront si
  *    18h10 est bien réglé ;
  *  - `revelation_ouverte` et `revelation_ouverte_le_soir` : la première ouverture d'une révélation (`POST /api/vu`,
- *    objet `revelation`), et parmi elles celles du soir même (« le soir » : défini par Game design) ;
+ *    objet `revelation`), et parmi elles celles du soir même (de 18h à minuit, heure de Paris, le jour de la
+ *    révélation ; confirmé par Game design, `FIN_DU_SOIR_MEME_HEURE`) ;
  *  - `cercle_pendant_deviner` : le geste `POST /api/geste`, une fois par manche (le verrou `manche.cercle_regarde`) ;
  *  - `message_envoye` et `message_recu` : le message de 18h envoyé, puis reçu (`POST /api/recu`) ; « message reçu »
  *    (D-005, condition 2). Les envois ne sont gardés en détail que 7 jours. */
@@ -1122,8 +1130,8 @@ export type Routes = {
   'POST /dev/horloge': Route<EnvoiHorloge, { readonly instant: Instant }, 'introuvable'>;
 };
 
-/** `POST /api/recu`, envoyée par l'extension de l'application seule, sans session : `{ envoi }`, réponse 204 sans
- *  corps (repris de test-18h). */
+/** `POST /api/recu`, envoyée par l'extension de l'application seule, sans session, sans origine ni
+ *  `Elenchos-Fabrication` : `{ envoi }` en JSON, réponse 204 sans corps (repris de test-18h ; CONTRAT.md, 2.13). */
 export type EnvoiRecu = { readonly envoi: string };
 
 // ============================================================================================================
