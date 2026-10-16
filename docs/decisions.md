@@ -571,6 +571,12 @@ Limite dite franchement (Game design) : le joueur se souvient de son pari ; avec
 
 Report de D-066 point 1 fait au passage : Le Pas de Côté effacé au départ de son titulaire, dans `docs/produit.md` (règles 4 et 14, titres passés, Réglages) et `docs/etape-6/regles.md` (règle 4).
 
+### D-068 — Étape 1 : le compte du porteur ouvert sans défi, pour vérifier le message de 18h · Arbitré par l'équipe (16 octobre 2026), à dire au porteur, renversable
+
+Au titre de D-062 point 5. Relevé par Back-end en construisant le serveur de l'étape 1.
+
+Le contrat ne crée un compte qu'au bout du défi (D-006), qui n'arrive qu'à l'étape 2. Sans compte, le porteur ne pourrait ni s'abonner au message de 18h, ni le vérifier sur son iPhone à l'étape 1. **Un réglage du serveur, `COMPTE_PORTEUR`, ouvre le compte du porteur à sa première connexion avec Apple, sans défi ni carte, tant qu'aucun compte n'existe dans la base** ; dès qu'un compte existe, il n'a plus d'effet, et il est retiré du serveur après usage. **Touche la lettre de D-006** (le compte vient après le défi) pour ce seul compte, pendant l'étape 1. Avant les amis, ce compte est soit effacé, soit gardé comme compte de joueur du porteur : choix de l'équipe à l'étape 4, dit au porteur. Écrit dans `jeu/CONTRAT.md`, 2.5 et partie 8.
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique : **tranché, D-042** (gratuit, contribution libre à l'ouverture) · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.

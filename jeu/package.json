@@ -14,13 +14,20 @@
     "test:socle": "node --test --test-concurrency=1 \"tests/socle/*.test.ts\"",
     "controle": "node outils/controle.ts",
     "garde-horaires": "node outils/garde-horaires.ts",
-    "migrer": "node outils/migrer.ts"
+    "migrer": "node outils/migrer.ts",
+    "app:copier": "cap sync ios",
+    "typer:interface": "tsc -p tsconfig.interface.json"
   },
   "dependencies": {
     "oauth4webapi": "3.8.8",
     "pg": "8.23.0"
   },
   "devDependencies": {
+    "@capacitor/app": "8.1.2",
+    "@capacitor/cli": "8.5.3",
+    "@capacitor/core": "8.5.3",
+    "@capacitor/ios": "8.5.3",
+    "@capacitor/push-notifications": "8.1.3",
     "@types/node": "22.20.4",
     "@types/pg": "8.23.1",
     "typescript": "6.0.3"

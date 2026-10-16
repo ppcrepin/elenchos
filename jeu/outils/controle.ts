@@ -4,7 +4,10 @@
 // 2. recherche de secrets dans le dossier du jeu et dans tout l'historique du dépôt (P-16) ;
 // 3. règles de la maison : rien n'écrit dans les journaux hors du module prévu (P-07) ; aucune adresse e-mail hors du
 //    domaine réservé exemple.invalid (P-17) ; aucun outil de mesure extérieur (P-09) ; aucun nom de modèle d'IA ;
-//    des versions exactes pour chaque bibliothèque.
+//    des versions exactes pour chaque bibliothèque ;
+// 4. l'adresse du serveur fixée dans l'application (DECISIONS-TECHNIQUES 1.11) : la page embarquée porte sa marque, et
+//    aucune adresse en dur ; jeu/ios/adresse-serveur.txt est vide ou porte une seule adresse « https://hôte ».
+// Ce que « cap sync ios » fabrique et que git ignore (copie de l'interface, configuration, modules Cordova) n'est pas lu.
 // Il n'a besoin d'aucune base ni d'aucun réglage : il tourne partout, et jamais sur des données réelles.
 
 import { execFileSync } from 'node:child_process';
@@ -24,11 +27,16 @@ for (const projet of readdirSync(RACINE).filter((n) => /^tsconfig.*\.json$/.test
   }
 }
 
+// Fabriqués par « cap sync ios » ou par Xcode, ignorés par git (jeu/ios/.gitignore) : jamais relus ni committés.
+const FABRIQUES = new Set(['ios/App/App/public', 'ios/App/App/capacitor.config.json', 'ios/App/App/config.xml',
+  'ios/capacitor-cordova-ios-plugins', 'ios/App/build', 'ios/App/output', 'ios/App/Pods', 'ios/DerivedData']);
+
 function fichiers(dossier: string): string[] {
   const sortie: string[] = [];
   for (const nom of readdirSync(dossier)) {
-    if (nom === 'node_modules' || nom.startsWith('.git')) continue;
+    if (nom === 'node_modules' || nom.startsWith('.git') || nom === 'xcuserdata' || nom === 'DerivedData') continue;
     const chemin = join(dossier, nom);
+    if (FABRIQUES.has(relative(RACINE, chemin))) continue;
     if (statSync(chemin).isDirectory()) sortie.push(...fichiers(chemin));
     else sortie.push(chemin);
   }
@@ -74,6 +82,21 @@ const paquet = JSON.parse(readFileSync(join(RACINE, 'package.json'), 'utf8')) as
 for (const [nom, version] of Object.entries({ ...paquet.dependencies, ...paquet.devDependencies, ...paquet.overrides })) {
   if (!/^\d+\.\d+\.\d+$/.test(version)) problemes.push(`package.json : ${nom} n’a pas de version exacte (${version})`);
   if (MESURE_EXTERIEURE.test(nom)) problemes.push(`package.json : ${nom} est un outil de mesure`);
+}
+
+// L'adresse du serveur dans l'application (DECISIONS-TECHNIQUES 1.11 ; .github/workflows/app-testflight.yml).
+const MARQUE_SERVEUR = '__ELENCHOS_SERVEUR__';
+const page = readFileSync(join(RACINE, 'public', 'index.html'), 'utf8');
+if (page.split(MARQUE_SERVEUR).length - 1 !== 2) problemes.push(`jeu/public/index.html : la marque ${MARQUE_SERVEUR} doit y être exactement deux fois`);
+for (const f of fichiers(join(RACINE, 'public'))) {
+  if (/\.(png|woff2?|ico)$/.test(f)) continue;
+  for (const adresse of readFileSync(f, 'utf8').match(/https?:\/\/[^\s'"`)<>]+/g) ?? []) {
+    if (!/^http:\/\/(localhost|127\.0\.0\.1)([:/]|$)/.test(adresse)) problemes.push(`${relative(DEPOT, f)} : adresse en dur (${adresse.replace(/^(https?:\/\/[^/]+).*$/, '$1')})`);
+  }
+}
+const lignesAdresse = readFileSync(join(RACINE, 'ios', 'adresse-serveur.txt'), 'utf8').split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('#'));
+if (lignesAdresse.length > 1 || (lignesAdresse.length === 1 && !/^https:\/\/[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(lignesAdresse[0]!))) {
+  problemes.push('jeu/ios/adresse-serveur.txt : une seule ligne « https://hôte », sans port, sans chemin, sans « / » final, ou aucune');
 }
 
 // Tout l'historique du dépôt (P-16), si git est là.
