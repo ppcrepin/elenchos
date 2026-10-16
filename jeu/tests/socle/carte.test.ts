@@ -29,7 +29,7 @@ test('les vues sont exactement celles des mesures', async () => {
 });
 
 const TYPE_ATTENDU: Record<Forme, string[]> = {
-  identifiant: ['uuid'], reference: ['uuid'], empreinte: ['text'], jeton_appareil: ['text'], liste: ['text'],
+  identifiant: ['uuid'], reference: ['uuid'], empreinte: ['text'], jeton_appareil: ['text'], aleatoire: ['text'], liste: ['text'],
   texte_id: ['text'], date: ['date'], instant: ['timestamp with time zone'], entier: ['smallint', 'integer', 'bigint'],
   booleen: ['boolean'], chiffre: ['bytea'], pseudo: ['text'], intitule: ['text'], rond: ['text'], contenu_public: ['jsonb'],
   nom_migration: ['text'],

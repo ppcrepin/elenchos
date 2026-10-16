@@ -8,7 +8,11 @@
   },
   "scripts": {
     "typer": "tsc -p tsconfig.json",
-    "test": "node --test --test-concurrency=1 \"tests/**/*.test.ts\""
+    "test": "node --test --test-concurrency=1 \"tests/**/*.test.ts\"",
+    "test:socle": "node --test --test-concurrency=1 \"tests/socle/*.test.ts\"",
+    "controle": "node outils/controle.ts",
+    "garde-horaires": "node outils/garde-horaires.ts",
+    "migrer": "node outils/migrer.ts"
   },
   "dependencies": {
     "oauth4webapi": "3.8.8",

@@ -221,11 +221,25 @@ CREATE TRIGGER carte_meme_cercle BEFORE INSERT OR UPDATE OF visage_membre_id ON 
   FOR EACH ROW EXECUTE FUNCTION meme_cercle();
 CREATE TRIGGER titre_meme_cercle BEFORE INSERT ON titre FOR EACH ROW EXECUTE FUNCTION meme_cercle();
 
+-- L'invitant a lu l'annonce d'arrivée : le score du défi s'efface (CONTRAT.md, 2.7). Seulement sur ses propres liens
+-- de ce cercle. Une fonction plutôt qu'un droit d'écrire sur les liens des autres : le jeu ne peut rien y changer
+-- d'autre.
+CREATE FUNCTION oublier_scores(p_cercle uuid) RETURNS integer LANGUAGE plpgsql SECURITY DEFINER SET search_path FROM CURRENT AS $$
+DECLARE ancien text := current_setting('elenchos.module', true); mes uuid[] := cloison_mes_membres(); n integer;
+BEGIN
+  PERFORM set_config('elenchos.module', 'cloison', true);
+  UPDATE invitation SET score_entree = NULL
+   WHERE cercle_id = p_cercle AND invitant_membre_id = ANY (mes) AND score_entree IS NOT NULL;
+  GET DIAGNOSTICS n = ROW_COUNT;
+  PERFORM set_config('elenchos.module', coalesce(ancien, ''), true);
+  RETURN n;
+END $$;
+
 -- Personne d'autre que les rôles prévus n'exécute ces fonctions (les droits sont donnés par jeu/src/base/roles.ts).
 REVOKE ALL ON FUNCTION module_courant(), joueur_courant(), jeton_courant(), cloison_mes_cercles(),
   cloison_mes_membres(), cloison_mes_proches(), cloison_mes_invitations(), cloison_cercles_invitation(),
   cloison_invitants_membres(), cloison_invitants_joueurs(), cloison_reponses_offertes(), cloison_peut_entrer(uuid),
-  membre_avant_entree(), joueur_avant_pseudo(), reponse_avant_ecriture(), meme_cercle() FROM PUBLIC;
+  membre_avant_entree(), joueur_avant_pseudo(), reponse_avant_ecriture(), meme_cercle(), oublier_scores(uuid) FROM PUBLIC;
 
 -- ---------------------------------------------------------------------------------------------------------------
 -- Les règles, table par table. « (SELECT f()) » est calculé une fois par requête.
@@ -233,10 +247,11 @@ REVOKE ALL ON FUNCTION module_courant(), joueur_courant(), jeton_courant(), cloi
 DO $$
 DECLARE t text;
 BEGIN
-  FOREACH t IN ARRAY ARRAY['texte', 'calendrier', 'carte_accord', 'joueur', 'identite', 'session', 'code_email',
-    'consentement', 'cercle', 'membre', 'invitation', 'reponse', 'manche', 'carte', 'journee_cercle',
-    'compte_semaine', 'compte_texte_cercle', 'titre', 'temperament', 'portrait_dimanche', 'vu', 'abonnement',
-    'envoi', 'compte_aucune', 'compteur', 'histogramme_raison', 'total_mesure', 'effacement']
+  FOREACH t IN ARRAY ARRAY['texte', 'calendrier', 'carte_accord', 'joueur', 'identite', 'session',
+    'connexion_en_cours', 'code_retour', 'code_email', 'consentement', 'cercle', 'membre', 'invitation', 'reponse',
+    'manche', 'carte', 'journee_cercle', 'compte_semaine', 'compte_texte_cercle', 'titre', 'temperament',
+    'portrait_dimanche', 'vu', 'repondre_ouvert', 'reprise_revelation', 'abonnement', 'message_coupe', 'envoi',
+    'compte_aucune', 'compteur', 'histogramme_raison', 'total_mesure', 'effacement']
   LOOP
     EXECUTE format('ALTER TABLE %I ENABLE ROW LEVEL SECURITY', t);
     EXECUTE format('ALTER TABLE %I FORCE ROW LEVEL SECURITY', t);
@@ -248,9 +263,10 @@ END $$;
 DO $$
 DECLARE t text;
 BEGIN
-  FOREACH t IN ARRAY ARRAY['joueur', 'identite', 'session', 'code_email', 'consentement', 'cercle', 'membre',
-    'invitation', 'reponse', 'manche', 'carte', 'journee_cercle', 'compte_semaine', 'compte_texte_cercle', 'titre',
-    'temperament', 'portrait_dimanche', 'vu', 'abonnement', 'envoi', 'effacement']
+  FOREACH t IN ARRAY ARRAY['joueur', 'identite', 'session', 'connexion_en_cours', 'code_retour', 'code_email',
+    'consentement', 'cercle', 'membre', 'invitation', 'reponse', 'manche', 'carte', 'journee_cercle',
+    'compte_semaine', 'compte_texte_cercle', 'titre', 'temperament', 'portrait_dimanche', 'vu', 'repondre_ouvert',
+    'reprise_revelation', 'abonnement', 'message_coupe', 'envoi', 'effacement']
   LOOP
     EXECUTE format('CREATE POLICY %I ON %I FOR ALL USING (module_courant() = ''menage'') WITH CHECK (module_courant() = ''menage'')',
       t || '_menage', t);
@@ -276,10 +292,16 @@ CREATE POLICY joueur_comptes_maj ON joueur FOR UPDATE USING (module_courant() = 
 CREATE POLICY joueur_comptes_provisoire ON joueur FOR DELETE USING (module_courant() = 'comptes' AND etat = 'provisoire');
 CREATE POLICY joueur_cloison ON joueur FOR SELECT USING (module_courant() = 'cloison');
 
--- Identités, sessions, codes : le module des comptes seul (P-01).
-CREATE POLICY identite_comptes ON identite FOR ALL USING (module_courant() = 'comptes') WITH CHECK (module_courant() = 'comptes');
-CREATE POLICY session_comptes ON session FOR ALL USING (module_courant() = 'comptes') WITH CHECK (module_courant() = 'comptes');
-CREATE POLICY code_email_comptes ON code_email FOR ALL USING (module_courant() = 'comptes') WITH CHECK (module_courant() = 'comptes');
+-- Identités, sessions, connexions en cours, codes : le module des comptes seul (P-01).
+DO $$
+DECLARE t text;
+BEGIN
+  FOREACH t IN ARRAY ARRAY['identite', 'session', 'connexion_en_cours', 'code_retour', 'code_email']
+  LOOP
+    EXECUTE format('CREATE POLICY %I ON %I FOR ALL USING (module_courant() = ''comptes'') WITH CHECK (module_courant() = ''comptes'')',
+      t || '_comptes', t);
+  END LOOP;
+END $$;
 
 -- consentement : le sien.
 CREATE POLICY consentement_jeu_lecture ON consentement FOR SELECT USING (module_courant() = 'jeu' AND joueur_id = joueur_courant());
@@ -318,6 +340,7 @@ CREATE POLICY invitation_jeu_liaison ON invitation FOR UPDATE USING (module_cour
   WITH CHECK (module_courant() = 'jeu' AND invite_joueur_id = joueur_courant());
 CREATE POLICY invitation_proprietaire ON invitation FOR INSERT WITH CHECK (module_courant() = 'proprietaire' AND sorte = 'createur');
 CREATE POLICY invitation_cloison ON invitation FOR SELECT USING (module_courant() = 'cloison');
+CREATE POLICY invitation_cloison_score ON invitation FOR UPDATE USING (module_courant() = 'cloison') WITH CHECK (module_courant() = 'cloison');
 
 -- reponse : les siennes ; celles de ses proches (le serveur en tire cartes, avis du cercle… et n'envoie au téléphone
 -- que ce que les règles montrent, P-26, P-27) ; les réponses d'entrée de son invitant, par un lien lié à lui.
@@ -351,18 +374,22 @@ CREATE POLICY temperament_jeu ON temperament FOR ALL USING (module_courant() = '
   (cercle_id IS NOT NULL AND ARRAY[cercle_id] <@ (SELECT cloison_mes_cercles()))
   OR (joueur_id IS NOT NULL AND ARRAY[joueur_id] <@ (SELECT cloison_mes_proches()))));
 
--- Ce qui n'est qu'à soi.
-CREATE POLICY portrait_dimanche_jeu ON portrait_dimanche FOR ALL USING (module_courant() = 'jeu' AND joueur_id = joueur_courant())
-  WITH CHECK (module_courant() = 'jeu' AND joueur_id = joueur_courant());
-CREATE POLICY vu_jeu ON vu FOR ALL USING (module_courant() = 'jeu' AND joueur_id = joueur_courant())
-  WITH CHECK (module_courant() = 'jeu' AND joueur_id = joueur_courant());
-CREATE POLICY abonnement_jeu ON abonnement FOR ALL USING (module_courant() = 'jeu' AND joueur_id = joueur_courant())
-  WITH CHECK (module_courant() = 'jeu' AND joueur_id = joueur_courant());
+-- Ce qui n'est qu'à soi (les droits de chaque table disent ensuite quelles commandes : roles.ts).
+DO $$
+DECLARE t text;
+BEGIN
+  FOREACH t IN ARRAY ARRAY['portrait_dimanche', 'vu', 'repondre_ouvert', 'reprise_revelation', 'abonnement', 'message_coupe']
+  LOOP
+    EXECUTE format('CREATE POLICY %I ON %I FOR ALL USING (module_courant() = ''jeu'' AND joueur_id = joueur_courant()) WITH CHECK (module_courant() = ''jeu'' AND joueur_id = joueur_courant())',
+      t || '_jeu', t);
+  END LOOP;
+END $$;
 
 -- Le message de 18h : l'envoi lit tous les abonnements, retire ceux qu'Apple refuse, écrit les envois (P-22).
 CREATE POLICY abonnement_envoi_lecture ON abonnement FOR SELECT USING (module_courant() = 'envoi');
 CREATE POLICY abonnement_envoi_retrait ON abonnement FOR DELETE USING (module_courant() = 'envoi');
 CREATE POLICY envoi_envoi ON envoi FOR ALL USING (module_courant() = 'envoi') WITH CHECK (module_courant() = 'envoi');
+CREATE POLICY message_coupe_envoi ON message_coupe FOR SELECT USING (module_courant() = 'envoi');
 
 -- Le journal des effacements : relu par le porteur après une restauration (P-32).
 CREATE POLICY effacement_proprietaire ON effacement FOR SELECT USING (module_courant() = 'proprietaire');

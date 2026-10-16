@@ -72,7 +72,7 @@ export function empreinteDe(mot: string): string {
 export const JOURS = { lundi: '2026-10-19', mardi: '2026-10-20', mercredi: '2026-10-21', dimanche: '2026-10-25' };
 
 export type Joueur = {
-  id: string; pseudo: string; rond: string; consentement: string; session: string; identite: string;
+  id: string; pseudo: string; rond: string; consentement: string; session: string; sessionId: string; identite: string;
   abonnement: string; jeton: string;
 };
 
@@ -109,26 +109,28 @@ export async function contenuPublic(base: BaseDeTest): Promise<void> {
   }
 }
 
-/** Un joueur : provisoire à l'accord (option B), puis compte (identité, session), sous les modules jeu et comptes. */
+/** Un joueur : provisoire à l'accord (option B), puis compte (identité, session de l'appareil), sous les modules jeu
+ *  et comptes ; puis l'abonnement au message de 18h de cet appareil. */
 export async function nouveauJoueur(base: BaseDeTest, pseudo: string, rond: string): Promise<Joueur> {
   const j: Joueur = {
     id: randomUUID(), pseudo, rond, consentement: randomUUID(), session: empreinteDe('session-' + pseudo),
-    identite: empreinteDe('sub-' + pseudo), abonnement: randomUUID(), jeton: createHash('sha256').update('jeton-' + pseudo).digest('hex'),
+    sessionId: randomUUID(), identite: empreinteDe('sub-' + pseudo), abonnement: randomUUID(), jeton: createHash('sha256').update('jeton-' + pseudo).digest('hex'),
   };
   await commeJoueur(base, j.id, async (c) => {
     await c.query("INSERT INTO joueur (id, etat, cree_le) VALUES ($1, 'provisoire', now())", [j.id]);
     await c.query('INSERT INTO consentement (id, joueur_id, version, donne_le, quinze_ans_et_plus) VALUES ($1, $2, 1, now(), true)',
       [j.consentement, j.id]);
     await c.query('UPDATE joueur SET pseudo = $2, pseudo_comparaison = $3 WHERE id = $1', [j.id, pseudo, pseudo.toLowerCase()]);
-    await c.query('INSERT INTO abonnement (id, joueur_id, jeton) VALUES ($1, $2, $3) ON CONFLICT (joueur_id, jeton) DO NOTHING',
-      [j.abonnement, j.id, j.jeton]);
   });
   await enTransaction(base.module('comptes'), {}, async (c) => {
     await c.query("INSERT INTO identite (voie, empreinte, joueur_id) VALUES ('apple', $1, $2) ON CONFLICT DO NOTHING", [j.identite, j.id]);
     await c.query("UPDATE joueur SET etat = 'compte' WHERE id = $1", [j.id]);
-    await c.query("INSERT INTO session (empreinte, joueur_id, expire_le) VALUES ($1, $2, now() + interval '30 days') ON CONFLICT DO NOTHING",
-      [j.session, j.id]);
+    await c.query(`INSERT INTO session (id, empreinte, joueur_id, expire_le) VALUES ($1, $2, $3, now() + interval '30 days')
+      ON CONFLICT (empreinte) DO NOTHING`, [j.sessionId, j.session, j.id]);
   });
+  await commeJoueur(base, j.id, (c) => c.query(
+    'INSERT INTO abonnement (id, joueur_id, session_id, jeton) VALUES ($1, $2, $3, $4) ON CONFLICT (session_id) DO NOTHING',
+    [j.abonnement, j.id, j.sessionId, j.jeton]));
   return j;
 }
 
@@ -232,9 +234,12 @@ export async function peupler(base: BaseDeTest) {
       ON CONFLICT (membre_id, semaine) DO UPDATE SET points = compte_semaine.points + 1`, [a.id, a.membres.get(marie.id), JOURS.dimanche]);
     await cl.query(`INSERT INTO compte_texte_cercle (cercle_id, texte_id, attributions, fausses) VALUES ($1, 'T04', 2, 1)
       ON CONFLICT DO NOTHING`, [a.id]);
-    await cl.query("INSERT INTO vu (joueur_id, objet, membre_id) VALUES ($1, 'arrivee', $2) ON CONFLICT DO NOTHING",
-      [marie.id, a.membres.get(paul.id)]);
+    await cl.query("INSERT INTO vu (joueur_id, objet, cercle_id, vu_le) VALUES ($1, 'arrivee', $2, now()) ON CONFLICT DO NOTHING",
+      [marie.id, a.id]);
     await cl.query('INSERT INTO portrait_dimanche (joueur_id, jour, nettes) VALUES ($1, $2, 3)', [marie.id, JOURS.dimanche]);
+    await cl.query('INSERT INTO repondre_ouvert (joueur_id, texte_id, ouvert_le) VALUES ($1, $2, now()) ON CONFLICT DO NOTHING',
+      [marie.id, 'T06']);
+    await cl.query('UPDATE manche SET cercle_regarde = true WHERE id = $1', [mancheA]);
   });
   const mancheB = randomUUID();
   const cartesB = [randomUUID(), randomUUID()];
@@ -249,7 +254,8 @@ export async function peupler(base: BaseDeTest) {
       ON CONFLICT (membre_id, semaine) DO NOTHING`, [b.id, b.membres.get(lea.id), JOURS.dimanche]);
     await cl.query(`INSERT INTO compte_texte_cercle (cercle_id, texte_id, attributions, fausses) VALUES ($1, 'T04', 2, 2)
       ON CONFLICT DO NOTHING`, [b.id]);
-    await cl.query("INSERT INTO vu (joueur_id, objet, cercle_id) VALUES ($1, 'cercle_lance', $2) ON CONFLICT DO NOTHING", [lea.id, b.id]);
+    await cl.query("INSERT INTO vu (joueur_id, objet, cercle_id, vu_le) VALUES ($1, 'cercle_lance', $2, now()) ON CONFLICT DO NOTHING", [lea.id, b.id]);
+    await cl.query("INSERT INTO reprise_revelation (joueur_id, jour, etape) VALUES ($1, $2, 'etape-B7Q2') ON CONFLICT DO NOTHING", [lea.id, JOURS.mardi]);
   });
 
   // Les titres du dimanche, et des tempéraments.
@@ -281,10 +287,20 @@ export async function peupler(base: BaseDeTest) {
         ON CONFLICT DO NOTHING`, [envois[j.pseudo], j.abonnement, JOURS.mardi]);
     }
   });
-  // Un code e-mail en cours, et des totaux.
-  await enTransaction(base.module('comptes'), {}, (cl) => cl.query(
-    "INSERT INTO code_email (id, empreinte_adresse, empreinte_code, cree_le, expire_le) VALUES ($1, $2, $3, now(), now() + interval '15 minutes')",
-    [randomUUID(), empreinteDe('traceur-7q2@exemple.invalid'), empreinteDe('code-123456')]));
+  // Un code e-mail en cours ; une connexion par Google en cours et son code de retour (Hugo) ; Inès a coupé le message.
+  const connexion = { id: randomUUID(), nonce: 'nonce-Trace7Q2-0123456789', etat: 'etat-Trace7Q2-0123456789',
+    verificateur: 'verif-Trace7Q2-' + 'v'.repeat(40), defi: 'defi-Trace7Q2-' + 'd'.repeat(29), codeRetour: empreinteDe('retour-hugo') };
+  await enTransaction(base.module('comptes'), {}, async (cl) => {
+    await cl.query(
+      "INSERT INTO code_email (id, empreinte_adresse, empreinte_code, cree_le, expire_le) VALUES ($1, $2, $3, now(), now() + interval '15 minutes')",
+      [randomUUID(), empreinteDe('traceur-7q2@exemple.invalid'), empreinteDe('code-123456')]);
+    await cl.query(`INSERT INTO connexion_en_cours (id, voie, but, nonce, etat_google, verificateur_google, defi, joueur_id, expire_le)
+      VALUES ($1, 'google', 'connexion', $2, $3, $4, $5, $6, now() + interval '10 minutes')`,
+    [connexion.id, connexion.nonce, connexion.etat, connexion.verificateur, connexion.defi, hugo.id]);
+    await cl.query("INSERT INTO code_retour (empreinte, defi, joueur_id, expire_le) VALUES ($1, $2, $3, now() + interval '1 minute')",
+      [connexion.codeRetour, connexion.defi, hugo.id]);
+  });
+  await commeJoueur(base, ines.id, (cl) => cl.query('INSERT INTO message_coupe (joueur_id) VALUES ($1) ON CONFLICT DO NOTHING', [ines.id]));
   await commeJoueur(base, marie.id, async (cl) => {
     await cl.query("SELECT ajouter_compteur('ipad', $1)", [JOURS.mardi]);
     await cl.query("SELECT ajouter_histogramme($1, 2::smallint)", [JOURS.dimanche]);
@@ -292,7 +308,7 @@ export async function peupler(base: BaseDeTest) {
   });
 
   return {
-    marie, paul, hugo, lea, ines, a, b, c, positions, mancheA, mancheB, cartesA, cartesB, titres, temperaments, envois,
+    marie, paul, hugo, lea, ines, a, b, c, positions, mancheA, mancheB, cartesA, cartesB, titres, temperaments, envois, connexion,
     invitations: { invPaul, invHugoA, invHugoB, invInes, invEnAttenteB },
   };
 }

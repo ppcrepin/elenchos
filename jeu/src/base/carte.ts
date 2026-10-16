@@ -19,6 +19,7 @@ export type Forme =
   | 'reference' // uuid d'une autre ligne
   | 'empreinte' // 64 chiffres hexadécimaux (HMAC ou SHA-256)
   | 'jeton_appareil' // hexadécimal : l'adresse technique d'Apple pour le message de 18h
+  | 'aleatoire' // base64url ou identifiant opaque tiré par le serveur ou l'application (nonce, défi, étape)
   | 'liste' // une valeur d'une liste fermée
   | 'texte_id' // « T01 »
   | 'date' | 'instant' | 'entier' | 'booleen'
@@ -49,8 +50,17 @@ export const CARTE: Record<string, Table> = {
     colonnes: { voie: 'liste', empreinte: 'empreinte', joueur_id: 'reference' },
   },
   session: {
-    usage: 4, duree: 'Jusqu’à la déconnexion ou l’échéance, jamais au-delà de la fin du test',
-    colonnes: { empreinte: 'empreinte', joueur_id: 'reference', expire_le: 'instant' },
+    usage: 4, duree: 'Jusqu’à la déconnexion de l’appareil ou l’échéance, jamais au-delà de la fin du test ; joueur provisoire : 7 jours au plus',
+    colonnes: { id: 'identifiant', empreinte: 'empreinte', joueur_id: 'reference', expire_le: 'instant' },
+  },
+  connexion_en_cours: {
+    usage: 4, duree: '10 minutes',
+    colonnes: { id: 'identifiant', voie: 'liste', but: 'liste', nonce: 'aleatoire', etat_google: 'aleatoire',
+      verificateur_google: 'aleatoire', defi: 'aleatoire', joueur_id: 'reference', expire_le: 'instant' },
+  },
+  code_retour: {
+    usage: 4, duree: 'Une minute',
+    colonnes: { empreinte: 'empreinte', defi: 'aleatoire', joueur_id: 'reference', refus: 'liste', expire_le: 'instant' },
   },
   code_email: {
     usage: 4, duree: '15 minutes',
@@ -84,7 +94,7 @@ export const CARTE: Record<string, Table> = {
   manche: {
     usage: 1, duree: 'Comme les réponses',
     colonnes: { id: 'identifiant', cercle_id: 'reference', devineur_membre_id: 'reference', jour: 'date',
-      texte_id: 'texte_id', validee_le: 'instant' },
+      texte_id: 'texte_id', validee_le: 'instant', cercle_regarde: 'booleen' },
   },
   carte: {
     usage: 1, duree: 'Comme les réponses',
@@ -121,12 +131,24 @@ export const CARTE: Record<string, Table> = {
     colonnes: { joueur_id: 'reference', jour: 'date', nettes: 'entier' },
   },
   vu: {
-    usage: 1, duree: 'Tant que le compte existe',
-    colonnes: { joueur_id: 'reference', objet: 'liste', jour: 'date', membre_id: 'reference', cercle_id: 'reference' },
+    usage: 1, duree: 'Tant que le compte existe (l’heure sert aussi la mesure « révélation ouverte le soir même », usage 3)',
+    colonnes: { joueur_id: 'reference', objet: 'liste', jour: 'date', cercle_id: 'reference', vu_le: 'instant' },
+  },
+  repondre_ouvert: {
+    usage: 1, duree: 'Jusqu’à la fermeture du texte',
+    colonnes: { joueur_id: 'reference', texte_id: 'texte_id', ouvert_le: 'instant' },
+  },
+  reprise_revelation: {
+    usage: 1, duree: 'Du 18h au 18h suivant',
+    colonnes: { joueur_id: 'reference', jour: 'date', etape: 'aleatoire' },
   },
   abonnement: {
-    usage: 1, duree: 'Jusqu’au retrait, à l’effacement, ou au refus d’Apple',
-    colonnes: { id: 'identifiant', joueur_id: 'reference', jeton: 'jeton_appareil' },
+    usage: 1, duree: 'Jusqu’au retrait, à la déconnexion de l’appareil, à l’effacement, ou au refus d’Apple',
+    colonnes: { id: 'identifiant', joueur_id: 'reference', session_id: 'reference', jeton: 'jeton_appareil' },
+  },
+  message_coupe: {
+    usage: 1, duree: 'Jusqu’à ce que le joueur le rallume, ou à l’effacement',
+    colonnes: { joueur_id: 'reference' },
   },
   envoi: {
     usage: 3, duree: '13 mois au plus (gestes), au plus jusqu’à la fin du test',

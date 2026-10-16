@@ -71,13 +71,47 @@ CREATE TABLE identite (
 );
 CREATE INDEX identite_joueur ON identite (joueur_id);
 
--- Les sessions : l'empreinte du jeton gardé dans le trousseau de l'iPhone (plan-jeu-entier-equipe.md, 2.3 ; P-41).
+-- Les sessions, une par appareil : l'empreinte du jeton gardé dans le trousseau de l'iPhone (CONTRAT.md, partie 4 ;
+-- DECISIONS-TECHNIQUES 1.8 ; P-41). L'identifiant, tiré au hasard, est « l'appareil » : un numéro sans lien avec
+-- l'iPhone, auquel s'attache l'abonnement au message.
 CREATE TABLE session (
-  empreinte text PRIMARY KEY CHECK (empreinte ~ '^[0-9a-f]{64}$'),
+  id uuid PRIMARY KEY,
+  empreinte text NOT NULL UNIQUE CHECK (empreinte ~ '^[0-9a-f]{64}$'),
   joueur_id uuid NOT NULL REFERENCES joueur (id) ON DELETE CASCADE,
-  expire_le timestamptz NOT NULL
+  expire_le timestamptz NOT NULL,
+  UNIQUE (id, joueur_id)
 );
 CREATE INDEX session_joueur ON session (joueur_id);
+
+-- Une connexion commencée par Apple ou Google, 10 minutes au plus (CONTRAT.md, 2.5) : le nonce donné, l'état et le
+-- vérificateur de Google (PKCE), le défi de l'application (SHA-256 de son vérificateur, en base64url), le joueur
+-- provisoire de la session s'il y en a un. Rien de ce qu'Apple ou Google renvoient n'y est gardé.
+CREATE TABLE connexion_en_cours (
+  id uuid PRIMARY KEY,
+  voie text NOT NULL CHECK (voie IN ('apple', 'google')),
+  but text NOT NULL CHECK (but IN ('creation', 'connexion')),
+  nonce text NOT NULL CHECK (nonce ~ '^[A-Za-z0-9_-]{16,128}$'),
+  etat_google text CHECK (etat_google ~ '^[A-Za-z0-9_-]{16,128}$'),
+  verificateur_google text CHECK (verificateur_google ~ '^[A-Za-z0-9_-]{43,128}$'),
+  defi text NOT NULL CHECK (defi ~ '^[A-Za-z0-9_-]{43}$'),
+  joueur_id uuid REFERENCES joueur (id) ON DELETE CASCADE,
+  expire_le timestamptz NOT NULL,
+  CHECK ((voie = 'google') = (etat_google IS NOT NULL AND verificateur_google IS NOT NULL))
+);
+CREATE INDEX connexion_en_cours_nonce ON connexion_en_cours (nonce);
+CREATE INDEX connexion_en_cours_etat ON connexion_en_cours (etat_google);
+
+-- Le code de retour de Google : son empreinte, une minute, une fois (CONTRAT.md, 2.5). Il porte le compte trouvé ou
+-- créé, ou un refus d'une liste fermée, et le défi qui lie la fin de la connexion à l'application qui l'a commencée.
+CREATE TABLE code_retour (
+  empreinte text PRIMARY KEY CHECK (empreinte ~ '^[0-9a-f]{64}$'),
+  defi text NOT NULL CHECK (defi ~ '^[A-Za-z0-9_-]{43}$'),
+  joueur_id uuid REFERENCES joueur (id) ON DELETE CASCADE,
+  refus text CHECK (refus IN ('refus_fournisseur', 'compte_organisation', 'compte_inconnu', 'cercle_complet',
+    'pseudo_pris', 'connexion_echouee')),
+  expire_le timestamptz NOT NULL,
+  CHECK ((joueur_id IS NULL) <> (refus IS NULL))
+);
 
 -- Le code à six chiffres de la voie e-mail : empreintes seulement ; 15 minutes, 5 essais (P-41).
 CREATE TABLE code_email (
@@ -177,7 +211,8 @@ CREATE TABLE reponse (
 -- La journée : manches, cartes, éveil du cercle.
 
 -- Une manche : ce qu'un membre devine dans un cercle, un jour (le texte de la veille). Créée à la première ouverture
--- de Deviner après 18h, avec ses cartes, une seule fois (règle 10).
+-- de Deviner après 18h, avec ses cartes, une seule fois (règle 10). « cercle_regarde » : le geste « Le Cercle ouvert
+-- pendant une manche pas encore validée », noté une fois par manche (CONTRAT.md, 2.15 ; produit.md §8).
 CREATE TABLE manche (
   id uuid PRIMARY KEY,
   cercle_id uuid NOT NULL REFERENCES cercle (id) ON DELETE CASCADE,
@@ -185,6 +220,7 @@ CREATE TABLE manche (
   jour date NOT NULL,
   texte_id text NOT NULL REFERENCES texte (id),
   validee_le timestamptz, -- Valider fige la manche (règle 9)
+  cercle_regarde boolean NOT NULL DEFAULT false,
   FOREIGN KEY (devineur_membre_id, cercle_id) REFERENCES membre (id, cercle_id) ON DELETE CASCADE,
   UNIQUE (devineur_membre_id, jour),
   UNIQUE (id, cercle_id)
@@ -299,28 +335,54 @@ CREATE TABLE portrait_dimanche (
 );
 
 -- Ce que le joueur a déjà vu (contrat : OBJETS_VU), pour ne le montrer qu'une fois : la révélation d'un jour,
--- l'arrivée d'un membre, la barre pleine…
+-- l'arrivée dans un cercle, le cercle lancé, les annonces, la barre pleine. L'heure sert la mesure « révélation
+-- ouverte le soir même » (CONTRAT.md, 2.9 et 2.15).
 CREATE TABLE vu (
   joueur_id uuid NOT NULL REFERENCES joueur (id) ON DELETE CASCADE,
-  objet text NOT NULL CHECK (objet IN ('revelation', 'revelation_finie', 'arrivee', 'cercle_lance', 'annonces', 'barre_pleine')),
+  objet text NOT NULL CHECK (objet IN ('revelation', 'arrivee', 'cercle_lance', 'annonces', 'barre_pleine')),
   jour date,
-  membre_id uuid REFERENCES membre (id) ON DELETE CASCADE,
-  cercle_id uuid REFERENCES cercle (id) ON DELETE CASCADE
+  cercle_id uuid REFERENCES cercle (id) ON DELETE CASCADE,
+  vu_le timestamptz NOT NULL
 );
 CREATE UNIQUE INDEX vu_une_fois ON vu (joueur_id, objet, coalesce(jour, DATE '0001-01-01'),
-  coalesce(membre_id, '00000000-0000-0000-0000-000000000000'::uuid),
   coalesce(cercle_id, '00000000-0000-0000-0000-000000000000'::uuid));
+
+-- L'écran Répondre d'un texte s'est affiché, et quand : la condition de la réponse en retard, jusqu'à 18h10 (règle 6,
+-- R10 ; CONTRAT.md, 2.8). Gardé jusqu'à la fermeture du texte.
+CREATE TABLE repondre_ouvert (
+  joueur_id uuid NOT NULL REFERENCES joueur (id) ON DELETE CASCADE,
+  texte_id text NOT NULL REFERENCES texte (id),
+  ouvert_le timestamptz NOT NULL,
+  PRIMARY KEY (joueur_id, texte_id)
+);
+
+-- La révélation reprend là où on l'avait laissée (E3 ; CONTRAT.md, 2.9) : la dernière étape vue, un identifiant
+-- opaque fait par le serveur, du 18h au 18h suivant.
+CREATE TABLE reprise_revelation (
+  joueur_id uuid NOT NULL REFERENCES joueur (id) ON DELETE CASCADE,
+  jour date NOT NULL,
+  etape text NOT NULL CHECK (etape ~ '^[A-Za-z0-9_-]{1,64}$'),
+  PRIMARY KEY (joueur_id, jour)
+);
 
 -- ---------------------------------------------------------------------------------------------------------------
 -- Le message de 18h.
 
--- Un abonnement : le jeton d'appareil que donne Apple (l'adresse technique où l'iPhone reçoit le message). Retiré
--- quand Apple le refuse (appareil désinstallé), au retrait, à l'effacement.
+-- Un abonnement : le jeton d'appareil que donne Apple (l'adresse technique où l'iPhone reçoit le message), lié à la
+-- session de cet appareil (CONTRAT.md, 2.13). Retiré quand Apple le refuse (application désinstallée), à la
+-- déconnexion de l'appareil (avec sa session), à l'effacement.
 CREATE TABLE abonnement (
   id uuid PRIMARY KEY,
   joueur_id uuid NOT NULL REFERENCES joueur (id) ON DELETE CASCADE,
+  session_id uuid NOT NULL UNIQUE,
   jeton text NOT NULL CHECK (jeton ~ '^[0-9a-f]{64,200}$'),
-  UNIQUE (joueur_id, jeton)
+  FOREIGN KEY (session_id, joueur_id) REFERENCES session (id, joueur_id) ON DELETE CASCADE
+);
+CREATE INDEX abonnement_joueur ON abonnement (joueur_id);
+
+-- Le message de 18h coupé dans les Réglages, pour tous les appareils du joueur (D-029 ; CONTRAT.md, 2.12).
+CREATE TABLE message_coupe (
+  joueur_id uuid PRIMARY KEY REFERENCES joueur (id) ON DELETE CASCADE
 );
 
 -- Un envoi : le verrou « un envoi par jour et par abonnement » (index partiel), et la mesure « message reçu »
@@ -347,7 +409,9 @@ CREATE TABLE compte_aucune (
 );
 
 CREATE TABLE compteur (
-  sorte text NOT NULL CHECK (sorte IN ('android', 'ordinateur', 'ipad', 'reponse_apres_18h')),
+  -- contrat.ts : SORTES_COMPTEUR et SORTES_COMPTEUR_SERVEUR.
+  sorte text NOT NULL CHECK (sorte IN ('android', 'ordinateur', 'ipad', 'iphone_sans_application',
+    'reponse_refusee_apres_18h', 'reponse_en_retard')),
   jour date NOT NULL,
   nombre integer NOT NULL CHECK (nombre >= 0),
   PRIMARY KEY (sorte, jour)
