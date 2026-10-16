@@ -208,7 +208,7 @@ export function creerPlanificateur(d: DependancesPlanificateur): Planificateur {
         menageFait = jourMenage;
       } catch (e) {
         menageEchoueLe = maintenant.getTime();
-        d.journal.ecrire({ evenement: 'erreur', detail: 'echeances effacees', erreur: typeErreur(e) });
+        d.journal.ecrire({ evenement: 'menage', erreur: typeErreur(e) });
       } finally {
         menageEnCours = false;
       }
@@ -239,7 +239,8 @@ export function creerPlanificateur(d: DependancesPlanificateur): Planificateur {
     demarrer() {
       if (!arrete) return;
       arrete = false;
-      d.journal.ecrire({ evenement: 'planificateur', detail: d.envoyeur ? 'horloge en marche' : 'horloge arretee' });
+      // `nombre` : 1 si le message de 18h part, 0 s'il est coupé (pas de clé, ou en local) ; le ménage tourne toujours.
+      d.journal.ecrire({ evenement: 'planificateur', detail: 'horloge en marche', nombre: d.envoyeur ? 1 : 0 });
       void tic().finally(boucle);
     },
     arreter() {
