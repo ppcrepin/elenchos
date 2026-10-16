@@ -62,13 +62,13 @@ Chaque exigence dit donc si elle vaut pendant le test, ou seulement pour la vers
 | Sa barre « Ton portrait se dessine » | oui | non | aucun écran | non | oui | non | non |
 | Ses devinettes et ses points | oui | non (4) | total | rapport | oui | non | rapport |
 | Ses gestes : ouvertures, durées, a joué ou non | oui | « a déjà joué » (5) | total ; testeur par testeur, ce que montre TestFlight (8) | rapport | oui | Apple, par TestFlight : installation, ouvertures, plantages (8) | rapport |
-| Si sa raison était « aucune » | oui | en partie (3) | total (6) | rapport (6) | oui | non | rapport (6) |
+| Si sa raison était « aucune » | oui | en partie (3) | aucun écran ; aucun total pendant le test (6) | rien pendant le test (6) | oui | non | rien pendant le test (6) |
 | Son adresse internet, et l'adresse technique où son téléphone reçoit le message de 18h | — | non | non | non | oui | Apple : pour la connexion et le message de 18h ; Google : pour la connexion seulement (D-054) | non |
 | Les journaux techniques du jeu, sans rien d'elle | — | non | oui | non | oui | non | non |
 
 **Les notes.**
 1. Vous détenez les clés : techniquement, vous pourriez tout lire. L'engagement (proposé) : aucun écran d'administration ne vous montre une réponse, un pseudo ni une adresse ; vous n'ouvrez la base que pour une restauration ou un incident (D-048), et chaque ouverture laisse une trace.
-2. Exception : l'annonce faite au créateur d'un cercle à chaque arrivée cite le pseudo de qui arrive. Sur le web, Apple l'achemine chiffrée, sans la lire (de mémoire, à vérifier au test de 18h) ; le jeu se jouant sur iPhone seulement, Apple est le seul service d'acheminement (D-054).
+2. Exception : l'annonce faite au créateur d'un cercle à chaque arrivée cite le pseudo de qui arrive, sans le score (D-061). Apple est le seul service d'acheminement (D-054), et dans l'application il peut lire le contenu d'un message (`jeu/CONTRAT.md`, 2.13) : il voit donc ce pseudo, et rien d'autre de personnel (P-05). Le chiffrement jusqu'au téléphone ne valait que pour le message web, qui disparaît avec l'application (D-062, point 2 ; P-06).
 3. Le lendemain, pendant Deviner, ses proches voient sa réponse sur une carte, sans nom. À 18h, chacun apprend qu'elle était de Marie si la carte lui était servie, ou s'il a désigné Marie sur une carte d'un proche qui avait répondu exactement la même chose (D-024). Le graphique de l'avis du cercle compte sa position chaque jour, presque nom par nom dans un petit cercle (D-025). Sa raison, elle, reste cachée hors de ces deux cas.
 4. Le cercle voit les titres que valent ses devinettes, jamais les devinettes une à une. Thomas, qui l'a invitée, voit son score d'entrée.
 5. Jamais qu'un membre est en pause (D-010, D-011) ; mais le total de l'avis du cercle peut laisser voir qu'un membre n'a pas répondu (D-025).
