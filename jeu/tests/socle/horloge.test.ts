@@ -24,8 +24,9 @@ test('28 mars 2027 : 18h passe de UTC+1 à UTC+2 ; 2h30 n’existe pas cette nui
   assert.equal(instantParis('2027-03-27', 18, 0).toISOString(), '2027-03-27T17:00:00.000Z'); // hiver
   assert.equal(instantParis('2027-03-28', 18, 0).toISOString(), '2027-03-28T16:00:00.000Z'); // jour du passage à l'été
   assert.throws(() => instantParis('2027-03-28', 2, 30), /inexistante/);
-  // 25 octobre 2026 : 2h30 existe deux fois ; on prend la première (encore à l'heure d'été).
-  assert.equal(instantParis('2026-10-25', 2, 30).toISOString(), '2026-10-25T00:30:00.000Z');
+  // 25 octobre 2026 : 2h30 existe deux fois ; l'horloge reprise rend la seconde (déjà à l'heure d'hiver). Le jeu ne
+  // demande jamais cette heure-là : seule 18h compte.
+  assert.equal(instantParis('2026-10-25', 2, 30).toISOString(), '2026-10-25T01:30:00.000Z');
 });
 
 test('17:59:59 contre 18:00:00 : le jour de jeu bascule à 18h pile, heure de Paris', () => {
