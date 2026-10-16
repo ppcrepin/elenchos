@@ -19,7 +19,7 @@ import { bascule, jourDeDate } from '../../src/regles/heure.ts';
 import { ajouterJours } from '../../src/serveur/horloge.ts';
 import type { ModeRoles } from '../../src/serveur/config.ts';
 import {
-  baseDeTest, commeJoueur, inviter, nouveauJoueur, peupler, repondre, toutCeQuIlVoit, type BaseDeTest, type Monde,
+  baseDeTest, commeJoueur, inviter, JOURS, MARDI_MIDI, nouveauJoueur, peupler, repondre, toutCeQuIlVoit, type BaseDeTest, type Monde,
 } from './aides.ts';
 
 const TABLES = Object.keys(CARTE).filter((t) => t !== 'migration');
@@ -107,7 +107,16 @@ for (const mode of ['roles', 'repli'] as ModeRoles[]) {
       const vu = await toutCeQuIlVoit(base, 'mesures', [...VUES, 'compte_aucune', 'total_mesure'], {});
       assert.deepEqual(vu.mesure_aucune, []); // 5 réponses au plus par texte : sous le seuil de 30
       assert.deepEqual(vu.mesure_totaux, []); // 1 apport : sous le seuil de 10
-      assert.equal((vu.mesure_compteurs as unknown[]).length, 1);
+      // Les compteurs par jour et l'histogramme, sans personne : rien sous 10 apports (N6 ; CONTRAT.md, 2.15).
+      assert.deepEqual(vu.mesure_compteurs, []); // 1 apport : sous le seuil de 10
+      assert.deepEqual(vu.mesure_histogramme, []);
+      await commeJoueur(base, m.paul.id, async (c) => {
+        for (let i = 0; i < 8; i += 1) await c.query("SELECT ajouter_compteur('ipad', $1)", [JOURS.mardi]);
+      }, undefined, new Date(MARDI_MIDI));
+      const compteurs = async () => (await toutCeQuIlVoit(base, 'mesures', ['mesure_compteurs'], {})).mesure_compteurs as { sorte: string; nombre: number }[];
+      assert.deepEqual(await compteurs(), []); // 9 : sous le seuil
+      await commeJoueur(base, m.paul.id, (c) => c.query("SELECT ajouter_compteur('ipad', $1)", [JOURS.mardi]), undefined, new Date(MARDI_MIDI));
+      assert.deepEqual((await compteurs()).map((l) => [l.sorte, l.nombre]), [['ipad', 10]]);
       if (mode === 'roles') {
         assert.equal(vu.compte_aucune, 'refus');
         assert.equal(vu.total_mesure, 'refus');
