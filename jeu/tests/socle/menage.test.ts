@@ -144,7 +144,8 @@ for (const mode of ['roles', 'repli'] as ModeRoles[]) {
       ]);
       // Zoé seule est partie, avec sa réponse et son accord : rien d'autre n'a bougé.
       const apres = await compter();
-      assert.deepEqual(apres, { ...comptes, joueur: comptes.joueur - 1, reponse: comptes.reponse - 1, consentement: comptes.consentement - 1 });
+      const moins = (t: string) => (comptes[t] ?? 0) - 1;
+      assert.deepEqual(apres, { ...comptes, joueur: moins('joueur'), reponse: moins('reponse'), consentement: moins('consentement') });
     });
 
     test('le joueur provisoire de plus de 7 jours est effacé comme par « Tout effacer », avec sa ligne au journal ; celui de 6 jours reste', async () => {

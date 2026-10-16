@@ -179,7 +179,7 @@ export const CARTE: Record<string, Table> = {
     colonnes: { joueur_id: 'reference' },
   },
   envoi: {
-    usage: 1, duree: '7 jours (ménage), puis seulement des totaux par jour, comptés à l’envoi et à la réception (D-066, point 4)',
+    usage: 1, duree: 'Usages 1 (un envoi par soir) et 3 (message reçu). 7 jours (ménage), puis seulement des totaux par jour, comptés à l’envoi et à la réception (D-066, point 4)',
     colonnes: { id: 'identifiant', abonnement_id: 'reference', sorte: 'liste', jour: 'date', envoye_a: 'instant',
       reponse_code: 'entier', recu_a: 'instant' },
   },

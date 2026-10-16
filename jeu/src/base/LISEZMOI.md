@@ -7,13 +7,15 @@
 | Fichier | Rôle |
 |---|---|
 | `migrations/0001-tables.sql` | les tables du jeu entier, et rien d'autre |
-| `migrations/0002-cloisonnement.sql` | les règles de cloisonnement par ligne (P-25), l'heure du jeu (`instant_du_jeu`, `fin_du_jour_de_jeu`), « rien avant 18h » pour les réponses du jour, les cartes vidées par un départ (règle 4), et les refus gardés par la base (P-34, dix membres, trois cercles, pseudo et rond uniques, joueur provisoire hors des cercles) |
-| `migrations/0003-totaux.sql` | les totaux écrits sans être lus, et les vues à seuil des mesures (P-22, P-23) |
+| `migrations/0002-cloisonnement.sql` | les règles de cloisonnement par ligne (P-25), l'heure du jeu (`instant_du_jeu`, `fin_du_jour_de_jeu`), « rien avant 18h » pour les réponses du jour, le lien lié lisible 7 jours, ce que fait un départ (règle 4 ; D-066, point 1 ; Juridique), et les refus gardés par la base (P-34, dix membres, trois cercles, pseudo et rond uniques, joueur provisoire hors des cercles) |
+| `migrations/0003-totaux.sql` | les totaux écrits sans être lus, le refus des mesures, les joueurs distincts, et les vues à seuil des mesures (P-22, P-23 ; D-066, points 3 et 4) |
 | `carte.ts` | la carte des données : chaque table, chaque colonne, son usage et sa forme (P-04) |
 | `connexion.ts` | les connexions par module, le chiffrement de la connexion, la déclaration du joueur |
 | `roles.ts` | les cinq rôles et la liste exacte de leurs droits (`DROITS`) |
 | `migrations.ts`, `installation.ts` | jouer les migrations, puis préparer les rôles |
 | `effacement.ts` | « Tout effacer », puis vérifier qu'il ne reste rien |
+| `menage.ts` | le ménage quotidien : chaque durée de la carte tenue (P-31) |
+| `totaux.ts` | le seul chemin du serveur vers les totaux, avec le réglage du test (D-066, point 2) |
 
 Les briques reprises de `test-18h/` sont dans `src/serveur/` (horloge, garde des horaires, chiffrement, journal, réglages), chacune avec son origine en tête. L'heure de Paris a une seule source, le moteur (`src/regles/heure.ts`) : l'horloge du serveur l'appelle, et la base suit la même convention (un test compare chaque 18h de 2026 à 2028).
 
@@ -23,7 +25,17 @@ Chaque demande ouvre une transaction et déclare d'abord qui la fait, et quand (
 
 **Ce que la base ne cloisonne pas, dit franchement.** Elle cloisonne par cercle, pas par membre. Sous le module du jeu, un joueur déclaré lit tout ce que son cercle peut voir : les réponses de ses proches (sauf celles au texte du jour, voir plus bas), et les manches, cartes et verdicts des autres devineurs de son cercle. Ce que le téléphone en reçoit (la liste fermée de P-27, « rien avant 18h » de P-26 pour tout le reste) est tenu par le serveur, et par les tests de l'étape 2.
 
-**Rien avant 18h, pour les réponses du jour, est tenu aussi par la base.** Un proche ne lit la réponse d'un autre au texte du jour qu'après la fermeture de ce texte, à 18h, heure de la transaction (`instant_du_jeu` : l'heure déclarée par le serveur, sinon celle de la base). Ses réponses d'entrée restent lisibles. « Déjà joué » passe par `cloison_ont_repondu(texte)`, qui ne rend que des identifiants de membres. Comme le module déclaré, l'heure déclarée protège contre l'oubli d'un filtre, pas contre un code fautif qui déclarerait une heure fausse.
+**Rien avant 18h, pour les réponses du jour, est tenu aussi par la base.** Un proche ne lit la réponse d'un autre au texte du jour qu'après la fermeture de ce texte, à 18h, heure de la transaction (`instant_du_jeu` : l'heure déclarée par le serveur, sinon celle de la base). Ses réponses d'entrée restent lisibles. « Déjà joué » passe par `cloison_ont_repondu(texte)`, qui ne rend que des identifiants de membres. Ce que la base tient, c'est la fermeture du texte (18h le jour d), pas la révélation (18h le jour d + 1) : pendant le jour où l'on devine, le serveur lit les réponses des proches pour tirer les cartes, et c'est lui seul qui garantit que le téléphone ne reçoit rien de la révélation avant 18h (P-26). Comme le module déclaré, l'heure déclarée protège contre l'oubli d'un filtre, pas contre un code fautif qui déclarerait une heure fausse. La base n'a qu'une horloge : l'accord d'une réponse (P-34), « rien avant 18h », les départs, les liens et les totaux jugent tous avec `instant_du_jeu`.
+
+**Le lien d'invitation, borné.** Un invité lit, par le lien lié à lui, le nom du cercle, le visage de l'invitant et ses trois réponses d'entrée : 7 jours au plus après la liaison, le temps du défi et du compte (un joueur provisoire est effacé au même terme). À son départ du cercle, ou à son effacement, le lien ne le désigne plus. Il ne lit alors plus que ce que ses cercles lui montrent (Juridique, P-25).
+
+**Ce que fait un départ, dans la base elle-même** (déclencheur `membre_avant_depart`, dans la transaction de « Quitter » ou de « Tout effacer ») :
+- avant 18h, les cartes où le partant était désigné redeviennent vides, sans « pourquoi » ni verdict, marquées « vidées par un départ » (règle 4, J10) ;
+- après 18h, la manche est jouée : seul le visage se vide (« un ancien membre ») et le verdict reste figé, sauf qu'un « jumeau » devient « juste » (Juridique : un « jumeau » sous un visage vide dirait qu'un ancien membre pensait comme l'auteur ; la règle 11 les compte pareil ; à confirmer par Game design) ;
+- ses badges Le Pas de Côté de ce cercle s'effacent (D-066, point 1) ; ses autres titres restent sous « un ancien membre » ;
+- ce qu'il avait « déjà vu » dans ce cercle s'efface ; le lien qui l'y avait fait entrer ne le désigne plus et perd son score.
+
+**Les totaux** (migration 0003, `totaux.ts`). Un joueur qui a refusé qu'on compte ses gestes (`mesures_refusees`, D-066, point 3) n'entre dans aucun total : chaque fonction regarde le joueur déclaré. Le seuil d'un total des mesures compte des joueurs distincts (D-066, point 4) : un joueur qui apporte trente fois compte pour un, grâce à un verrou (`apport_mesure`) qui part avec sa période. Pendant le test, ni la part de « aucune » ni les trois comptes de mi-bêta ne sont écrits : c'est un réglage du serveur, `COMPTES_DE_REGLAGE` dans `totaux.ts`, figé à faux (D-066, point 2).
 
 ## Les deux modes (`MODE_ROLES`)
 
@@ -61,13 +73,16 @@ IGNORER_HORAIRES=oui npm run test:socle   # de 15h à 19h et le dimanche, la gar
 npm run controle
 ```
 
+Les tests du moteur de règles : `node --test "tests/regles/*.test.ts"` (sans base).
+
 Chaque fichier de test crée son schéma, dont le propriétaire est un rôle sans privilège (`elenchos_test_proprietaire`), comme on suppose celui de Scalingo : un superutilisateur échapperait aux règles, et le test ne prouverait rien. Les tests avec base ne sont jamais sautés : sans `BASE_DE_TEST_URL`, ils échouent.
 
 ## Ce que le socle ne fait pas encore
 
 - le serveur HTTP, la connexion Apple et Google, l'envoi vers Apple, le planificateur de 18h, l'import des textes ;
-- le ménage quotidien des échéances (joueurs provisoires à 7 jours, sessions, codes, liens, scores d'entrée) : le rôle et ses droits existent, pas encore le programme ;
-- dans « Tout effacer » et « Quitter », le retrait d'une carte pas encore révélée des compteurs de la semaine (règle 4) : c'est le moteur de la journée. Les cartes où le partant était désigné, elles, sont déjà vidées par la base (déclencheur `membre_avant_depart`) ;
+- l'appel quotidien du ménage par le planificateur : le programme existe et il est testé (`menage.ts`), pas encore son déclenchement. Il doit tourner avant la première vraie invitation (Juridique) ;
+- dans « Tout effacer » et « Quitter », le retrait d'une carte pas encore révélée des compteurs de la semaine (règle 4) : c'est le moteur de la journée. Les cartes où le partant était désigné, elles, sont déjà vidées par la base (déclencheur `membre_avant_depart`). Avec le verdict écrit au geste, un départ après 18h ne change que « jumeau » en « juste » ; ce qui reste à l'étape 2 : une manche non validée reçoit « passe » sur ses cartes vides à la première lecture après 18h ;
+- la route qui pose ou retire le refus des mesures (la table existe, `mesures_refusees`) : ses mots, avec UX, à l'étape 2 (`CONTRAT.md`, partie 9) ;
 - le cercle de démonstration et le lien de relecture (CONTRAT.md, 2.16), et les vues du rapport des totaux tirées des tables de joueurs (retour à 7 jours, etc.) : chacun viendra par une migration, avec l'étape qui le construit. L'avis du cercle, lui, n'aura jamais de table : il se calcule à la lecture (CONTRAT.md, partie 3) ;
 - l'extension du test du journal de PostgreSQL (`test-18h/tests/journal-base/`) aux écritures du jeu, quand elles existeront.
 
@@ -75,6 +90,17 @@ Chaque fichier de test crée son schéma, dont le propriétaire est un rôle san
 
 Le test d'effacement prouve la base : après « Tout effacer », une lecture brute de toutes les tables ne contient plus rien du joueur (traceur), score du défi d'entrée compris. Il ne prouve pas encore :
 - **la révocation chez Apple** (CONTRAT.md, 2.12) : écrite dans le contrat, pas encore codée (étape 2) ;
-- **le rejeu du journal des effacements après une restauration** (P-32) : la table existe, le programme de restauration et son test non ;
+- **le rejeu du journal des effacements après une restauration** (P-32) : la table existe, le programme de restauration et son test non. La procédure, elle, est fixée (ci-dessous) ;
 - **les journaux de Scalingo** (P-07) : gardés un an chez l'hébergeur, hors d'atteinte de « Tout effacer ». Ils ne doivent rien contenir de personnel : c'est ce que tiennent le journal à listes fermées (`src/serveur/journal.ts`) et les refus « EL… » à message fixe ;
 - **les sauvegardes de la base** : elles gardent le joueur jusqu'à leur rotation ; le journal des effacements sert à le réeffacer après une restauration (P-32).
+
+## Restaurer une sauvegarde : lire le journal des effacements d'abord
+
+Une restauration remplace toute la base par une copie plus ancienne, **journal des effacements compris** : les effacements faits depuis la copie (« Tout effacer », joueurs provisoires effacés par le ménage) seraient perdus deux fois, dans les données et dans le journal (Juridique, correction 11 ; P-32). L'ordre est donc imposé :
+
+1. **Avant de restaurer**, lire le journal de la base actuelle (`SELECT joueur_id, efface_le FROM effacement`, sous le rôle propriétaire : seule règle qui le montre) et le garder hors de la base, le temps de l'opération.
+2. Restaurer la copie.
+3. **Rejouer** : pour chaque identifiant lu en 1, effacer le joueur comme « Tout effacer » (`effacerJoueurs`, `effacement.ts`), et remettre sa ligne au journal.
+4. Vérifier qu'il ne reste rien de chacun (`restesDuJoueur`), puis effacer la liste gardée en 1.
+
+L'outil qui fait ces quatre gestes, et son test (« un joueur effacé après la copie reste effacé après la restauration »), viendront avec le pas-à-pas de restauration (P-32). À la fin du test, la base est supprimée, non vidée, et sans sauvegarde manuelle (P-32).

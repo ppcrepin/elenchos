@@ -2,8 +2,8 @@
 // Juridique l'exige avant la première vraie invitation (relecture du schéma, 16 octobre 2026, correction 1) : sans lui,
 // aucune durée promise par « Qui, durée, droits » n'est tenue (art. 5.1.e). Il tourne sous le rôle du ménage, en une
 // transaction, avec l'heure du serveur déclarée (`elenchos.instant`, comme toute transaction du jeu) ; le planificateur
-// de l'étape 2 l'appellera chaque jour (P-31 : « un effacement quotidien »). Il peut être relancé : une seconde passe
-// à la même heure n'efface rien de plus.
+// de l'étape 2 l'appellera chaque jour, jamais entre 17 h 30 et 18 h 30 (P-31, proposé). Il peut être relancé : une
+// seconde passe à la même heure n'efface rien de plus.
 //
 // Ce qu'il efface, et pourquoi (la durée de la carte entre parenthèses) :
 // - les joueurs provisoires créés il y a 7 jours ou plus, comme « Tout effacer » (DECISIONS-TECHNIQUES, partie 3 ;

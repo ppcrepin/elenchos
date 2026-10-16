@@ -2,9 +2,10 @@
 // autre cercle, même par une requête privée de tout filtre (« SELECT * » sur chaque table, sous le rôle du jeu) : c'est
 // la base qui refuse. Sans déclaration, la base ne rend rien. Les identités ne sont lues que par les comptes (P-01) ;
 // les réponses, jamais par l'envoi ni par les mesures (P-22, P-23) ; les mesures ne lisent que des totaux au-dessus des
-// seuils. L'invitation ne montre les réponses d'entrée de l'invitant qu'à l'invité lié, 7 jours au plus (P-29). « Rien avant 18h »
-// (P-26) est tenu aussi par la base pour les réponses du jour : un proche ne les lit qu'après la fermeture du texte,
-// et « déjà joué » passe par une fonction qui ne rend que des membres. La base et le moteur placent 18h au même instant.
+// seuils. L'invitation ne montre les réponses d'entrée de l'invitant qu'à l'invité lié, et 7 jours au plus (P-29,
+// P-25). « Rien avant 18h » (P-26) est tenu aussi par la base pour les réponses du jour : un proche ne les lit qu'après
+// la fermeture du texte, et « déjà joué » passe par une fonction qui ne rend que des membres. La base et le moteur
+// placent 18h au même instant.
 //
 // Tout est joué deux fois : en mode « roles » (un rôle par module) et en mode « repli » (le propriétaire, retenu par
 // FORCE ROW LEVEL SECURITY), pour prouver que le repli tient le cloisonnement.

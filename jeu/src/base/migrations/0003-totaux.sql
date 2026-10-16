@@ -76,13 +76,17 @@ BEGIN
     RAISE EXCEPTION USING ERRCODE = 'EL040', MESSAGE = 'mesure sans joueur';
   END IF;
   IF NOT totaux_refuses() AND fin_du_jour_de_jeu(p_periode) > instant_du_jeu() THEN
+    -- Le total d'abord : une valeur hors liste y échoue sur une ligne qui ne porte aucun identifiant (P-07).
+    INSERT INTO total_mesure (periode, sorte, numerateur, denominateur, joueurs)
+      VALUES (p_periode, p_sorte, p_numerateur, p_denominateur, 0)
+      ON CONFLICT (periode, sorte) DO UPDATE SET numerateur = total_mesure.numerateur + EXCLUDED.numerateur,
+        denominateur = total_mesure.denominateur + EXCLUDED.denominateur;
     INSERT INTO apport_mesure (joueur_id, periode, sorte) VALUES (joueur_courant(), p_periode, p_sorte)
       ON CONFLICT (joueur_id, periode, sorte) DO NOTHING;
     GET DIAGNOSTICS nouveau = ROW_COUNT;
-    INSERT INTO total_mesure (periode, sorte, numerateur, denominateur, joueurs)
-      VALUES (p_periode, p_sorte, p_numerateur, p_denominateur, nouveau)
-      ON CONFLICT (periode, sorte) DO UPDATE SET numerateur = total_mesure.numerateur + EXCLUDED.numerateur,
-        denominateur = total_mesure.denominateur + EXCLUDED.denominateur, joueurs = total_mesure.joueurs + EXCLUDED.joueurs;
+    IF nouveau = 1 THEN
+      UPDATE total_mesure SET joueurs = joueurs + 1 WHERE periode = p_periode AND sorte = p_sorte;
+    END IF;
   END IF;
   PERFORM set_config('elenchos.module', coalesce(ancien, ''), true);
 END $$;

@@ -261,11 +261,17 @@ Replié : « « Sur l'écran d'accueil » n'apparaît pas ? » → « Tu n'es sa
 **N13. Lien qui ne marche plus** (5.14 élargi)
 « Ce lien ne marche plus » / « Une invitation ne sert qu'une fois, pendant 7 jours. Demande-en une nouvelle à {prénom}. » / « Tu as déjà un compte ? » bouton « Me connecter ».
 
-**N14. Tout effacer** (Moi › Réglages › Tout effacer)
+**N14. Tout effacer** (Moi › Réglages › Tout effacer ; mis à jour le 16 octobre 2026 : « Tout effacer » révoque aussi la connexion chez Apple, D-065 (rappel) ; `jeu/DECISIONS-TECHNIQUES.md`, 1.14 ; `jeu/CONTRAT.md`, `POST /api/tout-effacer` ; aligné sur N6, « Tes droits »)
 Confirmation : « Tout effacer ? » / « Ton compte, tes réponses et tes devinettes sont effacés du jeu tout de suite. Ton visage disparaît du cercle, sans message au cercle. » / « Les copies de secours de l'hébergeur s'effacent d'elles-mêmes en quatre semaines environ. Elles ne servent qu'en cas de panne. » / « Tout effacer » · « Annuler ».
-Après : « C'est effacé. Tu peux supprimer l'icône de ton écran d'accueil. »
-- [compte créé avec Apple] « Ton compte passait par Apple. Pour y retirer aussi Elenchos : ouvre les Réglages de l'iPhone et cherche « Se connecter avec Apple ». »
-- [compte créé avec Google] « Ton compte passait par Google. Pour y retirer aussi Elenchos : myaccount.google.com, rubrique « Sécurité », connexions aux applications tierces. »
+- [compte créé avec Apple, sous le texte de confirmation] « « Tout effacer » retire aussi Elenchos de ton compte Apple, quand tu confirmes. » (mots de Juridique, N6). Puis : « Apple te demandera de confirmer. Si tu fermes sa fenêtre, tout est quand même effacé, mais Elenchos reste dans ton compte Apple. » (mots à finaliser par UX). Au toucher sur « Tout effacer », la feuille d'Apple s'ouvre (Face ID). L'effacement se fait même si le joueur la ferme (`jeu/CONTRAT.md`).
+
+Après, selon la voie du compte et le résultat chez Apple (`voie`, `revoque`) :
+- [toujours] « C'est effacé. » Puis : « Tu peux aussi supprimer l'application Elenchos de ton iPhone. » (remplace « Tu peux supprimer l'icône de ton écran d'accueil. », sans objet avec l'application, D-062 point 2 ; mots à finaliser par UX).
+- [compte Apple, révoqué chez Apple] « Elenchos est aussi retiré de ton compte Apple. » (mots à finaliser par UX, d'après N6).
+- [compte Apple, non révoqué : feuille fermée, ou échec chez Apple] « Elenchos reste dans la liste des connexions de ton compte Apple, sans aucune donnée du jeu. Tu peux l'en retirer toi-même : ouvre les Réglages de l'iPhone et cherche « Se connecter avec Apple ». » (mots de Juridique, N6, avec le chemin déjà écrit par UX ; chemin à vérifier sur un iPhone par UX). Un échec chez Apple ne bloque jamais l'effacement (`jeu/DECISIONS-TECHNIQUES.md`, 1.14).
+- [compte Google] « Elenchos reste dans la liste des connexions de ton compte Google, sans aucune donnée du jeu. Tu peux l'en retirer toi-même : myaccount.google.com, rubrique « Sécurité », connexions aux applications tierces. » (mots de Juridique, N6, avec le chemin déjà écrit par UX ; chemin à vérifier par UX). Chez Google, le lien n'est coupé que de notre côté pendant le test (D-061).
+- [compte e-mail] rien de plus.
+- [toujours, en dernier] « Pour quitter aussi le test chez Apple : dans TestFlight, ouvre Elenchos et arrête le test. » (proposé : N6 dit qu'Apple sait que tu testes Elenchos ; mots et nom exact du bouton de TestFlight à vérifier par UX).
 
 **N15. Cercle complet** : « Ce cercle est complet : dix membres. » (règle 1, une ligne).
 
@@ -275,6 +281,11 @@ Bilan : « Tes 3 réponses sont prêtes. Tes proches vont essayer de les deviner
 
 **N17. Message du porteur au créateur** (le porteur l'envoie lui-même, ce n'est pas un écran)
 « Je teste un jeu sur iPhone, entre proches : chaque jour, un vrai texte de l'Assemblée. Tu donnes ton avis, puis tu devines celui de tes proches. Il faut inviter au moins deux proches (15 ans et plus) qui ont un iPhone. Ouvre ce lien dans Safari : [lien] »
+
+**N17 a. Message du porteur avant l'invitation à TestFlight par e-mail** (nouveau, 16 octobre 2026 ; le porteur l'envoie lui-même, ce n'est pas un écran ; texte de Juridique, tel quel, avis du 15 octobre 2026, `docs/etape-6/testflight-juridique.md`, 1.6 ; information due au titre de l'article 14 du RGPD ; à relire par UX)
+« Je peux donner ton adresse e-mail à Apple pour t'inviter au test d'Elenchos ? Apple ne s'en sert que pour l'invitation. »
+Sans « oui », pas d'invitation.
+Quand il sert (proposé) : seulement si [Prénom] invite un ami à TestFlight par son adresse e-mail. Le plan retient le lien public de TestFlight, où l'ami s'inscrit lui-même et où aucune adresse ne passe par [Prénom] (`docs/etape-6/plan-jeu-entier.md`, « Ce que l'équipe a tranché seule », D-064) : avec ce lien, ce message n'a pas à être envoyé.
 
 **N18. Pas de réseau** (UX, phase 0, 1.1). Les données passent toujours par le réseau : rien d'ancien ne s'affiche. Quand le réseau revient, l'écran se recharge tout seul et le bandeau disparaît sans message.
 - **L'icône s'ouvre sans réseau, rien n'est encore chargé** (écran entier : l'en-tête Elenchos, sans barre d'onglets) : « Pas de connexion » / « Elenchos a besoin d'internet pour afficher le jeu. Il s'affichera dès que la connexion revient. » / bouton « Réessayer ».

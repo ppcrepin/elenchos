@@ -429,7 +429,7 @@ CREATE POLICY invitation_cloison_maj ON invitation FOR UPDATE USING (module_cour
 -- reponse : les siennes ; celles de ses proches (le serveur en tire cartes, avis du cercle… et n'envoie au téléphone
 -- que ce que les règles montrent, P-26, P-27), mais au texte du jour seulement après sa fermeture, à 18h : avant, la
 -- base ne les rend pas, même à une requête sans filtre (« déjà joué » passe par cloison_ont_repondu) ; leurs réponses
--- d'entrée, toujours ; les réponses d'entrée de son invitant, par un lien lié à lui.
+-- d'entrée, toujours ; les réponses d'entrée de son invitant, par un lien lié à lui depuis moins de 7 jours.
 CREATE POLICY reponse_jeu_lecture ON reponse FOR SELECT USING (module_courant() = 'jeu' AND (
   joueur_id = joueur_courant()
   OR (ARRAY[joueur_id] <@ (SELECT cloison_mes_proches()) AND (moment = 'entree' OR EXISTS (
