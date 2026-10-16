@@ -3,8 +3,8 @@
 # serveur », après la copie des ressources).
 #
 # L'adresse du serveur est fixée dans l'application au moment de la fabrication, à partir d'une seule source : le
-# réglage ELENCHOS_SERVEUR, donné à xcodebuild par le workflow (la variable du même nom de l'environnement GitHub
-# « testflight »). Ce script la recopie dans la page embarquée, à la place de la marque __ELENCHOS_SERVEUR__, qui y
+# réglage ELENCHOS_SERVEUR, donné à xcodebuild par le workflow, qui le lit dans jeu/ios/adresse-serveur.txt
+# (app-testflight.yml), ou le faux serveur local (app-simulateur.yml). Ce script la recopie dans la page embarquée, à la place de la marque __ELENCHOS_SERVEUR__, qui y
 # figure deux fois : la règle de chargement (CSP, `connect-src`) et la balise lue par `public/client.js`. L'extension de
 # réception lit le même réglage dans son Info.plist.
 #

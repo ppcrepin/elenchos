@@ -1,8 +1,8 @@
 // Les mesures que le serveur compte lui-même, au moment du geste, sans rien garder de la personne
 // (`SORTES_COMPTEUR_SERVEUR`, contrat.ts ; CONTRAT.md, 2.15 ; D-066, point 4). Étape 1, travail D (16 octobre 2026).
 //
-// « LE SOIR MÊME » (compteur `revelation_ouverte_le_soir`, CONTRAT.md, 2.9). PROPOSÉ PAR BACK-END, À CONFIRMER PAR GAME
-// DESIGN : une révélation est ouverte « le soir même » si sa première ouverture a lieu entre 18h et minuit, heure de
+// « LE SOIR MÊME » (compteur `revelation_ouverte_le_soir`, CONTRAT.md, 2.9). PROPOSÉ PAR BACK-END, CONFIRMÉ PAR GAME
+// DESIGN (16 octobre 2026) : une révélation est ouverte « le soir même » si sa première ouverture a lieu entre 18h et minuit, heure de
 // Paris, le jour civil où elle tombe. Pourquoi minuit : en français, le soir finit à minuit ; une heure fixe se dit
 // en une phrase au porteur, là où une durée (« dans les 6 heures ») se lirait mal ; et elle sépare nettement ceux qui
 // viennent au rendez-vous de ceux qui découvrent la révélation le lendemain, avant le 18h suivant. Un seul réglage,

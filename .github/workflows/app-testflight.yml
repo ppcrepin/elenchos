@@ -14,7 +14,7 @@
 #   ASC_CLE_ID        identifiant de la clé d'API d'App Store Connect (clé d'équipe, rôle Admin)
 #   ASC_EMETTEUR_ID   identifiant de l'émetteur (Issuer ID) de cette clé
 #   ASC_CLE_P8        contenu du fichier .p8 de cette clé
-#   APPLE_EQUIPE_ID   identifiant d'équipe (Team ID) du compte développeur
+#   APPLE_ID_EQUIPE   identifiant d'équipe (Team ID) du compte développeur
 # Le journal ne dit que « juste », « ÉCART », « permis », « refusé », « réussi » ou « échoué », et les lignes d'erreur
 # de xcodebuild en cas d'échec ; les sorties complètes de xcodebuild restent sur la machine, effacée à la fin.
 #
@@ -140,13 +140,13 @@ jobs:
           ASC_CLE_ID: ${{ secrets.ASC_CLE_ID }}
           ASC_EMETTEUR_ID: ${{ secrets.ASC_EMETTEUR_ID }}
           ASC_CLE_P8: ${{ secrets.ASC_CLE_P8 }}
-          APPLE_EQUIPE_ID: ${{ secrets.APPLE_EQUIPE_ID }}
+          APPLE_ID_EQUIPE: ${{ secrets.APPLE_ID_EQUIPE }}
         run: |
           manque=""
           [ -n "$ASC_CLE_ID" ] || manque="$manque ASC_CLE_ID"
           [ -n "$ASC_EMETTEUR_ID" ] || manque="$manque ASC_EMETTEUR_ID"
           [ -n "$ASC_CLE_P8" ] || manque="$manque ASC_CLE_P8"
-          [ -n "$APPLE_EQUIPE_ID" ] || manque="$manque APPLE_EQUIPE_ID"
+          [ -n "$APPLE_ID_EQUIPE" ] || manque="$manque APPLE_ID_EQUIPE"
           if [ -n "$manque" ]; then echo "refusé : secrets absents de l'environnement testflight :$manque"; exit 1; fi
           umask 077
           mkdir -p "$RUNNER_TEMP/cles"
@@ -157,7 +157,7 @@ jobs:
         env:
           ASC_CLE_ID: ${{ secrets.ASC_CLE_ID }}
           ASC_EMETTEUR_ID: ${{ secrets.ASC_EMETTEUR_ID }}
-          APPLE_EQUIPE_ID: ${{ secrets.APPLE_EQUIPE_ID }}
+          APPLE_ID_EQUIPE: ${{ secrets.APPLE_ID_EQUIPE }}
         run: |
           adresse=$(grep -v '^#' ios/adresse-serveur.txt | tr -d '[:space:]')
           case "$SIGNATURE" in
@@ -169,7 +169,7 @@ jobs:
           # shellcheck disable=SC2086
           xcodebuild archive -project ios/App/App.xcodeproj -scheme App -configuration Release \
             -destination 'generic/platform=iOS' -archivePath "$RUNNER_TEMP/App.xcarchive" -derivedDataPath "$RUNNER_TEMP/derive" \
-            DEVELOPMENT_TEAM="$APPLE_EQUIPE_ID" CURRENT_PROJECT_VERSION="$NUMERO" ELENCHOS_SERVEUR="$adresse" $signature \
+            DEVELOPMENT_TEAM="$APPLE_ID_EQUIPE" CURRENT_PROJECT_VERSION="$NUMERO" ELENCHOS_SERVEUR="$adresse" $signature \
             > "$RUNNER_TEMP/archive.log" 2>&1 || {
               grep -E "error:|\*\* ARCHIVE FAILED" "$RUNNER_TEMP/archive.log" | head -60
               echo "échoué : archive (signature : $SIGNATURE)"
@@ -180,7 +180,7 @@ jobs:
         env:
           ASC_CLE_ID: ${{ secrets.ASC_CLE_ID }}
           ASC_EMETTEUR_ID: ${{ secrets.ASC_EMETTEUR_ID }}
-          APPLE_EQUIPE_ID: ${{ secrets.APPLE_EQUIPE_ID }}
+          APPLE_ID_EQUIPE: ${{ secrets.APPLE_ID_EQUIPE }}
         run: |
           options() {
             cat <<FIN
@@ -191,7 +191,7 @@ jobs:
             <key>method</key><string>app-store-connect</string>
             <key>destination</key><string>$1</string>
             <key>signingStyle</key><string>automatic</string>
-            <key>teamID</key><string>$APPLE_EQUIPE_ID</string>
+            <key>teamID</key><string>$APPLE_ID_EQUIPE</string>
             <key>manageAppVersionAndBuildNumber</key><false/>
             <key>uploadSymbols</key><true/>
           </dict>

@@ -285,7 +285,7 @@ jeu/
 - **jamais en ligne** (le serveur refuse alors de démarrer, `CONTRAT.md`, partie 5) : `IGNORER_HORAIRES`, `HORLOGE_VITESSE`, `HORLOGE_DEPART`, `CODES_ESSAI_LOCAUX`.
 
 **Chez GitHub** :
-- **l'environnement `testflight`**, réservé à la branche `mise-en-ligne`, avec quatre secrets, lus par `app-testflight.yml` seulement : `ASC_CLE_ID`, `ASC_EMETTEUR_ID`, `ASC_CLE_P8` (la clé d'App Store Connect, 1.15), et `APPLE_EQUIPE_ID`, qui porte la même valeur que `APPLE_ID_EQUIPE` chez Scalingo, sous un autre nom ;
+- **l'environnement `testflight`**, réservé à la branche `mise-en-ligne`, avec quatre secrets, lus par `app-testflight.yml` seulement : `ASC_CLE_ID`, `ASC_EMETTEUR_ID`, `ASC_CLE_P8` (la clé d'App Store Connect, 1.15), et `APPLE_ID_EQUIPE`, le même nom et la même valeur que chez Scalingo ;
 - `app-simulateur.yml` n'a besoin d'aucun secret.
 
 **Dans le dépôt, pas un secret** : `jeu/ios/adresse-serveur.txt`, l'adresse que vise l'application fabriquée pour TestFlight. Une seule ligne `https://hôte`, en pratique la même que `ADRESSE_PUBLIQUE`. Vide tant que l'adresse gratuite de Scalingo n'est pas connue : la fabrication pour TestFlight refuse alors de partir. Le workflow la passe à Xcode (réglage de fabrication `ELENCHOS_SERVEUR`) ; `ios/App/fixer-adresse.sh` la recopie dans la page embarquée, l'extension la lit dans son `Info.plist`, et le workflow vérifie dans l'IPA qu'elle est la même aux deux endroits. Passer au domaine : changer cette ligne, puis refaire une fabrication.

@@ -114,7 +114,7 @@ Une seule exception, qui ne touche pas au jeu : `GET /api/etat` prolonge l'éch�
 - **La version minimale.** Chaque enveloppe porte `fabricationMinimale`. Si le numéro de l'application est plus petit :
   - le serveur répond `mise_a_jour_requise` (426) à toute demande dont l'en-tête porte un numéro trop petit, sauf `GET /api/etat`, par laquelle l'application apprend le numéro minimal. Les demandes sans cet en-tête (nos pages web, l'extension) ne sont pas concernées : la version minimale est une question de compatibilité, pas de sécurité. Un en-tête qui n'est pas un entier de 1 à 9 chiffres donne `requete_invalide`, sauf sur `GET /api/etat`, qui l'ignore ;
   - le numéro minimal est le réglage `FABRICATION_MINIMALE` ; absent, il vaut 0 : tout est accepté ;
-  - l'application montre l'écran « Mets à jour Elenchos dans TestFlight » (mots d'UX, `A_ECRIRE`), sans rien perdre : un choix pas encore validé reste dans sa mémoire.
+  - l'application montre l'écran « Mise à jour requise » (mots d'UX, dans `public/textes.js`), sans rien perdre : un choix pas encore validé reste dans sa mémoire.
 
   Le numéro minimal ne monte que quand le contrat change d'une façon que l'ancienne fabrication ne comprend pas. Il se monte comme une mise en ligne : jamais de 15h à 19h ni le dimanche (D-043, D-054).
 - **Rien d'autre dans le téléphone** (P-11) : le trousseau garde le seul jeton de session. Ni `localStorage`, ni base locale, ni cache de réponses. Les fichiers de l'interface sont dans l'application elle-même. Seules exceptions, dans la mémoire du script et le temps d'un écran :
@@ -618,10 +618,10 @@ Toute autre adresse est ignorée. L'application ne garde ni l'une ni l'autre.
 | `deja_repondu`, `deja_validee` | 409 | geste déjà fait (deux appareils, renvoi) | `GET /api/aujourdhui` |
 | `carte_inconnue`, `visage_non_propose`, `visage_deja_pose`, `pourquoi_sans_visage` | 409 | geste impossible sur la manche | `GET /api/aujourdhui` ; l'écran ne doit pas permettre ces gestes |
 | `lien_expire`, `lien_deja_servi` | 410 | pendant le défi | N13 ou 5.14 |
-| `connexion_expiree` | 410 | connexion commencée il y a plus de 10 minutes, ou code de retour de plus d'une minute | retour à 1.8, sans message d'erreur (mots d'UX, `A_ECRIRE`) |
+| `connexion_expiree` | 410 | connexion commencée il y a plus de 10 minutes, ou code de retour de plus d'une minute | retour à 1.8, sans message d'erreur (mots d'UX, dans `public/textes.js`) |
 | `cercle_complet`, `trois_cercles` | 409 | invitation à dix membres ; quatrième cercle | N15 ; écran Rejoindre ou 5.6 |
 | `pseudo_pris`, `pseudo_invalide`, `nom_invalide`, `adresse_invalide`, `code_faux`, `code_expire`, `abonnement_invalide` | 422 | saisie refusée | message sous le champ (mots : UX ; N7 pour le pseudo ; `code_faux`, « Ce n'est pas le bon code. Vérifie les six chiffres. » ; `code_expire`, « Ce code a expiré. Demande un nouveau code. ») |
-| `trop_essais`, `trop_de_codes`, `trop_de_demandes` | 429 | limiteur | message fixe, sans durée variable : `trop_essais`, « Trop d'essais. Demande un nouveau code. » ; `trop_de_codes`, « Trop de codes demandés pour cette adresse. Réessaie dans un quart d'heure. » ; `trop_de_demandes`, message générique (`A_ECRIRE`, UX) |
+| `trop_essais`, `trop_de_codes`, `trop_de_demandes` | 429 | limiteur | message fixe, sans durée variable : `trop_essais`, « Trop d'essais. Demande un nouveau code. » ; `trop_de_codes`, « Trop de codes demandés pour cette adresse. Réessaie dans un quart d'heure. » ; `trop_de_demandes`, message générique (mots d'UX, dans `public/textes.js`) |
 | `erreur_serveur` | 500 | défaut du serveur | message neutre ; rien de personnel dans le journal (P-07) |
 | `indisponible` | 503 | fonction coupée faute de réglage | le bouton de la voie e-mail n'apparaît pas ; le bloc N10 non plus (`Etat.message.disponible`) |
 
@@ -712,7 +712,7 @@ Le corps d'une erreur ne contient que son code : jamais de message, de valeur re
 | Vue de secours | gardé | aucun | — |
 | Refus après 18h | gardé ; vaut après 18h10, ou dès 18h si Répondre ne s'était pas affiché | `texte_ferme`, `manche_fermee` | — |
 | Ligne de l'écran Inviter | gardé | mot fixe | — |
-| Mise à jour requise | **nouveau** (`A_ECRIRE`) : « Mets à jour Elenchos dans TestFlight » | `fabricationMinimale`, `mise_a_jour_requise` | — |
+| Mise à jour requise | **nouveau** (mots d'UX, dans `public/textes.js`) : ouvrir TestFlight et mettre à jour Elenchos | `fabricationMinimale`, `mise_a_jour_requise` | — |
 | Page d'invitation, sans l'application | **nouveau** (`A_ECRIRE`) : installer TestFlight, installer Elenchos, revenir toucher le lien | `GET /invitation` ; `POST /api/compteur` (`iphone_sans_application`) | — |
 | Défi d'un joueur inscrit | **nouveau** (`A_ECRIRE`) : la réponse reprise ; la ligne « Défi de {pseudo} à finir › » | `Entree.reprise`, `Etat.defi` | `Entree`, `Etat` |
 | Rejoindre un cercle | **nouveau** (`A_ECRIRE`) : garder ou changer son pseudo (règle 15), obstacles | `GET /api/rejoindre`, `POST /api/rejoindre` | `EcranRejoindre` |
@@ -720,7 +720,7 @@ Le corps d'une erreur ne contient que son code : jamais de message, de valeur re
 | Réponse en retard acceptée | **nouveau** (`A_ECRIRE`) : la phrase du jour, puis « Continuer » vers la révélation | `ReponseFaite.enRetard` | `ReponseFaite` |
 | « Rien à deviner dans {nom} aujourd'hui » | **nouveau** (mots de la maquette 5.8) | `Repere.cercles` (`rien`) | `Aujourdhui` |
 | Un ancien membre, sur l'écran d'un proche | **nouveau** (`A_ECRIRE`) : « Tu pensais à un ancien membre » | `SurpriseProche.tuPensais` null | `Proche` |
-| Connexion expirée | **nouveau** (`A_ECRIRE`) | `connexion_expiree` | — |
+| Connexion expirée | **nouveau** (mots d'UX, dans `public/textes.js`) | `connexion_expiree` | — |
 
 ## 8. Ce que ce contrat touche
 
