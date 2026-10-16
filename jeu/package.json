@@ -7,6 +7,8 @@
     "node": "22.22.0"
   },
   "scripts": {
+    "start": "node src/serveur/principal.ts",
+    "build": "node outils/garde-horaires.ts && node --test \"tests/socle/*-sans-base.test.ts\"",
     "typer": "tsc -p tsconfig.json",
     "test": "node --test --test-concurrency=1 \"tests/**/*.test.ts\"",
     "test:socle": "node --test --test-concurrency=1 \"tests/socle/*.test.ts\"",

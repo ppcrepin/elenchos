@@ -4,7 +4,7 @@
 
 *État, 11 octobre 2026 : **validé par le porteur (D-052)**. Les deux questions de la section 7 sont répondues : les règles sont validées d'un geste (D-052, point 1) et les trois comptes de mi-bêta sont ajoutés aux mesures (D-052, point 2). Ce qui était marqué « (proposé) » est donc décidé, sauf ce qui reste « à confirmer » (le lien de 7 jours, par UX) et les mots laissés à UX ; les passages écrits au conditionnel sur les trois comptes (sections 5, 8, 9 et 10) se lisent désormais au présent. Les mots des valeurs des tensions 6 et 7 suivent D-053 (point 3) : « l'indépendance » et « le privé » remplacent « la souveraineté » et « le marché » ; Souveraineté/Ouverture (SO) et État/Marché (EP) restent des noms de code internes, jamais des libellés à l'écran. Aucun chiffre n'a changé. Report dans `docs/produit.md` : fait le même jour.*
 
-*État, 16 octobre 2026 : règles 3, 4, 10, 11, 14 et 16 : arbitrages de l'équipe du 16 octobre (D-064, D-065, D-066, D-067), non validés par le porteur, renversables. La règle 16 ne change que pendant le test (D-064). Report dans `docs/produit.md` : fait le même jour.*
+*État, 16 octobre 2026 : règles 3, 4, 10, 11, 14, 15 et 16 : arbitrages de l'équipe du 16 octobre (D-064, D-065, D-066, D-067), non validés par le porteur, renversables. La règle 16 ne change que pendant le test (D-064). Report dans `docs/produit.md` : fait le même jour.*
 
 ## En bref
 

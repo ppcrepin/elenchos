@@ -10,7 +10,7 @@
 
 *Le 12 octobre 2026, mise à jour après D-054 (point 3, qui modifie D-005) : le jeu se joue sur iPhone seulement, et l'application ira sur l'App Store seul, sans Google Play. Entrent : qui peut jouer (section 1) ; ce que voit un proche sur Android, une page de refus (section 5), et ses mots, marqués « (proposé ; mots provisoires de l'équipe, à écrire par UX, D-054) » ; ce que voit quelqu'un sur un ordinateur ou un iPad, marqué « (proposé) » ; l'App Store seul (section 7) ; la mesure du message de 18h (section 8). Les mentions des deux boutiques, de Google Play et d'Android sont alignées ; la section 9, les questions tranchées, ce qui reste à régler et l'annexe sont mis à jour. Les autres réponses de D-054 touchent la fabrication (`docs/etape-6/test-18h.md`). Report de D-054 relu par Cohérence (compatible avec réserves, corrigées), puis par le Vérificateur (OK avec corrections, appliquées).*
 
-*Le 16 octobre 2026 : report de D-065 (point 1), D-066 (point 1) et D-067, arbitrages de l'équipe non encore vus par le porteur, renversables (règles 3, 4, 14, Titres passés, Réglages). Le même jour : report de D-062 (le test se joue dans une application iPhone, installée par TestFlight ; sections 5, 6, 7 et 8) ; de la relâche de E9 sur une tension, arbitrage de l'équipe de D-064, pendant le test (règle 16) ; du score retiré de la notification d'arrivée pendant le test (D-061, section 5) ; et, proposés, du refus des mesures et de l'export dans les Réglages (D-066, point 3 ; D-042, point 3). La section 9 les récapitule. Mise à jour : Game design (règles) et UX (écrans).*
+*Le 16 octobre 2026 : report de D-065 (point 1), D-066 (point 1) et D-067, arbitrages de l'équipe non encore vus par le porteur, renversables (règles 3, 4, 10, 14, 15, Titres passés, Réglages). Le même jour : report de D-062 (le test se joue dans une application iPhone, installée par TestFlight ; sections 5, 6, 7 et 8) ; de la relâche de E9 sur une tension, arbitrage de l'équipe de D-064, pendant le test (règle 16) ; du score retiré de la notification d'arrivée pendant le test (D-061, section 5) ; et, proposés, du refus des mesures et de l'export dans les Réglages (D-066, point 3 ; D-042, point 3). La section 9 les récapitule. Mise à jour : Game design (règles) et UX (écrans).*
 
 ## 1. En une phrase, et pour qui
 
@@ -254,6 +254,8 @@ Leur calcul lit des opinions (RGPD, art. 9) ; seuls des totaux en sortent. Condi
     - **D-011** : troisième exception ; un proche partagé sans réponse n'est proposé à un joueur que dans une seule de ses manches du jour (D-065, point 1 ; règle 3).
     - **D-045, point 2, la règle 14 et le §3** (« scores et titres figés ») : Le Pas de Côté est effacé au départ de son titulaire, au lieu de rester sous « un ancien membre » (D-066, point 1 ; règles 4 et 14, Titres passés, Réglages).
     - **D-024** (« la révélation le dit ») : un proche parti après 18h n'est plus nommé à la révélation ; son point reste, et un jumeau y devient juste (D-067 ; règles 4 et 11, Les attributions).
+    - **Règle 10** (« les membres actuels », D-052) : l'avis du cercle ne compte que les membres déjà présents à la fermeture du texte (D-065, point 4).
+    - **Règle 15 et `docs/onboarding.md`**, pendant le test seulement : un seul trio de textes d'entrée pour tous les cercles (D-065, point 2).
     - **E9** (D-030), pendant le test seulement : sur la tension « Tradition ou changement », 3 textes « changement » pour 1 « tradition » (D-064 ; règle 16).
 
 ## Questions de fond, tranchées (D-010)

@@ -92,14 +92,16 @@ async function lireCorps(req: IncomingMessage): Promise<string> {
   return Buffer.concat(morceaux).toString('utf8');
 }
 
-async function lireJson(req: IncomingMessage): Promise<Record<string, unknown>> {
+/** Le corps JSON d'un POST : un objet ; null si le corps est vide (une route sans envoi, comme
+ *  `POST /api/deconnexion`, accepte un corps vide ou `{}`). Tout autre corps exige `Content-Type: application/json`. */
+async function lireJson(req: IncomingMessage): Promise<Record<string, unknown> | null> {
+  const texte = await lireCorps(req);
+  if (texte === '') return null;
   if (!/^application\/json(;|$)/.test(req.headers['content-type'] ?? '')) throw new ErreurDemande('requete_invalide');
   try {
-    const v: unknown = JSON.parse(await lireCorps(req));
+    const v: unknown = JSON.parse(texte);
     if (v && typeof v === 'object' && !Array.isArray(v)) return v as Record<string, unknown>;
-  } catch (e) {
-    if (e instanceof ErreurDemande) throw e;
-  }
+  } catch { /* plus bas */ }
   throw new ErreurDemande('requete_invalide');
 }
 

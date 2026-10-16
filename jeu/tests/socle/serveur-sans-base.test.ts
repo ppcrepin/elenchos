@@ -24,9 +24,13 @@ function envComplet(complements: Record<string, string> = {}): NodeJS.ProcessEnv
     CLE_REPONSES: b64url(randomBytes(32)),
     CLE_IDENTITES: b64url(randomBytes(32)),
     APPLE_ID_EQUIPE: 'ABCDE12345',
-    APPLE_ID_CLE: 'KEY1234567',
     APPLE_ID_APPLICATION: 'fr.exemple.elenchos',
-    APPLE_CLE_PRIVEE: Buffer.from(privateKey.export({ type: 'pkcs8', format: 'pem' }).toString()).toString('base64'),
+    APPLE_ID_CLE_MESSAGES: 'KEY1234567',
+    APPLE_CLE_MESSAGES: Buffer.from(privateKey.export({ type: 'pkcs8', format: 'pem' }).toString()).toString('base64'),
+    APPLE_ID_CLE_CONNEXION: 'KEY7654321',
+    // Collée telle quelle (PEM sur plusieurs lignes) : acceptée aussi.
+    APPLE_CLE_CONNEXION: privateKey.export({ type: 'pkcs8', format: 'pem' }).toString(),
+    FABRICATION_MINIMALE: '12',
     GOOGLE_ID_CLIENT: 'client-google-de-test.apps.googleusercontent.com',
     GOOGLE_SECRET_CLIENT: 'secret-google-de-test',
     FIN_DU_TEST: '2027-03-31',
@@ -89,13 +93,59 @@ test('en ligne, FIN_DU_TEST est exigée : sans elle, le serveur refuse de démar
 test('un réglage absent ou illisible est signalé par son nom, jamais par sa valeur ; la fonction qui en dépend est coupée', () => {
   const env = envComplet({ APPLE_ID_EQUIPE: TRACEUR.email, GOOGLE_SECRET_CLIENT: '' });
   const c = lireConfig(env);
-  assert.equal(c.apple, null);
+  // Sans équipe : le message de 18h et la révocation sont coupés ; la connexion Apple, qui n'a besoin que de
+  // l'identifiant de l'application, reste.
+  assert.equal(c.apns, null);
+  assert.equal(c.revocation, null);
+  assert.deepEqual(c.apple, { idApplication: 'fr.exemple.elenchos' });
   assert.equal(c.google, null);
-  assert.equal(c.peutDemarrer, true); // Apple et Google coupés, le reste tourne
+  assert.equal(c.peutDemarrer, true); // le message, la révocation et Google coupés, le reste tourne
   assert.ok(c.manquants.includes('APPLE_ID_EQUIPE'));
   assert.ok(c.manquants.includes('GOOGLE_SECRET_CLIENT'));
   for (const m of c.manquants) assert.match(m, /^[A-Z_]+$/);
   assert.ok(!JSON.stringify([c.manquants, c.refuses]).includes(TRACEUR.email));
+});
+
+test('les réglages d’Apple, chacun pour sa fonction ; le service de production par défaut, « essai » sur demande', () => {
+  const c = lireConfig(envComplet());
+  assert.equal(c.apns?.service, 'production');
+  assert.equal(c.apns?.idCle, 'KEY1234567');
+  assert.equal(c.revocation?.idCle, 'KEY7654321');
+  assert.equal(lireConfig(envComplet({ APPLE_SERVICE_MESSAGES: 'essai' })).apns?.service, 'essai');
+  const inconnu = lireConfig(envComplet({ APPLE_SERVICE_MESSAGES: 'developpement' }));
+  assert.equal(inconnu.apns, null); // jamais pris pour la production
+  assert.ok(inconnu.manquants.includes('APPLE_SERVICE_MESSAGES'));
+  const sansCle = lireConfig(envComplet({ APPLE_CLE_MESSAGES: 'pas une clé' }));
+  assert.equal(sansCle.apns, null);
+  assert.ok(sansCle.manquants.includes('APPLE_CLE_MESSAGES'));
+  assert.notEqual(sansCle.revocation, null);
+  const sansAppli = lireConfig(envComplet({ APPLE_ID_APPLICATION: '' }));
+  assert.deepEqual([sansAppli.apple, sansAppli.apns, sansAppli.revocation], [null, null, null]);
+  // Une clé RSA, ou une clé P-256 tronquée, n'est pas une clé .p8 d'Apple.
+  const { privateKey: rsa } = generateKeyPairSync('rsa', { modulusLength: 2048 });
+  assert.equal(lireConfig(envComplet({ APPLE_CLE_MESSAGES: rsa.export({ type: 'pkcs8', format: 'pem' }).toString() })).apns, null);
+});
+
+test('la version minimale : un entier ; absente ou illisible, signalée, et tout est accepté (0)', () => {
+  assert.equal(lireConfig(envComplet()).fabricationMinimale, 12);
+  for (const v of ['', 'douze', '-1', '1.5', '1234567890']) {
+    const c = lireConfig(envComplet({ FABRICATION_MINIMALE: v }));
+    assert.equal(c.fabricationMinimale, 0, v);
+    assert.ok(c.manquants.includes('FABRICATION_MINIMALE'), v);
+    assert.equal(c.peutDemarrer, true);
+  }
+});
+
+test('le compte du porteur (étape 1) : facultatif ; un pseudo que la base refuserait est signalé et sans effet', () => {
+  assert.equal(lireConfig(envComplet()).comptePorteur, null);
+  assert.ok(!lireConfig(envComplet()).manquants.includes('COMPTE_PORTEUR'));
+  assert.deepEqual(lireConfig(envComplet({ COMPTE_PORTEUR: 'Mamie Jo' })).comptePorteur, { pseudo: 'Mamie Jo' });
+  for (const v of [TRACEUR.email, 'a'.repeat(25), 'https://x', '203.0.113.7']) {
+    const c = lireConfig(envComplet({ COMPTE_PORTEUR: v }));
+    assert.equal(c.comptePorteur, null, v);
+    assert.ok(c.manquants.includes('COMPTE_PORTEUR'));
+    assert.ok(!JSON.stringify(c.manquants).includes(v));
+  }
 });
 
 test('les réglages dangereux sont refusés chez Scalingo et sur GitHub : le serveur ne démarre pas', () => {
