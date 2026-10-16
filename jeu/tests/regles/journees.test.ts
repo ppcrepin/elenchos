@@ -527,6 +527,9 @@ describe('J7 · Dimanche : les titres et la phrase de la semaine', () => {
   test('« Amis » : rien à deviner ; « Famille » : Paul, Inès, puis Thomas ; Marie trouve tout', () => {
     assert.equal(am.statut, 'rien');
     assert.deepEqual(auteurs(fam), ['Paul', 'Ines', 'Thomas']);
+    // Hugo n'a pas répondu à G : il n'est proposé que dans « Famille », la seule de ses manches qui a des cartes (R8).
+    assert.deepEqual(fam.visages, ['Thomas', 'Hugo', 'Ines', 'Paul']);
+    assert.deepEqual(am.visages, ['Lea']);
     const r = reveler(
       jouer(fam, [
         { type: 'poser', carte: 0, visage: 'Paul' },

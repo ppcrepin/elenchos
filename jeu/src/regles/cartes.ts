@@ -213,9 +213,9 @@ export function proposablesDuCercle(cercle: CercleDuJour, devineur: IdMembre, jo
 
 /**
  * Règle 3 (R8), côté visages : un proche présent dans plusieurs de mes cercles n'est proposé que dans une seule de mes
- * manches chaque jour, qu'il ait répondu ou non. C'est la lettre de la règle 3 (« ne m'est servi qu'une fois par
- * jour ») et du contrat (« servi, et proposé, qu'une fois par jour »), dans la lecture de Game design retenue par
- * l'équipe à l'étape 1 (D-062, point 5). Sans elle, son visage proposé partout trahirait qu'il n'a pas répondu (D-011),
+ * manches chaque jour, qu'il ait répondu ou non. C'est la lettre de la règle 3 (`produit.md` : « ne t'est proposée
+ * qu'une fois par jour ») et du contrat (« servi, et proposé, qu'une fois par jour »), dans la lecture de Game design
+ * retenue par l'équipe à l'étape 1 (D-062, point 5). Sans elle, son visage proposé partout trahirait qu'il n'a pas répondu (D-011),
  * et sa réponse en retard pourrait rapporter deux points de jumeau le même jour (règle 11).
  * - Un proche servi est proposé là où R8 le sert (`placement`).
  * - Un proche sans réponse servie (pas de réponse, ou réponse en retard) est proposé dans une seule de mes manches qui

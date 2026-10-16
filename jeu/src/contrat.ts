@@ -638,7 +638,8 @@ export type EtapeDeviner =
       readonly texteHier: TexteCourt;
       /** Dans l'ordre de la manche ; la carte cachée en dernier. */
       readonly cartes: readonly CarteADeviner[];
-      /** Les visages proposés, par ordre d'arrivée (règle 8, sans le proche servi ailleurs, R8). */
+      /** Les visages proposés, par ordre d'arrivée (règle 8). Un proche présent dans plusieurs de tes cercles n'est
+       *  proposé que dans une seule de tes manches du jour, qu'il ait répondu ou non (R8). */
       readonly proposes: readonly Visage[];
       /** Les quatre raisons du texte d'hier, pour la feuille 2.2 ; null s'il n'y a pas de carte cachée. */
       readonly raisonsHier: readonly RaisonAffichee[] | null;
@@ -856,7 +857,9 @@ export type MesTitres = {
 
 export type LigneHistorique = {
   readonly texte: IdTexte;
-  /** « Jeudi 3 avril », ou « Pour commencer · 4 mars » pour un texte d'entrée (E6). */
+  /** « Jeudi 3 avril », ou « Pour commencer · 4 mars » pour un texte d'entrée (E6). Le jour d'un texte du jour est son
+   *  jour de jeu : le texte du jeudi s'ouvre le mercredi à 18h et se révèle le vendredi à 18h (CONTRAT.md, partie 3 ;
+   *  maquette 5.3). */
   readonly quand: string;
   readonly titre: string;
   readonly position: Position;

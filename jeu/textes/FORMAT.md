@@ -38,7 +38,7 @@
 |---|---|---|
 | `id` | « T01 » à « T99 » | unique, stable : c'est l'identifiant que voient le serveur et l'interface |
 | `role` | `entree`, `jour` ou `reserve` | 3, au moins 56, au moins 3 (C4) |
-| `rang` | entrée : 1 à 3, l'ordre du défi ; jour : 1 à n, l'ordre du calendrier ; réserve : 1 à r | le texte du jour de rang k s'ouvre à 18h le k-ième jour du test, à partir de la date du premier jour, saisie par le porteur. Un lot plus long que le test se complète en fin de calendrier (rangs suivants), sans toucher aux textes déjà ouverts (C30) |
+| `rang` | entrée : 1 à 3, l'ordre du défi ; jour : 1 à n, l'ordre du calendrier ; réserve : 1 à r | le texte du jour de rang k s'ouvre à 18h le k-ième jour du test, à partir de la date du premier jour, saisie par le porteur. Comme il s'ouvre à 18h, c'est le texte du jour de jeu suivant (`regles.md`, section 2 ; CONTRAT.md, partie 3) : avec un premier jour P, le texte du jour de jeu d est celui de rang d − P. Un lot plus long que le test se complète en fin de calendrier (rangs suivants), sans toucher aux textes déjà ouverts (C30) |
 | `titre` | le titre affiché | 60 points de code au plus, sans « : » (E8) |
 | `lignes` | les trois lignes du résumé | exactement trois, 90 points de code au plus chacune (comme au second essai) |
 | `tension` | un des huit codes (partie 6) | jamais affiché |

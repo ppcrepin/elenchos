@@ -2,10 +2,11 @@
 // (apostrophe droite) : la typographie d'affichage (`typographier`, essai 2) s'applique après, dans le module des
 // phrases du serveur (DECISIONS-TECHNIQUES.md, 1.4).
 //
-// « Entre » : la phrase du dimanche écrit les deux valeurs « sans article après « Entre » » (regles.md, J9 :
-// « Entre décision locale et décision nationale, … »). C'est la lettre de regles.md ; jeu/textes/FORMAT.md et
-// jeu/src/contrat.ts gardent la forme courte de l'essai (« local et national », « solidarité et responsabilité »),
-// que tensions.md disait « à confirmer pour le produit ». Écart signalé à Game design.
+// « Entre » : la phrase du dimanche écrit les deux valeurs sans leur article (regles.md, J9 : « Entre décision locale
+// et décision nationale, … »), forme validée avec D-052 et confirmée par Game design à l'étape 1. Elle remplace la forme
+// courte de l'essai (« local et national », « solidarité et responsabilité »), que tensions.md ne faisait que proposer.
+// Le contrat (`TENSIONS.sansArticle`, jeu/src/contrat.ts) et jeu/textes/FORMAT.md (partie 6) donnent la même forme ;
+// un test des règles vérifie que les deux listes concordent.
 
 import type { CodeTension } from './types.ts';
 

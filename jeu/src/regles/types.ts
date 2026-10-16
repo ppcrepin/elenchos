@@ -5,8 +5,8 @@
 // Paris où il FINIT à 18h, compté en jours depuis le 1970-01-01 (voir `heure.ts`). Le « jour de jeu du jeudi » commence
 // le mercredi à 18h et finit le jeudi à 18h ; il porte le numéro du jeudi. Le texte du jour d est celui auquel on répond
 // pendant le jour de jeu d ; la manche du jour d devine le texte du jour d − 1 ; sa révélation tombe à la fin du jour d
-// (lecture A, D-010). Attention : `jeu/CONTRAT.md` (partie 3) appelle « texte du jour d » le texte qui s'ouvre le jour
-// civil d à 18h, c'est-à-dire le texte du jour de jeu d + 1 ici.
+// (lecture A, D-010). Le texte qui s'ouvre à 18h le jour civil d est donc celui du jour de jeu d + 1. `jeu/CONTRAT.md`
+// (partie 3) nomme les textes de la même façon.
 
 import type { Fraction } from './fraction.ts';
 

@@ -306,7 +306,7 @@ Le serveur vérifie au même moment le cercle complet (N15) et le pseudo (E7). P
 **Deviner** (2.1, 2.2, 5.8) :
 - **Une manche par cercle**, jouées à la suite dans l'ordre d'entrée dans les cercles (règle 3). L'étape porte le cercle, le rang et le total (« Amis · 2 sur 2 »).
 - Un cercle endormi n'a pas de manche (règle 5). Une manche vidée par R8 est sautée.
-- Un proche présent dans deux de tes cercles n'est servi, et proposé, qu'une fois par jour (R8). Un membre arrivé après la fermeture du texte n'est pas proposé (règle 8).
+- Un proche présent dans deux de tes cercles n'est servi, et proposé, qu'une fois par jour (R8), qu'il ait répondu ou non : sinon son visage, proposé deux fois, dirait qu'il n'a pas répondu (D-011). S'il n'a pas de réponse servie (pas de réponse, ou réponse en retard), un tirage invisible choisit la manche où il est proposé, parmi tes manches qui ont des cartes (lecture de Game design, étape 1). Un membre arrivé après la fermeture du texte n'est pas proposé (règle 8).
 - Quand l'étape est `deviner` avec `ouverte: false`, l'application appelle `POST /api/deviner/ouvrir { cercle }` au moment où elle montre l'écran. C'est ce geste qui fait exister la manche (R10 : une manche dont l'écran ne s'est jamais affiché n'a pas de cartes). Le serveur tire alors les cartes, une seule fois, avec un tirage qui donne le même résultat quel que soit le moment.
 - **Le choix des cartes suit la règle 8.** Dès quatre réponses possibles, deux viennent parmi les plus inattendues de la part de leur auteur, et une au hasard (R3). Deux réponses identiques ne sont pas servies ensemble si une autre peut prendre la place (R4). La carte « qui et pourquoi » vient en dernier (règle 9). Rien à l'écran ne dit laquelle était inattendue.
 - `POST /api/deviner/poser` (`{ carte, visage }`, `visage: null` pour retirer), `POST /api/deviner/pourquoi` (`{ carte, raison }`), `POST /api/deviner/passer` (`{ carte }`), `POST /api/deviner/valider` (`{ cercle }`) : chacun rend le nouvel `Aujourdhui`.
@@ -468,9 +468,11 @@ Apple relit l'application avant les testeurs extérieurs, et demande un accès q
 
 ## 3. Avant et après 18h : l'heure du serveur
 
-**Le jour de jeu** va de 18h à 18h, heure de Paris :
-- le texte du jour d s'ouvre à 18h le jour d et se ferme à 18h le jour d+1 (18h10 pour une réponse en retard, R10) ;
-- il se devine jusqu'à 18h le jour d+2, et se révèle à ce moment-là.
+**Le jour de jeu** va de 18h à 18h, heure de Paris. Il porte le nom du jour où il finit : le « jour de jeu du jeudi » commence le mercredi à 18h et finit le jeudi à 18h (`regles.md`, section 2). Pendant ce jour de jeu, on devine les réponses au texte du mercredi et on répond au texte du jeudi. Le moteur numérote les jours de la même façon (`Jour`, `src/regles/types.ts` et `heure.ts`). Pour le texte du jour de jeu d, par exemple le texte du jeudi :
+- il s'ouvre à 18h le jour civil d − 1 (mercredi) et se ferme à 18h le jour d (jeudi), ou à 18h10 pour une réponse en retard (R10) ;
+- il se devine pendant le jour de jeu d + 1 et se révèle à sa fin, à 18h le jour d + 1 (vendredi ; lecture A, D-010).
+
+Autrement dit, le texte qui s'ouvre à 18h le jour civil d est le texte du jour de jeu d + 1. L'historique écrit ce nom, comme la maquette validée 5.3 : « Jeudi 3 avril · … » puis « révélé vendredi à 18h ».
 
 Ce qu'on voit « avant 18h » ou « après 18h » n'est donc qu'une question de jour de jeu, que seul le serveur connaît.
 
@@ -724,6 +726,7 @@ Le corps d'une erreur ne contient que son code : jamais de message, de valeur re
 6. **Les durées proposées** : connexion en cours 10 minutes ; code de retour une minute ; lien de créateur 7 jours ; lien de relecture 30 jours ; joueur provisoire 7 jours ; score d'entrée effacé à la lecture de l'annonce, 7 jours au plus ; sessions jamais au-delà de la fin du test.
 7. **La feuille de Google, partagée ou privée** : partagée, elle reprend la session Google de Safari mais iOS demande d'abord un accord ; privée, il faut retaper son mot de passe Google. À trancher par UX et Front-end à l'étape 2.
 8. **`GET /api/droits`** : les trois blancs de N6 sont des réglages du serveur, pour ne pas les écrire dans le dépôt public. À confirmer par Juridique.
+9. **Le jour écrit entre 18h et minuit.** L'en-tête « Aujourd'hui · … » donne le jour civil (`Aujourdhui.jour`) : le mercredi à 20h, « mercredi ». Le texte auquel on répond ce soir-là est pourtant celui du jeudi (partie 3), et l'historique l'écrira « Jeudi 3 avril » (maquette 5.3). À confirmer par UX à l'étape 2 ; le serveur suivra ce choix.
 
 ## 10. Limites et doutes
 

@@ -26,6 +26,7 @@ import {
   eveilleLeLendemain,
   F,
   inactivite,
+  motPole,
   jourDeDate,
   jourDeJeu,
   lienValide,
@@ -41,6 +42,7 @@ import {
   pseudoLibre,
   reponseAcceptee,
   revelerManche,
+  sansArticle,
   seuilOriginal,
   servirLaJournee,
   temperaments,
@@ -52,6 +54,7 @@ import {
   type CarteServie,
   type CercleDuJour,
   type ComptesTemperament,
+  type Hasard,
   type IdMembre,
   type MancheRevelee,
   type MancheServie,
@@ -60,6 +63,7 @@ import {
   type ReponseDatee,
   type ReponseDuJour,
 } from '../../src/regles/index.ts';
+import { TENSIONS } from '../../src/contrat.ts';
 import { hasardEcrit, rep, texte } from './aides.ts';
 
 const LUNDI = jourDeDate('2026-10-19');
@@ -137,24 +141,150 @@ describe('Règle 3 · Plusieurs cercles', () => {
     assert.deepEqual(j[0]?.visages, ['x'], 'dans l’autre manche, son visage n’est pas proposé');
     assert.deepEqual(j[1]?.visages, ['p', 'y']);
   });
-  test('R8 : un proche sans réponse est proposé dans ses deux cercles (rien n’est servi ailleurs)', () => {
-    const t = texte('X', 'S', 1, 'p1 pa c0 c1');
+  // Un proche présent dans plusieurs de mes cercles n'est proposé que dans une seule de mes manches, qu'il ait répondu
+  // ou non (lecture de Game design, étape 1, D-062 point 5) : sinon son visage, proposé partout, trahirait qu'il n'a
+  // pas répondu (D-011). Sans réponse servie, un tirage invisible choisit, parmi mes manches qui ont des cartes.
+  const CLE_VISAGE = `r8-visage|moi|${LUNDI}|p|`;
+  const deuxCercles: CercleDuJour[] = [
+    { id: 'C1', membres: membres('moi', 'p', 'x'), eveille: true },
+    { id: 'C2', membres: membres('moi', 'p', 'y'), eveille: true },
+  ];
+  const servirDeux = (reponses: ReadonlyMap<IdMembre, ReponseDuJour>, hasard: Hasard): MancheServie[] =>
+    servirLaJournee({ devineur: 'moi', jour: LUNDI, texte: texte('X', 'S', 1, 'p1 pa c0 c1'), cercles: deuxCercles, reponses, curseursVus: new Map(), hasard });
+  const ouEstPropose = (j: readonly MancheServie[], qui: IdMembre): string[] => j.filter((m) => m.visages.includes(qui)).map((m) => m.cercle);
+
+  test('R8 : un proche sans réponse n’est proposé que dans une de mes manches, choisie par un tirage invisible', () => {
     const reponses = new Map<IdMembre, ReponseDuJour>([
       ['x', { reponse: rep('F · R1') }],
       ['y', { reponse: rep('F · R1') }],
     ]);
-    const cercles: CercleDuJour[] = [
-      { id: 'C1', membres: membres('moi', 'p', 'x'), eveille: true },
-      { id: 'C2', membres: membres('moi', 'p', 'y'), eveille: true },
-    ];
-    const j = servirLaJournee({ devineur: 'moi', jour: LUNDI, texte: t, cercles, reponses, curseursVus: new Map(), hasard: creerTirage('fedcba9876543210') });
+    for (const [choisi, attendu] of [
+      ['C1', [['p', 'x'], ['y']]],
+      ['C2', [['x'], ['p', 'y']]],
+    ] as const) {
+      const j = servirDeux(reponses, hasardEcrit({ [CLE_VISAGE]: [choisi] }));
+      assert.deepEqual(
+        j.map((m) => m.statut),
+        ['cartes', 'cartes'],
+      );
+      assert.deepEqual(
+        j.map((m) => m.visages),
+        attendu,
+        `tirage : ${choisi}`,
+      );
+    }
+  });
+  test('R8 : sans réponse, le tirage ne se fait que parmi mes manches qui ont des cartes, après la répartition de R8', () => {
+    const t = texte('X', 'S', 1, 'p1 pa c0 c1');
+    // x et y ont répondu ; z non : la manche de C3 est sautée (« Rien à deviner dans ce cercle aujourd'hui »).
+    const reponses = new Map<IdMembre, ReponseDuJour>([
+      ['x', { reponse: rep('F · R1') }],
+      ['y', { reponse: rep('D · R3') }],
+    ]);
+    const cercles: CercleDuJour[] = [...deuxCercles, { id: 'C3', membres: membres('moi', 'p', 'z'), eveille: true }];
+    const tirages = new Map<string, string[]>();
+    const temoin: Hasard = {
+      ordonner<T extends string>(prefixe: string, elements: readonly T[]): T[] {
+        tirages.set(prefixe, [...elements]);
+        return [...elements];
+      },
+    };
+    const j = servirLaJournee({ devineur: 'moi', jour: LUNDI, texte: t, cercles, reponses, curseursVus: new Map(), hasard: temoin });
+    assert.deepEqual(tirages.get(CLE_VISAGE), ['C1', 'C2'], 'C3 n’a pas de cartes : il n’est pas candidat');
     assert.deepEqual(
-      j.map((m) => m.visages),
+      j.map((m) => [m.statut, m.visages]),
       [
-        ['p', 'x'],
-        ['p', 'y'],
+        ['cartes', ['p', 'x']],
+        ['cartes', ['y']],
+        ['rien', ['z']],
       ],
     );
+    // Une seule de mes manches a des cartes : il y est proposé, sans tirage ; absent de la manche sautée.
+    tirages.clear();
+    const une = servirDeux(new Map([['y', { reponse: rep('F · R1') }]]), temoin);
+    assert.equal(tirages.has(CLE_VISAGE), false);
+    assert.deepEqual(
+      une.map((m) => [m.statut, m.visages]),
+      [
+        ['rien', ['x']],
+        ['cartes', ['p', 'y']],
+      ],
+    );
+    // Aucune n'a de cartes : il n'y a rien à deviner, il n'est proposé nulle part.
+    const aucune = servirDeux(new Map(), temoin);
+    assert.deepEqual(
+      aucune.map((m) => [m.statut, m.visages]),
+      [
+        ['rien', ['x']],
+        ['rien', ['y']],
+      ],
+    );
+  });
+  test('R8 : une réponse en retard n’est jamais servie, son auteur n’est proposé qu’une fois : pas deux points de jumeau le même jour', () => {
+    // p a répondu en retard la même chose que x et que y.
+    const reponses = new Map<IdMembre, ReponseDuJour>([
+      ['p', { reponse: rep('F · R1'), tardive: true }],
+      ['x', { reponse: rep('F · R1') }],
+      ['y', { reponse: rep('F · R1') }],
+    ]);
+    for (const choisi of ['C1', 'C2'] as const) {
+      const j = servirDeux(reponses, hasardEcrit({ [CLE_VISAGE]: [choisi] }));
+      assert.deepEqual(
+        j.map((m) => m.cartes.map((c) => c.auteur)),
+        [['x'], ['y']],
+        'la réponse en retard n’est pas servie',
+      );
+      assert.deepEqual(ouEstPropose(j, 'p'), [choisi]);
+      // Dans chaque manche, Marie tente de poser p sur l'unique carte : refusé là où il n'est pas proposé.
+      let points = 0;
+      let jumeaux = 0;
+      for (const [i, m] of j.entries()) {
+        const ouverte = appliquerGeste(nouvelleManche(m), { type: 'ouvrir' });
+        if ('refus' in ouverte) throw new Error(ouverte.refus);
+        const pose = appliquerGeste(ouverte.etat, { type: 'poser', carte: 0, visage: 'p' });
+        if ('refus' in pose) {
+          assert.equal(pose.refus, 'visage_non_propose');
+          continue;
+        }
+        const membresIci = (deuxCercles[i] as CercleDuJour).membres.map((x) => x.id);
+        const r = revelerManche({
+          etat: pose.etat,
+          jour: LUNDI,
+          texte: 'X',
+          devineur: 'moi',
+          // Les réponses au texte, retard compris, pour le jumeau (règle 11).
+          reponses: new Map([...reponses].filter(([k]) => membresIci.includes(k)).map(([k, v]) => [k, v.reponse])),
+          ordreArrivee: membresIci,
+        });
+        assert.equal(r.cartes[0]?.verdict, 'jumeau');
+        points += r.points;
+        jumeaux += r.cartes.filter((c) => c.jumeau).length;
+      }
+      assert.equal(points, 1, `un seul point sur la réponse de p (tirage : ${choisi})`);
+      assert.equal(jumeaux, 1);
+    }
+  });
+  test('R8 : le tirage des visages est fait par la graine : même graine, même manche ; une autre graine peut changer', () => {
+    const reponses = new Map<IdMembre, ReponseDuJour>([
+      ['x', { reponse: rep('F · R1') }],
+      ['y', { reponse: rep('F · R1') }],
+    ]);
+    const sortis = new Set<string>();
+    for (let i = 0; i < 40; i++) {
+      const graine = `graine-r8-visage-${String(i).padStart(4, '0')}`;
+      const a = servirDeux(reponses, creerTirage(graine));
+      const b = servirDeux(reponses, creerTirage(graine));
+      assert.deepEqual(
+        a.map((m) => [m.visages, m.cartes]),
+        b.map((m) => [m.visages, m.cartes]),
+        'même graine, même journée',
+      );
+      const ou = ouEstPropose(a, 'p');
+      assert.equal(ou.length, 1, 'proposé une seule fois');
+      assert.equal(ou[0], creerTirage(graine).ordonner(CLE_VISAGE, ['C1', 'C2'])[0], 'le tirage de la clé r8-visage');
+      sortis.add(ou[0] as string);
+    }
+    assert.deepEqual([...sortis].sort(), ['C1', 'C2'], 'selon la graine, l’une ou l’autre manche');
   });
 });
 
@@ -646,6 +776,15 @@ describe('Règle 16 · Les tensions', () => {
     assert.deepEqual(controleSens(l(4, 3)), []);
     assert.deepEqual(controleSens(l(5, 3)), ['P']);
     assert.deepEqual(controleSens(l(5, 3), ['P']), []);
+  });
+  test('les mots des tensions concordent avec le contrat : pôles (D-053) et forme après « Entre » (J9, `sansArticle`)', () => {
+    const droite = (m: string): string => m.replaceAll('’', "'");
+    assert.deepEqual(Object.keys(TENSIONS), [...ORDRE_TENSIONS]);
+    for (const t of ORDRE_TENSIONS) {
+      const c = TENSIONS[t];
+      assert.deepEqual([motPole(t, 0), motPole(t, 1)], [droite(c.pole0), droite(c.pole1)], t);
+      assert.deepEqual([sansArticle(motPole(t, 0)), sansArticle(motPole(t, 1))], [...c.sansArticle], t);
+    }
   });
 });
 
