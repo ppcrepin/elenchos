@@ -158,7 +158,8 @@ CREATE TABLE cercle (
 
 -- Un membre : la place d'un joueur dans un cercle. Son identifiant est celui que voient les proches (IdMembre du
 -- contrat), jamais celui du joueur (P-01). Au départ, la ligne part : ses réponses quittent le cercle (P-37), ses
--- titres passés restent sous « un ancien membre » (D-045, point 2).
+-- titres passés restent sous « un ancien membre » (D-045, point 2), sauf Le Pas de Côté, effacé (D-066, point 1) ;
+-- ce que le départ change d'autre est fait par la base (déclencheur membre_avant_depart, migration 0002).
 CREATE TABLE membre (
   id uuid PRIMARY KEY,
   cercle_id uuid NOT NULL REFERENCES cercle (id) ON DELETE CASCADE,
@@ -174,6 +175,9 @@ CREATE INDEX membre_joueur ON membre (joueur_id);
 -- Un lien : de créateur (fabriqué par le porteur, sans cercle ni invitant) ou d'invitation. Le jeton n'est gardé que
 -- sous forme d'empreinte (P-29). Il est consommé une fois pour toutes à sa liaison (lie_le), même si l'invité
 -- s'efface ensuite. L'accord de l'invitant à envoyer ses trois réponses est gardé avec le lien (P-35).
+-- Lié, il ne fait lire à l'invité (le cercle, l'invitant, ses trois réponses d'entrée) que pendant 7 jours après sa
+-- liaison ; au départ de l'invité ou à son effacement, il ne le désigne plus et perd son score (P-25 ; migration
+-- 0002). Le ménage efface un lien échu jamais servi, et un lien de créateur à son échéance (menage.ts).
 CREATE TABLE invitation (
   id uuid PRIMARY KEY,
   sorte text NOT NULL CHECK (sorte IN ('createur', 'invite')),
@@ -217,8 +221,10 @@ CREATE TABLE reponse (
 -- La journée : manches, cartes, éveil du cercle.
 
 -- Une manche : ce qu'un membre devine dans un cercle, un jour (le texte de la veille). Créée à la première ouverture
--- de Deviner après 18h, avec ses cartes, une seule fois (règle 10). « cercle_regarde » : le geste « Le Cercle ouvert
--- pendant une manche pas encore validée », noté une fois par manche (CONTRAT.md, 2.15 ; produit.md §8).
+-- de Deviner après 18h, avec ses cartes, une seule fois (règle 10). « cercle_regarde » : un verrou, pour ne compter
+-- qu'une fois par manche le geste « Le Cercle ouvert pendant une manche pas encore validée » ; le geste lui-même se
+-- compte au moment où il a lieu, dans un total du jour sans personne (compteur « cercle_pendant_deviner » ;
+-- CONTRAT.md, 2.15 ; produit.md §8 ; D-066, point 4).
 CREATE TABLE manche (
   id uuid PRIMARY KEY,
   cercle_id uuid NOT NULL REFERENCES cercle (id) ON DELETE CASCADE,
@@ -240,10 +246,12 @@ CREATE INDEX manche_cercle_jour ON manche (cercle_id, jour);
 -- réponse (P-02 ; crypto.ts, 30 octets, lié à la carte) : avec le verdict « juste et raison », il dirait sinon en clair
 -- la raison de l'auteur.
 -- « videe_par_depart » : le membre dont le visage était posé est parti avant 18h (règle 4, J10). La base la pose
--- elle-même (déclencheur membre_avant_depart, migration 0002) ; la passe qui en résulte ne compte pas contre Le
--- Sans-Faute. Un geste du joueur sur la carte l'efface.
+-- elle-même (déclencheur membre_avant_depart, migration 0002), et remet le « pourquoi » et le verdict à vide ; la passe
+-- qui en résulte ne compte pas contre Le Sans-Faute. Un geste du joueur sur la carte l'efface.
+-- « verdict » : écrit au moment du geste (CONTRAT.md, partie 3). Après 18h, au départ du membre désigné, un « jumeau »
+-- devient « juste » (Juridique ; migration 0002).
 -- Restent en clair, voulus et dits sur la carte des données : le verdict et le visage posé (un « jumeau » dit que deux
--- membres ont donné la même réponse, ce que la révélation montre au devineur).
+-- membres ont donné la même réponse, ce que la révélation montre au devineur), et « qui_et_pourquoi » (carte.ts).
 CREATE TABLE carte (
   id uuid PRIMARY KEY,
   manche_id uuid NOT NULL,
@@ -278,7 +286,8 @@ CREATE TABLE journee_cercle (
 -- La semaine : compteurs, titres, badges.
 
 -- Les compteurs d'un membre pour une semaine, tenus au moment de chaque geste (« rien ne se calcule à 18h pile »,
--- D-043) : Le Devin, Le Mystère, Le Fidèle, Le Sans-Faute (règles 12 et 14).
+-- D-043) : Le Devin, Le Mystère, Le Fidèle, Le Sans-Faute (règles 12 et 14). Gardés pour la semaine en cours et la
+-- précédente ; le ménage efface les autres (menage.ts).
 CREATE TABLE compte_semaine (
   cercle_id uuid NOT NULL,
   membre_id uuid NOT NULL,
@@ -296,7 +305,8 @@ CREATE TABLE compte_semaine (
 );
 
 -- Les attributions d'un cercle sur un texte : la surprise de la semaine (règle 12). Elles restent au départ d'un
--- auteur (règle 4).
+-- auteur (règle 4). La semaine d'un texte est celle du jour où on le devine (calendrier.jour + 1) ; gardées pour la
+-- semaine en cours et la précédente, comme les compteurs ci-dessus.
 CREATE TABLE compte_texte_cercle (
   cercle_id uuid NOT NULL REFERENCES cercle (id) ON DELETE CASCADE,
   texte_id text NOT NULL REFERENCES texte (id),
@@ -306,7 +316,9 @@ CREATE TABLE compte_texte_cercle (
 );
 
 -- Les titres et badges rares, figés. Au départ d'un titulaire, membre_id devient vide : « un ancien membre »
--- (D-045, point 2 ; règle 4). La surprise de la semaine désigne un texte ; Le Pas de Côté, un membre et un texte.
+-- (D-045, point 2 ; règle 4). Sauf Le Pas de Côté, effacé au départ de son titulaire (Quitter, Tout effacer,
+-- inactivité) : il dit qu'une réponse allait contre son penchant, une donnée tirée d'une opinion (D-066, point 1 ;
+-- migration 0002). La surprise de la semaine désigne un texte ; Le Pas de Côté, un membre et un texte.
 CREATE TABLE titre (
   id uuid PRIMARY KEY,
   cercle_id uuid NOT NULL REFERENCES cercle (id) ON DELETE CASCADE,
@@ -342,29 +354,33 @@ CREATE UNIQUE INDEX temperament_personne ON temperament (sorte, joueur_id) WHERE
 CREATE UNIQUE INDEX temperament_membre ON temperament (sorte, membre_id) WHERE membre_id IS NOT NULL;
 
 -- La lecture du dimanche (règle 18, « une tension devenue nette depuis la lecture du dimanche précédent ») : quelles
--- tensions étaient nettes, en huit bits, sans leur sens. Visible du seul joueur.
+-- tensions étaient nettes, en huit bits, sans leur sens. Visible du seul joueur. Une seule ligne par joueur, la
+-- dernière lecture, remplacée chaque dimanche (« INSERT … ON CONFLICT (joueur_id) DO UPDATE ») : seul le dimanche
+-- précédent sert, et l'historique semaine après semaine serait un profil sans usage (Juridique).
 CREATE TABLE portrait_dimanche (
-  joueur_id uuid NOT NULL REFERENCES joueur (id) ON DELETE CASCADE,
+  joueur_id uuid PRIMARY KEY REFERENCES joueur (id) ON DELETE CASCADE,
   jour date NOT NULL CHECK (extract(isodow FROM jour) = 7),
-  nettes smallint NOT NULL CHECK (nettes BETWEEN 0 AND 255),
-  PRIMARY KEY (joueur_id, jour)
+  nettes smallint NOT NULL CHECK (nettes BETWEEN 0 AND 255)
 );
 
 -- Ce que le joueur a déjà vu (contrat : OBJETS_VU), pour ne le montrer qu'une fois : la révélation d'un jour,
--- l'arrivée dans un cercle, le cercle lancé, les annonces, la barre pleine. L'heure sert la mesure « révélation
--- ouverte le soir même » (CONTRAT.md, 2.9 et 2.15).
+-- l'arrivée dans un cercle, le cercle lancé, les annonces, la barre pleine. Sans heure : une heure par jour et par
+-- personne formerait un journal de ses habitudes. La mesure « révélation ouverte le soir même » se compte au moment
+-- du geste, dans des totaux du jour sans personne (compteurs « revelation_ouverte » et « revelation_ouverte_le_soir » ;
+-- D-066, point 4 ; CONTRAT.md, 2.9 et 2.15). Durées : la révélation, jusqu'au 18h qui suit sa révélation (`jour` est
+-- le jour de jeu de la manche révélée, comme pour reprise_revelation ; ménage) ; les objets d'un cercle, jusqu'au
+-- départ de ce cercle (migration 0002) ; la barre pleine, tant que le compte existe.
 CREATE TABLE vu (
   joueur_id uuid NOT NULL REFERENCES joueur (id) ON DELETE CASCADE,
   objet text NOT NULL CHECK (objet IN ('revelation', 'arrivee', 'cercle_lance', 'annonces', 'barre_pleine')),
   jour date,
-  cercle_id uuid REFERENCES cercle (id) ON DELETE CASCADE,
-  vu_le timestamptz NOT NULL
+  cercle_id uuid REFERENCES cercle (id) ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX vu_une_fois ON vu (joueur_id, objet, coalesce(jour, DATE '0001-01-01'),
   coalesce(cercle_id, '00000000-0000-0000-0000-000000000000'::uuid));
 
 -- L'écran Répondre d'un texte s'est affiché, et quand : la condition de la réponse en retard, jusqu'à 18h10 (règle 6,
--- R10 ; CONTRAT.md, 2.8). Gardé jusqu'à la fermeture du texte.
+-- R10 ; CONTRAT.md, 2.8). Gardé jusqu'à 18h10 le jour où le texte se ferme (ménage).
 CREATE TABLE repondre_ouvert (
   joueur_id uuid NOT NULL REFERENCES joueur (id) ON DELETE CASCADE,
   texte_id text NOT NULL REFERENCES texte (id),
@@ -373,7 +389,8 @@ CREATE TABLE repondre_ouvert (
 );
 
 -- La révélation reprend là où on l'avait laissée (E3 ; CONTRAT.md, 2.9) : la dernière étape vue, un identifiant
--- opaque fait par le serveur, du 18h au 18h suivant.
+-- opaque fait par le serveur, du 18h au 18h suivant. `jour` : le jour de jeu de la manche révélée (révélée à 18h à
+-- sa fin) ; le ménage efface la ligne au 18h suivant.
 CREATE TABLE reprise_revelation (
   joueur_id uuid NOT NULL REFERENCES joueur (id) ON DELETE CASCADE,
   jour date NOT NULL,
@@ -401,8 +418,17 @@ CREATE TABLE message_coupe (
   joueur_id uuid PRIMARY KEY REFERENCES joueur (id) ON DELETE CASCADE
 );
 
--- Un envoi : le verrou « un envoi par jour et par abonnement » (index partiel), et la mesure « message reçu »
--- (produit.md, section 8) par son numéro tiré au hasard.
+-- Le joueur refuse qu'on compte ses gestes (droit d'opposition, art. 21 ; promis par « Qui, durée, droits » ; D-066,
+-- point 3). Tant que la ligne existe, les fonctions des totaux (migration 0003) n'ajoutent rien pour lui. Ce qui était
+-- déjà compté reste : un total anonyme ne se décompte pas (P-23).
+CREATE TABLE mesures_refusees (
+  joueur_id uuid PRIMARY KEY REFERENCES joueur (id) ON DELETE CASCADE
+);
+
+-- Un envoi : le verrou « un envoi par jour et par abonnement » (index partiel), et le numéro tiré au hasard que
+-- l'extension renvoie à la réception. Gardé en détail 7 jours, puis effacé par le ménage ; la mesure « message reçu »
+-- (produit.md, section 8 ; D-005, condition 2) se compte au moment de l'envoi et de la réception, dans des totaux du
+-- jour sans personne (compteurs « message_envoye » et « message_recu » ; D-066, point 4).
 CREATE TABLE envoi (
   id uuid PRIMARY KEY,
   abonnement_id uuid NOT NULL REFERENCES abonnement (id) ON DELETE CASCADE,
@@ -425,9 +451,10 @@ CREATE TABLE compte_aucune (
 );
 
 CREATE TABLE compteur (
-  -- contrat.ts : SORTES_COMPTEUR et SORTES_COMPTEUR_SERVEUR.
+  -- contrat.ts : SORTES_COMPTEUR et SORTES_COMPTEUR_SERVEUR (un test compare les deux listes).
   sorte text NOT NULL CHECK (sorte IN ('android', 'ordinateur', 'ipad', 'iphone_sans_application',
-    'reponse_refusee_apres_18h', 'reponse_en_retard')),
+    'reponse_refusee_apres_18h', 'reponse_en_retard', 'revelation_ouverte', 'revelation_ouverte_le_soir',
+    'cercle_pendant_deviner', 'message_envoye', 'message_recu')),
   jour date NOT NULL,
   nombre integer NOT NULL CHECK (nombre >= 0),
   PRIMARY KEY (sorte, jour)
@@ -440,6 +467,10 @@ CREATE TABLE histogramme_raison (
   PRIMARY KEY (semaine, tranche)
 );
 
+-- « periode » : le dernier jour de jeu de la période (le dimanche qui clôt une semaine, comme `semaine` ; le dernier
+-- jour d'un mois). Une période se ferme à 18h ce jour-là, et ne reçoit plus rien ensuite (migration 0003).
+-- Les trois dernières lignes de sortes (Pas de Côté, tempéraments, curseurs nets) sont les trois comptes de mi-bêta,
+-- non écrits pendant le test (D-066, point 2 ; src/base/totaux.ts).
 CREATE TABLE total_mesure (
   periode date NOT NULL,
   sorte text NOT NULL CHECK (sorte IN (
@@ -448,13 +479,29 @@ CREATE TABLE total_mesure (
     'curseur_net_40', 'curseur_net_60', 'curseur_net_80')),
   numerateur bigint NOT NULL CHECK (numerateur >= 0),
   denominateur bigint NOT NULL CHECK (denominateur >= 0),
-  effectif integer NOT NULL CHECK (effectif >= 0), -- le nombre d'apports : le seuil se compte dessus
+  joueurs integer NOT NULL CHECK (joueurs >= 0), -- les joueurs distincts qui y ont apporté : le seuil se compte dessus
   PRIMARY KEY (periode, sorte)
 );
 
+-- Le verrou qui fait compter des joueurs distincts (D-066, point 4 ; P-21) : « ce joueur a déjà apporté à ce total
+-- pendant cette période ». Rien d'autre : ni la valeur apportée, ni l'heure, ni le cercle. Écrit seulement par la
+-- fonction ajouter_mesure (migration 0003), jamais lu par un module ; effacé avec le joueur, et par le ménage dès que
+-- sa période est close.
+CREATE TABLE apport_mesure (
+  joueur_id uuid NOT NULL REFERENCES joueur (id) ON DELETE CASCADE,
+  periode date NOT NULL,
+  sorte text NOT NULL CHECK (sorte IN (
+    'justesse_cartes', 'justesse_hasard', 'mystere_nouveaux', 'pas_de_cote',
+    'temperament_original', 'temperament_pont', 'temperament_mesure', 'temperament_tranche',
+    'curseur_net_40', 'curseur_net_60', 'curseur_net_80')),
+  PRIMARY KEY (joueur_id, periode, sorte)
+);
+
 -- ---------------------------------------------------------------------------------------------------------------
--- Le journal des effacements (P-32) : l'identifiant tiré au hasard d'un joueur effacé, sans adresse ni pseudo, pour
--- rejouer l'effacement après une restauration. Gardé la plus longue rotation des sauvegardes, plus 5 jours.
+-- Le journal des effacements (P-32) : l'identifiant tiré au hasard d'un joueur effacé (« Tout effacer », ou joueur
+-- provisoire effacé par le ménage à 7 jours), sans adresse ni pseudo, pour rejouer l'effacement après une
+-- restauration. À lire AVANT toute restauration : la copie restaurée remplace aussi ce journal par son ancienne
+-- version (src/base/LISEZMOI.md). Gardé la plus longue rotation des sauvegardes, plus 5 jours.
 CREATE TABLE effacement (
   joueur_id uuid PRIMARY KEY,
   efface_le date NOT NULL

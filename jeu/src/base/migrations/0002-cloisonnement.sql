@@ -1,8 +1,9 @@
 -- Migration 0002 : le cloisonnement des cercles, imposé par la base (P-25), et les refus que la base garde elle-même
 -- (P-34 ; trois cercles ; dix membres ; pseudo unique dans le cercle ; le joueur provisoire n'est membre de rien).
--- Avec eux, deux règles de temps : un proche ne lit la réponse d'un autre au texte du jour qu'après la fermeture de ce
--- texte, à 18h (« rien avant 18h », P-26, tenu aussi par la base) ; un départ avant 18h vide les cartes où le partant
--- était désigné (règle 4).
+-- Avec eux, trois règles de temps : un proche ne lit la réponse d'un autre au texte du jour qu'après la fermeture de
+-- ce texte, à 18h (« rien avant 18h », P-26, tenu aussi par la base) ; un lien lié ne fait plus rien lire 7 jours
+-- après sa liaison (P-25) ; un départ avant 18h vide les cartes où le partant était désigné (règle 4). Et ce qu'un
+-- départ efface ou change dans la base elle-même (déclencheur membre_avant_depart).
 --
 -- LE PRINCIPE. Chaque table porte des règles de sécurité au niveau des lignes (ROW LEVEL SECURITY), imposées aussi
 -- au propriétaire des tables (FORCE). Une ligne n'est visible que si une règle la montre au MODULE qui demande
@@ -95,7 +96,9 @@ BEGIN
   RETURN r;
 END $$;
 
--- Les invitations « du joueur » : liées à lui, ou, pas encore liées, dont il a déclaré le jeton.
+-- Les invitations « du joueur » : liées à lui depuis moins de 7 jours, ou, pas encore liées, dont il a déclaré le
+-- jeton. Les 7 jours (Juridique, P-25 : « seulement un membre ») : le temps du défi et du compte ; ensuite, l'invité
+-- ne lit plus que ce que ses cercles lui montrent. Un joueur provisoire est effacé au même terme (ménage).
 CREATE FUNCTION cloison_mes_invitations() RETURNS TABLE (cercle_id uuid, invitant_membre_id uuid, lie boolean)
 LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path FROM CURRENT AS $$
 DECLARE ancien text := current_setting('elenchos.module', true);
@@ -104,7 +107,8 @@ BEGIN
   RETURN QUERY
     SELECT i.cercle_id, i.invitant_membre_id, (i.invite_joueur_id IS NOT NULL)
       FROM invitation i
-     WHERE (joueur_courant() IS NOT NULL AND i.invite_joueur_id = joueur_courant())
+     WHERE (joueur_courant() IS NOT NULL AND i.invite_joueur_id = joueur_courant()
+            AND i.lie_le > instant_du_jeu() - interval '7 days')
         OR (i.lie_le IS NULL AND jeton_courant() IS NOT NULL AND i.empreinte_jeton = jeton_courant());
   PERFORM set_config('elenchos.module', coalesce(ancien, ''), true);
 END $$;
@@ -126,8 +130,8 @@ BEGIN
   RETURN r;
 END $$;
 
--- Les réponses d'entrée de l'invitant, offertes à l'invité par une invitation LIÉE à lui (P-29) : « joueur:texte ».
--- Un lien seulement ouvert (jeton déclaré, pas encore lié) n'offre aucune réponse.
+-- Les réponses d'entrée de l'invitant, offertes à l'invité par une invitation LIÉE à lui depuis moins de 7 jours
+-- (P-29) : « joueur:texte ». Un lien seulement ouvert (jeton déclaré, pas encore lié) n'offre aucune réponse.
 CREATE FUNCTION cloison_reponses_offertes() RETURNS text[] LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path FROM CURRENT AS $$
 DECLARE ancien text := current_setting('elenchos.module', true); r text[];
 BEGIN
@@ -138,20 +142,21 @@ BEGIN
     JOIN membre m ON m.id = i.invitant_membre_id
     JOIN cercle c ON c.id = i.cercle_id
     CROSS JOIN LATERAL (VALUES (c.entree_1), (c.entree_2), (c.entree_3)) AS t (texte_id)
-   WHERE i.invite_joueur_id = joueur_courant();
+   WHERE i.invite_joueur_id = joueur_courant() AND i.lie_le > instant_du_jeu() - interval '7 days';
   PERFORM set_config('elenchos.module', coalesce(ancien, ''), true);
   RETURN r;
 END $$;
 
 -- Entrer dans un cercle : le premier membre (le créateur, qui vient de le créer), ou un invité dont le lien de ce
--- cercle est lié à lui.
+-- cercle est lié à lui depuis moins de 7 jours.
 CREATE FUNCTION cloison_peut_entrer(p_cercle uuid) RETURNS boolean LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path FROM CURRENT AS $$
 DECLARE ancien text := current_setting('elenchos.module', true); r boolean;
 BEGIN
   IF joueur_courant() IS NULL THEN RETURN false; END IF;
   PERFORM set_config('elenchos.module', 'cloison', true);
   SELECT NOT EXISTS (SELECT 1 FROM membre m WHERE m.cercle_id = p_cercle)
-      OR EXISTS (SELECT 1 FROM invitation i WHERE i.cercle_id = p_cercle AND i.invite_joueur_id = joueur_courant())
+      OR EXISTS (SELECT 1 FROM invitation i WHERE i.cercle_id = p_cercle AND i.invite_joueur_id = joueur_courant()
+                   AND i.lie_le > instant_du_jeu() - interval '7 days')
     INTO r;
   PERFORM set_config('elenchos.module', coalesce(ancien, ''), true);
   RETURN r;
@@ -223,13 +228,15 @@ CREATE TRIGGER joueur_avant_pseudo BEFORE UPDATE OF pseudo_comparaison ON joueur
 -- P-34 : aucune réponse sans un accord du même joueur, enregistré avant elle, à une version de la carte au moins
 -- égale à la dernière version marquée « nouvel accord ». Le déclencheur passe AVANT la clé étrangère : un accord
 -- absent donne ce refus-ci, sans valeur, et jamais le refus de la clé, qui recopierait les identifiants.
+-- L'heure est celle du jeu (instant_du_jeu), la même que pour « rien avant 18h » et les départs : avec l'horloge
+-- accélérée, now() refuserait tout accord écrit à l'heure du serveur.
 CREATE FUNCTION reponse_avant_ecriture() RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path FROM CURRENT AS $$
 DECLARE ancien text := current_setting('elenchos.module', true); ok boolean;
 BEGIN
   PERFORM set_config('elenchos.module', 'cloison', true);
   SELECT EXISTS (
     SELECT 1 FROM consentement c
-     WHERE c.id = NEW.consentement_id AND c.joueur_id = NEW.joueur_id AND c.donne_le <= now()
+     WHERE c.id = NEW.consentement_id AND c.joueur_id = NEW.joueur_id AND c.donne_le <= instant_du_jeu()
        AND c.version >= coalesce((SELECT max(a.version) FROM carte_accord a WHERE a.nouvel_accord), 0)
   ) INTO ok;
   IF NOT ok THEN
@@ -258,18 +265,35 @@ CREATE TRIGGER carte_meme_cercle BEFORE INSERT OR UPDATE OF visage_membre_id ON 
   FOR EACH ROW EXECUTE FUNCTION meme_cercle();
 CREATE TRIGGER titre_meme_cercle BEFORE INSERT ON titre FOR EACH ROW EXECUTE FUNCTION meme_cercle();
 
--- Règle 4 (J10) : un membre part (« Quitter », ou « Tout effacer », par la cascade) avant 18h. Une carte où son
--- visage était posé, dans une manche dont le jour de jeu n'est pas fini, redevient vide, validée ou non : le
--- « pourquoi » s'efface, et la carte porte la marque « vidée par un départ », qui ne compte pas contre Le Sans-Faute.
--- Après 18h, la manche est jouée : la clé étrangère vide seulement le visage, qui devient « un ancien membre ». Sa
--- propre carte part avec lui (clé étrangère de l'auteur).
+-- Un membre part (« Quitter », ou « Tout effacer » et l'inactivité, par la cascade). Dans la même transaction, la base :
+-- 1. Règle 4 (J10), avant 18h : une carte où son visage était posé, dans une manche dont le jour de jeu n'est pas
+--    fini, redevient vide, validée ou non : le « pourquoi » et le verdict (écrit au geste, CONTRAT.md, partie 3)
+--    s'effacent, et la carte porte la marque « vidée par un départ », qui ne compte pas contre Le Sans-Faute.
+-- 2. Après 18h, la manche est jouée : la clé étrangère vide seulement le visage, qui devient « un ancien membre », et
+--    le verdict reste figé, sauf qu'un « jumeau » devient « juste » : avec un visage vide, il dirait qu'un ancien
+--    membre avait donné la même réponse que l'auteur (Juridique ; règle 11 : jumeau et juste comptent pareil ; à
+--    confirmer par Game design).
+-- 3. Ses badges Le Pas de Côté de ce cercle s'effacent (D-066, point 1) ; ses autres titres restent sous « un ancien
+--    membre » (clé étrangère).
+-- 4. Ce qu'il avait « déjà vu » dans ce cercle s'efface (arrivée, cercle lancé).
+-- 5. Le lien qui l'avait fait entrer dans ce cercle ne le désigne plus et perd son score (Juridique, P-25 ; comme à
+--    l'effacement) : il reste servi, et ne s'ouvre pas à un autre (P-29).
+-- Sa propre carte part avec lui (clé étrangère de l'auteur).
 CREATE FUNCTION membre_avant_depart() RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path FROM CURRENT AS $$
 DECLARE ancien text := current_setting('elenchos.module', true);
 BEGIN
   PERFORM set_config('elenchos.module', 'cloison', true);
-  UPDATE carte k SET visage_membre_id = NULL, pourquoi = NULL, passee = false, videe_par_depart = true
+  UPDATE carte k SET visage_membre_id = NULL, pourquoi = NULL, passee = false, verdict = NULL, videe_par_depart = true
     FROM manche m
    WHERE k.visage_membre_id = OLD.id AND m.id = k.manche_id AND fin_du_jour_de_jeu(m.jour) > instant_du_jeu();
+  UPDATE carte k SET verdict = CASE k.verdict WHEN 'jumeau' THEN 'juste' ELSE 'juste_et_raison' END
+    FROM manche m
+   WHERE k.visage_membre_id = OLD.id AND m.id = k.manche_id AND fin_du_jour_de_jeu(m.jour) <= instant_du_jeu()
+     AND k.verdict IN ('jumeau', 'jumeau_et_raison');
+  DELETE FROM titre t WHERE t.membre_id = OLD.id AND t.sorte = 'pas_de_cote';
+  DELETE FROM vu v WHERE v.joueur_id = OLD.joueur_id AND v.cercle_id = OLD.cercle_id;
+  UPDATE invitation i SET invite_joueur_id = NULL, score_entree = NULL
+   WHERE i.cercle_id = OLD.cercle_id AND i.invite_joueur_id = OLD.joueur_id;
   PERFORM set_config('elenchos.module', coalesce(ancien, ''), true);
   RETURN OLD;
 END $$;
@@ -305,8 +329,9 @@ BEGIN
   FOREACH t IN ARRAY ARRAY['texte', 'calendrier', 'carte_accord', 'joueur', 'identite', 'session',
     'connexion_en_cours', 'code_retour', 'code_email', 'consentement', 'cercle', 'membre', 'invitation', 'reponse',
     'manche', 'carte', 'journee_cercle', 'compte_semaine', 'compte_texte_cercle', 'titre', 'temperament',
-    'portrait_dimanche', 'vu', 'repondre_ouvert', 'reprise_revelation', 'abonnement', 'message_coupe', 'envoi',
-    'compte_aucune', 'compteur', 'histogramme_raison', 'total_mesure', 'effacement']
+    'portrait_dimanche', 'vu', 'repondre_ouvert', 'reprise_revelation', 'abonnement', 'message_coupe',
+    'mesures_refusees', 'envoi', 'compte_aucune', 'compteur', 'histogramme_raison', 'total_mesure', 'apport_mesure',
+    'effacement']
   LOOP
     EXECUTE format('ALTER TABLE %I ENABLE ROW LEVEL SECURITY', t);
     EXECUTE format('ALTER TABLE %I FORCE ROW LEVEL SECURITY', t);
@@ -314,14 +339,15 @@ BEGIN
   END LOOP;
 END $$;
 
--- Le ménage (effacement à la demande, échéances) voit et efface tout ce qui porte une donnée de joueur.
+-- Le ménage (effacement à la demande, échéances : src/base/menage.ts) voit et efface tout ce qui porte une donnée de
+-- joueur.
 DO $$
 DECLARE t text;
 BEGIN
   FOREACH t IN ARRAY ARRAY['joueur', 'identite', 'session', 'connexion_en_cours', 'code_retour', 'code_email',
     'consentement', 'cercle', 'membre', 'invitation', 'reponse', 'manche', 'carte', 'journee_cercle',
     'compte_semaine', 'compte_texte_cercle', 'titre', 'temperament', 'portrait_dimanche', 'vu', 'repondre_ouvert',
-    'reprise_revelation', 'abonnement', 'message_coupe', 'envoi', 'effacement']
+    'reprise_revelation', 'abonnement', 'message_coupe', 'mesures_refusees', 'envoi', 'apport_mesure', 'effacement']
   LOOP
     EXECUTE format('CREATE POLICY %I ON %I FOR ALL USING (module_courant() = ''menage'') WITH CHECK (module_courant() = ''menage'')',
       t || '_menage', t);
@@ -382,20 +408,23 @@ CREATE POLICY membre_jeu_entree ON membre FOR INSERT WITH CHECK (module_courant(
 CREATE POLICY membre_jeu_depart ON membre FOR DELETE USING (module_courant() = 'jeu' AND joueur_id = joueur_courant());
 CREATE POLICY membre_cloison ON membre FOR SELECT USING (module_courant() = 'cloison');
 
--- invitation : celles de ses cercles ; la sienne ; celle dont il tient le jeton, pas encore liée.
+-- invitation : celles de ses cercles ; la sienne, liée depuis moins de 7 jours ; celle dont il tient le jeton, pas
+-- encore liée.
 CREATE POLICY invitation_jeu_lecture ON invitation FOR SELECT USING (module_courant() = 'jeu' AND (
   ARRAY[cercle_id] <@ (SELECT cloison_mes_cercles())
-  OR invite_joueur_id = joueur_courant()
+  OR (invite_joueur_id = joueur_courant() AND lie_le > instant_du_jeu() - interval '7 days')
   OR (lie_le IS NULL AND empreinte_jeton = jeton_courant())));
 CREATE POLICY invitation_jeu_creation ON invitation FOR INSERT WITH CHECK (module_courant() = 'jeu' AND sorte = 'invite'
   AND ARRAY[cercle_id] <@ (SELECT cloison_mes_cercles()) AND ARRAY[invitant_membre_id] <@ (SELECT cloison_mes_membres())
   AND lie_le IS NULL AND invite_joueur_id IS NULL);
 CREATE POLICY invitation_jeu_liaison ON invitation FOR UPDATE USING (module_courant() = 'jeu' AND (
-  invite_joueur_id = joueur_courant() OR (lie_le IS NULL AND empreinte_jeton = jeton_courant())))
+  (invite_joueur_id = joueur_courant() AND lie_le > instant_du_jeu() - interval '7 days')
+  OR (lie_le IS NULL AND empreinte_jeton = jeton_courant())))
   WITH CHECK (module_courant() = 'jeu' AND invite_joueur_id = joueur_courant());
 CREATE POLICY invitation_proprietaire ON invitation FOR INSERT WITH CHECK (module_courant() = 'proprietaire' AND sorte = 'createur');
 CREATE POLICY invitation_cloison ON invitation FOR SELECT USING (module_courant() = 'cloison');
-CREATE POLICY invitation_cloison_score ON invitation FOR UPDATE USING (module_courant() = 'cloison') WITH CHECK (module_courant() = 'cloison');
+-- Le score oublié à la lecture de l'annonce (oublier_scores) ; la désignation et le score vidés au départ.
+CREATE POLICY invitation_cloison_maj ON invitation FOR UPDATE USING (module_courant() = 'cloison') WITH CHECK (module_courant() = 'cloison');
 
 -- reponse : les siennes ; celles de ses proches (le serveur en tire cartes, avis du cercle… et n'envoie au téléphone
 -- que ce que les règles montrent, P-26, P-27), mais au texte du jour seulement après sa fermeture, à 18h : avant, la
@@ -426,10 +455,15 @@ BEGIN
   END LOOP;
 END $$;
 
--- Le départ d'un membre vide les cartes où il était désigné, dans tous les cercles où il était (membre_avant_depart).
+-- Le départ d'un membre (membre_avant_depart) : il vide ou fige les cartes où il était désigné, efface ses Pas de
+-- Côté et ce qu'il avait vu dans ce cercle.
 CREATE POLICY manche_cloison ON manche FOR SELECT USING (module_courant() = 'cloison');
 CREATE POLICY carte_cloison ON carte FOR SELECT USING (module_courant() = 'cloison');
 CREATE POLICY carte_cloison_depart ON carte FOR UPDATE USING (module_courant() = 'cloison') WITH CHECK (module_courant() = 'cloison');
+CREATE POLICY titre_cloison ON titre FOR SELECT USING (module_courant() = 'cloison');
+CREATE POLICY titre_cloison_depart ON titre FOR DELETE USING (module_courant() = 'cloison');
+CREATE POLICY vu_cloison ON vu FOR SELECT USING (module_courant() = 'cloison');
+CREATE POLICY vu_cloison_depart ON vu FOR DELETE USING (module_courant() = 'cloison');
 
 -- temperament : ceux de ses cercles (L'Original, Le Pont) et ceux de ses proches (Le Mesuré, Le Tranché).
 CREATE POLICY temperament_jeu ON temperament FOR ALL USING (module_courant() = 'jeu' AND (
@@ -443,7 +477,8 @@ CREATE POLICY temperament_jeu ON temperament FOR ALL USING (module_courant() = '
 DO $$
 DECLARE t text;
 BEGIN
-  FOREACH t IN ARRAY ARRAY['portrait_dimanche', 'vu', 'repondre_ouvert', 'reprise_revelation', 'abonnement', 'message_coupe']
+  FOREACH t IN ARRAY ARRAY['portrait_dimanche', 'vu', 'repondre_ouvert', 'reprise_revelation', 'abonnement', 'message_coupe',
+    'mesures_refusees']
   LOOP
     EXECUTE format('CREATE POLICY %I ON %I FOR ALL USING (module_courant() = ''jeu'' AND joueur_id = joueur_courant()) WITH CHECK (module_courant() = ''jeu'' AND joueur_id = joueur_courant())',
       t || '_jeu', t);

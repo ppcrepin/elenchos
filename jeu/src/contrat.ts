@@ -970,13 +970,24 @@ export type Geste = (typeof GESTES)[number];
 export const SORTES_COMPTEUR = ['android', 'ordinateur', 'ipad', 'iphone_sans_application'] as const;
 export type SorteCompteur = (typeof SORTES_COMPTEUR)[number];
 
-/** Comptés par le serveur lui-même, sans geste de l'application et sans rien garder de la personne : les réponses du
- *  jour refusées après 18h (`texte_ferme`), et celles acceptées en retard (R10). Ils diront si 18h10 est bien réglé. */
-export const SORTES_COMPTEUR_SERVEUR = ['reponse_refusee_apres_18h', 'reponse_en_retard'] as const;
+/** Comptés par le serveur lui-même, au moment du geste, en totaux par jour, sans rien garder de la personne (D-066,
+ *  point 4) ; jamais pour un joueur qui a refusé qu'on compte ses gestes (D-066, point 3 : la base l'exclut) :
+ *  - les réponses du jour refusées après 18h (`texte_ferme`), et celles acceptées en retard (R10) : ils diront si
+ *    18h10 est bien réglé ;
+ *  - `revelation_ouverte` et `revelation_ouverte_le_soir` : la première ouverture d'une révélation (`POST /api/vu`,
+ *    objet `revelation`), et parmi elles celles du soir même (« le soir » : défini par Game design) ;
+ *  - `cercle_pendant_deviner` : le geste `POST /api/geste`, une fois par manche (le verrou `manche.cercle_regarde`) ;
+ *  - `message_envoye` et `message_recu` : le message de 18h envoyé, puis reçu (`POST /api/recu`) ; « message reçu »
+ *    (D-005, condition 2). Les envois ne sont gardés en détail que 7 jours. */
+export const SORTES_COMPTEUR_SERVEUR = [
+  'reponse_refusee_apres_18h', 'reponse_en_retard', 'revelation_ouverte', 'revelation_ouverte_le_soir',
+  'cercle_pendant_deviner', 'message_envoye', 'message_recu',
+] as const;
 export type SorteCompteurServeur = (typeof SORTES_COMPTEUR_SERVEUR)[number];
 
-/** Ce qu'on marque comme vu. `revelation` (première ouverture) sert aussi la mesure « révélation ouverte le soir même ».
- *  `arrivee` et `cercle_lance` portent le cercle concerné ; les autres, `cercle: null`. */
+/** Ce qu'on marque comme vu, sans heure. `revelation` (première ouverture) déclenche aussi les compteurs du jour
+ *  `revelation_ouverte` et `revelation_ouverte_le_soir` (D-066, point 4). `arrivee` et `cercle_lance` portent le cercle
+ *  concerné, et s'effacent au départ de ce cercle ; les autres, `cercle: null`. */
 export const OBJETS_VU = ['revelation', 'arrivee', 'cercle_lance', 'annonces', 'barre_pleine'] as const;
 export type ObjetVu = (typeof OBJETS_VU)[number];
 

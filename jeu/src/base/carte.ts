@@ -11,18 +11,29 @@
 // les adresses IP ; les autres textes sont des empreintes hexadécimales, des valeurs d'une liste fermée ou des
 // numéros de texte, tous contraints par la base.
 //
-// Ce qui reste lisible en clair dans une copie de la base et dit quelque chose des réponses (dérivés acceptés, à
-// reporter dans la carte des données de docs/etape-6/donnees.md, partie 4, par Back-end avec Juridique). Les réponses
-// et le « pourquoi » des cartes sont chiffrés (P-02) ; restent en clair :
+// Ce qui reste lisible en clair dans une copie de la base et dit quelque chose des réponses (dérivés acceptés pour le
+// test par Juridique, relecture du 16 octobre 2026, à reporter dans docs/etape-6/donnees.md, partie 4). Ce sont
+// probablement des données de l'art. 9, couvertes par le même accord que les réponses ; aucune ne dit un camp à elle
+// seule. Les réponses et le « pourquoi » des cartes sont chiffrés (P-02) ; restent en clair :
 // - carte.verdict avec carte.visage_membre_id : « juste » dit que le devineur a reconnu l'auteur ; « jumeau » dit que
-//   le membre désigné a donné exactement la même réponse que l'auteur (D-024), ce que la révélation montre au devineur ;
+//   le membre désigné a donné exactement la même réponse que l'auteur (D-024), ce que la révélation montre au devineur.
+//   Au départ du membre désigné après 18h, « jumeau » devient « juste » (migration 0002) ;
+// - carte.qui_et_pourquoi (usage 1, forme « booleen », durée de sa carte : comme les réponses) : la carte « qui et
+//   pourquoi » n'est servie que si la raison de l'auteur n'est pas « aucune » ; une manche sans cette carte dit que
+//   toutes les raisons servies étaient « aucune » ;
 // - titre, sorte « pas_de_cote » : la réponse de son titulaire à ce texte allait contre son curseur, donc son côté
-//   (fuite voulue par le §4 : le badge est annoncé au cercle ; regles.md, section 9) ;
+//   (fuite voulue par le §4 : le badge est annoncé au cercle ; regles.md, section 9). Effacé au départ de son
+//   titulaire (D-066, point 1) ; premier candidat au chiffrement à la version publique ;
 // - temperament : une part des réponses d'un joueur sur deux mois (règle 13 : L'Original, souvent seul de son côté ;
 //   Le Pont, souvent neutre sur les textes qui divisent ; Le Mesuré, souvent neutre ; Le Tranché, souvent « Très … ») ;
-// - portrait_dimanche.nettes : quelles tensions étaient nettes, sans leur sens ;
+// - portrait_dimanche.nettes : quelles tensions étaient nettes au dernier dimanche, sans leur sens (une ligne par
+//   joueur) ;
 // - compte_semaine, compte_texte_cercle : des comptes de cartes justes, fausses ou passées, sans aucune position.
 // L'avis du cercle n'est pas gardé : il se calcule à la lecture (CONTRAT.md, partie 3).
+//
+// Les durées ci-dessous valent toutes dans une limite : pendant le test, toute donnée de joueur est effacée au plus
+// tard à la fin du test (D-061, point 2). « Valable N minutes » est une validité : la ligne part à la passe du ménage
+// qui suit (P-31 ; src/base/menage.ts).
 
 import type pg from 'pg';
 
@@ -67,16 +78,16 @@ export const CARTE: Record<string, Table> = {
     colonnes: { id: 'identifiant', empreinte: 'empreinte', joueur_id: 'reference', expire_le: 'instant' },
   },
   connexion_en_cours: {
-    usage: 4, duree: '10 minutes',
+    usage: 4, duree: 'Valable 10 minutes ; effacée à son usage, sinon à la passe suivante du ménage',
     colonnes: { id: 'identifiant', voie: 'liste', but: 'liste', nonce: 'aleatoire', etat_google: 'aleatoire',
       verificateur_google: 'aleatoire', defi: 'aleatoire', joueur_id: 'reference', expire_le: 'instant' },
   },
   code_retour: {
-    usage: 4, duree: 'Une minute',
+    usage: 4, duree: 'Valable une minute ; effacé à son usage, sinon à la passe suivante du ménage',
     colonnes: { empreinte: 'empreinte', defi: 'aleatoire', joueur_id: 'reference', refus: 'liste', expire_le: 'instant' },
   },
   code_email: {
-    usage: 4, duree: '15 minutes',
+    usage: 4, duree: 'Valable 15 minutes, une fois, 5 essais ; ligne gardée 24 heures au plus pour limiter les demandes par adresse, puis effacée par le ménage',
     colonnes: { id: 'identifiant', empreinte_adresse: 'empreinte', empreinte_code: 'empreinte', cree_le: 'instant',
       expire_le: 'instant', essais: 'entier' },
   },
@@ -94,7 +105,7 @@ export const CARTE: Record<string, Table> = {
       arrive_le: 'instant' },
   },
   invitation: {
-    usage: 1, duree: 'Jusqu’à son usage, 7 jours au plus ; le score d’entrée, jusqu’à la lecture de l’annonce par l’invitant, 7 jours au plus après la création du compte, et effacé avec l’invité',
+    usage: 1, duree: 'Jamais servi : jusqu’à son échéance (7 jours). Servi : tant que le cercle existe, sans plus désigner personne après le départ ou l’effacement de l’invité ; ne fait lire l’invité que 7 jours après sa liaison. Lien de créateur : effacé à son échéance. Score d’entrée : jusqu’à la lecture de l’annonce par l’invitant, 7 jours au plus après la liaison, effacé avec l’invité ou à son départ',
     colonnes: { id: 'identifiant', sorte: 'liste', empreinte_jeton: 'empreinte', cercle_id: 'reference',
       invitant_membre_id: 'reference', accord_invitant_version: 'entier', accord_invitant_le: 'instant',
       expire_le: 'instant', lie_le: 'instant', invite_joueur_id: 'reference', score_entree: 'entier' },
@@ -105,12 +116,12 @@ export const CARTE: Record<string, Table> = {
       consentement_id: 'reference' },
   },
   manche: {
-    usage: 1, duree: 'Comme les réponses',
+    usage: 1, duree: 'Comme les réponses (cercle_regarde : un verrou ; le geste se compte au moment où il a lieu)',
     colonnes: { id: 'identifiant', cercle_id: 'reference', devineur_membre_id: 'reference', jour: 'date',
       texte_id: 'texte_id', validee_le: 'instant', cercle_regarde: 'booleen' },
   },
   carte: {
-    usage: 1, duree: 'Comme les réponses',
+    usage: 1, duree: 'Comme les réponses ; une carte part avec son auteur, le visage d’un partant se vide',
     colonnes: { id: 'identifiant', manche_id: 'reference', cercle_id: 'reference', ordre: 'entier',
       auteur_membre_id: 'reference', qui_et_pourquoi: 'booleen', visage_membre_id: 'reference', pourquoi: 'chiffre',
       passee: 'booleen', videe_par_depart: 'booleen', verdict: 'liste' },
@@ -120,17 +131,17 @@ export const CARTE: Record<string, Table> = {
     colonnes: { cercle_id: 'reference', jour: 'date', eveille: 'booleen', titres_calcules: 'booleen' },
   },
   compte_semaine: {
-    usage: 1, duree: 'Jusqu’au départ du cercle',
+    usage: 1, duree: 'La semaine en cours et la précédente (ménage) ; partent au départ du cercle',
     colonnes: { cercle_id: 'reference', membre_id: 'reference', semaine: 'date', points: 'entier',
       raisons_trouvees: 'entier', tentatives_subies: 'entier', erreurs_subies: 'entier', jours_avec_cartes: 'entier',
       erreurs_faites: 'entier', passes_faites: 'entier', textes_repondus: 'entier' },
   },
   compte_texte_cercle: {
-    usage: 1, duree: 'Tant que le cercle existe',
+    usage: 1, duree: 'La semaine en cours et la précédente, comptées au jour où le texte se devine (ménage) ; restent au départ d’un auteur',
     colonnes: { cercle_id: 'reference', texte_id: 'texte_id', attributions: 'entier', fausses: 'entier' },
   },
   titre: {
-    usage: 1, duree: 'Tant que le cercle existe ; sous « un ancien membre » après un départ (D-045)',
+    usage: 1, duree: 'Tant que le cercle existe ; sous « un ancien membre » après un départ (D-045), sauf Le Pas de Côté, effacé au départ de son titulaire (D-066, point 1)',
     colonnes: { id: 'identifiant', cercle_id: 'reference', sorte: 'liste', jour: 'date', membre_id: 'reference',
       texte_id: 'texte_id' },
   },
@@ -140,19 +151,19 @@ export const CARTE: Record<string, Table> = {
       membre_id: 'reference', depuis: 'date' },
   },
   portrait_dimanche: {
-    usage: 1, duree: 'Comme les réponses',
+    usage: 1, duree: 'Une seule lecture par joueur, remplacée chaque dimanche',
     colonnes: { joueur_id: 'reference', jour: 'date', nettes: 'entier' },
   },
   vu: {
-    usage: 1, duree: 'Tant que le compte existe (l’heure sert aussi la mesure « révélation ouverte le soir même », usage 3)',
-    colonnes: { joueur_id: 'reference', objet: 'liste', jour: 'date', cercle_id: 'reference', vu_le: 'instant' },
+    usage: 1, duree: 'Sans heure. Révélation : jusqu’au 18h suivant (ménage). Objets d’un cercle : jusqu’au départ de ce cercle. Barre pleine : tant que le compte existe',
+    colonnes: { joueur_id: 'reference', objet: 'liste', jour: 'date', cercle_id: 'reference' },
   },
   repondre_ouvert: {
-    usage: 1, duree: 'Jusqu’à la fermeture du texte',
+    usage: 1, duree: 'Jusqu’à 18h10 le jour où le texte se ferme (règle 6 ; ménage)',
     colonnes: { joueur_id: 'reference', texte_id: 'texte_id', ouvert_le: 'instant' },
   },
   reprise_revelation: {
-    usage: 1, duree: 'Du 18h au 18h suivant',
+    usage: 1, duree: 'Du 18h au 18h suivant (ménage)',
     colonnes: { joueur_id: 'reference', jour: 'date', etape: 'aleatoire' },
   },
   abonnement: {
@@ -163,26 +174,34 @@ export const CARTE: Record<string, Table> = {
     usage: 1, duree: 'Jusqu’à ce que le joueur le rallume, ou à l’effacement',
     colonnes: { joueur_id: 'reference' },
   },
+  mesures_refusees: {
+    usage: 1, duree: 'Tant que le compte existe, ou jusqu’à ce que le joueur retire son refus (art. 21 ; D-066, point 3)',
+    colonnes: { joueur_id: 'reference' },
+  },
   envoi: {
-    usage: 3, duree: '13 mois au plus (gestes), au plus jusqu’à la fin du test',
+    usage: 1, duree: '7 jours (ménage), puis seulement des totaux par jour, comptés à l’envoi et à la réception (D-066, point 4)',
     colonnes: { id: 'identifiant', abonnement_id: 'reference', sorte: 'liste', jour: 'date', envoye_a: 'instant',
       reponse_code: 'entier', recu_a: 'instant' },
   },
   compte_aucune: {
-    usage: 2, duree: 'Sans limite : anonyme',
+    usage: 2, duree: 'Sans limite : anonyme ; non écrit pendant le test (D-066, point 2)',
     colonnes: { texte_id: 'texte_id', reponses: 'entier', aucune: 'entier' },
   },
-  compteur: { usage: 3, duree: 'Sans limite : anonyme', colonnes: { sorte: 'liste', jour: 'date', nombre: 'entier' } },
+  compteur: { usage: 3, duree: 'Sans limite : anonyme (des totaux par jour, sans personne)', colonnes: { sorte: 'liste', jour: 'date', nombre: 'entier' } },
   histogramme_raison: {
     usage: 3, duree: 'Sans limite : anonyme (P-40)',
     colonnes: { semaine: 'date', tranche: 'entier', nombre: 'entier' },
   },
   total_mesure: {
-    usage: 3, duree: 'Sans limite : anonyme ; trois comptes de mi-bêta (usage 5) : à fixer dans l’analyse d’impact',
-    colonnes: { periode: 'date', sorte: 'liste', numerateur: 'entier', denominateur: 'entier', effectif: 'entier' },
+    usage: 3, duree: 'Sans limite : anonyme ; trois comptes de mi-bêta (usage 5) : non écrits pendant le test (D-066, point 2), durée à fixer dans l’analyse d’impact',
+    colonnes: { periode: 'date', sorte: 'liste', numerateur: 'entier', denominateur: 'entier', joueurs: 'entier' },
+  },
+  apport_mesure: {
+    usage: 3, duree: 'Jusqu’à la fin de sa période (ménage) : le verrou qui fait compter des joueurs distincts (D-066, point 4)',
+    colonnes: { joueur_id: 'reference', periode: 'date', sorte: 'liste' },
   },
   effacement: {
-    usage: 4, duree: 'Plus longue rotation des sauvegardes, plus 5 jours (P-32)',
+    usage: 4, duree: 'Plus longue rotation des sauvegardes, plus 5 jours (P-32) ; joueurs provisoires effacés par le ménage compris ; lu avant toute restauration',
     colonnes: { joueur_id: 'identifiant', efface_le: 'date' },
   },
   migration: {

@@ -49,12 +49,13 @@ export const DROITS: Record<Module, DroitsModule> = {
       compte_texte_cercle: ['SELECT', 'INSERT', 'UPDATE(attributions, fausses)'],
       titre: ['SELECT', 'INSERT'],
       temperament: ['SELECT', 'INSERT', 'UPDATE(depuis)', 'DELETE'],
-      portrait_dimanche: ['SELECT', 'INSERT'],
+      portrait_dimanche: ['SELECT', 'INSERT', 'UPDATE(jour, nettes)'], // une ligne, remplacée chaque dimanche
       vu: ['SELECT', 'INSERT'],
       repondre_ouvert: ['SELECT', 'INSERT'],
       reprise_revelation: ['SELECT', 'INSERT', 'UPDATE(etape)'],
       abonnement: ['SELECT', 'INSERT', 'DELETE'],
       message_coupe: ['SELECT', 'INSERT', 'DELETE'],
+      mesures_refusees: ['SELECT', 'INSERT', 'DELETE'], // le refus des mesures, posé et retiré par le joueur (D-066)
     },
     fonctions: [
       ...FONCTIONS_DES_REGLES,
@@ -79,7 +80,8 @@ export const DROITS: Record<Module, DroitsModule> = {
       message_coupe: ['SELECT'],
       envoi: ['SELECT', 'INSERT', 'UPDATE(reponse_code, recu_a)'],
     },
-    fonctions: [...FONCTIONS_DES_REGLES],
+    // « message envoyé » et « message reçu », comptés au moment de l'envoi et de la réception (D-066, point 4).
+    fonctions: [...FONCTIONS_DES_REGLES, 'ajouter_compteur(text, date)'],
   },
   menage: {
     tables: {
@@ -89,7 +91,8 @@ export const DROITS: Record<Module, DroitsModule> = {
       ...Object.fromEntries(['joueur', 'identite', 'session', 'connexion_en_cours', 'code_retour', 'code_email',
         'consentement', 'cercle', 'membre', 'reponse', 'manche', 'carte', 'journee_cercle', 'compte_semaine',
         'compte_texte_cercle', 'titre', 'temperament', 'portrait_dimanche', 'vu', 'repondre_ouvert',
-        'reprise_revelation', 'abonnement', 'message_coupe', 'envoi'].map((t) => [t, ['SELECT', 'DELETE']])),
+        'reprise_revelation', 'abonnement', 'message_coupe', 'mesures_refusees', 'envoi', 'apport_mesure']
+        .map((t) => [t, ['SELECT', 'DELETE']])),
       invitation: ['SELECT', 'DELETE', 'UPDATE(score_entree)'],
       effacement: ['SELECT', 'INSERT', 'DELETE'],
     },
