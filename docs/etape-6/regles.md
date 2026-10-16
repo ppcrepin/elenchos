@@ -224,7 +224,7 @@ Nos joueurs inventés répondent d'après un profil caché, se trompent sur leur
 - **L'ordre.** Les attributions, cercle par cercle ; puis le vote et, avec lui, l'avis de chaque cercle ; puis les auteurs ; puis les badges rares (D-011).
 - **La manche se ferme telle qu'elle est.** Un visage posé compte ; une carte vide est passée. Une manche dont l'écran Deviner ne s'est jamais affiché n'a pas de cartes, et sa révélation commence au vote (R10).
 - **L'avis du cercle** (D-025 ; seuil et ligne proposés) :
-  - il compte les réponses des membres actuels du cercle au texte révélé, réponses en retard comprises ;
+  - il compte les réponses au texte révélé des membres actuels du cercle qui l'étaient déjà à sa fermeture (comme la règle 8), réponses en retard comprises (précision de l'équipe, D-065 point 4) ;
   - **seuil : 3 réponses** ; en dessous, ni ligne, ni graphique, ni phrase de remplacement ;
   - on range les n réponses de TD à TF. Si n est impair, la mention du milieu est celle de rang (n + 1)/2. Si n est pair, on marque les deux du milieu, ou une seule si elles sont égales ;
   - la ligne suit le côté du milieu : favorable, « Ton cercle, lui, l'aurait adopté. » ; défavorable, « … l'aurait rejeté. » ; neutre, ou deux côtés différents au milieu, « Ton cercle, lui, était partagé. » ;

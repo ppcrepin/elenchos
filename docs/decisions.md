@@ -547,6 +547,8 @@ Au titre de D-062 point 5 (l'équipe tranche les détails ; le porteur est infor
 2. **Un seul trio de textes d'entrée pour tous les cercles pendant le test** (lecture B2 de Game design). **Suspend, pour le test, `docs/onboarding.md` et la règle 15** (trois textes fixés par cercle) ; l'exemple de la règle 15 (une réponse reprise sur trois) ne peut pas se produire. À rétablir pour la version publique (quelques trios en rotation).
 3. **Un lien de relecture réutilisable, 30 jours, pour le relecteur d'Apple**, qui n'ouvre qu'un cercle de démonstration aux membres et réponses inventés. **Exception à D-006 (arbitrage 3, lien non réutilisable) et à P-29**, bornée : aucune donnée réelle n'en sort.
 
+4. **L'avis du cercle ne compte que les membres déjà présents à la fermeture du texte** (comme la règle 8 pour les cartes et les visages ; Game design, sur une variante du Vérificateur ; Back-end proposait « arrivés avant la révélation »). Précise « les membres actuels » de la règle 10 (D-052) ; reporté dans `docs/etape-6/regles.md` règle 10. Une arrivée ne change jamais l'avis d'un texte fermé.
+
 Rappel, déjà dans le plan relu (D-064) : « Tout effacer » révoque aussi la connexion chez Apple (rétablit D-035 règle 5 et P-38 pour Apple ; l'allègement de D-061 reste pour Google).
 
 ### Points ouverts du §11 — toujours ouverts
