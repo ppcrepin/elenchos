@@ -527,6 +527,12 @@ Le porteur, mot pour mot (dicté) : « je n'avais pas compris que le test conten
 
 Estimation donnée au porteur (orchestrateur, à chiffrer par l'équipe) : 2 à 3 mois de construction. Dit franchement : Apple relit les applications avant les testeurs externes et ses règles demandent une société pour une application qui garde des opinions politiques ; la voie des testeurs internes est à vérifier.
 
+### D-063 — Aucune dépense sans l'avis du porteur · Décidé (16 octobre 2026)
+
+Le porteur, mot pour mot : « Ne paie rien sans demander mon avis. » **Renforce D-042** : aucune dépense, même de quelques euros (hébergement, domaine, location d'un Mac, abonnement, renouvellement), n'est engagée ni laissée s'engager seule sans son accord écrit préalable, présentée avec son montant. Les agents ne paient jamais rien eux-mêmes ; c'est le porteur qui paie, sur ses comptes. Toute facturation qui démarrerait d'elle-même (fin d'un essai gratuit, D-055 ; renouvellement automatique) lui est signalée au moins une semaine avant, avec le choix de continuer ou d'arrêter.
+
+Fait dit au porteur le même jour : le journal ne consigne aucune ouverture de compte Scalingo (le pas-à-pas du test de 18h a été mis en attente par D-059) ; s'il en a ouvert un, l'essai gratuit court depuis ce jour-là, et rien n'est facturé tant qu'aucune application ni base n'existe (D-055).
+
 ### Points ouverts du §11 — toujours ouverts
 
 (1) Web ou application : **tranché, D-005** · (2) Onboarding : **tranché, D-006** (`docs/onboarding.md`) · (3) Modèle économique : **tranché, D-042** (gratuit, contribution libre à l'ouverture) · (4) Juridique · (5) Mortalité du cercle : **tranché, D-010** · (6) Plafond d'attributions : **tranché, D-010** · (7) Surcouche 2027 · (8) Étapes suivantes (la partie technique « iOS puis Android » est remplacée par D-005). Les autres restent ouverts.
