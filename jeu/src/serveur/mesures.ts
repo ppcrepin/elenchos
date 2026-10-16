@@ -12,8 +12,8 @@
 
 import { ajouterJours, fermetureDuJour, instantParis, partiesParis } from './horloge.ts';
 
-/** L'heure de Paris où finit « le soir même », comptée depuis minuit du jour de la révélation : 24 = minuit (proposé,
- *  à confirmer par Game design). */
+/** L'heure de Paris où finit « le soir même », comptée depuis minuit du jour de la révélation : 24 = minuit (confirmé par
+ *  Game design le 16 octobre 2026, au titre de D-062 point 5 ; renversable par le porteur). */
 export const FIN_DU_SOIR_MEME_HEURE = 24;
 
 /** Vrai si une révélation tombée à 18h le jour civil `jour` (« AAAA-MM-JJ ») a été ouverte le soir même, à l'instant
