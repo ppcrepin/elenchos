@@ -44,20 +44,21 @@ Chaque exigence dit donc si elle vaut pendant le test, ou seulement pour la vers
 
 **Les mots.**
 - **Scalingo** : l'hébergeur français où tourne le jeu (D-048). Il garde la base de données : tout ce que le jeu enregistre.
-- **Scaleway** : le service français qui envoie nos e-mails et garde une copie de secours de la base (choix de l'équipe, `docs/plateforme.md` ; D-048 ne décide que Scalingo ; à confirmer au travail 5).
+- **Scaleway** : le service français qui envoie nos e-mails (choix de l'équipe, `docs/plateforme.md` ; D-048 ne décide que Scalingo). À la version publique, il gardera aussi une copie de secours de la base ; pas pendant le test (D-060 ; P-13).
+- **TestFlight** : l'application d'Apple qui sert à installer une version de test. Vos amis y installent Elenchos (D-062, point 2).
 - **Les agents** : les assistants d'IA qui construisent le jeu. Ils travaillent chez un fournisseur américain d'IA, qui voit tout ce qu'ils voient.
 - **Le téléphone** : le jeu ne demande jamais de numéro de téléphone.
 - **Chiffré** : illisible sans la clé. **Un total** : un chiffre sur beaucoup de joueurs, jamais rattaché à un nom.
-- **La version d'aperçu** : une copie du jeu, remplie de données inventées, où vous validez en jouant.
+- **La version d'aperçu** : une copie du jeu, remplie de données inventées, prévue pour la version publique. Il n'y en a pas pendant le test (D-060) : vous jouez sur la vraie base.
 
 **Le tableau** suit Marie, membre d'un cercle avec Thomas, Paul et Hugo. « aucun écran » : pourrait techniquement la lire, mais aucun écran ne la montre. « total » : seulement dans un total. « rapport » : seulement dans un total, au-dessus des seuils, dans un rapport que vous leur donnez, jamais par un accès (D-052, point 3). « — » : sans objet. Les chiffres renvoient aux notes.
 
 | Ce que le jeu garde de Marie | Marie | Son cercle | Vous (1) | Les agents | Scalingo (7) | Apple et Google (8) | Le fournisseur d'IA |
 |---|---|---|---|---|---|---|---|
-| Son adresse e-mail | oui | non | aucun écran | non | une empreinte seulement (l'adresse n'est jamais gardée) | si elle se connecte par eux ; Apple aussi, si elle est invitée par e-mail à TestFlight (8) | non |
-| Son pseudo | oui | oui | aucun écran | non | oui | non (2) | non |
+| Son adresse e-mail | oui | non | non : elle n'est pas gardée (P-01) | non | une empreinte seulement (l'adresse n'est jamais gardée) | si elle se connecte par eux ; Apple aussi, si elle est invitée par e-mail à TestFlight (8) | non |
+| Son pseudo | oui | oui | aucun écran | non | oui | Apple : dans l'annonce d'arrivée seulement (2) | non |
 | Sa réponse : position et raison | oui | en partie (3) | aucun écran | non | oui | non | non |
-| Son portrait, ses tempéraments, ses titres | oui | oui | aucun écran ; total (9) | rapport (9) | oui | non | rapport (9) |
+| Son portrait, ses tempéraments, ses titres | oui | oui | aucun écran ; ses titres : total (9) ; le reste : aucun total pendant le test (9) | ses titres : rapport (9) ; le reste : rien pendant le test (9) | oui | non | comme les agents (9) |
 | Sa barre « Ton portrait se dessine » | oui | non | aucun écran | non | oui | non | non |
 | Ses devinettes et ses points | oui | non (4) | total | rapport | oui | non | rapport |
 | Ses gestes : ouvertures, durées, a joué ou non | oui | « a déjà joué » (5) | total ; testeur par testeur, ce que montre TestFlight (8) | rapport | oui | Apple, par TestFlight : installation, ouvertures, plantages (8) | rapport |
