@@ -1,8 +1,9 @@
 // Les cartes à deviner (règles 3, 8 et 9) : les réponses possibles, la répartition d'un proche présent dans plusieurs
 // de mes cercles (R8), le choix des cartes (les plus inattendues, R3 ; jamais deux identiques quand une autre peut
 // prendre la place, R4), la carte « qui et pourquoi » et l'ordre d'affichage (D-038), les visages proposés (D-011,
-// et ses deux exceptions ; un proche présent dans plusieurs de mes cercles n'est proposé que dans une seule de mes
-// manches, qu'il ait répondu ou non). Tout se tire à 18h, parmi les réponses déjà fermées.
+// et ses trois exceptions ; la troisième, D-065 point 1 : un proche présent dans plusieurs de mes cercles n'est
+// proposé que dans une seule de mes manches, qu'il ait répondu ou non). Tout se tire à 18h, parmi les réponses déjà
+// fermées.
 //
 // Écarts avec l'essai 2 (`calculerManche`), regles.md l'emporte :
 // - la carte « qui et pourquoi » est tirée au sort parmi les cartes servies dont la raison n'est pas « aucune » (règle 9,
@@ -214,9 +215,10 @@ export function proposablesDuCercle(cercle: CercleDuJour, devineur: IdMembre, jo
 /**
  * Règle 3 (R8), côté visages : un proche présent dans plusieurs de mes cercles n'est proposé que dans une seule de mes
  * manches chaque jour, qu'il ait répondu ou non. C'est la lettre de la règle 3 (`produit.md` : « ne t'est proposée
- * qu'une fois par jour ») et du contrat (« servi, et proposé, qu'une fois par jour »), dans la lecture de Game design
- * retenue par l'équipe à l'étape 1 (D-062, point 5). Sans elle, son visage proposé partout trahirait qu'il n'a pas répondu (D-011),
- * et sa réponse en retard pourrait rapporter deux points de jumeau le même jour (règle 11).
+ * qu'une fois par jour ») et du contrat (« servi, et proposé, qu'une fois par jour »), dans la lecture A2 de Game
+ * design, arbitrée par l'équipe : troisième exception à D-011, fidèle à son but (D-065, point 1). Sans elle, son
+ * visage proposé partout trahirait qu'il n'a pas répondu (D-011), et sa réponse en retard pourrait rapporter deux
+ * points de jumeau le même jour (règle 11).
  * - Un proche servi est proposé là où R8 le sert (`placement`).
  * - Un proche sans réponse servie (pas de réponse, ou réponse en retard) est proposé dans une seule de mes manches qui
  *   ont des cartes, après la répartition de R8 : la seule s'il n'y en a qu'une, sinon celle qu'un tirage invisible

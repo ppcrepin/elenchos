@@ -5,9 +5,12 @@
 // par construction. Jamais : adresse internet, jeton d'appareil, identifiant, pseudo, adresse e-mail, code, contenu
 // d'une demande. Scalingo garde ces journaux un an, hors d'atteinte de « Tout effacer » (P-07, vigilance).
 //
-// Les routes suivent jeu/CONTRAT.md (état du 15 octobre 2026), moins ce que l'application iPhone rend sans objet
-// (code de passage, geste de l'icône : plan-jeu-entier-equipe.md, 2.4). À réaligner quand le contrat du jeu entier
-// sera posé : une route absente s'écrit « (autre) », ce qui ne fuit rien mais rend le journal moins utile.
+// Les routes sont celles du contrat du jeu entier (jeu/CONTRAT.md, parties 2 et 7 ; les types `Routes` de
+// jeu/src/contrat.ts), plus les navigations web (CONTRAT.md, 2.14) et `POST /api/recu`. La compilation vérifie que la
+// liste et le contrat concordent dans les deux sens : une route ajoutée au contrat sans être ajoutée ici fait échouer
+// `tsc` (`ROUTES_ALIGNEES`). Toute adresse qui n'est pas dans la liste s'écrit « (autre) ».
+
+import type { Routes } from '../contrat.ts';
 
 const EVENEMENTS = [
   'demarrage', 'arret', 'migration', 'roles', 'reglages', 'requete', 'planificateur', 'envoi', 'connexion',
@@ -15,20 +18,38 @@ const EVENEMENTS = [
 ] as const;
 export type Evenement = (typeof EVENEMENTS)[number];
 
-/** Les routes, sous forme de modèle. Toute autre adresse s'écrit « (autre) ». */
-export const ROUTES = [
-  'GET /', 'GET (fichier)',
-  'GET /api/etat', 'POST /api/lien', 'GET /api/accord', 'POST /api/accord',
-  'GET /api/entree', 'POST /api/entree/repondre', 'GET /api/entree/bilan',
-  'GET /api/compte', 'POST /api/compte/pseudo', 'POST /api/compte/email', 'POST /api/compte/code',
-  'POST /api/cercle', 'GET /api/inviter', 'POST /api/inviter', 'GET /api/miroir', 'POST /api/miroir/parier',
-  'GET /api/aujourdhui', 'POST /api/repondre', 'POST /api/deviner/ouvrir', 'POST /api/deviner/poser',
-  'POST /api/deviner/pourquoi', 'POST /api/deviner/passer', 'POST /api/deviner/valider',
-  'GET /api/revelation', 'POST /api/vu', 'POST /api/fiche',
-  'POST /api/abonnement', 'POST /api/recu', 'POST /api/compteur',
-  'GET /api/cercle', 'GET /api/moi', 'GET /api/droits', 'POST /api/tout-effacer', 'POST /api/deconnexion',
-  'GET /connexion/apple', 'GET /connexion/google', 'POST /connexion/apple/retour', 'POST /connexion/google/retour',
+/** Les routes JSON du contrat, dans l'ordre de `Routes` (jeu/src/contrat.ts). */
+const ROUTES_DU_CONTRAT = [
+  'GET /api/etat',
+  'POST /api/lien', 'GET /api/accord', 'POST /api/accord', 'GET /api/entree', 'POST /api/entree/repondre',
+  'GET /api/entree/bilan',
+  'GET /api/compte', 'POST /api/compte/pseudo', 'POST /api/connexion/debut', 'POST /api/connexion/apple',
+  'POST /api/connexion/echanger', 'POST /api/compte/email', 'POST /api/compte/code', 'GET /api/rejoindre',
+  'POST /api/rejoindre',
+  'GET /api/cercles', 'POST /api/cercle', 'POST /api/cercle/voir', 'POST /api/cercle/titres', 'POST /api/cercle/quitter',
+  'POST /api/proche', 'POST /api/inviter/voir', 'POST /api/inviter', 'GET /api/miroir', 'POST /api/miroir/parier',
+  'GET /api/aujourdhui', 'POST /api/deviner/ouvrir', 'POST /api/deviner/poser', 'POST /api/deviner/pourquoi',
+  'POST /api/deviner/passer', 'POST /api/deviner/valider', 'POST /api/repondre/ouvrir', 'POST /api/repondre',
+  'GET /api/revelation', 'POST /api/revelation/etape', 'POST /api/fiche', 'POST /api/vu',
+  'GET /api/moi', 'GET /api/moi/titres', 'GET /api/moi/historique', 'GET /api/reglages', 'POST /api/message',
+  'GET /api/droits', 'POST /api/tout-effacer', 'POST /api/deconnexion',
+  'POST /api/abonnement', 'POST /api/geste', 'POST /api/duree-raison', 'POST /api/compteur',
   'POST /dev/connexion', 'POST /dev/horloge',
+] as const;
+
+/** Vrai seulement si la liste ci-dessus et les clés de `Routes` sont exactement les mêmes : sinon `tsc` refuse
+ *  l'affectation de `true`, et le contrôle du code échoue. */
+type Egales<A, B> = [A] extends [B] ? ([B] extends [A] ? true : false) : false;
+export const ROUTES_ALIGNEES: Egales<(typeof ROUTES_DU_CONTRAT)[number], keyof Routes> = true;
+
+/** Les routes, sous forme de modèle : celles du contrat, `POST /api/recu` (l'extension de réception, hors de
+ *  `Routes`), les navigations web (CONTRAT.md, 2.14) et les fichiers de ces pages. Toute autre adresse s'écrit
+ *  « (autre) ». */
+export const ROUTES = [
+  ...ROUTES_DU_CONTRAT,
+  'POST /api/recu',
+  'GET /', 'GET /confidentialite', 'GET /invitation', 'GET /.well-known/apple-app-site-association',
+  'POST /connexion/google/retour', 'GET (fichier)',
   '(autre)',
 ] as const;
 export type Route = (typeof ROUTES)[number];

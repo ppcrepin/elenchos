@@ -63,13 +63,14 @@ BEGIN
   END LOOP;
 END $$;
 
--- Un texte du jour d s'ouvre à 18h le jour d, se ferme à 18h le jour d+1 et se révèle à 18h le jour d+2, heure de
--- Paris (règle 6 ; plan-version-test-backend.md, partie 3). Les textes d'entrée n'ont pas de jour : ils n'y sont pas.
+-- Le texte du jour de jeu d s'ouvre à 18h le jour d − 1, se ferme à 18h le jour d et se révèle à 18h le jour d + 1,
+-- heure de Paris (regles.md §2 ; CONTRAT.md, partie 3 ; fin_du_jour_de_jeu, migration 0002). Les textes d'entrée n'ont
+-- pas de jour : ils n'y sont pas.
 CREATE VIEW mesure_aucune WITH (security_barrier) AS
   SELECT a.texte_id, a.reponses, a.aucune
     FROM compte_aucune a JOIN calendrier c ON c.texte_id = a.texte_id
    WHERE a.reponses >= 30
-     AND (((c.jour + 2)::timestamp + TIME '18:00') AT TIME ZONE 'Europe/Paris') <= now();
+     AND fin_du_jour_de_jeu(c.jour + 1) <= instant_du_jeu();
 
 CREATE VIEW mesure_totaux WITH (security_barrier) AS
   SELECT periode, sorte, numerateur, denominateur, effectif

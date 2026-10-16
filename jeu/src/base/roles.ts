@@ -24,7 +24,8 @@ export type DroitsModule = {
  *  les exécuter (PostgreSQL vérifie ce droit même pour une règle qui ne s'applique pas à lui). Elles ne rendent que ce
  *  qui concerne le joueur déclaré. */
 const FONCTIONS_DES_REGLES = [
-  'module_courant()', 'joueur_courant()', 'jeton_courant()', 'cloison_mes_cercles()', 'cloison_mes_membres()',
+  'module_courant()', 'joueur_courant()', 'jeton_courant()', 'instant_du_jeu()', 'fin_du_jour_de_jeu(date)',
+  'cloison_mes_cercles()', 'cloison_mes_membres()',
   'cloison_mes_proches()', 'cloison_mes_invitations()', 'cloison_cercles_invitation()', 'cloison_invitants_membres()',
   'cloison_invitants_joueurs()', 'cloison_reponses_offertes()', 'cloison_peut_entrer(uuid)',
 ];
@@ -42,7 +43,7 @@ export const DROITS: Record<Module, DroitsModule> = {
       invitation: ['SELECT', 'INSERT', 'UPDATE(invite_joueur_id, lie_le, score_entree)'],
       reponse: ['SELECT', 'INSERT'],
       manche: ['SELECT', 'INSERT', 'UPDATE(validee_le, cercle_regarde)'],
-      carte: ['SELECT', 'INSERT', 'UPDATE(visage_membre_id, pourquoi, passee, verdict)'],
+      carte: ['SELECT', 'INSERT', 'UPDATE(visage_membre_id, pourquoi, passee, videe_par_depart, verdict)'],
       journee_cercle: ['SELECT', 'INSERT', 'UPDATE(eveille, titres_calcules)'],
       compte_semaine: ['SELECT', 'INSERT', 'UPDATE(points, raisons_trouvees, tentatives_subies, erreurs_subies, jours_avec_cartes, erreurs_faites, passes_faites, textes_repondus)'],
       compte_texte_cercle: ['SELECT', 'INSERT', 'UPDATE(attributions, fausses)'],
@@ -58,7 +59,7 @@ export const DROITS: Record<Module, DroitsModule> = {
     fonctions: [
       ...FONCTIONS_DES_REGLES,
       'compter_reponse(text, boolean)', 'ajouter_compteur(text, date)', 'ajouter_histogramme(date, smallint)',
-      'ajouter_mesure(date, text, bigint, bigint)', 'oublier_scores(uuid)',
+      'ajouter_mesure(date, text, bigint, bigint)', 'oublier_scores(uuid)', 'cloison_ont_repondu(text)',
     ],
   },
   comptes: {
@@ -101,7 +102,9 @@ export const DROITS: Record<Module, DroitsModule> = {
       mesure_compteurs: ['SELECT'],
       mesure_histogramme: ['SELECT'],
     },
-    fonctions: ['module_courant()'],
+    // Les fonctions d'une vue s'exécutent avec les droits de qui la lit : la vue de « aucune » juge l'heure de la
+    // révélation avec elles.
+    fonctions: ['module_courant()', 'instant_du_jeu()', 'fin_du_jour_de_jeu(date)'],
   },
 };
 

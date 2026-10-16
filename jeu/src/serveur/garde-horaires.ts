@@ -1,4 +1,5 @@
-// Origine : test-18h/src/garde-horaires.ts (REPRIS, 12 octobre 2026), copié tel quel.
+// Origine : test-18h/src/garde-horaires.ts (REPRIS, 12 octobre 2026), copié tel quel ; seul le jour de la semaine suit
+// désormais la convention du moteur (6 = dimanche ; horloge.ts, 16 octobre 2026).
 // La règle des horaires de mise en ligne (D-043, D-054, CLAUDE.md) : aucune installation de 15h à 19h ni le dimanche,
 // heure de Paris. Les vérifications automatiques échouent exprès dans ces créneaux : Scalingo refuse alors d'installer
 // (fabrication en échec, ou vérification GitHub en échec). La même règle vaut pour les versions de l'application
@@ -9,7 +10,7 @@ import { partiesParis } from './horloge.ts';
 
 export function fenetreInterdite(d: Date): boolean {
   const p = partiesParis(d);
-  return p.jourSemaine === 0 || (p.heure >= 15 && p.heure < 19);
+  return p.jourSemaine === 6 || (p.heure >= 15 && p.heure < 19);
 }
 
 /** Les variables qui disent qu'on tourne chez Scalingo (fabrication ou conteneur) ou dans une vérification

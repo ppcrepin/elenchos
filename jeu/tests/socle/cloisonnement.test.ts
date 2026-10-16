@@ -2,7 +2,9 @@
 // autre cercle, même par une requête privée de tout filtre (« SELECT * » sur chaque table, sous le rôle du jeu) : c'est
 // la base qui refuse. Sans déclaration, la base ne rend rien. Les identités ne sont lues que par les comptes (P-01) ;
 // les réponses, jamais par l'envoi ni par les mesures (P-22, P-23) ; les mesures ne lisent que des totaux au-dessus des
-// seuils. L'invitation ne montre les réponses d'entrée de l'invitant qu'à l'invité lié (P-29).
+// seuils. L'invitation ne montre les réponses d'entrée de l'invitant qu'à l'invité lié (P-29). « Rien avant 18h »
+// (P-26) est tenu aussi par la base pour les réponses du jour : un proche ne les lit qu'après la fermeture du texte,
+// et « déjà joué » passe par une fonction qui ne rend que des membres. La base et le moteur placent 18h au même instant.
 //
 // Tout est joué deux fois : en mode « roles » (un rôle par module) et en mode « repli » (le propriétaire, retenu par
 // FORCE ROW LEVEL SECURITY), pour prouver que le repli tient le cloisonnement.
@@ -12,6 +14,8 @@ import { randomBytes, randomUUID } from 'node:crypto';
 import { after, before, describe, test } from 'node:test';
 import { CARTE, VUES } from '../../src/base/carte.ts';
 import { enTransaction } from '../../src/base/connexion.ts';
+import { bascule, jourDeDate } from '../../src/regles/heure.ts';
+import { ajouterJours } from '../../src/serveur/horloge.ts';
 import type { ModeRoles } from '../../src/serveur/config.ts';
 import { baseDeTest, commeJoueur, peupler, repondre, toutCeQuIlVoit, type BaseDeTest, type Monde } from './aides.ts';
 
@@ -188,6 +192,50 @@ for (const mode of ['roles', 'repli'] as ModeRoles[]) {
       assert.equal(await score(m.invitations.invPaul.id), null);
       assert.equal(await score(m.invitations.invHugoA.id), null);
       assert.equal(await score(m.invitations.invHugoB.id), 3);
+    });
+
+    test('rien avant 18h, tenu par la base : Marie ne lit la réponse de Paul au texte du mardi qu’à sa fermeture, mardi 18h', async () => {
+      // T04 est le texte du jour de jeu du lundi (fermé lundi 18h), T05 celui du mardi (fermé mardi 18h, 16:00Z).
+      const lire = async (instant: string) => {
+        const lignes = await enTransaction(base.module('jeu'), { joueur: m.marie.id, instant: new Date(instant) },
+          async (c) => (await c.query<{ joueur_id: string; texte_id: string }>('SELECT joueur_id, texte_id FROM reponse')).rows);
+        return (joueur: string) => lignes.filter((l) => l.joueur_id === joueur).map((l) => l.texte_id).sort();
+      };
+      const avant = await lire('2026-10-20T15:59:59Z'); // mardi 17:59:59
+      assert.deepEqual(avant(m.paul.id), ['T01', 'T02', 'T03', 'T04'], 'ses réponses d’entrée et celle du lundi, pas celle du mardi');
+      assert.deepEqual(avant(m.hugo.id), ['T01', 'T02', 'T03', 'T04']);
+      assert.deepEqual(avant(m.marie.id), ['T01', 'T02', 'T03', 'T04', 'T05'], 'les siennes, toujours');
+      const a18h = await lire('2026-10-20T16:00:00Z'); // mardi 18:00:00
+      assert.deepEqual(a18h(m.paul.id), ['T01', 'T02', 'T03', 'T04', 'T05']);
+      // La veille, même la réponse du lundi est cachée ; les réponses d'entrée, jamais.
+      assert.deepEqual((await lire('2026-10-18T12:00:00Z'))(m.paul.id), ['T01', 'T02', 'T03']);
+      // Témoin : sans la règle de temps (une heure lointaine), tout se lit.
+      assert.deepEqual((await lire('2099-01-01T00:00:00Z'))(m.hugo.id), ['T01', 'T02', 'T03', 'T04', 'T05']);
+    });
+
+    test('« déjà joué » avant 18h : des membres de ses cercles seulement, jamais une réponse ni un membre d’un autre cercle', async () => {
+      const ontRepondu = (joueur: string, texte: string) => enTransaction(base.module('jeu'), { joueur, instant: new Date('2026-10-20T15:59:59Z') },
+        async (c) => new Set((await c.query<{ r: string[] }>('SELECT cloison_ont_repondu($1) AS r', [texte])).rows[0]?.r ?? []));
+      // Dans « Famille », Marie, Paul et Hugo ont répondu au texte du mardi.
+      assert.deepEqual(await ontRepondu(m.marie.id, 'T05'), new Set([...m.a.membres.values()]));
+      // Hugo est dans trois cercles : ses proches de chacun, sous leurs identifiants de membre.
+      const hugo = await ontRepondu(m.hugo.id, 'T05');
+      assert.deepEqual(hugo, new Set([...m.a.membres.values(), ...m.b.membres.values(), ...m.c.membres.values()]));
+      // Personne n'a répondu au texte du mercredi ; un joueur sans cercle, ou inconnu, ne reçoit rien.
+      assert.deepEqual(await ontRepondu(m.marie.id, 'T06'), new Set());
+      assert.deepEqual(await ontRepondu(randomUUID(), 'T05'), new Set());
+      // Ce que rend la fonction : des identifiants de membre, jamais ceux des joueurs (P-01).
+      const joueurs = [m.marie, m.paul, m.hugo, m.lea, m.ines].map((j) => j.id);
+      for (const id of hugo) assert.ok(!joueurs.includes(id));
+    });
+
+    test('la base et le moteur placent 18h au même instant, chaque jour de 2026 à 2028, changements d’heure compris', async () => {
+      const jours: string[] = [];
+      for (let d = '2026-01-01'; d < '2029-01-01'; d = ajouterJours(d, 1)) jours.push(d);
+      const r = await base.admin.query<{ jour: string; fin: Date }>(
+        'SELECT j::text AS jour, fin_du_jour_de_jeu(j) AS fin FROM unnest($1::date[]) AS j', [jours]);
+      assert.equal(r.rowCount, jours.length);
+      for (const l of r.rows) assert.equal(l.fin.getTime(), bascule(jourDeDate(l.jour)), l.jour);
     });
 
     test('une déclaration ne survit pas à sa transaction : la connexion suivante ne voit plus personne', async () => {

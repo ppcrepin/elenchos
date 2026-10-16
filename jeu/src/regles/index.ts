@@ -17,5 +17,6 @@ export * from './revelation.ts';
 export * from './titres.ts';
 export * from './temperaments.ts';
 export * from './cercle.ts';
+export * from './confusables.ts';
 export * from './entree.ts';
 export * from './contenu.ts';

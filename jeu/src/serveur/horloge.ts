@@ -1,7 +1,18 @@
-// Origine : test-18h/src/horloge.ts (REPRIS, 12 octobre 2026), copié tel quel ; ajouté pour le jeu : le jour de jeu
-// et ses bornes (règle 6 : le texte s'ouvre à 18h, heure de Paris, pour 24 heures), et la semaine (règle 12).
-// Une seule horloge pour tout le serveur, qu'un test peut régler (outil « horloge simulée » de docs/etape-6/donnees.md).
+// Origine : test-18h/src/horloge.ts (REPRIS, 12 octobre 2026). Adapté le 16 octobre 2026 (relecture de l'étape 1,
+// corrections 1 et 5) : tous les calculs d'heure passent désormais par le moteur, `src/regles/heure.ts`, SEULE SOURCE
+// du jour de jeu, de l'heure d'été et du jour de la semaine. Ce fichier garde l'horloge du serveur, qu'un test peut
+// régler (outil « horloge simulée » de docs/etape-6/donnees.md), et traduit les numéros de jour du moteur en dates
+// « AAAA-MM-JJ », celles de la base.
+//
+// Le jour de jeu (regles.md §2 ; CONTRAT.md, partie 3) va de 18h à 18h, heure de Paris, et porte le nom du jour où il
+// FINIT : le « jour de jeu du jeudi » commence le mercredi à 18h et finit le jeudi à 18h. La base suit la même
+// convention (`fin_du_jour_de_jeu`, migration 0002) ; un test compare la base et le moteur, jour par jour.
 // Rien ne se calcule à 18h pile (D-043) : ces fonctions disent seulement de quel côté de 18h on se trouve.
+
+import {
+  bascule, civilDepuisJours, jourDeJeu as jourDeJeuDuMoteur, joursDepuisCivil, jourSemaine, paris,
+} from '../regles/heure.ts';
+import type { Jour } from '../regles/types.ts';
 
 export type Horloge = { maintenant(): Date };
 
@@ -17,46 +28,56 @@ export function horlogeReglable(depart: Date): Horloge & { regler(d: Date): void
   };
 }
 
+/** L'heure du rendez-vous : 18h00, heure de Paris (§2). */
+export const HEURE_DU_RENDEZ_VOUS = 18;
+
+const deux = (n: number) => String(n).padStart(2, '0');
+
+/** La date « AAAA-MM-JJ » d'un numéro de jour du moteur (jours depuis le 1970-01-01). */
+export function dateDeJour(z: Jour): string {
+  const c = civilDepuisJours(z);
+  return `${String(c.annee).padStart(4, '0')}-${deux(c.mois)}-${deux(c.jour)}`;
+}
+
+/** Le numéro de jour du moteur d'une date « AAAA-MM-JJ ». Une date qui n'existe pas (« 2026-02-30 ») est refusée. */
+export function jourDeDateISO(dateISO: string): Jour {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateISO);
+  if (!m) throw new Error('horloge: date illisible');
+  const z = joursDepuisCivil(Number(m[1]), Number(m[2]), Number(m[3]));
+  if (dateDeJour(z) !== dateISO) throw new Error('horloge: date illisible');
+  return z;
+}
+
 export type PartiesParis = {
   dateISO: string; // AAAA-MM-JJ, jour civil à Paris
   heure: number;
   minute: number;
   seconde: number;
-  jourSemaine: number; // 0 = dimanche … 6 = samedi
+  jourSemaine: number; // 0 = lundi … 6 = dimanche, comme le moteur (src/regles/heure.ts)
 };
 
-const FORMAT = new Intl.DateTimeFormat('en-GB', {
-  timeZone: 'Europe/Paris',
-  year: 'numeric', month: '2-digit', day: '2-digit',
-  hour: '2-digit', minute: '2-digit', second: '2-digit',
-  weekday: 'short', hourCycle: 'h23',
-});
-
-const JOURS: Record<string, number> = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
-
 export function partiesParis(d: Date): PartiesParis {
-  const p: Record<string, string> = {};
-  for (const morceau of FORMAT.formatToParts(d)) p[morceau.type] = morceau.value;
-  const jour = JOURS[p.weekday ?? ''];
-  if (jour === undefined) throw new Error('horloge: jour illisible');
+  const ms = d.getTime();
+  const p = paris(ms); // refuse un instant invalide
   return {
-    dateISO: `${p.year}-${p.month}-${p.day}`,
-    heure: Number(p.hour),
-    minute: Number(p.minute),
-    seconde: Number(p.second),
-    jourSemaine: jour,
+    dateISO: dateDeJour(p.numeroJour),
+    heure: Math.floor(p.minutesDuJour / 60),
+    minute: p.minutesDuJour % 60,
+    // Paris est décalé d'heures entières : les secondes sont celles de l'instant UTC.
+    seconde: ((Math.floor(ms / 1000) % 60) + 60) % 60,
+    jourSemaine: jourSemaine(p.numeroJour),
   };
 }
 
-/** L'instant (UTC) qui correspond à « dateISO, heure:minute » à Paris. Paris est à UTC+1 l'hiver, UTC+2 l'été. */
+/** L'instant (UTC) qui correspond à « dateISO, heure:minute » à Paris. Paris est à UTC+1 l'hiver, UTC+2 l'été. Une
+ *  heure qui existe deux fois (la nuit du passage à l'hiver) rend la seconde ; une heure qui n'existe pas est refusée. */
 export function instantParis(dateISO: string, heure: number, minute: number): Date {
-  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateISO);
-  if (!m) throw new Error('horloge: date illisible');
-  const base = Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]), heure, minute, 0, 0);
-  for (const decalage of [1, 2]) {
-    const essai = new Date(base - decalage * 3_600_000);
-    const p = partiesParis(essai);
-    if (p.dateISO === dateISO && p.heure === heure && p.minute === minute) return essai;
+  const z = jourDeDateISO(dateISO);
+  const voulue = heure * 60 + minute;
+  for (const decalage of [60, 120]) {
+    const ms = (z * 1440 + voulue - decalage) * 60_000;
+    const p = paris(ms);
+    if (p.numeroJour === z && p.minutesDuJour === voulue) return new Date(ms);
   }
   throw new Error('horloge: heure inexistante à Paris ce jour-là');
 }
@@ -64,52 +85,35 @@ export function instantParis(dateISO: string, heure: number, minute: number): Da
 /** « 18:00:09 », heure de Paris. */
 export function heureParis(d: Date): string {
   const p = partiesParis(d);
-  const deux = (n: number) => String(n).padStart(2, '0');
   return `${deux(p.heure)}:${deux(p.minute)}:${deux(p.seconde)}`;
 }
-
-// --- Ajouté pour le jeu -------------------------------------------------------------------------------------------
-
-/** L'heure du rendez-vous : 18h00, heure de Paris (§2). */
-export const HEURE_DU_RENDEZ_VOUS = 18;
 
 /** Ajoute n jours à une date civile (« 2026-10-25 » + 1 = « 2026-10-26 »), sans passer par l'heure : un jour civil
  *  dure 23 ou 25 heures les jours de changement d'heure, et seule la date compte ici. */
 export function ajouterJours(dateISO: string, n: number): string {
-  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateISO);
-  if (!m) throw new Error('horloge: date illisible');
-  const d = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]) + n, 12));
-  return d.toISOString().slice(0, 10);
+  return dateDeJour(jourDeDateISO(dateISO) + n);
 }
 
-/** Le jour de jeu en cours : le jour civil dont le texte s'est ouvert à 18h et n'est pas encore fermé.
- *  À 17:59:59 le 25 octobre, c'est le 24 ; à 18:00:00, c'est le 25. */
+/** Le jour de jeu en cours : le jour civil de Paris s'il est avant 18h, le lendemain sinon (le moteur, `jourDeJeu`).
+ *  À 17:59:59 le 25 octobre, c'est le 25 ; à 18:00:00, c'est le 26. */
 export function jourDeJeu(d: Date): string {
-  const p = partiesParis(d);
-  return p.heure >= HEURE_DU_RENDEZ_VOUS ? p.dateISO : ajouterJours(p.dateISO, -1);
+  return dateDeJour(jourDeJeuDuMoteur(d.getTime()));
 }
 
-/** L'ouverture du texte du jour j : 18h00 à Paris, ce jour-là. */
+/** L'ouverture du jour de jeu j : 18h00 à Paris, la veille. C'est l'ouverture du texte du jour j. */
 export function ouvertureDuJour(jour: string): Date {
-  return instantParis(jour, HEURE_DU_RENDEZ_VOUS, 0);
+  return new Date(bascule(jourDeDateISO(jour) - 1));
 }
 
-/** La fermeture du texte du jour j : 18h00 à Paris le lendemain. Le jour de jeu dure 23 ou 25 heures quand
- *  l'heure change pendant la nuit. */
+/** La fin du jour de jeu j : 18h00 à Paris, ce jour-là. Le texte du jour j s'y ferme, la manche du jour j s'y révèle.
+ *  Un jour de jeu dure 23 ou 25 heures quand l'heure change pendant la nuit. */
 export function fermetureDuJour(jour: string): Date {
-  return ouvertureDuJour(ajouterJours(jour, 1));
+  return new Date(bascule(jourDeDateISO(jour)));
 }
 
-/** Le jour de la semaine d'une date civile (0 = dimanche). */
-export function jourSemaine(dateISO: string): number {
-  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateISO);
-  if (!m) throw new Error('horloge: date illisible');
-  return new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]), 12)).getUTCDay();
-}
-
-/** La semaine d'un jour de jeu, nommée par son dimanche : la semaine du jeu va du lundi au dimanche, et ses titres
- *  tombent le dimanche à 18h (règle 12). Le jour de jeu du dimanche appartient à la semaine qu'il clôt. */
+/** La semaine d'un jour de jeu, nommée par son dimanche : elle compte les jours de jeu du lundi au dimanche, et ses
+ *  titres tombent le dimanche à 18h (règle 12 ; regles.md §2). Le jour de jeu du dimanche clôt sa semaine. */
 export function dimancheDeLaSemaine(jour: string): string {
-  const js = jourSemaine(jour);
-  return ajouterJours(jour, js === 0 ? 0 : 7 - js);
+  const z = jourDeDateISO(jour);
+  return dateDeJour(z + 6 - jourSemaine(z));
 }

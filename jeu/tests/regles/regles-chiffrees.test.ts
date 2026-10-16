@@ -16,6 +16,7 @@ import {
   controleGroupes,
   controleMelange,
   controleSens,
+  EXCEPTIONS_SENS,
   creerTirage,
   curseur,
   curseurDepuis,
@@ -40,6 +41,8 @@ import {
   portrait,
   portraitVu,
   pseudoLibre,
+  pseudoComparaison,
+  LETTRES_QUI_IMITENT,
   reponseAcceptee,
   revelerManche,
   sansArticle,
@@ -84,6 +87,29 @@ describe('Règle 1 · Taille et pseudo', () => {
     assert.equal(pseudoLibre('MARIE', ['Marie']), false);
     assert.equal(pseudoLibre('Mаrie', ['Marie'], { а: 'a' }), false, 'a cyrillique');
     assert.equal(pseudoLibre('Maria', ['Marie']), true);
+  });
+  test('la table des lettres qui imitent les nôtres (confusables.txt d’Unicode) sert par défaut, et à pseudo_comparaison', () => {
+    // Écrits par leur numéro : « Mаrie » (а cyrillique), « Ηugo » (Η grec, majuscule : sa minuscule η imite un n),
+    // « Ρaul » (Ρ grec), « Ｌéa » (pleine chasse), « 𝐌arie » (gras mathématique), « Ꭺnna » (cherokee).
+    const cyrillique = 'M\u{430}rie';
+    assert.equal(pseudoLibre(cyrillique, ['Marie']), false, 'a cyrillique, sans table passée');
+    assert.equal(pseudoComparaison(cyrillique), pseudoComparaison('Marie'));
+    assert.equal(pseudoComparaison('Marie-A7Q2'), 'marie-a7q2');
+    assert.equal(pseudoComparaison('\u{3A1}aul'), 'paul');
+    assert.equal(pseudoComparaison('\u{FF2C}\u{E9}a'), 'lea');
+    assert.equal(pseudoComparaison('\u{1D40C}arie'), 'marie');
+    assert.equal(pseudoComparaison('\u{13AA}nna'), 'anna');
+    assert.equal(pseudoComparaison('\u{397}ugo'), 'nugo', 'la minuscule d’abord, comme UTS #39 pour une comparaison sans majuscules');
+    assert.equal(pseudoLibre('Maria', ['M\u{430}rie']), true);
+    // La table : des caractères hors ASCII, déjà en minuscules sans accent, vers une lettre a–z ou un chiffre.
+    const entrees = Object.entries(LETTRES_QUI_IMITENT);
+    assert.ok(entrees.length > 1000);
+    for (const [c, l] of entrees) {
+      assert.equal([...c].length, 1, c);
+      assert.ok(c.codePointAt(0)! >= 0x80, c);
+      assert.equal(c.normalize('NFD').replace(/\p{Mn}/gu, '').toLowerCase(), c, c);
+      assert.match(l, /^[a-z0-9]$/, c);
+    }
   });
 });
 
@@ -771,11 +797,21 @@ describe('Règle 16 · Les tensions', () => {
   test('huit tensions dans l’ordre fixe', () => {
     assert.deepEqual(ORDRE_TENSIONS, ['S', 'EM', 'SR', 'P', 'T', 'SO', 'EP', 'L']);
   });
-  test('sur 8 semaines, autant de textes dans chaque sens, à un près ; l’exception de D-064', () => {
-    const l = (a: number, b: number) => [...Array.from({ length: a }, () => ({ tension: 'P' as const, sens: 0 as const })), ...Array.from({ length: b }, () => ({ tension: 'P' as const, sens: 1 as const }))];
+  test('sur 8 semaines, autant de textes dans chaque sens, à un près ; l’exception de D-064, bornée à un quart de « tradition »', () => {
+    const l = (a: number, b: number, tension: 'P' | 'T' = 'P') => [...Array.from({ length: a }, () => ({ tension, sens: 0 as const })), ...Array.from({ length: b }, () => ({ tension, sens: 1 as const }))];
     assert.deepEqual(controleSens(l(4, 3)), []);
     assert.deepEqual(controleSens(l(5, 3)), ['P']);
-    assert.deepEqual(controleSens(l(5, 3), ['P']), []);
+    // « Tradition ou changement » (D-064 ; FORMAT.md, C23) : sens 0 = tradition.
+    assert.deepEqual(controleSens(l(1, 3, 'T')), [], '3 « changement » contre 1 « tradition » : passe');
+    assert.deepEqual(controleSens(l(0, 4, 'T')), ['T'], '4 contre 0 : échoue');
+    assert.deepEqual(controleSens(l(2, 7, 'T')), ['T'], 'moins d’un quart : échoue');
+    assert.deepEqual(controleSens(l(2, 6, 'T')), [], 'un quart tout juste : passe');
+    assert.deepEqual(controleSens(l(3, 1, 'T')), ['T'], 'l’exception ne vaut que si la tradition manque');
+    assert.deepEqual(controleSens(l(2, 2, 'T')), []);
+    // Sans exception, T suit la règle ordinaire ; l'exception ne touche aucune autre tension.
+    assert.deepEqual(controleSens(l(1, 3, 'T'), {}), ['T']);
+    assert.deepEqual(controleSens(l(1, 3, 'P')), ['P']);
+    assert.deepEqual(EXCEPTIONS_SENS.T?.partMin.toString(), '1/4');
   });
   test('les mots des tensions concordent avec le contrat : pôles (D-053) et forme après « Entre » (J9, `sansArticle`)', () => {
     const droite = (m: string): string => m.replaceAll('’', "'");

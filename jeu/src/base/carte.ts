@@ -10,6 +10,19 @@
 // les seules colonnes de texte libre sont le pseudo et le nom du cercle, et la base y refuse « @ », « / », « : » et
 // les adresses IP ; les autres textes sont des empreintes hexadécimales, des valeurs d'une liste fermée ou des
 // numéros de texte, tous contraints par la base.
+//
+// Ce qui reste lisible en clair dans une copie de la base et dit quelque chose des réponses (dérivés acceptés, à
+// reporter dans la carte des données de docs/etape-6/donnees.md, partie 4, par Back-end avec Juridique). Les réponses
+// et le « pourquoi » des cartes sont chiffrés (P-02) ; restent en clair :
+// - carte.verdict avec carte.visage_membre_id : « juste » dit que le devineur a reconnu l'auteur ; « jumeau » dit que
+//   le membre désigné a donné exactement la même réponse que l'auteur (D-024), ce que la révélation montre au devineur ;
+// - titre, sorte « pas_de_cote » : la réponse de son titulaire à ce texte allait contre son curseur, donc son côté
+//   (fuite voulue par le §4 : le badge est annoncé au cercle ; regles.md, section 9) ;
+// - temperament : une part des réponses d'un joueur sur deux mois (règle 13 : L'Original, souvent seul de son côté ;
+//   Le Pont, souvent neutre sur les textes qui divisent ; Le Mesuré, souvent neutre ; Le Tranché, souvent « Très … ») ;
+// - portrait_dimanche.nettes : quelles tensions étaient nettes, sans leur sens ;
+// - compte_semaine, compte_texte_cercle : des comptes de cartes justes, fausses ou passées, sans aucune position.
+// L'avis du cercle n'est pas gardé : il se calcule à la lecture (CONTRAT.md, partie 3).
 
 import type pg from 'pg';
 
@@ -23,7 +36,7 @@ export type Forme =
   | 'liste' // une valeur d'une liste fermée
   | 'texte_id' // « T01 »
   | 'date' | 'instant' | 'entier' | 'booleen'
-  | 'chiffre' // réponse chiffrée, 31 octets
+  | 'chiffre' // chiffré par le programme (P-02) : une réponse, 31 octets ; le « pourquoi » d'une carte, 30 octets
   | 'pseudo' | 'intitule' | 'rond' // texte court, saisi par le joueur, contraint
   | 'contenu_public' // jsonb, contenu de l'Assemblée
   | 'nom_migration'; // « 0001-tables.sql »
@@ -81,7 +94,7 @@ export const CARTE: Record<string, Table> = {
       arrive_le: 'instant' },
   },
   invitation: {
-    usage: 1, duree: 'Jusqu’à son usage, 7 jours au plus ; le score d’entrée, jusqu’à son échéance',
+    usage: 1, duree: 'Jusqu’à son usage, 7 jours au plus ; le score d’entrée, jusqu’à la lecture de l’annonce par l’invitant, 7 jours au plus après la création du compte, et effacé avec l’invité',
     colonnes: { id: 'identifiant', sorte: 'liste', empreinte_jeton: 'empreinte', cercle_id: 'reference',
       invitant_membre_id: 'reference', accord_invitant_version: 'entier', accord_invitant_le: 'instant',
       expire_le: 'instant', lie_le: 'instant', invite_joueur_id: 'reference', score_entree: 'entier' },
@@ -99,8 +112,8 @@ export const CARTE: Record<string, Table> = {
   carte: {
     usage: 1, duree: 'Comme les réponses',
     colonnes: { id: 'identifiant', manche_id: 'reference', cercle_id: 'reference', ordre: 'entier',
-      auteur_membre_id: 'reference', qui_et_pourquoi: 'booleen', visage_membre_id: 'reference', pourquoi: 'entier',
-      passee: 'booleen', verdict: 'liste' },
+      auteur_membre_id: 'reference', qui_et_pourquoi: 'booleen', visage_membre_id: 'reference', pourquoi: 'chiffre',
+      passee: 'booleen', videe_par_depart: 'booleen', verdict: 'liste' },
   },
   journee_cercle: {
     usage: 1, duree: 'Tant que le cercle existe',

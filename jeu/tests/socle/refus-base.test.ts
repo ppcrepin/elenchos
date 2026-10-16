@@ -9,6 +9,7 @@
 import assert from 'node:assert/strict';
 import { randomBytes, randomUUID } from 'node:crypto';
 import { after, before, test } from 'node:test';
+import { pseudoComparaison } from '../../src/regles/cercle.ts';
 import {
   baseDeTest, commeJoueur, creerCercle, entrer, inviter, nouveauJoueur, peupler, repondre, type BaseDeTest, type Monde,
 } from './aides.ts';
@@ -96,12 +97,16 @@ test('E7 : deux membres d’un cercle n’ont jamais le même pseudo (comparé) 
   const sosie = await nouveauJoueur(base, 'MARIE-a7q2', 'Q'); // même forme de comparaison que « Marie-A7Q2 »
   const inv = await inviter(base, m.a, m.marie);
   await assert.rejects(entrer(base, m.a, inv, sosie), refus('EL003'));
+  // « Маrie-A7Q2 » écrit avec un М et un а cyrilliques : même squelette (pseudoComparaison, table de confusables.ts).
+  const imitation = await nouveauJoueur(base, '\u{41C}\u{430}rie-A7Q2', 'R');
+  const inv3 = await inviter(base, m.a, m.marie);
+  await assert.rejects(entrer(base, m.a, inv3, imitation), refus('EL003'));
   const homonyme = await nouveauJoueur(base, 'Mathilde', 'M'); // même rond que Marie
   const inv2 = await inviter(base, m.a, m.marie);
   await assert.rejects(entrer(base, m.a, inv2, homonyme), refus('EL004'));
   // Changer de pseudo pour celui d'un proche : refusé ; pour un pseudo libre : accepté.
   await assert.rejects(commeJoueur(base, m.paul.id, (c) => c.query(
-    'UPDATE joueur SET pseudo = $2, pseudo_comparaison = $3 WHERE id = $1', [m.paul.id, 'Hugo', m.hugo.pseudo.toLowerCase()])), refus('EL003'));
+    'UPDATE joueur SET pseudo = $2, pseudo_comparaison = $3 WHERE id = $1', [m.paul.id, 'Hugo', pseudoComparaison(m.hugo.pseudo)])), refus('EL003'));
   await commeJoueur(base, m.paul.id, (c) => c.query(
     'UPDATE joueur SET pseudo = $2, pseudo_comparaison = $3 WHERE id = $1', [m.paul.id, 'Polo', 'polo']));
 });

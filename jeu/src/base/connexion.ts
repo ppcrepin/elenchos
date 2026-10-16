@@ -65,10 +65,13 @@ export function creerPoolModule(url: string, module: ModuleOuProprietaire, mode:
   return creerPool(url, parametres, options);
 }
 
-/** Qui fait la demande. `joueur` : l'identifiant du joueur (compte ou provisoire) ; `jeton` : l'empreinte du jeton
- *  d'un lien d'invitation, pour qui ouvre un lien sans être encore joueur (P-29). Sans déclaration, les règles de
- *  cloisonnement ne voient personne et la base ne rend rien (DECISIONS-TECHNIQUES 1.6). */
-export type Declaration = { joueur?: string; jeton?: string };
+/** Qui fait la demande, et quand. `joueur` : l'identifiant du joueur (compte ou provisoire) ; `jeton` : l'empreinte
+ *  du jeton d'un lien d'invitation, pour qui ouvre un lien sans être encore joueur (P-29). Sans déclaration, les règles
+ *  de cloisonnement ne voient personne et la base ne rend rien (DECISIONS-TECHNIQUES 1.6). `instant` : l'heure de
+ *  l'horloge du serveur (horloge.ts), qui juge « avant ou après 18h » pour la base (`instant_du_jeu`, migration 0002) ;
+ *  sans elle, la base prend sa propre heure. Le serveur la déclare à chaque transaction ; l'horloge accélérée du
+ *  développement local et les tests en ont besoin. */
+export type Declaration = { joueur?: string; jeton?: string; instant?: Date };
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const HEX64 = /^[0-9a-f]{64}$/;
@@ -78,11 +81,13 @@ const HEX64 = /^[0-9a-f]{64}$/;
 export async function enTransaction<T>(pool: pg.Pool, qui: Declaration, travail: (c: pg.PoolClient) => Promise<T>): Promise<T> {
   if (qui.joueur !== undefined && !UUID.test(qui.joueur)) throw new TypeError('joueur illisible');
   if (qui.jeton !== undefined && !HEX64.test(qui.jeton)) throw new TypeError('jeton illisible');
+  if (qui.instant !== undefined && !Number.isFinite(qui.instant.getTime())) throw new TypeError('instant illisible');
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
     if (qui.joueur !== undefined) await client.query("SELECT set_config('elenchos.joueur', $1, true)", [qui.joueur]);
     if (qui.jeton !== undefined) await client.query("SELECT set_config('elenchos.jeton', $1, true)", [qui.jeton]);
+    if (qui.instant !== undefined) await client.query("SELECT set_config('elenchos.instant', $1, true)", [qui.instant.toISOString()]);
     const resultat = await travail(client);
     await client.query('COMMIT');
     return resultat;

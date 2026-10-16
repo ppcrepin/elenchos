@@ -7,7 +7,7 @@
 | Fichier | Rôle |
 |---|---|
 | `migrations/0001-tables.sql` | les tables du jeu entier, et rien d'autre |
-| `migrations/0002-cloisonnement.sql` | les règles de cloisonnement par ligne (P-25) et les refus gardés par la base (P-34, dix membres, trois cercles, pseudo et rond uniques, joueur provisoire hors des cercles) |
+| `migrations/0002-cloisonnement.sql` | les règles de cloisonnement par ligne (P-25), l'heure du jeu (`instant_du_jeu`, `fin_du_jour_de_jeu`), « rien avant 18h » pour les réponses du jour, les cartes vidées par un départ (règle 4), et les refus gardés par la base (P-34, dix membres, trois cercles, pseudo et rond uniques, joueur provisoire hors des cercles) |
 | `migrations/0003-totaux.sql` | les totaux écrits sans être lus, et les vues à seuil des mesures (P-22, P-23) |
 | `carte.ts` | la carte des données : chaque table, chaque colonne, son usage et sa forme (P-04) |
 | `connexion.ts` | les connexions par module, le chiffrement de la connexion, la déclaration du joueur |
@@ -15,11 +15,15 @@
 | `migrations.ts`, `installation.ts` | jouer les migrations, puis préparer les rôles |
 | `effacement.ts` | « Tout effacer », puis vérifier qu'il ne reste rien |
 
-Les briques reprises de `test-18h/` sont dans `src/serveur/` (horloge, garde des horaires, chiffrement, journal, réglages), chacune avec son origine en tête.
+Les briques reprises de `test-18h/` sont dans `src/serveur/` (horloge, garde des horaires, chiffrement, journal, réglages), chacune avec son origine en tête. L'heure de Paris a une seule source, le moteur (`src/regles/heure.ts`) : l'horloge du serveur l'appelle, et la base suit la même convention (un test compare chaque 18h de 2026 à 2028).
 
 ## Le cloisonnement, en bref
 
-Chaque demande ouvre une transaction et déclare d'abord qui la fait (`enTransaction(pool, { joueur }, …)`, qui pose `SET LOCAL elenchos.joueur`). Chaque table porte des règles qui ne montrent une ligne qu'au module qui en a l'usage et, pour le jeu, qu'aux membres du cercle de cette ligne. **Une requête qui oublie son filtre ne reçoit rien d'un autre cercle ; une requête sans déclaration ne reçoit rien du tout.** Les règles sont imposées au propriétaire lui-même (`FORCE ROW LEVEL SECURITY`) : sans module déclaré, il ne voit aucune donnée de joueur.
+Chaque demande ouvre une transaction et déclare d'abord qui la fait, et quand (`enTransaction(pool, { joueur, instant }, …)`, qui pose `SET LOCAL elenchos.joueur` et `elenchos.instant`). Chaque table porte des règles qui ne montrent une ligne qu'au module qui en a l'usage et, pour le jeu, qu'aux membres du cercle de cette ligne. **Une requête qui oublie son filtre ne reçoit rien d'un autre cercle ; une requête sans déclaration ne reçoit rien du tout.** Les règles sont imposées au propriétaire lui-même (`FORCE ROW LEVEL SECURITY`) : sans module déclaré, il ne voit aucune donnée de joueur.
+
+**Ce que la base ne cloisonne pas, dit franchement.** Elle cloisonne par cercle, pas par membre. Sous le module du jeu, un joueur déclaré lit tout ce que son cercle peut voir : les réponses de ses proches (sauf celles au texte du jour, voir plus bas), et les manches, cartes et verdicts des autres devineurs de son cercle. Ce que le téléphone en reçoit (la liste fermée de P-27, « rien avant 18h » de P-26 pour tout le reste) est tenu par le serveur, et par les tests de l'étape 2.
+
+**Rien avant 18h, pour les réponses du jour, est tenu aussi par la base.** Un proche ne lit la réponse d'un autre au texte du jour qu'après la fermeture de ce texte, à 18h, heure de la transaction (`instant_du_jeu` : l'heure déclarée par le serveur, sinon celle de la base). Ses réponses d'entrée restent lisibles. « Déjà joué » passe par `cloison_ont_repondu(texte)`, qui ne rend que des identifiants de membres. Comme le module déclaré, l'heure déclarée protège contre l'oubli d'un filtre, pas contre un code fautif qui déclarerait une heure fausse.
 
 ## Les deux modes (`MODE_ROLES`)
 
@@ -44,7 +48,7 @@ Les deux modes passent les mêmes tests de cloisonnement et d'effacement (`tests
 
 ## Les migrations
 
-Des fichiers SQL numérotés, joués au démarrage par le propriétaire seul, dans une transaction, sous un verrou. Une migration jouée ne se modifie plus : le démarrage échoue si son empreinte a changé. **Tant qu'aucune base réelle n'existe, 0001 à 0003 peuvent encore être réécrites** ; dès la première mise en ligne, toute correction passe par une migration nouvelle.
+Des fichiers SQL numérotés, joués au démarrage par le propriétaire seul, dans une transaction, sous un verrou. Une migration jouée ne se modifie plus : le démarrage échoue si son empreinte a changé. **Tant qu'aucune base réelle n'existe, 0001 à 0003 peuvent encore être réécrites** (elles l'ont été le 16 octobre 2026, après la relecture de l'étape 1) ; dès la première mise en ligne, toute correction passe par une migration nouvelle.
 
 ## Lancer les tests
 
@@ -63,6 +67,14 @@ Chaque fichier de test crée son schéma, dont le propriétaire est un rôle san
 
 - le serveur HTTP, la connexion Apple et Google, l'envoi vers Apple, le planificateur de 18h, l'import des textes ;
 - le ménage quotidien des échéances (joueurs provisoires à 7 jours, sessions, codes, liens, scores d'entrée) : le rôle et ses droits existent, pas encore le programme ;
-- dans « Tout effacer » et « Quitter », le retrait d'une carte pas encore révélée des compteurs de la semaine (règle 4) : c'est le moteur de la journée ;
-- l'avis du cercle préparé la veille, le cercle de démonstration et le lien de relecture (CONTRAT.md, 2.16), et les vues du rapport des totaux tirées des tables de joueurs (retour à 7 jours, etc.) : chacun viendra par une migration, avec l'étape qui le construit ;
+- dans « Tout effacer » et « Quitter », le retrait d'une carte pas encore révélée des compteurs de la semaine (règle 4) : c'est le moteur de la journée. Les cartes où le partant était désigné, elles, sont déjà vidées par la base (déclencheur `membre_avant_depart`) ;
+- le cercle de démonstration et le lien de relecture (CONTRAT.md, 2.16), et les vues du rapport des totaux tirées des tables de joueurs (retour à 7 jours, etc.) : chacun viendra par une migration, avec l'étape qui le construit. L'avis du cercle, lui, n'aura jamais de table : il se calcule à la lecture (CONTRAT.md, partie 3) ;
 - l'extension du test du journal de PostgreSQL (`test-18h/tests/journal-base/`) aux écritures du jeu, quand elles existeront.
+
+## Ce que « Tout effacer » n'atteint pas encore
+
+Le test d'effacement prouve la base : après « Tout effacer », une lecture brute de toutes les tables ne contient plus rien du joueur (traceur), score du défi d'entrée compris. Il ne prouve pas encore :
+- **la révocation chez Apple** (CONTRAT.md, 2.12) : écrite dans le contrat, pas encore codée (étape 2) ;
+- **le rejeu du journal des effacements après une restauration** (P-32) : la table existe, le programme de restauration et son test non ;
+- **les journaux de Scalingo** (P-07) : gardés un an chez l'hébergeur, hors d'atteinte de « Tout effacer ». Ils ne doivent rien contenir de personnel : c'est ce que tiennent le journal à listes fermées (`src/serveur/journal.ts`) et les refus « EL… » à message fixe ;
+- **les sauvegardes de la base** : elles gardent le joueur jusqu'à leur rotation ; le journal des effacements sert à le réeffacer après une restauration (P-32).

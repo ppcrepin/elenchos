@@ -86,14 +86,17 @@ Les phrases qui dépendent des données sont faites dans un seul module du serve
 
 ### 1.5 La base
 
-Une quinzaine de tables, dont : joueurs, empreintes d'identité, accords, sessions, abonnements, cercles (avec la marque « démonstration »), appartenances (ordre d'entrée, rond, date d'arrivée, date de départ), liens, réponses (chiffrées), manches, cartes et brouillons, révélations préparées et étape vue, titres et badges par semaine, tempéraments, textes importés, connexions en cours, codes de retour, totaux des mesures.
+34 tables, chacune sur la carte des données du code (`src/base/carte.ts`), qu'un test compare à la base réelle, colonne par colonne. Parmi elles : joueurs, empreintes d'identité, accords, sessions, abonnements, cercles, membres (ordre et date d'arrivée, rond), liens, réponses (chiffrées), manches, cartes et brouillons (le « pourquoi » chiffré lui aussi, la marque « vidée par un départ »), éveil des cercles, comptes de la semaine, titres et badges, tempéraments, lecture du dimanche, étape vue de la révélation, textes importés, connexions en cours, codes de retour, totaux des mesures, journal des effacements, mémoire des migrations. Ce qui change depuis la phase 0 :
+- **Au départ d'un cercle, la ligne du membre part** (P-37) : ses réponses quittent le cercle d'elles-mêmes. Aucune « date de départ » n'est gardée ; un titre dont le titulaire est vide est celui d'« un ancien membre » (D-045, point 2).
+- **Aucune révélation n'est préparée en table** : la révélation se calcule à la lecture, avis du cercle compris (`CONTRAT.md`, partie 3) ; seule l'étape vue est gardée.
+- **La marque « démonstration »** des cercles viendra avec le cercle de démonstration (1.16), par une migration nouvelle : elle n'est pas encore dans le schéma.
 
 Trois règles, reprises du test de 18h pour tenir P-07 (Scalingo garde un an les journaux de la base) :
 - toutes les écritures passent par `ON CONFLICT` : une contrainte qui échoue recopierait la ligne fautive dans le journal de la base ;
 - les valeurs sont vérifiées par le programme avant d'arriver à la base ;
 - le test du journal de PostgreSQL est étendu au jeu.
 
-Les migrations sont des fichiers SQL numérotés, joués au démarrage sous le rôle propriétaire, et seulement par lui.
+Les migrations sont des fichiers SQL numérotés (`src/base/migrations/`), joués au démarrage sous le rôle propriétaire, et seulement par lui. Une migration jouée ne se modifie plus ; tant qu'aucune base réelle n'existe, 0001 à 0003 peuvent encore être réécrites (`src/base/LISEZMOI.md`).
 
 ### 1.6 Les rôles de base, et le repli
 
@@ -114,14 +117,15 @@ Les migrations sont des fichiers SQL numérotés, joués au démarrage sous le r
 
 **À vérifier au début de l'étape 1 : Scalingo permet-il de créer des rôles ?** De mémoire, oui, mais ce n'est pas vérifié. Le code est écrit pour fonctionner dans les deux cas, avec un seul réglage.
 
-**Le repli, si les rôles sont impossibles.** Tous les modules se connectent sous le rôle propriétaire, et chaque table reçoit `FORCE ROW LEVEL SECURITY` : les règles de cloisonnement s'appliquent aussi au propriétaire. Ce qui tient encore : le cloisonnement des cercles (P-25). **Ce qui est perdu, dit franchement** : la séparation des identités (P-01) et des totaux (P-22, P-23) n'est plus tenue que par le code ; et le propriétaire peut lever les règles d'une commande. Il faudrait alors le signaler au porteur.
+**Le repli, si les rôles sont impossibles.** Tous les modules se connectent sous le rôle propriétaire, et chaque table reçoit `FORCE ROW LEVEL SECURITY` : les règles de cloisonnement s'appliquent aussi au propriétaire. Chaque connexion déclare son module à l'ouverture (`elenchos.module`), et les mêmes règles par ligne regardent ce module. Ce qui tient encore, contre l'oubli : le cloisonnement des cercles (P-25) **et** la séparation des modules (P-01, P-22, P-23), testés dans les deux modes. **Ce qui est perdu, dit franchement** : les droits par colonne (le jeu pourrait écrire par erreur une colonne que la règle de sa ligne lui laisse) ; et la protection contre un code fautif, qui changerait lui-même son module déclaré ou lèverait les règles d'une commande. Si le propriétaire échappe aux règles (superutilisateur), l'installation refuse le repli. Il faudrait alors le signaler au porteur. Le détail : `src/base/LISEZMOI.md`.
 
 ### 1.7 Secrets, clés, empreintes, chiffrement
 
-- **Un secret de session** (`SECRET_SESSION`, 32 octets, saisi par le porteur chez Scalingo, jamais dans le dépôt). On en tire des clés distinctes : empreintes des jetons, empreintes d'identité, tirage. C'est le module `crypto.ts` du test de 18h.
+- **Un secret de session** (`SECRET_SESSION`, 32 octets, saisi par le porteur chez Scalingo, jamais dans le dépôt). On en tire des clés distinctes : empreintes des jetons et des codes, tirage. C'est le module `crypto.ts` du test de 18h. Le changer déconnecte tout le monde, sans perdre aucun compte.
+- **Une clé des identités** (`CLE_IDENTITES`, 32 octets, saisie chez Scalingo, gardée hors ligne par le porteur comme `CLE_REPONSES`). Les empreintes d'identité (identifiant Apple ou Google, adresse e-mail) en dérivent, et d'elle seule : c'est elle qui retrouve un compte. **Elle ne se change jamais pendant le test** : la changer rendrait tous les comptes introuvables. Sans elle, le serveur refuse de démarrer ; les trois clés doivent être distinctes (`config.ts`).
 - **Des empreintes avec clé (HMAC)**, jamais la valeur : identifiant Apple ou Google, adresse e-mail, jetons de session, jetons de lien, codes à six chiffres, codes de retour de Google, vérificateurs de connexion.
 - **L'adresse e-mail n'est jamais gardée**, ni en clair ni chiffrée ; seule son empreinte reste.
-- **Les réponses sont chiffrées** par le programme avant la base (P-02), avec une clé réglée chez Scalingo, dont le porteur garde une copie hors ligne.
+- **Les réponses sont chiffrées** par le programme avant la base (P-02), avec une clé réglée chez Scalingo (`CLE_REPONSES`), dont le porteur garde une copie hors ligne. Le « pourquoi » posé sur la carte « qui et pourquoi » l'est aussi, avec la même clé : avec le verdict « juste et raison », il dirait sinon en clair la raison de l'auteur. Ce qui reste en clair et dit quelque chose des réponses (verdicts, Pas de Côté, tempéraments…) est listé en tête de `src/base/carte.ts`.
 - **Les clés d'Apple**, créées par le porteur dans son compte Apple, réglées chez Scalingo ou dans les secrets de GitHub, jamais dans le dépôt, avec une copie hors ligne chez lui :
   - la clé des messages (`.p8`) ;
   - la clé « Se connecter avec Apple », pour révoquer à l'effacement (la même clé peut servir aux deux, de mémoire, à vérifier) ;
@@ -132,13 +136,14 @@ Les migrations sont des fichiers SQL numérotés, joués au démarrage sous le r
 - **Une session est un jeton** de 32 octets tirés au hasard. L'application le range dans le trousseau et l'envoie dans l'en-tête `Authorization: Bearer …`. La base n'en garde que l'empreinte, avec le joueur, l'appareil (un numéro sans lien avec l'iPhone) et une échéance.
 - **Pourquoi plus de cookie** : dans l'application, la page (`capacitor://localhost`) et le serveur n'ont pas la même adresse, et iOS y bloque les cookies d'un autre site (de mémoire, plan 2.3). Un jeton dans un en-tête marche partout, et supprime d'un coup le risque qu'une page d'un autre site agisse au nom du joueur.
 - **Une table plutôt qu'un jeton seulement scellé**, parce que P-41 demande que la session s'arrête à la déconnexion : sans table, un jeton copié resterait valable jusqu'à son terme.
-- **Chaque appareil a la sienne**, et l'abonnement au message est lié à elle. L'échéance est prolongée à chaque ouverture, **jamais au-delà de la fin du test** (D-061, point 2). « Tout effacer » les supprime toutes (P-38).
+- **Chaque appareil a la sienne**, et l'abonnement au message est lié à elle. L'échéance est prolongée à chaque ouverture, **jamais au-delà de la fin du test** (D-061, point 2) : en ligne, le serveur refuse de démarrer sans `FIN_DU_TEST`. « Tout effacer » les supprime toutes (P-38).
 - **Le joueur provisoire** a son propre jeton, rendu par l'accord, 7 jours au plus. À la connexion, le jeton du compte le remplace dans le trousseau.
 - **CORS**, puisque la page et le serveur n'ont pas la même adresse. Le serveur répond aux demandes préalables du navigateur intégré pour la seule origine `capacitor://localhost`, les méthodes `GET` et `POST`, et les en-têtes `Authorization`, `Content-Type` et `Elenchos-Fabrication`. Pas d'identifiants de navigateur : il n'y a pas de cookie.
 
 ### 1.9 L'horloge, et le développement local
 
-- **Une seule horloge** pour tout le serveur (`horloge.ts`, repris tel quel) : heure de Paris, changements d'heure compris, réglable par les tests.
+- **Une seule horloge** pour tout le serveur (`horloge.ts`, repris du test de 18h), réglable par les tests, et **une seule source pour l'heure de Paris** : le moteur (`src/regles/heure.ts`), que l'horloge appelle pour le jour de jeu, les changements d'heure et le jour de la semaine (0 = lundi). Le jour de jeu porte le nom du jour où il finit (`regles.md`, section 2).
+- **La base juge aussi « avant ou après 18h »** pour les réponses du jour et les départs : l'heure déclarée par le serveur dans chaque transaction, sinon la sienne (`instant_du_jeu`, `fin_du_jour_de_jeu`, migration 0002). Un test compare chaque 18h de 2026 à 2028 entre la base et le moteur.
 - **L'horloge accélérée et la connexion d'essai par code n'existent qu'en local** (`CONTRAT.md`, partie 5). Le serveur refuse de démarrer si leurs réglages sont présents chez Scalingo ou sur GitHub.
 - **La garde des horaires de mise en ligne** (D-043, D-054) est reprise telle quelle, et étendue à la fabrication de l'application (1.15).
 - **En local**, l'interface tourne dans Chromium, servie par un petit serveur de fichiers de développement, avec le faux module natif. C'est ainsi que se font les tests de bout en bout et les captures.
@@ -169,13 +174,15 @@ jeu/
   capacitor.config.json                   la coquille (dossier de l'interface : public/)
   ios/                                    le projet iOS que Capacitor fabrique, avec nos morceaux Swift et l'extension
   src/                                    serveur (TypeScript) ; contrat.ts ; regles/, le moteur ; serveur/ ; base/
-  migrations/                             SQL numérotés
+  src/base/migrations/                    SQL numérotés
   public/                                 l'interface embarquée (JavaScript, JSDoc), polices, styles
   pages/                                  les pages web du serveur (N1, confidentialité, invitation)
   textes/                                 FORMAT.md, exemple.json, puis le lot de Contenu
-  outils/                                 contrôle, garde des horaires, liens de créateur et de relecture, cercle de
+  outils/                                 contrôle, garde des horaires, migrations, table des lettres qui imitent les
+                                          nôtres ; plus tard : liens de créateur et de relecture, cercle de
                                           démonstration, proches simulés
-  tests/                                  sans-base/, avec-base/, navigateur/, journal-base/
+  tests/                                  regles/ (le moteur), socle/ (serveur sans base, et base : exigent un
+                                          PostgreSQL jetable) ; plus tard : navigateur/, journal-base/
 ```
 
 ### 1.13 Le message de 18h, par Apple
@@ -214,11 +221,11 @@ jeu/
 
 ### 1.16 Le cercle de démonstration, pour le relecteur d'Apple
 
-- **Un outil du serveur**, geste du porteur, crée un cercle marqué « démonstration ». Il a quatre membres inventés, sans compte ni identité, et leurs réponses d'entrée inventées. L'outil fabrique aussi le lien de relecture : plusieurs usages, 30 jours (proposé).
+- **Un outil du serveur**, geste du porteur, crée un cercle marqué « démonstration ». Il a quatre membres inventés, sans compte ni identité, et leurs réponses d'entrée inventées. L'outil fabrique aussi le lien de relecture : plusieurs usages, 30 jours. C'est une **exception à D-006 (arbitrage 3, lien à usage unique) et à P-29**, arbitrée par l'équipe et bornée à ce cercle inventé (D-065, point 3).
 - **Un module du serveur** fait répondre ces membres chaque jour, avant 17h, par un tirage fixe sur les positions et les raisons du texte du jour. Il ne voit que les cercles marqués ; la marque ne se pose que par l'outil.
 - **Les mesures** excluent les cercles marqués.
 - **Après la relecture**, l'outil efface le compte du relecteur comme « Tout effacer ».
-- C'est une exception écrite à P-19 (aucun joueur simulé en ligne, proposé), bornée à ce cercle (`CONTRAT.md`, partie 8).
+- Il mêle des données inventées à la base réelle : c'est une exception écrite au principe de P-19 (une base est « inventée » ou « réelle » ; P-19 et P-20, allégés pour le test avec D-060), bornée à ce cercle (`CONTRAT.md`, partie 8). Une ligne P-19 a est à ajouter à `donnees.md`.
 
 ## 2. Ce qui est repris
 
@@ -228,7 +235,8 @@ D'après le plan (2.2), complété :
 
 | Sort | Fichiers | Ce qui change |
 |---|---|---|
-| Tel quel | `horloge.ts`, `garde-horaires.ts` et son outil, `crypto.ts`, `journal.ts` (avec les listes fermées des routes du contrat), le chiffrement de `base.ts`, le contrôle du code, la vérification GitHub, le `Procfile`, leurs tests sans base et le test du journal de PostgreSQL | rien, sauf les listes de `journal.ts` |
+| Tel quel | `garde-horaires.ts` et son outil, `crypto.ts`, `journal.ts` (avec les listes fermées des routes du contrat), le chiffrement de `base.ts`, le contrôle du code, la vérification GitHub, le `Procfile`, leurs tests sans base et le test du journal de PostgreSQL | les listes de `journal.ts`, vérifiées contre le contrat à la compilation ; dans `crypto.ts`, le « pourquoi » chiffré et la clé des identités |
+| Adapté | `horloge.ts` | l'heure de Paris vient du moteur (`src/regles/heure.ts`), seule source ; le jour de jeu porte le nom du jour où il finit |
 | Adapté | `planificateur.ts` | un envoi par jour vers chaque abonnement actif, verrou par abonnement, rattrapage jusqu'à 18h30 ; les six textes de `MESSAGES_18H` choisis selon ce qui attend chaque joueur ; l'annonce d'arrivée |
 | | `connexion.ts` | Google par la feuille du système, avec retour par formulaire et code de retour ; Apple natif ; créer ou retrouver le compte, refuser un compte Google d'organisation (P-41) ; porter le joueur provisoire dans la transaction |
 | | `serveur.ts` | jetons au lieu des cookies, CORS limité à l'application, version minimale, limiteur par session ; en-têtes de sécurité et « rien dans les adresses » gardés |
@@ -246,7 +254,7 @@ D'après le plan (2.2), complété :
 | Gardé | le haut d'`interface.js` : les outils de page et les petits blocs (bandeaux, boutons, positions, raisons, visages, curseurs, feuille, onglets) | ils lisent une réponse du serveur au lieu du socle, du moteur et du calendrier |
 | Adapté | les écrans de l'entrée, Deviner, Répondre, En attendant, la révélation, les titres, Moi, Le Cercle, l'écran d'un proche | la révélation suit les étapes rendues par le serveur |
 | Adapté | `textes.js` : les mots validés des écrans | les mots de N1 à N18 et de la phase 0 ajoutés ; ceux de l'icône retirés. **L'agent qui le reprend vérifie d'abord qu'il ne contient aucun texte du lot de l'essai** |
-| Extrait | de `noyau.js` : `typographier`, `dePrenom`, `quePrenom`, `listeEt` ; la table des caractères qui se ressemblent (E7) | — |
+| Extrait | de `noyau.js` : `typographier`, `dePrenom`, `quePrenom`, `listeEt` ; `squelette` (E7) | `noyau.js` n'a pas de table des caractères qui se ressemblent (« {} en attendant ») : elle est tirée de `confusables.txt` d'Unicode, comme il le prévoyait, par `outils/confusables.ts` (`src/regles/confusables.ts`) |
 | Porté en TypeScript, côté serveur | de `moteur.js` : le tirage `t(clé)` ; `identiques`, `estJuste`, `redistribuer`, `verdict` ; les points ; `avisCercle` ; `classer` ; `calculerManche` (les réponses inattendues, R3) ; `curseur` ; `pasDeCote` ; `calculerTemperaments` ; `phraseSemaine` ; `calculerTitres` (Le Devin, Le Mystère, Le Sans-Faute, la surprise) | aux seuils de `regles.md` (validés par D-052), qui ne sont pas toujours ceux de l'essai ; comparés au moteur de l'essai sur des milliers de manches |
 | Réécrit | la carte « qui et pourquoi » (règle 9, D-038) ; Le Fidèle (règle 12) ; `phraseDuJour` (huit tensions, mots de D-053) ; R8 ; pause et sommeil ; départs (règle 4) ; la règle 20 | prouvés par les dix journées de `regles.md` |
 | Repris | `harnais/navigateur.js` (appareil « iPhone 15 », horloge, sombre, animations réduites) ; `harnais/passe-webkit.js` | le mode « app » de Safari n'a plus d'objet |
@@ -286,10 +294,15 @@ La phase 0 a tranché pour **l'option B : un joueur provisoire en base dès l'ac
 - **P-11, P-41** : jeton au lieu de cookie, même exigence tenue. **P-06** : sans objet dans une application (Apple lit le message) ; P-05 tient.
 - **P-19** : une exception écrite pour le cercle de démonstration (1.16).
 - **`plateforme.md`, annexe A** : la location d'un Mac n'est plus prévue ; Xcode Cloud est écarté (plan).
-- **La carte des données** (`donnees.md`, partie 4) : à mettre à jour par Back-end avec Juridique.
-  - Les sessions deviennent des jetons.
-  - S'ajoutent : l'abonnement par appareil, la connexion en cours (10 minutes), le code de retour (une minute), la note « écran Répondre affiché » (jusqu'à la fermeture du texte), l'étape vue de la révélation (jusqu'au 18h suivant), l'histogramme de la durée de la raison, le cercle de démonstration (jusqu'à la fin de la relecture).
-  - Ce sont des précisions, sans décision touchée.
+- **La carte des données** (`donnees.md`, partie 4) : à mettre à jour par Back-end avec Juridique. En attendant, la carte du code (`src/base/carte.ts`) fait foi : chaque table et chaque colonne réelles y figurent, avec leur usage et leur durée.
+  - Les sessions sont des jetons ; `donnees.md` n'a pas encore de ligne « session » : elle est à ajouter.
+  - S'ajoutent : l'abonnement par appareil, la connexion en cours (10 minutes), le code de retour (une minute), la note « écran Répondre affiché » (jusqu'à la fermeture du texte), l'étape vue de la révélation (jusqu'au 18h suivant).
+  - S'ajoutent aussi, nés avec le schéma : l'éveil du cercle par jour, les comptes de la semaine par membre, les comptes d'attributions par texte et par cercle, les manches, les cartes (le « pourquoi » chiffré, la marque « vidée par un départ »), « vu », le message coupé, les envois, les compteurs et totaux des mesures ; sur le joueur, la forme de comparaison du pseudo et la date de création ; sur le membre, le créateur et la date d'arrivée ; et les tables publiques sans donnée de joueur (textes, calendrier, versions de la carte de consentement).
+  - Gardés alors que `donnees.md` dit « recalculé » : les tempéraments en cours (la marge des 4/5 demande de savoir depuis quand on en tient un) et les tensions nettes du dimanche précédent (« devenue nette », règle 18).
+  - Les dérivés en clair acceptés (verdicts, Pas de Côté, tempéraments) sont listés en tête de `src/base/carte.ts`.
+  - L'histogramme de la durée de la raison existe déjà dans `donnees.md` ; le cercle de démonstration n'est pas encore dans le schéma (1.16).
+  - **L'adresse e-mail n'est jamais gardée** (1.7) : l'effacement après 12 mois d'inactivité, prévenu par un e-mail 30 jours avant (D-045, point 1 ; P-30), ne peut donc pas se faire tel quel pour un compte e-mail. Sans objet pendant le test (tout est effacé à la fin, D-061, point 2) ; à régler avant la version publique.
+  - Ce sont des précisions, sans décision touchée. Les usages et durées à revoir avec Juridique sont listés avec la carte.
 - **P-02** (chiffrement des réponses) : gardé, retirable, déjà signalé avec D-060. **P-13, P-19, P-20** : allégés pour le test, déjà signalés avec D-060.
 - **Le repli des rôles** (1.6), s'il est nécessaire, affaiblit P-01, P-22 et P-23 : il faudrait alors le dire au porteur.
 

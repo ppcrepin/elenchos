@@ -88,7 +88,7 @@ export type TitresDimanche = {
 
 /**
  * Règles 12 et 14 : les titres d'un cercle au dimanche 18h. null si le cercle dormait pendant le jour de jeu du
- * dimanche (règle 5) ; Le Sans-Faute tombe avec eux (lecture du moteur, à confirmer par Game design).
+ * dimanche (règle 5) ; Le Sans-Faute tombe avec eux (lecture du moteur, confirmée par Game design à l'étape 1, A7).
  * Un titre sans titulaire n'apparaît pas (R6) : son titulaire vaut null, ou la liste est vide.
  */
 export function titresDuDimanche(entree: {

@@ -14,8 +14,9 @@ import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import type pg from 'pg';
 import { creerPool, creerPoolModule, enTransaction, type ModuleOuProprietaire } from '../../src/base/connexion.ts';
 import { installerBase } from '../../src/base/installation.ts';
+import { pseudoComparaison } from '../../src/regles/cercle.ts';
 import type { ModeRoles } from '../../src/serveur/config.ts';
-import { chiffrerReponse, type ReponseClaire } from '../../src/serveur/crypto.ts';
+import { chiffrerPourquoi, chiffrerReponse, type ReponseClaire } from '../../src/serveur/crypto.ts';
 
 export const PROPRIETAIRE_DE_TEST = 'elenchos_test_proprietaire';
 export const CLE_REPONSES_TEST = randomBytes(32);
@@ -76,9 +77,11 @@ export type Joueur = {
   abonnement: string; jeton: string;
 };
 
-/** Écrit, sous le module du jeu, une transaction déclarée au nom d'un joueur. */
-export function commeJoueur<T>(base: BaseDeTest, joueur: string, travail: (c: pg.PoolClient) => Promise<T>, jeton?: string): Promise<T> {
-  return enTransaction(base.module('jeu'), jeton === undefined ? { joueur } : { joueur, jeton }, travail);
+/** Écrit, sous le module du jeu, une transaction déclarée au nom d'un joueur (et, si on la donne, à une heure). */
+export function commeJoueur<T>(base: BaseDeTest, joueur: string, travail: (c: pg.PoolClient) => Promise<T>, jeton?: string,
+  instant?: Date): Promise<T> {
+  return enTransaction(base.module('jeu'), { joueur, ...(jeton === undefined ? {} : { jeton }), ...(instant === undefined ? {} : { instant }) },
+    travail);
 }
 
 /** Une réponse chiffrée, et son apport au compte de « aucune ». */
@@ -120,7 +123,7 @@ export async function nouveauJoueur(base: BaseDeTest, pseudo: string, rond: stri
     await c.query("INSERT INTO joueur (id, etat, cree_le) VALUES ($1, 'provisoire', now())", [j.id]);
     await c.query('INSERT INTO consentement (id, joueur_id, version, donne_le, quinze_ans_et_plus) VALUES ($1, $2, 1, now(), true)',
       [j.consentement, j.id]);
-    await c.query('UPDATE joueur SET pseudo = $2, pseudo_comparaison = $3 WHERE id = $1', [j.id, pseudo, pseudo.toLowerCase()]);
+    await c.query('UPDATE joueur SET pseudo = $2, pseudo_comparaison = $3 WHERE id = $1', [j.id, pseudo, pseudoComparaison(pseudo)]);
   });
   await enTransaction(base.module('comptes'), {}, async (c) => {
     await c.query("INSERT INTO identite (voie, empreinte, joueur_id) VALUES ('apple', $1, $2) ON CONFLICT DO NOTHING", [j.identite, j.id]);
@@ -246,9 +249,12 @@ export async function peupler(base: BaseDeTest) {
   await commeJoueur(base, lea.id, async (cl) => {
     await cl.query('INSERT INTO manche (id, cercle_id, devineur_membre_id, jour, texte_id) VALUES ($1, $2, $3, $4, $5)',
       [mancheB, b.id, b.membres.get(lea.id), JOURS.mardi, 'T04']);
+    // La carte « qui et pourquoi » d'Inès, où Léa a posé le visage de Hugo et deviné la raison de rang 2 : le
+    // « pourquoi » est chiffré, lié à sa carte (correction 2).
     await cl.query(`INSERT INTO carte (id, manche_id, cercle_id, ordre, auteur_membre_id, qui_et_pourquoi, visage_membre_id, pourquoi)
-      VALUES ($1, $2, $3, 1, $4, false, $5, NULL), ($6, $2, $3, 2, $5, true, $4, 2)`,
-      [cartesB[0], mancheB, b.id, b.membres.get(hugo.id), b.membres.get(ines.id), cartesB[1]]);
+      VALUES ($1, $2, $3, 1, $4, false, $5, NULL), ($6, $2, $3, 2, $5, true, $4, $7)`,
+      [cartesB[0], mancheB, b.id, b.membres.get(hugo.id), b.membres.get(ines.id), cartesB[1],
+        chiffrerPourquoi(CLE_REPONSES_TEST, cartesB[1] ?? '', 2)]);
     await cl.query(`INSERT INTO journee_cercle (cercle_id, jour, eveille) VALUES ($1, $2, true) ON CONFLICT DO NOTHING`, [b.id, JOURS.mardi]);
     await cl.query(`INSERT INTO compte_semaine (cercle_id, membre_id, semaine, points) VALUES ($1, $2, $3, 2)
       ON CONFLICT (membre_id, semaine) DO NOTHING`, [b.id, b.membres.get(lea.id), JOURS.dimanche]);

@@ -16,7 +16,7 @@
   - une page web d'invitation, sur le domaine, ouvre l'application si elle est installée, et explique TestFlight sinon.
 - **« Tout effacer » révoque aussi la connexion chez Apple** (arbitrage de l'équipe, `docs/etape-6/plan-jeu-entier.md`, « Ce que l'équipe a tranché seule ») : une feuille d'Apple se montre à la confirmation ; l'effacement se fait même si elle est fermée. Pour Google, l'allègement de D-061 reste.
 - **Le relecteur d'Apple entre dans un cercle inventé**, par un lien de relecture, jamais dans un vrai cercle (2.16).
-- **Décisions touchées, à dire au porteur** (partie 8) : aucune n'est modifiée par ce contrat seul. Il applique D-062 et le plan sur lequel D-064 lance l'étape 1 (`docs/etape-6/plan-jeu-entier.md`) ; il signale cinq lectures nouvelles (tempéraments sur les réponses révélées, un trio d'entrée pour tous les cercles, les textes d'entrée d'un second cercle, la ligne de l'écran 5.11, le cercle de démonstration).
+- **Décisions touchées, à dire au porteur** (partie 8) : il applique D-062, le plan sur lequel D-064 lance l'étape 1 (`docs/etape-6/plan-jeu-entier.md`) et les trois arbitrages de l'équipe de D-065 : un proche partagé sans réponse proposé dans une seule manche (troisième exception à D-011), un seul trio d'entrée pendant le test (suspension de `onboarding.md` et de la règle 15), un lien de relecture réutilisable pour Apple (exception à D-006 et à P-29). Six lectures, tranchées par Game design ou par l'équipe (partie 8).
 
 ## 1. Les règles du contrat
 
@@ -62,8 +62,9 @@ Jamais : l'adresse, la voie de connexion, la barre du portrait (D-026), la pause
 - Avant la révélation d'un texte, aucune réponse du serveur ne porte son vote, son auteur, l'auteur d'une carte, le député derrière une raison ou l'avis du cercle, même sous une forme cachée.
 - Les numéros des cartes sont tirés au hasard pour chaque joueur, chaque cercle et chaque jour.
 - Avant la révélation, `POST /api/fiche` ne rend que le texte et ta réponse.
-- **Ce qu'on reçoit d'un autre membre se calcule d'après son entrée et ses seules réponses déjà révélées** : ses curseurs (règle 19, lecture A), ses tempéraments (proposé, partie 8), ses surprises. Sinon, un curseur qui bouge ou un tempérament qui apparaît avant 18h trahirait la réponse du jour. Le choix des cartes les plus inattendues (règle 8, R3) suit la même règle : il utilise le curseur tel que le joueur qui devine peut le voir.
+- **Ce qu'on reçoit d'un autre membre se calcule d'après son entrée et ses seules réponses déjà révélées** : ses curseurs (règle 19, lecture A), ses tempéraments (lecture confirmée par Game design, partie 8), ses surprises. Sinon, un curseur qui bouge ou un tempérament qui apparaît avant 18h trahirait la réponse du jour. Le choix des cartes les plus inattendues (règle 8, R3) suit la même règle : il utilise le curseur tel que le joueur qui devine peut le voir.
 - Le Pas de Côté s'annonce à la révélation du texte, jamais avant (règle 14).
+- **La base le tient aussi pour les réponses du jour.** Un proche ne lit la réponse d'un autre au texte du jour qu'après la fermeture de ce texte, à 18h : avant, la base ne la rend pas, même à une requête sans filtre. « Déjà joué » passe par une fonction de la base qui ne rend que des identifiants de membres (`cloison_ont_repondu`, migration 0002). Le reste de P-26 et P-27 (ce que le serveur envoie au téléphone, les manches des autres devineurs) est tenu par le serveur et ses tests.
 
 ### 1.5 Les lectures ne changent rien
 
@@ -263,7 +264,7 @@ Le serveur vérifie au même moment le cercle complet (N15) et le pseudo (E7). P
 - **Écrans** : 5.1, 5.6, 4.2 (avec 1.15, 5.9, 5.13), 5.5, 5.7 (Quitter), 1.14.
 - `GET /api/cercles` → `MesCercles` : tes cercles dans l'ordre d'entrée, et `peutCreer` (faux à trois cercles : « + Créer un cercle » est grisé, 5.6).
 - `POST /api/cercle { nom }` → `{ cercle }`. Il crée le premier cercle à la fin de l'entrée du créateur (`nommer_cercle`), ou un autre cercle depuis 5.6. **Erreurs** : `nom_invalide`, `trois_cercles`, `etape_incorrecte`, `non_connecte`.
-  - Les trois textes d'entrée du nouveau cercle sont ceux de l'entrée de son créateur (proposé) : ses trois réponses existent déjà, et ce sont elles que ses invités devineront (D-006). Avec un seul trio d'entrée pour tout le lot (`FORMAT.md`, partie 3), c'est le même pour tous.
+  - Les trois textes d'entrée du nouveau cercle sont ceux de l'entrée de son créateur (lecture confirmée par Game design) : ses trois réponses existent déjà, et ce sont elles que ses invités devineront (D-006). Pendant le test, un seul trio d'entrée sert à tous les cercles (D-065, point 2 ; `FORMAT.md`, partie 3) : c'est le même pour tous.
 - `POST /api/cercle/voir { cercle }` → `Cercle` (4.2) :
   - les membres par ordre d'arrivée ;
   - sous chaque visage, ses distinctions dans l'ordre que donne le serveur : titres de la semaine, badges jusqu'aux titres suivants, puis tempéraments (R9, règle 13) ;
@@ -274,7 +275,7 @@ Le serveur vérifie au même moment le cercle complet (N15) et le pseudo (E7). P
   « Vous êtes trois : le cercle est lancé. » ne revient pas après `POST /api/vu { objet: 'cercle_lance', cercle }`. Le bandeau `cercle_incomplet` dit les mêmes mots au départ (5.13) et en sommeil (5.9) : on ne dit jamais qui a arrêté. **Erreurs** : `introuvable` (un cercle qui n'est pas le sien répond comme un cercle qui n'existe pas), `non_connecte`.
 - `POST /api/cercle/titres { cercle }` → `TitresPasses` (5.5) : semaine par semaine, chaque titre et badge avec ses titulaires présents et le nombre d'anciens membres qui l'avaient (« un ancien membre », D-045 point 2 ; deux anciens membres ne se distinguent pas, règle 4). Sans total (R7).
 - `POST /api/cercle/quitter { cercle, confirmation: 'quitter' }` → `{ quitte: true }`. C'est un départ (règle 4), distinct de « Tout effacer » :
-  - ses réponses quittent ce cercle seulement (P-37) : sa carte pas encore révélée disparaît de la manche, une carte où son visage était posé redevient vide, l'avis du cercle déjà préparé est recalculé (3) ;
+  - ses réponses quittent ce cercle seulement (P-37) : sa carte pas encore révélée disparaît de la manche ; une carte où son visage était posé redevient vide, marquée « vidée par un départ » si la manche n'est pas encore révélée ; l'avis du cercle, calculé à chaque lecture, ne compte plus ses réponses (3) ;
   - son visage disparaît, sans message au cercle ;
   - ses titres passés restent sous « un ancien membre » ; un titre de la semaine qu'il détenait n'est pas redonné ;
   - il garde son compte, son portrait et ses autres cercles. S'il n'en a plus, son parcours passe à `nommer_cercle` avec `premierCercle: false` ;
@@ -291,7 +292,7 @@ Le serveur vérifie au même moment le cercle complet (N15) et le pseudo (E7). P
 - **L'annonce** part à l'entrée d'un invité dans un cercle de moins de trois membres (D-006), par création de compte ou par l'écran Rejoindre. Elle arrive de deux façons :
   - par un message, si l'invitant a accepté le message de 18h : un texte fixe, **sans le score**, de `MESSAGES_ARRIVEE` (2.13) ;
   - et toujours dans `Etat.annonces`, avec son cercle, à l'écran, avec le score (texte de D-011, `AnnonceArrivee.texte`), jusqu'à `POST /api/vu { objet: 'annonces' }`, qui efface aussi le score en base (2.4).
-- `GET /api/miroir` → `Miroir` : le cercle, un texte à deviner (son titre seulement, 1.11) ou le bilan. Le créateur devine son premier invité dans chaque cercle qu'il crée, quand ils sont deux (D-006, D-058 point 3). **Erreurs** : `rien_a_deviner`, `non_connecte`.
+- `GET /api/miroir` → `Miroir` : le cercle, un texte à deviner (son titre seulement, 1.11) ou le bilan. Le créateur devine son premier invité quand ils sont deux (D-006, D-011) ; « dans chaque cercle qu'il crée » étend D-006 aux cercles qu'un joueur inscrit crée ensuite (proposé). **Erreurs** : `rien_a_deviner`, `non_connecte`.
 - `POST /api/miroir/parier { cercle, texte, pari }` → `MiroirRevele` : le verdict et la réponse de l'invité, sans le vote ni les auteurs, que le créateur connaît déjà. **Erreurs** : `rien_a_deviner`, `introuvable`, `etape_incorrecte`, `non_connecte`.
 
 ### 2.8 La journée : `GET /api/aujourdhui` et ses gestes
@@ -306,7 +307,7 @@ Le serveur vérifie au même moment le cercle complet (N15) et le pseudo (E7). P
 **Deviner** (2.1, 2.2, 5.8) :
 - **Une manche par cercle**, jouées à la suite dans l'ordre d'entrée dans les cercles (règle 3). L'étape porte le cercle, le rang et le total (« Amis · 2 sur 2 »).
 - Un cercle endormi n'a pas de manche (règle 5). Une manche vidée par R8 est sautée.
-- Un proche présent dans deux de tes cercles n'est servi, et proposé, qu'une fois par jour (R8), qu'il ait répondu ou non : sinon son visage, proposé deux fois, dirait qu'il n'a pas répondu (D-011). S'il n'a pas de réponse servie (pas de réponse, ou réponse en retard), un tirage invisible choisit la manche où il est proposé, parmi tes manches qui ont des cartes (lecture de Game design, étape 1). Un membre arrivé après la fermeture du texte n'est pas proposé (règle 8).
+- Un proche présent dans deux de tes cercles n'est servi, et proposé, qu'une fois par jour (R8), qu'il ait répondu ou non : sinon son visage, proposé deux fois, dirait qu'il n'a pas répondu (D-011). S'il n'a pas de réponse servie (pas de réponse, ou réponse en retard), un tirage invisible choisit la manche où il est proposé, parmi tes manches qui ont des cartes (lecture A2 de Game design ; troisième exception à D-011, fidèle à son but, D-065 point 1). Un membre arrivé après la fermeture du texte n'est pas proposé (règle 8).
 - Quand l'étape est `deviner` avec `ouverte: false`, l'application appelle `POST /api/deviner/ouvrir { cercle }` au moment où elle montre l'écran. C'est ce geste qui fait exister la manche (R10 : une manche dont l'écran ne s'est jamais affiché n'a pas de cartes). Le serveur tire alors les cartes, une seule fois, avec un tirage qui donne le même résultat quel que soit le moment.
 - **Le choix des cartes suit la règle 8.** Dès quatre réponses possibles, deux viennent parmi les plus inattendues de la part de leur auteur, et une au hasard (R3). Deux réponses identiques ne sont pas servies ensemble si une autre peut prendre la place (R4). La carte « qui et pourquoi » vient en dernier (règle 9). Rien à l'écran ne dit laquelle était inattendue.
 - `POST /api/deviner/poser` (`{ carte, visage }`, `visage: null` pour retirer), `POST /api/deviner/pourquoi` (`{ carte, raison }`), `POST /api/deviner/passer` (`{ carte }`), `POST /api/deviner/valider` (`{ cercle }`) : chacun rend le nouvel `Aujourdhui`.
@@ -402,7 +403,7 @@ Le serveur vérifie au même moment le cercle complet (N15) et le pseudo (E7). P
     - une carte de l'effacé déjà servie mais pas encore révélée disparaît de la manche (elle ne compte ni juste ni fausse) ;
     - une carte où son visage était posé redevient vide, manche validée ou non, sans que la manche se rouvre ;
     - un titre de la semaine qu'il détenait disparaît avec son visage, et reste sous « un ancien membre » dans les titres passés.
-  - **L'avis du cercle déjà préparé est recalculé** sur les membres restants (règle 10, partie 3).
+  - **L'avis du cercle ne compte plus ses réponses** : il n'est jamais gardé, il se calcule à chaque lecture sur les membres présents (règle 10, partie 3).
   - **Accepté en session provisoire** (« Effacer mes réponses », 2.5) : le joueur provisoire, ses réponses et son score sont effacés comme ceux d'un compte (P-38) ; le lien reste servi, pour qu'il ne s'ouvre pas à un autre (P-29).
   - L'application efface ensuite le jeton du trousseau.
 - `POST /api/deconnexion` → `{ deconnecte: true }` : la session de cet appareil et son abonnement au message sont révoqués ; l'application efface le jeton du trousseau.
@@ -441,12 +442,12 @@ Les mesures portent sur des gestes, jamais sur ce que les joueurs répondent (D-
   - `POST /api/geste { geste: 'cercle_pendant_deviner' }`, quand Le Cercle ou l'écran d'un proche s'ouvre pendant une manche pas encore validée (« Qui regarde Le Cercle pour deviner », `produit.md` §8). Le serveur vérifie qu'une manche est bien ouverte, et ne le note qu'une fois par manche ;
   - `POST /api/duree-raison { secondes }`, à la validation de 2.4. Rangée aussitôt dans l'histogramme de la semaine, jamais sous l'identifiant du joueur, ni par texte (P-40) ;
   - `POST /api/compteur { sorte }`, sans session, depuis la page d'invitation ou l'application sur un iPad : `android`, `ordinateur`, `ipad`, `iphone_sans_application`. Ce dernier dit combien d'invités arrivent sans l'application, pour savoir combien vont au bout des gestes de TestFlight.
-- **Tirées de la base par le serveur**, sans geste de plus :
-  - le retour à 7, 14 et 21 jours, et la part qui répond au moins cinq jours sur sept ;
-  - les manches où un visage est posé, et la justesse comparée au hasard ;
+- **Tirées de la base par le serveur**, sans geste de plus. Celles marquées « proposé » viennent de `contenu-test.md` (partie 5, « Ce que le test mesure »), dont le périmètre est remplacé par D-062 : ce sont des mesures sur des gestes (usage 3), à ajouter à `produit.md` (section 8) ; les autres y sont déjà.
+  - le retour à 7, 14 et 21 jours (proposé), et la part qui répond au moins cinq jours sur sept ;
+  - les manches où un visage est posé (proposé), et la justesse comparée au hasard ;
   - le message reçu, et « a joué avant 18h le lendemain » ;
-  - la révélation ouverte le soir même ;
-  - les invitations envoyées, et les cercles à trois en 7 jours ;
+  - la révélation ouverte le soir même (proposé) ;
+  - les invitations envoyées, et les cercles qui atteignent trois membres, en 7 jours (le délai est proposé) ;
   - l'entrée finie puis le compte créé, et la voie choisie ;
   - la première séance d'un invité, du lien au compte ;
   - la part des Mystère qui vont à un nouveau venu, les cercles encore actifs à deux mois ;
@@ -461,7 +462,7 @@ Apple relit l'application avant les testeurs extérieurs, et demande un accès q
 
 - **Le cercle de démonstration** est créé par un outil du serveur, geste du porteur. Il compte quatre membres inventés, sans compte, aux pseudos inventés. Leurs réponses d'entrée sont inventées.
 - Chaque jour, un module du serveur fait répondre ces quatre membres au texte du jour, par un tirage fixe, et seulement dans ce cercle. Ce module ne touche que les cercles marqués « démonstration ». La marque ne se pose que par l'outil, jamais par une route.
-- **Le lien de relecture** est une invitation venue d'un de ces membres inventés. Il sert plusieurs fois (plusieurs relecteurs, plusieurs relectures) et vaut 30 jours (proposé), dans ce seul cercle.
+- **Le lien de relecture** est une invitation venue d'un de ces membres inventés. Il sert plusieurs fois (plusieurs relecteurs, plusieurs relectures) et vaut 30 jours, dans ce seul cercle. C'est une **exception à D-006 (arbitrage 3 : un lien à usage unique, le lien réutilisable écarté) et à P-29 (une personne, une fois)**, arbitrée par l'équipe et bornée : il n'ouvre que le cercle de démonstration, aux membres et réponses inventés ; aucune donnée réelle n'en sort (D-065, point 3).
 - Le relecteur suit le vrai parcours : carte, trois textes, défi, compte avec Apple, journée. Il n'a besoin ni de code fixe ni d'e-mail : la voie Apple n'attend pas le domaine.
 - **Après la relecture**, le porteur efface son compte avec l'outil (ou le relecteur touche « Tout effacer »). Le cercle de démonstration n'entre dans aucune mesure.
 - Ce qu'il faut écrire dans le formulaire d'Apple (notes de relecture, « What to Test ») : l'équipe le prépare à la fin de l'étape 2. Les consignes aux testeurs y demandent de ne jamais envoyer de capture qui montre des réponses (`testflight-juridique.md`, 1.4).
@@ -488,15 +489,15 @@ Ce qu'on voit « avant 18h » ou « après 18h » n'est donc qu'une question de 
 
 **Rien ne se calcule à 18h pile** (D-043). À 18h, le serveur ne fait que comparer l'heure et envoyer le message.
 - **Les cartes** : chaque carte est jugée au moment du geste. Les cartes se tirent à l'ouverture de Deviner, parmi les réponses enregistrées avant 18h00 : une réponse en retard n'est jamais servie (règle 6).
-- **L'avis du cercle** se prépare après 18h10 le jour de la fermeture du texte, donc la veille de sa révélation, réponses en retard comprises.
+- **L'avis du cercle n'est jamais gardé en base** : le serveur le calcule à chaque lecture de la révélation, à partir des réponses déchiffrées des membres présents du cercle, réponses en retard comprises (règle 10 : « les membres actuels »). Un membre arrivé après la révélation n'y entre pas (proposé) : l'avis déjà montré ne bouge pas à son arrivée. Dix réponses au plus : le calcul est immédiat, et il n'existe aucune donnée dérivée de plus à protéger ni à recalculer.
 - **La pause** se juge à 18h, sur les 7 derniers textes ; une réponse, même en retard, en sort. **Le sommeil** se juge à 18h, sur les membres hors pause ; le cercle se réveille au 18h suivant (règle 5).
-- **Les titres, la surprise et les badges du dimanche** se calculent à la première lecture après 18h, avec un départage gardé (R6). **Les tempéraments** se calculent le dimanche, sur les réponses déjà révélées (proposé, partie 8). **Le Pas de Côté** se juge sur le curseur tel qu'il était juste avant la réponse, et s'annonce à la révélation de ce texte (règle 14).
+- **Les titres, la surprise et les badges du dimanche** se calculent à la première lecture après 18h, avec un départage gardé (R6). **Les tempéraments** se calculent le dimanche, sur les réponses déjà révélées (lecture confirmée par Game design, partie 8). **Le Pas de Côté** se juge sur le curseur tel qu'il était juste avant la réponse, et s'annonce à la révélation de ce texte (règle 14).
 
-**Un départ ou un effacement entre la préparation et 18h** recalcule l'avis du cercle sur les membres restants. Il retire aussi la carte du partant des manches ouvertes ou validées (elle ne compte ni juste ni fausse), et vide la carte où son visage était posé (règle 4, J10). Le recalcul se fait dans la transaction du départ, pas à 18h. Test : le traceur d'un joueur parti à 17h n'apparaît dans aucune révélation de ce cercle à 18h.
+**Un départ ou un effacement avant 18h** retire la carte du partant des manches ouvertes ou validées (elle ne compte ni juste ni fausse) et vide la carte où son visage était posé, avec la marque « vidée par un départ », qui ne compte pas contre Le Sans-Faute (règle 4, J10). C'est la base qui vide ces cartes, dans la transaction du départ, pas à 18h (`carte.videe_par_depart`, déclencheur `membre_avant_depart`, migration 0002 ; testé avant et après 18h). Ses réponses sortent d'elles-mêmes de l'avis du cercle, calculé à la lecture. Test à écrire à l'étape 2 : le traceur d'un joueur parti à 17h n'apparaît dans aucune révélation de ce cercle à 18h.
 
 **Un texte corrigé** (règle 20) : le retrait des portraits, ou le recalcul d'une étiquette, se fait hors de 15h–19h et jamais le dimanche, comme une mise en ligne. Il peut être relancé sans changer le résultat.
 
-**Les changements d'heure** ne regardent que le serveur (`horloge.ts`, repris du test de 18h). Les tests couvrent le 25 octobre 2026 et le 28 mars 2027.
+**Les changements d'heure** ne regardent que le serveur. Une seule source les calcule : le moteur (`src/regles/heure.ts`, règle européenne), que l'horloge du serveur appelle (`src/serveur/horloge.ts`). La base place 18h avec la même convention (`fin_du_jour_de_jeu`, migration 0002). Les tests couvrent le 25 octobre 2026 et le 28 mars 2027, et comparent chaque heure de 2026 à 2028 à la base de fuseaux de Node, et chaque 18h de ces trois ans à celui de la base.
 
 ## 4. L'application : session, connexion, version (Front-end et Back-end)
 
@@ -537,7 +538,7 @@ Toute autre adresse est ignorée. L'application ne garde ni l'une ni l'autre.
 
 **La connexion d'essai par code** (`POST /dev/connexion { code }`) rend le jeton d'un joueur inventé de la base locale. Elle sert aux tests de bout en bout (quatre joueurs dans Chromium, la page embarquée servie en local) et aux captures. Le porteur se connecte avec ses propres comptes (D-059, point 1).
 
-**L'horloge accélérée** (`POST /dev/horloge`). À la vitesse 168, une semaine de jeu passe en une heure. `POST /dev/horloge` saute à `bascule`, à `dix_secondes_avant` ou au prochain `dimanche_bascule`. En local, aucun message ne part vers Apple.
+**L'horloge accélérée** (`POST /dev/horloge`). À la vitesse 168, une semaine de jeu passe en une heure. `POST /dev/horloge` saute à `bascule`, à `dix_secondes_avant` ou au prochain `dimanche_bascule`. En local, aucun message ne part vers Apple. Le serveur déclare l'heure de son horloge à la base dans chaque transaction (`elenchos.instant`) : « rien avant 18h » et les départs, que la base juge aussi, suivent l'horloge accélérée.
 
 **L'adresse du serveur dans l'application** est fixée à la fabrication. Une fabrication pour TestFlight ne connaît que l'adresse en ligne ; un test refuse une fabrication qui viserait une autre adresse.
 
@@ -681,12 +682,13 @@ Le corps d'une erreur ne contient que son code : jamais de message, de valeur re
 
 **Un arbitrage de l'équipe déjà dit au porteur avec le plan** (`plan-jeu-entier.md`, « Ce que l'équipe a tranché seule ») : **« Tout effacer » révoque la connexion chez Apple** (2.12). Il rétablit en partie D-035, règle 5, et P-38, que l'arbitrage de D-061 allégeait. Pour Google, l'allègement de D-061 reste (le lien coupé de notre côté seulement) : la révocation chez Google demanderait de garder un jeton de Google, ou de faire repasser le joueur par Google. À dire en une ligne au point d'étape. D-064 ne cite pas cet arbitrage ; il était dans le plan validé.
 
-**Cinq lectures nouvelles, proposées, à dire au porteur et à confirmer par les spécialistes** :
-1. **Les tempéraments vus par le cercle se calculent sur les réponses déjà révélées** (1.4, 3). La règle 13 les calcule le dimanche « sur les 56 derniers jours de jeu ». Lue à la lettre, la fenêtre compterait la réponse au texte du dimanche, qui ne se révèle que le lundi. Un tempérament gagné ou perdu le dimanche à 18h pourrait alors trahir cette réponse (même raison que la lecture A, règle 19, P-27 a). Proposé : la fenêtre s'arrête au dernier texte révélé. Aucun seuil ne change. **À confirmer par Game design.**
-2. **Un seul trio de textes d'entrée pour tous les cercles** (`FORMAT.md`, partie 3). `onboarding.md` dit que le système fixe trois textes « à la création d'un cercle » ; un trio commun tient cette lettre. Avec lui, les textes d'entrée d'un second cercle sont ceux de son créateur (2.6), et un joueur inscrit qui rejoint un autre cercle n'a rien à redonner : ses trois réponses sont reprises (règle 15). Prix : sa barre n'avance pas pendant ce défi. `contenu-test.md` (partie 8) comptait ce trio commun parmi les allègements du test. **À confirmer par Game design et Contenu.**
-3. **Les textes d'entrée d'un cercle créé par un joueur déjà inscrit** sont ceux de sa propre entrée (2.6). Aucune règle ne le disait. La maquette 5.6 mène de « + Créer un cercle » directement à 5.1, sans nouveau défi. **À confirmer par Game design.**
-4. **La ligne de 5.11** (« … Il faut environ trois mois pour les premiers curseurs nets. ») ne s'affiche que si aucun curseur n'est net (2.11). Elle serait fausse chez qui a déjà un curseur net avant 60 réponses, comme la phrase de la règle 18 que D-052 a précisée pour le même motif. Le point ouvert de la version de test sur 5.11 (couper la seconde phrase) tombe : le jeu entier montre les curseurs. **À confirmer par UX et Game design.**
-5. **Le cercle de démonstration** (2.16) fait répondre des membres inventés, en ligne, dans ce seul cercle. Il précise P-19 (« aucun joueur simulé en ligne », proposé) par une exception écrite, bornée par la marque « démonstration ».
+**Six lectures, tranchées à l'étape 1** (par Game design, ou par l'équipe au titre de D-062 point 5), à dire au porteur ; les trois qui touchent la lettre d'une décision validée sont consignées dans D-065, renversables :
+1. **Les tempéraments vus par le cercle se calculent sur les réponses déjà révélées** (1.4, 3). La règle 13 les calcule le dimanche « sur les 56 derniers jours de jeu ». Lue à la lettre, la fenêtre compterait la réponse au texte du dimanche, qui ne se révèle que le lundi. Un tempérament gagné ou perdu le dimanche à 18h pourrait alors trahir cette réponse (même raison que la lecture A, règle 19, P-27 a). La fenêtre s'arrête au dernier texte révélé. Aucun seuil ne change. **Confirmée par Game design.**
+2. **Un seul trio de textes d'entrée pour tous les cercles, pendant le test** (`FORMAT.md`, partie 3). C'est une **suspension, pour le test, de `onboarding.md` et de la règle 15** (trois textes fixés par cercle), retenue par Game design et arbitrée par l'équipe (D-065, point 2) ; `contenu-test.md` (partie 8) la rangeait déjà parmi les décisions touchées. Avec elle, les textes d'entrée d'un second cercle sont ceux de son créateur (2.6), et un joueur inscrit qui rejoint un autre cercle n'a rien à redonner : ses trois réponses sont reprises (règle 15). Prix : sa barre n'avance pas pendant ce défi, et l'exemple de la règle 15 (une réponse reprise sur trois) ne peut pas se produire. **À rétablir pour la version publique** (quelques trios en rotation ; le format les porte déjà).
+3. **Les textes d'entrée d'un cercle créé par un joueur déjà inscrit** sont ceux de sa propre entrée (2.6). Aucune règle ne le disait. La maquette 5.6 mène de « + Créer un cercle » directement à 5.1, sans nouveau défi. **Confirmée par Game design.**
+4. **La ligne de 5.11** (« … Il faut environ trois mois pour les premiers curseurs nets. ») ne s'affiche que si aucun curseur n'est net (2.11). Elle serait fausse chez qui a déjà un curseur net avant 60 réponses, comme la phrase de la règle 18 que D-052 a précisée pour le même motif. Le point ouvert de la version de test sur 5.11 (couper la seconde phrase) tombe : le jeu entier montre les curseurs. **Confirmée par Game design** (UX garde les mots).
+5. **Le cercle de démonstration** (2.16) fait répondre des membres inventés, en ligne, dans ce seul cercle. Il mêle des données inventées à la base réelle : c'est une exception écrite au principe de P-19 (une base est « inventée » ou « réelle » ; P-19 et P-20 sont allégés pour le test, signalé avec D-060), bornée par la marque « démonstration ». Une ligne P-19 a est à ajouter à `donnees.md`. Son **lien de relecture**, réutilisable 30 jours, est une **exception à D-006 (arbitrage 3) et à P-29** (D-065, point 3 ; 2.16).
+6. **Un proche partagé sans réponse n'est proposé que dans une seule de mes manches du jour** (2.8 ; lecture A2 de Game design, R8). C'est la **troisième exception à D-011** (« tous les autres membres sont proposés »), fidèle à son but : ne jamais montrer qui n'a pas répondu (D-065, point 1, reportée dans `produit.md` et `regles.md`, règle 3).
 
 **Ce qui précise une proposition, sans toucher une décision du porteur** :
 - **P-11, P-41** : la session est un jeton dans le trousseau, révoqué à la déconnexion. Même exigence tenue.
@@ -698,7 +700,7 @@ Le corps d'une erreur ne contient que son code : jamais de message, de valeur re
 - **D-045, point 1, et P-30** (effacement après 12 mois, e-mail 30 jours avant ; compte devenu inaccessible) : non construits pour le test, car sans objet : tout est effacé à la fin (D-061, point 2 ; plan). Ils reviennent à la deuxième version.
 - **Le lien de créateur et le lien de relecture** sont des éléments nouveaux, fabriqués par le porteur avec un outil du serveur (P-42 : l'outil ne montre rien). Ce sont des gestes de son pas-à-pas.
 - **Un compte retrouvé depuis un défi** se fond avec le joueur provisoire (2.5) ; la réponse la plus ancienne reste définitive (règle 7).
-- **Les sessions** : la ligne de la carte des données (`donnees.md`, partie 4) dit désormais « jeton », et non plus « cookie ». S'y ajoutent l'abonnement par appareil, la connexion en cours (10 minutes), le code de retour (une minute) et la note « écran Répondre affiché » (jusqu'à la fermeture du texte).
+- **Les sessions** : une ligne « session (jeton gardé dans le trousseau, empreinte seulement en base) » est **à ajouter** à la carte des données (`donnees.md`, partie 4), qui n'en a pas encore. S'y ajoutent l'abonnement par appareil, la connexion en cours (10 minutes), le code de retour (une minute) et la note « écran Répondre affiché » (jusqu'à la fermeture du texte). La carte du code (`jeu/src/base/carte.ts`) fait foi en attendant ; Back-end et Juridique reportent ses lignes dans `donnees.md`.
 - **`TENSIONS`** : la forme courte de l'essai (« local et national ») est remplacée par le libellé unique de E2 sans article (« décision locale et décision nationale »). C'est la lettre de `regles.md` (J9) et de E2 ; l'écart avait été relevé par le moteur de règles.
 
 ## 9. Points ouverts
@@ -722,7 +724,7 @@ Le corps d'une erreur ne contient que son code : jamais de message, de valeur re
    - « Connecté avec Apple » dans les Réglages ;
    - N13 sans invitant ; « Effacer mes réponses » et sa confirmation.
 4. **N6 à compléter par Juridique** : les ajouts de `testflight-juridique.md` (1.6), la révocation chez Apple, l'iPad, la voie Google par la feuille du système, et la publication à `/confidentialite`. Juridique relit aussi `MESSAGES_ARRIVEE`, désormais lisible par Apple.
-5. **Les cinq lectures de la partie 8**, chacune à son spécialiste.
+5. **Les six lectures de la partie 8** sont tranchées ; reste à les dire au porteur au point d'étape (D-065).
 6. **Les durées proposées** : connexion en cours 10 minutes ; code de retour une minute ; lien de créateur 7 jours ; lien de relecture 30 jours ; joueur provisoire 7 jours ; score d'entrée effacé à la lecture de l'annonce, 7 jours au plus ; sessions jamais au-delà de la fin du test.
 7. **La feuille de Google, partagée ou privée** : partagée, elle reprend la session Google de Safari mais iOS demande d'abord un accord ; privée, il faut retaper son mot de passe Google. À trancher par UX et Front-end à l'étape 2.
 8. **`GET /api/droits`** : les trois blancs de N6 sont des réglages du serveur, pour ne pas les écrire dans le dépôt public. À confirmer par Juridique.

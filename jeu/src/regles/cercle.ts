@@ -1,5 +1,6 @@
 // Le cercle (règles 1, 2, 3 et 5) : taille, pseudo, plusieurs cercles, pause et sommeil, message de 18h (D-029).
 
+import { LETTRES_QUI_IMITENT } from './confusables.ts';
 import { REGLES } from './constantes.ts';
 import type { IdMembre, Jour, MembreCercle } from './types.ts';
 
@@ -16,17 +17,23 @@ export function peutRejoindre(nombreCerclesDuJoueur: number): boolean {
 }
 
 /** Le squelette d'un pseudo (E7 ; essai 2, `squelette`, UTS #39 réduit) : décomposition, marques combinantes retirées,
- *  minuscules, puis chaque caractère que la table connaît (lettres d'autres alphabets qui imitent les nôtres, tirée de
- *  confusables.txt) remplacé par sa lettre latine. */
-export function squelette(s: string, table: Readonly<Record<string, string>> = {}): string {
+ *  minuscules, puis chaque caractère que la table connaît remplacé par la lettre latine qu'il imite. La table est celle
+ *  de confusables.ts, tirée de confusables.txt d'Unicode comme le prévoyait l'essai 2 (qui n'avait encore que {}). */
+export function squelette(s: string, table: Readonly<Record<string, string>> = LETTRES_QUI_IMITENT): string {
   const d = s.normalize('NFD').replace(/\p{Mn}/gu, '').toLowerCase();
   let sortie = '';
   for (const c of d) sortie += Object.prototype.hasOwnProperty.call(table, c) ? table[c] : c;
   return sortie.normalize('NFD').replace(/\p{Mn}/gu, '').toLowerCase();
 }
 
+/** La forme de comparaison d'un pseudo, gardée en base à côté de lui (`joueur.pseudo_comparaison`) : c'est elle que
+ *  la base compare pour refuser deux pseudos semblables dans un cercle (E7 ; migration 0002, refus EL003). */
+export function pseudoComparaison(pseudo: string): string {
+  return squelette(pseudo);
+}
+
 /** Règle 1 (E7) : deux membres d'un même cercle n'ont jamais le même pseudo, comparé par squelette. */
-export function pseudoLibre(pseudo: string, pseudosDuCercle: readonly string[], table: Readonly<Record<string, string>> = {}): boolean {
+export function pseudoLibre(pseudo: string, pseudosDuCercle: readonly string[], table: Readonly<Record<string, string>> = LETTRES_QUI_IMITENT): boolean {
   const s = squelette(pseudo, table);
   return !pseudosDuCercle.some((p) => squelette(p, table) === s);
 }

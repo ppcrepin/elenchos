@@ -4,7 +4,7 @@
 
 ## En bref
 
-- **Un seul fichier JSON**, `jeu/textes/lot-test.json` (nom proposé), avec environ 70 textes : 3 d'entrée, communs à tous les cercles (proposé, partie 3), au moins 56 du jour, au moins 3 de réserve. Le test dure au moins huit semaines (D-062) ; les nombres exacts sont fixés par Contenu avec le lot (plan de D-064 : « environ 70 textes, de quoi couvrir deux mois et demi de jeu, plus une réserve »). La version de test en prévoyait 34 (D-058, remplacé par D-062).
+- **Un seul fichier JSON**, `jeu/textes/lot-test.json` (nom proposé), avec environ 70 textes : 3 d'entrée, communs à tous les cercles pendant le test (D-065, point 2 ; partie 3), au moins 56 du jour, au moins 3 de réserve. Le test dure au moins huit semaines (D-062) ; les nombres exacts sont fixés par Contenu avec le lot (plan de D-064 : « environ 70 textes, de quoi couvrir deux mois et demi de jeu, plus une réserve »). La version de test en prévoyait 34 (D-058, remplacé par D-062).
 - **Contenu l'écrit dans le dépôt ; le serveur l'importe au démarrage.** Le chemin va dans un seul sens. Aucun agent ne touche la base (D-048).
 - **Chaque texte porte ses faits, jamais ses phrases.** Le serveur tire de ces faits les phrases à l'écran : la ligne du vote, « Proposé par … », la phrase du jour. Les mots restent donc les mêmes partout.
 - **32 contrôles automatiques** vérifient le fichier avant toute mise en ligne (partie 7). Ceux du lot glissent sur des fenêtres de quatre ou huit semaines, comme les règles qu'ils appliquent. Quatre points restent humains (partie 8).
@@ -63,12 +63,12 @@
 
 `depot` est le jour du dépôt : le groupe est celui de ce jour-là (règle du moment, E5).
 
-**Les trois textes d'entrée, communs à tous les cercles** (proposé ; à confirmer par Game design et Contenu). `onboarding.md` dit que le système fixe trois textes « à la création d'un cercle », identiques pour tous ceux qui y entrent ; un trio commun à tout le lot tient cette lettre. Il a trois effets, voulus :
+**Les trois textes d'entrée, communs à tous les cercles pendant le test.** C'est une **suspension, pour le test, de `onboarding.md` et de la règle 15**, qui fixent trois textes par cercle à sa création : retenue par Game design, arbitrée par l'équipe et consignée dans D-065 (point 2), renversable par le porteur ; `contenu-test.md` (partie 8) la rangeait déjà parmi les décisions touchées. **À rétablir pour la version publique** : quelques trios en rotation, pour les créateurs jamais invités. Pendant le test, elle a trois effets, voulus :
 - les textes d'entrée d'un cercle créé par un joueur déjà inscrit sont ceux de sa propre entrée, auxquels il a déjà répondu (`CONTRAT.md`, 2.6) ;
 - un joueur inscrit qui rejoint un autre cercle n'a rien à redonner : ses trois réponses sont reprises (règle 15) ;
 - le lot n'a besoin que de trois textes d'archive clivants, vérifiés une fois.
 
-Le prix : la barre d'un joueur qui rejoint un second cercle n'avance pas pendant ce défi. Si Game design préfère plusieurs trios, le format les porte sans changer de forme (rangs d'entrée 1 à 3k, un trio par cercle) ; seul C4 change.
+Le prix : la barre d'un joueur qui rejoint un second cercle n'avance pas pendant ce défi, et l'exemple de la règle 15 (une réponse reprise sur trois) ne peut pas se produire. Le format porte déjà plusieurs trios sans changer de forme (rangs d'entrée 1 à 3k, un trio par cercle) ; seul C4 changera.
 
 **`vote`**, repris du second essai : `objet` (`texte`, `article`, `amendement`, `motion`, `resolution`), `issue` (`adopte`, `rejete`), `etape` (`navette`, `definitif`, `aucune`), `date`, `suite` (`null`, `texte_tombe`, `texte_retire`), et un champ nouveau, `rejetDeProcedure`. Il vaut `true` seulement pour une motion de rejet adoptée par les partisans du texte pour un motif de procédure, qui ne compte pas comme un rejet (D-028, règle d'application de Contenu). Les combinaisons permises sont celles du second essai (C9). Le serveur en tire « Texte adopté. » ou « Texte rejeté. », puis la ligne datée avec l'étape (« Le 9 octobre 2024. Le Sénat devait encore voter. », E4). **Les voix sous le vote ne figurent pas** : E4 reste ouvert (`produit.md`, « Ce que ces décisions laissent à régler »). Si UX et Contenu retiennent les voix, un champ `voix` s'ajoutera.
 
@@ -134,7 +134,7 @@ Ils tournent à chaque changement du fichier, dans le contrôle du code (`npm ru
 | C1 | JSON valide ; clés exactement celles de `FichierTextes`, sans clé en plus ni en moins ; `format` = `elenchos-textes/1` | ce document | bloquant, texte |
 | C2 | Chaînes en NFC ; ni espace au bord, ni espace double ; ni caractère de contrôle, ni caractère invisible, ni espace insécable, ni apostrophe courbe ; aucune marque `A_ECRIRE`, `TODO`, `[`, `]` | partie 1 | bloquant, texte |
 | C3 | `id` unique, de forme `T` suivi de deux chiffres ; `rang` contigu dans chaque rôle (1 à 3, 1 à 28, 1 à 3) ; `r1` à `r4` chacun une fois | partie 3 | bloquant, texte |
-| C4 | 3 textes d'entrée ; au moins 56 du jour ; au moins 3 de réserve. Relevé en plus, sans bloquer : le nombre de jours de jeu que le lot couvre après la date du premier jour | D-062 (au moins huit semaines de test) ; nombres exacts : Contenu, avec le lot ; trio commun : partie 3, proposé | bloquant, lot |
+| C4 | 3 textes d'entrée ; au moins 56 du jour ; au moins 3 de réserve. Relevé en plus, sans bloquer : le nombre de jours de jeu que le lot couvre après la date du premier jour | D-062 (au moins huit semaines de test) ; nombres exacts : Contenu, avec le lot ; trio commun pendant le test : partie 3, D-065 (point 2) | bloquant, lot |
 | C5 | Longueurs : titre ≤ 60, chaque ligne ≤ 90, raison ≤ 110 (proposé), extrait ≤ 600, nom ≤ 60, groupe ≤ 70, commission ≤ 80 points de code | second essai ; raison : proposé | bloquant, texte |
 | C6 | Titre sans « : » ; raison terminée par « . », « ? » ou « ! », sans guillemets autour | E8 ; essais | bloquant, texte |
 | C7 | `lienScrutin` et chaque `source.adresse` en `https://www.assemblee-nationale.fr/…`, au motif du premier essai ; `lienScrutin` égal à `…/dyn/{legislature}/scrutins/{numero}` | essais ; P-09 (rien d'ailleurs) | bloquant, texte |
@@ -193,9 +193,9 @@ Dit franchement : un programme vérifie la forme et les comptes, pas le sens. Re
 
 ## 10. Ce que ce format touche, et les points ouverts
 
-- **Aucune décision modifiée.** Le format applique D-028, D-034, D-041, D-044 (point 3), D-053, D-062 (le lot du jeu entier), D-064 (« Tradition ou changement » à 3 pour 1, C23), E2, E4, E5, E8, E9, E11, les règles 15, 16 et 20, et le plafond par commission signalé avec D-060.
-- **Lectures proposées, à confirmer par Contenu** (et par Game design pour le trio d'entrée) :
-  - le trio d'entrée commun à tous les cercles (partie 3, C4) ;
+- **Une décision suspendue pour le test, par un arbitrage de l'équipe** : le trio d'entrée commun à tous les cercles suspend `onboarding.md` et la règle 15 (trois textes fixés par cercle), D-065 point 2 (partie 3, C4) ; à rétablir pour la version publique.
+- **Appliquées** : D-028, D-034, D-041, D-044 (point 3), D-053, D-062 (le lot du jeu entier), D-064 (« Tradition ou changement » à 3 pour 1, C23 ; le moteur la lit de même, `controleSens`, `EXCEPTIONS_SENS`), E2, E4, E5, E8, E9, E11, les règles 16 et 20, et le plafond par commission signalé avec D-060.
+- **Lectures proposées, à confirmer par Contenu** :
   - les nombres exacts du lot (C4) ;
   - l'égalité entre groupes appliquée au lot entier, plus court que douze semaines (C22) ;
   - l'équilibre des sens par fenêtre de huit semaines, et l'exception de D-064 lue comme « au moins un quart de sens 0 » (C23) ;

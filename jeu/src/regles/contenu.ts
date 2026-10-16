@@ -2,7 +2,7 @@
 // (jamais sur les joueurs) ; la chaîne des textes et l'import du lot s'en servent.
 
 import { REGLES } from './constantes.ts';
-import { F } from './fraction.ts';
+import { F, type Fraction } from './fraction.ts';
 import type { CodeTension, Pole } from './types.ts';
 
 /** Règle 6 (D-028) : sur 4 semaines glissantes (28 textes), adoptés et rejetés font chacun entre un tiers et deux tiers
@@ -33,15 +33,37 @@ export function controleGroupes(raisonsParGroupe: ReadonlyMap<string, number>): 
   });
 }
 
+/** Une tension où un sens peut manquer (D-064) : `pole`, le sens qui peut être en minorité, doit faire au moins
+ *  `partMin` des textes de la tension ; il ne peut jamais dépasser l'autre de plus d'un texte (la règle ordinaire). */
+export type ExceptionSens = { readonly pole: Pole; readonly partMin: Fraction };
+
+/** D-064 (arbitrage de l'équipe, qui relâche E9 sur cette seule tension, faute de textes récents « tradition ») :
+ *  pour « tradition ou changement », 3 textes « changement » pour 1 « tradition » au plus, soit des textes de sens 0
+ *  (favorable sert la tradition) au moins pour un quart (jeu/textes/FORMAT.md, C23). 3 contre 1 passe ; 4 contre 0
+ *  échoue ; 3 « tradition » contre 1 échoue aussi : l'exception ne vaut que dans le sens où les textes manquent. */
+export const EXCEPTIONS_SENS: Readonly<Partial<Record<CodeTension, ExceptionSens>>> = Object.freeze({
+  T: Object.freeze({ pole: 0, partMin: F(1, 4) }),
+});
+
 /** Règle 16 (E9) : sur 8 semaines, pour chaque tension, autant de textes où « favorable » sert une valeur que l'autre, à
- *  un texte près quand leur nombre est impair. Rend les tensions en défaut. D-064 relâche cette règle pour « tradition
- *  ou changement » (3 pour 1, sur cette seule tension) : `exceptions` la nomme. */
-export function controleSens(textes: readonly { readonly tension: CodeTension; readonly sens: Pole }[], exceptions: readonly CodeTension[] = []): CodeTension[] {
+ *  un texte près quand leur nombre est impair. Rend les tensions en défaut. Une tension nommée dans `exceptions` suit
+ *  son exception (par défaut, celle de D-064), et seulement elle : le moteur et le contrôle du lot disent la même chose. */
+export function controleSens(
+  textes: readonly { readonly tension: CodeTension; readonly sens: Pole }[],
+  exceptions: Readonly<Partial<Record<CodeTension, ExceptionSens>>> = EXCEPTIONS_SENS,
+): CodeTension[] {
   const parTension = new Map<CodeTension, [number, number]>();
   for (const t of textes) {
     const c = parTension.get(t.tension) ?? [0, 0];
     c[t.sens] += 1;
     parTension.set(t.tension, c);
   }
-  return [...parTension.entries()].filter(([t, [a, b]]) => !exceptions.includes(t) && Math.abs(a - b) > 1).map(([t]) => t);
+  return [...parTension.entries()].filter(([t, compte]) => {
+    if (Math.abs(compte[0] - compte[1]) <= 1) return false;
+    const e = exceptions[t];
+    if (e === undefined) return true;
+    const minoritaire = compte[e.pole];
+    const autre = compte[1 - e.pole] ?? 0;
+    return minoritaire > autre || F(minoritaire, minoritaire + autre).inf(e.partMin);
+  }).map(([t]) => t);
 }

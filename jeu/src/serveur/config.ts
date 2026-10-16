@@ -1,8 +1,11 @@
 // Origine : test-18h/src/config.ts (12 octobre 2026), copie adaptée. Le principe est repris tel quel : tout secret
 // passe par une variable d'environnement, saisie par le porteur chez Scalingo, jamais dans le dépôt (D-048, P-16) ;
 // un réglage absent ou illisible est signalé par son NOM, jamais par sa valeur. Ce qui change pour le jeu :
-// - trois réglages sont indispensables : la base, SECRET_SESSION et CLE_REPONSES. Sans l'un d'eux, le serveur refuse
-//   de démarrer, au lieu de tourner à moitié (P-02 : « sans clé, le serveur refuse de démarrer ») ;
+// - quatre réglages sont indispensables : la base, SECRET_SESSION, CLE_REPONSES et CLE_IDENTITES (la clé des
+//   empreintes d'identité, à part depuis le 16 octobre 2026 : changer SECRET_SESSION ne doit jamais rendre les comptes
+//   introuvables). Sans l'un d'eux, le serveur refuse de démarrer, au lieu de tourner à moitié (P-02 : « sans clé, le
+//   serveur refuse de démarrer »). Les trois clés doivent être distinctes. En ligne, FIN_DU_TEST l'est aussi : sans
+//   elle, rien ne garantirait qu'aucune session ne dure au-delà de la fin du test (D-061, point 2) ;
 // - les autres coupent seulement la fonction qui en dépend (connexion Apple ou Google, message de 18h) ;
 // - les réglages dangereux (horloge accélérée, connexion d'essai, garde des horaires levée) n'existent qu'en local :
 //   présents chez Scalingo ou sur GitHub, ils sont REFUSÉS et le serveur ne démarre pas (CONTRAT.md, partie 5).
@@ -28,9 +31,12 @@ export type Config = {
   modeRoles: ModeRoles;
   secretSession: Buffer | null;
   cleReponses: Buffer | null;
+  /** La clé des empreintes d'identité (Apple, Google, e-mail), gardée hors ligne par le porteur ; ne se change jamais
+   *  pendant le test (crypto.ts, `empreinteIdentite`). */
+  cleIdentites: Buffer | null;
   apple: { idEquipe: string; idCle: string; idApplication: string; clePrivee: KeyObject } | null;
   google: { idClient: string; secretClient: string } | null;
-  /** AAAA-MM-JJ : aucune session ne dure au-delà (DECISIONS-TECHNIQUES 1.8 ; D-061, point 2). */
+  /** AAAA-MM-JJ : aucune session ne dure au-delà (DECISIONS-TECHNIQUES 1.8 ; D-061, point 2). Exigée en ligne. */
   finDuTest: string | null;
   /** Réglages de développement, lus seulement hors environnement protégé. */
   local: { horlogeVitesse: number | null; horlogeDepart: Date | null; codesEssai: string[] | null };
@@ -127,7 +133,18 @@ export function lireConfig(env: NodeJS.ProcessEnv): Config {
     return null;
   };
   const secretSession = cle('SECRET_SESSION', false);
-  const cleReponses = cle('CLE_REPONSES', true);
+  let cleReponses = cle('CLE_REPONSES', true);
+  let cleIdentites = cle('CLE_IDENTITES', true);
+  // Trois clés distinctes : la même valeur collée deux fois ferait tomber la séparation (qui tient l'une tiendrait
+  // l'autre). Le réglage fautif est signalé par son nom, jamais par sa valeur.
+  if (cleIdentites && ((cleReponses && cleIdentites.equals(cleReponses)) || (secretSession && cleIdentites.equals(secretSession)))) {
+    signaler('CLE_IDENTITES');
+    cleIdentites = null;
+  }
+  if (cleReponses && secretSession && cleReponses.equals(secretSession)) {
+    signaler('CLE_REPONSES');
+    cleReponses = null;
+  }
 
   let apple: Config['apple'] = null;
   const aEquipe = val('APPLE_ID_EQUIPE');
@@ -186,10 +203,10 @@ export function lireConfig(env: NodeJS.ProcessEnv): Config {
     }
   }
 
-  const peutDemarrer = urlBase !== null && secretSession !== null && cleReponses !== null && refuses.length === 0
-    && (!enLigne || adresseOk);
+  const peutDemarrer = urlBase !== null && secretSession !== null && cleReponses !== null && cleIdentites !== null
+    && refuses.length === 0 && (!enLigne || (adresseOk && finDuTest !== null));
   return {
-    enLigne, protege, port, adressePublique, version, urlBase, modeRoles, secretSession, cleReponses, apple, google,
+    enLigne, protege, port, adressePublique, version, urlBase, modeRoles, secretSession, cleReponses, cleIdentites, apple, google,
     finDuTest, local, manquants: [...new Set(manquants)], refuses: [...new Set(refuses)], peutDemarrer,
   };
 }

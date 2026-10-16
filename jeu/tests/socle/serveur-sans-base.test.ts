@@ -7,9 +7,10 @@ import { test } from 'node:test';
 import { chiffrementBase, creerPoolModule } from '../../src/base/connexion.ts';
 import { lireConfig, REGLAGES_DANGEREUX } from '../../src/serveur/config.ts';
 import {
-  b64url, chiffrerReponse, dechiffrerReponse, deriverCle, empreinte, LONGUEUR_REPONSE_CHIFFREE,
+  b64url, chiffrerPourquoi, chiffrerReponse, dechiffrerPourquoi, dechiffrerReponse, deriverCle, deriverCleIdentite, empreinte,
+  empreinteIdentite, LONGUEUR_POURQUOI_CHIFFRE, LONGUEUR_REPONSE_CHIFFREE,
 } from '../../src/serveur/crypto.ts';
-import { assainir, creerJournal, typeErreur, type Ligne } from '../../src/serveur/journal.ts';
+import { assainir, creerJournal, ROUTES, ROUTES_ALIGNEES, typeErreur, type Ligne } from '../../src/serveur/journal.ts';
 
 const TRACEUR = { email: 'traceur-7q2@exemple.invalid', sub: 'traceur-sub-7Q2', pseudo: 'Traceur-pseudo-7Q2', jeton: 'ab'.repeat(32) };
 
@@ -21,6 +22,7 @@ function envComplet(complements: Record<string, string> = {}): NodeJS.ProcessEnv
     DATABASE_URL: 'postgresql://inutile@127.0.0.1:1/inutile',
     SECRET_SESSION: b64url(randomBytes(32)),
     CLE_REPONSES: b64url(randomBytes(32)),
+    CLE_IDENTITES: b64url(randomBytes(32)),
     APPLE_ID_EQUIPE: 'ABCDE12345',
     APPLE_ID_CLE: 'KEY1234567',
     APPLE_ID_APPLICATION: 'fr.exemple.elenchos',
@@ -41,8 +43,9 @@ test('réglages complets : rien ne manque, le serveur peut démarrer', () => {
   assert.equal(c.version, 'local');
 });
 
-test('sans base, sans SECRET_SESSION ou sans CLE_REPONSES (32 octets exactement), le serveur refuse de démarrer (P-02)', () => {
-  for (const [nom, signale] of [['DATABASE_URL', 'SCALINGO_POSTGRESQL_URL'], ['SECRET_SESSION', 'SECRET_SESSION'], ['CLE_REPONSES', 'CLE_REPONSES']] as const) {
+test('sans base, sans SECRET_SESSION, sans CLE_REPONSES ou sans CLE_IDENTITES (32 octets exactement), le serveur refuse de démarrer (P-02)', () => {
+  for (const [nom, signale] of [['DATABASE_URL', 'SCALINGO_POSTGRESQL_URL'], ['SECRET_SESSION', 'SECRET_SESSION'], ['CLE_REPONSES', 'CLE_REPONSES'],
+    ['CLE_IDENTITES', 'CLE_IDENTITES']] as const) {
     const env = envComplet();
     delete env[nom];
     const c = lireConfig(env);
@@ -52,6 +55,35 @@ test('sans base, sans SECRET_SESSION ou sans CLE_REPONSES (32 octets exactement)
   assert.equal(lireConfig(envComplet({ CLE_REPONSES: b64url(randomBytes(31)) })).peutDemarrer, false);
   assert.equal(lireConfig(envComplet({ CLE_REPONSES: b64url(randomBytes(33)) })).peutDemarrer, false);
   assert.equal(lireConfig(envComplet({ SECRET_SESSION: 'pas+du+base64url' })).peutDemarrer, false);
+  assert.equal(lireConfig(envComplet({ CLE_IDENTITES: b64url(randomBytes(31)) })).peutDemarrer, false);
+});
+
+test('les trois clés sont distinctes : la même valeur collée deux fois est refusée, signalée par son nom', () => {
+  const une = b64url(randomBytes(32));
+  for (const [env, signale] of [
+    [{ CLE_IDENTITES: une, CLE_REPONSES: une }, 'CLE_IDENTITES'],
+    [{ CLE_IDENTITES: une, SECRET_SESSION: une }, 'CLE_IDENTITES'],
+    [{ CLE_REPONSES: une, SECRET_SESSION: une }, 'CLE_REPONSES'],
+  ] as const) {
+    const c = lireConfig(envComplet(env));
+    assert.equal(c.peutDemarrer, false, signale);
+    assert.ok(c.manquants.includes(signale), signale);
+    assert.ok(!JSON.stringify(c.manquants).includes(une));
+  }
+});
+
+test('en ligne, FIN_DU_TEST est exigée : sans elle, le serveur refuse de démarrer (D-061, point 2) ; en local, elle peut manquer', () => {
+  const enLigne = envComplet({ CONTAINER: 'web-1' });
+  assert.equal(lireConfig(enLigne).peutDemarrer, true);
+  delete enLigne.FIN_DU_TEST;
+  const c = lireConfig(enLigne);
+  assert.equal(c.enLigne, true);
+  assert.equal(c.peutDemarrer, false);
+  assert.ok(c.manquants.includes('FIN_DU_TEST'));
+  assert.equal(lireConfig(envComplet({ CONTAINER: 'web-1', FIN_DU_TEST: '2027-02-30' })).peutDemarrer, false);
+  const local = envComplet();
+  delete local.FIN_DU_TEST;
+  assert.equal(lireConfig(local).peutDemarrer, true);
 });
 
 test('un réglage absent ou illisible est signalé par son nom, jamais par sa valeur ; la fonction qui en dépend est coupée', () => {
@@ -116,6 +148,22 @@ test('le journal ne garde que ses champs permis, et des valeurs de liste fermée
     { evenement: 'requete', route: 'POST /api/tout-effacer', statut: 204 });
 });
 
+test('le journal connaît chaque route du contrat (vérifié aussi à la compilation), et rien d’autre que les navigations', () => {
+  assert.equal(ROUTES_ALIGNEES, true);
+  for (const r of ['GET /api/cercles', 'POST /api/revelation/etape', 'POST /api/connexion/debut', 'POST /api/proche',
+    'POST /api/rejoindre', 'POST /api/cercle/quitter', 'POST /api/geste', 'GET /api/reglages', 'POST /api/message',
+    'GET /api/moi/titres', 'GET /api/moi/historique', 'POST /api/inviter/voir', 'POST /api/recu', 'GET /confidentialite'] as const) {
+    assert.equal(assainir({ evenement: 'requete', route: r }).route, r, r);
+  }
+  // 50 routes de `Routes` sous /api/ et /dev/, plus POST /api/recu : les 51 routes /api/ du contrat et les deux /dev/.
+  assert.equal(ROUTES.filter((r) => r.startsWith('GET /api/') || r.startsWith('POST /api/')).length, 51);
+  assert.equal(ROUTES.filter((r) => r.includes(' /dev/')).length, 2);
+  // Les routes de la version de test qui n'existent plus s'écrivent « (autre) ».
+  for (const r of ['POST /api/passage', 'POST /api/cercle/voir?cercle=x', 'GET /api/cercle']) {
+    assert.equal(assainir({ evenement: 'requete', route: r as Ligne['route'] }).route, '(autre)', r);
+  }
+});
+
 test('le type d’une erreur, jamais son message ; nos refus de la base gardent leur code « EL… »', () => {
   assert.equal(typeErreur(Object.assign(new Error(`clé ${TRACEUR.email} en double`), { code: '23505' })), '23505');
   assert.equal(typeErreur(Object.assign(new Error('reponse sans accord (P-34)'), { code: 'EL034' })), 'EL034');
@@ -145,13 +193,45 @@ test('réponses chiffrées (P-02) : longueur fixe, deux chiffrés différents po
   assert.deepEqual([...tailles], [LONGUEUR_REPONSE_CHIFFREE]);
 });
 
-test('empreintes avec clé (P-01) : une clé par usage, jamais celles du test de 18h', () => {
+test('empreintes avec clé (P-01) : une clé par usage, jamais celles du test de 18h ; les identités, de leur seule clé', () => {
   const secret = randomBytes(32);
-  assert.notDeepEqual(deriverCle(secret, 'identite'), deriverCle(secret, 'session'));
-  const e = empreinte(secret, 'adresse', TRACEUR.email);
+  const cleIdentites = randomBytes(32);
+  assert.notDeepEqual(deriverCle(secret, 'tirage'), deriverCle(secret, 'session'));
+  const e = empreinteIdentite(cleIdentites, 'adresse', TRACEUR.email);
   assert.match(e, /^[0-9a-f]{64}$/);
-  assert.notEqual(e, empreinte(secret, 'identite', TRACEUR.email));
-  assert.notEqual(e, empreinte(randomBytes(32), 'adresse', TRACEUR.email));
+  assert.notEqual(e, empreinteIdentite(cleIdentites, 'identite', TRACEUR.email));
+  assert.notEqual(e, empreinteIdentite(randomBytes(32), 'adresse', TRACEUR.email));
+  // Une même valeur dans les deux réglages ne donne jamais la même clé : les étiquettes diffèrent.
+  assert.notDeepEqual(deriverCleIdentite(secret, 'identite'), deriverCle(secret, 'session'));
+  assert.notEqual(empreinteIdentite(secret, 'identite', TRACEUR.sub), empreinte(secret, 'session', TRACEUR.sub));
+  // Changer SECRET_SESSION ne change aucune empreinte d'identité : les comptes restent retrouvables.
+  const avant = lireConfig(envComplet({ CLE_IDENTITES: b64url(cleIdentites) }));
+  const apres = lireConfig(envComplet({ CLE_IDENTITES: b64url(cleIdentites) }));
+  assert.notDeepEqual(avant.secretSession, apres.secretSession);
+  assert.ok(avant.cleIdentites && apres.cleIdentites);
+  assert.equal(empreinteIdentite(avant.cleIdentites, 'identite', TRACEUR.sub), empreinteIdentite(apres.cleIdentites, 'identite', TRACEUR.sub));
+});
+
+test('le « pourquoi » d’une carte est chiffré (correction 2) : longueur fixe, deux chiffrés différents, lié à sa carte', () => {
+  const cle = randomBytes(32);
+  const carte = '8f3c0000-0000-4000-8000-0000000000c1';
+  const a = chiffrerPourquoi(cle, carte, 2);
+  const b = chiffrerPourquoi(cle, carte, 2);
+  assert.equal(a.length, LONGUEUR_POURQUOI_CHIFFRE);
+  assert.equal(LONGUEUR_POURQUOI_CHIFFRE, 30);
+  assert.notDeepEqual(a, b);
+  assert.equal(dechiffrerPourquoi(cle, carte, a), 2);
+  assert.equal(dechiffrerPourquoi(cle, carte, b), 2);
+  assert.equal(dechiffrerPourquoi(cle, '8f3c0000-0000-4000-8000-0000000000c2', a), null); // recopié sur une autre carte
+  assert.equal(dechiffrerPourquoi(randomBytes(32), carte, a), null); // une autre clé
+  const altere = Buffer.from(a);
+  altere[29] = (altere[29] ?? 0) ^ 1;
+  assert.equal(dechiffrerPourquoi(cle, carte, altere), null);
+  // Un chiffré de réponse n'est jamais pris pour un « pourquoi », ni l'inverse : longueur et données associées diffèrent.
+  assert.equal(dechiffrerPourquoi(cle, carte, chiffrerReponse(cle, carte, 'T04', { position: 2, raison: 2 })), null);
+  assert.throws(() => chiffrerPourquoi(cle, carte, 0 as 1), RangeError);
+  const tailles = new Set(([1, 2, 3, 4] as const).map((r) => chiffrerPourquoi(cle, carte, r).length));
+  assert.deepEqual([...tailles], [LONGUEUR_POURQUOI_CHIFFRE]);
 });
 
 test('connexion à la base : chiffrée sauf « sslmode=disable » ; le module se déclare à l’ouverture', async () => {

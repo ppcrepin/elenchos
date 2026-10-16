@@ -11,8 +11,12 @@
 -- 3. les refus voulus (accord absent, cercle complet…) viennent de déclencheurs qui lèvent un code « EL… » avec un
 --    message fixe, sans aucune valeur (migration 0002).
 --
--- Mots : « jour » = jour de jeu, la date civile dont le texte s'ouvre à 18h, heure de Paris (règle 6) ;
--- « semaine » = le dimanche qui la clôt (règle 12). Les identifiants sont tirés au hasard par le programme.
+-- Mots : « jour » = jour de jeu : le jour civil, à Paris, où il finit à 18h ; il a commencé la veille à 18h (regles.md
+-- §2 ; CONTRAT.md, partie 3 ; le moteur, src/regles/heure.ts). `calendrier.jour` est le jour de jeu du texte : il
+-- s'ouvre la veille à 18h, se ferme ce jour-là à 18h, se devine pendant le jour de jeu suivant et se révèle à sa fin.
+-- `manche.jour` est le jour de jeu pendant lequel on devine (le texte de la veille). La base calcule 18h avec
+-- `fin_du_jour_de_jeu` (migration 0002), comparée au moteur par un test. « semaine » = le dimanche qui la clôt
+-- (règle 12). Les identifiants sont tirés au hasard par le programme.
 
 -- ---------------------------------------------------------------------------------------------------------------
 -- Le contenu public (données de l'Assemblée, P-14) : aucune donnée de joueur.
@@ -143,7 +147,9 @@ CREATE TABLE cercle (
   id uuid PRIMARY KEY,
   intitule text CHECK (intitule IS NULL OR (
     char_length(intitule) BETWEEN 1 AND 40 AND intitule !~ '[@/:<>[:cntrl:]]' AND intitule !~ '[0-9]+([.][0-9]+){3}')),
-  -- Les trois textes d'entrée, fixés à la création, les mêmes pour tous ceux qui y entrent (règle 15).
+  -- Les trois textes d'entrée, fixés à la création, les mêmes pour tous ceux qui y entrent (règle 15). Pendant le
+  -- test, un seul trio pour tous les cercles (D-065, point 2) : ces colonnes portent alors les mêmes trois textes ;
+  -- elles porteront des trios différents à la version publique.
   entree_1 text NOT NULL REFERENCES texte (id),
   entree_2 text NOT NULL REFERENCES texte (id),
   entree_3 text NOT NULL REFERENCES texte (id),
@@ -230,6 +236,14 @@ CREATE INDEX manche_cercle_jour ON manche (cercle_id, jour);
 -- Une carte : la réponse d'un auteur, servie à un devineur. Son identifiant est tiré au hasard pour chaque joueur et
 -- chaque jour (P-26). La carte ne recopie pas la réponse : elle désigne son auteur. Au départ de l'auteur, une carte
 -- part avec lui ; au départ d'un membre désigné, la carte redevient vide (règle 4).
+-- « pourquoi » : le rang de la raison devinée sur la carte « qui et pourquoi », CHIFFRÉ par le programme comme une
+-- réponse (P-02 ; crypto.ts, 30 octets, lié à la carte) : avec le verdict « juste et raison », il dirait sinon en clair
+-- la raison de l'auteur.
+-- « videe_par_depart » : le membre dont le visage était posé est parti avant 18h (règle 4, J10). La base la pose
+-- elle-même (déclencheur membre_avant_depart, migration 0002) ; la passe qui en résulte ne compte pas contre Le
+-- Sans-Faute. Un geste du joueur sur la carte l'efface.
+-- Restent en clair, voulus et dits sur la carte des données : le verdict et le visage posé (un « jumeau » dit que deux
+-- membres ont donné la même réponse, ce que la révélation montre au devineur).
 CREATE TABLE carte (
   id uuid PRIMARY KEY,
   manche_id uuid NOT NULL,
@@ -238,13 +252,15 @@ CREATE TABLE carte (
   auteur_membre_id uuid NOT NULL,
   qui_et_pourquoi boolean NOT NULL,
   visage_membre_id uuid REFERENCES membre (id) ON DELETE SET NULL, -- même cercle : migration 0002
-  pourquoi smallint CHECK (pourquoi BETWEEN 1 AND 4),
+  pourquoi bytea CHECK (octet_length(pourquoi) = 30),
   passee boolean NOT NULL DEFAULT false,
+  videe_par_depart boolean NOT NULL DEFAULT false,
   verdict text CHECK (verdict IN ('juste', 'juste_et_raison', 'jumeau', 'jumeau_et_raison', 'faux', 'passe')),
   FOREIGN KEY (manche_id, cercle_id) REFERENCES manche (id, cercle_id) ON DELETE CASCADE,
   FOREIGN KEY (auteur_membre_id, cercle_id) REFERENCES membre (id, cercle_id) ON DELETE CASCADE,
   UNIQUE (manche_id, ordre),
-  CHECK (pourquoi IS NULL OR qui_et_pourquoi)
+  CHECK (pourquoi IS NULL OR qui_et_pourquoi),
+  CHECK (NOT videe_par_depart OR (visage_membre_id IS NULL AND pourquoi IS NULL AND NOT passee))
 );
 CREATE INDEX carte_auteur ON carte (auteur_membre_id);
 CREATE INDEX carte_visage ON carte (visage_membre_id);

@@ -252,7 +252,8 @@ export type AnnonceArrivee = {
    *  Marie. », ou la première phrase seule si `aDeviner` est faux. Le message envoyé, lui, ne porte jamais le score : il
    *  prend un texte de `MESSAGES_ARRIVEE` (partie 13). */
   readonly texte: string;
-  /** Vrai si le créateur doit deviner cet invité (son premier invité, quand ils sont deux : D-006, D-058 point 3). */
+  /** Vrai si le créateur doit deviner cet invité : son premier invité, quand ils sont deux (D-006, D-011), dans chaque
+   *  cercle qu'il crée (extension de D-006 aux cercles suivants, proposé). */
   readonly aDeviner: boolean;
 };
 

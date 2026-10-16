@@ -7,7 +7,7 @@
 //   à 3 réponses dans son cercle unique) ;
 // - un tempérament obtenu se garde tant que la part reste aux 4/5 du seuil (marge absente de l'essai).
 //
-// Lectures du moteur (regles.md ne les dit pas, à confirmer par Game design) :
+// Lectures du moteur (regles.md ne les dit pas ; confirmées par Game design à l'étape 1, lectures A3 à A5) :
 // - la fenêtre est celle des textes révélés pendant ces 56 jours de jeu, c'est-à-dire les textes des jours
 //   dimanche − 56 à dimanche − 1 : le texte du dimanche n'est révélé que le lundi (lecture A) ; c'était l'essai ;
 // - « au moins 20 réponses » : pour L'Original et Le Pont, 20 réponses à des textes qui comptent (au moins 3 réponses

@@ -1,5 +1,8 @@
 -- Migration 0002 : le cloisonnement des cercles, imposé par la base (P-25), et les refus que la base garde elle-même
 -- (P-34 ; trois cercles ; dix membres ; pseudo unique dans le cercle ; le joueur provisoire n'est membre de rien).
+-- Avec eux, deux règles de temps : un proche ne lit la réponse d'un autre au texte du jour qu'après la fermeture de ce
+-- texte, à 18h (« rien avant 18h », P-26, tenu aussi par la base) ; un départ avant 18h vide les cartes où le partant
+-- était désigné (règle 4).
 --
 -- LE PRINCIPE. Chaque table porte des règles de sécurité au niveau des lignes (ROW LEVEL SECURITY), imposées aussi
 -- au propriétaire des tables (FORCE). Une ligne n'est visible que si une règle la montre au MODULE qui demande
@@ -39,6 +42,24 @@ $$;
 -- L'empreinte du jeton d'un lien, déclarée par qui ouvre ce lien sans être encore joueur (P-29).
 CREATE FUNCTION jeton_courant() RETURNS text LANGUAGE sql STABLE AS $$
   SELECT nullif(current_setting('elenchos.jeton', true), '')
+$$;
+
+-- ---------------------------------------------------------------------------------------------------------------
+-- Quand. L'heure que la base prend pour juger « avant ou après 18h » : l'heure déclarée par le serveur dans la
+-- transaction (SET LOCAL elenchos.instant, comme le joueur : jeu/src/base/connexion.ts), sinon celle de la base
+-- (now()). Les deux sont la même horloge en ligne ; l'horloge accélérée du développement local et les tests déclarent
+-- la leur. Cette déclaration protège contre l'oubli d'un filtre, pas contre un code fautif qui déclarerait une heure
+-- fausse (même limite que le module déclaré, jeu/src/base/LISEZMOI.md).
+
+CREATE FUNCTION instant_du_jeu() RETURNS timestamptz LANGUAGE sql STABLE AS $$
+  SELECT coalesce(nullif(current_setting('elenchos.instant', true), '')::timestamptz, now())
+$$;
+
+-- La fin du jour de jeu d : 18h00 à Paris, le jour civil d (regles.md §2 ; CONTRAT.md, partie 3 ; `bascule` du moteur,
+-- src/regles/heure.ts). Le texte du jour d s'y ferme ; la manche du jour d s'y révèle. 18h n'est jamais ambigu : les
+-- changements d'heure ont lieu la nuit.
+CREATE FUNCTION fin_du_jour_de_jeu(p_jour date) RETURNS timestamptz LANGUAGE sql STABLE AS $$
+  SELECT (p_jour::timestamp + TIME '18:00') AT TIME ZONE 'Europe/Paris'
 $$;
 
 -- ---------------------------------------------------------------------------------------------------------------
@@ -136,6 +157,22 @@ BEGIN
   RETURN r;
 END $$;
 
+-- « Déjà joué » (CONTRAT.md, 2.8, En attendant) : les membres de ses cercles qui ont répondu à ce texte. Avant 18h, la
+-- règle de lecture des réponses cache celles des proches au texte du jour ; cette fonction ne rend que des
+-- identifiants de membres, jamais une position ni une raison (P-27 : « déjà joué » est dans la liste fermée).
+CREATE FUNCTION cloison_ont_repondu(p_texte text) RETURNS uuid[] LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path FROM CURRENT AS $$
+DECLARE ancien text := current_setting('elenchos.module', true); r uuid[];
+BEGIN
+  IF joueur_courant() IS NULL THEN RETURN '{}'; END IF;
+  PERFORM set_config('elenchos.module', 'cloison', true);
+  SELECT coalesce(array_agg(DISTINCT autre.id), '{}') INTO r
+    FROM membre moi JOIN membre autre ON autre.cercle_id = moi.cercle_id
+   WHERE moi.joueur_id = joueur_courant()
+     AND EXISTS (SELECT 1 FROM reponse rp WHERE rp.joueur_id = autre.joueur_id AND rp.texte_id = p_texte);
+  PERFORM set_config('elenchos.module', coalesce(ancien, ''), true);
+  RETURN r;
+END $$;
+
 -- ---------------------------------------------------------------------------------------------------------------
 -- Les refus gardés par la base. Chacun lève un code « EL… » avec un message fixe : aucune valeur n'entre dans le
 -- journal de la base (P-07). Les verrous consultatifs sérialisent deux entrées simultanées dans un même cercle.
@@ -221,6 +258,23 @@ CREATE TRIGGER carte_meme_cercle BEFORE INSERT OR UPDATE OF visage_membre_id ON 
   FOR EACH ROW EXECUTE FUNCTION meme_cercle();
 CREATE TRIGGER titre_meme_cercle BEFORE INSERT ON titre FOR EACH ROW EXECUTE FUNCTION meme_cercle();
 
+-- Règle 4 (J10) : un membre part (« Quitter », ou « Tout effacer », par la cascade) avant 18h. Une carte où son
+-- visage était posé, dans une manche dont le jour de jeu n'est pas fini, redevient vide, validée ou non : le
+-- « pourquoi » s'efface, et la carte porte la marque « vidée par un départ », qui ne compte pas contre Le Sans-Faute.
+-- Après 18h, la manche est jouée : la clé étrangère vide seulement le visage, qui devient « un ancien membre ». Sa
+-- propre carte part avec lui (clé étrangère de l'auteur).
+CREATE FUNCTION membre_avant_depart() RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path FROM CURRENT AS $$
+DECLARE ancien text := current_setting('elenchos.module', true);
+BEGIN
+  PERFORM set_config('elenchos.module', 'cloison', true);
+  UPDATE carte k SET visage_membre_id = NULL, pourquoi = NULL, passee = false, videe_par_depart = true
+    FROM manche m
+   WHERE k.visage_membre_id = OLD.id AND m.id = k.manche_id AND fin_du_jour_de_jeu(m.jour) > instant_du_jeu();
+  PERFORM set_config('elenchos.module', coalesce(ancien, ''), true);
+  RETURN OLD;
+END $$;
+CREATE TRIGGER membre_avant_depart BEFORE DELETE ON membre FOR EACH ROW EXECUTE FUNCTION membre_avant_depart();
+
 -- L'invitant a lu l'annonce d'arrivée : le score du défi s'efface (CONTRAT.md, 2.7). Seulement sur ses propres liens
 -- de ce cercle. Une fonction plutôt qu'un droit d'écrire sur les liens des autres : le jeu ne peut rien y changer
 -- d'autre.
@@ -236,10 +290,11 @@ BEGIN
 END $$;
 
 -- Personne d'autre que les rôles prévus n'exécute ces fonctions (les droits sont donnés par jeu/src/base/roles.ts).
-REVOKE ALL ON FUNCTION module_courant(), joueur_courant(), jeton_courant(), cloison_mes_cercles(),
-  cloison_mes_membres(), cloison_mes_proches(), cloison_mes_invitations(), cloison_cercles_invitation(),
-  cloison_invitants_membres(), cloison_invitants_joueurs(), cloison_reponses_offertes(), cloison_peut_entrer(uuid),
-  membre_avant_entree(), joueur_avant_pseudo(), reponse_avant_ecriture(), meme_cercle(), oublier_scores(uuid) FROM PUBLIC;
+REVOKE ALL ON FUNCTION module_courant(), joueur_courant(), jeton_courant(), instant_du_jeu(), fin_du_jour_de_jeu(date),
+  cloison_mes_cercles(), cloison_mes_membres(), cloison_mes_proches(), cloison_mes_invitations(),
+  cloison_cercles_invitation(), cloison_invitants_membres(), cloison_invitants_joueurs(), cloison_reponses_offertes(),
+  cloison_peut_entrer(uuid), cloison_ont_repondu(text), membre_avant_entree(), joueur_avant_pseudo(),
+  reponse_avant_ecriture(), meme_cercle(), membre_avant_depart(), oublier_scores(uuid) FROM PUBLIC;
 
 -- ---------------------------------------------------------------------------------------------------------------
 -- Les règles, table par table. « (SELECT f()) » est calculé une fois par requête.
@@ -343,10 +398,15 @@ CREATE POLICY invitation_cloison ON invitation FOR SELECT USING (module_courant(
 CREATE POLICY invitation_cloison_score ON invitation FOR UPDATE USING (module_courant() = 'cloison') WITH CHECK (module_courant() = 'cloison');
 
 -- reponse : les siennes ; celles de ses proches (le serveur en tire cartes, avis du cercle… et n'envoie au téléphone
--- que ce que les règles montrent, P-26, P-27) ; les réponses d'entrée de son invitant, par un lien lié à lui.
+-- que ce que les règles montrent, P-26, P-27), mais au texte du jour seulement après sa fermeture, à 18h : avant, la
+-- base ne les rend pas, même à une requête sans filtre (« déjà joué » passe par cloison_ont_repondu) ; leurs réponses
+-- d'entrée, toujours ; les réponses d'entrée de son invitant, par un lien lié à lui.
 CREATE POLICY reponse_jeu_lecture ON reponse FOR SELECT USING (module_courant() = 'jeu' AND (
-  joueur_id = joueur_courant() OR ARRAY[joueur_id] <@ (SELECT cloison_mes_proches())
+  joueur_id = joueur_courant()
+  OR (ARRAY[joueur_id] <@ (SELECT cloison_mes_proches()) AND (moment = 'entree' OR EXISTS (
+    SELECT 1 FROM calendrier c WHERE c.texte_id = reponse.texte_id AND fin_du_jour_de_jeu(c.jour) <= instant_du_jeu())))
   OR ARRAY[joueur_id::text || ':' || texte_id] <@ (SELECT cloison_reponses_offertes())));
+CREATE POLICY reponse_cloison ON reponse FOR SELECT USING (module_courant() = 'cloison');
 CREATE POLICY reponse_jeu_creation ON reponse FOR INSERT WITH CHECK (module_courant() = 'jeu' AND joueur_id = joueur_courant());
 
 -- Les tables d'un cercle : celles de ses cercles seulement.
@@ -365,6 +425,11 @@ BEGIN
     END IF;
   END LOOP;
 END $$;
+
+-- Le départ d'un membre vide les cartes où il était désigné, dans tous les cercles où il était (membre_avant_depart).
+CREATE POLICY manche_cloison ON manche FOR SELECT USING (module_courant() = 'cloison');
+CREATE POLICY carte_cloison ON carte FOR SELECT USING (module_courant() = 'cloison');
+CREATE POLICY carte_cloison_depart ON carte FOR UPDATE USING (module_courant() = 'cloison') WITH CHECK (module_courant() = 'cloison');
 
 -- temperament : ceux de ses cercles (L'Original, Le Pont) et ceux de ses proches (Le Mesuré, Le Tranché).
 CREATE POLICY temperament_jeu ON temperament FOR ALL USING (module_courant() = 'jeu' AND (

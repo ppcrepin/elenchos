@@ -41,7 +41,7 @@ const SECRETS: [string, RegExp][] = [
   ['adresse de base avec mot de passe', /postgres(ql)?:\/\/[^\s:@/'"`]+:[^\s@/'"`]{8,}@/],
   ['secret Google', /GOCSPX-[A-Za-z0-9_-]{10,}/],
   ['variable secrète remplie',
-    /^(SECRET_SESSION|CLE_REPONSES|APPLE_CLE_PRIVEE|GOOGLE_SECRET_CLIENT|CODES_ESSAI|CODE_ACCES_PORTEUR|VAPID_CLE_PRIVEE)=\S{8,}/m],
+    /^(SECRET_SESSION|CLE_REPONSES|CLE_IDENTITES|APPLE_CLE_PRIVEE|GOOGLE_SECRET_CLIENT|CODES_ESSAI|CODE_ACCES_PORTEUR|VAPID_CLE_PRIVEE)=\S{8,}/m],
 ];
 // La liste est codée, pour qu'aucun nom de modèle n'apparaisse en clair dans le dépôt (règle du porteur).
 const NOMS_MODELES = new RegExp(Buffer.from('XGIoQ2xhdWRlfE9wdXN8U29ubmV0fEhhaWt1fEZhYmxlfEdQVC0/XGR8Q2hhdEdQVHxHZW1pbml8TWlzdHJhbHxMbGFtYSlcYg==', 'base64').toString('utf8'));
