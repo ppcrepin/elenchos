@@ -1,14 +1,20 @@
-# Les choix techniques de la phase 0 (version de test)
+# Les choix techniques (le jeu entier, application iPhone)
 
-*Phase 0 de la construction (D-060). Back-end et Front-end, ensemble, 15 octobre 2026. Ce document arrête les choix techniques que D-048 laisse à l'équipe, pour la seule version de test (D-056). Il ne décide rien de ce qui revient au porteur. La question de la phase 0, où garder les trois réponses d'entrée d'un invité avant son compte, est tranchée par l'équipe (partie 3). Relu par Cohérence et le Vérificateur ; leurs corrections et les arbitrages de l'orchestrateur sont appliqués (15 octobre 2026). Le contrat est dans `jeu/CONTRAT.md`, ses types dans `jeu/src/contrat.ts`, le format des textes dans `jeu/textes/FORMAT.md`.*
+*Étape 1, travail A (D-064). Back-end et Front-end, ensemble, 16 octobre 2026. Ce document arrête les choix techniques que D-048 et D-062 (point 5) laissent à l'équipe, pour le jeu entier dans une application iPhone testée par TestFlight. Il remplace la version de la phase 0 (D-060, 15 octobre 2026). Il garde ce qui tient, et dit ce qui change, à partir du plan de D-064 (`docs/etape-6/plan-jeu-entier.md`, et le détail de `plan-jeu-entier-equipe.md`, partie 2). Il ne décide rien de ce qui revient au porteur, et n'engage aucune dépense (D-063). Le contrat est dans `jeu/CONTRAT.md`, ses types dans `jeu/src/contrat.ts`, le format des textes dans `jeu/textes/FORMAT.md`. À relire par Cohérence puis par le Vérificateur.*
 
 ## En bref
 
-- **Rien de neuf à installer** : Node 22, TypeScript lu tel quel, PostgreSQL, deux bibliothèques (`pg`, `oauth4webapi`). C'est la pile du test de 18h, déjà relue et testée (82 tests).
-- **Sans cadriciel, une seule page.** L'interface est faite de modules JavaScript que Safari lit tels quels, typés par des commentaires. Il n'y a rien à fabriquer, donc rien qui puisse casser chez Scalingo, et un humain peut tout relire sans outil (D-043).
-- **Le cloisonnement des cercles est tenu par la base elle-même**, avec des rôles séparés. Si Scalingo ne permet pas de créer des rôles, un repli existe ; il protège moins, et nous disons de combien (partie 1.6).
-- **On reprend beaucoup.** Du test de 18h : l'horloge, la connexion, l'envoi du message, la sécurité des pages. Du second essai : les styles, les polices, une partie des écrans, une partie du moteur de règles (partie 2).
-- **Les réponses d'entrée de l'invité : tranché par l'équipe, un joueur provisoire en base dès l'accord, effacé à 7 jours** (option B), avec deux conditions prises à Juridique : un lien « Effacer mes réponses » sur l'écran du compte, et la phrase des 7 jours dans « Qui, durée, droits ». Juridique préférait garder les réponses dans le téléphone ; l'équipe retient le joueur provisoire, pour la solidité, avec un lien d'effacement avant le compte (partie 3).
+- **La pile du serveur ne change pas** : Node 22, TypeScript lu tel quel, PostgreSQL, deux bibliothèques (`pg`, `oauth4webapi`). Le message de 18h part vers Apple avec les seuls modules de Node.
+- **L'interface non plus** : des modules JavaScript sans cadriciel, typés par des commentaires. Ils sont maintenant **embarqués dans une application Capacitor**, au lieu d'être servis par le serveur. Quelques petits morceaux en Swift font ce que le web ne peut pas faire : le trousseau, la connexion Apple, la feuille de Google, le message de 18h, la réception du message.
+- **Ce qui change** :
+  - les sessions sont des jetons rangés dans le trousseau (1.8) ;
+  - le message de 18h passe par Apple directement (1.13) ;
+  - la connexion Apple est native, celle de Google passe par la feuille du système (1.14) ;
+  - la version minimale remplace le rechargement de l'icône (1.10) ;
+  - l'application se fabrique sur les machines macOS de GitHub, sans Mac (1.15).
+- **Le moteur du second essai sert maintenant presque en entier** : portrait, Pas de Côté, tempéraments, phrase de la semaine, cartes les plus inattendues, titres (2.2).
+- **Les trois réponses d'entrée de l'invité** : l'option B (un joueur provisoire en base) tient, avec un jeton au lieu d'un cookie (partie 3).
+- **Le cloisonnement des cercles reste tenu par la base elle-même**, avec des rôles séparés, et le même repli si l'hébergeur ne permet pas de créer des rôles (1.6).
 
 ## 1. Les choix arrêtés
 
@@ -16,50 +22,73 @@
 
 | Élément | Choix | Pourquoi |
 |---|---|---|
-| Serveur | Node 22 (22.22.0, comme le test de 18h), un seul processus, le module `node:http`, sans cadre web | Déjà en place et testé ; rien à apprendre pour un humain qui reprendrait le code |
+| Serveur | Node 22 (22.22.0), un seul processus, le module `node:http`, sans cadre web | Déjà en place et testé ; rien à apprendre pour un humain qui reprendrait le code (D-043) |
 | Langage du serveur | TypeScript exécuté tel quel par Node, qui efface les types (`erasableSyntaxOnly`) : ni fabrication, ni fichier produit | Ce qui est lu est ce qui tourne |
 | Base | PostgreSQL de Scalingo (D-048), via `pg` | Choix déjà fait ; les règles de cloisonnement par ligne existent dans PostgreSQL |
-| Connexion Apple et Google | `oauth4webapi`, flux repris de `test-18h/src/connexion.ts` | Bibliothèque certifiée OpenID, sans dépendance ; déjà relue |
-| E-mails du code | L'envoi d'e-mails de Scaleway, par son interface web, coupé tant qu'il n'y a pas de domaine (D-060, point 2) | Prestataire français (D-043), 0 € pour le test |
+| Connexion Google | `oauth4webapi`, flux repris de `test-18h/src/connexion.ts`, retour par formulaire | Bibliothèque certifiée OpenID, sans dépendance ; déjà relue |
+| Connexion Apple | Vérification du jeton signé par Apple avec `oauth4webapi` et `node:crypto` | Natif dans l'application : ni identifiant de service web, ni domaine |
+| Message de 18h | `node:http2` et `node:crypto` vers le service d'Apple (APNs), sans bibliothèque | Environ 150 lignes, à la place des trois modules du message web |
+| E-mails du code | L'envoi d'e-mails de Scaleway, coupé tant qu'il n'y a pas de domaine (D-060, point 2) | Prestataire français (D-043), 0 € pour le test |
 | Interface | Modules JavaScript, `// @ts-check`, types en JSDoc vérifiés par `tsc` | Partie 1.2 |
-| Outils de développement | `typescript`, `@types/node`, `@types/pg`, `playwright-core` | Ceux du test de 18h |
+| Emballage | Capacitor, outil libre, et deux de ses modules officiels : les notifications et le cycle de vie de l'application (liens reçus, retour au premier plan) | Partie 1.3 ; le plan, 2.1 |
+| Morceaux natifs | Un petit module Swift à nous, et une extension Swift de réception du message | Ce que le web ne fait pas ; pas de module tiers de plus |
+| Outils de développement | `typescript`, `@types/node`, `@types/pg`, `playwright-core`, la ligne de commande de Capacitor | Ceux du test de 18h, plus Capacitor |
 
-`jeu/` aura son propre `package.json`, de type module, et son `Procfile` ; Scalingo installera ce dossier (réglage `PROJECT_DIR=jeu`, comme `test-18h`). Les fichiers repris de `test-18h/` sont **copiés** dans `jeu/`, avec en tête leur origine. `test-18h/` reste intact, comme source de briques (D-060, point 3), et pourra être retiré sans rien casser.
+`jeu/` a son propre `package.json`, de type module, et son `Procfile` ; Scalingo installe ce dossier (`PROJECT_DIR=jeu`). Les versions sont épinglées exactement, comme aujourd'hui. Capacitor et ses deux modules s'y ajoutent au début de l'étape 1, à la dernière version stable, épinglée. Les fichiers repris de `test-18h/` sont copiés dans `jeu/`, avec en tête leur origine ; `test-18h/` reste intact (D-060, point 3).
 
 ### 1.2 L'interface sans cadriciel
 
-Les quatre options de Front-end (`plan-version-test-frontend.md`, 1.2) :
+Le choix de la phase 0 tient : **des modules que WebKit lit tels quels**, sans étape de fabrication, typés par JSDoc et vérifiés par `tsc`. Capacitor copie ces fichiers tels quels dans l'application, ce qui garde l'avantage principal : ce qui est relu est ce qui tourne.
 
 | Option | En une ligne |
 |---|---|
-| **A. Sans cadriciel ni fabrication (retenue)** | Des modules que Safari 16.4 lit tels quels, typés par JSDoc et vérifiés par `tsc`. Le code de l'essai se reprend, sans dépendance de plus, sans étape de fabrication chez Scalingo. |
-| B. Preact et htm, copiés dans le dépôt | Des composants plus déclaratifs, mais une dépendance à suivre, pour un gain faible sur une soixantaine d'écrans simples. |
-| C. Svelte ou React, avec Vite | Plus d'outils, plus de dépendances, une fabrication chez Scalingo. Rien ne le justifie pour un test. |
-| D. Pages faites par le serveur | Très robuste, mais chaque geste recharge la page dans l'icône. La révélation, une chose à la fois, devient laborieuse. |
+| **A. Sans cadriciel ni fabrication (retenue)** | Le code de l'essai se reprend, sans dépendance de plus. |
+| B. Preact et htm, copiés dans le dépôt | Plus déclaratif, mais une dépendance à suivre, pour un gain faible sur une soixantaine d'écrans simples. |
+| C. Svelte ou React, avec Vite | Plus d'outils, une fabrication de plus. Rien ne le justifie. |
+| D. Une application réécrite en Swift | Tous les écrans à refaire, par des agents sans Mac ni simulateur pour voir ce qu'ils écrivent (plan, 2.1). |
 
 Le principe de l'essai est gardé : à chaque changement, l'écran entier est redessiné à partir de l'état, avec `createElement` et `textContent`, jamais `innerHTML`.
 
-### 1.3 Une seule page
+### 1.3 La coquille embarquée, et les pages web du serveur
 
-- `GET /` sert la page ; tout le reste passe par les échanges du contrat.
-- L'adresse ne change que pour porter un jeton après le « # » (lien, code de passage). La page le lit, puis l'efface de la barre d'adresse.
-- L'interface tient en quelques modules (noms proposés) :
-  - `client.js` : les échanges, l'enveloppe, la version, les erreurs ;
-  - `ecran.js` : une fonction pure qui, de `Etat`, du contexte de l'appareil et du « # », tire l'écran à montrer (`CONTRAT.md`, 2.1). Elle se teste sans navigateur ;
-  - `textes.js` : tous les mots fixes, avec la marque `A_ECRIRE` ;
-  - les écrans, par lot (`plan-version-test-frontend.md`, 1.3) ;
-  - `sw.js` : la réception du message, et la mise en cache des seuls fichiers de l'interface ;
-  - le manifeste, sans adresse de départ (pour le code de passage, `CONTRAT.md`, partie 4).
+**Décision de l'équipe (plan, 2.1) : l'interface est embarquée dans l'application, et non chargée depuis le serveur.**
+- Pourquoi : Apple refuse les applications qui ne sont qu'un site emballé (règle 4.2, qui comptera pour la deuxième version), et la coquille s'ouvre même sans réseau.
+- Le prix : chaque correction d'écran demande une nouvelle fabrication. Elle est automatique et prend environ une heure, envoi compris.
 
-### 1.4 Le serveur calcule, l'interface montre
+**L'application** (noms proposés) :
+- `client.js` : les échanges, l'enveloppe, les trois en-têtes, la version minimale, les erreurs ;
+- `ecran.js` : une fonction pure qui, de `Etat`, de l'adresse reçue et de l'appareil, tire l'écran à montrer (`CONTRAT.md`, 2.1). Elle se teste sans navigateur ;
+- `natif.js` : la seule porte vers les morceaux Swift (trousseau, feuilles de connexion, message, appareil, numéro de fabrication). Dans Chromium, pendant les tests, un faux module la remplace ;
+- `textes.js` : tous les mots fixes, avec la marque `A_ECRIRE` ;
+- les écrans, par lot ;
+- `index.html`, avec sa règle stricte de chargement : seule l'adresse du serveur est permise pour les échanges.
 
-C'est la règle 1.1 du contrat. Deux conséquences techniques :
-- **Le moteur de règles est une bibliothèque pure côté serveur** : pas de base, pas d'horloge, pas de hasard caché. Le tirage passe par une fonction `t(clé)` qui donne le même résultat quel que soit qui la déclenche, avec un secret du serveur pour graine. Ainsi, les numéros des cartes ne se calculent pas d'avance (P-26). Le moteur se teste seul, sur les journées chiffrées de `regles.md`.
-- **Les phrases qui dépendent des données** (phrase du jour, lignes du vote, auteurs, avis du cercle, message de 18h, annonce d'arrivée, dates écrites) sont faites dans un seul module du serveur, avec la typographie de l'essai (`typographier`). Les mots fixes restent dans `textes.js`.
+**Les morceaux Swift**, un seul module à nous, environ 300 lignes en tout :
+- le trousseau : lire, écrire, effacer le jeton de session, accessible seulement quand l'iPhone a été déverrouillé une fois depuis son démarrage ;
+- la feuille d'Apple : demander un jeton signé avec un nonce, sans nom ni adresse ; à « Tout effacer », demander un code d'autorisation ;
+- la feuille du système (ASWebAuthenticationSession) : ouvrir une adresse, rendre l'adresse de retour `elenchos://…` ;
+- l'appareil : iPhone, ou iPad et Mac ; le numéro de fabrication.
+
+Le message de 18h passe par le module officiel de Capacitor (accord d'iOS, jeton d'appareil, toucher sur un message). Les liens universels et le retour au premier plan passent par le module officiel du cycle de vie.
+
+**L'extension de réception** (Notification Service Extension, environ 40 lignes de Swift) : à chaque message, elle envoie `POST /api/recu { envoi }`, sans session, puis laisse le message s'afficher tel quel. C'est la mesure « message reçu » (plan, 2.2). Coût estimé : un jour.
+
+**Les pages web, servies par le serveur** (`CONTRAT.md`, 2.14) : la page publique, la page de confidentialité, la page d'invitation, le fichier d'association avec l'application, le retour de Google. Ce sont des pages fixes, en HTML écrit à la main, avec un seul petit script pour la page d'invitation (reconnaître l'appareil, compter). Pas de cookie, rien chargé d'ailleurs.
+
+### 1.4 Le serveur calcule, l'application montre
+
+C'est la règle 1.1 du contrat. Trois conséquences techniques :
+- **Le moteur de règles est une bibliothèque pure côté serveur** (`src/regles/`) : pas de base, pas d'horloge, pas de hasard caché. Le tirage passe par une fonction `t(clé)` qui donne le même résultat quel que soit qui la déclenche, avec un secret du serveur pour graine. Les numéros des cartes ne se calculent donc pas d'avance (P-26). Le moteur se teste seul, sur les dix journées chiffrées de `regles.md`, qui deviennent des tests.
+- **Le moteur porte tout le jeu** : cartes (R3, R4), verdicts et jumeaux, points, avis du cercle, titres, surprise de la semaine, curseurs, Pas de Côté, Sans-Faute, tempéraments, phrases du jour et de la semaine, barre, R8, pause et sommeil, départs (règle 4), texte corrigé (règle 20).
+- **Deux portraits par joueur, d'une même fonction** : le portrait entier (Moi, la phrase de la semaine, Le Pas de Côté), et le portrait vu par le cercle, calculé sur les seules réponses révélées (règle 19, P-27 a). Ce second calcul sert aussi au choix des cartes (R3) et aux tempéraments vus par le cercle (`CONTRAT.md`, partie 8). Un test vérifie, réponses inversées, que le second ne dépend d'aucune réponse pas encore révélée.
+
+Les phrases qui dépendent des données sont faites dans un seul module du serveur, avec la typographie de l'essai (`typographier`). Les mots fixes restent dans `textes.js`.
 
 ### 1.5 La base
 
-Une douzaine de tables (`plan-version-test-backend.md`, partie 2), plus une table des sessions (1.8). Trois règles, reprises du test de 18h pour tenir P-07 (Scalingo garde un an les journaux de la base) :
+Une quinzaine de tables, dont : joueurs, empreintes d'identité, accords, sessions, abonnements, cercles (avec la marque « démonstration »), appartenances (ordre d'entrée, rond, date d'arrivée, date de départ), liens, réponses (chiffrées), manches, cartes et brouillons, révélations préparées et étape vue, titres et badges par semaine, tempéraments, textes importés, connexions en cours, codes de retour, totaux des mesures.
+
+Trois règles, reprises du test de 18h pour tenir P-07 (Scalingo garde un an les journaux de la base) :
 - toutes les écritures passent par `ON CONFLICT` : une contrainte qui échoue recopierait la ligne fautive dans le journal de la base ;
 - les valeurs sont vérifiées par le programme avant d'arriver à la base ;
 - le test du journal de PostgreSQL est étendu au jeu.
@@ -68,159 +97,214 @@ Les migrations sont des fichiers SQL numérotés, joués au démarrage sous le r
 
 ### 1.6 Les rôles de base, et le repli
 
-**Le principe (P-25).** Chaque demande du téléphone ouvre une transaction et y déclare d'abord qui la fait : `SET LOCAL elenchos.joueur = '…'`. Chaque table du jeu porte une règle de cloisonnement par ligne (la « sécurité au niveau des lignes » de PostgreSQL) qui ne montre une ligne qu'aux membres de son cercle. **Si la déclaration est oubliée, la règle ne voit personne et la base ne rend rien.** Le joueur provisoire du défi est déclaré de la même façon ; une règle à part lui laisse lire les seules réponses d'entrée de son invitant, et seulement par l'invitation liée à lui (P-29).
+**Le principe (P-25).** Chaque demande ouvre une transaction et y déclare d'abord qui la fait : `SET LOCAL elenchos.joueur = '…'`. Chaque table du jeu porte une règle de cloisonnement par ligne, qui ne montre une ligne qu'aux membres de son cercle. **Si la déclaration est oubliée, la règle ne voit personne et la base ne rend rien.**
+- Avec plusieurs cercles, la règle lit les appartenances : un joueur voit les lignes de chacun de ses cercles, jamais celles d'un cercle où il n'est pas. R8 est le seul calcul qui regarde deux cercles à la fois, ceux du joueur qui devine (P-28).
+- Le joueur provisoire du défi est déclaré de la même façon. Une règle à part lui laisse lire les seules réponses d'entrée de son invitant, et seulement par l'invitation liée à lui (P-29).
 
-**Les rôles** (comptes de connexion à la base, chacun avec ses droits) :
+**Les rôles** :
 
 | Rôle | Ce qu'il peut | Exigence tenue par la base |
 |---|---|---|
 | `proprietaire` | créer les tables ; joué seulement par les migrations | — |
-| `jeu` | lire et écrire les tables du jeu, soumis aux règles de cloisonnement ; écrire, sans les lire, dans les tables de totaux, où il dépose la justesse et la part des Mystère déjà totalisées ; aucun droit sur les identités | P-25, P-01, P-22 |
+| `jeu` | lire et écrire les tables du jeu, soumis aux règles de cloisonnement ; écrire, sans les lire, dans les tables de totaux ; aucun droit sur les identités | P-25, P-01, P-22 |
 | `comptes` | lire et écrire les seules empreintes d'identité | P-01 |
-| `envoi` | lire les abonnements, écrire les envois | P-22 |
-| `menage` | effacer ce qui est échu (joueurs provisoires à 7 jours, scores d'entrée, codes, codes de passage, sessions) | P-31 |
+| `envoi` | lire les abonnements actifs, écrire les envois | P-22 |
+| `menage` | effacer ce qui est échu : joueurs provisoires à 7 jours, scores d'entrée, codes e-mail, connexions en cours, codes de retour, sessions | P-31 |
 | `mesures` | lire des vues de totaux, jamais une réponse | P-22, P-23 |
 
-**À vérifier : Scalingo permet-il de créer des rôles ?** De mémoire, oui (Back-end), mais ce n'est pas vérifié. Le compte Scalingo ne s'ouvre qu'en phase 6 (D-060, point 1). En phase 1, on le cherche dans la documentation de Scalingo ; le code est écrit pour fonctionner dans les deux cas, avec un seul réglage.
+**À vérifier au début de l'étape 1 : Scalingo permet-il de créer des rôles ?** De mémoire, oui, mais ce n'est pas vérifié. Le code est écrit pour fonctionner dans les deux cas, avec un seul réglage.
 
-**Le repli, si les rôles sont impossibles.** Tous les modules se connectent sous le rôle propriétaire, et chaque table reçoit `FORCE ROW LEVEL SECURITY` : les règles de cloisonnement s'appliquent aussi au propriétaire. Ce qui tient encore : le cloisonnement des cercles (P-25) ; une demande sans déclaration ne rend toujours rien. **Ce qui est perdu, dit franchement** : la séparation des identités (P-01) et des totaux (P-22, P-23) n'est plus tenue par la base, seulement par le code. Un test vérifie alors que seul le module des comptes touche à la table des identités ; mais un défaut du module du jeu pourrait la lire. Et le propriétaire peut lever les règles d'une commande : la protection vaut contre l'oubli, pas contre un code fautif.
+**Le repli, si les rôles sont impossibles.** Tous les modules se connectent sous le rôle propriétaire, et chaque table reçoit `FORCE ROW LEVEL SECURITY` : les règles de cloisonnement s'appliquent aussi au propriétaire. Ce qui tient encore : le cloisonnement des cercles (P-25). **Ce qui est perdu, dit franchement** : la séparation des identités (P-01) et des totaux (P-22, P-23) n'est plus tenue que par le code ; et le propriétaire peut lever les règles d'une commande. Il faudrait alors le signaler au porteur.
 
-### 1.7 Secrets, empreintes, chiffrement
+### 1.7 Secrets, clés, empreintes, chiffrement
 
-- **Un secret de session** (`SECRET_SESSION`, 32 octets, saisi par le porteur chez Scalingo, jamais dans le dépôt) ; on en tire des clés distinctes : cookies, empreintes, tirage. C'est le module `crypto.ts` du test de 18h.
-- **Des empreintes avec clé (HMAC)**, jamais la valeur : identifiant Apple ou Google, adresse e-mail, jetons de lien, codes à six chiffres, codes de passage.
-- **L'adresse e-mail n'est jamais gardée**, ni en clair ni chiffrée ; seule son empreinte reste (`plan-version-test.md`, partie 1 ; plus strict que P-01 et P-02).
-- **Les réponses sont chiffrées** par le programme avant la base (P-02), avec une clé réglée chez Scalingo, dont le porteur garde une copie hors ligne. Gardé, et retirable sur sa demande (D-060, signalé).
+- **Un secret de session** (`SECRET_SESSION`, 32 octets, saisi par le porteur chez Scalingo, jamais dans le dépôt). On en tire des clés distinctes : empreintes des jetons, empreintes d'identité, tirage. C'est le module `crypto.ts` du test de 18h.
+- **Des empreintes avec clé (HMAC)**, jamais la valeur : identifiant Apple ou Google, adresse e-mail, jetons de session, jetons de lien, codes à six chiffres, codes de retour de Google, vérificateurs de connexion.
+- **L'adresse e-mail n'est jamais gardée**, ni en clair ni chiffrée ; seule son empreinte reste.
+- **Les réponses sont chiffrées** par le programme avant la base (P-02), avec une clé réglée chez Scalingo, dont le porteur garde une copie hors ligne.
+- **Les clés d'Apple**, créées par le porteur dans son compte Apple, réglées chez Scalingo ou dans les secrets de GitHub, jamais dans le dépôt, avec une copie hors ligne chez lui :
+  - la clé des messages (`.p8`) ;
+  - la clé « Se connecter avec Apple », pour révoquer à l'effacement (la même clé peut servir aux deux, de mémoire, à vérifier) ;
+  - la clé d'accès à App Store Connect, pour la fabrication (1.15), dans les secrets de GitHub seulement.
 
 ### 1.8 Les sessions
 
-Une session est un numéro tiré au hasard, dans un cookie `__Host-session`. La base n'en garde que l'empreinte, avec le joueur et une échéance. Une table plutôt qu'un cookie seulement scellé, parce que P-41 demande que la session s'arrête à la déconnexion : sans table, un cookie copié resterait valable jusqu'à son terme. Chaque appareil a la sienne : se déconnecter dans Safari ne déconnecte pas l'icône. Durée proposée, alignée sur Juridique : l'échéance est prolongée à chaque ouverture, **jamais au-delà de la fin du test**. « Tout effacer » les supprime toutes (P-38). C'est une ligne à ajouter à la carte des données (`donnees.md`, partie 4), qui citait déjà « les sessions » parmi ce que « Tout effacer » efface ; à signaler au porteur. Ce que deviennent les comptes à la fin du test attend sa réponse (durées de garde, QCM en cours).
+- **Une session est un jeton** de 32 octets tirés au hasard. L'application le range dans le trousseau et l'envoie dans l'en-tête `Authorization: Bearer …`. La base n'en garde que l'empreinte, avec le joueur, l'appareil (un numéro sans lien avec l'iPhone) et une échéance.
+- **Pourquoi plus de cookie** : dans l'application, la page (`capacitor://localhost`) et le serveur n'ont pas la même adresse, et iOS y bloque les cookies d'un autre site (de mémoire, plan 2.3). Un jeton dans un en-tête marche partout, et supprime d'un coup le risque qu'une page d'un autre site agisse au nom du joueur.
+- **Une table plutôt qu'un jeton seulement scellé**, parce que P-41 demande que la session s'arrête à la déconnexion : sans table, un jeton copié resterait valable jusqu'à son terme.
+- **Chaque appareil a la sienne**, et l'abonnement au message est lié à elle. L'échéance est prolongée à chaque ouverture, **jamais au-delà de la fin du test** (D-061, point 2). « Tout effacer » les supprime toutes (P-38).
+- **Le joueur provisoire** a son propre jeton, rendu par l'accord, 7 jours au plus. À la connexion, le jeton du compte le remplace dans le trousseau.
+- **CORS**, puisque la page et le serveur n'ont pas la même adresse. Le serveur répond aux demandes préalables du navigateur intégré pour la seule origine `capacitor://localhost`, les méthodes `GET` et `POST`, et les en-têtes `Authorization`, `Content-Type` et `Elenchos-Fabrication`. Pas d'identifiants de navigateur : il n'y a pas de cookie.
 
 ### 1.9 L'horloge, et le développement local
 
 - **Une seule horloge** pour tout le serveur (`horloge.ts`, repris tel quel) : heure de Paris, changements d'heure compris, réglable par les tests.
-- **L'horloge accélérée et la connexion d'essai par code n'existent qu'en local** (`CONTRAT.md`, partie 5). Le serveur refuse de démarrer si leurs réglages sont présents chez Scalingo ou sur GitHub, avec les marqueurs de `garde-horaires.ts`.
-- **La garde des horaires de mise en ligne** (D-043, D-054) est reprise telle quelle : aucune installation de 15h à 19h ni le dimanche.
+- **L'horloge accélérée et la connexion d'essai par code n'existent qu'en local** (`CONTRAT.md`, partie 5). Le serveur refuse de démarrer si leurs réglages sont présents chez Scalingo ou sur GitHub.
+- **La garde des horaires de mise en ligne** (D-043, D-054) est reprise telle quelle, et étendue à la fabrication de l'application (1.15).
+- **En local**, l'interface tourne dans Chromium, servie par un petit serveur de fichiers de développement, avec le faux module natif. C'est ainsi que se font les tests de bout en bout et les captures.
 
-### 1.10 La version et le cache
+### 1.10 La version minimale
 
-Le serveur annonce sa version (`SOURCE_VERSION`, posée par Scalingo ; « local » sur nos machines) dans chaque réponse. Le service de réception garde les fichiers de l'interface sous cette version. Si la version reçue diffère, l'interface se recharge. Sans cela, une icône peut garder l'ancien code des jours après une mise en ligne.
+- L'application envoie son **numéro de fabrication** dans l'en-tête `Elenchos-Fabrication`. Le serveur annonce `fabricationMinimale` dans chaque enveloppe, et répond `mise_a_jour_requise` en dessous (`CONTRAT.md`, 1.7).
+- Le numéro minimal est un réglage du serveur. Il ne monte que quand le contrat change d'une façon que l'ancienne fabrication ne comprend pas. Ajouter un champ que l'ancienne fabrication ignore ne le fait pas monter.
+- Le numéro de version reste « 1.0 » pendant tout le test : Apple ne relit en entier que la première fabrication d'une version (plan, 2.1, vérifié). Le numéro de fabrication est celui de l'exécution sur GitHub, qui ne fait que monter.
+- **Les fabrications expirent au bout de 90 jours** dans TestFlight : une nouvelle fabrication part donc au moins tous les deux mois, même sans correction.
 
 ### 1.11 Les tests et le contrôle
 
 - **`node --test`**, en quatre groupes, comme le test de 18h : sans base (aussi joués chez Scalingo à l'installation), avec base, navigateur (un vrai Chromium), journal de PostgreSQL.
 - **Les quatre outils de `donnees.md`** (partie 2) : le traceur, les réponses inversées, l'horloge simulée, le relevé du réseau.
-- **Une passe WebKit** sur une machine macOS de GitHub, reprise de l'essai 2 : ce n'est pas Safari sur iPhone, mais le même moteur.
-- **`npm run controle`** : les types du serveur, les types de l'interface (JSDoc), la recherche de secrets, l'absence de `A_ECRIRE`, les contrôles du fichier des textes (`FORMAT.md`, partie 7), la garde des horaires. Il tourne avant toute mise en ligne ; Scalingo attend son feu vert sur GitHub.
+- **Les dix journées de `regles.md`** : le moteur doit retrouver exactement leurs résultats.
+- **Le moteur de l'essai 2 sert de référence** : on compare les deux moteurs sur des milliers de manches tirées au hasard, pour les fonctions communes (2.2).
+- **Une passe WebKit** sur une machine macOS de GitHub, reprise de l'essai 2.
+- **L'application dans le simulateur d'iPhone** des machines de GitHub : elle s'ouvre, montre ses premiers écrans contre un serveur de test, et fait des captures. Le message, les vraies connexions, le trousseau et les liens universels ne se prouvent que sur l'iPhone du porteur.
+- **`npm run controle`** : les types du serveur, les types de l'interface, la recherche de secrets, l'absence de `A_ECRIRE`, les contrôles du fichier des textes (`FORMAT.md`, partie 7), la garde des horaires, l'adresse du serveur fixée dans l'application. Il tourne avant toute mise en ligne et avant toute fabrication.
 
 ### 1.12 L'arborescence
 
 ```
 jeu/
-  CONTRAT.md, DECISIONS-TECHNIQUES.md     phase 0
-  package.json, Procfile, tsconfig*.json  phase 1
-  src/                                    serveur (TypeScript) ; contrat.ts dès la phase 0
+  CONTRAT.md, DECISIONS-TECHNIQUES.md     ce travail
+  package.json, Procfile, tsconfig.json   étape 1
+  capacitor.config.json                   la coquille (dossier de l'interface : public/)
+  ios/                                    le projet iOS que Capacitor fabrique, avec nos morceaux Swift et l'extension
+  src/                                    serveur (TypeScript) ; contrat.ts ; regles/, le moteur ; serveur/ ; base/
   migrations/                             SQL numérotés
-  public/                                 interface (JavaScript, JSDoc), polices, icônes, sw.js
+  public/                                 l'interface embarquée (JavaScript, JSDoc), polices, styles
+  pages/                                  les pages web du serveur (N1, confidentialité, invitation)
   textes/                                 FORMAT.md, exemple.json, puis le lot de Contenu
-  outils/                                 contrôle, garde des horaires, liens de créateur, proches simulés
+  outils/                                 contrôle, garde des horaires, liens de créateur et de relecture, cercle de
+                                          démonstration, proches simulés
   tests/                                  sans-base/, avec-base/, navigateur/, journal-base/
 ```
+
+### 1.13 Le message de 18h, par Apple
+
+- **Le serveur s'adresse directement au service d'Apple** (APNs), en HTTP/2, avec un jeton signé par la clé `.p8` du porteur (ES256). Le jeton se renouvelle environ toutes les 40 minutes : Apple refuse un jeton de plus d'une heure, et un renouvellement trop fréquent.
+- **Le service de production**, que les fabrications TestFlight utilisent (de mémoire, à vérifier dès l'étape 1). En local, aucun message ne part.
+- **Ce qu'on reprend de `test-18h/`** : le planificateur, adapté. Un envoi par jour vers chaque abonnement actif, un verrou « un envoi par jour et par abonnement », un rattrapage jusqu'à 18h30, et le texte choisi parmi les six de `MESSAGES_18H` (E1).
+- **Le contenu** est `MessageApns` (`contrat.ts`) : un titre, un texte, `mutable-content` pour que l'extension signale la réception, et le numéro d'envoi tiré au hasard. **Apple peut le lire** : il ne contient rien de personnel, sauf le pseudo de l'annonce d'arrivée (P-05 ; `CONTRAT.md`, 2.13).
+- **Un abonnement refusé par Apple** (application désinstallée, jeton périmé) est retiré.
+- **Couper le message** dans les Réglages (D-029) arrête l'envoi pour tous les appareils du joueur.
+
+### 1.14 La connexion
+
+- **Apple, en natif** : la feuille d'Apple rend un jeton signé. Le serveur vérifie la signature avec les clés publiques d'Apple, l'émetteur, l'application visée, l'échéance, le nonce qu'il a lui-même donné, et le vérificateur (`CONTRAT.md`, 2.5). On ne demande que l'identifiant (D-061).
+- **Google, par la feuille du système** : Google interdit sa connexion dans une page intégrée à une application. La feuille ouvre le parcours déjà écrit dans `connexion.ts`, avec un retour par formulaire (`response_mode=form_post`), un code de retour d'une minute après « # », et le vérificateur. Aucune bibliothèque de Google dans l'application. Chez Google, l'écran d'accord est publié « en production » avec la seule demande d'identifiant (de mémoire, plan 2.3).
+- **Le vérificateur** : l'application tire 32 octets, envoie leur empreinte au début, et les octets eux-mêmes à la fin. Un jeton d'Apple ou un code de retour volé ne sert donc à rien sans la mémoire de l'application qui a commencé.
+- **E-mail** : inchangé (Scaleway), allumé à l'étape 4 avec le domaine.
+- **La révocation chez Apple à « Tout effacer »** (arbitrage de l'équipe, plan de D-064 ; un jour de travail) :
+  - la feuille d'Apple, montrée à la confirmation, rend un code d'autorisation neuf ;
+  - le serveur efface d'abord tout, en une transaction ;
+  - puis il échange le code chez Apple, avec un secret signé par la clé « Se connecter avec Apple », demande la révocation du jeton obtenu, et ne garde rien.
+
+  Un échec chez Apple ne bloque jamais l'effacement : `revoque` vaut faux, et N14 dit comment le retirer soi-même.
+- **Google** : coupé de notre côté seulement, comme D-061 l'avait arrêté. Le révoquer chez Google demanderait de garder son jeton, ou de faire repasser le joueur par Google.
+- **Les règles d'Apple** : effacer son compte dans l'application (5.1.1 (v)), c'est « Tout effacer » ; Google étant proposé, une connexion qui protège la vie privée doit l'être aussi (4.8), c'est Apple.
+
+### 1.15 Fabriquer et distribuer l'application
+
+- **Sur les machines macOS de GitHub**, gratuites pour un dépôt public (vérifié, plan 2.5) : Capacitor recopie l'interface, Xcode fabrique et signe automatiquement avec la clé d'accès d'App Store Connect, puis envoie la fabrication à App Store Connect. Environ 15 à 20 minutes, puis le traitement d'Apple.
+- **Seulement depuis la branche `mise-en-ligne`**, après le feu vert écrit du porteur la veille (D-054).
+- **Jamais de 15h à 19h, ni le dimanche** (D-043, D-054) : une fabrication proposée aux testeurs à 17h55 présente le même risque qu'une mise en ligne du serveur.
+  - La fabrication refuse de démarrer après 14h et le dimanche (proposé : une heure de marge pour le traitement d'Apple).
+  - Elle n'est ajoutée au groupe des testeurs qu'avant 15h ; sinon, le lendemain matin.
+- **À vérifier au tout début de l'étape 1** : l'accès à la clé d'App Store Connect pour un compte individuel (plan, 2.5). Premier repli : une clé personnelle et un certificat créé depuis le site d'Apple. Dernier recours, présenté au porteur avec son montant avant toute dépense (D-063) : un Mac loué pour une journée.
+- **Les testeurs** : le porteur, testeur interne dès l'étape 1, sans relecture ; ses amis, testeurs externes, par le lien public, après la relecture d'Apple (plan de D-064).
+
+### 1.16 Le cercle de démonstration, pour le relecteur d'Apple
+
+- **Un outil du serveur**, geste du porteur, crée un cercle marqué « démonstration ». Il a quatre membres inventés, sans compte ni identité, et leurs réponses d'entrée inventées. L'outil fabrique aussi le lien de relecture : plusieurs usages, 30 jours (proposé).
+- **Un module du serveur** fait répondre ces membres chaque jour, avant 17h, par un tirage fixe sur les positions et les raisons du texte du jour. Il ne voit que les cercles marqués ; la marque ne se pose que par l'outil.
+- **Les mesures** excluent les cercles marqués.
+- **Après la relecture**, l'outil efface le compte du relecteur comme « Tout effacer ».
+- C'est une exception écrite à P-19 (aucun joueur simulé en ligne, proposé), bornée à ce cercle (`CONTRAT.md`, partie 8).
 
 ## 2. Ce qui est repris
 
 ### 2.1 Du test de 18h (`test-18h/`)
 
-Tableau de Back-end (`plan-version-test-backend.md`, partie 1), complété par Front-end :
+D'après le plan (2.2), complété :
 
 | Sort | Fichiers | Ce qui change |
 |---|---|---|
-| Tel quel | `horloge.ts`, `garde-horaires.ts` et son outil, `crypto.ts`, `push/chiffrement.ts`, `push/envoyeur.ts`, `push/services.ts`, le chiffrement de `base.ts`, le contrôle du code, la vérification GitHub, le `Procfile`, leurs tests sans base et le test du journal de PostgreSQL | rien |
-| Adapté | `journal.ts` | listes fermées des routes et des événements du jeu (celles du contrat) |
-| | `planificateur.ts` | un envoi par jour vers tous les abonnements ; verrou « un envoi par jour et par abonnement » ; les six textes de `MESSAGES_18H` ; l'annonce d'arrivée |
-| | `connexion.ts` | créer le compte, le retrouver, refuser un compte Google d'organisation (P-41) ; porter le joueur provisoire dans la transaction |
-| | `mesure.ts`, `public/sw.js` | la mesure « message reçu » reste ; un toucher ouvre la page, qui mène à la révélation |
-| | `serveur.ts` | en-têtes, cookies `__Host-`, contrôle d'origine et « rien dans les adresses » gardés ; limiteur par session |
-| | `config.ts` | nouveaux réglages ; les réglages dangereux refusés en ligne |
-| | `public/app.js` (logique seulement) | `depuisIcone()`, `messagesPossibles()`, la demande d'autorisation lancée par le toucher, l'attente du service de réception limitée à 5 secondes |
-| | `tests/navigateur/` | les vrais formulaires dans Chromium |
-| Non repris | `pages.ts`, `depot.ts`, la page de résultats, `/preparer` tel quel, le reste de `public/` | le principe de `effacer.ts` (vider, puis vérifier que c'est vide) sert à « Tout effacer » |
+| Tel quel | `horloge.ts`, `garde-horaires.ts` et son outil, `crypto.ts`, `journal.ts` (avec les listes fermées des routes du contrat), le chiffrement de `base.ts`, le contrôle du code, la vérification GitHub, le `Procfile`, leurs tests sans base et le test du journal de PostgreSQL | rien, sauf les listes de `journal.ts` |
+| Adapté | `planificateur.ts` | un envoi par jour vers chaque abonnement actif, verrou par abonnement, rattrapage jusqu'à 18h30 ; les six textes de `MESSAGES_18H` choisis selon ce qui attend chaque joueur ; l'annonce d'arrivée |
+| | `connexion.ts` | Google par la feuille du système, avec retour par formulaire et code de retour ; Apple natif ; créer ou retrouver le compte, refuser un compte Google d'organisation (P-41) ; porter le joueur provisoire dans la transaction |
+| | `serveur.ts` | jetons au lieu des cookies, CORS limité à l'application, version minimale, limiteur par session ; en-têtes de sécurité et « rien dans les adresses » gardés |
+| | `config.ts` | nouveaux réglages (clés d'Apple, version minimale) ; les réglages dangereux refusés en ligne |
+| | `mesure.ts` | la mesure « message reçu » reste, appelée par l'extension |
+| Remplacé | `push/chiffrement.ts`, `push/envoyeur.ts`, `push/services.ts` | un envoyeur vers Apple d'environ 150 lignes (1.13) |
+| Retiré | `public/sw.js`, la logique de `public/app.js` (`depuisIcone`, `messagesPossibles`) | sans objet dans une application |
+| Non repris | `pages.ts`, `depot.ts`, la page de résultats, `/preparer` tel quel | le principe de `effacer.ts` (vider, puis vérifier que c'est vide) sert à « Tout effacer » |
 
 ### 2.2 Du second essai (`docs/essai/a-ne-pas-ouvrir-2/outillage/page/`, le code seulement)
 
 | Sort | Ce qui est repris | Ce qui change |
 |---|---|---|
-| Gardé | `style.css`, partie « Téléphone : La Tablée » (environ 200 lignes sur 362) ; les polices réduites Alegreya et Alegreya Sans, avec leurs licences | l'écran occupe tout l'iPhone ; le cadre de l'essai est retiré ; l'avis du cercle devient une barre en cinq parts, d'une seule teinte |
-| Gardé | le haut d'`interface.js` : les outils de page et les petits blocs (bandeaux, boutons, positions, raisons, visages, feuille, onglets) | ils lisent une réponse du serveur au lieu du socle, du moteur et du calendrier |
-| Adapté | les écrans de l'entrée, Deviner, Répondre, la raison, En attendant, la révélation, l'avis du cercle (35 à 40 % d'`interface.js`) | la carte se montre d'un coup, sans retournement, sans total de points |
-| Adapté | `textes.js` : les mots validés des écrans | N1 à N16, N18 et les mots d'UX de la phase 0 (`CONTRAT.md`, partie 11) ajoutés ; le cadre et la table des valeurs retirés. **L'agent qui le reprend vérifie d'abord qu'il ne contient aucun texte du lot de l'essai** (nous ne l'avons pas ouvert en phase 0) |
+| Gardé | `style.css`, partie « Téléphone : La Tablée » ; les polices réduites Alegreya et Alegreya Sans, avec leurs licences | l'écran occupe tout l'iPhone, zones sûres comprises ; le cadre de l'essai est retiré ; l'avis du cercle devient une barre en cinq parts, d'une seule teinte |
+| Gardé | le haut d'`interface.js` : les outils de page et les petits blocs (bandeaux, boutons, positions, raisons, visages, curseurs, feuille, onglets) | ils lisent une réponse du serveur au lieu du socle, du moteur et du calendrier |
+| Adapté | les écrans de l'entrée, Deviner, Répondre, En attendant, la révélation, les titres, Moi, Le Cercle, l'écran d'un proche | la révélation suit les étapes rendues par le serveur |
+| Adapté | `textes.js` : les mots validés des écrans | les mots de N1 à N18 et de la phase 0 ajoutés ; ceux de l'icône retirés. **L'agent qui le reprend vérifie d'abord qu'il ne contient aucun texte du lot de l'essai** |
 | Extrait | de `noyau.js` : `typographier`, `dePrenom`, `quePrenom`, `listeEt` ; la table des caractères qui se ressemblent (E7) | — |
-| Porté en TypeScript, côté serveur | de `moteur.js` : le tirage `t(clé)` ; `identiques`, `estJuste`, `redistribuer` (le jumeau, D-024), `verdict` ; les points ; `avisCercle` ; `classer` ; Le Devin et Le Mystère | comparés au moteur de l'essai sur des milliers de manches tirées au hasard, pour les fonctions communes |
-| Réécrit | le choix des cartes (au hasard, sans deux identiques, R4) ; la carte « qui et pourquoi » (tirée au sort, en dernier : règle 9, D-038) ; Le Fidèle (sans le nouveau venu de la semaine : règle 12) ; `phraseDuJour` (huit tensions, mots de D-053) | prouvés par les journées de `regles.md` |
-| Repris | `harnais/navigateur.js` (appareil « iPhone 15 », mode app imposé, horloge, sombre, animations réduites) ; `harnais/passe-webkit.js` ; la détection du contexte de la page-test (`docs/essai/page-test-icone/source.html`) | — |
-| Non repris | le socle, les sauts, le rattrapage, le carnet, le cadre, le dévoilement, le témoin, tout ce qui suppose le fichier scellé et des personnages simulés ; le portrait, les tempéraments, Le Pas de Côté, la phrase de la semaine (après le test, D-058) | — |
+| Porté en TypeScript, côté serveur | de `moteur.js` : le tirage `t(clé)` ; `identiques`, `estJuste`, `redistribuer`, `verdict` ; les points ; `avisCercle` ; `classer` ; `calculerManche` (les réponses inattendues, R3) ; `curseur` ; `pasDeCote` ; `calculerTemperaments` ; `phraseSemaine` ; `calculerTitres` (Le Devin, Le Mystère, Le Sans-Faute, la surprise) | aux seuils de `regles.md` (validés par D-052), qui ne sont pas toujours ceux de l'essai ; comparés au moteur de l'essai sur des milliers de manches |
+| Réécrit | la carte « qui et pourquoi » (règle 9, D-038) ; Le Fidèle (règle 12) ; `phraseDuJour` (huit tensions, mots de D-053) ; R8 ; pause et sommeil ; départs (règle 4) ; la règle 20 | prouvés par les dix journées de `regles.md` |
+| Repris | `harnais/navigateur.js` (appareil « iPhone 15 », horloge, sombre, animations réduites) ; `harnais/passe-webkit.js` | le mode « app » de Safari n'a plus d'objet |
+| Non repris | le socle, les sauts, le rattrapage, le carnet, le cadre, le dévoilement, le témoin, tout ce qui suppose le fichier scellé et des personnages simulés ; la détection de la page-test de l'icône | — |
 
-## 3. Les trois réponses d'entrée de l'invité : tranché par l'équipe (option B)
+## 3. Les trois réponses d'entrée de l'invité : l'option B tient
 
-### 3.1 La question
+### 3.1 La question, et la décision de la phase 0
 
-Marie ouvre le lien de Thomas, accepte la carte, répond à trois textes et devine Thomas sur chacun. Puis elle crée son compte, ou s'en va. Entre la carte et le compte, ses trois réponses (position et raison) existent. Où ? La question vaut aussi pour le créateur, qui répond à ses trois textes avant son compte. `plan-version-test.md` (partie 4) la renvoie à l'équipe et à Juridique : ce n'est pas un choix pour le porteur. Ce qui suit est le compte rendu de l'examen et de la décision.
+Marie ouvre le lien de Thomas, accepte la carte, répond à trois textes et devine Thomas sur chacun. Puis elle crée son compte, ou s'en va. Entre la carte et le compte, ses trois réponses existent. Où ?
 
-### 3.2 Les deux options
+La phase 0 a tranché pour **l'option B : un joueur provisoire en base dès l'accord, effacé au bout de 7 jours**. Juridique préférait l'option A, garder les réponses dans le téléphone jusqu'au compte. L'équipe a retenu B pour la solidité, avec un lien d'effacement avant le compte. Le raisonnement complet est dans l'historique de ce fichier (version du 15 octobre 2026) ; en voici l'essentiel :
+- pour tenir P-29 (le lien ne sert qu'une fois) et P-34 (accord enregistré avant toute réponse), le serveur doit de toute façon enregistrer l'accord et la liaison du lien avant le compte, même dans l'option A ;
+- l'option A ne gagne donc que les trois réponses d'une personne qui s'arrête avant le compte, 7 jours au plus ;
+- B tient P-29 et P-34 tels qu'ils sont écrits, à l'heure du serveur, avec un seul chemin d'enregistrement.
 
-**Option A, de Front-end : les garder dans l'onglet jusqu'au compte.** Les réponses restent dans la mémoire de l'onglet (`sessionStorage`), qui survit au passage par Apple ou Google dans le même onglet. Elles partent d'un coup à la création du compte. But : la base ne garde rien d'un invité qui s'arrête en route.
+### 3.2 Ce que l'application change
 
-**Option B, de Back-end : un joueur provisoire en base dès l'accord.** L'accord crée un joueur sans identité, avec un cookie `__Host-provisoire`. Chaque réponse est enregistrée, chiffrée (P-02). À la création du compte, ce joueur devient le compte, en une transaction. Sans compte, il est effacé au bout de 7 jours, et tout de suite si la personne se connecte à un compte qui existe déjà (N12).
+- **Le cookie `__Host-provisoire` devient un jeton provisoire**, rendu par l'accord et rangé dans le trousseau, 7 jours au plus. Le reste de l'option B ne change pas.
+- **L'argument de solidité de B se renforce** : dans l'application, iOS peut fermer l'application en arrière-plan pendant le passage par Mail ou par la feuille de Google. Une option A garderait les réponses dans la mémoire de l'application, et les perdrait.
+- **Un cas nouveau : le joueur inscrit qui relève un défi** (règle 15). Il n'a pas de joueur provisoire : ses réponses nouvelles s'enregistrent sur son compte, et le lien se lie à lui (`CONTRAT.md`, 2.4).
+- **Un compte retrouvé depuis un défi** (réinstallation) : le joueur provisoire se fond dans le compte, et la réponse la plus ancienne reste définitive (`CONTRAT.md`, 2.5).
 
-**Ce que l'examen de l'option A a montré.** Pour tenir P-29 et P-34, le serveur doit de toute façon enregistrer des choses avant le compte, même dans l'option A :
-- **l'accord** : P-34 veut un accord enregistré avant toute réponse. Or le serveur traite déjà la réponse à chaque texte : il en lit la raison pour montrer « Ta raison, … , était l'argument de … » (1.6), et il juge le pari. Traiter une opinion, même sans la garder, demande l'accord avant (RGPD, art. 9.2.a) ;
-- **la liaison du lien** : P-29 veut un lien qui ne sert qu'une fois. S'il ne se liait qu'à la création du compte, un lien transféré montrerait les réponses de Thomas à plusieurs personnes pendant 7 jours. Il faut donc le lier dès la première réponse, à quelque chose qui reste côté serveur.
+### 3.3 Les conditions, inchangées
 
-L'option A garde donc un accord et une liaison en base. Elle ne gagne que **les trois réponses d'une personne qui s'arrête avant le compte, pendant 7 jours au plus.**
+1. **Rien avant l'accord.** Ouvrir le lien n'enregistre rien.
+2. **Le joueur provisoire ne garde que** l'accord, les trois réponses chiffrées, la liaison du lien, le score du pari, et le pseudo dès qu'il est choisi. Ni identité, ni adresse, ni rien de l'appareil.
+3. **Effacé au bout de 7 jours** par le ménage quotidien, ou tout de suite s'il se fond dans un compte. Personne n'en est averti.
+4. **Personne ne le voit** : il n'est membre d'aucun cercle (1.6).
+5. **« Qui, durée, droits » le dit** : « Si tu t'arrêtes avant de créer ton compte, tes réponses sont effacées au bout de 7 jours. »
+6. **« Effacer mes réponses »** sur l'écran du compte (1.8) et sur N15 : `POST /api/tout-effacer`, accepté en session provisoire.
 
-### 3.3 Leurs effets
+## 4. Ce que ces choix touchent
 
-| | Option A : dans l'onglet | Option B : joueur provisoire (recommandée) |
-|---|---|---|
-| **P-29** (une seule personne, une fois) | Tenu, à condition de lier le lien à un jeton d'onglet enregistré en base à la première réponse | Tenu tel quel : la première réponse enregistrée lie le lien au joueur provisoire |
-| **P-34** (accord enregistré avant toute réponse) | Le test de P-34 tient si l'accord est inséré en premier, dans la transaction qui crée le compte (condition 4 de Juridique) ; mais l'heure du toucher serait déclarée par le téléphone, preuve plus faible que l'heure du serveur. Seule la phrase « l'accord … suit l'invité » perd son objet | Tenu tel quel : la base refuse une réponse sans accord (clé étrangère) ; l'accord suit l'invité jusqu'à son compte, avec sa date d'origine, comme P-34 le propose |
-| **P-35** (accord de l'invitant, avec l'invitation) | Inchangé | Inchangé |
-| **D-006** (trois textes avant tout compte ; lien personnel à usage unique) | Tenu | Tenu : le joueur provisoire n'a ni identité, ni pseudo avant 1.8, ni adresse ; ce n'est pas un compte |
-| **Minimisation** (RGPD, art. 5.1.c) | Meilleure : rien des réponses de qui s'arrête | Les réponses de qui s'arrête restent 7 jours au plus, chiffrées, lisibles de personne. Durée déjà inscrite sur la carte des données (`donnees.md`, partie 4 : « Réponses d'un invité qui ne crée pas de compte, 7 jours au plus », proposé par Juridique) et prévue dans « Qui, durée, droits » (`onboarding.md`) |
-| **P-11** (le téléphone ne garde rien) | Le téléphone garde ses propres opinions plusieurs minutes, au-delà de « le temps de l'envoyer » | Rien dans le téléphone, sauf le cookie |
-| **Solidité** | Fragile : pour lire le code reçu par e-mail, on quitte Safari pour Mail. Si l'iPhone manque de mémoire, il recharge l'onglet au retour, et la reprise de `sessionStorage` dans ce cas n'est pas garantie. Le défi serait alors perdu, et avec lui l'annonce à Thomas | Solide : la reprise se fait depuis la base, dans le même navigateur, pendant 7 jours |
-| **Ce que le serveur peut prouver** | Les réponses arrivent après les révélations, envoyées par l'onglet : le serveur ne peut pas vérifier qu'elles ont été données avant de voir celles de Thomas | Chaque réponse est enregistrée avant la réponse de Thomas, dans le même échange que le pari (`CONTRAT.md`, 2.4) |
-| **Code** | Deux chemins pour enregistrer une réponse (pendant le défi, puis en lot) | Un seul chemin, le même que pour le texte du jour |
-| **Décisions touchées** | Une phrase de P-34 et P-29 (« à sa première réponse » deviendrait « à sa première devinette »), P-11, la ligne « 7 jours » de la carte des données, `onboarding.md` (proposés) ; et, dans la variante de Juridique (le serveur ne reçoit que les devinettes), une exception à la liste fermée (P-27), pour envoyer au téléphone les auteurs des quatre raisons | Aucune |
-
-### 3.4 La décision de l'équipe : l'option B, avec deux conditions prises à Juridique
-
-**Les positions.** Back-end et Front-end recommandaient l'option B (Front-end s'y est rangé à l'examen). Juridique recommandait l'option A : rien des réponses de qui s'arrête dans la base, ni dans les sauvegardes (près de cinq semaines en tout sous B), et « fermer l'onglet suffit » pour effacer. Cohérence relève que les sources déjà écrites supposent B (règle 2 de `regles.md`, `onboarding.md`, carte des données) ; le Vérificateur recommande B, en reprenant à Juridique ce qui ne coûte rien.
-
-**La décision, telle qu'elle sera dite au porteur** : « Juridique préférait garder les réponses dans le téléphone ; l'équipe retient le joueur provisoire, pour la solidité, avec un lien d'effacement avant le compte. » Raison en une ligne : B tient P-29 et P-34 tels qu'ils sont écrits, à l'heure du serveur, sans écran de rattrapage ni second chemin d'enregistrement ; sa donnée en plus est bornée (7 jours), chiffrée, déjà sur la carte des données, et effaçable d'un toucher. C'est ce que demande D-056 (le plus simple), sans rien retirer à D-057 point 5 (accord explicite, effacement réel).
-
-**Les conditions** :
-1. **Rien avant l'accord.** Ouvrir le lien n'enregistre rien et ne pose aucun cookie (`CONTRAT.md`, 2.2).
-2. **Le joueur provisoire ne garde que** : l'accord, les trois réponses chiffrées, la liaison du lien, le score du pari, et le pseudo dès qu'il est choisi à l'écran du compte (1.8 ; `CONTRAT.md`, 2.5). Ni identité, ni adresse, ni rien de l'appareil.
-3. **Effacé au bout de 7 jours** par le ménage quotidien. **Effacé tout de suite** si la personne se connecte à un compte existant (N12). Personne n'en est averti, ni l'invitant, ni le cercle.
-4. **Personne ne le voit** : il n'est membre d'aucun cercle, et la base le garantit par ses règles de cloisonnement (partie 1.6).
-5. **« Qui, durée, droits » le dit** (condition prise à Juridique) : « Si tu t'arrêtes avant de créer ton compte, tes réponses sont effacées au bout de 7 jours. » (phrase d'UX, pour l'option B).
-6. **Un lien « Effacer mes réponses » sur l'écran du compte (1.8)** (condition prise à Juridique) : il appelle `POST /api/tout-effacer`, accepté en session provisoire ; aucune route nouvelle. Le droit d'effacement existe ainsi avant le compte (RGPD, art. 12.2). Mots du lien et de sa confirmation : UX.
-
-## 4. Ce que ces choix touchent (au titre de D-056)
-
-- **Une décision du porteur est allégée pour le test, et n'avait pas été signalée avec D-060** : D-035 (règle 5 des six règles de Juridique, « la suppression du compte coupe le lien ») et P-38. « Tout effacer » coupe le lien avec Apple ou Google de notre côté seulement ; le révoquer chez eux obligerait à garder leurs jetons. N14 dit au joueur comment retirer Elenchos chez Apple ou Google (`CONTRAT.md`, 2.12). À ajouter à la liste des allègements signalés au porteur (D-056).
-- **D-035 et P-03, précisés** : l'identifiant seul est demandé à Apple et à Google (moins que le plafond de D-035, avis de Juridique).
-- Les autres décisions touchées par le contrat (D-011 pour le canal du message d'arrivée, D-006 pour le score d'entrée, D-045 point 2) sont listées dans `CONTRAT.md`, partie 8. La carte de consentement (N5) et les durées de garde du test sont en attente du porteur.
-- **P-20 (proposé)** : la connexion d'essai devient locale seulement, faute d'aperçu en ligne avant la phase 6 (D-060, point 1).
-- **La carte des données** (`donnees.md`, partie 4) reçoit une ligne : les sessions (empreinte, joueur, échéance ; prolongée à chaque ouverture, jamais au-delà de la fin du test, proposé). À signaler au porteur. Avec l'option B, aucune autre ligne ne change.
-- **P-02** (chiffrement des réponses) : gardé, retirable, déjà signalé au porteur avec D-060.
-- **P-13, P-19, P-20** : allégés pour le test, déjà signalés au porteur avec D-060.
-- **Le repli des rôles** (partie 1.6), s'il est nécessaire, affaiblit P-01, P-22 et P-23 : la séparation n'y serait plus tenue que par le code. Il faudrait alors le signaler au porteur.
+- **D-062 et le plan de D-064** : appliqués. Capacitor, l'interface embarquée, la fabrication sur GitHub, le message par Apple, la connexion native, les jetons sont les choix de l'équipe annoncés dans le plan (« Ce que l'équipe tranche »).
+- **D-061, arbitrage d'équipe « Tout effacer coupe le lien de notre côté seulement »** : il tombe pour Apple, qui est révoqué (1.14), comme le plan l'a annoncé ; il reste pour Google. D-035 (règle 5) et P-38 sont en partie rétablis. À dire en une ligne au point d'étape (`CONTRAT.md`, partie 8).
+- **P-11, P-41** : jeton au lieu de cookie, même exigence tenue. **P-06** : sans objet dans une application (Apple lit le message) ; P-05 tient.
+- **P-19** : une exception écrite pour le cercle de démonstration (1.16).
+- **`plateforme.md`, annexe A** : la location d'un Mac n'est plus prévue ; Xcode Cloud est écarté (plan).
+- **La carte des données** (`donnees.md`, partie 4) : à mettre à jour par Back-end avec Juridique.
+  - Les sessions deviennent des jetons.
+  - S'ajoutent : l'abonnement par appareil, la connexion en cours (10 minutes), le code de retour (une minute), la note « écran Répondre affiché » (jusqu'à la fermeture du texte), l'étape vue de la révélation (jusqu'au 18h suivant), l'histogramme de la durée de la raison, le cercle de démonstration (jusqu'à la fin de la relecture).
+  - Ce sont des précisions, sans décision touchée.
+- **P-02** (chiffrement des réponses) : gardé, retirable, déjà signalé avec D-060. **P-13, P-19, P-20** : allégés pour le test, déjà signalés avec D-060.
+- **Le repli des rôles** (1.6), s'il est nécessaire, affaiblit P-01, P-22 et P-23 : il faudrait alors le dire au porteur.
 
 ## 5. Limites et doutes
 
-- **De mémoire, à vérifier** : la création de rôles chez Scalingo ; la reprise de `sessionStorage` après un rechargement de l'onglet par iOS (c'était l'un des arguments de la partie 3, dit comme un doute, pas comme un fait mesuré) ; la marque de domaine de Google sans la demande de l'e-mail (`CONTRAT.md`, partie 10) ; l'adresse de départ d'une icône sans adresse dans le manifeste (`CONTRAT.md`, partie 4).
-- **Aucun vrai iPhone avant la phase 6** (D-060, point 1). Le moteur WebKit sur macOS n'est pas Safari sur iPhone.
+- **De mémoire, à vérifier au début de l'étape 1** :
+  - la création de rôles chez Scalingo ;
+  - le plancher d'iOS de Capacitor ;
+  - le service de production d'Apple pour TestFlight ;
+  - le blocage des cookies dans l'application ;
+  - le « # » transmis par un lien universel ;
+  - le retour de Google par formulaire dans la feuille du système ;
+  - la clé « Se connecter avec Apple » nécessaire à la révocation ;
+  - l'accès à la clé d'App Store Connect pour un compte individuel.
+- **Sans Mac, un défaut qui n'apparaît que sur un vrai iPhone est plus long à comprendre** : l'inspecteur de Safari demande un Mac. Parade : l'application signale ses erreurs au serveur, sans aucun contenu de joueur ; si l'on reste bloqué, un Mac loué une journée, présenté d'abord au porteur avec son montant (D-063).
+- **Les premiers morceaux natifs du projet** : nos durées sont des estimations, sans mesure sur ce type de travail.
 - **Seuls des modèles relisent ce code**, qui gardera des opinions (D-043, point 2) ; aucun avocat (D-056).
-- **À observer avec de vraies personnes** : combien d'invités s'arrêtent entre le défi et le compte (ce que l'option B garde 7 jours) ; combien touchent « Effacer mes réponses » ; combien reviennent finir leur compte plus tard ; si l'aller-retour vers Mail pour le code fait perdre des défis.
+- **À observer avec de vraies personnes** : combien d'invités vont au bout des gestes de TestFlight ; si le message arrive sur des iPhone plus anciens que celui du porteur ; si la feuille de Google est comprise ; combien d'invités s'arrêtent entre le défi et le compte (ce que l'option B garde 7 jours).
