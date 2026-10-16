@@ -6,7 +6,7 @@
 
 **En tout : environ 2 h 30 de gestes, en cinq fois, sur une à deux semaines** (le plan annonçait environ 2 heures ; le détail des gestes ajoute une demi-heure), plus l'attente d'une réponse d'Apple (durée inconnue, 1.9). Ensuite, trois soirs de 2 minutes.
 
-**Ce que ça coûte.** Rien pendant 30 jours. Ensuite, environ 26 € TTC par mois chez Scalingo, l'hébergeur, si vous continuez : la question vous sera posée une semaine avant (D-055, D-063). Tout le reste est gratuit, à une exception déjà engagée : votre compte Apple, qui se renouvelle chaque année pour environ 99 € (1.7).
+**Ce que ça coûte.** Rien pendant 30 jours. Ensuite, environ 26 € TTC par mois chez Scalingo, l'hébergeur, si vous continuez : la question vous sera posée une semaine avant (D-055, D-063). Tout le reste de ces gestes est gratuit, à une exception déjà engagée : votre compte Apple, qui se renouvelle chaque année pour environ 99 € (1.7). Plus tard, le domaine elenchos.fr (environ 6 €, étape 4) vous sera présenté avec son prix avant tout achat (D-063).
 
 **Sommaire et déroulé**
 
@@ -24,7 +24,7 @@ En cas de souci : partie 6.
 **Trois règles, pour tout ce qui suit.**
 1. **Vous ne nous envoyez jamais un secret** : ni clé, ni mot de passe, ni code, ni capture d'écran qui en montre un (D-048). Vous les tapez vous-même chez Apple, GitHub et Scalingo, et vous les gardez dans votre gestionnaire de mots de passe (l'app Mots de passe de l'iPhone convient).
 2. **Ce que vous pouvez nous écrire** se limite à la partie 4, aux lignes du soir (5.5) et à ce que la partie 6 vous demande.
-3. **Rien ne se met en ligne de 15h à 19h ni le dimanche** (D-043). Une fois le serveur en ligne, un réglage changé chez Scalingo ne compte qu'au démarrage suivant du serveur : après un changement, c'est vous qui redémarrez l'application (5.2). Ce redémarrage compte comme une mise en ligne. Changer un réglage et redémarrer se font donc aux mêmes heures : avant 15h ou après 19h, jamais le dimanche. L'application pour votre iPhone, elle, se fabrique **le matin** : elle doit partir avant 14h, pour qu'Apple ait fini de la traiter avant 15h.
+3. **Rien ne se met en ligne de 15h à 19h ni le dimanche** (D-043). Une fois le serveur en ligne, un réglage changé chez Scalingo ne compte qu'au démarrage suivant du serveur : après un changement, c'est vous qui redémarrez l'application (5.2). Ce redémarrage compte comme une mise en ligne. Changer un réglage et redémarrer se font donc aux mêmes heures : avant 15h ou après 19h, jamais le dimanche. L'application pour votre iPhone, elle, se fabrique **le matin** : l'équipe la lance avant 14h (sa règle, une heure de marge), pour qu'Apple ait fini de la traiter avant 15h.
 
 **Cinq mots, une fois pour toutes.**
 - **Clé** : un fichier, ou une ligne de lettres, qui ouvre un accès, comme un mot de passe.
@@ -66,12 +66,12 @@ L'extension est le petit morceau de l'application qui signale l'arrivée du mess
 2. Cochez **Apple Push Notification service (APNs)**, puis **Configure** : environnement **Production**, type **Team Scoped**. **Save**.
 3. **Continue**, **Register**. Apple affiche la clé, avec le bouton **Download** : touchez-le. Un fichier `AuthKey_…p8` arrive dans vos Téléchargements.
 4. Notez le **Key ID** affiché (10 signes).
-5. Dans votre gestionnaire, créez une fiche « Elenchos messages » : le Key ID, et le contenu du fichier collé dans les notes (ouvrez-le avec TextEdit ou le Bloc-notes, **Tout sélectionner**, copier). Gardez le fichier jusqu'à la partie 3.
+5. Dans votre gestionnaire, créez une fiche « Elenchos messages » : le Key ID, et le contenu du fichier collé dans les notes (ouvrez-le avec TextEdit ou le Bloc-notes, **Tout sélectionner**, copier). Gardez le fichier jusqu'au premier soir réussi (5.5).
 
 > **Apple ne donne ce fichier qu'une fois.** S'il est perdu, on révoque la clé et on en crée une autre, gratuitement (partie 6).
 
 ### 1.5 La clé de connexion (5 min, 0 €)
-Elle sert au serveur pour retirer Elenchos du compte Apple d'un joueur qui fait « Tout effacer ».
+Elle sert au serveur pour retirer Elenchos du compte Apple d'un joueur qui fait « Tout effacer ». Elle ne servira qu'à l'étape 2 ; nous la créons maintenant pour ne pas vous faire revenir chez Apple.
 1. **Keys**, **+**. **Key Name** : `Elenchos connexion`.
 2. Cochez **Sign in with Apple**, puis **Configure** : **Primary App ID** = `Elenchos (io.github.ppcrepin.elenchos)`. **Save**.
 3. **Continue**, **Register**, **Download**. Notez le **Key ID**. Vous voyez maintenant deux clés dans **Keys**.
@@ -198,7 +198,7 @@ FIN_DU_TEST=2027-03-31
 COMPTE_PORTEUR=…votre pseudo
 ```
 - `FIN_DU_TEST` est provisoire (proposé) : l'équipe vous donnera la vraie date avant l'arrivée de vos amis.
-- `COMPTE_PORTEUR` : votre pseudo dans le jeu (1 à 24 signes ; ni @, ni /, ni « : », ni < ou > ; pas d'espace au début ni à la fin). Il ouvre votre compte à votre première connexion, sans le défi d'entrée qui n'existe pas encore ; vous le retirerez juste après (5.4 ; D-068).
+- `COMPTE_PORTEUR` : votre pseudo dans le jeu (1 à 24 signes ; ni @, ni /, ni « : », ni < ou > ; pas d'espace au début ni à la fin). Il ouvre votre compte à votre première connexion, sans le défi d'entrée qui n'existe pas encore ; vous le retirerez juste après (5.4). Ce réglage a été décidé par l'équipe (D-068), pas par vous, et vous pouvez le refuser : votre compte et les trois soirs passent alors à l'étape 4.
 
 **Apple** (tirés de votre gestionnaire, partie 1) :
 ```
@@ -228,7 +228,7 @@ L'équipe en tire l'adresse du serveur, que l'application doit connaître, et vo
 **La veille de la mise en ligne**, quand l'équipe vous dit que tout est relu (D-054) :
 > Feu vert : mise en ligne demain, [jour et date], le matin.
 
-Un jour de semaine, pas un dimanche. **Le lendemain matin, écrivez « allez-y »** : sans conversation ouverte, rien ne part.
+Un jour de semaine, pas un dimanche. **Le lendemain matin, écrivez « allez-y »** : sans conversation ouverte, rien ne part. Chaque nouvelle version, y compris un correctif après un échec, demande un nouveau feu vert la veille (D-054).
 
 ---
 
@@ -238,18 +238,18 @@ Un jour de semaine, pas un dimanche. **Le lendemain matin, écrivez « allez-y �
 Dès que l'équipe vous écrit qu'elle a poussé le code sur `mise-en-ligne` :
 1. Application `elenchos`, onglet **Deploy** › **Configuration** : dépôt `ppcrepin/elenchos`, branche **`mise-en-ligne`**, **Automatic deployments** activé. Si un réglage « Review apps » (ou « Deploy review apps ») est proposé ▲, laissez-le **désactivé** : il créerait d'autres applications, facturées, à partir de code que personne n'a relu.
 2. Si rien ne démarre dans les dix minutes, écrivez-le-nous d'abord. Ensuite seulement : **Manual deployment**, branche `mise-en-ligne`.
-3. Attendez la fin (quelques minutes). Si l'installation échoue, copiez-nous son message d'erreur, rien d'autre. De 15h à 19h et le dimanche, elle échoue exprès (« Horaires : aucune installation de 15h à 19h ni le dimanche ») : c'est voulu.
+3. Attendez la fin (quelques minutes). Si l'installation échoue, copiez-nous son message d'erreur, rien d'autre. De 15h à 19h et le dimanche, elle devrait échouer exprès ▲ (« Horaires : aucune installation de 15h à 19h ni le dimanche ») : c'est voulu.
 
 Enchaînez aussitôt avec 5.2.
 
 ### 5.2 Les trois clés du serveur (juste après 5.1, 10 min, 0 €)
-Le serveur vient de démarrer sans ses trois clés : il ne fait rien d'autre que servir une page qui les crée au hasard **dans votre navigateur**. Elle n'envoie rien, ni à nous ni ailleurs, et ne garde rien. Faites ceci avant 15h : le redémarrage du geste 5 compte comme une mise en ligne (règle 3).
+Le serveur vient de démarrer sans ses trois clés : il ne fait rien d'autre que servir une page qui les crée au hasard **dans votre navigateur**. Elle n'envoie rien, ni à nous ni ailleurs, et ne garde rien. Faites ceci le matin, avant 13h : le redémarrage du geste 5 compte comme une mise en ligne (règle 3), et l'équipe lance ensuite la fabrication de l'application, qui doit partir avant 14h.
 1. Sur votre ordinateur, ouvrez `https://elenchos.osc-fr1.scalingo.io/preparer` (avec le nom choisi en 3.4). La page « Préparer le serveur » s'affiche.
 2. Touchez **Créer les trois clés**, puis **Copier les trois lignes**.
 3. Collez-les dans une nouvelle fiche de votre gestionnaire de mots de passe, « Elenchos serveur ».
 4. Chez Scalingo, onglet **Environment** : ajoutez les trois lignes, en bloc ou une par une (le nom avant le « = », la valeur après) ▲. Enregistrez.
 5. Redémarrez l'application : bouton **Restart** de l'application ▲. Le serveur ne lit ses réglages qu'en démarrant : enregistrer ne suffit pas (la documentation de Scalingo demande ce redémarrage après l'ajout d'un réglage). Si Scalingo vous propose lui-même de redémarrer, acceptez : cela revient au même.
-6. Deux minutes plus tard, chez Scalingo, onglet **Logs** de l'application ▲ : la dernière ligne qui contient « demarrage » doit contenir **« pret »**. C'est le signe que le serveur a démarré avec ses clés. Si vous lisez « reglages incomplets », « cles changees » ou « repli », ou si rien ne vient au bout de dix minutes : ne créez pas d'autres clés, allez à la partie 6. Rechargée, la page « Préparer le serveur » ne doit plus s'afficher ; mais une page vide ou d'erreur ne prouve rien à elle seule.
+6. Deux minutes plus tard, chez Scalingo, onglet **Logs** de l'application ▲ : la dernière ligne qui contient « demarrage » doit contenir **« pret »**. C'est le signe que le serveur a démarré avec ses clés. Une ligne « reglages incomplets » qui ne nomme que `GOOGLE_ID_CLIENT` et `GOOGLE_SECRET_CLIENT` est normale à cette étape. Allez à la partie 6 si la ligne « demarrage » dit « reglages incomplets » ou « pas de base », si une ligne dit « cles changees », ou si rien ne vient au bout de dix minutes ; et ne créez pas d'autres clés. Rechargée, la page « Préparer le serveur » ne doit plus s'afficher ; mais une page vide ou d'erreur ne prouve rien à elle seule.
 
 Ne rechargez pas la page avant d'avoir tout collé : elle créerait d'autres clés.
 
@@ -299,6 +299,8 @@ Après le troisième soir, l'équipe vous fait le point d'étape.
 | Une clé a été montrée (envoyée, capturée, collée au mauvais endroit) | Même chose, tout de suite. Écrivez-nous « une clé a été exposée », sans sa valeur. |
 | Un e-mail « Apple », « GitHub » ou « Scalingo » vous demande d'agir | Ne cliquez pas. Ouvrez le site à la main. |
 
+À cette étape seulement, nous vous demandons parfois un extrait du journal du serveur (onglet **Logs**) : aucun joueur n'existe encore, et le journal ne contient que des mots d'une liste fermée. Avec de vrais joueurs, aucun extrait de journal ne nous sera demandé (D-052, point 3).
+
 **Ce que vous ne faites jamais :**
 - nous envoyer une clé, un mot de passe, un code, le contenu d'un fichier .p8, ni une capture de l'onglet **Environment** de Scalingo, des secrets de GitHub ou d'un fichier .p8 ouvert ;
 - toucher **Stop free trial** chez Scalingo ;
@@ -312,7 +314,8 @@ Après le troisième soir, l'équipe vous fait le point d'étape.
 
 ## Ce qui n'est pas encore sûr
 
-- **Ce qui est déjà prouvé** : la fabrication pour le simulateur, sans signature, a réussi sur GitHub le 16 octobre 2026 : le Swift compile et l'application s'ouvre. Ce qui reste à prouver, c'est la signature et l'envoi à Apple.
+- **L'installation chez Scalingo** : qu'elle refuse bien de partir de 15h à 19h et le dimanche (repris du test de 18h, non revérifié).
+- **Ce qui est déjà prouvé** : la fabrication pour le simulateur, sans signature, a réussi sur GitHub le 16 octobre 2026 (« App - simulateur », exécution n° 1) : le Swift compile et l'application s'ouvre. Ce qui reste à prouver, c'est la signature et l'envoi à Apple.
 - **Chez Apple** : l'accord pour la clé de fabrication (1.9) ; le rôle **Admin** de cette clé, nécessaire d'après des développeurs, pas d'après Apple ; la fabrication sans Mac du premier coup.
 - **Les écrans marqués ▲.**
 - **Le redémarrage chez Scalingo** (règle 3, 5.2) : sa documentation dit que les réglages sont donnés au serveur quand il démarre, et demande de redémarrer l'application après l'ajout d'un réglage (pages « Environment Variables », mise à jour le 20 mars 2026, et « Access Your Database », le 9 février 2026, relues le 16 octobre 2026). Elle ne dit pas si son tableau de bord propose ou fait lui-même ce redémarrage. D'où le redémarrage à la main, sans risque s'il était déjà fait.
