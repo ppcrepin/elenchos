@@ -369,7 +369,7 @@ Le serveur vérifie au même moment le cercle complet (N15) et le pseudo (E7). P
   - À chaque étape affichée, l'application envoie `POST /api/revelation/etape { etape }` (l'`id` de l'étape), et `'fin'` à l'écran 2.7f.
   - `reprise` rend la dernière étape vue. « Finir la révélation › » y reprend ; « Revoir la révélation › » reprend au début.
   - Les `id` sont opaques et stables du 18h au 18h suivant. Si l'étape a disparu (un départ, règle 4), le serveur donne la suivante.
-- `POST /api/vu { objet: 'revelation', cercle: null }`, à l'ouverture : la première ouverture après 18h ne commence plus par la révélation. « Déjà vu » ne garde pas d'heure, et part au 18h suivant. Au même moment, le serveur ajoute 1 aux compteurs du jour `revelation_ouverte` et, si c'est le soir même, `revelation_ouverte_le_soir` : la mesure « révélation ouverte le soir même » est un total par jour, sans personne (D-066, point 4 ; « le soir » est à définir par Game design, partie 9).
+- `POST /api/vu { objet: 'revelation', cercle: null }`, à l'ouverture : la première ouverture après 18h ne commence plus par la révélation. « Déjà vu » ne garde pas d'heure, et part au 18h suivant. Au même moment, le serveur ajoute 1 aux compteurs du jour `revelation_ouverte` et, si c'est le soir même, `revelation_ouverte_le_soir` : la mesure « révélation ouverte le soir même » est un total par jour, sans personne (D-066, point 4 ; « le soir même » : de 18h à minuit, heure de Paris, le jour de la révélation, proposé par Back-end, à confirmer par Game design, partie 9).
 - `POST /api/fiche { texte }` → `Fiche` (5.4) :
   - avant la révélation, le texte et ta réponse seulement, avec « Le vote et les auteurs : … à 18h », sans lien officiel ;
   - après, le vote, l'auteur, les quatre raisons et leurs députés, le lien du scrutin, et la ligne d'erratum s'il y en a une (règle 20 ; jamais pour une erreur d'étiquette, qui ne se montre pas) ;
@@ -505,7 +505,7 @@ Apple relit l'application avant les testeurs extérieurs, et demande un accès q
 
 | Route | Ce qu'elle fait à l'étape 1 |
 |---|---|
-| `GET /api/etat` | Sans session : `dehors`. Un compte sans cercle : `nommer_cercle` (`premierCercle` vrai : « Quitter » n'existe pas encore). Un compte dans un cercle : `jeu`. Un joueur provisoire : `entree` ou `entree_finie`. Partout : `revelationAOuvrir` faux, `annonces` vide, `defi` null (ils viennent avec le jeu) ; `voies` : Apple selon son réglage, Google et e-mail faux ; `message.disponible` selon la clé des messages. Prolonge la session (1.5, 1.7). |
+| `GET /api/etat` | Sans session : `dehors`. Un compte sans cercle : `nommer_cercle` (`premierCercle` vrai : « Quitter » n'existe pas encore). Un compte dans un cercle : `jeu`. Un joueur provisoire : `entree` ou `entree_finie` (avant sa première réponse, son lien n'est pas encore lié : étape 2, partie 9 ; `introuvable` d'ici là, et aucun joueur provisoire ne peut exister à l'étape 1). Partout : `revelationAOuvrir` faux, `annonces` vide, `defi` null (ils viennent avec le jeu) ; `voies` : Apple selon son réglage, Google et e-mail faux ; `message.disponible` selon la clé des messages. Prolonge la session (1.5, 1.7). |
 | `POST /api/connexion/debut`, `POST /api/connexion/apple` | La voie Apple (2.5), « J'ai déjà un compte », le compte d'un créateur, et le compte du porteur (`COMPTE_PORTEUR`, 2.5). La voie Google répond `indisponible`. |
 | `POST /api/abonnement` | 2.13. |
 | `POST /api/message` | Couper ou rallumer le message (2.12). |
@@ -750,6 +750,14 @@ Le corps d'une erreur ne contient que son code : jamais de message, de valeur re
 
 **Un arbitrage de l'équipe, lecture de Game design sur une proposition de Juridique et de Back-end** (D-067, renversable) : quand un membre part après 18h, une carte close où son visage était posé garde son verdict et son point, un « jumeau » y devient « juste », et la révélation ne montre plus le pari (partie 3). Touche la lettre de D-024 (« la révélation le dit ») pour ce seul cas.
 
+**Ce que le serveur de l'étape 1 (travail D, 16 octobre 2026) ajoute ou arbitre**, au titre de D-062 point 5, à dire au porteur, renversable :
+- **le compte du porteur à l'étape 1** (`COMPTE_PORTEUR`, 2.5) : tant qu'aucun compte n'existe, sa première connexion Apple ouvre son compte sans défi ni carte, pour qu'il puisse vérifier le message de 18h dès l'étape 1. **Touche la lettre de D-006** (le compte vient après le défi) pour ce seul compte, à l'étape 1 ;
+- **le seuil des compteurs sans personne** (2.15) : 10, 30 ou 70 apports selon la sorte, tenu par la base, pour tenir la promesse de N6 (« au moins dix joueurs différents ») ; confirme la proposition de l'équipe (10), et la relève là où un même joueur peut apporter plusieurs fois ;
+- **les comptes d'attributions par texte** sont gardés jusqu'au lundi 18h qui suit leur semaine (avis de Juridique, retenu par l'équipe), au lieu de la semaine en cours et de la précédente : le calcul des titres du dimanche doit donc se faire avant (partie 9) ;
+- **la validation d'une manche** n'a plus d'heure : un simple « validée ou non » (`manche.validee`, booléen), comme « vu » ; aucune règle ne lisait l'heure ;
+- **le cercle de démonstration** : un cercle neuf à chaque ouverture du lien de relecture (2.16), au lieu d'un cercle partagé ;
+- **« le soir même »** : de 18h à minuit, heure de Paris, le jour de la révélation (proposé par Back-end, à confirmer par Game design, partie 9).
+
 Et deux précisions de Juridique, sans décision touchée : le lien d'invitation ne fait lire l'invité que 7 jours après sa liaison et ne le désigne plus après son départ (P-25, P-29 ; 2.6) ; la lecture du dimanche n'est gardée qu'en une ligne par joueur (règle 18).
 
 **Ce qui précise une proposition, sans toucher une décision du porteur** :
@@ -774,7 +782,7 @@ Et deux précisions de Juridique, sans décision touchée : le lien d'invitation
    - le plancher d'iOS de Capacitor ;
    - le service de production d'Apple pour TestFlight ;
    - la révocation chez Apple demande-t-elle une clé « Se connecter avec Apple » (la même que celle des messages, ou une seconde) ?
-2. **Un réglage de plus pour le porteur, sans frais** : la clé qui permet de révoquer la connexion chez Apple, si elle n'est pas celle des messages. Elle entre dans le pas-à-pas de l'étape 1.
+2. **Un réglage de plus pour le porteur, sans frais** : la clé qui permet de révoquer la connexion chez Apple (`APPLE_ID_CLE_CONNEXION`, `APPLE_CLE_CONNEXION`), si elle n'est pas celle des messages (`APPLE_ID_CLE_MESSAGES`, `APPLE_CLE_MESSAGES`) ; si une seule clé porte les deux services, le porteur colle la même deux fois. Elle entre dans le pas-à-pas de l'étape 1 ; elle ne sert qu'à l'étape 2. Le service d'Apple pour les messages est celui de production par défaut ; `APPLE_SERVICE_MESSAGES=essai` le change sans nouvelle fabrication, s'il le faut.
 3. **Les mots encore à écrire par UX** (`A_ECRIRE`) :
    - la mise à jour requise et la page d'invitation sans l'application ;
    - N1 dans l'application ; N10 sans sa variante ; N12 ; N14 avec la feuille d'Apple ; N17 ;
@@ -787,14 +795,30 @@ Et deux précisions de Juridique, sans décision touchée : le lien d'invitation
    - N13 sans invitant ; « Effacer mes réponses » et sa confirmation.
 4. **N6 à compléter par Juridique** : les ajouts de `testflight-juridique.md` (1.6), la révocation chez Apple, l'iPad, la voie Google par la feuille du système, et la publication à `/confidentialite`. Juridique relit aussi `MESSAGES_ARRIVEE`, désormais lisible par Apple.
 5. **Les sept lectures de la partie 8** sont tranchées ; reste à les dire au porteur au point d'étape (D-065), avec les quatre arbitrages de D-066 et celui de D-067.
-6. **Les durées proposées** : connexion en cours 10 minutes ; code de retour une minute ; code e-mail 15 minutes, sa ligne gardée 24 heures ; lien de créateur 7 jours ; lien de relecture 30 jours ; joueur provisoire 7 jours ; lien lié lisible par l'invité 7 jours ; score d'entrée effacé à la lecture de l'annonce, 7 jours au plus après la liaison ; envois 7 jours ; comptes de la semaine et par texte, la semaine en cours et la précédente ; sessions jamais au-delà de la fin du test. Toutes sont tenues par le ménage quotidien (`src/base/menage.ts`, P-31), écrit et testé ; reste à le brancher sur le planificateur (étape 2), avant la première vraie invitation.
+6. **Les durées proposées** : connexion en cours 10 minutes ; code de retour une minute ; code e-mail 15 minutes, sa ligne gardée 24 heures ; lien de créateur 7 jours ; lien de relecture 30 jours ; joueur provisoire 7 jours ; lien lié lisible par l'invité 7 jours ; score d'entrée effacé à la lecture de l'annonce, 7 jours au plus après la liaison ; envois 7 jours ; comptes de la semaine, la semaine en cours et la précédente ; comptes d'attributions par texte, jusqu'au lundi 18h qui suit leur semaine ; sessions de compte 30 jours, prolongées à chaque ouverture, jamais au-delà de la fin du test ; tâche du jour du ménage, 7 jours. Toutes sont tenues par le ménage quotidien (`src/base/menage.ts`, P-31), **branché sur le planificateur depuis l'étape 1** : chaque jour à 4h, heure de Paris (proposé), ou dès que possible jusqu'à 17h30 s'il n'a pas pu tourner, jamais de 17h30 à 18h30, une fois par jour, jamais deux fois en même temps (`tache_du_jour`, migration 0004).
 7. **La feuille de Google, partagée ou privée** : partagée, elle reprend la session Google de Safari mais iOS demande d'abord un accord ; privée, il faut retaper son mot de passe Google. À trancher par UX et Front-end à l'étape 2.
 8. **`GET /api/droits`** : les trois blancs de N6 sont des réglages du serveur, pour ne pas les écrire dans le dépôt public. À confirmer par Juridique.
 9. **Le jour écrit entre 18h et minuit.** L'en-tête « Aujourd'hui · … » donne le jour civil (`Aujourdhui.jour`) : le mercredi à 20h, « mercredi ». Le texte auquel on répond ce soir-là est pourtant celui du jeudi (partie 3), et l'historique l'écrira « Jeudi 3 avril » (maquette 5.3). À confirmer par UX à l'étape 2 ; le serveur suivra ce choix.
 10. **Trois points nés de la relecture de Juridique (D-066, D-067)** :
-   - **à définir par Game design** : le « soir même » du compteur `revelation_ouverte_le_soir` (2.9). Le « jumeau » changé en « juste » est tranché (D-067) ;
-   - **à écrire avec UX à l'étape 2** : la route qui pose et retire le refus des mesures, et ses mots dans les Réglages (2.12) ;
+   - **à confirmer par Game design** : le « soir même » du compteur `revelation_ouverte_le_soir` (2.9). Proposé par Back-end : de 18h à minuit, heure de Paris, le jour de la révélation (`FIN_DU_SOIR_MEME_HEURE`, une seule constante, `src/serveur/mesures.ts`). Le « jumeau » changé en « juste » est tranché (D-067) ;
+   - **à écrire avec UX à l'étape 2** : la route qui pose et retire le refus des mesures, et ses mots dans les Réglages (2.12 ; point 11) ;
    - « a joué avant 18h le lendemain » se tire des envois, qui ne vivent que 7 jours : le calcul doit se faire dans ce délai (2.15).
+11. **À construire à l'étape 2, en plus des routes du jeu** (relevés de Cohérence et du Vérificateur, et du serveur de l'étape 1). Chaque route nouvelle entre dans `Routes` (`contrat.ts`) et dans la liste du journal (`src/serveur/journal.ts`), que la compilation compare :
+   - **le refus des mesures** dans les Réglages : poser et retirer le refus (`mesures_refusees`), mots d'UX (2.12) ;
+   - **« Emporter mes données »** (droits d'accès et de portabilité, RGPD art. 15 et 20) : sous sa session, un fichier lisible de ses données (pseudo, cercles, réponses déchiffrées, titres, tempéraments…), fait par le serveur, sans que personne d'autre n'ouvre la base (P-36, P-42) ;
+   - **« Changer de pseudo »** dans les Réglages : le nouveau pseudo vaut pour tous ses cercles, comme à la règle 15 (P-03 a) ; mêmes refus que pour un pseudo pris (`pseudo_pris` dans un de ses cercles, E7 ; `pseudo_invalide`) ;
+   - **l'écran « Le test se termine le … »**, montré une semaine avant la fin du test (`FIN_DU_TEST`), qui propose « Tout effacer » : N6 le promet ; un champ de `Etat` à ajouter, et ses mots d'UX ;
+   - **l'état « pari d'un membre parti »** de la révélation : `CarteRevelee.pari` vaut `'parti'` (ajouté à `contrat.ts` à l'étape 1), distinct de null (carte passée ou vide) ; la révélation n'y montre que le verdict et « C'était {auteur}. » (D-067, partie 3) ;
+   - **le compte d'un invité** (entrée dans le cercle, rond, cercle complet, pseudo pris, annonce d'arrivée en message et dans `Etat.annonces`) et **la fusion** d'un joueur provisoire dans un compte retrouvé (2.5) : la fusion demande à la base une fonction nouvelle, car les règles de cloisonnement interdisent de déplacer le lien et les réponses d'un joueur à l'autre (et une réponse chiffrée est liée à son joueur) ;
+   - **où garder le lien entre l'accord et la première réponse** d'un joueur provisoire (il ne se lie qu'à sa première réponse, P-29) : `Etat` en a besoin pour dire `mode` et `invitant` ;
+   - **`premierCercle` faux** après « Quitter » tous ses cercles : aucune date de départ n'est gardée ; une marque est à décider avec « Quitter » ;
+   - **la voie Google** (feuille du système, retour par formulaire, code de retour), reprise de `test-18h/src/connexion.ts` ;
+   - **la révocation chez Apple** à « Tout effacer » (2.12) : les réglages sont prêts (`config.revocation`) ;
+   - **ce qui attend chaque joueur à 18h** (cartes, vote, titres du dimanche), branché à la place de `rienNAttendEncore` (`src/serveur/planificateur.ts`) ;
+   - **les titres du dimanche calculés avant le lundi 18h**, même si personne n'ouvre le jeu : les comptes d'attributions par texte partent alors (point 6) ;
+   - **un refus après 18h compté une fois par joueur et par texte**, pour que le seuil des compteurs tienne (2.15) ;
+   - **le compte du porteur de l'étape 1** (2.5) : le garder, avec l'accord qu'il donnera à sa première réponse, ou l'effacer avant les amis ; et retirer `COMPTE_PORTEUR` chez l'hébergeur.
+12. **À vérifier à l'ouverture de l'hébergeur** (en plus de `src/base/LISEZMOI.md`) : le serveur ouvre au plus 9 connexions à la base (jeu 4, comptes 2, envoi 2, ménage 1), plus une au démarrage ; la plus petite base de l'hébergeur doit les accepter.
 
 ## 10. Limites et doutes
 

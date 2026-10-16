@@ -8,13 +8,14 @@
 |---|---|
 | `migrations/0001-tables.sql` | les tables du jeu entier, et rien d'autre |
 | `migrations/0002-cloisonnement.sql` | les règles de cloisonnement par ligne (P-25), l'heure du jeu (`instant_du_jeu`, `fin_du_jour_de_jeu`), « rien avant 18h » pour les réponses du jour, le lien lié lisible 7 jours, ce que fait un départ (règle 4 ; D-066, point 1 ; Juridique), et les refus gardés par la base (P-34, dix membres, trois cercles, pseudo et rond uniques, joueur provisoire hors des cercles) |
-| `migrations/0003-totaux.sql` | les totaux écrits sans être lus, le refus des mesures, les joueurs distincts, et les vues à seuil des mesures (P-22, P-23 ; D-066, points 3 et 4) |
+| `migrations/0003-totaux.sql` | les totaux écrits sans être lus, le refus des mesures, les joueurs distincts, et les vues à seuil des mesures (P-22, P-23 ; D-066, points 3 et 4 ; les compteurs sans personne au-dessus d'un seuil d'apports : 10, 30 ou 70) |
+| `migrations/0004-planificateur.sql` | la tâche du jour : le ménage une fois par jour, jamais deux fois en même temps (étape 1, travail D) |
 | `carte.ts` | la carte des données : chaque table, chaque colonne, son usage et sa forme (P-04) |
 | `connexion.ts` | les connexions par module, le chiffrement de la connexion, la déclaration du joueur |
 | `roles.ts` | les cinq rôles et la liste exacte de leurs droits (`DROITS`) |
 | `migrations.ts`, `installation.ts` | jouer les migrations, puis préparer les rôles |
 | `effacement.ts` | « Tout effacer », puis vérifier qu'il ne reste rien |
-| `menage.ts` | le ménage quotidien : chaque durée de la carte tenue (P-31) |
+| `menage.ts` | le ménage quotidien : chaque durée de la carte tenue (P-31) ; `menageDuJour`, appelé chaque jour à 4h par le planificateur (`src/serveur/planificateur.ts`) |
 | `totaux.ts` | le seul chemin du serveur vers les totaux, avec le réglage du test (D-066, point 2) |
 
 Les briques reprises de `test-18h/` sont dans `src/serveur/` (horloge, garde des horaires, chiffrement, journal, réglages), chacune avec son origine en tête. L'heure de Paris a une seule source, le moteur (`src/regles/heure.ts`) : l'horloge du serveur l'appelle, et la base suit la même convention (un test compare chaque 18h de 2026 à 2028).
@@ -60,7 +61,7 @@ Les deux modes passent les mêmes tests de cloisonnement et d'effacement (`tests
 
 ## Les migrations
 
-Des fichiers SQL numérotés, joués au démarrage par le propriétaire seul, dans une transaction, sous un verrou. Une migration jouée ne se modifie plus : le démarrage échoue si son empreinte a changé. **Tant qu'aucune base réelle n'existe, 0001 à 0003 peuvent encore être réécrites** (elles l'ont été le 16 octobre 2026, après la relecture de l'étape 1) ; dès la première mise en ligne, toute correction passe par une migration nouvelle.
+Des fichiers SQL numérotés, joués au démarrage par le propriétaire seul, dans une transaction, sous un verrou. Une migration jouée ne se modifie plus : le démarrage échoue si son empreinte a changé. **Tant qu'aucune base réelle n'existe, 0001 à 0004 peuvent encore être réécrites** (0001 à 0003 l'ont été le 16 octobre 2026, après les relectures de l'étape 1) ; dès la première mise en ligne, toute correction passe par une migration nouvelle.
 
 ## Lancer les tests
 
@@ -79,8 +80,7 @@ Chaque fichier de test crée son schéma, dont le propriétaire est un rôle san
 
 ## Ce que le socle ne fait pas encore
 
-- le serveur HTTP, la connexion Apple et Google, l'envoi vers Apple, le planificateur de 18h, l'import des textes ;
-- l'appel quotidien du ménage par le planificateur : le programme existe et il est testé (`menage.ts`), pas encore son déclenchement. Il doit tourner avant la première vraie invitation (Juridique) ;
+- la connexion Google, l'import des textes, les routes du jeu (étape 2). Le serveur HTTP, la connexion Apple, l'envoi vers Apple et le planificateur existent depuis l'étape 1, travail D (`src/serveur/`) ;
 - dans « Tout effacer » et « Quitter », le retrait d'une carte pas encore révélée des compteurs de la semaine (règle 4) : c'est le moteur de la journée. Les cartes où le partant était désigné, elles, sont déjà vidées par la base (déclencheur `membre_avant_depart`). Avec le verdict écrit au geste, un départ après 18h ne change que « jumeau » en « juste » (D-067) ; ce qui reste à l'étape 2 : une manche non validée reçoit « passe » sur ses cartes vides à la première lecture après 18h ;
 - la route qui pose ou retire le refus des mesures (la table existe, `mesures_refusees`) : ses mots, avec UX, à l'étape 2 (`CONTRAT.md`, partie 9) ;
 - le cercle de démonstration et le lien de relecture (CONTRAT.md, 2.16), et les vues du rapport des totaux tirées des tables de joueurs (retour à 7 jours, etc.) : chacun viendra par une migration, avec l'étape qui le construit. L'avis du cercle, lui, n'aura jamais de table : il se calcule à la lecture (CONTRAT.md, partie 3) ;
